@@ -1,0 +1,20 @@
+{
+  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.title": "Round Table Fragment",
+  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.description": "#At the end of your turn, retain up to !B! Block.",
+  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.flavor": "A splinter of the great table of Camelot. Even broken, it remembers how to protect.",
+  "MASHSHIELDER-LORD_CAMELOT_RESTORED.title": "Lord Camelot (Restored)",
+  "MASHSHIELDER-LORD_CAMELOT_RESTORED.description": "#At the end of your turn, retain up to !B! Block. Replaces the Round Table Fragment's retention.",
+  "MASHSHIELDER-LORD_CAMELOT_RESTORED.flavor": "The Castle of the Distant Utopia, whole once more. The wall that protected humanity's final journey.",
+  "MASHSHIELDER-FOU_AMULET.title": "Fou's Amulet",
+  "MASHSHIELDER-FOU_AMULET.description": "#Once per combat, the first time you would die: survive at 1 HP.",
+  "MASHSHIELDER-FOU_AMULET.flavor": "Kyu! A small white blessing that refuses to let her go.",
+  "MASHSHIELDER-SPARE_GLASSES.title": "Spare Glasses",
+  "MASHSHIELDER-SPARE_GLASSES.description": "#At the start of each combat, draw !C! additional card(s).",
+  "MASHSHIELDER-SPARE_GLASSES.flavor": "Senpai, have you seen my glasses? ...Oh. Right. Thank you.",
+  "MASHSHIELDER-ORTINAX_CORE.title": "Ortinax Core",
+  "MASHSHIELDER-ORTINAX_CORE.description": "#Start each combat with !NpCharge! NP Charge.",
+  "MASHSHIELDER-ORTINAX_CORE.flavor": "Chaldea's finest engineering, humming with stored magical energy.",
+  "MASHSHIELDER-A_TEAM_DIARY.title": "A-Team Diary",
+  "MASHSHIELDER-A_TEAM_DIARY.description": "#Whenever you enter a room, gain 1 Max HP.",
+  "MASHSHIELDER-A_TEAM_DIARY.flavor": "The records of those who should have climbed instead. She carries them all."
+}

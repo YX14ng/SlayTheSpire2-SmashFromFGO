@@ -1,0 +1,71 @@
+﻿using BaseLib.Abstracts;
+using BaseLib.Utils.NodeFactories;
+using MashShielder.MashShielderCode.Cards.Basic;
+using MashShielder.MashShielderCode.Extensions;
+using MashShielder.MashShielderCode.Relics;
+using Godot;
+using MegaCrit.Sts2.Core.Entities.Characters;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Relics;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+
+namespace MashShielder.MashShielderCode.Character;
+
+public class MashShielder : PlaceholderCharacterModel
+{
+    public const string CharacterId = "MashShielder";
+    
+    public static readonly Color Color = new("a883e0");
+
+    public override Color NameColor => Color;
+    public override CharacterGender Gender => CharacterGender.Feminine;
+    public override int StartingHp => 85;
+    
+    public override IEnumerable<CardModel> StartingDeck => [
+        ModelDb.Card<StrikeMash>(),
+        ModelDb.Card<StrikeMash>(),
+        ModelDb.Card<StrikeMash>(),
+        ModelDb.Card<StrikeMash>(),
+        ModelDb.Card<DefendMash>(),
+        ModelDb.Card<DefendMash>(),
+        ModelDb.Card<DefendMash>(),
+        ModelDb.Card<DefendMash>(),
+        ModelDb.Card<ShieldBash>(),
+        ModelDb.Card<ProtectSenpai>()
+    ];
+
+    public override IReadOnlyList<RelicModel> StartingRelics =>
+    [
+        ModelDb.Relic<RoundTableFragment>()
+    ];
+    
+    /// <summary>
+    /// Combat visual: the original FGO model rendered to frame sequences (idle/attack/
+    /// cast/hurt/die) played by an AnimatedSprite2D — pipeline in docs/ANIMATIONS.md.
+    /// BaseLib converts the scene to NCreatureVisuals and routes animation signals.
+    /// </summary>
+    public override string CustomVisualPath => $"{MainFile.ResPath}/character/mash_visuals.tscn";
+
+    public override CardPoolModel CardPool => ModelDb.CardPool<MashShielderCardPool>();
+    public override RelicPoolModel RelicPool => ModelDb.RelicPool<MashShielderRelicPool>();
+    public override PotionPoolModel PotionPool => ModelDb.PotionPool<MashShielderPotionPool>();
+    
+    /*  PlaceholderCharacterModel will utilize placeholder basegame assets for most of your character assets until you
+        override all the other methods that define those assets. 
+        These are just some of the simplest assets, given some placeholders to differentiate your character with. 
+        You don't have to, but you're suggested to rename these images. */
+    public override Control CustomIcon
+    {
+        get
+        {
+            var icon = NodeFactory<Control>.CreateFromResource(CustomIconTexturePath);
+            icon.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+            return icon;
+        }
+    }
+    public override string CustomIconTexturePath => "character_icon_char_name.png".CharacterUiPath();
+    public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
+    public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
+    public override string CustomMapMarkerPath => "map_marker_char_name.png".CharacterUiPath();
+}

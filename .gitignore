@@ -1,0 +1,21 @@
+# MegaDot editor (1.4+ GB, descargar de https://megadot.megacrit.com/)
+/MegaDot/
+
+# Build outputs
+**/bin/
+**/obj/
+**/.godot/
+
+# IDE
+.vs/
+.idea/
+*.user
+
+# Logs
+*.log
+
+# Herramientas de extraccion y bundles pesados
+/tools/
+assets/reference/bundles/
+assets/reference/extracted/
+/decompiled/

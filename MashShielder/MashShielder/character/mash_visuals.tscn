@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://MashShielder/character/mash_sprite.gd" id="script_1"]
+[ext_resource type="SpriteFrames" path="res://MashShielder/character/mash_frames_base.tres" id="frames_base"]
+
+[node name="MashVisuals" type="Control"]
+
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Visuals"]
+position = Vector2(0, -250)
+flip_h = true
+sprite_frames = ExtResource("frames_base")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("script_1")
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+offset_left = -130.0
+offset_top = -440.0
+offset_right = 130.0
+offset_bottom = 0.0
+
+[node name="IntentPosition" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -470)
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -230)
