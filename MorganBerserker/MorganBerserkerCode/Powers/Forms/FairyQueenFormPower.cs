@@ -13,7 +13,8 @@ namespace MorganBerserker.MorganBerserkerCode.Powers.Forms;
 /// </summary>
 public sealed class FairyQueenFormPower : MorganFormPower, ICurseAmplifier
 {
-    public const int NpOnDamage = 5;
+    // 5 -> 8 en el primer pase de buffs (playtest 2026-06-11: "no es tan fuerte").
+    public const int NpOnDamage = 8;
 
     public override string FramesPath => $"{MainFile.ResPath}/character/morgan_frames_queen.tres";
 

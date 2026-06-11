@@ -30,7 +30,7 @@ $powers = @{
     "worlds_end_guts_power"         = "$skill/skill_00404.png"
 }
 $corePowers = @{
-    "curse_power"               = "$skill/skill_00403.png"
+    "curse_power"               = "https://static.atlasacademy.io/JP/BuffIcons/bufficon_521.png" # icono de ESTADO real de FGO (feedback: skill_00403 es otra cosa)
     "guts_power"                = "$skill/skill_00305.png"
     "overcharge_blessing_power" = "$skill/skill_00508.png"
 }

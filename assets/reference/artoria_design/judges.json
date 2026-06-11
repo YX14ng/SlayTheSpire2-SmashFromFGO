@@ -1,0 +1,250 @@
+[
+    {
+        "scores":  [
+                       {
+                           "proposal":  0,
+                           "fidelidadKit":  9,
+                           "balanceVsBaselines":  6,
+                           "decisionesDeForma":  9,
+                           "implementabilidadFGOCore":  8,
+                           "claridad":  7,
+                           "total":  39,
+                           "problemas":  [
+                                             "Égida Feérica (poco común, 1⚡: 1 Anti-Purga, repetible, sin Exhaust): el ancla declarada es Buffer de StS1 (2⚡, RARA, 1 stack); además AP persiste entre turnos a diferencia del Bloqueo — está a ~50% del precio del precedente y es spammeable contra jefes de golpe único.",
+                                             "Promesa bajo la Tormenta (rara, 2⚡: 2 Anti-Purga SIN Exhaust, +: +2★): motor repetible de negaciones imposibles de perforar; contra Lagavulin-likes ≈ Intangible reciclable. Velo de Avalon (3 AP) sí paga Exhaust — la versión repetible no puede dar 2/3 del efecto sin candado.",
+                                             "Recarga de Hechizos (poder 2⚡: la 1ª Habilidad de cada turno cuesta 1⚡ menos): en un kit que SIEMPRE juega Habilidades (la pasiva Caster lo exige) es ≈ +1⚡/turno casi incondicional — por encima del presupuesto de DemonForm (3⚡, rara) y se paga en 2 turnos. Subir a 3⚡ o \u0027solo Habilidades de coste 2+\u0027.",
+                                             "Protección del Lago A mejorada (1⚡: NP+28, en Caster +14 adicional = 42 NP por 1⚡ repetible): 2.1⚡ de valor pagado solo por condición de forma, que según §3 cubre +20-30%, no +110%.",
+                                             "Bendición del Lago (común 0⚡: NP+8, +: +14, sin Exhaust): el precedente propio citado (Memoria del Fresno de Morgan, 0⚡ NP+8) LLEVA Exhaust — acá es grifo gratis repetible; el upgrade a +14 son 0.7⚡ gratis por jugar una carta.",
+                                             "Pasiva Berserker \u0027+2 de daño recibido POR GOLPE\u0027: contra encuentros multi-hit (3-5 ataques/turno) son +6-10 HP/turno — la ventana de cobro se vuelve injugable según el encuentro, swinginess que el jugador no controla (tensión con §1.2 \u0027nunca por debajo de tasa\u0027).",
+                                             "Around Caliburn: Desatado reciclable da 2 de Fuerza PERMANENTE por ciclo de 100 NP (~cada 4-5 turnos): el ATK up de 3 turnos del NP real traducido a Fuerza apilable infinita en peleas largas — combinado con 3 AP/ciclo acerca la inmortalidad escalante contra jefes lentos."
+                                         ],
+                           "mejoresIdeas":  [
+                                                "Las DOS firmas básicas SON las cartas de cambio de forma (Arrebato de Verano / Canción de la Profecía, precedente Eruption/Vigilance de la Watcher): garantiza la danza desde el combate 1 y que el keyword Crítico nunca sea letra muerta en el mazo inicial — ES el injerto nº1 para la ganadora.",
+                                                "Valores de crítico IMPRESOS por carta (\u0027CRÍTICO 2★: 13\u0027) en vez de fórmula: legibilidad in-game superior a cualquier \u0027+X por ★\u0027 calculado.",
+                                                "Diadema de Orejas de Conejo (reliquia: 1⚡ la primera vez que entrás en Berserker cada combate): hace tempo-neutral abrir la ventana de cobro, 1/combate = sin loops.",
+                                                "Contraataque de la Guardiana / Ojos Feéricos sobre BlockedHitsThisTurn con tope 3/turno: el puente defensa→motor usando exactamente la infraestructura que FormPower ya expone, con la perilla anti-degeneración integrada.",
+                                                "Documentar la colisión temática DELIBERADA con Morgan (\u0027Protección del Lago\u0027 existe en ambos kits reales) para que nadie la \u0027corrija\u0027 por error.",
+                                                "La nota de convergencia de assets: la asc.3 del rig Berserker (704720) también es Artoria Avalon — ambos caminos visuales convergen como en el lore.",
+                                                "Resolver explícitamente el daño ANTES del FormSwitch en Arrebato de Verano para que la carta no se auto-buffee — gotcha de orden de comandos que P1/P2 no mencionan."
+                                            ]
+                       },
+                       {
+                           "proposal":  1,
+                           "fidelidadKit":  8,
+                           "balanceVsBaselines":  5,
+                           "decisionesDeForma":  8,
+                           "implementabilidadFGOCore":  8,
+                           "claridad":  8,
+                           "total":  37,
+                           "problemas":  [
+                                             "El keyword Crítico \u0027+50% (redondeo abajo)\u0027 es estructuralmente superlineal y rompe §3 (\u0027efecto/punto ≤ costo de generarlo\u0027) en toda carta de base \u003e10: Caliburn Floreciente (#50, 3⚡, 30 de daño, hasta 2★): 30→45→60 = +15 por ★ cuando generar 1★ cuesta ~½⚡ ≈ 4-5 de daño. Imprimir las cartas 1-2 bajo tasa solo compensa en las chicas.",
+                                             "Espada de Selección (#56, 2⚡ Exhaust: próximo Ataque hace EL DOBLE): multiplicador sobre multiplicador — ×2 encima de crit ×1.5 + flats de Estival/Magia Única/Pulso; con Caliburn Floreciente ≈ 120 de daño en un combo de 2 cartas. Sin precedente vanilla de ×2 de daño final en carta.",
+                                             "Ritmo del Festival (#63, poder 1⚡: cambio de forma OPCIONAL al final de cada turno): convierte todos los payoffs por-cambio (starter relic 1★+5NP/cambio, Guía del Bastón #65, Aplauso del Público #37, Partitura de la Danza) en motores POR TURNO sin gastar carta ni ⚡ — los caps 2/turno individuales no frenan la suma.",
+                                             "Cadena de Baterías (#57, 1⚡ Exhaust: NP+40, +: +50): 2.0-2.5⚡ de valor; Exhaust paga +30-50% según §3 → presupuesto 1.3-1.5⚡. Comparar con Núcleo de Avalon de P0 (+30 por el mismo costo, que sí cierra).",
+                                             "Flotador de Tiburón Blanco (reliquia poco común: \u0027no recibís el daño adicional de Estival\u0027): borra el 100% del downside de la forma — parking gratis en Berserker, mata la danza que es la identidad del personaje. Una reliquia no debería eliminar la decisión central.",
+                                             "Bambalinas (#61, 0⚡: cambio + 1★ + NP+10): ~1⚡ de valor a 0⚡ repetible; con Ritmo + Partitura + Aplauso forma loops de tempo que ellos mismos flagean pero dejan impresos.",
+                                             "El chip de Estival (+1 de daño por golpe ≈ 2-4 HP/turno) es demasiado suave como única renta de la ventana: aun sin el Flotador, acampar en Berserker sale barato comparado con el +2/golpe de P0 o el −2 de Bloqueo de P2."
+                                         ],
+                           "mejoresIdeas":  [
+                                                "Escapada de Verano (#42, 0⚡: cambiá de forma; al final del turno volvés sola): la \u0027visita de un turno\u0027 empaqueta el ciclo cobrar-y-volver en una carta — la mejor carta-lente de las tres propuestas, injertable tal cual.",
+                                                "Riders direccionales Paso Adelante (#8) / Paso Atrás (#15): la danza paga en AMBAS direcciones con cartas espejo ataque/defensa — textura de decisión barata y legible.",
+                                                "Identificación honesta del marcador \u0027Compás\u0027 (cambiaste-de-forma-ESTE-TURNO) como pieza nueva: FormShiftedPower es por-combate, el por-turno no existe en FGOCore — ninguna otra propuesta lo detecta tan explícitamente.",
+                                                "Lupa de la Detective del Verano (reliquia: críticos dan NP+3 al consumir la ★): cose los dos carriles (gastar ★ también carga la ulti) y empuja a cruzar los 100 en Estival — solución elegante al sesgo \u0027siempre cargo en Caster\u0027.",
+                                                "Estocada de Selección (#23: 12/1⚡ SOLO jugable en Estival): condición dura de forma como pago limpio — carta muerta de verdad en la forma equivocada, el patrón §3 más honesto.",
+                                                "El formato del documento: pool numerado 1-68 con justificación por carta contra §2/§3 — el estándar de presentación a copiar en el diseño final.",
+                                                "Hope Will Camelot como 7×6 hits literales: la forma de NP más fiel al original (6 hits Arts), y escala con Fuerza como pagan los multi-hit vanilla."
+                                            ]
+                       },
+                       {
+                           "proposal":  2,
+                           "fidelidadKit":  9,
+                           "balanceVsBaselines":  8,
+                           "decisionesDeForma":  7,
+                           "implementabilidadFGOCore":  9,
+                           "claridad":  8,
+                           "total":  41,
+                           "problemas":  [
+                                             "El mazo inicial NO tiene carta de cambio de forma (firmas: Bastón de Selección = bloqueo+NP, Familiar = ataque con Crítico): la danza —la mecánica firma del encargo— y la reliquia starter (\u0027la primera vez que cambiás de forma...\u0027) quedan INERTES hasta draftear #34/35/36. Sigue el precedente Morgan, pero falla la lente de formas en acto 1 temprano; P0 demuestra que las firmas-cambio lo arreglan gratis.",
+                                             "Égida de la Profecía (#67, poder 3⚡: 1 Anti-Purga/turno si no tenés): contra jefes de golpe único es negación perpetua de 1 ataque por turno — su ancla declarada (WraithForm) tiene drawback acumulativo de Destreza, esto no tiene ninguno. El \u0027si no tenés\u0027 impide stackear pero no impide la inmortalidad de ritmo 1-golpe/turno.",
+                                             "Seis Golpes de la Espada (#55, 2⚡: 3×6, hasta 3★ a +1/golpe): cada ★ vale +6 (1 por cada uno de los 6 golpes) \u003e costo de generación 4-5 (§3); además double-dipea con Fuerza (×6 hits). Recortar a \u0027hasta 2★\u0027 o +1 a solo 3 golpes.",
+                                             "Hada del Verano (#33, 1⚡ Exhaust: NP+20 + Bendición×2): 20NP≈1⚡ + ~0.5-1⚡ de tier = hasta 2⚡ de valor contra presupuesto 1.4⚡ (1⚡ + Exhaust +40%) — única skill real cuya cuenta no cierra y el doc no la flagea.",
+                                             "Around Caliburn: Desatado da 3 de Fuerza PERMANENTE por ciclo de ulti: mismo problema de Fuerza apilable infinita que P0/P1 (el ATK up real dura 3 turnos); el +1 AP por cada 50 es el escalado más conservador de los tres, pero la Fuerza reciclada en jefes largos escala sin techo.",
+                                             "Pequeña Estrella Azul (#61, 1⚡ Exhaust: 3★ + cura 3 ≈ 1.5⚡+ de valor) y Festival de Servants (#59, roba 3 + NP10 por 1⚡ Exhaust): impresas sobre presupuesto y solo defendidas con \u0027vigilar en playtest\u0027 — bajo lente estricta entran ya recortadas (#61 a 2★+cura, #59 a roba 3 seco).",
+                                             "La generación Caster (1ª golpe completamente bloqueado/anulado por turno) cae a CERO contra enemigos que no atacan, rituales de buff o multi-hit chico imposible de bloquear entero: interrumpible ✓ (§1.2), pero con solo ~5 generadores de carta en el pool la densidad del plan B de ★ es justa — vigilar en acto 1."
+                                         ],
+                           "mejoresIdeas":  [
+                                                "Crítico lineal \u0027consume hasta N★: +4 por ★\u0027 clavado en la banda Regent (1★≈3-5): el único de los tres diseños donde el keyword NO puede romperse por escala de carta — los techos (+6, +8/★) están pagados por forma+poder+rareza de manera auditable.",
+                                                "Regla sistemática \u0027cooldown 5-6 de FGO → Exhaust\u0027: traducción disciplinada que paga TODOS los números 1:1 de las skills reales con la tabla §3, replicable para futuros personajes.",
+                                                "Pasiva Caster sobre golpe COMPLETAMENTE bloqueado (GetBlockedHits, que existe en FormPower exactamente para esto): la generación más decision-rich de las tres — apuntás el Bloqueo al golpe que podés anular entero; defensa correcta = motor.",
+                                                "Penalidad Berserker \u0027−2 de Bloqueo por carta\u0027 como espejo exacto del \u0027−2 de daño en Caster\u0027 de Morgan: simétrica, legible, y apaga la generación (que requiere bloquear) — doble razón estructural para volver, sin swinginess por encuentro.",
+                                                "Recarga de Habilidades (Append 5 como reliquia: 1/combate, la primera carta no-NP que se agotaría va al descarte) con la exclusión de NPs detectada como obligatoria — el mapeo de append más inteligente de las tres propuestas.",
+                                                "OC Count exacto: +1 Anti-Purga por cada 50 sobre 100 → a 300 quedan exactamente 5, como OC500 en Atlas — la traducción numérica más fiel del Overcharge real.",
+                                                "Las notas de implementación de mayor calidad: clamp a 0 estilo IntangiblePower con caveat de \u0027verificar si el motor fuerza mínimo 1\u0027, anti-double-count de ★ entre Anti-Purga y BlockedHitsThisTurn, y dedup de arte contra mapping_morgan.csv (conoce el pipeline real del repo)."
+                                            ]
+                       }
+                   ],
+        "veredicto":  "Gana la PROPUESTA 2 (41/50) bajo lente balance-estricto: es la única donde el keyword central no puede romperse estructuralmente (crítico lineal +4/★ en la banda Regent exacta, vs el +50% multiplicativo de P1 que viola §3 en toda carta grande), tiene la regla de traducción más disciplinada (cooldown→Exhaust sistemático para las 6 skills reales), ancla Anti-Purga al precedente Buffer CON Exhaust (vs las repetibles baratas de P0), capea todos los grifos, y sus notas de implementación demuestran el mejor dominio del FGOCore real (verifiqué: FormPower.GetBlockedHits, ConsumeAllForNpCard, OverchargeBlessingPower etc. existen tal como las usa). INJERTOS OBLIGATORIOS EN P2: (1) de P0, las firmas-cambio en el mazo inicial — reemplazar \u0027Bastón de Selección\u0027/\u0027Familiar de la Espada Sagrada\u0027 por Arrebato de Verano (1⚡: 6 daño, entra en Berserker, Crítico 1) y Canción de la Profecía (1⚡: 4 Bloqueo, entra en Caster, +NP5), con la nota de resolver daño ANTES del FormSwitch — corrige la única falla grave de P2 (danza inerte hasta draftear) y activa su starter relic desde el combate 1; (2) de P1, Escapada de Verano (0⚡: visita de un turno con retorno automático) y el marcador \u0027Compás\u0027 (cambió-este-turno) documentado como pieza nueva; (3) de P1, la Lupa de la Detective (críticos → NP+3) para corregir el sesgo \u0027siempre cruzo los 100 en Caster\u0027; (4) de P0, la Diadema de Orejas de Conejo (1⚡ al primer Berserker/combate) y los valores de crítico impresos por carta si el \u0027+4/★\u0027 no se lee en playtest. PARCHES A LA GANADORA ANTES DE CONGELAR: Exhaust o drawback acumulativo a Égida de la Profecía (#67), Seis Golpes (#55) a \u0027hasta 2★\u0027, Hada del Verano (#33) a NP+15, la Fuerza de Around Caliburn: Desatado a 2 con tope o convertida en buff temporal, y recortar de imprenta #59/#61 que el propio doc admite \u0027al filo\u0027. NO injertar de P1: Ritmo del Festival, Espada de Selección ×2 ni el Flotador que borra el downside de forma — son las tres fugas sistémicas que le costaron el puntaje."
+    },
+    {
+        "scores":  [
+                       {
+                           "proposal":  0,
+                           "fidelidadKit":  9,
+                           "balanceVsBaselines":  7,
+                           "decisionesDeForma":  9,
+                           "implementabilidadFGOCore":  9,
+                           "claridad":  8,
+                           "total":  42,
+                           "problemas":  [
+                                             "Égida Feérica (poco común, 1⚡: 1 Anti-Purga, repetible, sin Exhaust): contra golpes de jefe de Acto 3 (30-45 daño) 1⚡ anula 4-5⚡ de valor; el ancla real (Buffer StS1) es 2⚡ RARA por 1 stack. Subir a 1⚡+Exhaust o 2⚡ — es la carta más sub-tasada de la propuesta.",
+                                             "Promesa bajo la Tormenta (rara, 2⚡: 2 Anti-Purga + 2★ al +, sin Exhaust, repetible): vs jefes de golpe único ≈ 60-90 de daño anulado por 2⚡ reciclables; P2 cobra lo mismo CON Exhaust (Mar Interior).",
+                                             "Around Caliburn: Desatado da 2 de Fuerza por uso y es repetible cada ciclo del medidor → Fuerza apilada sin tope en combates largos (3 ciclos = 6 Fuerza + 36 Bloqueo + 9 AP). Falta un tope o que la Fuerza sea temporal.",
+                                             "Manto del Viaje (común, 2⚡: 12 Bloqueo + 1★ + NP+5, sin downside) ≈ 17 de valor eq. vs el baseline común 2⚡ de 16 CON −2 HP (§2): sobre tasa sin pagar.",
+                                             "Embate de Verano (común, 2⚡: 13 daño base): por debajo de la banda 2⚡ común (18 con downside) cuando no hay ★/forma — carta trampa para el 40% pan-y-manteca que §4.5 exige funcione sin motor.",
+                                             "Hope Will Camelot: Desatado de un solo golpe (40) pierde la textura 6-hits del NP real — fidelidad menor que P1 (7×6) y que la carta Seis Golpes de P2.",
+                                             "Las skills reales (Carisma +15 NP, Pulso +25) traducen el 30%/50% real sin criterio declarado y sin Exhaust — números menos fieles que la regla cooldown→Exhaust de P2."
+                                         ],
+                           "mejoresIdeas":  [
+                                                "Las dos firmas básicas SON los cambios de forma (Arrebato de Verano / Canción de la Profecía, precedente Eruption/Vigilance de la Watcher): garantiza la danza y que el keyword Crítico nunca sea letra muerta desde el combate 1 — la mejor respuesta de las tres al §5/§6.",
+                                                "Doble candado del Crítico (★ acumuladas + forma Berserker) con AMBOS valores impresos en la carta (\u00276. CRÍTICO 2★: 12\u0027): máxima legibilidad y tasa /★ siempre ≤ costo de generación.",
+                                                "+2 de daño recibido POR GOLPE en Berserker: anti-parking estructural que escala con la presión enemiga y es la traducción literal del \u0027daño doble\u0027 de la clase Berserker en FGO.",
+                                                "La nota de convergencia lore: la asc-3 de ambos paths (504520 y 704720) ES Artoria Avalon — los dos caminos convergen en la forma clímax, como en el canon.",
+                                                "Cometa del Verano calcada al slot exacto del Comet del Regent (0⚡+5★) con doble candado: el uso más honesto del precedente vanilla de recurso secundario.",
+                                                "Ojos Feéricos «?» como puente defensa→motor sobre BlockedHitsThisTurn (golpe anulado → ★+NP): convierte la anulación pagada en economía sin loop.",
+                                                "Co-op riders fieles al rol de soporte (Carisma y Around Caliburn regalan versiones reducidas a aliados; ofensa sin escalar §1.5)."
+                                            ]
+                       },
+                       {
+                           "proposal":  1,
+                           "fidelidadKit":  7.5,
+                           "balanceVsBaselines":  6,
+                           "decisionesDeForma":  8,
+                           "implementabilidadFGOCore":  8,
+                           "claridad":  7,
+                           "total":  36.5,
+                           "problemas":  [
+                                             "Caliburn Floreciente (3⚡: 30, consume hasta 2★ a +50% c/u → 60): +15 de daño por ★ = 3× el costo de generación (1★≈½⚡≈4.5) — rompe frontalmente §3 \u0027efecto/punto ≤ costo de generarlo\u0027. El crítico PORCENTUAL escala con el tamaño de la carta: defecto estructural del keyword, no de una carta.",
+                                             "Flotador de Tiburón Blanco (reliquia poco común: elimina el daño extra de Estival): borra el ÚNICO castigo de la forma → camping gratis en Berserker; contradice el anti-parking que la propia justificación de motor declara.",
+                                             "Ritmo del Festival (poder 1⚡: cambio opcional GRATIS al final de cada turno) apilado con Corona de Avalon + Guía del Bastón + Bastón starter: hasta ~2★+10NP+5Block/turno sin gastar cartas — contradice su justificación (5) \u0027la danza cuesta cartas+tempo\u0027.",
+                                             "Plegaria a la Estrella (1⚡ Exhaust: 1 Anti-Purga) citando \u0027costeo Buffer ~1⚡/negación\u0027: Buffer real es 2⚡ rara por 1 stack — ancla mal citada, AP queda barata vs jefes de golpe grande.",
+                                             "Mazo inicial con UNA sola carta de cambio (Ensayo del Festival): §5 pide ~2-3 cambios/combate; en acto 1 la danza es ~1-1.5/combate — funcional pero por debajo del estándar que P0 sí cumple.",
+                                             "Festival de Servants #59 (1⚡ Exhaust: roba 3 + NP+10): 3 robos ≈ 1.5⚡ + NP — sobre tasa incluso con Exhaust (auto-flagged, pero impreso así).",
+                                             "Crítico = ×1.5 con redondeo abajo + flats apilados después (+3 forma, +2 Pulso, +3 Magia Única): orden de operaciones ambiguo y la peor legibilidad en combate de las tres propuestas."
+                                         ],
+                           "mejoresIdeas":  [
+                                                "Escapada de Verano (0⚡: cambia de forma; al final del turno volvés sola): la \u0027visita de un turno\u0027 habilita el ciclo cobrar-y-volver en UNA carta — la carta-lente del personaje, injertable tal cual.",
+                                                "Framing de stars BANQUEADAS: en Caster los Críticos \u0027no se activan\u0027 (las ★ se conservan, cero desperdicio) en vez de \u0027no existen\u0027 — el mejor wording del gate de forma.",
+                                                "Lupa de la Detective del Verano (reliquia: críticos +2 y NP+3 al consumir ★): cose los dos carriles (gastar ★ también carga la ulti) y empuja a cruzar los 100 en Estival — resuelve el sesgo-de-ulti que la propia propuesta detecta.",
+                                                "Paso Adelante / Paso Atrás (riders direccionales por forma de entrada): premia la DIRECCIÓN del cambio, no solo el cambio.",
+                                                "Identificación honesta del marcador \u0027Compás\u0027 (FormShiftedPower es por-combate; \u0027este turno\u0027 necesita un power transitorio nuevo): el único de los tres que nombra esta pieza de implementación real — P0 también la necesita para Espada y Canción.",
+                                                "Detección y mitigación explícita del sesgo de ulti (cargar es natural en Caster → baterías condicionadas a Estival como Pulso/Lupa para que Hope Will Desatado exista)."
+                                            ]
+                       },
+                       {
+                           "proposal":  2,
+                           "fidelidadKit":  9,
+                           "balanceVsBaselines":  8,
+                           "decisionesDeForma":  6,
+                           "implementabilidadFGOCore":  9,
+                           "claridad":  8,
+                           "total":  40,
+                           "problemas":  [
+                                             "Mazo inicial SIN carta de cambio de forma (Bastón de Selección = bloqueo+NP; Familiar = ataque con Crítico): la reliquia starter (\u0027la primera vez que cambiás de forma…\u0027) está MUERTA hasta draftear #34/#35/#36 — viola §5 (cambio 2-3 veces/combate) y deja la mecánica firma fuera del acto 1 entero.",
+                                             "El Crítico funciona en TODAS las formas (+4/★ base en cualquier lado; Berserker solo suma +2/★ y −2 Bloqueo): el gate de forma desaparece — un mazo de ★ puede quedarse en Caster cobrando a 4/★ y la decisión de forma se vuelve optimización blanda, contra §5 \u0027cambiar las DECISIONES, no los números\u0027.",
+                                             "Égida de la Profecía (poder 3⚡: al inicio de cada turno, si no tenés AP, ganás 1): contra jefes de UN ataque/turno = inmunidad permanente; WraithForm (su banda citada) tiene drawback ACUMULATIVO y esto no tiene ninguno — la carta más rota de las tres propuestas.",
+                                             "Around Caliburn Desatado: 3 de Fuerza repetible por ciclo de medidor → Fuerza apilada sin tope (peor que P0: 3 vs 2 por uso); auto-flagged pero sin perilla aplicada al número impreso.",
+                                             "Muro de la Capilla (común, 2⚡: 15 de Bloqueo plano): el baseline común 2⚡ es 16 CON −2 HP — sobre tasa sin pagar nada.",
+                                             "La penalidad de Berserker (−2 Bloqueo en tus cartas) no muerde contra enemigos de baja presión: turnos en que no necesitás bloquear = camping gratis (el +daño-recibido de P0 siempre cobra).",
+                                             "Pequeña Estrella Azul (1⚡ Exhaust: 3★ + cura 3 ≈ 1.9⚡ de valor) y Festival de Servants (roba 3 + NP10 a 1⚡ Exhaust): ambas sobre el presupuesto Exhaust +30-50% — auto-flagged, números impresos igual."
+                                         ],
+                           "mejoresIdeas":  [
+                                                "La regla sistemática cooldown 5-6 → Exhaust con números 1:1 del kit real (Carisma 30% → +30 NP; Pulso 50% → +40; Protección 20% → +25): el ÚNICO criterio de traducción numérica declarado y verificable — injertar a las skills reales de P0, que las recorta sin criterio.",
+                                                "Anti-Purga anclada explícitamente a Buffer de StS1 (2⚡ rara/1 stack → 2⚡+Exhaust poco común): el pricing de AP más defendible de las tres — usar esta tabla para re-tasar Égida Feérica y Promesa de P0.",
+                                                "Rivalidad de Verano (poder: +daño en Berserker, citando el perfil oficial \u0027Berserker por su rivalidad con Morgan\u0027): lore cross-mod brillante dado que Morgan es el otro personaje del repo.",
+                                                "Seis Golpes de la Espada (2⚡: 3×6, consume hasta 3★ → +1/golpe/★): rescata la textura 6-hits del NP real como carta drafteable con tasa /★ legal.",
+                                                "Pasiva Caster \u0027primer golpe completamente bloqueado/anulado por turno → 1★+NP+5\u0027 sobre GetBlockedHits ya existente: la defensa CORRECTA (apuntar el bloqueo al golpe anulable) como motor — decisión defensiva real, distinta de Mash y de la Bruja de Morgan.",
+                                                "Conservar el nombre real \u0027Protección del Lago\u0027 documentando la colisión con Morgan (en FGO la comparten de verdad, rangos C vs A): más fiel que renombrarla (P1).",
+                                                "Higiene de implementación: exclusión obligatoria de cartas NP en Recarga de Habilidades, conteo de golpes anulados por AP dentro del propio power para no duplicar ★, y dedup de arte de CEs contra mapping_morgan.csv."
+                                            ]
+                       }
+                   ],
+        "veredicto":  "Gana la PROPUESTA 0 (42/50) sobre P2 (40) y P1 (36.5). Decide la lente de formas: P0 es la única donde la danza existe desde el combate 1 (las dos firmas básicas SON los cambios, precedente Eruption/Vigilance) y donde el Crítico tiene gate duro de forma (★ + Berserker) con anti-parking que siempre muerde (+2 recibido/golpe, traducción literal del daño doble de la clase) — P2, pese a su balance más prolijo y su criterio de traducción superior, entrega un mazo inicial SIN carta de cambio y un Crítico que funciona en cualquier forma, vaciando la decisión central; P1 rompe §3 con el crítico porcentual (Caliburn Floreciente +15/★) y desarma su propio costo de la danza (Ritmo del Festival + Flotador). INJERTOS OBLIGADOS EN P0 — de P2: (1) la regla cooldown→Exhaust con números 1:1 para las 6 skills reales (Carisma 2⚡+Exhaust +30 NP, Pulso +40, Protección +25 — hoy P0 las recorta sin criterio), (2) re-tasar Anti-Purga con su ancla Buffer (Égida Feérica 1⚡→1⚡+Exhaust o 2⚡; Promesa bajo la Tormenta agregar Exhaust o bajar a 1 AP+OC), (3) la carta Rivalidad de Verano (lore cross-mod con Morgan), (4) Seis Golpes de la Espada para la textura 6-hits del NP, y (5) su higiene de implementación (AP cuenta sus anulaciones dentro del propio power; dedup de arte vs mapping_morgan.csv). De P1: (6) Escapada de Verano (visita de un turno con retorno automático — la mejor carta-lente del ciclo), (7) la Lupa de la Detective (crítico→NP, cura el sesgo hacia la ulti de Caster), y (8) presupuestar el marcador transitorio \u0027cambiaste/jugaste-X este turno\u0027 como pieza nueva de FGOCore (P0 lo necesita para Espada y Canción y la pasiva Caster, y solo P1 lo nombró). Fixes propios de P0 antes de congelar: tope o temporalidad a la Fuerza repetible de Around Caliburn Desatado, Manto del Viaje 12→10 de Bloqueo, y Embate de Verano 13→15 base para que el pan-y-manteca funcione sin motor."
+    },
+    {
+        "scores":  [
+                       {
+                           "proposal":  0,
+                           "fidelidadKit":  9,
+                           "balanceVsBaselines":  7,
+                           "decisionesDeForma":  9,
+                           "implementabilidadFGOCore":  8,
+                           "claridad":  8,
+                           "total":  41,
+                           "problemas":  [
+                                             "Égida Feérica (1⚡, 1 Anti-Purga, repetible, SIN Exhaust): su propia tasación interna (\u00271 AP ≈ 7-9 Bloqueo vs jefes\u0027) usa escala de acto 1 — contra jefes de golpe único de 25-40 equivale a 25-40 de Bloqueo imperforable por 1⚡. El precedente correcto es Buffer (2⚡ rara en StS1); P2 lo ancla bien, P0 no.",
+                                             "Promesa bajo la Tormenta (2⚡, 2 AP, repetible sin Exhaust): mismo eje degenerado contra jefes de un golpe; en combates largos se recicla.",
+                                             "«¡Intentémoslo!» (0⚡ común: 1★ + NP+5 ≈ 0.75⚡ de valor gratis, sin Exhaust): sobre el presupuesto de Mamá Boba (que solo se reemplaza a sí misma con el robo).",
+                                             "Espada y Canción (1⚡: 7 +4 si jugaste Habilidad = 11/1⚡ común): la condición es casi automática en Caster (la pasiva ya te pide jugar Habilidades primero) — no \u0027falla de verdad\u0027 como exige §3.",
+                                             "Avalon fija Around Caliburn (la ulti defensiva): trampa de build — un mazo centrado en NP-damage pierde Hope Will Desatado para siempre al consagrarse; P1 y P2 le dan a Avalon la de daño.",
+                                             "Cometa del Verano (0⚡+5★ = 28 → 5.6/★): excede su propia regla de §3 (efecto/★ ≤ costo de generación ≈ 4.5-5); defendible por el slot Comet, pero es la excepción que contradice la justificación general."
+                                         ],
+                           "mejoresIdeas":  [
+                                                "Las DOS firmas básicas SON las cartas de cambio (precedente Eruption/Vigilance de la Watcher): la danza está garantizada desde el combate 1 y las cartas con Crítico nunca son letra muerta en el mazo inicial — la mejor respuesta del lote al checklist §6.",
+                                                "Penalidad Berserker \u0027+2 de daño recibido POR GOLPE\u0027: anti-parking estructural que escala con la presión enemiga (contra 3 ataques son +6/turno) — la ventana se achica sola, exactamente §1.2.",
+                                                "Tercer arquetipo defensa→motor sobre BlockedHits (Ojos Feéricos «?» + Contraataque de la Guardiana capeado 3/turno): convierte la fantasía de soporte en plan B drafteable real.",
+                                                "Crítico con valores IMPRESOS por carta (\u00276 de daño. Crítico 2★: 13\u0027): cero matemática mental en mesa, la opción más legible de las tres.",
+                                                "El detalle de lore de que la asc.3 del Berserker (704720) también es AA — ambos caminos convergen en Avalon, documentado para assets."
+                                            ]
+                       },
+                       {
+                           "proposal":  1,
+                           "fidelidadKit":  7,
+                           "balanceVsBaselines":  6,
+                           "decisionesDeForma":  8,
+                           "implementabilidadFGOCore":  8,
+                           "claridad":  6,
+                           "total":  35,
+                           "problemas":  [
+                                             "Caliburn Floreciente (#50, 3⚡: 30 de daño, hasta 2★ a +50% c/u → 15 de daño por ★): rompe frontalmente §3 (\u0027efecto/punto ≤ costo de generarlo\u0027 ≈ 4-5/★). Es el defecto estructural del crit multiplicativo: escala con la base, y 30 NO está impreso bajo tasa (3⚡ rara 24-32).",
+                                             "HWC (#49 y el Desatado) OMITE el muro Anti-Purga party-wide — el elemento firma del NP real (\u0027Anti-Enforcement DEF a TODO el equipo\u0027); P0 y P2 lo incluyen. La ulti Around Caliburn tampoco tiene rider co-op pese a que el NP real es grupal.",
+                                             "Reliquia Flotador de Tiburón Blanco (\u0027no recibís el daño adicional de Estival\u0027): borra el único costo de la forma de cobro → parking gratis en Berserker y la danza muere esa run. Quitar el palo sin tocar la zanahoria es la perilla equivocada.",
+                                             "Bambalinas (#61, 0⚡: cambio + 1★ + NP+10 ≈ 1⚡ de valor + dispara la reliquia starter): sobre presupuesto, admitido en sus propios riesgos; junto a Cambio de Vestuario 0⚡ + Escapada 0⚡ + Aplauso (sin tope/turno) arma loops de tempo.",
+                                             "Faltan piezas del kit: Append 5 (Skill Reloading) no existe en ningún slot, y Madness Enhancement A solo está implícito en la pasiva de forma — contra la regla \u0027cada skill real como carta/reliquia RECONOCIBLE\u0027 (§4.1).",
+                                             "Claridad del crítico: ×1.5 con redondeo abajo + tres fuentes aditivas apiladas (+3 forma, +3 Magia Única #64, +2 Pulso #45) = orden de operaciones opaco en mesa; ellos mismos deben flaggear el orden vs Fuerza/Vulnerable en riesgos."
+                                         ],
+                           "mejoresIdeas":  [
+                                                "Escapada de Verano (#42, 0⚡: cambiá de forma, al final del turno volvés sola): LA carta-lente del personaje — comprime el ciclo \u0027cobrar y volver\u0027 en una decisión de una carta. Injerto obligado.",
+                                                "Ritmo del Festival (#63, poder: cambio OPCIONAL al final de cada turno): convierte la danza en una decisión por turno sin gastar cartas — el motor de decisiones de forma más elegante del lote.",
+                                                "Auspicio del Lago (#43, poder: tus cartas de Carga NP dan +3 adicional): la traducción más fiel del \u0027NP Gain +30% party\u0027 de Protection of the Lake — buff a la GENERACIÓN, no batería plana.",
+                                                "HWC Desatado como 7×6 multi-hit: fiel a los 6 hits del NP real y escala con Fuerza/Bendición de forma natural.",
+                                                "Textura direccional de la danza (Paso Adelante/Paso Atrás, Ensayo del Festival con rider según dirección): cada cambio tiene sabor distinto según hacia dónde bailás."
+                                            ]
+                       },
+                       {
+                           "proposal":  2,
+                           "fidelidadKit":  9,
+                           "balanceVsBaselines":  8,
+                           "decisionesDeForma":  6,
+                           "implementabilidadFGOCore":  9,
+                           "claridad":  8,
+                           "total":  40,
+                           "problemas":  [
+                                             "EL problema de mi lente: el mazo inicial NO tiene ninguna carta de cambio de forma (firmas = Bastón de Selección y Familiar de la Espada Sagrada; los cambios #34/35/36 son poco comunes). La danza — la mecánica pedida del encargo — está dormida hasta draftear, y la reliquia starter (\u0027la primera vez que cambiás de forma...\u0027) es letra muerta en los primeros combates. Viola el espíritu de §5 (~2-3 cambios/combate) y el checklist §6.",
+                                             "Égida de la Profecía (#67, 3⚡ poder: al inicio de cada turno, si no tenés AP, ganá 1): contra jefes de UN ataque por turno es inmortalidad práctica renovable — peor que cualquier carta AP puntual de P0/P1. Necesita \u0027cada dos turnos\u0027 o costo recurrente, no solo el \u0027si no tenés\u0027.",
+                                             "Crítico activo en TODAS las formas (Berserker solo sube de 4/★ a 6/★): la forma deja de ser ACCESO al cobro y pasa a ser eficiencia — debilita la ventana y habilita la línea \u0027nunca cambio, cobro a 4/★ en Caster\u0027, justo lo contrario del Caster→Berserker pedido.",
+                                             "La pasiva Caster (\u0027primer golpe COMPLETAMENTE bloqueado cada turno → 1★+NP5\u0027) se dispara casi gratis contra multi-hit chico (bloquear entero un golpe de 2-3 es trivial con un Defender): la generación es mucho más confiable de lo que su sección de interrupciones admite, y la decisión de \u0027apuntar el bloqueo\u0027 solo muerde contra golpes grandes.",
+                                             "Festival de Servants (#59: roba 3 + NP10 por 1⚡+Exhaust ≈ 2⚡ de valor) y Pequeña Estrella Azul (#61: 3★ + cura por 1⚡+Exhaust): ambas sobre presupuesto, auto-flaggeadas como \u0027al filo\u0027 — deberían salir corregidas, no en watch-list.",
+                                             "HWC mapea el muro party-wide del NP real a \u00271 Anti-Purga propio\u0027 sin rider co-op (solo Around Caliburn lo tiene): nick de fidelidad en el elemento grupal del NP de daño."
+                                         ],
+                           "mejoresIdeas":  [
+                                                "La regla sistémica \u0027cooldown 5-6 → Exhaust\u0027 para TODAS las skills reales: paga los números fieles de batería (Pulso +40 ≈ el 50% real, el más fiel del lote) con un costo uniforme, legible y justificado por §3. Injerto obligado a la ganadora.",
+                                                "Anclaje de Anti-Purga al precedente Buffer (2⚡+Exhaust por negación, o comprada con medidor): la ÚNICA tasación correcta de AP de las tres propuestas — corrige directamente el agujero de P0.",
+                                                "La soldadura AP→★ (\u0027cuando Anti-Purga anula: ganás 1★\u0027) + pasiva Caster por bloqueo completo: \u0027defender BIEN genera\u0027 es la textura de decisión intra-forma más rica y la traducción más honesta del rol de soporte (la defensa alimenta a la DPS).",
+                                                "Mapeo de Overcharge matemáticamente elegante: +1 AP por cada 50 sobre 100 → a 300 consumidos quedás EXACTO en 5 = OC500 real (Count 1→5 de Atlas).",
+                                                "Operativa de implementación superior: guarda anti-doble-conteo entre AP y la pasiva (★ duplicadas), exclusión de NPs en Recarga de Habilidades, patrón IntangiblePower con clamp a 0 documentado, y el dedup de arte de CEs contra mapping_morgan.csv."
+                                            ]
+                       }
+                   ],
+        "veredicto":  "Gana la PROPUESTA 0 (41 pts) por la lente experiencia-de-juego, con la 2 pisándole los talones (40) y la 1 tercera (35). P0 es la única donde la fantasía Caster→Berserker se JUEGA desde el combate 1: sus dos firmas básicas son los cambios de forma (precedente Eruption/Vigilance), la ventana Berserker tiene un alquiler real que escala con la presión (+2 recibido/golpe), y el crítico con candado duro de forma + valores impresos por carta hace que \u0027cuándo abro la ventana\u0027 sea una decisión legible cada turno. P2 tiene mejor balance e implementabilidad (la regla skills→Exhaust y el anclaje Buffer de Anti-Purga son los mejores del lote) pero comete el pecado capital de mi lente: cero cartas de cambio en el mazo inicial — la danza no existe hasta draftear poco comunes — y su crítico sin candado de forma ablanda la ventana a una mera mejora de eficiencia. P1 tiene el toolkit de danza más creativo pero el crit multiplicativo (+50%) rompe la tasa por estrella en cartas de base grande (Caliburn Floreciente: 15 daño/★) y una reliquia que borra el downside de Berserker mata la danza. INJERTOS a P0: de P2 — (a) repricing de Anti-Purga al ancla Buffer (Égida Feérica pasa a 2⚡ o gana Exhaust; Promesa bajo la Tormenta gana Exhaust), (b) la regla \u0027skill real = Exhaust\u0027 que además permite subir Pulso de Primavera a +40 NP fiel, (c) la soldadura \u0027AP anula → ganás 1★\u0027 (P0 ya tiene el power Ojos Feéricos: fusionar), y (d) considerar la pasiva Caster por bloqueo-completo de P2 como reemplazo de \u0027primera Habilidad\u0027 (más decisión, menos piloto automático). De P1 — (e) Escapada de Verano (visita de un turno con retorno automático) y (f) Ritmo del Festival (cambio opcional al final de turno) como poco común/rara de danza, y (g) el formato 7×6 multi-hit para Hope Will Camelot Desatado. Fixes propios de P0 antes de congelar: que Avalon manifieste la ulti A ELECCIÓN al cruzar 100 (o fijar HWC como P1/P2) para no castigar builds NP-damage con la Consagración; recortar «¡Intentémoslo!» (añadir Exhaust o quitar el NP+5) y Espada y Canción (7+4→7+3 o condición \u0027si jugaste 2+ Habilidades\u0027)."
+    }
+]

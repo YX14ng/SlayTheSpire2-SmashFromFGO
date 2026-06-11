@@ -53,9 +53,24 @@ Animaciones (pipeline: `tools/render_all_morgan.ps1`, modos list/probe/debug/mea
   en visuals; (+34.5,−271.4) sin flip en merchant/rest. `morgan_sprite.gd` = volver a idle.
 - 365 `.webp.import` parcheados con `tools/patch_webp_imports.ps1` (publish → patch → publish).
 
+Fixes post-playtest (2026-06-11 tarde, feedback del usuario):
+- Idle re-renderizado a 30fps (a 15 se veía entrecortado); `size_limit=1024` en los
+  .webp.import (~1.5GB→~450MB de VRAM, pck 139→124MB) con scale 0.9326 en los .tscn.
+- El Cetro ahora fija la forma Reina al inicio del combate (antes peleaba SIN forma
+  hasta el primer cambio — pasiva muerta) y eso dispara la precarga de formas (la traba
+  del primer cambio era que PreloadAll recién corría en el propio cambio).
+- Icono de Maldición = bufficon_521 (el estado real de FGO; skill_00403 era otra cosa).
+- Tienda/fogata: flip_h=true + X negado (miraba a la izquierda, de espaldas al mercader;
+  también corregido en Mash). Guía del playbook corregida (decía lo contrario).
+- PRIMER PASE DE BUFFS ("no es tan fuerte"): pasivas de forma NP 5→8 (Reina por daño,
+  Bruja por turno; Invierno hereda ambas), Cetro +10 NP en el primer cambio. Si sigue
+  floja: siguientes perillas en DESIGN-MORGAN.md §11.
+
 PENDIENTE de Morgan:
 1. Playtest: perillas en DESIGN-MORGAN.md §11 (grifos NP, mini-NP, Cernunnos+cap 15).
 2. Verificar en juego: animaciones de las 3 formas (swap incluido), botón "Invocar (dupe)".
+3. Opcional: aplicar size_limit+30fps-idle a MASH (sus texturas siguen a resolución
+   completa ~1.5GB VRAM; mismo procedimiento, scale 0.5/(1024/1758)=0.858).
 
 ## (implementado) SIGUIENTE GRAN TAREA: implementar a Morgan (diseño COMPLETO y aprobado)
 

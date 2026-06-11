@@ -5,7 +5,8 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 
 function New-FramesTres([string]$framesFolder, [string]$outFile) {
     $anims = @(
-        @{ name = "idle"; src = "idle"; loop = "true"; speed = 15.0 },
+        # idle renderizado a 30fps (step 1) tras feedback de playtest: a 15 se veia entrecortado
+        @{ name = "idle"; src = "idle"; loop = "true"; speed = 30.0 },
         @{ name = "attack"; src = "attack"; loop = "false"; speed = 30.0 },
         @{ name = "cast"; src = "cast"; loop = "false"; speed = 15.0 },
         @{ name = "hurt"; src = "hurt"; loop = "false"; speed = 30.0 },

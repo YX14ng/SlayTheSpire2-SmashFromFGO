@@ -12,7 +12,8 @@ namespace MorganBerserker.MorganBerserkerCode.Powers.Forms;
 /// </summary>
 public sealed class RainWitchFormPower : MorganFormPower
 {
-    public const int NpPerTurn = 5;
+    // 5 -> 8 en el primer pase de buffs (playtest 2026-06-11: "no es tan fuerte").
+    public const int NpPerTurn = 8;
     public const int AttackPenalty = 2;
 
     public override string FramesPath => $"{MainFile.ResPath}/character/morgan_frames_aesc.tres";

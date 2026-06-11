@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://ArtoriaCaster/character/form_caster.png" id="caster"]
+
+[node name="ArtoriaMerchant" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -217)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("caster")

@@ -19,10 +19,11 @@ const SELECT := {
 	"800150": { "idle": [0, 154, 2], "attack": [0, 20, 1], "cast": [0, 79, 2], "hurt": [0, 16, 1] },
 	"800200": { "idle": [0, 156, 2], "attack": [20, 66, 1], "cast": [0, 64, 2], "hurt": [0, 16, 1] },
 	# Morgan: los spell invocan el espejo gigante (llena el canvas) — cast recortado
-	# al gesto previo a que aparezca el prop.
-	"704020": { "idle": [0, 153, 2], "attack": [48, 68, 1], "cast": [0, 5, 1], "hurt": [0, 16, 1] },
-	"505320": { "idle": [0, 153, 2], "attack": [28, 48, 1], "cast": [0, 7, 1], "hurt": [0, 16, 1] },
-	"704030": { "idle": [0, 153, 2], "attack": [48, 68, 1], "cast": [0, 5, 1], "hurt": [0, 16, 1] },
+	# al gesto previo a que aparezca el prop. Idle a 30fps (step 1): a 15fps el pelo
+	# y la capa se ven entrecortados (feedback de playtest).
+	"704020": { "idle": [0, 153, 1], "attack": [48, 68, 1], "cast": [0, 5, 1], "hurt": [0, 16, 1] },
+	"505320": { "idle": [0, 153, 1], "attack": [28, 48, 1], "cast": [0, 7, 1], "hurt": [0, 16, 1] },
+	"704030": { "idle": [0, 153, 1], "attack": [48, 68, 1], "cast": [0, 5, 1], "hurt": [0, 16, 1] },
 }
 const CLIP_FOR := { "idle": "wait", "attack": "attack_b", "cast": "spell", "hurt": "damage_01" }
 # Overrides de clip por modelo (vacio por ahora; attack_ex/attack_a de Aesc

@@ -1,0 +1,43 @@
+{
+    "casterServantId":  504500,
+    "berserkerServantId":  704700,
+    "casterCharagraphs":  [
+                              "https://static.atlasacademy.io/JP/CharaGraph/504500/504500a@1.png",
+                              "https://static.atlasacademy.io/JP/CharaGraph/504500/504500a@2.png",
+                              "https://static.atlasacademy.io/JP/CharaGraph/504500/504500b@1.png",
+                              "https://static.atlasacademy.io/JP/CharaGraph/504500/504500b@2.png"
+                          ],
+    "berserkerCharagraphs":  [
+                                 "https://static.atlasacademy.io/JP/CharaGraph/704700/704700a@1.png",
+                                 "https://static.atlasacademy.io/JP/CharaGraph/704700/704700a@2.png",
+                                 "https://static.atlasacademy.io/JP/CharaGraph/704700/704700b@1.png",
+                                 "https://static.atlasacademy.io/JP/CharaGraph/704700/704700b@2.png"
+                             ],
+    "casterBattleModels":  [
+                               "504500 (asc 0) -\u003e bundle: https://static.atlasacademy.io/JP/Servants/504500/504500 | textura: https://static.atlasacademy.io/JP/Servants/504500/textures/504500.png | manifest: https://static.atlasacademy.io/JP/Servants/504500/manifest.json",
+                               "504510 (asc 1-2) -\u003e bundle: https://static.atlasacademy.io/JP/Servants/504510/504510 | textura: https://static.atlasacademy.io/JP/Servants/504510/textures/504510.png",
+                               "504520 (asc 3-4) -\u003e bundle: https://static.atlasacademy.io/JP/Servants/504520/504520 | textura: https://static.atlasacademy.io/JP/Servants/504520/textures/504520.png"
+                           ],
+    "berserkerBattleModels":  [
+                                  "704700 (asc 0) -\u003e bundle: https://static.atlasacademy.io/JP/Servants/704700/704700 | textura: https://static.atlasacademy.io/JP/Servants/704700/textures/704700.png | manifest: https://static.atlasacademy.io/JP/Servants/704700/manifest.json",
+                                  "704710 (asc 1-2) -\u003e bundle: https://static.atlasacademy.io/JP/Servants/704710/704710 | textura: https://static.atlasacademy.io/JP/Servants/704710/textures/704710.png",
+                                  "704720 (asc 3-4) -\u003e bundle: https://static.atlasacademy.io/JP/Servants/704720/704720 | textura: https://static.atlasacademy.io/JP/Servants/704720/textures/704720.png"
+                              ],
+    "faceIconSources":  [
+                            "https://static.atlasacademy.io/JP/Faces/f_5045000.png",
+                            "https://static.atlasacademy.io/JP/Faces/f_5045001.png",
+                            "https://static.atlasacademy.io/JP/Faces/f_5045002.png",
+                            "https://static.atlasacademy.io/JP/Faces/f_5045003.png",
+                            "https://static.atlasacademy.io/JP/Faces/f_7047000.png",
+                            "https://static.atlasacademy.io/JP/Faces/f_7047001.png",
+                            "https://static.atlasacademy.io/JP/Faces/f_7047002.png",
+                            "https://static.atlasacademy.io/JP/Faces/f_7047003.png"
+                        ],
+    "skillIconIds":  [
+                         "skill_00300",
+                         "skill_00601",
+                         "skill_00305",
+                         "skill_00303"
+                     ],
+    "notes":  "CORRECCION IMPORTANTE: Artoria Caster (Berserker) es collectionNo 386, NO 371 (371 es Tezcatlipoca, assassin). Verificado contra https://api.atlasacademy.io/export/JP/basic_servant_lang_en.json. (1) Artoria Caster: collectionNo 284, id 504500, \u0027Altria Caster\u0027, caster 5*. (2) Artoria Caster (Berserker): collectionNo 386, id 704700, \u0027Altria Caster\u0027, berserker 5* (verano 2023). NINGUNO de los dos tiene costumes (profile.costume vacio en ambos). charaGraphEx/extraGraph: vacio en ambos; los charaGraphs son los 4 estandar a@1/a@2/b@1/b@2 — todos verificados HTTP 200 via HEAD. Faces: 4 por servant (f_\u003cid\u003e0..3), todos 200. MODELOS DE BATALLA: el patron https://static.atlasacademy.io/dl/lateststory/JP/Servants.\u003cid\u003e.unity3d da 404 (probado con .unity3d, .unity3d.gz, dl/latest) — Atlas Academy solo expone los bundles EXTRAIDOS en https://static.atlasacademy.io/JP/Servants/\u003ccharaId\u003e/ con manifest.json que lista \u0027\u003ccharaId\u003e\u0027 (type \u0027Modified Unity3D\u0027) + \u0027textures/\u003ccharaId\u003e.png\u0027 (Texture2D, el atlas de partes que consume el pipeline del repo, ver docs/WORKFLOW-FGO.md). Mapeo spriteModel por ascension (campo extraAssets.spriteModel del JSON): asc 0 -\u003e \u003cid\u003e00 base (504500/704700), asc 1-2 -\u003e \u003cid\u003e10 (504510/704710), asc 3-4 -\u003e \u003cid\u003e20 (504520/704720). Los 6 bundles + 6 texturas + manifests verificados 200. SKILLS (campo \u0027icon\u0027 de cada skill en el JSON nice): Caster 504500: S1 \u0027Charisma of Hope B\u0027 (id 761450) skill_00300, S2 \u0027Protection of the Lake A\u0027 (id 762550) skill_00601, S3 \u0027Sword of Selection EX\u0027 (id 763650) skill_00305. Berserker 704700: S1 \\\"Spring\u0027s Pulse EX\\\" (id 2248650) skill_00303, S2 \u0027Summer Faerie B\u0027 (id 2249450) skill_00601, S3 \u0027Sacred Sword Manipulation A\u0027 (id 2250550) skill_00305. Los 4 iconos unicos verificados 200 en https://static.atlasacademy.io/JP/SkillIcons/skill_XXXXX.png. Extras verificados 200: charaFigures merged (5045000-2, 7047000-2 en /JP/CharaFigure/\u003cfigId\u003e/\u003cfigId\u003e_merged.png), narrowFigures (504500@0..2 + 504500_2@0, idem 704700), y card art NP (/JP/Servants/Commands/\u003cid\u003e/card_servant_np.png). JSONs completos descargados en C:\\Users\\YX14n\\AppData\\Local\\Temp\\aa\\s284.json y s386.json. Nota: el repo ya tiene assets/reference/castoria_caster_nice_servant.json con los datos del Caster."
+}

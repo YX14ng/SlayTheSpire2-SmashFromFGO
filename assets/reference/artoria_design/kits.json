@@ -1,0 +1,91 @@
+[
+    {
+        "servantName":  "Artoria Caster (Castoria) — アルトリア・キャスター — 5★ Caster, collectionNo 284 (NA: \"Altria Caster\"). Stats lvl 90: HP 14.406 / ATK 10.546. Deck: Q-A-A-A-B. CV: Ayako Kawasumi. Ilustrador: Takashi Takeuchi.",
+        "classAndRole":  "Caster 5★ — el soporte Arts definitivo del juego: doble batería de NP (30% grupal + 20% individual), buffs de ATK/Arts/NP-gain para el equipo, e invulnerabilidad selectiva más Anti-Purge Defense party-wide vía NP; ella misma casi no pega (NP de soporte sin daño).",
+        "skills":  [
+                       {
+                           "name_en":  "Charisma of Hope B",
+                           "name_jp":  "希望のカリスマ B (Kibō no Charisma)",
+                           "effects":  "A todos los aliados: ATK +20% (3 turnos) y carga de NP +30% (instantáneo). Escalado lvl 1→10: ATK 10%→20%, carga NP 20%→30%. Verificado en Atlas Academy (gainNp 3000 = 30%) y Gamepress.",
+                           "cooldown":  6
+                       },
+                       {
+                           "name_en":  "Protection of the Lake A",
+                           "name_jp":  "湖の加護 A (Mizūmi no Kago)",
+                           "effects":  "A UN aliado: carga de NP +20% (instantáneo). A todos los aliados: NP Gain (generación de NP por carta/golpe) +30% (3 turnos). Escalado lvl 1→10: carga 10%→20%, NP gain 20%→30%. Nota clave: doble Castoria = 30+30+20+20 = 100% de carga a cualquier DPS.",
+                           "cooldown":  5
+                       },
+                       {
+                           "name_en":  "Sword of Selection EX",
+                           "name_jp":  "選定の剣 EX (Sentei no Ken)",
+                           "effects":  "A UN aliado: efectividad de cartas Arts +50% (3 turnos), Special Attack contra enemigos con trait [Threat to Humanity / 人類の脅威] +50% (3 turnos), e Invencibilidad (1 turno). Escalado lvl 1→10: Arts 30%→50%, Special Attack 30%→50%; la invencibilidad es fija.",
+                           "cooldown":  6
+                       }
+                   ],
+        "noblePhantasm":  {
+                              "name":  "Around Caliburn — 「きみをいだく希望の星」 (\"La Estrella de Esperanza que te Abraza\")",
+                              "reading":  "Kimi o Idaku Kibō no Hoshi (Around Caliburn / アラウンド・カリバーン)",
+                              "cardType":  "Arts (NP de soporte, NO hace daño), Rank A, Anti-Army",
+                              "effects":  "A todos los aliados: (1) ATK up por 3 turnos, escala con nivel de NP: 30%/40%/45%/47.5%/50% (NP1→NP5); (2) remueve todos los debuffs; (3) aplica Anti-Purge Defense (対粛正防御) por 3 turnos: reduce a 0 el daño de ataques recibidos e IGNORA \"Ignore Invincible\" — la única defensa del juego que no puede ser perforada.",
+                              "overcharge":  "El Overcharge escala la cantidad de usos del Anti-Purge Defense: 1/2/3/4/5 hits anulados según OC 100%/200%/300%/400%/500% (verificado en Atlas Academy: Count 1→5)."
+                          },
+        "passives":  [
+                         "Magic Resistance A (対魔力 A): resistencia a debuffs +20%",
+                         "Territory Creation EX (陣地作成 EX): efectividad de cartas Arts propias +12%",
+                         "Unique Magecraft B (固有魔術 B): daño crítico de cartas Arts propias +10% — pasiva única de Castoria, no estándar de la clase. NOTA: solo tiene estas 3; una mención de \u0027Fae Eyes\u0027 como pasiva en un resumen de Gamepress resultó falsa (la API JP de Atlas confirma 3 pasivas)."
+                     ],
+        "appendSkills":  [
+                             "Append 1 — Extra Attack Boost (追撃技巧向上): efectividad de la carta Extra +30%→50% (lvl 1→10)",
+                             "Append 2 — Load Magical Energy (魔力装填): empieza la batalla con NP cargado +10%→20% (lvl 1→10)",
+                             "Append 3 — Anti-Saber ATK Up (対セイバー攻撃適性): ATK contra clase Saber +20%→30% (lvl 1→10)",
+                             "Append 4 — Special Attack Finesse Improvement (特撃技巧向上): daño crítico propio +20%→30% (lvl 1→10, sin condición de trait según Atlas)",
+                             "Append 5 — Skill Reloading (スキル再装填): tras usar una skill, avanza 1 turno su cooldown (1 vez; 2 veces a Lv6-9, 3 veces a Lv10; máx. una vez por skill)"
+                         ],
+        "loreIdentity":  "Es la \"Niña de la Profecía\" (予言の子) de Lostbelt 6: Avalon le Fae — una Artoria criada entre hadas en la Britania feérica, destinada a salvar ese mundo, que recorre su peregrinaje guiada por el Bastón de Selección (el bastón de Merlín, que le habla con su voz). En realidad es un \"hada especial\" enviada desde Avalon (el Mar Interior del Planeta) como dispositivo para forjar la Espada Sagrada contra las amenazas al planeta. Por fuera se muestra alegre y confiable para estar a la altura de las expectativas; por dentro es tímida, pesimista y llorona, y sus Ojos Feéricos le hacen percibir las mentiras y la malicia del mundo como una tormenta aterradora — pero persevera aferrada a \"una pequeña estrella azul que brilla más allá de la tormenta\", que es exactamente lo que canaliza su NP Around Caliburn: convertirse ella misma en la estrella de esperanza que protege a sus aliados. Al completar su viaje trasciende como Artoria Avalon (A.A.), la guardiana que se consagró para volverse la Espada Sagrada misma.",
+        "ascensionLooks":  "Ascensión 1: la viajera — maga andante de vestido blanco y azul con gran capa/capucha, lazos azules en el pelo rubio trenzado, cargando el enorme Bastón de Selección de madera (el bastón robado a Merlín; el concepto de diseño original de Takeuchi era \"una Artoria que le roba el bastón a Merlín y viaja de incógnito disfrazada de maga\"). Ascensión 2: el diseño original del personaje — mismo look de Niña de la Profecía sin la capa de viaje, mostrando el vestido de maga azul-blanco con detalles dorados, todavía con el bastón. Según el lore, las etapas 1-2 son una \"emulación\" de la chica que viajó como Niña de la Profecía (recuerdos de su primavera). Ascensión 3 y arte final: Artoria Avalon — su figura verdadera y madura como \"Guardiana de la Espada Sagrada\": atuendo regio blanco y dorado mucho más ornamentado, porte de realeza/santidad, envuelta en la luz radiante de Avalon; representa a la que se consagró para convertirse en la Espada Sagrada misma. El salto visual fuerte es entre A2 (maga viajera humilde) y A3 (entidad sagrada regia)."
+    },
+    {
+        "servantName":  "Artoria Caster (Berserker) — \"Summer Castoria\" (NA oficial: Altria Caster, 5★ Berserker, collectionNo 386; debut JP 9-10/08/2023 en \"Servant Summer Festival! 2023\", NA verano 2025; CV Ayako Kawasumi, ilustrador Takashi Takeuchi)",
+        "classAndRole":  "Berserker 5★ limitada de verano: boss-slayer crítica de Artes a objetivo único, autosuficiente — batería propia de 70% (50+20), Overcharge +2, crit damage/absorción masivos y supervivencia atípica para Berserker (Invencible propio + muro defensivo de NP para todo el equipo). Deck QAABB, atributo Star, Neutral Good, ATK 12.134 / HP 12.696 a nv. 90, NP gain 0,40%/hit.",
+        "skills":  [
+                       {
+                           "name_en":  "Spring\u0027s Pulse EX",
+                           "name_jp":  "春の鼓動 EX (Haru no Kodō)",
+                           "effects":  "A sí misma: +50% daño crítico (3 turnos); +5000% absorción de estrellas críticas (3 turnos); +30% probabilidad de crítico de sus cartas (3 turnos, valor fijo en todos los niveles, omitido en la descripción in-game pero presente en el datamine de Atlas Academy); carga 50% de NP. (Nivel 1: 30% crit dmg, 3000% absorción, 30% NP.)",
+                           "cooldown":  6
+                       },
+                       {
+                           "name_en":  "Summer Faerie B",
+                           "name_jp":  "夏の妖精 B (Natsu no Yōsei)",
+                           "effects":  "A un aliado (puede ser ella misma): carga 20% de NP y +2 niveles de Overcharge al usar su NP (1 vez, 3 turnos). A todo el equipo: +20% NP Gain (3 turnos). (Nivel 1: 10% NP, 10% NP Gain; el OC+2 es fijo.)",
+                           "cooldown":  6
+                       },
+                       {
+                           "name_en":  "Sacred Sword Manipulation A",
+                           "name_jp":  "聖剣操縦 A (Seiken Sōjū)",
+                           "effects":  "A sí misma: +50% efectividad de cartas Arts (3 turnos); gana 10 estrellas críticas por turno (3 turnos, fijo); +10% probabilidad de crítico (3 turnos, fijo, oculto en la descripción); Invencible (1 turno). (Nivel 1: 30% Arts.)",
+                           "cooldown":  6
+                       }
+                   ],
+        "noblePhantasm":  {
+                              "name":  "Hope Will Camelot — 宿願接ぐ希望の剣 (Sword of Hope That Joins the Long-Cherished Desire / La Espada de Esperanza que Hereda el Anhelo)",
+                              "reading":  "Hōpuwiru Kyamerotto (ホープウィル・キャメロット)",
+                              "cardType":  "Arts, rango A+, Anti-God, objetivo único, 6 hits",
+                              "effects":  "1) A TODO el equipo: \u0027Anti-Enforcement DEF\u0027 — reduce a 0 el daño de ataque recibido e IGNORA Ignore Invincible (1 vez, 1 turno; se aplica antes del daño). 2) Daño masivo a un enemigo: 900% / 1200% / 1350% / 1425% / 1500% según nivel de NP, con daño supereffectivo del 150% contra enemigos con el trait [Threat to Humanity]. 3) Al enemigo: -20% probabilidad de crítico y -20% generación de estrellas (3 turnos). Lore: es la combinación de Excalibur y Rhongomyniad usada para purgar la maldición en el Lostbelt de Bretaña, comprimida a un solo objetivo como campo acotado sin daño colateral.",
+                              "overcharge":  "Se aplica a sí misma ANTES del daño: Special ATK contra [Chaotic] y Special ATK contra [Divine] (1 turno cada uno), ambos escalando 50% / 62,5% / 75% / 87,5% / 100% con OC 100→500%. Sinergia clave: su propia skill 2 le da OC+2, llevando los Special ATK a 75% cada uno."
+                          },
+        "passives":  [
+                         "Madness Enhancement A: +10% efectividad de cartas Buster",
+                         "Magic Resistance B: +17,5% resistencia a debuffs",
+                         "Item Construction E: +2% probabilidad de éxito de debuffs",
+                         "Fae Eyes ? (妖精眼, rango \u0027?\u0027): -20% probabilidad de recibir críticos enemigos y los enemigos generan -20% estrellas al atacarla"
+                     ],
+        "appendSkills":  [
+                             "Append 1 — Extra Attack Boost: +30%→50% efectividad de Extra Attack",
+                             "Append 2 — Load Magical Energy: empieza la batalla con 10%→20% de NP",
+                             "Append 3 — Anti-Pretender (Crit. Res. Up): +20%→30% resistencia a críticos contra clase Pretender"
+                         ],
+        "loreIdentity":  "Es la versión de verano de Artoria Caster (Castoria, la heroína de Lostbelt 6: Avalon le Fae), que cambió su Origen Espiritual para resolver un incidente en la Singularidad tropical \"Hawaltria\" creada por BB, transformando su magecraft en canción y danza. Su perfil oficial bromea con que es Berserker \"obviamente por su rivalidad con Morgan\" (cuya versión de verano fue Saber): pese a ser pacifista, su entusiasmo desbordante por su primer verano la volvió imparable y le dio Madness Enhancement A — su naturaleza temeraria y marimacho ya no puede esconderse (\"¡Intentémoslo! ¡Si fallo, que así sea!\"). En su tercera ascensión es AA (Artoria Avalon), la Guardiana de la Espada Sagrada que \"murió en la playa (verano)\": abandonó sus deberes como encarnación de la razón solo \"porque es verano\", organizó en secreto el ServantFes, y esta vez Castoria y AA operan como individuos SEPARADOS — cuando Castoria descubre la verdad se enfurece. En combate controla familiares extraídos de la esencia de la espada sagrada (de ahí \"Sacred Sword Manipulation\"), y al usar su NP deja de ser la chica juguetona de verano para portarse como pura Niña de la Profecía y Guardiana de la Espada Sagrada.",
+        "ascensionLooks":  "Asc. 1 — \"detective de verano\" en Hawaltria: gorra blanca tipo marinera, chaqueta blanca corta abierta sobre bikini negro, shorts negros con un legging negro asimétrico en una sola pierna, sandalias; la acompañan su búho familiar y un flotador de tiburón blanco en una playa tropical. Asc. 2 — outfit temático de Alicia en el País de las Maravillas (forzada a cambiarse \"por... razones\", según su perfil): vestido blanco y celeste con delantal, diadema de orejas de conejo blancas, medias a rayas azul-blanco, posando en un jardín con grandes espadas sagradas doradas clavadas en el suelo a sus costados. Asc. 3 — se convierte en AA, la Guardiana de la Espada Sagrada: vestiduras blancas y doradas de diosa con cintas púrpura, cabello recogido con ornamentos dorados tipo corona, halo de luz dorada radiante de fondo; porte solemne y sonrisa altiva (\"Es verano y es desastre tras desastre, así que no tuve más remedio que venir\")."
+    }
+]
