@@ -1,5 +1,9 @@
 # MegaDot editor (1.4+ GB, descargar de https://megadot.megacrit.com/)
 /MegaDot/
+# MegaDot Linux: solo se versiona el .zip (<100MB, limite de GitHub); el binario crudo
+# y los debugsymbols (1.1GB) no. Descomprimir el zip en la otra PC (+ chmod +x).
+/MegaDotLinux/MegaDot_v4.5.1-stable_mono_linux.x86_64
+/MegaDotLinux/*.debugsymbols
 
 # Build outputs
 **/bin/
@@ -13,9 +17,22 @@
 
 # Logs
 *.log
+publish_log.txt
 
 # Herramientas de extraccion y bundles pesados
-/tools/
+# (los scripts .ps1 y el proyecto de render SI se versionan: son el pipeline reutilizable)
+/tools/AssetStudioCLI/
+/tools/AssetStudioGUI/
+/tools/godotpcktool.exe
+/tools/render_project/*.fbx
+/tools/render_project/*.png
+/tools/render_project/frames/
+/tools/render_project/crop_union.txt
 assets/reference/bundles/
 assets/reference/extracted/
+assets/reference/ce/art/
+assets/reference/ce/icons/
+assets/reference/ce/*.json
+assets/reference/fanart/*
+!assets/reference/fanart/CREDITS.txt
 /decompiled/

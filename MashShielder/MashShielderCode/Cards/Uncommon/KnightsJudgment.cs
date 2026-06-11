@@ -14,7 +14,7 @@ public sealed class KnightsJudgment() : MashShielderCard(1, CardType.Attack, Car
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(9m, ValueProp.Move),
-        new PowerVar<ProvokePower>(5m)
+        new PowerVar<ProvokePower>("Provoke", 5m)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ProvokePower>()];

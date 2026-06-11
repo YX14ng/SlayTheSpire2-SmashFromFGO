@@ -13,7 +13,7 @@ public sealed class MobileWall() : MashShielderCard(1, CardType.Skill, CardRarit
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(8m, ValueProp.Move),
-        new PowerVar<MobileWallPower>(8m)
+        new PowerVar<MobileWallPower>("MobileWall", 8m)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

@@ -9,7 +9,7 @@ namespace MashShielder.MashShielderCode.Cards.Rare;
 /// <summary>Corazón del Homúnculo — Power: changing form draws cards and charges the NP.</summary>
 public sealed class HomunculusHeart() : MashShielderCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<HomunculusHeartPower>(1m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<HomunculusHeartPower>("HomunculusHeart", 1m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

@@ -1,0 +1,215 @@
+extends Node3D
+# Renders FGO servant FBX animations to PNG frame sequences for the StS2 mod.
+# Two-pass flow to avoid baked-in clipping:
+#   PASS = "measure": renders selected frames, accumulates the union content rect
+#                     across forms into crop_union.txt (no PNGs written).
+#   PASS = "save":    renders selected frames cropped to the merged union rect.
+# Run once per form in measure mode, then once per form in save mode.
+
+const PASS := "save"   # "measure" | "save"
+const FPS := 30
+const OUT_DIR := "res://frames"
+const CROP_FILE := "res://crop_union.txt"
+# 1024px canvas at double the old camera size = same pixel density, 2x margin.
+const CAM_SIZE := 43.8
+
+# Selected frame windows per model: anim -> [from, to, step] (indices at 30fps).
+const SELECT := {
+	"800100": { "idle": [0, 155, 2], "attack": [27, 53, 1], "cast": [0, 59, 2], "hurt": [0, 16, 1] },
+	"800150": { "idle": [0, 154, 2], "attack": [0, 20, 1], "cast": [0, 79, 2], "hurt": [0, 16, 1] },
+	"800200": { "idle": [0, 156, 2], "attack": [20, 66, 1], "cast": [0, 64, 2], "hurt": [0, 16, 1] },
+}
+const CLIP_FOR := { "idle": "wait", "attack": "attack_b", "cast": "spell", "hurt": "damage_01" }
+
+const FACE_POSE := {
+	"joint_open_eye": 1.0, "joint_close_eye": 0.0,
+	"joint_open_mouth": 0.0, "joint_close_mouth": 1.0,
+	"joint_eyebrow": 1.0, "joint_eyebrow_attack": 0.0,
+}
+
+var _model: Node3D
+var _player: AnimationPlayer
+var _skeleton: Skeleton3D
+var _model_id := ""
+
+func _ready() -> void:
+	get_viewport().transparent_bg = true
+
+	for f in DirAccess.get_files_at("res://"):
+		if f.ends_with(".png") and not f.begins_with("debug"):
+			_model_id = f.get_basename()
+			break
+	print("MODEL: ", _model_id, "  PASS: ", PASS)
+
+	var packed: PackedScene = load("res://chr.fbx")
+	_model = packed.instantiate()
+	add_child(_model)
+
+	_player = _model.find_child("AnimationPlayer", true, false)
+	var head_raw := _head_position()
+	var s := 15.0 / head_raw.y if head_raw != Vector3.INF and head_raw.y > 0.0001 else 1000.0
+	_model.scale = Vector3.ONE * s
+	print("SCALE: ", s)
+
+	_setup_meshes()
+	_setup_camera()
+
+	if PASS == "measure":
+		await _measure()
+	else:
+		await _save_cropped()
+	print("=== DONE ===")
+	get_tree().quit(0)
+
+func _selected_frames(anim: String) -> Array:
+	var w: Array = SELECT[_model_id][anim]
+	var frames := []
+	var i: int = w[0]
+	while i <= w[1]:
+		frames.append(i)
+		i += w[2]
+	return frames
+
+func _pose_frame(clip: String, frame_idx: int) -> void:
+	_player.seek(float(frame_idx) / FPS, true)
+	_apply_face_pose()
+
+func _capture() -> Image:
+	return get_viewport().get_texture().get_image()
+
+func _measure() -> void:
+	var union := Rect2i()
+	var first := true
+	for anim in SELECT[_model_id].keys():
+		var clip := _find_animation(CLIP_FOR[anim])
+		_player.play(clip)
+		_player.pause()
+		var anchor_z := INF
+		for i in _selected_frames(anim):
+			anchor_z = await _pose_anchored(clip, i, anchor_z)
+			var r := _capture().get_used_rect()
+			if r.size.x == 0:
+				continue
+			union = r if first else union.merge(r)
+			first = false
+	print("UNION: ", union.position.x, " ", union.position.y, " ", union.size.x, " ", union.size.y)
+	var fa := FileAccess.open(CROP_FILE, FileAccess.READ_WRITE if FileAccess.file_exists(CROP_FILE) else FileAccess.WRITE)
+	fa.seek_end()
+	fa.store_line("%d %d %d %d" % [union.position.x, union.position.y, union.size.x, union.size.y])
+	fa.close()
+
+func _merged_crop() -> Rect2i:
+	var union := Rect2i()
+	var first := true
+	var fa := FileAccess.open(CROP_FILE, FileAccess.READ)
+	while not fa.eof_reached():
+		var parts := fa.get_line().split(" ", false)
+		if parts.size() == 4:
+			var r := Rect2i(int(parts[0]), int(parts[1]), int(parts[2]), int(parts[3]))
+			union = r if first else union.merge(r)
+			first = false
+	fa.close()
+	# Margen de seguridad, dentro del lienzo.
+	union = union.grow(16).intersection(Rect2i(0, 0, 2048, 2048))
+	return union
+
+func _save_cropped() -> void:
+	var crop := _merged_crop()
+	var ground_row_full := (CAM_SIZE * 0.32 + CAM_SIZE * 0.5) / CAM_SIZE * 2048.0
+	print("CROP: ", crop.position.x, " ", crop.position.y, " ", crop.size.x, " ", crop.size.y)
+	print("GROUND_ROW_IN_CROP: ", ground_row_full - crop.position.y)
+	print("CAM_CENTER_COL_IN_CROP: ", 1024.0 - crop.position.x)
+	for anim in SELECT[_model_id].keys():
+		var clip := _find_animation(CLIP_FOR[anim])
+		var dir: String = OUT_DIR + "/" + anim
+		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
+		_player.play(clip)
+		_player.pause()
+		var anchor_z := INF
+		var n := 0
+		for i in _selected_frames(anim):
+			anchor_z = await _pose_anchored(clip, i, anchor_z)
+			var img := _capture().get_region(crop)
+			img.save_webp(ProjectSettings.globalize_path("%s/%03d.webp" % [dir, n]), true, 0.9)
+			n += 1
+		print("  ", anim, ": ", n, " frames")
+
+func _pose_anchored(clip: String, frame_idx: int, anchor_z: float) -> float:
+	_model.position = Vector3.ZERO
+	_pose_frame(clip, frame_idx)
+	var head := _head_position()
+	var z := head.z if head != Vector3.INF else 0.0
+	if anchor_z == INF:
+		anchor_z = z
+	_model.position = Vector3(0, 0, anchor_z - z)
+	await RenderingServer.frame_post_draw
+	return anchor_z
+
+func _setup_meshes() -> void:
+	var atlas: Texture2D = load("res://" + _model_id + ".png")
+	var best_body := ""
+	for child in _model.find_children("*", "MeshInstance3D", true, false):
+		var nm := String(child.name)
+		if nm.begins_with("body") and nm > best_body:
+			best_body = nm
+	for child in _model.find_children("*", "MeshInstance3D", true, false):
+		var mi := child as MeshInstance3D
+		var nm := String(mi.name)
+		var show := not nm.begins_with("body") or nm == best_body
+		mi.visible = show
+		if not show:
+			continue
+		var mat := StandardMaterial3D.new()
+		mat.albedo_texture = atlas
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+		mat.alpha_scissor_threshold = 0.4
+		mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+		for su in range(mi.get_surface_override_material_count()):
+			mi.set_surface_override_material(su, mat)
+
+func _setup_camera() -> void:
+	var cam := Camera3D.new()
+	cam.projection = Camera3D.PROJECTION_ORTHOGONAL
+	cam.size = CAM_SIZE
+	var head := _head_position()
+	var center := Vector3(0, CAM_SIZE * 0.32, head.z if head != Vector3.INF else 0.0)
+	add_child(cam)
+	cam.look_at_from_position(center + Vector3(100.0, 0, 0), center, Vector3.UP)
+	cam.current = true
+
+	var light := DirectionalLight3D.new()
+	light.rotation_degrees = Vector3(-30, 20, 0)
+	light.light_energy = 1.2
+	add_child(light)
+	var env := WorldEnvironment.new()
+	var e := Environment.new()
+	e.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	e.ambient_light_color = Color(1, 1, 1)
+	e.ambient_light_energy = 1.0
+	env.environment = e
+	add_child(env)
+
+func _head_position() -> Vector3:
+	if _skeleton == null:
+		_skeleton = _model.find_child("Skeleton3D", true, false)
+		if _skeleton == null:
+			return Vector3.INF
+	var idx := _skeleton.find_bone("joint_head")
+	if idx < 0:
+		return Vector3.INF
+	return (_skeleton.global_transform * _skeleton.get_bone_global_pose(idx)).origin
+
+func _find_animation(clip: String) -> String:
+	for anim_name in _player.get_animation_list():
+		if anim_name == clip or anim_name.ends_with("|" + clip) or anim_name.ends_with("/" + clip):
+			return anim_name
+	return clip
+
+func _apply_face_pose() -> void:
+	if _skeleton == null:
+		return
+	for joint in FACE_POSE.keys():
+		var idx := _skeleton.find_bone(joint)
+		if idx >= 0:
+			_skeleton.set_bone_pose_scale(idx, Vector3.ONE * FACE_POSE[joint])

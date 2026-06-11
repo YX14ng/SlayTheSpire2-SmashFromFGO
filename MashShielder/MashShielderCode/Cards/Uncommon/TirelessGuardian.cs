@@ -9,7 +9,7 @@ namespace MashShielder.MashShielderCode.Cards.Uncommon;
 /// <summary>Guardiana Incansable — Power: permanent Intercept.</summary>
 public sealed class TirelessGuardian() : MashShielderCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<InterceptPower>(4m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<InterceptPower>("Intercept", 4m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

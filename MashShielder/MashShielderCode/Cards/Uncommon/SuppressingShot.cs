@@ -14,7 +14,7 @@ public sealed class SuppressingShot() : MashShielderCard(1, CardType.Attack, Car
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(9m, ValueProp.Move),
-        new PowerVar<WeakPower>(2m)
+        new PowerVar<WeakPower>("Weak", 2m)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<WeakPower>()];
@@ -23,7 +23,7 @@ public sealed class SuppressingShot() : MashShielderCard(1, CardType.Attack, Car
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_pierce")
+            .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
         await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
     }

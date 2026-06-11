@@ -1,0 +1,16 @@
+{
+  "FGOCORE-GOLDEN_APPLE.title": "金苹果",
+  "FGOCORE-GOLDEN_APPLE.description": "#获得!Energy!点能量。抽!C!张牌。肝就完事了。",
+  "FGOCORE-MAPO_TOFU.title": "激辛麻婆豆腐",
+  "FGOCORE-MAPO_TOFU.description": "#回复!H!点生命。失去!HpLoss!点生命。美味。痛苦。美味。",
+  "FGOCORE-INSUFFICIENT_QP.title": "QP不足！",
+  "FGOCORE-INSUFFICIENT_QP.description": "#获得!Gold!金币。不够的。永远都不够。",
+  "FGOCORE-TEN_PULL_SUMMON.title": "十连召唤",
+  "FGOCORE-TEN_PULL_SUMMON.description": "#将!C!张你角色卡池的随机卡牌加入手牌，本回合费用为0。愿你成为欧皇。",
+  "FGOCORE-BLACK_KEYS.title": "黑键",
+  "FGOCORE-BLACK_KEYS.description": "#造成!D!点伤害。将一张本牌的复制加入你的弃牌堆。法衣里永远还有更多。",
+  "FGOCORE-EXP_EMBER.title": "种火",
+  "FGOCORE-EXP_EMBER.description": "#本场战斗中升级你手牌中的!C!张随机卡牌。万物皆狗粮。",
+  "FGOCORE-PALINGENESIS.title": "圣杯转临",
+  "FGOCORE-PALINGENESIS.description": "#你的生命上限提高!H!点并回复!H!点生命。圣杯接受了你的供奉。"
+}

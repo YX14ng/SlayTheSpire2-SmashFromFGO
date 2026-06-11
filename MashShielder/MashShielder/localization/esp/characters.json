@@ -1,0 +1,16 @@
+{
+  "MASHSHIELDER-MASH_SHIELDER.title": "Mash Kyrielight",
+  "MASHSHIELDER-MASH_SHIELDER.titleObject": "la Shielder",
+  "MASHSHIELDER-MASH_SHIELDER.description": "Una Demi-Servant fusionada con el Espíritu Heroico Galahad. Alza el gran escudo Lord Camelot, acumulando Bloqueo que nunca se derrumba y desatándolo como devastadores Noble Phantasms.",
+  "MASHSHIELDER-MASH_SHIELDER.pronounObject": "ella",
+  "MASHSHIELDER-MASH_SHIELDER.possessiveAdjective": "su",
+  "MASHSHIELDER-MASH_SHIELDER.pronounPossessive": "suya",
+  "MASHSHIELDER-MASH_SHIELDER.pronounSubject": "ella",
+  "MASHSHIELDER-MASH_SHIELDER.goldMonologue": "Chaldea nunca me pagó un sueldo... Senpai, ¿esto es lo que llaman presupuesto?",
+  "MASHSHIELDER-MASH_SHIELDER.eventDeathPrevention": "Una criatura blanca y familiar chilla en algún lugar lejano... Fou gasta su milagro una vez más, y Mash abre los ojos.",
+  "MASHSHIELDER-MASH_SHIELDER.aromaPrinciple": "Huele como la cafetería de Chaldea... como sándwiches. Mash se siente en paz.",
+  "MASHSHIELDER-MASH_SHIELDER.cardsModifierTitle": "Arsenal de la Shielder",
+  "MASHSHIELDER-MASH_SHIELDER.cardsModifierDescription": "Juega con el pool de cartas de Mash Kyrielight.",
+  "MASHSHIELDER-MASH_SHIELDER.banter.alive.endTurnPing": "¡Senpai, sus órdenes!",
+  "MASHSHIELDER-MASH_SHIELDER.banter.dead.endTurnPing": "Lo siento, Senpai... no pude protegerte..."
+}

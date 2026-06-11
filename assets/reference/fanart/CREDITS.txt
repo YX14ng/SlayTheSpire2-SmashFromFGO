@@ -1,0 +1,10 @@
+Fondo de seleccion de personaje (select_bg_fanart.png):
+  Fanart de Mash Kyrielight por "rororo"
+  Danbooru post 6538496 (rating: general; la solo-Mash con mas score/favs al 2026-06)
+  https://danbooru.donmai.us/posts/6538496
+  Recorte 16:9 (banda y=420..1860 de 2561x4093) reescalado a 1920x1080.
+  Uso en mod personal, sin redistribucion comercial. Si el mod se publica,
+  acreditar al artista o pedir permiso.
+
+Otros candidatos descargados (no usados): 4995380, 9232632, 8456723,
+9503709 (takeuchi takashi), 8158469, 3518995, 4993949, 4883850.

@@ -7,8 +7,9 @@ namespace MashShielder.MashShielderCode.Powers;
 /// <summary>
 /// Corazón del Homúnculo — whenever Mash changes form: draw cards and gain NP Charge.
 /// Stacks scale the effect (1 stack: draw 2, NP +10; 2 stacks: draw 3, NP +15).
+/// Notified by FGOCore's FormSwitch via IFormChangeListener.
 /// </summary>
-public sealed class HomunculusHeartPower : MashShielderPower
+public sealed class HomunculusHeartPower : MashShielderPower, IFormChangeListener
 {
     public override PowerType Type => PowerType.Buff;
 

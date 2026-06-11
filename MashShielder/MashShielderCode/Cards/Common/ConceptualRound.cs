@@ -20,7 +20,7 @@ public sealed class ConceptualRound() : MashShielderCard(1, CardType.Attack, Car
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        VfxCmd.PlayOnCreatureCenter(cardPlay.Target, "vfx/vfx_attack_pierce");
+        VfxCmd.PlayOnCreatureCenter(cardPlay.Target, "vfx/vfx_dramatic_stab");
         await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue,
             ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this);
 

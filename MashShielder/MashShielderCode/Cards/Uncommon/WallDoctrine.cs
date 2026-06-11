@@ -10,7 +10,7 @@ namespace MashShielder.MashShielderCode.Cards.Uncommon;
 /// <summary>Doctrina del Muro — Power: the first Block card each turn charges the NP.</summary>
 public sealed class WallDoctrine() : MashShielderCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<WallDoctrinePower>(10m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<WallDoctrinePower>("WallDoctrine", 10m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 

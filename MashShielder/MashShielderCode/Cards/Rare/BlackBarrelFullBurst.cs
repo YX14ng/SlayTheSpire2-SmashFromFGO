@@ -8,8 +8,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MashShielder.MashShielderCode.Cards.Rare;
 
 /// <summary>
-/// BLACK BARREL — Disparo Pleno. NP card (50 charge): huge Black Barrel shot.
-/// Overcharge (cast at exactly 100): strips ALL the target's buffs.
+/// BLACK BARREL — Disparo Pleno. NP card (min 50 charge, consumes ALL): huge Black Barrel shot.
+/// FGO Overcharge: +damage per 10 extra charge; at a full 100 it strips ALL the target's buffs.
 /// </summary>
 public sealed class BlackBarrelFullBurst() : MashShielderCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
@@ -18,7 +18,8 @@ public sealed class BlackBarrelFullBurst() : MashShielderCard(2, CardType.Attack
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(35m, ValueProp.Move | ValueProp.Unblockable),
-        new DynamicVar("ChargeCost", ChargeCost)
+        new DynamicVar("ChargeCost", ChargeCost),
+        new DynamicVar("PerTen", 4)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
@@ -31,11 +32,11 @@ public sealed class BlackBarrelFullBurst() : MashShielderCard(2, CardType.Attack
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var overcharged = NpCharge.IsOvercharged(Owner.Creature);
-        await NpCharge.PayForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
 
-        await BlackBarrel.Hit(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, Owner.Creature, this);
-        if (overcharged && !cardPlay.Target.IsDead)
+        await BlackBarrel.Hit(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue + bonus, Owner.Creature, this);
+        if (tier >= NpChargePower.Max && !cardPlay.Target.IsDead)
         {
             await BlackBarrel.RemoveAllBuffs(cardPlay.Target);
         }
@@ -44,5 +45,6 @@ public sealed class BlackBarrelFullBurst() : MashShielderCard(2, CardType.Attack
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(10m);
+        DynamicVars["PerTen"].UpgradeValueBy(1m);
     }
 }

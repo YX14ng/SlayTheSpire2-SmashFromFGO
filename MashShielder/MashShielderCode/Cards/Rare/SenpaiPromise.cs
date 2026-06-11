@@ -10,7 +10,7 @@ namespace MashShielder.MashShielderCode.Cards.Rare;
 /// <summary>Promesa a Senpai — Power: every hit your wall stops feeds the Noble Phantasm.</summary>
 public sealed class SenpaiPromise() : MashShielderCard(2, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<SenpaiPromisePower>(6m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<SenpaiPromisePower>("SenpaiPromise", 6m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 

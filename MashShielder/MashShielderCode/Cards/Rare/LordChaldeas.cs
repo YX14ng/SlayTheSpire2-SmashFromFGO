@@ -8,19 +8,18 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MashShielder.MashShielderCode.Cards.Rare;
 
 /// <summary>
-/// LORD CHALDEAS — NP card (50 charge): a fortress of Bulwark Block.
-/// Overcharge: even taller.
+/// LORD CHALDEAS — NP card (min 50 charge, consumes ALL): a fortress of Bulwark Block.
+/// FGO Overcharge: +Block per 10 charge consumed beyond the minimum.
 /// </summary>
 public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
     public const int ChargeCost = 50;
-    private const int OverchargeBonus = 12;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(24m, ValueProp.Move),
         new DynamicVar("ChargeCost", ChargeCost),
-        new DynamicVar("OverchargeBonus", OverchargeBonus)
+        new DynamicVar("PerTen", 3)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -32,18 +31,20 @@ public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var overcharged = NpCharge.IsOvercharged(Owner.Creature);
-        await NpCharge.PayForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
 
-        await BlockRetention.GainBulwarkBlock(this, Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        if (overcharged)
+        await BlockRetention.GainBulwarkBlock(this, Owner.Creature,
+            (BlockVar)DynamicVars.Block, cardPlay);
+        if (bonus > 0)
         {
-            await BlockRetention.GainBulwarkBlock(this, Owner.Creature, DynamicVars["OverchargeBonus"].IntValue);
+            await BlockRetention.GainBulwarkBlock(this, Owner.Creature, bonus);
         }
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(6m);
+        DynamicVars["PerTen"].UpgradeValueBy(1m);
     }
 }

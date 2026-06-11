@@ -6,8 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A custom character mod for **Slay the Spire 2** (Early Access, Godot 4 / C#). The character is **Mash Kyrielight** (the Shielder from Fate/Grand Order — "Smash" in the repo name is a pun on her name; no FGO character is literally named Smash). The mod targets the **MAIN branch** of the game (v0.103.x), not the beta branch — BaseLib ≥ 3.1.8 is the main-compatible line.
 
+- [docs/HANDOFF.md](docs/HANDOFF.md) — **pending tasks + cross-machine handoff** (NP cap 300, dupe mechanic, Holy Grail). If you're picking up development on a new machine, read this FIRST.
+- [docs/WORKFLOW-FGO.md](docs/WORKFLOW-FGO.md) — **the playbook**: end-to-end process for building FGO characters (asset pipeline, renderer, art matching, the gotcha table). Read this FIRST for any new character or when touching the pipeline.
+- The repo holds TWO mod projects: `FGOCore/` (shared mechanics library — build/publish first) and `MashShielder/` (the character, depends on FGOCore). On Linux, MegaDot lives at `MegaDotLinux/` in the repo.
 - [docs/MODDING.md](docs/MODDING.md) — toolchain, mod format, BaseLib API, resource links.
 - [docs/DESIGN.md](docs/DESIGN.md) — full character design: mechanics (Carga NP, Baluarte, Formas Shielder/Ortinax/Paladín, Intercepción, Black Barrel), complete card pool, relics, and the 2D model/animation plan.
+- `tools/*.ps1` + `tools/render_project/` — reusable pipeline scripts (render, art, icons, tres generation). `.claude/workflows/match-ce-art.js` — parameterized CE art matching workflow.
 - `assets/reference/` — official art and battle-sprite part atlases downloaded from Atlas Academy (servant 800100, costumes 800150 Ortinax / 800200 Paladin). FGO battle models are Unity 2D puppets, NOT frame spritesheets — animations must be re-rigged in Godot (see DESIGN.md §7).
 
 The user communicates in Spanish — respond in Spanish. Card/mechanic names in the design are Spanish with English localization planned.

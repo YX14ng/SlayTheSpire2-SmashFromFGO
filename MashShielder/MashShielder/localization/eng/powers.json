@@ -64,5 +64,14 @@
   "MASHSHIELDER-FOU_MIRACLE_POWER.smartDescription": "#The first time you would die this combat: survive at this much HP and gain 25 Block.",
   "MASHSHIELDER-ABSOLUTE_WALL_POWER.title": "Absolute Wall",
   "MASHSHIELDER-ABSOLUTE_WALL_POWER.description": "#Until your next turn, your HP cannot be reduced.",
-  "MASHSHIELDER-ABSOLUTE_WALL_POWER.smartDescription": "#Until your next turn, your HP cannot be reduced."
+  "MASHSHIELDER-ABSOLUTE_WALL_POWER.smartDescription": "#Until your next turn, your HP cannot be reduced.",
+  "MASHSHIELDER-COVER_POWER.title": "Cover",
+  "MASHSHIELDER-COVER_POWER.description": "#Until your next turn, damage that pierces your allies' defenses is taken by Mash instead.",
+  "MASHSHIELDER-COVER_POWER.smartDescription": "#Until your next turn, damage that pierces your allies' defenses is taken by Mash instead.",
+  "MASHSHIELDER-CAMELOT_MANIFESTED_POWER.title": "Camelot Manifested",
+  "MASHSHIELDER-CAMELOT_MANIFESTED_POWER.description": "#The Noble Phantasm answered the full gauge: LORD CAMELOT was added to your hand. Spend Charge and refill to 100 to manifest it again.",
+  "MASHSHIELDER-CAMELOT_MANIFESTED_POWER.smartDescription": "#The Noble Phantasm answered the full gauge: LORD CAMELOT was added to your hand. Spend Charge and refill to 100 to manifest it again.",
+  "MASHSHIELDER-BOND_POWER.title": "Bond",
+  "MASHSHIELDER-BOND_POWER.description": "#Mash's Bond level this run. Grants bonuses at the start of each combat (see the Bond Gauge relic).",
+  "MASHSHIELDER-BOND_POWER.smartDescription": "#Mash's Bond level this run. Grants bonuses at the start of each combat (see the Bond Gauge relic)."
 }

@@ -1,0 +1,11 @@
+{
+  "id": "FGOCore",
+  "name": "FGO Core",
+  "author": "Chaldea",
+  "description": "Shared FGO mechanics library: NP gauge with Overcharge, form stances, Bulwark block retention, bond (好感度) system, and colorless FGO meme cards. Required by FGO character mods.",
+  "version": "v0.1.0",
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": ["BaseLib"],
+  "affects_gameplay": true
+}

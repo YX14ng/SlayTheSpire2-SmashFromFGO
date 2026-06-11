@@ -12,7 +12,7 @@ public sealed class DefensiveFormation() : MashShielderCard(1, CardType.Skill, C
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded ? [] : [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DefensiveFormationPower>(99m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DefensiveFormationPower>("DefensiveFormation", 99m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

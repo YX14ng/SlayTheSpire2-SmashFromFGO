@@ -15,7 +15,7 @@ public sealed class ParadoxCylinder() : MashShielderCard(1, CardType.Skill, Card
     [
         new HpLossVar(3m),
         new BlockVar(14m, ValueProp.Move),
-        new PowerVar<ProvokePower>(5m)
+        new PowerVar<ProvokePower>("Provoke", 5m)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ProvokePower>()];

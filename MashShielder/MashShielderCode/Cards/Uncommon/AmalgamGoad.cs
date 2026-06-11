@@ -12,7 +12,7 @@ public sealed class AmalgamGoad() : MashShielderCard(1, CardType.Skill, CardRari
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<ProvokePower>(6m),
+        new PowerVar<ProvokePower>("Provoke", 6m),
         new DynamicVar("NpCharge", 15)
     ];
 

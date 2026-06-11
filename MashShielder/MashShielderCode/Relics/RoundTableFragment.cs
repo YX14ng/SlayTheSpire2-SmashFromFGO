@@ -1,4 +1,3 @@
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -11,7 +10,7 @@ namespace MashShielder.MashShielderCode.Relics;
 /// <summary>
 /// Fragmento de la Mesa Redonda — starter relic: at the end of your turn, retain up to 10 Block.
 /// </summary>
-public sealed class RoundTableFragment : MashShielderRelic
+public sealed class RoundTableFragment : MashShielderRelic, IBlockRetentionSource
 {
     public const int MaxRetainedBlock = 10;
 
@@ -20,6 +19,9 @@ public sealed class RoundTableFragment : MashShielderRelic
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(MaxRetainedBlock, ValueProp.Unpowered)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.Block)];
+
+    public decimal RetentionCap(Creature creature) =>
+        Owner.GetRelic<LordCamelotRestored>() != null ? 0m : MaxRetainedBlock;
 
     public override async Task BeforeCombatStartLate()
     {
@@ -33,7 +35,7 @@ public sealed class RoundTableFragment : MashShielderRelic
         if (this != preventer || creature != Owner.Creature) return;
 
         if (creature.Block == 0) return;
-        await Powers.BlockRetention.Enforce(creature);
+        await BlockRetention.Enforce(creature);
         Flash();
     }
 }

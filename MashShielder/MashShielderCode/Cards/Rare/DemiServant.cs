@@ -10,7 +10,7 @@ namespace MashShielder.MashShielderCode.Cards.Rare;
 /// <summary>Demi-Servant — Power: Galahad's protection builds the wall every turn.</summary>
 public sealed class DemiServant() : MashShielderCard(2, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DemiServantPower>(5m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DemiServantPower>("DemiServant", 5m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<BulwarkPower>()];
 

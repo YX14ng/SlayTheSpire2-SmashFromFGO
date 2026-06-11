@@ -1,0 +1,23 @@
+{
+  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.title": "Fragmento de la Mesa Redonda",
+  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.description": "#Al final de tu turno, conserva hasta !B! de Bloqueo.",
+  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.flavor": "Una astilla de la gran mesa de Camelot. Incluso rota, recuerda cómo proteger.",
+  "MASHSHIELDER-LORD_CAMELOT_RESTORED.title": "Lord Camelot (Restaurado)",
+  "MASHSHIELDER-LORD_CAMELOT_RESTORED.description": "#Al final de tu turno, conserva hasta !B! de Bloqueo. Reemplaza la retención del Fragmento de la Mesa Redonda.",
+  "MASHSHIELDER-LORD_CAMELOT_RESTORED.flavor": "El Castillo de la Utopía Lejana, entero una vez más. El muro que protegió el último viaje de la humanidad.",
+  "MASHSHIELDER-FOU_AMULET.title": "Amuleto de Fou",
+  "MASHSHIELDER-FOU_AMULET.description": "#Una vez por combate, la primera vez que fueras a morir: sobrevive con 1 de Vida.",
+  "MASHSHIELDER-FOU_AMULET.flavor": "¡Kyu! Una pequeña bendición blanca que se niega a soltarla.",
+  "MASHSHIELDER-SPARE_GLASSES.title": "Lentes de Repuesto",
+  "MASHSHIELDER-SPARE_GLASSES.description": "#Al inicio de cada combate, roba !C! carta(s) extra.",
+  "MASHSHIELDER-SPARE_GLASSES.flavor": "Senpai, ¿viste mis lentes? ...Ah. Cierto. Gracias.",
+  "MASHSHIELDER-ORTINAX_CORE.title": "Núcleo del Ortinax",
+  "MASHSHIELDER-ORTINAX_CORE.description": "#Comienza cada combate con !NpCharge! de Carga NP.",
+  "MASHSHIELDER-ORTINAX_CORE.flavor": "La mejor ingeniería de Chaldea, zumbando con energía mágica almacenada.",
+  "MASHSHIELDER-A_TEAM_DIARY.title": "Diario del Equipo A",
+  "MASHSHIELDER-A_TEAM_DIARY.description": "#Cada vez que entras a una sala, obtén 1 de Vida máxima.",
+  "MASHSHIELDER-A_TEAM_DIARY.flavor": "Los registros de quienes debieron escalar en su lugar. Ella los lleva a todos.",
+  "MASHSHIELDER-MASH_BOND.title": "Medidor de Vínculo",
+  "MASHSHIELDER-MASH_BOND.description": "#Mash gana puntos de Vínculo al vencer en combate (+2, élites +3, jefes +5) y al entrar a eventos, tiendas y fogatas (+1). Cada nivel de *Vínculo* otorga regalos permanentes: Vida máxima (Nv 1/3/6/9), *Carga *NP inicial (Nv 2/5/8), Bloqueo inicial (Nv 4/7), y al Nv 10 no dejará que caigas: sobrevive el daño letal con 1 de Vida una vez por combate. En multijugador, los regalos de Vida máxima y Bloqueo escalan con la cantidad de jugadores.",
+  "MASHSHIELDER-MASH_BOND.flavor": "Senpai... yo te protegeré."
+}

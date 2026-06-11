@@ -1,0 +1,16 @@
+{
+  "MASHSHIELDER-MASH_SHIELDER.title": "玛修·基列莱特",
+  "MASHSHIELDER-MASH_SHIELDER.titleObject": "盾兵",
+  "MASHSHIELDER-MASH_SHIELDER.description": "与英灵加拉哈德融合的亚从者。她高举巨盾罗德·卡美洛，积累永不崩塌的格挡，并将其化作毁灭性的宝具解放。",
+  "MASHSHIELDER-MASH_SHIELDER.pronounObject": "她",
+  "MASHSHIELDER-MASH_SHIELDER.possessiveAdjective": "她的",
+  "MASHSHIELDER-MASH_SHIELDER.pronounPossessive": "她的",
+  "MASHSHIELDER-MASH_SHIELDER.pronounSubject": "她",
+  "MASHSHIELDER-MASH_SHIELDER.goldMonologue": "迦勒底从来没给我发过工资……前辈，这就是所谓的预算吗？",
+  "MASHSHIELDER-MASH_SHIELDER.eventDeathPrevention": "远处传来熟悉的白色生物的叫声……芙芙再次献出了它的奇迹，玛修睁开了眼睛。",
+  "MASHSHIELDER-MASH_SHIELDER.aromaPrinciple": "闻起来像迦勒底的食堂……像三明治。玛修安心了下来。",
+  "MASHSHIELDER-MASH_SHIELDER.cardsModifierTitle": "盾兵的武装",
+  "MASHSHIELDER-MASH_SHIELDER.cardsModifierDescription": "使用玛修·基列莱特的卡池进行游戏。",
+  "MASHSHIELDER-MASH_SHIELDER.banter.alive.endTurnPing": "前辈，请下指示！",
+  "MASHSHIELDER-MASH_SHIELDER.banter.dead.endTurnPing": "对不起，前辈……我没能保护好你……"
+}

@@ -11,7 +11,7 @@ namespace MashShielder.MashShielderCode.Relics;
 /// Lord Camelot (restaurado) — Ancient relic: retain up to 25 Block between turns.
 /// Supersedes the Round Table Fragment (caps don't stack; the higher one wins).
 /// </summary>
-public sealed class LordCamelotRestored : MashShielderRelic
+public sealed class LordCamelotRestored : MashShielderRelic, IBlockRetentionSource
 {
     public const int MaxRetainedBlock = 25;
 
@@ -20,6 +20,8 @@ public sealed class LordCamelotRestored : MashShielderRelic
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(MaxRetainedBlock, ValueProp.Unpowered)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.Block)];
+
+    public decimal RetentionCap(Creature creature) => MaxRetainedBlock;
 
     public override async Task BeforeCombatStartLate()
     {
@@ -33,7 +35,7 @@ public sealed class LordCamelotRestored : MashShielderRelic
         if (this != preventer || creature != Owner.Creature) return;
 
         if (creature.Block == 0) return;
-        await Powers.BlockRetention.Enforce(creature);
+        await BlockRetention.Enforce(creature);
         Flash();
     }
 }

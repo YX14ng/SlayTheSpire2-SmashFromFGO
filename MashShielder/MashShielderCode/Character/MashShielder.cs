@@ -37,7 +37,8 @@ public class MashShielder : PlaceholderCharacterModel
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
     [
-        ModelDb.Relic<RoundTableFragment>()
+        ModelDb.Relic<RoundTableFragment>(),
+        ModelDb.Relic<MashBond>()
     ];
     
     /// <summary>
@@ -46,6 +47,13 @@ public class MashShielder : PlaceholderCharacterModel
     /// BaseLib converts the scene to NCreatureVisuals and routes animation signals.
     /// </summary>
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/mash_visuals.tscn";
+
+    /// <summary>Character select background: the golden Castle of the Distant Utopia, dimmed.</summary>
+    public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/mash_select_bg.tscn";
+
+    /// <summary>Merchant/rest-site visuals: the animated idle, replacing the Ironclad placeholders.</summary>
+    public override string CustomMerchantAnimPath => $"{MainFile.ResPath}/character/mash_merchant.tscn";
+    public override string CustomRestSiteAnimPath => $"{MainFile.ResPath}/character/mash_rest.tscn";
 
     public override CardPoolModel CardPool => ModelDb.CardPool<MashShielderCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<MashShielderRelicPool>();

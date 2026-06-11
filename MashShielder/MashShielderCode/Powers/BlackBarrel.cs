@@ -15,7 +15,7 @@ public static class BlackBarrel
 {
     public static async Task Hit(PlayerChoiceContext choiceContext, Creature target, decimal amount, Creature dealer, CardModel source)
     {
-        VfxCmd.PlayOnCreatureCenter(target, "vfx/vfx_attack_pierce");
+        VfxCmd.PlayOnCreatureCenter(target, "vfx/vfx_dramatic_stab");
         await CreatureCmd.Damage(choiceContext, target, amount, ValueProp.Move | ValueProp.Unblockable, dealer, source);
         await RemoveBuffs(target, 1);
     }

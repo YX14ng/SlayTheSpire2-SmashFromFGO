@@ -21,16 +21,17 @@ public sealed class FouMiraclePower : MashShielderPower
 
     private bool _triggered;
 
+    // OJO: los hooks ModifyHpLost* devuelven el monto ABSOLUTO resultante (no un delta).
     public override decimal ModifyHpLostAfterOstyLate(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (_triggered || target != Owner) return 0m;
+        if (_triggered || target != Owner) return amount;
 
         var hp = Owner.CurrentHp;
-        if (hp <= 0 || amount < hp) return 0m;
+        if (hp <= 0 || amount < hp) return amount;
 
         _triggered = true;
         var floor = Math.Min(Amount, hp);
-        return -(amount - (hp - floor));
+        return hp - floor;
     }
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)

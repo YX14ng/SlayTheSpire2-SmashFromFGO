@@ -12,7 +12,7 @@ public sealed class FousMiracle() : MashShielderCard(1, CardType.Skill, CardRari
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<FouMiraclePower>(1m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<FouMiraclePower>("FouMiracle", 1m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<FouMiraclePower>()];
 

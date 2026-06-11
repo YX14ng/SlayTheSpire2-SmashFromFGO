@@ -1,5 +1,9 @@
 using Godot;
 using HarmonyLib;
+using MashShielder.MashShielderCode.Powers;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Modding;
 
 namespace MashShielder.MashShielderCode;
@@ -14,11 +18,37 @@ public partial class MainFile : Node
 
     public static void Initialize()
     {
-        //If you want to use scripts defined in your mod for Godot scenes, uncomment the following line.
-        //Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(Assembly.GetExecutingAssembly());
-        
         Harmony harmony = new(ModId);
-
         harmony.PatchAll();
+
+        // FGOCore preloads every registered form's frames in background threads.
+        FormVisuals.RegisterFrames(
+            $"{ResPath}/character/mash_frames_base.tres",
+            $"{ResPath}/character/mash_frames_ortinax.tres",
+            $"{ResPath}/character/mash_frames_paladin.tres");
+
+        // Ult cycle: reaching 100 NP manifests Lord Camelot for free; spending below
+        // 100 re-arms it so the next full gauge manifests it again.
+        NpCharge.GaugeFilled += TryManifestUlt;
+        NpCharge.GaugeDropped += DisarmUltMarker;
+    }
+
+    private static async Task TryManifestUlt(Creature creature)
+    {
+        if (creature.Player?.Character is not Character.MashShielder) return;
+        if (creature.HasPower<CamelotManifestedPower>()) return;
+
+        await PowerCmd.Apply<CamelotManifestedPower>(creature, 1m, creature, null);
+        var card = creature.CombatState.CreateCard<Cards.Special.LordCamelotUnleashed>(creature.Player);
+        CardCmd.PreviewCardPileAdd(
+            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 1.5f);
+    }
+
+    private static async Task DisarmUltMarker(Creature creature)
+    {
+        if (creature.HasPower<CamelotManifestedPower>())
+        {
+            await PowerCmd.Remove<CamelotManifestedPower>(creature);
+        }
     }
 }

@@ -1,0 +1,16 @@
+{
+  "FGOCORE-GOLDEN_APPLE.title": "Golden Apple",
+  "FGOCORE-GOLDEN_APPLE.description": "#Gain !Energy! Energy. Draw !C! card(s). The grind never ends.",
+  "FGOCORE-MAPO_TOFU.title": "Extra Spicy Mapo Tofu",
+  "FGOCORE-MAPO_TOFU.description": "#Heal !H! HP. Lose !HpLoss! HP. Delicious. Painful. Delicious.",
+  "FGOCORE-INSUFFICIENT_QP.title": "Insufficient QP!",
+  "FGOCORE-INSUFFICIENT_QP.description": "#Gain !Gold! gold. It will not be enough. It is never enough.",
+  "FGOCORE-TEN_PULL_SUMMON.title": "10-Pull Summon",
+  "FGOCORE-TEN_PULL_SUMMON.description": "#Add !C! random card(s) from your character\u0027s pool to your hand, costing 0 this turn. May the gacha bless you.",
+  "FGOCORE-BLACK_KEYS.title": "Black Keys",
+  "FGOCORE-BLACK_KEYS.description": "#Deal !D! damage. Add a copy of this card to your discard pile. There are always more.",
+  "FGOCORE-EXP_EMBER.title": "EXP Ember",
+  "FGOCORE-EXP_EMBER.description": "#Upgrade !C! random card(s) in your hand for this combat. Everything is fodder.",
+  "FGOCORE-PALINGENESIS.title": "Palingenesis",
+  "FGOCORE-PALINGENESIS.description": "#Raise your Max HP by !H! and heal !H! HP. The Grail accepts your offering."
+}

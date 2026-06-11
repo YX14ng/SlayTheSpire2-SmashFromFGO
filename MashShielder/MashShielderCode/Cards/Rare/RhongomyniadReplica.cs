@@ -10,20 +10,21 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MashShielder.MashShielderCode.Cards.Rare;
 
 /// <summary>
-/// Réplica de Rhongomyniad — NP card (full 100 charge): the lance that anchors the world.
-/// Always overcharged by definition. Exhaust.
+/// Réplica de Rhongomyniad — NP card (min 70 charge, consumes ALL): the lance that anchors
+/// the world. FGO Overcharge: +damage per 10 extra charge. Exhaust.
 /// </summary>
 public sealed class RhongomyniadReplica() : MashShielderCard(3, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
-    public const int ChargeCost = 100;
+    public const int ChargeCost = 70;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(60m, ValueProp.Move | ValueProp.Unblockable),
-        new PowerVar<VulnerablePower>(3m),
-        new DynamicVar("ChargeCost", ChargeCost)
+        new DamageVar(39m, ValueProp.Move | ValueProp.Unblockable),
+        new PowerVar<VulnerablePower>("Vulnerable", 3m),
+        new DynamicVar("ChargeCost", ChargeCost),
+        new DynamicVar("PerTen", 7)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -37,16 +38,19 @@ public sealed class RhongomyniadReplica() : MashShielderCard(3, CardType.Attack,
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        await NpCharge.PayForNpCard(Owner.Creature, ChargeCost, this);
-        await BlackBarrel.Hit(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, Owner.Creature, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
+
+        await BlackBarrel.Hit(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue + bonus, Owner.Creature, this);
         if (!cardPlay.Target.IsDead)
         {
-            await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
         }
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(15m);
+        DynamicVars["PerTen"].UpgradeValueBy(2m);
     }
 }

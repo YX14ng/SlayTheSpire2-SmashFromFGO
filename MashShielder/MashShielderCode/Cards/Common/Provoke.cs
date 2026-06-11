@@ -10,7 +10,7 @@ namespace MashShielder.MashShielderCode.Cards.Common;
 /// <summary>Provocación — free Intercept for one turn.</summary>
 public sealed class Provoke() : MashShielderCard(0, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<ProvokePower>(4m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<ProvokePower>("Provoke", 4m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ProvokePower>()];
 

@@ -1,0 +1,14 @@
+{
+  "FGOCORE-NP_CHARGE_POWER.title": "NP Charge",
+  "FGOCORE-NP_CHARGE_POWER.description": "#Energy for Mash\u0027s Noble Phantasm, up to a maximum of 100. NP cards consume it when played.",
+  "FGOCORE-NP_CHARGE_POWER.smartDescription": "#Energy for Mash\u0027s Noble Phantasm, up to a maximum of 100. NP cards consume it when played.",
+  "FGOCORE-BULWARK_POWER.title": "Bulwark",
+  "FGOCORE-BULWARK_POWER.description": "#Block up to this amount is not removed at the start of your turn.",
+  "FGOCORE-BULWARK_POWER.smartDescription": "#Block up to this amount is not removed at the start of your turn.",
+  "FGOCORE-FORM_SHIFTED_POWER.title": "Form Shifted",
+  "FGOCORE-FORM_SHIFTED_POWER.description": "#Mash changed form this combat.",
+  "FGOCORE-FORM_SHIFTED_POWER.smartDescription": "#Mash changed form this combat.",
+  "FGOCORE-BOND_POWER.title": "Bond",
+  "FGOCORE-BOND_POWER.description": "#Mash\u0027s Bond level this run. Grants bonuses at the start of each combat (see the Bond Gauge relic).",
+  "FGOCORE-BOND_POWER.smartDescription": "#Mash\u0027s Bond level this run. Grants bonuses at the start of each combat (see the Bond Gauge relic)."
+}

@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://MashShielder/character/mash_frames_base.tres" id="frames_base"]
+
+[node name="MashRestSite" type="Node2D"]
+
+[node name="ControlRoot" type="Control" parent="."]
+
+[node name="Hitbox" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+offset_left = -137.0
+offset_top = -462.0
+offset_right = 137.0
+offset_bottom = 0.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-72.5, -327.7)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("frames_base")
+animation = &"idle"
+autoplay = "idle"

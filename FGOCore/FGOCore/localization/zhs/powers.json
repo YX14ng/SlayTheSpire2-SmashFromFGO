@@ -1,0 +1,14 @@
+{
+  "FGOCORE-NP_CHARGE_POWER.title": "宝具值",
+  "FGOCORE-NP_CHARGE_POWER.description": "#玛修宝具的能量，上限100。打出宝具牌时消耗。",
+  "FGOCORE-NP_CHARGE_POWER.smartDescription": "#玛修宝具的能量，上限100。打出宝具牌时消耗。",
+  "FGOCORE-BULWARK_POWER.title": "壁垒",
+  "FGOCORE-BULWARK_POWER.description": "#不超过此数值的格挡在你的回合开始时不会消失。",
+  "FGOCORE-BULWARK_POWER.smartDescription": "#不超过此数值的格挡在你的回合开始时不会消失。",
+  "FGOCORE-FORM_SHIFTED_POWER.title": "形态已变换",
+  "FGOCORE-FORM_SHIFTED_POWER.description": "#玛修本场战斗变换过形态。",
+  "FGOCORE-FORM_SHIFTED_POWER.smartDescription": "#玛修本场战斗变换过形态。",
+  "FGOCORE-BOND_POWER.title": "羁绊",
+  "FGOCORE-BOND_POWER.description": "#玛修本局游戏的羁绊等级。每场战斗开始时提供加成（详见羁绊计量器遗物）。",
+  "FGOCORE-BOND_POWER.smartDescription": "#玛修本局游戏的羁绊等级。每场战斗开始时提供加成（详见羁绊计量器遗物）。"
+}

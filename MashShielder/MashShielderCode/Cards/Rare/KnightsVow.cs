@@ -16,7 +16,7 @@ public sealed class KnightsVow() : MashShielderCard(1, CardType.Attack, CardRari
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(8m, ValueProp.Move),
-        new PowerVar<StrengthPower>(2m),
+        new PowerVar<StrengthPower>("Strength", 2m),
         new DynamicVar("RequiredBlock", RequiredBlock)
     ];
 
@@ -33,13 +33,13 @@ public sealed class KnightsVow() : MashShielderCard(1, CardType.Attack, CardRari
 
         if (Owner.Creature.Block >= RequiredBlock)
         {
-            await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
         }
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars.Strength.UpgradeValueBy(1m);
+        DynamicVars["Strength"].UpgradeValueBy(1m);
     }
 }

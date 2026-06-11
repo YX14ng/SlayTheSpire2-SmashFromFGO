@@ -14,7 +14,7 @@ public sealed class ShieldRam() : MashShielderCard(1, CardType.Attack, CardRarit
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(8m, ValueProp.Move),
-        new PowerVar<VulnerablePower>(1m)
+        new PowerVar<VulnerablePower>("Vulnerable", 1m)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
@@ -25,12 +25,12 @@ public sealed class ShieldRam() : MashShielderCard(1, CardType.Attack, CardRarit
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
-        await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars.Vulnerable.UpgradeValueBy(1m);
+        DynamicVars["Vulnerable"].UpgradeValueBy(1m);
     }
 }

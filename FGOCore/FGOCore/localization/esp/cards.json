@@ -1,0 +1,16 @@
+{
+  "FGOCORE-GOLDEN_APPLE.title": "Manzana Dorada",
+  "FGOCORE-GOLDEN_APPLE.description": "#Obtén !Energy! de Energía. Roba !C! carta(s). El grindeo nunca termina.",
+  "FGOCORE-MAPO_TOFU.title": "Mapo Tofu Extra Picante",
+  "FGOCORE-MAPO_TOFU.description": "#Cura !H! de Vida. Pierde !HpLoss! de Vida. Delicioso. Doloroso. Delicioso.",
+  "FGOCORE-INSUFFICIENT_QP.title": "¡QP Insuficientes!",
+  "FGOCORE-INSUFFICIENT_QP.description": "#Obtén !Gold! de oro. No va a alcanzar. Nunca alcanza.",
+  "FGOCORE-TEN_PULL_SUMMON.title": "Invocación x10",
+  "FGOCORE-TEN_PULL_SUMMON.description": "#Añade !C! carta(s) al azar del pool de tu personaje a tu mano; cuestan 0 este turno. Que el gacha te bendiga.",
+  "FGOCORE-BLACK_KEYS.title": "Llaves Negras",
+  "FGOCORE-BLACK_KEYS.description": "#Inflige !D! de daño. Añade una copia de esta carta a tu pila de descarte. Siempre hay más.",
+  "FGOCORE-EXP_EMBER.title": "Llama de EXP",
+  "FGOCORE-EXP_EMBER.description": "#Mejora !C! carta(s) al azar de tu mano durante este combate. Todo es alimento.",
+  "FGOCORE-PALINGENESIS.title": "Palingénesis",
+  "FGOCORE-PALINGENESIS.description": "#Aumenta tu Vida máxima en !H! y cura !H! de Vida. El Grial acepta tu ofrenda."
+}

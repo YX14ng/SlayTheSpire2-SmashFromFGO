@@ -57,8 +57,9 @@ Fantasía: empezás el combate construyendo una fortaleza y terminás disparando
 
 ### Carga NP (recurso, contador visible junto a la energía)
 - Se gana con cartas (`Carga NP +X`) y con las pasivas de forma.
-- Las cartas **NP** gastan 50 o 100 de Carga al jugarse.
-- **Sobrecarga**: si la jugás con la Carga exactamente al máximo (100), efecto mejorado (el Overcharge de FGO).
+- Las cartas **NP** tienen un **costo mínimo** de Carga y al jugarse **consumen TODA la Carga disponible** *(rediseñado en v0.1, estilo FGO)*.
+- **Sobrecarga escalonada**: cada 10 de Carga consumida por encima del mínimo mejora los stats de la carta (+Bloqueo o +daño según la carta). *BLACK BARREL: Full Burst* conserva además su bonus máximo al consumir 100 (borra todos los buffs). Mínimos: LORD CHALDEAS y Full Burst 50; LORD CAMELOT y Rhongomyniad 70; la ulti generada 100.
+- **Manifestación del NP** *(agregado en v0.1)*: **cada vez** que el medidor llega a 100, se genera en tu mano **"LORD CAMELOT: Unleashed"** — la ulti de Mash: coste 0⚡, Exhaust (se agota al usarla), 30 Bloqueo Baluarte + 3 Fuerza + Intercepción 12. Generarla NO consume el medidor; la Carga solo se gasta al jugar cartas NP (incluida esta). Al gastar Carga y volver a llenar a 100, se manifiesta de nuevo — el ciclo completo de FGO.
 - Se resetea a 0 entre combates (la reliquia *Núcleo del Ortinax* da 40 inicial).
 
 ### Baluarte (keyword)
@@ -71,6 +72,9 @@ Fantasía: empezás el combate construyendo una fortaleza y terminás disparando
 | **Shielder** (inicial) | Al final de tu turno, si tienes 8+ de Bloqueo: Carga NP +5. La primera carta de Bloqueo de cada turno otorga +3 de Bloqueo. |
 | **Ortinax** | Tus ataques consumen hasta 5 de tu Bloqueo y suman ese daño (*Bunker Bolt*). Tus cartas de defensa dan 1 menos de Bloqueo. |
 | **Paladín** (solo vía carta rara) | Ambas pasivas, sin la penalización de Ortinax. No se puede salir de ella. |
+
+### Cobertura — mecánica de multijugador *(agregado en v0.1)*
+En partidas co-op, **al inicio de cada turno** (mientras haya un aliado vivo) se genera **"Behind Me!"**: coste 0⚡, Ethereal (se desvanece si no se usa), Exhaust. Al jugarla: hasta tu próximo turno, **todo el daño que atraviese las defensas de tus aliados lo recibe Mash** (su propio Bloqueo aplica). El tanque del grupo, como en FGO. En solitario la carta no se genera.
 
 ### Intercepción (keyword de contraataque)
 *Mientras tengas Intercepción X: cuando un enemigo te ataque y el golpe no atraviese tu Bloqueo, recibe X de daño.* El "taunt + counter" de Mash (*Shield of Rousing Resolution*, *Amalgam Goad*).
@@ -184,6 +188,29 @@ Fantasía: empezás el combate construyendo una fortaleza y terminás disparando
 - **Sobrecarga**: se evalúa con la Carga exactamente en 100 ANTES de pagar; las NP de coste 100 siempre están sobrecargadas.
 - **Black Barrel (keyword)**: cada impacto BB ignora Bloqueo Y remueve 1 buff (Ráfaga remueve hasta 2).
 - **Formación Defensiva**: aplica a cartas que ganan Bloqueo (flag `GainsBlock` del juego).
+
+### Cartas meme de la comunidad (agregado en v0.1)
+
+Basadas en el canon de jerga de la comunidad china (Mooncell, "FGO黑话·梗"). **Incoloras** (aparecen en runs de cualquier personaje):
+
+| Carta | Meme | Efecto |
+|---|---|---|
+| **Golden Apple** (PC) | 金苹果 — recargar AP para seguir grindeando | 1⚡: +2 Energía, roba 1. Exhaust |
+| **Extra Spicy Mapo Tofu** (C) | 麻婆豆腐 — el tofu de Kotomine | 1⚡: cura 7, pierde 2 HP. Exhaust |
+| **Insufficient QP!** (C) | QP不足 — nunca alcanza | 0⚡: +18 oro. Exhaust |
+| **10-Pull Summon** (PC) | 十连/歪了 — la tirada del gacha | 1⚡: 1 carta aleatoria de tu pool a la mano, coste 0 este turno. Exhaust |
+| **Black Keys** (C) | 黑键 — siempre hay más en la sotana | 0⚡: 3 daño; añade una copia al descarte |
+| **EXP Ember** (PC) | 种火/狗粮 — todo es comida de experiencia | 1⚡: mejora 1 carta aleatoria de tu mano este combate. Exhaust |
+| **Palingenesis** (R) | 圣杯转临 — el Grial sube el nivel | 2⚡: +4 HP máx y cura 4. Exhaust |
+
+**En el pool de Mash** (memes de ella):
+
+| Carta | Meme | Efecto |
+|---|---|---|
+| **Fou (Beast IV?)** (PC) | Fou = Primate Murder dormido | 0⚡: 3 daño; si mata: cura 5 y Carga +20. Exhaust |
+| **Multipurpose Shield** (C) | 盾娘 + el manga de Riyo: escudo tabla/sartén/trineo | 1⚡: 6 Bloqueo, roba 1, Carga +5 |
+
+Arte: CEs oficiales exactos ("Extremely Spicy Mapo Tofu", "Golden Apple", "Mona Lisa" para QP, "The Black Grail", "Learning with Manga! FGO", etc.).
 
 ## 6. Reliquias del personaje
 

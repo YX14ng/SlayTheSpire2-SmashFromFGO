@@ -15,10 +15,11 @@ public sealed class AbsoluteWallPower : MashShielderPower
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    // OJO: los hooks ModifyHpLost* devuelven el monto ABSOLUTO resultante (no un delta).
     public override decimal ModifyHpLostAfterOstyLate(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (target != Owner) return 0m;
-        return -amount;
+        if (target != Owner) return amount;
+        return 0m;
     }
 
     public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)

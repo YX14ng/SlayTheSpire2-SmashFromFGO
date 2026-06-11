@@ -25,6 +25,13 @@
             <HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
             <Private>false</Private>
         </Reference>
+        <!-- Mod-librería FGOCore (compilar/publicar FGOCore antes que este proyecto).
+             Private=false: el dll lo distribuye solo el mod FGOCore; el loader del juego
+             lo resuelve por nombre vía dependencies del manifest. -->
+        <Reference Include="FGOCore">
+            <HintPath>$(ModsPath)FGOCore/FGOCore.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
     </ItemGroup>
 
     <ItemGroup Condition="False"> <!--Allows access to originally private/protected members but may (unlikely to) cause errors.-->

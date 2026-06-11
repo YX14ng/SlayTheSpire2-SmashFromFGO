@@ -23,15 +23,16 @@ public sealed class FouAmulet : MashShielderRelic
         return Task.CompletedTask;
     }
 
+    // OJO: los hooks ModifyHpLost* devuelven el monto ABSOLUTO resultante (no un delta).
     public override decimal ModifyHpLostAfterOstyLate(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (_triggeredThisCombat || target != Owner.Creature) return 0m;
+        if (_triggeredThisCombat || target != Owner.Creature) return amount;
 
         var hp = target.CurrentHp;
-        if (hp <= 1 || amount < hp) return 0m;
+        if (hp <= 1 || amount < hp) return amount;
 
         _triggeredThisCombat = true;
         Flash();
-        return -(amount - (hp - 1));
+        return hp - 1;
     }
 }
