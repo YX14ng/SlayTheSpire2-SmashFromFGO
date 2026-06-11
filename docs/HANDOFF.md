@@ -43,6 +43,14 @@ del v1 conservada como UNO de los tres arquetipos drafteables). Berserker→Cast
 reliquias, vínculo sobre defaults, assets verificados (Morgan 704020/704030, Aesc 505320).
 Orden de implementación y perillas de playtest en su §11. Nuevo para FGOCore: GutsPower +
 candado "Inutilizable: turno N" + manifestación de ulti por forma.
+**ARTE DE CARTAS YA HECHO** (2026-06-11): las 74 imágenes (500×380 + big/) están pre-armadas en
+`MorganBerserker/MorganBerserker/images/card_portraits/` (carpeta pre-scaffold: al crear el
+proyecto con el template, conservarla). Mapping en `assets/reference/ce/mapping_morgan.csv`
+(entradas `CHARA:` = charagraphs oficiales de los servants, no CEs). Auditado visualmente:
+los retratos de Morgan/Aesc usan charagraphs (704000a@1/a@2/b@1/b@2, 704030a, 505300a@1/a@2/b@1);
+21 matches malos del workflow fueron re-elegidos a mano (gotcha: CEs con nombre-trampa tipo
+"Crown Saber Morgan" = hamburguesa del collab con McDonald's). Herramientas nuevas:
+tools/make_contact_sheet.ps1 (auditar arte en lote) y tools/fix_morgan_art.ps1.
 La skill [.claude/skills/sts2-mechanics-design](../.claude/skills/sts2-mechanics-design/SKILL.md)
 contiene los baselines numéricos reales del juego para cualquier ajuste.
 OJO: el export de AssetStudio GUI (×3 modelos) es PASO MANUAL del usuario.

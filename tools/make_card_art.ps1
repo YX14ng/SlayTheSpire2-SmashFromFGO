@@ -3,11 +3,13 @@
 # Salida: MashShielder/MashShielder/images/card_portraits/<file>.png (500x380)
 #         MashShielder/MashShielder/images/card_portraits/big/<file>.png (1000x760)
 param(
-    [Parameter(Mandatory)][string]$MappingCsv
+    [Parameter(Mandatory)][string]$MappingCsv,
+    [string]$OutDir = "f:\Programs\SlayTheSpire2-SmashFromFGO\MashShielder\MashShielder\images\card_portraits"
 )
 Add-Type -AssemblyName System.Drawing
 
-$imgDir = "f:\Programs\SlayTheSpire2-SmashFromFGO\MashShielder\MashShielder\images\card_portraits"
+$imgDir = $OutDir
+New-Item -ItemType Directory -Force "$imgDir\big" | Out-Null
 $cache = "f:\Programs\SlayTheSpire2-SmashFromFGO\assets\reference\ce\art"
 New-Item -ItemType Directory -Force $cache | Out-Null
 
