@@ -14,6 +14,36 @@ explícito (sección 3). Si un número no tiene justificación, está mal.
 **Objetivo: top-tier, no tramposa** (referencia: la Watcher de StS1 — la más fuerte
 del elenco sin trivializar jefes). Reglas:
 
+### 1.bis EL TECHO REAL (replanteo 2026-06-11, pedido del usuario): el entorno modded
+
+El usuario NO juega vanilla. Juega con **HextechRunes** (dificultad) + **BetterCharacters**
+(personajes vanilla deificados — el mod se llama 我已神化). Medido del decompilado:
+
+- **HextechRunes** (la presión): los enemigos reciben *hexes* por acto que se acumulan —
+  daño enemigo ×1.2-1.5, HP máximo +20-40% por tier, sustain/bloqueo ×1.15-1.25, más
+  impuestos mecánicos (cada 3er ataque del jugador cuesta doble ⚡, slow, strength drain).
+  El jugador compensa con runas MULTIPLICATIVAS (×1.2-×2 en daño/bloqueo/HP/curación)
+  y forjas de stats. Peleas más largas y picos de daño enemigo mucho más altos.
+- **BetterCharacters** (el nivel de los pares): los personajes vanilla llevan motores
+  ×1.5-2 (Forma Demoníaca DUPLICA toda la Fuerza; Maestría Nigromante DUPLICA las
+  invocaciones; forja exponencial del Regent), tasas +20-40%, descuentos de coste en
+  piezas de motor (3⚡→2⚡, 2⚡→1⚡), Exhaust removido de cartas clave, y topes quitados.
+- **BetterSpire2** es solo QoL (información perfecta del daño entrante + retry de
+  combate) — no toca números, pero implica que la VARIANZA es barata: diseños de techo
+  alto que a veces fallan son aceptables.
+
+**Reglas operativas del replanteo**:
+1. Los baselines de §2 siguen siendo el VOCABULARIO (qué es una tasa vanilla), pero el
+   TECHO de diseño es ~×1.5 sobre ellos en motores/payoffs y ~×1.25 en tasa cruda.
+2. La subida de tasa cruda va por **palanca central**: `BondRelic.ServantDamageMultiplier`
+   / `ServantBlockMultiplier` (FGOCore, ×1.25, herencia automática en todos los
+   personajes) — NO inflando carta por carta. Perilla: 1.25 → 1.4 si sigue floja.
+3. Los MOTORES sí se suben en sus números propios (estilo BetterCharacters: duplicar el
+   escalador del arquetipo, acelerar la economía del recurso, levantar topes que ahogan
+   en peleas largas — Maldición 15→25 fue el primer caso).
+4. Los topes/candados anti-degeneración se conservan ESTRUCTURALMENTE (1/turno,
+   1/combate, condición de forma) pero sus montos se presupuestan al techo nuevo.
+
 1. **Números sobre tasa SOLO embudados por mecánica propia.** Una carta puede superar
    el baseline si su exceso está pagado por: un recurso que hay que construir (Carga NP),
    costo de HP, Exhaust, condición de forma/stance, o renunciar a otra cosa (dupes).

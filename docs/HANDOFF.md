@@ -66,8 +66,18 @@ Fixes post-playtest (2026-06-11 tarde, feedback del usuario):
   Bruja por turno; Invierno hereda ambas), Cetro +10 NP en el primer cambio. Si sigue
   floja: siguientes perillas en DESIGN-MORGAN.md §11.
 
+RE-BALANCE v3 (2026-06-11 noche): el usuario juega **HextechRunes + BetterCharacters**
+("recién los vanilla mejorados se juegan cómodo") → REPLANTEO del techo de balance,
+medido del decompilado de ambos mods (skill sts2-mechanics-design §1.bis tiene los
+números). Aplicado: `BondRelic.ServantDamageMultiplier/Block` ×1.25 en FGOCore (lift
+multiplicativo central, herencia automática Mash/Morgan/Artoria — perilla: 1.25→1.4),
+Maldición tope 15→25, Reina NP 10/turno y amplificador de Maldición ×2, Bruja NP
+12/turno, Artoria re-baseada (DESIGN-ARTORIA §8.bis). Loc ×3 actualizada con la línea
+"Servant ascendido" en BOND_POWER y los vínculos.
+
 PENDIENTE de Morgan:
-1. Playtest: perillas en DESIGN-MORGAN.md §11 (grifos NP, mini-NP, Cernunnos+cap 15).
+1. Playtest del re-balance v3; si sigue floja: subir el multiplicador a 1.4 y/o pasar
+   las perillas de DESIGN-MORGAN.md §11.
 2. Verificar en juego: animaciones de las 3 formas (swap incluido), botón "Invocar (dupe)".
 3. Opcional: aplicar size_limit+30fps-idle a MASH (sus texturas siguen a resolución
    completa ~1.5GB VRAM; mismo procedimiento, scale 0.5/(1024/1758)=0.858).

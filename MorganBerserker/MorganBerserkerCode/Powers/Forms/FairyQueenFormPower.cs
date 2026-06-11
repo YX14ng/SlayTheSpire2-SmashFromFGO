@@ -13,12 +13,14 @@ namespace MorganBerserker.MorganBerserkerCode.Powers.Forms;
 /// </summary>
 public sealed class FairyQueenFormPower : MorganFormPower, ICurseAmplifier
 {
-    // 5 -> 8 en el primer pase de buffs (playtest 2026-06-11: "no es tan fuerte").
-    public const int NpOnDamage = 8;
+    // 5 -> 8 (primer pase) -> 10 (re-balance v3 al entorno Hextech+BetterCharacters).
+    public const int NpOnDamage = 10;
 
     public override string FramesPath => $"{MainFile.ResPath}/character/morgan_frames_queen.tres";
 
-    public int ExtraCurse => 1;
+    // 1 -> 2 en el re-balance v3 (estilo BetterCharacters: duplicar el escalador del
+    // arquetipo; acompaña el tope de Maldicion 15 -> 25).
+    public int ExtraCurse => 2;
 
     private bool _npThisTurn;
 

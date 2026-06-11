@@ -11,7 +11,8 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Powers;
 /// </summary>
 public sealed class CriticalStarsPower : ArtoriaPower
 {
-    public const int Max = 10;
+    // 10 -> 12 en el re-baseo al entorno Hextech+BetterCharacters (DESIGN-ARTORIA §8.bis).
+    public const int Max = 12;
 
     public override PowerType Type => PowerType.Buff;
 

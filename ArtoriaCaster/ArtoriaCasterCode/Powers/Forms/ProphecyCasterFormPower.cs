@@ -12,7 +12,8 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Powers.Forms;
 public sealed class ProphecyCasterFormPower : ArtoriaFormPower
 {
     public const int StarsOnFirstSkill = 1;
-    public const int NpOnFirstSkill = 3;
+    // 3 -> 5 en el re-baseo al entorno Hextech+BetterCharacters (DESIGN-ARTORIA §8.bis).
+    public const int NpOnFirstSkill = 5;
 
     public override string FramesPath => $"{MainFile.ResPath}/character/artoria_frames_caster.tres";
 

@@ -1,6 +1,8 @@
 using BaseLib.Abstracts;
 using FGOCore.FGOCoreCode.Np;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -24,6 +26,29 @@ namespace FGOCore.FGOCoreCode.Bond;
 public abstract class BondRelic : CustomRelicModel
 {
     private int _points;
+
+    /// <summary>
+    /// Servant Ascendido: subida de tasa global para el entorno modded real del
+    /// usuario (HextechRunes endurece a los enemigos con hexes ×1.2-1.5 y los
+    /// personajes vanilla llevan BetterCharacters; a tasa vanilla pura nuestros
+    /// servants quedan ~25-50% por debajo). Es la misma palanca multiplicativa
+    /// que usan las runas Hextech. Perilla de playtest: 1.25 → 1.4 si sigue floja.
+    /// </summary>
+    public virtual decimal ServantDamageMultiplier => 1.25m;
+
+    public virtual decimal ServantBlockMultiplier => 1.25m;
+
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        if (dealer != Owner.Creature || !props.IsPoweredAttack()) return 1m;
+        return ServantDamageMultiplier;
+    }
+
+    public override decimal ModifyBlockMultiplicative(Creature target, decimal block, ValueProp props, CardModel? cardSource, MegaCrit.Sts2.Core.Entities.Cards.CardPlay? cardPlay)
+    {
+        if (target != Owner.Creature) return 1m;
+        return ServantBlockMultiplier;
+    }
 
     public override bool ShowCounter => true;
 

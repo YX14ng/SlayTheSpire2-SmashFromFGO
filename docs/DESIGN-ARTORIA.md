@@ -271,6 +271,17 @@ Caster antes de que el +2 por golpe duela. **Arquetipos drafteables**: (1) Doble
 12. RARA/EVENTO (ILimitBreaker): Cáliz del Mar Interior del Planeta — +15 HP máx;
     Vínculo hasta 12, NP level hasta 6.
 
+## 8.bis Re-baseo al entorno real (2026-06-11)
+
+El usuario juega HextechRunes + BetterCharacters (ver skill §1.bis). Los números de
+este diseño son tasa vanilla: quedan vigentes como TASA RELATIVA entre cartas, y el
+lift global lo da `ArtoriaBond` heredando `BondRelic.ServantDamageMultiplier`/`Block`
+(×1.25 automático, ya implementado en FGOCore). Ajustes de motor al techo nuevo ANTES
+del playtest: pasiva Caster 1★+NP3 → **1★+NP5** por primera Habilidad; tope de
+Estrellas 10 → **12**; los generadores con Exhaust (Marea de Estrellas, Núcleo de
+Avalon, Pulso) +25% en sus montos. El resto se ajusta con las perillas de §11 tras
+jugar.
+
 ## 9. Justificación de balance (resumen; detalle en artoria_design/proposal_0.json)
 
 Crítico = consumir acumulable con doble candado (★ + forma), tasa ≤ ½⚡/★ siempre;

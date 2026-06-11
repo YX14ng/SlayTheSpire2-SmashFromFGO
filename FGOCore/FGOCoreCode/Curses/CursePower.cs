@@ -15,7 +15,9 @@ namespace FGOCore.FGOCoreCode.Curses;
 /// </summary>
 public sealed class CursePower : FGOCorePower
 {
-    public const int MaxPerEnemy = 15;
+    // 15 -> 25 en el re-balance v3: con los hexes de HextechRunes las peleas son mas
+    // largas y el tope de 15 ahogaba el arquetipo de Maldicion justo cuando escalaba.
+    public const int MaxPerEnemy = 25;
 
     public override PowerType Type => PowerType.Debuff;
 
