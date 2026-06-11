@@ -35,10 +35,14 @@ CERRADO o el dll queda lockeado). Última publicación verificada 2026-06-11.
 
 ## SIGUIENTE GRAN TAREA: implementar a Morgan (diseño COMPLETO y aprobado)
 
-[DESIGN-MORGAN.md](DESIGN-MORGAN.md) tiene el diseño terminado (panel multi-agente + jueces,
-2026-06-11): Berserker→Caster vía cartas (swap de modelo con FGOCore FormSwitch), Maldición a
-mitades + Impuesto, 69 cartas + especiales, reliquias, vínculo, assets verificados
-(Morgan 704020/704030, Aesc 505320). Orden de implementación y perillas de playtest en su §10.
+[DESIGN-MORGAN.md](DESIGN-MORGAN.md) tiene el diseño terminado **v2** (panel multi-agente +
+jueces; rehecho a pedido del usuario: FIEL AL KIT de FGO como columna — cada skill real de
+Morgan/Aesc es una carta reconocible, Alzarse/Guts central — y la economía Maldición/Impuesto
+del v1 conservada como UNO de los tres arquetipos drafteables). Berserker→Caster vía cartas
+(swap de modelo con FGOCore FormSwitch) + Reina del Invierno permanente. 68 cartas + especiales,
+reliquias, vínculo sobre defaults, assets verificados (Morgan 704020/704030, Aesc 505320).
+Orden de implementación y perillas de playtest en su §11. Nuevo para FGOCore: GutsPower +
+candado "Inutilizable: turno N" + manifestación de ulti por forma.
 La skill [.claude/skills/sts2-mechanics-design](../.claude/skills/sts2-mechanics-design/SKILL.md)
 contiene los baselines numéricos reales del juego para cualquier ajuste.
 OJO: el export de AssetStudio GUI (×3 modelos) es PASO MANUAL del usuario.

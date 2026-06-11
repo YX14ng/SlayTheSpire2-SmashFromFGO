@@ -1,388 +1,335 @@
-# Diseño de personaje — Morgan (Berserker → Caster, Lostbelt 6)
+# Diseño de personaje — Morgan (Berserker → Caster, Lostbelt 6) — v2
 
 > Mod de personaje para **Slay the Spire 2** (rama MAIN, v0.103.x) sobre **BaseLib ≥ 3.1.8** + **FGOCore**.
-> Segundo personaje del proyecto (tras Mash). Convive con `MashShielder/` — NO pisa Baluarte, Intercepción ni Black Barrel.
+> Convive con `MashShielder/` — NO pisa Baluarte, Intercepción ni Black Barrel.
 >
-> **Proveniencia**: diseñado con la skill [sts2-mechanics-design](../.claude/skills/sts2-mechanics-design/SKILL.md)
-> (baselines extraídos de las 577 cartas del decompilado) mediante panel de 3 diseños independientes
-> (fiel-a-FGO / roguelike-first / reina-tirana) evaluados por 3 jueces (balance numérico / experiencia
-> de juego / lore+implementación). Base: **roguelike-first** (ganador unánime) + injertos puntuales
-> de los otros dos. Assets verificados contra Atlas Academy el 2026-06-11.
+> **v2 por pedido del usuario**: la columna vertebral es la **fidelidad al kit de FGO** (cada skill
+> real de Morgan y de Aesc existe como carta o reliquia reconocible; los dos NP reales son las
+> cartas-NP). La economía de Maldición/Impuesto del v1 NO desaparece: queda como **uno de los tres
+> arquetipos drafteables** del pool (§5).
+> Proveniencia: skill [sts2-mechanics-design](../.claude/skills/sts2-mechanics-design/SKILL.md)
+> + panel de 3 diseños y 3 jueces (2026-06-11); v2 = el diseño "fiel-a-fgo" con los fixes de balance
+> que los jueces le marcaron. Assets verificados contra Atlas Academy.
 
 ## 0. Filosofía de balance
 
-**Rota pero honesta (techo Watcher).** Morgan golpea por encima de la tasa estándar, pero todo
-exceso está embudado por sus propias mecánicas:
+**Rota pero honesta (techo Watcher).** Todo exceso embudado:
 
-- Lo más fuerte requiere **Maldición instalada en los enemigos** — y la Maldición **se evapora a
-  mitades** cada turno: hay que sembrarla, mantenerla y elegir cómo cobrarla. Artefacto, limpiezas
-  de debuffs y combates cortos apagan el plan A → Morgan baja a tasa normal, nunca por debajo.
-- Lo más explosivo paga **HP propio** (es una Berserker: patrón vanilla Hemokinesis/Bloodletting/
-  Offering, siempre `ValueProp.Unblockable|Unpowered`) o **Exhaust**.
 - Las cartas NP consumen **TODA** la Carga (FGOCore): gastar a 70 es renunciar a la ulti de 100.
-- La danza de formas cuesta cartas y tempo: la reliquia inicial paga solo el PRIMER cambio.
+- Lo explosivo paga **HP** (es una Berserker) o **Exhaust**; el auto-daño siempre
+  `ValueProp.Unblockable|Unpowered`.
+- La Maldición tiene **tope de 15 por enemigo** y su conversión a NP está capeada (+6/turno vía
+  reliquia de pool) — sin doble-dip que gane por inercia.
+- Plan A interrumpible: Artefacto/limpiezas apagan la Maldición; presión alta castiga quedarse
+  en Bruja; enemigos con mucho Bloqueo niegan el NP-al-dañar de la Reina.
 
 ## 1. Identidad en una frase
 
-**"La tirana que siembra maldiciones y la salvadora que las cosecha — dos reinados en un solo cuerpo."**
+**"La Reina que murió incontables veces: maldice, carga su lanza, y se alza de cada muerte."**
 
-La pregunta que Morgan responde cada turno y un mazo de Ironclad no: **¿este turno SIEMBRO o COBRO?**
+Fantasía: el kit real de Morgan jugado como mazo — *Carisma del Anhelo* para abrir, réplicas de
+Rhongomyniad para castigar, *Desde el Confín del Mundo* para levantarse de la muerte con más
+fuerza, y la danza entre sus dos vidas: la **Reina Berserker** que golpea y siembra maldiciones,
+y **Aesc, la Bruja de la Lluvia (Caster)** que carga el Noble Phantasm bajo la lluvia de Orkney.
+El loop esperado: sembrar en Reina → cruzar a Bruja a cargar NP → decidir **en qué forma cruzo
+los 100** (¿ulti de daño o de supervivencia?) → volver a ejecutar.
 
-- En forma **Berserker** (la Reina) siembra **Maldición** (daño diferido que se evapora a mitades)
-  y paga sus excesos con HP. Acumula. Sangra.
-- En forma **Caster** (Aesc, la Bruja de la Lluvia) cobra el **Impuesto**: consume esas Maldiciones
-  y las convierte en Carga NP y economía. Gasta. Se estabiliza.
-- Cada punto de Maldición tiene **tres compradores**: dejarlo tickear (daño), cobrarlo en Caster
-  (recurso) o detonarlo con cartas (tempo). El jugador elige uno por turno.
-- El clímax (carta rara, permanente) es la **Reina del Invierno**: los dos reinados a la vez.
-
-La oscilación no es "modo mejor": Berserker defiende peor (−1 de Bloqueo por carta) y quema HP;
-Caster deja de sembrar (el Impuesto cobra en vacío si la Maldición ya se evaporó). El motor te
-empuja a volver.
-
-## 2. Resumen de lore (fuente del sabor — terminología CN oficial de Mooncell/scripts)
+## 2. Resumen de lore (terminología CN oficial)
 
 - **Reina del Invierno (冬之女王)**: tirana 2000 años de la Britania de las Hadas (妖精国不列颠).
   Porta **Rhongomyniad** (止境之枪·伦戈米尼亚德) como magia: dispara réplicas de la lanza.
-- **Impuesto de Existencia (存在税)**: las hadas le pagan energía mágica una vez al año o mueren
-  → el motor del personaje.
-- **Aesc (CN oficial: 梣, el fresno), la Salvadora (救世妖精)** del Clan de la Lluvia (雨之氏族) de
-  Orkney del Confín (止境的奥克尼): fundó la Mesa Redonda, construyó Londinium (伦蒂尼恩), fue
-  traicionada y asesinada por las hadas que salvó, murió incontables veces y volvió del Confín
-  (止境) convertida en invierno. En FGO es la servant separada **"Aesc the Rain Witch"** (雨之魔女梣).
-- Skills reales mapeadas: Carisma del Anhelo (渴望的魅力), Protección del Lago (湖之加护), Desde el
-  Confín del Mundo (来自止境), Hada del País de la Lluvia (雨之国的妖精), Carisma de la Adversidad
-  (逆境的魅力), Último Recurso (最后的度假胜地 — el CN oficial conserva el chiste resort/recurso),
-  Ojos Feéricos (妖精眼), Madness Enhancement (狂化).
-- NPs reales: **Roadless Camelot** (业已无法抵达的理想乡 — Maldición 5t + "Overcharge +1") y
-  **Memory of Londinium** (圣剑遥远梦之遗痕 — "las armas de los caballeros del pasado, presente y futuro").
-- Reparto secundario: Caballeros Hada/Tam Lin (妖精骑士: 巴格斯特 / 梅柳齐娜 / 芭万·希), Spriggan el
-  tesorero (斯普里根), los Mors (摩耳斯 — criaturas-maldición, NO asistentes), Cernunnos (科尔努诺斯),
-  Albion (阿尔比恩), Clan del Espejo (镜之氏族), Oberon (奥伯龙), Habetrot (哈贝特洛特), Vivian (薇薇安).
-- Memes CN: 想和摩根组建家庭 ("quiero formar un hogar con Morgan"), 笨蛋妈妈 (mamá boba de Baobhan Sith).
+- **Kit Berserker real**: Carisma del Anhelo B (渴望的魅力), Protección del Lago C (湖之加护),
+  Desde el Confín del Mundo A (来自止境 — Guts + críticos + aura), Madness Enhancement B (狂化),
+  Item Construction EX (道具作成), Territory Creation B (阵地作成), Ojos Feéricos A (妖精眼).
+  NP **Roadless Camelot** (业已无法抵达的理想乡): daño masivo + **Maldición 5t a todos** +
+  "Overcharge +1 al usar NP".
+- **Kit Caster real (Aesc, 雨之魔女梣)**: Hada del País de la Lluvia A (雨之国的妖精 — regen NP),
+  Carisma de la Adversidad A (逆境的魅力 — escala con HP perdida), Último Recurso A
+  (最后的度假胜地 — inutilizable 5 turnos). NP **Memory of Londinium** (圣剑遥远梦之遗痕):
+  Invencible + las armas de los caballeros del pasado, presente y futuro.
+- **Impuesto de Existencia (存在税)**: las hadas pagan energía o mueren → el arquetipo de la Tiranía.
+- Reparto: Caballeros Hada (妖精骑士: Barghest 巴格斯特 / Melusine 梅柳齐娜 / Baobhan Sith 芭万·希),
+  Spriggan (斯普里根), Mors (摩耳斯, criaturas-maldición), Cernunnos (科尔努诺斯), Albion (阿尔比恩),
+  Clan del Espejo (镜之氏族), Habetrot (哈贝特洛特), Vivian/la Dama del Lago (薇薇安/水妃),
+  el fresno árbol-mundo (梣). Memes CN: 想和摩根组建家庭, 笨蛋妈妈.
 
 ## 3. Stats base
 
-| Atributo | Valor | Justificación contra baseline |
+| Atributo | Valor | Justificación |
 |---|---|---|
-| HP máximo | **78** | Rango vanilla 66–80. No es tanque (Mash 85 intocada), pero usa HP como recurso → colchón del arquetipo gastador (Ironclad 80 es el precedente). 78 = casi tope, restado porque tiene Alzarse y curación condicional. |
-| Energía | 3⚡ | Estándar universal. |
-| Oro inicial | 99 | Estándar universal. |
-| Color de cartas | Blanco glacial y azul noche, acentos carmesí | Paleta de Morgan; las cartas de Caster tintean a azul lluvia. |
-| Carga NP | 0–300, ulti a 100 | FGOCore estándar (ya probado con Mash). |
+| HP máximo | **76** | Rango vanilla 66-80; paga HP en ~8 cartas (precedente Ironclad 80) pero tiene Alzarse y curas condicionales. Entre Defect (75) e Ironclad (80). |
+| Energía | 3⚡ | Estándar. |
+| Oro inicial | 99 | Estándar. |
+| Color | Blanco glacial y azul noche, acentos carmesí | Las cartas de Caster tintean a azul lluvia. |
+| Carga NP | 0–300, ulti a 100 | FGOCore estándar. |
 | Forma inicial | **Berserker** | Requisito del encargo. |
 
 **Reliquia inicial — Rhongomyniad, el Cetro de la Reina (止境之枪·伦戈米尼亚德(王笏))**:
-*La primera vez que cambias de forma en cada combate: gana 1⚡ y roba 1 carta.*
-Hace tempo-positivo el primer cambio sin regalar un motor infinito.
+*La primera vez que cambias de forma en cada combate: gana 1⚡ y roba 1.*
+(La mecánica pedida — cambiar de forma vía cartas — definida desde la starter; el primer cambio
+es tempo-positivo, los demás los pagás vos. La conversión Maldición→NP que era starter en v1 se
+movió al pool: es del arquetipo, no del personaje.)
 
-**Mazo inicial (10):** 4× Golpe (1⚡, 6) · 4× Defender (1⚡, 5) · 2 firmas (§5.0).
-Checklist: gana el acto 1 sin motor — los Golpes + Azote de la Reina son daño a tasa; en Berserker
-los Defender dan 4 (la primera lección: defender es del reinado de la lluvia).
+**Mazo inicial (10):** 4× Golpe (1⚡, 6) · 4× Defender (1⚡, 5) · 2 firmas:
+
+| # | Carta (eng / es / zhs) | Tipo, Coste | Efecto | Mejora |
+|---|---|---|---|---|
+| S1 | Lance of the World's End / **Lanza del Confín** / 止境之枪 | Ataque, 1⚡ | 8 de daño. Aplica 2 de Maldición. | +: 11 de daño, 3 de Maldición |
+| S2 | Queen's Mandate / **Mandato de la Reina** / 女王的敕命 | Habilidad, 1⚡ | 5 de Bloqueo. Carga NP +10. Si algún enemigo tiene Maldición: +3 de Bloqueo. | +: 7 de Bloqueo, Carga +15 |
+
+(Mismo presupuesto que las firmas de Mash; S1 siembra → S2 cobra: enseñan el loop desde el combate 1.)
 
 ## 4. Mecánicas y keywords
 
-Presupuesto (§1.3 de la skill): **una familia original** (Maldición + Impuesto) + **FGOCore**
-(Carga NP, Formas, Vínculo/dupes/Grial). El costo de HP no es mecánica nueva (patrón vanilla).
+Presupuesto (§1.3 de la skill): **2 keywords originales** (Maldición, Alzarse) + FGOCore
+(Carga NP, Formas, Vínculo/dupes/Grial).
 
-### Maldición (Curse / 诅咒) — keyword nueva, debuff de enemigo
-*Al final del turno del enemigo: recibe daño igual a su Maldición (ignora Bloqueo); luego la
-Maldición se reduce a la MITAD (redondeo hacia abajo).*
+### Maldición (Curse / 诅咒) — keyword nº1
+*Al final del turno de la criatura maldita: pierde X de HP (ignora Bloqueo); luego la Maldición
+se reduce en 1. Máximo 15 por enemigo.*
 
-- Daño total si nadie la toca: pila 5 → 8; pila 8 → 15; pila 12 → 22. **Tasa de presupuesto:
-  1 punto ≈ 1,7 de daño diferido** (el delay es el premium vs 9-10 inmediato por 1⚡).
-- La evaporación a mitades es la urgencia del diseño: **cobrala o perdela** (la diferencia real
-  contra Veneno, que premia ignorarlo).
-- **REQUISITO de implementación (no negociable, condición de los 3 jueces)**: tooltip con el daño
-  proyectado del próximo tick — precedente exacto en el decompilado:
-  `PoisonPower.CalculateTotalDamageNextTurn()`. Plan B si las mitades no se leen en playtest:
-  decaimiento plano −2 y recortar ~10 aplicadores (tabla en §10).
-- Multijugador: ofensa personal → NO escala con jugadores.
+- Matemática de Veneno (X ≈ X(X+1)/2 de daño diferido) → **1⚡ ≈ 4-5 de Maldición pura**.
+- Origen canónico: la Maldición 5t del NP *Roadless Camelot*.
+- El **tope de 15** y la conversión capeada (+6/turno, reliquia de pool) son los fixes del panel
+  al doble-dip: sin auto-win por inercia en peleas largas, ni con *Maldición de Cernunnos*.
+- Implementación: daño directo a fin de turno (`CreatureCmd.Damage` Unblockable), NO tocar los
+  hooks `ModifyHpLost*` (tabla de gotchas). Tooltip de daño del próximo tick = pulido deseable
+  (precedente `PoisonPower.CalculateTotalDamageNextTurn()`).
 
-### Impuesto (Tax / 存在税) — el verbo de cobro
-*Impuesto X: consume hasta X de Maldición (del objetivo, o del enemigo con más si no se especifica).
-Cada punto consumido produce el efecto indicado.*
+### Alzarse (Guts / 毅力) — keyword nº2, el drama del personaje
+*Power único (no acumulable; el más nuevo reemplaza al anterior). La primera vez que tu HP
+llegaría a 0 este combate: no morís, quedás a 1 HP (cada fuente detalla bonus al activarse).*
 
-- No es un recurso ni un contador nuevo: es un VERBO sobre la Maldición (cero UI extra).
-- Cobrar 1 pt da ~2 NP o ~2 de daño inmediato renunciando a ~1,7 de daño diferido: el loop nunca
-  se rompe (§3 de la skill se cumple por construcción — sin doble-dip).
+- Es el Guts real de *Desde el Confín del Mundo* y *Último Recurso*: "murió incontables veces y
+  volvió como Reina". Las fuentes dan bonus al dispararse — **morir ES el power spike de Morgan**.
+- Vive en **FGOCore** (`GutsPower`, generalización del patrón `FouMiraclePower` ya probado):
+  reutilizable por futuros servants.
 
-### Carga NP (FGOCore, tal cual)
-- 0–300, ulti al cruzar 100 (`GaugeFilled`), re-arme bajo 100, cartas NP con mínimo que consumen
-  TODO, Sobrecarga lineal +X por cada 10 sobre el mínimo (evaluada antes de pagar).
-- Mínimos del personaje: Lluvia de Rhongomyniad 40 · Memory of Londinium 50 · Roadless Camelot 70 ·
-  Lanza del Confín 100 · ultis manifestadas 100. (Escala espejo de Mash.)
-- **La ulti manifestada depende de la forma activa** y **se transforma al cambiar de forma con
-  ella en mano** (`IFormChangeListener` la intercambia — mismo slot; nunca perdés la ulti por
-  oscilar; la decisión es cuándo y en qué forma JUGARLA). Nota de implementación: las ultis son
-  0⚡/Exhaust/sin upgrade → el swap es generar-y-reemplazar sin estado que migrar; si diera pelea,
-  fallback aprobado por el panel: fijarla al manifestarse (decisión "¿en qué forma cruzo los 100?").
-- **Bendición de Rhongomyniad** (estado generado — el "Overcharge +1" del NP real): *tu próxima
-  carta NP suma +10 a su Sobrecarga.* La otorgan Roadless Camelot a 100+ y la ulti Desatada.
+### Carga NP (FGOCore, sin cambios)
+- 0–300; mínimos: Lluvia de Rhongomyniad 40 · NPs grandes 70 · ultis 100. Sobrecarga lineal
+  (+X por cada 10 sobre el mínimo, evaluada antes de pagar).
+- **Manifestación a 100 dependiente de forma, FIJA**: al cruzar 100, se genera la ulti de la
+  forma activa (Reina/Reina del Invierno → *ROADLESS CAMELOT: Desatado*; Bruja → *MEMORY OF
+  LONDINIUM: Desatado*). La carta NO cambia si después cambiás de forma — "¿en qué forma cruzo
+  los 100?" es la decisión de build del medidor. Re-arme al caer bajo 100.
+- **Bendición de Rhongomyniad** (estado, el "Overcharge +1" del NP real): *tu próxima carta NP
+  suma +10 a su Sobrecarga.*
 
-### HP como recurso (lado Berserker)
-Baselines en TODAS las cartas con sangre: 1 HP ≈ rider chico · 2 HP ≈ +5-6 · 3 HP ≈ 2⚡ ·
-6 HP ≈ 2⚡ + 3 robos con Exhaust. La HP perdida es también combustible de payoffs
-(Carisma de la Adversidad, Venganza de la Traicionada, Sangre de la Reina).
+### Inutilizable: turno N (mecánica menor, una carta)
+*Último Recurso* no puede jugarse antes de tu 5º turno (contador visible) — su mecánica real de
+FGO. El candado paga ~2× de valor (§3 de la skill).
 
-### Reglas globales de legibilidad
-1. **El cambio de forma se resuelve ANTES que el resto de la carta** (el Bloqueo del toggle ya
-   recibe el ±1 de la forma nueva).
-2. Cartas duales: máximo UNA cláusula condicional de forma por carta.
-3. La Maldición se ve como debuff en el enemigo con tooltip de daño proyectado.
+### Multijugador (fiel al kit de soporte)
+- *Carisma del Anhelo*: en co-op da además 1 de Fuerza a los aliados.
+- *Hada del País de la Lluvia*: en co-op, aliados con medidor NP +3/turno.
+- Regalos defensivos del Vínculo escalan ×(1+0.5×(jugadores−1)) (herencia BondRelic); ofensa no.
 
-## 5. Formas (FGOCore: `FormPower` + `FormSwitch` + `FormVisuals`)
+## 5. Los tres arquetipos drafteables
 
-| Forma | Modelo 2D | Pasivas |
-|---|---|---|
-| **Berserker — La Tirana de Britania** (狂战士·妖精国的暴君) — inicial | **704020** | (a) Cuando juegas un Ataque: aplica **1 de Maldición** al primer enemigo golpeado. (b) Tus cartas otorgan **1 menos de Bloqueo** (狂化). |
-| **Caster — Aesc, la Bruja de la Lluvia** (雨之魔女梣) | **505320** | (a) **Cobro del Impuesto**: al inicio de tu turno, Impuesto 5 (del enemigo con más Maldición): **+2 de Carga NP por punto** (máx. +10/turno). (b) Tus cartas otorgan **+1 de Bloqueo**. |
-| **Reina del Invierno** (冬之女王) — permanente (`IsPermanent`), clímax vía carta rara | **704030** (traje oficial) | Las pasivas (a) de AMBAS formas (siembra al atacar + cobro al inicio de turno), sin modificador de Bloqueo, **más composición: al final de tu turno, los enemigos Malditos ganan +2 de Maldición**. La ulti manifestada es la de Berserker. |
+El pool está construido para que el mazo se incline hacia 1-2 de estos ejes (cada uno con
+habilitadores en poco común y payoffs en raro). El mazo inicial funciona sin ninguno.
 
-- La composición de la Reina del Invierno (injerto del panel) converge sola: pila p → p/2+2 →
-  punto fijo ≈ 4 de daño/turno/enemigo — el clímax convierte el motor de oscilación en motor de
-  ejecución sin que las cartas de siembra dejen de pagar. Las 3 cartas que premian cambiar quedan
-  muertas tras coronarte: costo de oportunidad aceptado, igual que el Paladín de Mash.
-- Cambios esperados por combate: 2–4. Pasivas en banda 3-5/turno (§5 de la skill) ✓.
-- Implementación: `FramesPath` por forma (swap de modelo con precarga en hilos), `FormShiftedPower`
-  como marcador, `IFormChangeListener` para la transformación de ulti y los powers de cambio.
+1. **La Carga de la Lanza (NP/Sobrecarga)** — el eje del kit: generadores de NP, las 3 cartas NP
+   con mínimo, Bendición, y la danza de formas para cargar más rápido. Soportado por las skills
+   reales de batería (Protección del Lago, Hada del País de la Lluvia).
+2. **La Sangre de la Reina (HP como recurso + Alzarse)** — Madness Enhancement, Carisma de la
+   Adversidad (umbrales de HP perdida), pagar vida por efecto, y levantarse de la muerte con
+   Fuerza y NP. El lado Berserker del kit.
+3. **La Tiranía (Maldición/Impuesto)** — **el diseño v1 conservado como arquetipo**: sembrar
+   Maldición, mantenerla y cobrarla (como DoT, como NP vía *Impuesto de Existencia* — ahora
+   reliquia de pool — o detonándola con *Cobro Final*). Origen canónico: la Maldición del NP.
 
-## 6. Pool de cartas
+## 6. Formas (FGOCore: `FormPower` + `FormSwitch` + `FormVisuals`)
 
-### 6.0 Firmas (en el mazo inicial)
+| Forma | Modelo | Pasiva | Qué decisión cambia |
+|---|---|---|---|
+| **La Reina (Berserker)** — 妖精女王（狂战士） — inicial | **704020** (fallback 704010) | La primera vez que dañes el HP de un enemigo cada turno: **Carga NP +5**. Tus cartas que aplican Maldición aplican **+1**. | Querés ATACAR y que el daño entre (mucho Bloqueo enemigo niega el NP). Se siembra en Reina. |
+| **Bruja de la Lluvia (Caster)** — 雨之魔女·梣 | **505320** (fallback 505310) | Al inicio de tu turno: **Carga NP +5**. Tus Ataques hacen **2 menos de daño**. | Cargar sin atacar; turnos de Habilidades/Poderes y defensa. La penalidad muerde si te quedás a pegar. |
+| **Reina del Invierno** — 冬之女王 — permanente (`IsPermanent`), clímax vía carta rara | **704030** (traje oficial) | **Ambas pasivas, sin la penalización de Caster.** La ulti manifestada es la de la Reina. | El clímax: deja de existir la danza, empieza la ejecución (rol del Paladín de Mash). |
 
-| # | Carta (eng / es / zhs) | Tipo, Coste | Efecto | Mejora |
-|---|---|---|---|---|
-| S1 | Queen's Scourge / **Azote de la Reina** / 女王的鞭笞 | Ataque, 1⚡ | 6 de daño. Aplica 2 de Maldición. | +: 8 de daño, 3 de Maldición |
-| S2 | Rain and Winter / **Lluvia e Invierno** / 雨与冬 | Habilidad, 1⚡ | **Cambia de forma** (toggle; se resuelve primero). Gana 5 de Bloqueo. | +: 8 de Bloqueo y roba 1 |
+(Fix del panel: la pasiva de Bruja baja de +6 a **+5 NP/turno** — anti-"Caster estacionaria";
+con la starter ya no generando NP pasivo, los grifos apilables quedan en banda.)
 
-S1: 6 + 2pts(≈3,4) ≈ 9,4 a 1⚡ = banda común exacta. S2: el mazo inicial ya oscila; con la starter
-el primer uso es tempo-positivo.
+Cartas de cambio (§5 de la skill: baratas, efecto inmediato, ~2-3 cambios por combate):
+*Cambio: La Reina* (#33), *Cambio: Bruja de la Lluvia* (#34), *Truco del Clan del Espejo* (#40),
+*Coronación del Invierno* (#57, permanente).
 
-### 6.1 Comunes (20) — ~9 pan y manteca / ~8 motor / ~3 payoff
+## 7. Pool de cartas
 
-**Ataques (10)**
+### 7.1 Comunes (20) — 10 Ataques / 10 Habilidades
 
 | # | Carta (eng / es / zhs) | Tipo, Coste | Efecto | Mejora |
 |---|---|---|---|---|
-| 1 | Lance Replica / **Réplica de la Lanza** / 长枪的复制品 | Ataque, 1⚡ | 9 de daño. | +: 12 |
-| 2 | Frost Lash / **Azote Gélido** / 寒霜鞭笞 | Ataque, 1⚡ | 6 de daño. Aplica 2 de Maldición. | +: 8 y 3 |
-| 3 | Execution Decree / **Decreto de Ejecución** / 处刑敕令 | Ataque, 2⚡ | 18 de daño. Pierde 3 HP. | +: 24 de daño |
-| 4 | Storm of Lances / **Tormenta de Lanzas** / 枪之风暴 | Ataque, 1⚡ | 4 de daño a TODOS. 1 de Maldición a TODOS. | +: 6 y 2 a TODOS |
-| 5 | Scepter Blow / **Golpe del Cetro** / 权杖重击 | Ataque, 2⚡ | 14 de daño. Gana 4 de Bloqueo. | +: 18 y 6 |
-| 6 | Call the Mors / **Llamado de los Mors** / 摩耳斯之唤 | Ataque, 1⚡ | 5 de daño. **Impuesto 3**: +2 de daño por punto. | +: 7, Impuesto 4 |
-| 7 | Queen's Wrath / **Cólera de la Reina** / 女王之怒 | Ataque, 0⚡ | Pierde 2 HP: 8 de daño. | +: 11 |
-| 8 | Tyrant's Charge / **Embestida Tiránica** / 暴君冲撞 | Ataque, 1⚡ | 8 de daño. En Berserker: aplica 2 de Maldición. | +: 11 y 3 |
-| 9 | Cutting Rain / **Lluvia Cortante** / 斩裂之雨 | Ataque, 1⚡ | 3 de daño ×3. En Caster: gana 3 de Bloqueo. | +: 4×3, gana 4 |
-| 10 | Disdain / **Desdén** / 蔑视 | Ataque, 1⚡ | 7 de daño. Aplica 1 de Débil. | +: 10 y 2 |
+| 1 | Replica Lance / **Réplica de Lanza** / 长枪复制品 | Ataque, 1⚡ | 9 de daño. | +: 12 |
+| 2 | Cursed Bolt / **Saeta Maldita** / 诅咒之矢 | Ataque, 1⚡ | 6 de daño. Aplica 2 de Maldición. | +: 8 y 3 |
+| 3 | Queen's Scorn / **Desdén de la Reina** / 女王的轻蔑 | Ataque, 0⚡ | 4 de daño. +3 si el objetivo tiene Maldición. | +: 6, +4 |
+| 4 | Mad Lunge / **Embestida Demente** / 狂化突进 | Ataque, 2⚡ | 20 de daño. Pierdes 2 HP. | +: 26 |
+| 5 | Tyrant's Sweep / **Barrido de la Tirana** / 暴君横扫 | Ataque, 1⚡ | 6 de daño a TODOS. | +: 9 a TODOS |
+| 6 | Scepter Blow / **Golpe de Cetro** / 王笏之击 | Ataque, 1⚡ | 8 de daño. Carga NP +5. | +: 11, +8 |
+| 7 | Twin Replicas / **Réplica Doble** / 双重复制 | Ataque, 1⚡ | 4 de daño ×2. Carga NP +4. | +: 6×2, +6 |
+| 8 | Royal Punishment / **Castigo Real** / 女王的惩罚 | Ataque, 2⚡ | 12 de daño. Aplica 2 de Vulnerable. | +: 16 |
+| 9 | Tyrant's Blood / **Sangre de Tirana** / 暴君之血 | Ataque, 0⚡ | 6 de daño. Pierdes 1 HP. | +: 9 |
+| 10 | Queen's Fury / **Furia de la Reina** / 女王之怒 | Ataque, 1⚡ | 10 de daño. En forma Reina: Carga NP +8. | +: 13, +10 |
+| 11 | Mist Veil / **Velo de Niebla** / 雾之帷幕 | Habilidad, 1⚡ | 8 de Bloqueo. | +: 12 |
+| 12 | Cursed Rain / **Lluvia Maldita** / 诅咒之雨 | Habilidad, 1⚡ | Aplica 2 de Maldición a TODOS. Carga NP +5. | +: 3 a TODOS, +8 |
+| 13 | Witch's Mark / **Marca de la Bruja** / 魔女的印记 | Habilidad, 0⚡ | Aplica 3 de Maldición. | +: 5 |
+| 14 | Tax Collection / **Recaudación** / 征税 | Habilidad, 1⚡ | Carga NP +12. Si algún enemigo tiene Maldición: +8 adicional. | +: +16, +12 |
+| 15 | Royal Edict / **Edicto Real** / 女王敕令 | Habilidad, 1⚡ | Roba 2. Carga NP +5. | +: roba 3 |
+| 16 | Protective Frost / **Escarcha Protectora** / 护身之霜 | Habilidad, 1⚡ | 6 de Bloqueo. Carga NP +6. | +: 8, +10 |
+| 17 | Queen's Gaze / **Mirada de la Reina** / 女王的凝视 | Habilidad, 0⚡ | Aplica 1 de Débil. Carga NP +5. | +: 2 de Débil, +8 |
+| 18 | Rain Chant / **Canto de la Lluvia** / 雨之咏唱 | Habilidad, 1⚡ | 5 de Bloqueo. En forma Bruja: Carga NP +10. | +: 8, +14 |
+| 19 | Winter Steel / **Acero del Invierno** / 寒冬之铁 | Habilidad, 2⚡ | 15 de Bloqueo. | +: 20 |
+| 20 | Vassalage / **Vasallaje** / 臣从之礼 | Habilidad, 0⚡ | 4 de Bloqueo. | +: 6, roba 1 |
 
-**Habilidades (10)**
+### 7.2 Poco comunes (28) — 10 Ataques / 12 Habilidades / 6 Poderes
 
-| # | Carta (eng / es / zhs) | Tipo, Coste | Efecto | Mejora |
-|---|---|---|---|---|
-| 11 | Rime Guard / **Guardia de Escarcha** / 霜之守势 | Habilidad, 1⚡ | 8 de Bloqueo. | +: 11 |
-| 12 | Rain Veil / **Velo de Lluvia** / 雨之帷幕 | Habilidad, 1⚡ | 5 de Bloqueo. Carga NP +10. | +: 7 y +15 |
-| 13 | Royal Edict / **Edicto Real** / 王敕 | Habilidad, 0⚡ | Aplica 2 de Maldición. | +: 3 |
-| 14 | Tax Collection / **Recaudación** / 征税 | Habilidad, 1⚡ | **Impuesto 4**: gana 2 de Carga NP y 1 de Bloqueo por punto. | +: Impuesto 6 |
-| 15 | Fairy Eyes / **Ojos Feéricos** / 妖精眼 | Habilidad, 1⚡ | Roba 2. | +: roba 2, Carga NP +10 |
-| 16 | Territory Creation / **Creación de Territorio** / 阵地作成 | Habilidad, 1⚡ | 6 de Bloqueo. En Caster: roba 1. | +: 9 de Bloqueo |
-| 17 | Everfrost / **Escarcha Perenne** / 永冬之霜 | Habilidad, 2⚡ | 13 de Bloqueo. Aplica 2 de Maldición. | +: 16 y 3 |
-| 18 | Blood Tribute / **Tributo de Sangre** / 血之贡品 | Habilidad, 0⚡ | Pierde 2 HP: Carga NP +15. | +: +22 |
-| 19 | Tyrant's Gaze / **Mirada de la Tirana** / 妖妃的凝视 | Habilidad, 1⚡ | Aplica 2 de Débil y 1 de Maldición. | +: 3 y 2 |
-| 20 | Turn of Seasons / **Cambio de Estación** / 季节更替 | Habilidad, 0⚡ | **Cambia de forma**. Carga NP +5. | +: +10 y roba 1 |
-
-### 6.2 Poco comunes (29) — 12 ataques / 12 habilidades / 5 poderes
-
-**Ataques (12)**
+Aquí viven 4 skills del kit (#31, #32, #43, #44) y las cartas de cambio de forma.
 
 | # | Carta (eng / es / zhs) | Tipo, Coste | Efecto | Mejora |
 |---|---|---|---|---|
-| 21 | Scattered Replicas / **Réplicas Dispersas** / 离散的复制长枪 | Ataque, 2⚡ | 7 de daño ×2. Carga NP +10. | +: 9×2, +15 |
-| 22 | Mors Harvest / **Cosecha de Mors** / 摩耳斯的收割 | Ataque, 1⚡ | 8 de daño. Si el objetivo tiene Maldición: roba 1 y Carga NP +5. | +: 11 |
-| 23 | Lance of Judgment / **Lanza del Juicio** / 裁决之枪 | Ataque, 3⚡ | 24 de daño. Aplica 4 de Maldición. | +: 30 y 5 |
-| 24 | Chill of the End / **Frío del Confín** / 止境之寒 | Ataque, 1⚡ | 11 de daño. Solo jugable en Berserker o Reina del Invierno. | +: 15 |
-| 25 | Rod of Torrents / **Vara de los Torrentes** / 激流之杖 | Ataque, 1⚡ | 8 de daño. En Caster: Carga NP +10 y gana 3 de Bloqueo. | +: 10, +15 y 5 |
-| 26 | Make an Example / **Castigo Ejemplar** / 杀一儆百 | Ataque, 2⚡ | 16 de daño. Si mata al objetivo: 4 de Maldición a TODOS los demás. | +: 20 y 6 |
-| 27 | Silver Avalanche / **Avalancha de Plata** / 银色雪崩 | Ataque, 2⚡ | 12 de daño a TODOS. Pierde 4 HP. | +: 16 a TODOS |
-| 28 | Barghest's Fang / **Colmillo de Barghest** / 巴格斯特之牙 | Ataque, 2⚡ | 13 de daño. Cura HP igual a la Maldición del objetivo (máx. 5). | +: 17, máx. 7 |
-| 29 | Baobhan Sith's Song / **Canción de Baobhan Sith** / 芭万·希之歌 | Ataque, 1⚡ | 5 de daño ×2. Si el objetivo tiene Maldición: +2 por golpe. | +: 6×2, +3 |
-| 30 | Melusine's Flash / **Destello de Melusine** / 梅柳齐娜的闪光 | Ataque, 0⚡ | 7 de daño. Exhaust. | +: 10 y Carga NP +5 |
-| 31 | Albion's Roar / **Rugido de Albion** / 阿尔比恩的咆哮 | Ataque, 3⚡ | 30 de daño. Pierde 4 HP. | +: 38 |
-| 32 | Rain of Rhongomyniad / **Lluvia de Rhongomyniad** / 伦戈米尼亚德之雨 | **Ataque NP**, 1⚡ (mín. Carga 40, consume TODA) | 16 de daño. **Sobrecarga**: +4 por cada 10 sobre 40. | +: 20 base, +5/10 |
+| 21 | Replica Barrage / **Andanada de Réplicas** / 复制枪连射 | Ataque, 2⚡ | 5 de daño ×3. Carga NP +5 por golpe que dañe HP. | +: 6×3 |
+| 22 | Barghest's Fang / **Colmillo de Barghest** / 巴格斯特之牙 | Ataque, 2⚡ | 16 de daño. Si el objetivo tiene Maldición: cura 4 HP. | +: 21, cura 6 |
+| 23 | Melusine's Talon / **Garra de Melusine** / 梅柳齐娜之爪 | Ataque, 1⚡ | 12 de daño. | +: 16 |
+| 24 | Baobhan Sith's Shriek / **Chillido de Baobhan Sith** / 芭万·希的尖啸 | Ataque, 1⚡ | 9 de daño. Aplica 2 de Maldición. | +: 12 y 3 |
+| 25 | Wild Hunt Charge / **Carga de la Cacería** / 狂猎冲锋 | Ataque, 2⚡ | 11 de daño a TODOS. | +: 15 a TODOS |
+| 26 | Storm's Wrath / **Ira de la Tormenta** / 风暴之怒 | Ataque, 3⚡ | 26 de daño. Aplica 3 de Maldición. | +: 32 y 4 |
+| 27 | Adversity's Fury / **Furia de la Adversidad** / 逆境之怒 | Ataque, 1⚡ | 8 de daño. +4 si tu HP ≤ 75%; +4 más si ≤ 50%. | +: 10 base |
+| 28 | Royal Execution / **Ejecución Real** / 女王处刑 | Ataque, 2⚡ | 14 de daño. Si mata al objetivo: Carga NP +25 y 2 de Maldición a TODOS. | +: 18, +30 |
+| 29 | Albion's Breath / **Aliento de Albion** / 阿尔比恩的吐息 | Ataque, 3⚡ | 9 de daño ×3 (aleatorio). | +: 11×3 |
+| 30 | Mirror Strike / **Golpe del Espejo** / 镜之一击 | Ataque, 1⚡ | 6 de daño ×2. Si cambiaste de forma este combate: ×3. | +: 8 por golpe |
+| 31 | Charisma of Yearning / **Carisma del Anhelo** / 渴望的魅力 | Habilidad, 2⚡ | Gana 2 de Fuerza. Aplica 1 de Vulnerable a TODOS. Carga NP +10. *(co-op: aliados +1 Fuerza)* | +: 3 de Fuerza, +15 |
+| 32 | Protection of the Lake / **Protección del Lago** / 湖之加护 | Habilidad, 1⚡ | Carga NP +20. En forma Bruja: roba 1. | +: +28 |
+| 33 | Form: The Fairy Queen / **Cambio: La Reina** / 切换：妖精女王 | Habilidad, 1⚡ | Entra en forma **Reina**. Aplica 3 de Maldición. | +: 5 |
+| 34 | Form: Rain Witch / **Cambio: Bruja de la Lluvia** / 切换：雨之魔女 | Habilidad, 0⚡ | Entra en forma **Bruja de la Lluvia**. Carga NP +10. | +: +18 |
+| 35 | Winter Decree / **Decreto de Invierno** / 寒冬敕令 | Habilidad, 2⚡ | 12 de Bloqueo. Aplica 2 de Maldición a TODOS. | +: 16 y 3 |
+| 36 | Embrace of the Lake / **Abrazo de la Dama del Lago** / 水妃的拥抱 | Habilidad, 1⚡ | 12 de Bloqueo. Solo jugable en forma Bruja. | +: 16 |
+| 37 | Winter Thorns / **Espinas del Invierno** / 寒冬荆棘 | Habilidad, 1⚡ | 7 de Bloqueo. Los enemigos que te ataquen este turno ganan 2 de Maldición. | +: 10 y 3 |
+| 38 | Curse Harvest / **Cosecha de Maldiciones** / 诅咒收割 | Habilidad, 1⚡ | Duplica la Maldición de UN enemigo (máx. +6). | +: máx. +10 |
+| 39 | Memory of the Ash Tree / **Memoria del Fresno** / 梣树之忆 | Habilidad, 0⚡ | Carga NP +8. Roba 1. Exhaust. | +: +14 |
+| 40 | Mirror Clan's Trick / **Truco del Clan del Espejo** / 镜之氏族的把戏 | Habilidad, 1⚡ | Cambia a tu forma opuesta. Roba 2. | +: roba 3 |
+| 41 | Savior's Tears / **Lágrimas de la Salvadora** / 救世妖精之泪 | Habilidad, 1⚡ | Cura 5 HP; si tu HP ≤ 50%: cura 9. Exhaust. | +: 7 / 12 |
+| 42 | Call of the Fairy Knights / **Llamado de los Caballeros Hada** / 妖精骑士召集 | Habilidad, 2⚡ | 2 de Maldición a TODOS (Barghest), 1 de Débil a TODOS (Baobhan Sith), 6 de Bloqueo (Melusine). Exhaust. | +: 3 / 2 / 9 |
+| 43 | Fairy of the Rainland / **Hada del País de la Lluvia** / 雨之国的妖精 | Poder, 1⚡ | Al jugarla: Carga NP +15. Al inicio de cada turno: +5. *(co-op: aliados con NP +3/turno)* | +: +20 al jugarla, +8/turno |
+| 44 | Madness Enhancement / **Refuerzo de Locura** / 狂化 | Poder, 1⚡ | Cada vez que pierdas HP durante tu turno: Carga NP +6 (máx. +12 por turno). | +: +9 (máx. +18) |
+| 45 | Fairy Eyes / **Ojos Feéricos** / 妖精眼 | Poder, 1⚡ | Al inicio de cada turno: aplica 1 de Maldición a TODOS. | +: 2 a TODOS |
+| 46 | Territory Creation / **Creación de Territorio** / 阵地作成 | Poder, 1⚡ | Al final de tu turno: gana 4 de Bloqueo. | +: 6 |
+| 47 | Item Construction / **Creación de Objetos** / 道具作成 | Poder, 2⚡ | Tus cartas que aplican Maldición aplican +1. | +: coste 1⚡ |
+| 48 | Winter Court / **Corte del Invierno** / 冬之宫廷 | Poder, 2⚡ | Roba 1 carta adicional cada turno. | +: coste 1⚡ |
 
-#32 (injerto del panel): la mini-NP spameable — el SUELO de la economía del cobro. Garantiza que
-convertir Maldición→NP en Caster siempre tenga salida aunque no robes las NP raras.
+(#44 ahora con tope por turno — fix del panel a los grifos de NP apilables.)
 
-**Habilidades (12)**
-
-| # | Carta (eng / es / zhs) | Tipo, Coste | Efecto | Mejora |
-|---|---|---|---|---|
-| 33 | Winter's Fury / **Furia del Invierno** / 凛冬之怒 | Habilidad, 1⚡ | Entra en forma **Berserker**. Aplica 3 de Maldición. | +: 5 |
-| 34 | Memory of the Savior / **Memoria de la Salvadora** / 救世主的记忆 | Habilidad, 1⚡ | Entra en forma **Caster**. Gana 8 de Bloqueo. | +: 12 |
-| 35 | Existence Tax / **Impuesto de Existencia** / 存在税 | Habilidad, 1⚡ | **Impuesto 6**: gana 1 de Bloqueo y 2 de Carga NP por punto. Roba 1. | +: Impuesto 9 |
-| 36 | Habetrot's Blessing / **Bendición de Habetrot** / 哈贝特洛特的祝福 | Habilidad, 1⚡ | Cura 4 HP. En Caster: cura 7. Exhaust. | +: 6 / 10 |
-| 37 | Mirror Clan's Glass / **Espejo del Clan** / 镜之氏族的魔镜 | Habilidad, 1⚡ | Roba 2. Si cambiaste de forma este turno: roba 3. | +: coste 0⚡ |
-| 38 | Spriggan's Hoard / **Tesoro de Spriggan** / 斯普里根的宝库 | Habilidad, 1⚡ | 8 de Bloqueo. **Impuesto 2**: +2 de Bloqueo por punto. | +: 10, Impuesto 3 |
-| 39 | Rain of Orkney / **Lluvia de Orkney** / 奥克尼之雨 | Habilidad, 2⚡ | 13 de Bloqueo. Carga NP +10. | +: 17, +15 |
-| 40 | Savior's Sacrifice / **Sacrificio de la Salvadora** / 救世主的牺牲 | Habilidad, 0⚡ | Pierde 3 HP: gana 2⚡. Exhaust. | +: pierde 2 HP |
-| 41 | Beneath the World-Ash / **Bajo el Fresno** / 梣树之下 | Habilidad, 1⚡ | Carga NP +15. En Caster: +25. | +: +20 / +30 |
-| 42 | Winter Decree / **Decreto de Invierno** / 凛冬敕令 | Habilidad, 1⚡ | Aplica 4 de Maldición. | +: 6 |
-| 43 | Mist over Norwich / **Niebla de Norwich** / 诺里奇之雾 | Habilidad, 1⚡ | Aplica 2 de Maldición a TODOS. | +: 3 |
-| 44 | Pact of the Lake / **Pacto del Lago** / 湖之契约 | Habilidad, 1⚡ | 11 de Bloqueo. Solo jugable en Caster o Reina del Invierno. | +: 14 |
-
-**Poderes (5)**
+### 7.3 Raras (20) — 6 Ataques / 8 Habilidades / 6 Poderes
 
 | # | Carta (eng / es / zhs) | Tipo, Coste | Efecto | Mejora |
 |---|---|---|---|---|
-| 45 | Mad Enhancement / **Locura Realzada** / 狂化 | Poder, 1⚡ | Tus Ataques aplican +1 de Maldición. | +: coste 0⚡ |
-| 46 | Charisma of Adversity / **Carisma de la Adversidad** / 逆境的魅力 | Poder, 2⚡ | Gana 1 de Fuerza. La primera vez que tu HP caiga bajo 75% / 50% / 25%: gana 2 de Fuerza. | +: 3 por umbral |
-| 47 | Fairy of the Rainy Land / **Hada del País de la Lluvia** / 雨之国的妖精 | Poder, 1⚡ | Al inicio de tu turno: Carga NP +8. | +: +12 |
-| 48 | Faerie Court / **Corte de las Hadas** / 妖精的宫廷 | Poder, 1⚡ | Al inicio de cada turno: aplica 1 de Maldición a TODOS. | +: 2 |
-| 49 | Item Construction (EX) / **Construcción de Ítems** / 道具作成(EX) | Poder, 1⚡ | Cada vez que cambias de forma: gana 4 de Bloqueo y Carga NP +5. | +: 6 y +8 |
+| 49 | **ROADLESS CAMELOT** / 业已无法抵达的理想乡 | Ataque NP, 2⚡ (mín. 70, consume TODA) | 30 de daño a TODOS. Aplica 4 de Maldición a TODOS. Ganas **Bendición de Rhongomyniad**. **Sobrecarga**: +3 de daño por cada 10. | +: 38, 5 de Maldición |
+| 50 | **MEMORY OF LONDINIUM** / 圣剑遥远梦之遗痕 | Ataque NP, 2⚡ (mín. 70, consume TODA) | 18 de daño a TODOS. Gana 1 de **Intangible**. Añade 2 **Armas del Caballero**. **Sobrecarga**: +2 de daño por cada 10; a 100+: +1 Arma. | +: 24, 3 Armas |
+| 51 | Rhongomyniad Rain / **Lluvia de Rhongomyniad** / 伦戈米尼亚德之雨 | Ataque NP, 1⚡ (mín. 40, consume TODA) | 18 de daño. **Sobrecarga**: +4 por cada 10. | +: 24 |
+| 52 | Tyrant's Lance / **Lanza de la Tirana** / 暴君之枪 | Ataque, 2⚡ | 24 de daño. Pierdes 4 HP. | +: 30 |
+| 53 | Savior's Vengeance / **Venganza de la Salvadora** / 救世妖精的复仇 | Ataque, 1⚡ | 6 de daño + tu HP perdida ÷ 5 (máx. 20 total). | +: ÷4 (máx. 24) |
+| 54 | Final Collection / **Cobro Final** / 最后的清算 | Ataque, 1⚡ | Consume TODA la Maldición del objetivo: 2 de daño por punto. | +: 3 por punto |
+| 55 | From the World's End / **Desde el Confín del Mundo** / 来自止境 | Habilidad, 2⚡, Exhaust | Gana **Alzarse**: al activarse quedás a 1 HP, ganás 3 de Fuerza y Carga NP +50. Aplica 1 de Débil a TODOS. | +: quedás a 10 HP, 2 de Débil |
+| 56 | Last Resort / **Último Recurso** / 最后的度假胜地 | Habilidad, 1⚡, Exhaust | **No puede jugarse antes de tu 5º turno.** Carga NP +50. Gana **Alzarse** (1 HP). | +: desde el turno 4, Carga +60 |
+| 57 | Winter Coronation / **Coronación del Invierno** / 冬之女王戴冠 | Habilidad, 2⚡, Exhaust | Entra en forma **Reina del Invierno** (permanente). Aplica 3 de Maldición a TODOS. | +: coste 1⚡, 4 |
+| 58 | Extraordinary Tax / **Impuesto Extraordinario** / 临时增税 | Habilidad, 1⚡, Exhaust | Aplica 4 de Maldición a TODOS. Cura 2 HP por cada enemigo con Maldición. | +: 6, cura 3 |
+| 59 | Under the World Tree / **Bajo el Árbol del Mundo** / 世界树之下 | Habilidad, 2⚡ | Roba 3. Carga NP +20. | +: roba 4, +25 |
+| 60 | Vivian's Gift / **Regalo de Vivian** / 薇薇安的赠礼 | Habilidad, 1⚡, Exhaust | Añade 2 **Armas del Caballero**. Este combate, tus Armas hacen +3 de daño. | +: 3 Armas |
+| 61 | Hailstorm Wall / **Muralla de Granizo** / 冰雹之壁 | Habilidad, 2⚡ | 16 de Bloqueo. Aplica 2 de Maldición a TODOS. | +: 22 y 3 |
+| 62 | "A Home with Morgan" / **«Un Hogar con Morgan»** / 想和摩根组建家庭 | Habilidad, 1⚡, Exhaust | +3 HP máximos. Cura 3 HP. *(meme CN del pool)* | +: +5 y 5 |
+| 63 | Charisma of Adversity / **Carisma de la Adversidad** / 逆境的魅力 | Poder, 1⚡ | Tus ataques hacen +1/+2/+3/+4 de daño si te falta al menos 1%/25%/50%/75% de tu HP. | +: +2/+3/+4/+6 |
+| 64 | Curse of Cernunnos / **Maldición de Cernunnos** / 科尔努诺斯的诅咒 | Poder, 2⚡ | Tus Maldiciones ya no se reducen al activarse. | +: coste 1⚡ |
+| 65 | Sovereign of Two Faces / **Soberana de Dos Rostros** / 双面君主 | Poder, 1⚡ | Cada vez que cambias de forma: roba 2 y Carga NP +10. | +: roba 3, +15 |
+| 66 | Spriggan's Vigil / **Vigilia de Spriggan** / 斯普里根的看守 | Poder, 2⚡ | Al inicio de cada turno: gana 5 de Bloqueo. | +: 7 |
+| 67 | Perpetual Winter / **Invierno Perpetuo** / 永恒之冬 | Poder, 3⚡ | Al inicio de cada turno: aplica 2 de Maldición a TODOS. | +: coste 2⚡ |
+| 68 | Fae Blood Pact / **Pacto de Sangre Feérica** / 妖精血之契约 | Poder, 2⚡ | Al inicio de cada turno: pierdes 2 HP y Carga NP +12. | +: +18 |
 
-(#48 corregido por el panel: a 2⚡ con 1/turno era carta trampa — baja a 1⚡.)
+Fixes del panel sobre el v-base: #54 ahora CONSUME (el detonador del arquetipo de Tiranía, con
+tope implícito por el cap de 15 → máx. 30/45); #56 pierde el "+50% a la próxima NP" (excedía el
+presupuesto del candado); #64 queda acotado por el tope de Maldición 15 y el cap del Impuesto.
+Nombres zhs corregidos a terminología oficial (渴望的魅力, 逆境的魅力, 来自止境, 最后的度假胜地, 湖之加护).
 
-### 6.3 Raras (20) — 6 ataques / 9 habilidades / 5 poderes
-
-**Ataques (6)**
-
-| # | Carta (eng / es / zhs) | Tipo, Coste | Efecto | Mejora |
-|---|---|---|---|---|
-| 50 | **ROADLESS CAMELOT** / 业已无法抵达的理想乡 | Ataque NP, 2⚡ (mín. 70, consume TODA) | 28 de daño a TODOS. 4 de Maldición a TODOS. **Sobrecarga**: +3 de daño a todos por cada 10 sobre 70. Si consumiste 100+: gana **Bendición de Rhongomyniad**. | +: 36 base, 5 de Maldición |
-| 51 | Spear That Marks the End / **Lanza del Confín** / 止境之枪·伦戈米尼亚德 | Ataque NP, 3⚡ (mín. 100, consume TODA) | 50 de daño. Si mata: gana 30 de Carga NP. **Sobrecarga**: +5 por cada 10 sobre 100. Exhaust. | +: 62 base |
-| 52 | Final Collection / **Cobro Final** / 最后的清算 | Ataque, 1⚡ | **Impuesto TOTAL** (toda la Maldición del objetivo): 2 de daño por punto. | +: 3 por punto |
-| 53 | Rend of Cernunnos / **Desgarro de Cernunnos** / 科尔努诺斯之撕裂 | Ataque, 3⚡ | 20 de daño a TODOS. Pierde 6 HP. | +: 26 a TODOS |
-| 54 | Rain of Holy Swords / **Lluvia de Espadas Sagradas** / 圣剑之雨 | Ataque, 2⚡ | 5 de daño ×4 (aleatorio). En Caster: +2 por golpe. | +: 6×4, +3 |
-| 55 | Vengeance of the Betrayed / **Venganza de la Traicionada** / 背叛者的复仇 | Ataque, 1⚡ | 6 de daño, +1 por cada 2 de HP perdida este combate (máx. +12). | +: 8 base, máx. +18 |
-
-**Habilidades (9)**
-
-| # | Carta (eng / es / zhs) | Tipo, Coste | Efecto | Mejora |
-|---|---|---|---|---|
-| 56 | **MEMORY OF LONDINIUM** / 圣剑遥远梦之遗痕 | Habilidad NP, 2⚡ (mín. 50, consume TODA) | Gana 20 de Bloqueo. Añade 2 **Caballeros Hada** aleatorios a tu mano. **Sobrecarga**: +3 de Bloqueo por cada 10 sobre 50. | +: 26 de Bloqueo, 3 Caballeros |
-| 57 | Last Resort / **Último Recurso** / 最后的度假胜地 | Habilidad, 0⚡ | **Solo jugable a partir del turno 5.** Gana 2⚡ y Carga NP +50. Exhaust. | +: a partir del turno 4 |
-| 58 | Throne at World's End / **El Trono del Confín** / 止境的王座 | Habilidad, 2⚡ | Entra en forma **Reina del Invierno** (permanente). Aplica 3 de Maldición a TODOS. Exhaust. | +: coste 1⚡, 5 de Maldición |
-| 59 | From the World's End / **Desde el Confín del Mundo** / 来自止境 | Habilidad, 1⚡ | Este combate, la primera vez que fueras a morir: quedas a 1 HP y ganas 3 de Fuerza. Exhaust. | +: quedas con 10 HP |
-| 60 | Charisma of Yearning / **Carisma del Anhelo** / 渴望的魅力 | Habilidad, 1⚡ | Gana 2 de Fuerza. Carga NP +10. Exhaust. | +: 3 de Fuerza, +15 |
-| 61 | Protection of the Lake / **Protección del Lago** / 湖之加护 | Habilidad, 1⚡ | Carga NP +30. Exhaust. | +: +40 |
-| 62 | Oberon's Dream / **Sueño de Oberon** / 奥伯龙之梦 | Habilidad, 0⚡ | Roba 3. Al final de este turno: pierde 4 HP. | +: roba 4, pierde 3 |
-| 63 | The 10,000-Year Plan / **El Plan de Diez Mil Años** / 万年大计 | Habilidad, 2⚡ | Duplica la Maldición de un enemigo (máx. +15). Exhaust. | +: máx. +25 |
-| 64 | Savior's Veil / **Velo de la Salvadora** / 救世主的面纱 | Habilidad, 1⚡ | Gana **Intangible 1**. Ethereal. Exhaust. | +: sin Ethereal |
-
-(#57 nerfeado por el panel: pierde el "roba 2" — el mega-turno determinista de turno 5 excedía el
-techo del marker. #60/#46/#59/#57/#61: nombres zhs corregidos a la terminología CN oficial.)
-
-**Poderes (5)**
-
-| # | Carta (eng / es / zhs) | Tipo, Coste | Efecto | Mejora |
-|---|---|---|---|---|
-| 65 | Fairy Queen of Britain / **Reina de las Hadas de Britania** / 妖精国不列颠的女王 | Poder, 3⚡ | Al inicio de tu turno: 2 de Maldición a TODOS y gana 2 de Carga NP por enemigo con Maldición. | +: 3 de Maldición |
-| 66 | Nesting Mors / **Nido de Mors** / 摩耳斯之巢 | Poder, 2⚡ | Cuando un enemigo muere con Maldición: su Maldición pasa a un enemigo aleatorio y ganas 8 de Carga NP. | +: además 4 de Bloqueo |
-| 67 | Perpetual Winter / **Invierno Perpetuo** / 永冬 | Poder, 2⚡ | Al final de tu turno: gana 3 de Bloqueo por cada enemigo con Maldición. | +: 4 |
-| 68 | Tyrant and Savior / **Tirana y Salvadora** / 暴君与救世主 | Poder, 2⚡ | Cada vez que cambias de forma: roba 1 y gana 1 de Fuerza. | +: coste 1⚡ |
-| 69 | Queen's Blood / **Sangre de la Reina** / 女王之血 | Poder, 1⚡ | Cuando pierdas HP en tu turno: gana 2 de Carga NP por punto (máx. +12/turno). | +: máx. +20 |
-
-### 6.4 Especiales generadas
-
-**Ultis manifestadas a 100** (la de la forma activa; se transforma al cambiar de forma):
+### 7.4 Especiales generadas
 
 | Carta (eng / es / zhs) | Tipo, Coste | Efecto |
 |---|---|---|
-| **ROADLESS CAMELOT: Desatado** / 业已无法抵达的理想乡·全解放 *(Berserker y Reina del Invierno)* | Ataque NP, 0⚡ (mín. 100, consume TODA), Exhaust | 22 de daño a TODOS. 4 de Maldición a TODOS. Gana **Bendición de Rhongomyniad**. **Sobrecarga**: +2 de daño a todos por cada 10 sobre 100 (a 300: 62 a todos). |
-| **MEMORY OF LONDINIUM: Desatado** / 圣剑遥远梦之遗痕·全解放 *(Caster)* | Habilidad NP, 0⚡ (mín. 100, consume TODA), Exhaust | Gana 18 de Bloqueo. Añade 3 **Caballeros Hada** aleatorios. Cura 4 HP. **Sobrecarga**: +2 de Bloqueo por cada 10; a 200+: +1 Caballero. |
+| **ROADLESS CAMELOT: Desatado** / 业已无法抵达的理想乡·全解放 *(Reina / Reina del Invierno)* | Ataque NP, 0⚡ (mín. 100, consume TODA), Exhaust | 36 de daño a TODOS. 5 de Maldición a TODOS. Ganás **Bendición de Rhongomyniad**. **Sobrecarga**: +3 de daño por cada 10 sobre 100. |
+| **MEMORY OF LONDINIUM: Desatado** / 圣剑遥远梦之遗痕·全解放 *(Bruja de la Lluvia)* | Ataque NP, 0⚡ (mín. 100, consume TODA), Exhaust | 24 de daño a TODOS. Gana 1 de **Intangible**. Añade 2 **Armas del Caballero**. **Sobrecarga**: +2 de daño por cada 10; a 200+: +1 Arma. |
+| Knight's Arm / **Arma del Caballero** / 骑士的武器 | Ataque, 0⚡, Exhaust | 5 de daño. *("Las espadas de los caballeros del pasado, presente y futuro.")* |
+| **Bendición de Rhongomyniad** / 伦戈米尼亚德的祝福 | Estado (power) | Tu próxima carta NP suma +10 a su Sobrecarga. |
 
-**Tokens — Caballeros Hada (妖精骑士 / Tam Lin)**, 0⚡, Exhaust, presupuesto ≈ Backstab (11-14):
+Meme común adicional del pool: **Mamá Boba** / 笨蛋妈妈 — Habilidad, 0⚡: roba 1, Carga NP +5
+*(+: roba 1, +10, 2 de Bloqueo)*.
 
-| Token (eng / es / zhs) | Efecto |
-|---|---|
-| **Barghest** / 妖精骑士高文·巴格斯特 | Ataque: 14 de daño. Pierdes 2 HP (algo se comió por el camino). |
-| **Melusine** / 妖精骑士兰斯洛特·梅柳齐娜 | Ataque: 4 de daño ×3. |
-| **Baobhan Sith** / 妖精骑士崔斯坦·芭万·希 | Ataque: 7 de daño. Aplica 3 de Maldición. |
-
-(Generación aleatoria entre los 3 — la UI "elige 1" no está verificada en BaseLib; si algún día
-se verifica, Convocatoria elige.)
-
-**Estado generado**: Bendición de Rhongomyniad / 伦戈米尼亚德的祝福 — *tu próxima carta NP suma
-+10 a su Sobrecarga.*
-
-**Memes propios del pool** (los incoloros de FGOCore ya existen, no se tocan):
-
-| Carta | Rareza | Efecto |
-|---|---|---|
-| I Want to Start a Family with Morgan / **Quiero Formar un Hogar con Morgan** / 想和摩根组建家庭 | Poco común | Habilidad, 1⚡: cura 4 HP y gana 4 de Bloqueo. Exhaust. *(+: 6 y 6)* |
-| Silly Mama / **Mamá Boba** / 笨蛋妈妈 | Común | Habilidad, 0⚡: roba 1. Carga NP +5. *(+: roba 1, +10, 2 de Bloqueo)* |
-
-## 7. Reliquias del personaje
+## 8. Reliquias del personaje
 
 | Reliquia (eng / es / zhs) | Tier | Efecto |
 |---|---|---|
 | Rhongomyniad, the Queen's Scepter / **el Cetro de la Reina** / 止境之枪(王笏) | **Inicial** | La primera vez que cambias de forma en cada combate: gana 1⚡ y roba 1. |
 | Coronation at World's End / **Coronación del Confín** / 止境的加冕 | Jefe (reemplaza la inicial) | Cada vez que cambias de forma: gana 1⚡ (máx. 1 vez por turno). |
-| Remains of Cernunnos / **Vestigio de Cernunnos** / 科尔努诺斯的遗骸 | Jefe/Raro | La Maldición ya no se reduce a la mitad: se reduce en 2 después de dañar. |
-| Spriggan's Ledger / **Libro de Cuentas de Spriggan** / 斯普里根的账簿 | Común | Al final de cada combate en el que aplicaste 10+ de Maldición: gana 12 de oro. |
-| Mirror Clan's Glass / **Espejo del Clan** / 镜之氏族的魔镜 | Tienda | Empiezas cada combate con 20 de Carga NP. |
-| Seed of the World-Ash / **Semilla del Fresno** / 梣树之种 | Evento | Al subir de piso: cura 2 HP. |
+| **Existence Tax / Impuesto de Existencia / 存在税** | Tienda/Poco común | Al final de tu turno: gana Carga NP igual al total de Maldición de los enemigos (máx. +6). *(El habilitador del arquetipo de la Tiranía — ya no es starter.)* |
+| Spriggan's Treasury / **Tesoro de Spriggan** / 斯普里根的宝库 | Tienda | Empiezas cada combate con 30 de Carga NP. |
+| Mirror Clan's Mirror / **Espejo del Clan** / 镜之氏族的魔镜 | Poco común | Cada vez que cambias de forma: roba 1. |
+| Bottled Mors / **Mors Embotellado** / 瓶中的摩耳斯 | Rara | Cuando un enemigo muere con Maldición: su Maldición salta a un enemigo aleatorio. |
+| Habetrot's Thread / **Hilo de Habetrot** / 哈贝特洛特的纺线 | Rara/Evento | La primera vez que **Alzarse** se active en cada combate: quedás a 10 HP en vez de 1. |
+| Chalice of the Lady of the Lake / **Cáliz de la Dama del Lago** / 水妃的圣杯 | Rara (`ILimitBreaker`) | +15 HP máx al obtenerla; mientras la tengas: Vínculo hasta Nv12 y NP level hasta 6. *(El "Santo Grial" de Morgan.)* |
+| Queen's Summon Seal / **Sello de Invocación de la Reina** / 女王的呼符 | Starter oculta (`INpLevelStore`) | Contador NP level 1-5; botón "Invocar (dupe)" en recompensas (50% +25% pity, patrón SummonTicket). |
+| Oath to the Queen / **Juramento a la Reina** / 向女王宣誓效忠 | Starter (`BondRelic`) | El Vínculo de Morgan (§9). |
 
-(Coronación nerfeada por el panel: pierde el "roba 1" — con el toggle 0⚡ era motor casi gratis.)
+## 9. Vínculo, dupes y la ulti
 
-Reliquias de sistema (patrón Mash, FGOCore): **Boleto de Invocación** (呼符, `INpLevelStore`,
-contador NP1-5, botón "Invocar (dupe)" — clave literal `OPTION_MORGAN_DUPE.name` en
-`card_reward_ui.json`, guard de máx. 2 alternativas), **Vínculo de Morgan** (`BondRelic`),
-**Santo Grial** (`ILimitBreaker`, ya existe en el pool de Mash — para Morgan se agrega a su pool).
+### Vínculo — «Juramento a la Reina»
+Puntos y umbrales default de FGOCore. Regalos (overrides mínimos sobre los defaults):
 
-## 8. Vínculo, dupes y la ulti
+| Nv | Regalo |
+|---|---|
+| 1 / 3 / 6 / 9 | +3/+3/+4/+5 HP máx (defaults, escalan en multijugador) |
+| 2 / 5 / 8 | Empiezas con 5/10/15 de Carga NP (defaults) |
+| 4 / 7 | Empiezas aplicando 1/2 de Maldición a TODOS *(reemplaza el Bloqueo default — Morgan no es tanque; mismo valor, sabor de tirana)* |
+| 10 | **Capstone «Un hogar con Morgan» (想和摩根组建家庭)**: al inicio de cada combate ganás **Alzarse** (1 HP). *Ya tiene algo por lo que vivir.* |
+| 11-12 | Solo con el Cáliz: +14 pts por nivel, +5 HP máx c/u (defaults). |
 
-### Vínculo (subclase de `BondRelic` — los DEFAULTS probados + capstone propio)
-Tema: las hadas (y Chaldea) aprenden a querer a la Reina. **Usa la espina dorsal numérica
-default de FGOCore** (HP en Nv1/3/6/9 = +3/3/4/5 con escalado multijugador; NP inicial 5/10/15
-en Nv2/5/8; Bloqueo inicial 3/6 en Nv4/7) — cero código nuevo — y SOLO overridea el capstone:
+### Dupes / NP level
+Sistema de Mash tal cual: botón "Invocar (dupe)", clave literal `OPTION_MORGAN_DUPE.name` en
+`card_reward_ui.json`, guard de 2 alternativas; **+15%** vía `NpLevels.Scale` en las **5 cartas
+NP** (#49, #50, #51 y las 2 ultis).
 
-- **Nv10 — "La Corte paga el impuesto" (宫廷纳税)**: al inicio de cada combate, aplica 2 de
-  Maldición a TODOS los enemigos y gana 10 de Carga NP.
+### La ulti a 100 — depende de la forma, y queda FIJA
+Cruzar los 100 vestida de Reina da la ulti de daño; vestida de Bruja, la de supervivencia.
+Cargar en Bruja es eficiente, pero si querés *Roadless Camelot* tenés que cruzar el umbral como
+Reina: la danza de formas se vuelve una decisión de build del medidor.
 
-### Dupes / NP level (sistema de Mash, tal cual)
-Botón "Invocar (dupe)" en recompensas de carta (50% +25% pity); cada nivel: **+15%** vía
-`NpLevels.Scale` en las **6 cartas NP**: #32, #50, #51, #56 y las 2 ultis manifestadas.
+## 10. Plan de assets (IDs verificados, 2026-06-11)
 
-### Santo Grial
-El de Mash (`ILimitBreaker`): Vínculo hasta Nv12, NP level hasta 6. Se añade al pool de reliquias
-de Morgan con la misma carta de presentación.
-
-## 9. Plan de assets (IDs verificados contra Atlas Academy, 2026-06-11)
-
-| Forma | Modelo de batalla | Charagraph | Bundle |
+| Forma | Modelo | Charagraph | Bundle |
 |---|---|---|---|
-| Berserker — La Tirana (inicial) | **704020** (asc 3-4; fallback 704010) | collectionNo **309** | `static.atlasacademy.io/JP/Servants/704020/` ✓ |
-| Caster — Aesc | **505320** (asc final; fallback 505310) | collectionNo **385** | `static.atlasacademy.io/JP/Servants/505320/` ✓ |
+| Reina (Berserker) | **704020** (fallback 704010) | collectionNo **309** | `static.atlasacademy.io/JP/Servants/704020/` ✓ |
+| Bruja de la Lluvia (Caster) | **505320** (fallback 505310) | collectionNo **385** | `static.atlasacademy.io/JP/Servants/505320/` ✓ |
 | Reina del Invierno | **704030** (traje oficial) | costume 704030 | `static.atlasacademy.io/JP/Servants/704030/` ✓ |
 
-- svtId base: Morgan **704000**, Aesc **505300**. "Aesc the Savior" NO es jugable (solo lore).
-- Pipeline: el de Mash tal cual (WORKFLOW-FGO.md §2-3): export GUI de AssetStudio por modelo
-  (PASO MANUAL del usuario, ×3 modelos), render 2-pasadas con crop común, WebP 2×, `.tres` por
-  forma, patch de `.import`. Presupuestar ~1.5× el trabajo de Mash (tres rigs).
-- Arte de cartas: `match-ce-art.js` contra CEs oficiales (los nombres del pool son matcheables:
-  LB6 y los eventos de Morgan/Aesc tienen CEs de lluvia/invierno/fresno/espejo/corona/caballeros).
-- Iconos de reliquias: regla del workflow — la starter de mecánica usa el **icono de clase
-  Berserker** en la variante de rareza (Morgan 5★ = oro, `Berserkergold.png` del wiki con
-  `&format=original`).
+- svtId base: Morgan **704000**, Aesc **505300**. La forma Caster es la servant separada "Aesc
+  the Rain Witch"; "Aesc the Savior" no es jugable (solo lore).
+- Pipeline de Mash tal cual (WORKFLOW-FGO.md §2-3); el export GUI de AssetStudio ×3 modelos es
+  PASO MANUAL del usuario. Tres rigs → presupuestar ~1.5× el trabajo de Mash.
+- Arte de cartas: `match-ce-art.js` (CEs de LB6/lluvia/invierno/caballeros hada abundan).
+- Icono de la starter de mecánica: regla del workflow — **icono de clase Berserker dorado**
+  (Morgan 5★), `Berserkergold.png` del fandom con `&format=original`.
 - Manifest `id: "MorganBerserker"` — no cambiar nunca. `dependencies: ["BaseLib", "FGOCore"]`.
 
-## 10. Orden de implementación y riesgos abiertos
+## 11. Orden de implementación y riesgos
 
-1. Scaffold (copiar MashShielder como plantilla, §4.5 del workflow) + formas + Maldición/Impuesto
-   (con el **tooltip de daño proyectado** desde el día 1 — precedente `PoisonPower`).
-2. Pool por rarezas (básicas→comunes→…), reliquias, vínculo, dupes.
-3. Assets: modelos (3 exports manuales del usuario) → render → arte de cartas → iconos.
-4. Localización trilingüe + pruebas.
+1. FGOCore: `GutsPower` (generalizar `FouMiraclePower` — hook `ModifyHpLostAfterOstyLate` ya
+   domado) + candado "Inutilizable: turno N" + manifestación por forma (handler `GaugeFilled`
+   consulta la `FormPower` activa).
+2. Scaffold MorganBerserker (plantilla MashShielder) + formas + Maldición (daño directo fin de
+   turno, NO hooks ModifyHpLost; tope 15; verificar `IntangiblePower` del juego — confirmado
+   en decompilado por el panel).
+3. Pool → reliquias → vínculo/dupes → assets (3 exports manuales) → localización ×3 → pruebas.
 
-**Perillas que MÁS necesitan playtest** (identificadas por el panel):
-- Tasa de cobro del Impuesto pasivo de Caster (2 NP/pt, tope 5/turno) — si "nunca cambies" domina,
-  subir a tope 6-7/turno antes que tocar la tasa.
-- La banda de la mini-NP #32 (16 base / +4 por 10) — el suelo de la economía.
-- Si la Maldición a mitades no se LEE en playtest: plan B = decaimiento plano −2, recortando
-  aplicadores: S1/#2 → 2→2 (igual), #13 → 2, #23 → 4→3, #42 → 4→3, #43 → 2→1 a TODOS, #63 máx.
-  +15→+10, ulti 4→3 a TODOS (la pila vale ~n²/4 en vez de ~1,7n).
-- La transformación de ulti en mano: si la implementación da pelea, fallback = fijarla al
-  manifestarse (aprobado por el panel).
-- Último Recurso (#57) es binaria por diseño (muerta en combates <5 turnos) — fiel a FGO;
-  si frustra, bajar a turno 4 base y mejorar otro eje.
+**Perillas de playtest** (del panel):
+- Grifos de NP apilables (Bruja +5 + Hada del País + Madness capeado + Impuesto +6): si la ulti
+  sale cada <4 turnos en mazos dedicados, recortar primero el Impuesto (+6→+4).
+- "Caster estacionaria": si la danza no aparece, condicionar la pasiva de Bruja ("si no atacaste
+  este turno") antes que bajarla más.
+- Con HP 76 y ~8 cartas de sangre, si el acto 1 castiga mucho, promover *Lágrimas de la
+  Salvadora* a común.
+- #64 Cernunnos + #45/#67: vigilar el DoT permanente en jefes largos (el tope de 15 es el freno).

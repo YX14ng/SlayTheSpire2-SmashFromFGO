@@ -87,7 +87,10 @@ vanilla con/sin penalidad; verificar contra §2 al usarlas):
 ## 4. Método FGO → StS2 (en orden)
 
 1. **Identidad en una frase.** "La muralla que avanza" (Mash). Si no se puede decir en
-   una frase, el diseño no está listo. La fantasía manda sobre la fidelidad.
+   una frase, el diseño no está listo. **La fidelidad al kit manda** (regla del usuario,
+   aprendida con Morgan v1→v2): cada skill real del servant debe existir como carta o
+   reliquia RECONOCIBLE, y los NP reales son las cartas-NP. Las mecánicas novedosas van
+   como arquetipos drafteables DENTRO del pool, nunca como reemplazo del kit.
 2. **Inventario del kit FGO**: skills, NP con Overcharge, pasivas, lore beats. Cada
    skill de FGO es candidata a carta/reliquia; el NP son las cartas-NP (mín. de carga +
    escalado por consumo total — ya resuelto en FGOCore).
