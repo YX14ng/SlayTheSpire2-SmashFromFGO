@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Modding;
+using MegaCrit.Sts2.Core.Models;
 
 namespace MashShielder.MashShielderCode;
 
@@ -39,7 +40,24 @@ public partial class MainFile : Node
         if (creature.HasPower<CamelotManifestedPower>()) return;
 
         await PowerCmd.Apply<CamelotManifestedPower>(creature, 1m, creature, null);
-        var card = creature.CombatState.CreateCard<Cards.Special.LordCamelotUnleashed>(creature.Player);
+
+        // The ult matches the active form, like her FGO kit: Shielder → LORD CHALDEAS
+        // (her true NP), Ortinax → BLACK BARREL (her Lostbelt armament), Paladin →
+        // LORD CAMELOT (the shield's true name). The generated card stays fixed if
+        // the form changes afterwards — the decision is in which form you cross 100.
+        CardModel card;
+        if (creature.HasPower<Powers.Forms.OrtinaxFormPower>())
+        {
+            card = creature.CombatState.CreateCard<Cards.Special.BlackBarrelUnleashed>(creature.Player);
+        }
+        else if (creature.HasPower<Powers.Forms.ShielderFormPower>())
+        {
+            card = creature.CombatState.CreateCard<Cards.Special.LordChaldeasUnleashed>(creature.Player);
+        }
+        else
+        {
+            card = creature.CombatState.CreateCard<Cards.Special.LordCamelotUnleashed>(creature.Player);
+        }
         CardCmd.PreviewCardPileAdd(
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 1.5f);
     }
