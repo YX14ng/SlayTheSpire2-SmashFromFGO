@@ -33,6 +33,16 @@ CERRADO o el dll queda lockeado). Última publicación verificada 2026-06-11.
 - El log del juego es siempre el primer lugar para diagnosticar (en Linux:
   `~/.local/share/SlayTheSpire2/logs/godot.log` o equivalente de `user://logs`).
 
+## SIGUIENTE GRAN TAREA: implementar a Morgan (diseño COMPLETO y aprobado)
+
+[DESIGN-MORGAN.md](DESIGN-MORGAN.md) tiene el diseño terminado (panel multi-agente + jueces,
+2026-06-11): Berserker→Caster vía cartas (swap de modelo con FGOCore FormSwitch), Maldición a
+mitades + Impuesto, 69 cartas + especiales, reliquias, vínculo, assets verificados
+(Morgan 704020/704030, Aesc 505320). Orden de implementación y perillas de playtest en su §10.
+La skill [.claude/skills/sts2-mechanics-design](../.claude/skills/sts2-mechanics-design/SKILL.md)
+contiene los baselines numéricos reales del juego para cualquier ajuste.
+OJO: el export de AssetStudio GUI (×3 modelos) es PASO MANUAL del usuario.
+
 ## TAREAS — IMPLEMENTADAS el 2026-06-11 (quedan acá como referencia de diseño)
 
 Las tres se implementaron y publicaron en la PC Windows. Lo que quedó:

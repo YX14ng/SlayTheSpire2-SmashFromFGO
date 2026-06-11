@@ -11,6 +11,7 @@ A custom character mod for **Slay the Spire 2** (Early Access, Godot 4 / C#). Th
 - The repo holds TWO mod projects: `FGOCore/` (shared mechanics library — build/publish first) and `MashShielder/` (the character, depends on FGOCore). On Linux, MegaDot lives at `MegaDotLinux/` in the repo.
 - [docs/MODDING.md](docs/MODDING.md) — toolchain, mod format, BaseLib API, resource links.
 - [docs/DESIGN.md](docs/DESIGN.md) — full character design: mechanics (Carga NP, Baluarte, Formas Shielder/Ortinax/Paladín, Intercepción, Black Barrel), complete card pool, relics, and the 2D model/animation plan.
+- [docs/DESIGN-MORGAN.md](docs/DESIGN-MORGAN.md) — second character (Morgan, Berserker→Caster form-switching via cards): complete design, not yet implemented. Designed with the [.claude/skills/sts2-mechanics-design](.claude/skills/sts2-mechanics-design/SKILL.md) skill (real vanilla balance baselines — use it for ANY new card/character/relic design).
 - `tools/*.ps1` + `tools/render_project/` — reusable pipeline scripts (render, art, icons, tres generation). `.claude/workflows/match-ce-art.js` — parameterized CE art matching workflow.
 - `assets/reference/` — official art and battle-sprite part atlases downloaded from Atlas Academy (servant 800100, costumes 800150 Ortinax / 800200 Paladin). FGO battle models are Unity 2D puppets, NOT frame spritesheets — animations must be re-rigged in Godot (see DESIGN.md §7).
 
