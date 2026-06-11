@@ -1,31 +1,151 @@
-[gd_resource type="SpriteFrames" load_steps=2 format=3]
+[gd_resource type="SpriteFrames" load_steps=122 format=3]
 
-[ext_resource type="Texture2D" path="res://MorganBerserker/character/form_winter.png" id="tex_1"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/000.webp" id="tex_1"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/001.webp" id="tex_2"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/002.webp" id="tex_3"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/003.webp" id="tex_4"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/004.webp" id="tex_5"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/005.webp" id="tex_6"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/006.webp" id="tex_7"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/007.webp" id="tex_8"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/008.webp" id="tex_9"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/009.webp" id="tex_10"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/010.webp" id="tex_11"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/011.webp" id="tex_12"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/012.webp" id="tex_13"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/013.webp" id="tex_14"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/014.webp" id="tex_15"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/015.webp" id="tex_16"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/016.webp" id="tex_17"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/017.webp" id="tex_18"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/018.webp" id="tex_19"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/019.webp" id="tex_20"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/020.webp" id="tex_21"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/021.webp" id="tex_22"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/022.webp" id="tex_23"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/023.webp" id="tex_24"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/024.webp" id="tex_25"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/025.webp" id="tex_26"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/026.webp" id="tex_27"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/027.webp" id="tex_28"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/028.webp" id="tex_29"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/029.webp" id="tex_30"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/030.webp" id="tex_31"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/031.webp" id="tex_32"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/032.webp" id="tex_33"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/033.webp" id="tex_34"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/034.webp" id="tex_35"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/035.webp" id="tex_36"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/036.webp" id="tex_37"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/037.webp" id="tex_38"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/038.webp" id="tex_39"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/039.webp" id="tex_40"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/040.webp" id="tex_41"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/041.webp" id="tex_42"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/042.webp" id="tex_43"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/043.webp" id="tex_44"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/044.webp" id="tex_45"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/045.webp" id="tex_46"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/046.webp" id="tex_47"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/047.webp" id="tex_48"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/048.webp" id="tex_49"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/049.webp" id="tex_50"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/050.webp" id="tex_51"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/051.webp" id="tex_52"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/052.webp" id="tex_53"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/053.webp" id="tex_54"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/054.webp" id="tex_55"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/055.webp" id="tex_56"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/056.webp" id="tex_57"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/057.webp" id="tex_58"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/058.webp" id="tex_59"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/059.webp" id="tex_60"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/060.webp" id="tex_61"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/061.webp" id="tex_62"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/062.webp" id="tex_63"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/063.webp" id="tex_64"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/064.webp" id="tex_65"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/065.webp" id="tex_66"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/066.webp" id="tex_67"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/067.webp" id="tex_68"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/068.webp" id="tex_69"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/069.webp" id="tex_70"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/070.webp" id="tex_71"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/071.webp" id="tex_72"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/072.webp" id="tex_73"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/073.webp" id="tex_74"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/074.webp" id="tex_75"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/075.webp" id="tex_76"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/idle/076.webp" id="tex_77"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/000.webp" id="tex_78"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/001.webp" id="tex_79"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/002.webp" id="tex_80"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/003.webp" id="tex_81"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/004.webp" id="tex_82"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/005.webp" id="tex_83"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/006.webp" id="tex_84"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/007.webp" id="tex_85"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/008.webp" id="tex_86"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/009.webp" id="tex_87"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/010.webp" id="tex_88"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/011.webp" id="tex_89"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/012.webp" id="tex_90"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/013.webp" id="tex_91"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/014.webp" id="tex_92"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/015.webp" id="tex_93"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/016.webp" id="tex_94"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/017.webp" id="tex_95"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/018.webp" id="tex_96"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/019.webp" id="tex_97"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/attack/020.webp" id="tex_98"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/cast/000.webp" id="tex_99"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/cast/001.webp" id="tex_100"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/cast/002.webp" id="tex_101"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/cast/003.webp" id="tex_102"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/cast/004.webp" id="tex_103"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/cast/005.webp" id="tex_104"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/000.webp" id="tex_105"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/001.webp" id="tex_106"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/002.webp" id="tex_107"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/003.webp" id="tex_108"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/004.webp" id="tex_109"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/005.webp" id="tex_110"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/006.webp" id="tex_111"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/007.webp" id="tex_112"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/008.webp" id="tex_113"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/009.webp" id="tex_114"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/010.webp" id="tex_115"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/011.webp" id="tex_116"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/012.webp" id="tex_117"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/013.webp" id="tex_118"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/014.webp" id="tex_119"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/015.webp" id="tex_120"]
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/frames_winter/hurt/016.webp" id="tex_121"]
 
 [resource]
 animations = [{
-"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}, {"duration": 1.0, "texture": ExtResource("tex_2")}, {"duration": 1.0, "texture": ExtResource("tex_3")}, {"duration": 1.0, "texture": ExtResource("tex_4")}, {"duration": 1.0, "texture": ExtResource("tex_5")}, {"duration": 1.0, "texture": ExtResource("tex_6")}, {"duration": 1.0, "texture": ExtResource("tex_7")}, {"duration": 1.0, "texture": ExtResource("tex_8")}, {"duration": 1.0, "texture": ExtResource("tex_9")}, {"duration": 1.0, "texture": ExtResource("tex_10")}, {"duration": 1.0, "texture": ExtResource("tex_11")}, {"duration": 1.0, "texture": ExtResource("tex_12")}, {"duration": 1.0, "texture": ExtResource("tex_13")}, {"duration": 1.0, "texture": ExtResource("tex_14")}, {"duration": 1.0, "texture": ExtResource("tex_15")}, {"duration": 1.0, "texture": ExtResource("tex_16")}, {"duration": 1.0, "texture": ExtResource("tex_17")}, {"duration": 1.0, "texture": ExtResource("tex_18")}, {"duration": 1.0, "texture": ExtResource("tex_19")}, {"duration": 1.0, "texture": ExtResource("tex_20")}, {"duration": 1.0, "texture": ExtResource("tex_21")}, {"duration": 1.0, "texture": ExtResource("tex_22")}, {"duration": 1.0, "texture": ExtResource("tex_23")}, {"duration": 1.0, "texture": ExtResource("tex_24")}, {"duration": 1.0, "texture": ExtResource("tex_25")}, {"duration": 1.0, "texture": ExtResource("tex_26")}, {"duration": 1.0, "texture": ExtResource("tex_27")}, {"duration": 1.0, "texture": ExtResource("tex_28")}, {"duration": 1.0, "texture": ExtResource("tex_29")}, {"duration": 1.0, "texture": ExtResource("tex_30")}, {"duration": 1.0, "texture": ExtResource("tex_31")}, {"duration": 1.0, "texture": ExtResource("tex_32")}, {"duration": 1.0, "texture": ExtResource("tex_33")}, {"duration": 1.0, "texture": ExtResource("tex_34")}, {"duration": 1.0, "texture": ExtResource("tex_35")}, {"duration": 1.0, "texture": ExtResource("tex_36")}, {"duration": 1.0, "texture": ExtResource("tex_37")}, {"duration": 1.0, "texture": ExtResource("tex_38")}, {"duration": 1.0, "texture": ExtResource("tex_39")}, {"duration": 1.0, "texture": ExtResource("tex_40")}, {"duration": 1.0, "texture": ExtResource("tex_41")}, {"duration": 1.0, "texture": ExtResource("tex_42")}, {"duration": 1.0, "texture": ExtResource("tex_43")}, {"duration": 1.0, "texture": ExtResource("tex_44")}, {"duration": 1.0, "texture": ExtResource("tex_45")}, {"duration": 1.0, "texture": ExtResource("tex_46")}, {"duration": 1.0, "texture": ExtResource("tex_47")}, {"duration": 1.0, "texture": ExtResource("tex_48")}, {"duration": 1.0, "texture": ExtResource("tex_49")}, {"duration": 1.0, "texture": ExtResource("tex_50")}, {"duration": 1.0, "texture": ExtResource("tex_51")}, {"duration": 1.0, "texture": ExtResource("tex_52")}, {"duration": 1.0, "texture": ExtResource("tex_53")}, {"duration": 1.0, "texture": ExtResource("tex_54")}, {"duration": 1.0, "texture": ExtResource("tex_55")}, {"duration": 1.0, "texture": ExtResource("tex_56")}, {"duration": 1.0, "texture": ExtResource("tex_57")}, {"duration": 1.0, "texture": ExtResource("tex_58")}, {"duration": 1.0, "texture": ExtResource("tex_59")}, {"duration": 1.0, "texture": ExtResource("tex_60")}, {"duration": 1.0, "texture": ExtResource("tex_61")}, {"duration": 1.0, "texture": ExtResource("tex_62")}, {"duration": 1.0, "texture": ExtResource("tex_63")}, {"duration": 1.0, "texture": ExtResource("tex_64")}, {"duration": 1.0, "texture": ExtResource("tex_65")}, {"duration": 1.0, "texture": ExtResource("tex_66")}, {"duration": 1.0, "texture": ExtResource("tex_67")}, {"duration": 1.0, "texture": ExtResource("tex_68")}, {"duration": 1.0, "texture": ExtResource("tex_69")}, {"duration": 1.0, "texture": ExtResource("tex_70")}, {"duration": 1.0, "texture": ExtResource("tex_71")}, {"duration": 1.0, "texture": ExtResource("tex_72")}, {"duration": 1.0, "texture": ExtResource("tex_73")}, {"duration": 1.0, "texture": ExtResource("tex_74")}, {"duration": 1.0, "texture": ExtResource("tex_75")}, {"duration": 1.0, "texture": ExtResource("tex_76")}, {"duration": 1.0, "texture": ExtResource("tex_77")}],
 "loop": true,
 "name": &"idle",
-"speed": 5
+"speed": 15
 }, {
-"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_78")}, {"duration": 1.0, "texture": ExtResource("tex_79")}, {"duration": 1.0, "texture": ExtResource("tex_80")}, {"duration": 1.0, "texture": ExtResource("tex_81")}, {"duration": 1.0, "texture": ExtResource("tex_82")}, {"duration": 1.0, "texture": ExtResource("tex_83")}, {"duration": 1.0, "texture": ExtResource("tex_84")}, {"duration": 1.0, "texture": ExtResource("tex_85")}, {"duration": 1.0, "texture": ExtResource("tex_86")}, {"duration": 1.0, "texture": ExtResource("tex_87")}, {"duration": 1.0, "texture": ExtResource("tex_88")}, {"duration": 1.0, "texture": ExtResource("tex_89")}, {"duration": 1.0, "texture": ExtResource("tex_90")}, {"duration": 1.0, "texture": ExtResource("tex_91")}, {"duration": 1.0, "texture": ExtResource("tex_92")}, {"duration": 1.0, "texture": ExtResource("tex_93")}, {"duration": 1.0, "texture": ExtResource("tex_94")}, {"duration": 1.0, "texture": ExtResource("tex_95")}, {"duration": 1.0, "texture": ExtResource("tex_96")}, {"duration": 1.0, "texture": ExtResource("tex_97")}, {"duration": 1.0, "texture": ExtResource("tex_98")}],
 "loop": false,
 "name": &"attack",
-"speed": 5
+"speed": 30
 }, {
-"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_99")}, {"duration": 1.0, "texture": ExtResource("tex_100")}, {"duration": 1.0, "texture": ExtResource("tex_101")}, {"duration": 1.0, "texture": ExtResource("tex_102")}, {"duration": 1.0, "texture": ExtResource("tex_103")}, {"duration": 1.0, "texture": ExtResource("tex_104")}],
 "loop": false,
 "name": &"cast",
-"speed": 5
+"speed": 15
 }, {
-"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_105")}, {"duration": 1.0, "texture": ExtResource("tex_106")}, {"duration": 1.0, "texture": ExtResource("tex_107")}, {"duration": 1.0, "texture": ExtResource("tex_108")}, {"duration": 1.0, "texture": ExtResource("tex_109")}, {"duration": 1.0, "texture": ExtResource("tex_110")}, {"duration": 1.0, "texture": ExtResource("tex_111")}, {"duration": 1.0, "texture": ExtResource("tex_112")}, {"duration": 1.0, "texture": ExtResource("tex_113")}, {"duration": 1.0, "texture": ExtResource("tex_114")}, {"duration": 1.0, "texture": ExtResource("tex_115")}, {"duration": 1.0, "texture": ExtResource("tex_116")}, {"duration": 1.0, "texture": ExtResource("tex_117")}, {"duration": 1.0, "texture": ExtResource("tex_118")}, {"duration": 1.0, "texture": ExtResource("tex_119")}, {"duration": 1.0, "texture": ExtResource("tex_120")}, {"duration": 1.0, "texture": ExtResource("tex_121")}],
 "loop": false,
 "name": &"hurt",
-"speed": 5
+"speed": 30
 }, {
-"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_105")}, {"duration": 1.0, "texture": ExtResource("tex_106")}, {"duration": 1.0, "texture": ExtResource("tex_107")}, {"duration": 1.0, "texture": ExtResource("tex_108")}, {"duration": 1.0, "texture": ExtResource("tex_109")}, {"duration": 1.0, "texture": ExtResource("tex_110")}, {"duration": 1.0, "texture": ExtResource("tex_111")}, {"duration": 1.0, "texture": ExtResource("tex_112")}, {"duration": 1.0, "texture": ExtResource("tex_113")}, {"duration": 1.0, "texture": ExtResource("tex_114")}, {"duration": 1.0, "texture": ExtResource("tex_115")}, {"duration": 1.0, "texture": ExtResource("tex_116")}, {"duration": 1.0, "texture": ExtResource("tex_117")}, {"duration": 1.0, "texture": ExtResource("tex_118")}, {"duration": 1.0, "texture": ExtResource("tex_119")}, {"duration": 1.0, "texture": ExtResource("tex_120")}, {"duration": 1.0, "texture": ExtResource("tex_121")}],
 "loop": false,
 "name": &"die",
-"speed": 5
+"speed": 30
 }]

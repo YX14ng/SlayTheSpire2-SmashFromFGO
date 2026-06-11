@@ -33,22 +33,29 @@ CERRADO o el dll queda lockeado). Última publicación verificada 2026-06-11.
 - El log del juego es siempre el primer lugar para diagnosticar (en Linux:
   `~/.local/share/SlayTheSpire2/logs/godot.log` o equivalente de `user://logs`).
 
-## MORGAN IMPLEMENTADA (v1, 2026-06-11) — queda el paso manual de animaciones
+## MORGAN IMPLEMENTADA (v2 con ANIMACIONES, 2026-06-11)
 
 El mod **MorganBerserker** está completo y publicado: 76 cartas + 18 powers + 10 reliquias +
-vínculo/dupes/Cáliz + loc trilingüe (255 claves × 3) + arte CE auditado. **Visuales v1 =
-charagraphs estáticos por forma** (swap funciona: Reina 704000b@2 / Aesc 505300a@1 / Reina del
-Invierno 704030a, SpriteFrames de 1 frame). FGOCore ganó: CursePower+Curses (tick estilo Poison,
+vínculo/dupes/Cáliz + loc trilingüe (255 claves × 3) + arte CE auditado + **animaciones reales
+de las 3 formas** (idle/attack/cast/hurt/die renderizadas de los modelos 3D de FGO; los
+charagraphs estáticos se borraron). FGOCore ganó: CursePower+Curses (tick estilo Poison,
 cap 15, ICurseAmplifier/ICursePreserver), GutsPower (+IGutsFloorBooster), OverchargeBlessingPower
 (integrada en ConsumeAllForNpCard), FormSwitch notifica también reliquias IFormChangeListener.
 
+Animaciones (pipeline: `tools/render_all_morgan.ps1`, modos list/probe/debug/measure/save):
+- Ventanas en `tools/render_project/render.gd` (SELECT 704020/505320/704030). Gotchas Morgan
+  resueltos ahí: escala normalizada con pose `wait` f0 (el reposo del FBX Berserker es gigante),
+  `cast` cortado antes de que el espejo gigante llene el canvas (queen/winter [0,5], aesc [0,7]),
+  `MEASURE_SKIP` para el attack de Aesc (lanza fragmentos de corona al borde del canvas; se
+  recortan en save), `CLIP_OVERRIDE` disponible (attack_ex/attack_a de Aesc invocan la concha
+  negra: NO usarlos). Los dos modelos Berserker exportan `Animator/model/model.fbx` (no chr/chr).
+- Crop compartido (0,263,1910,1747) → sprite scale 0.5, posición (−34.5,−271.4) con flip_h
+  en visuals; (+34.5,−271.4) sin flip en merchant/rest. `morgan_sprite.gd` = volver a idle.
+- 365 `.webp.import` parcheados con `tools/patch_webp_imports.ps1` (publish → patch → publish).
+
 PENDIENTE de Morgan:
-1. **Animaciones reales** (v2): export manual AssetStudio GUI ×3 bundles (704020, 505320,
-   704030 — URLs en DESIGN-MORGAN.md §10) → pipeline de render de WORKFLOW-FGO.md §3 →
-   reemplazar los .tres de 1 frame. El FramesPath ya apunta a los nombres correctos.
-2. Playtest: perillas en DESIGN-MORGAN.md §11 (grifos NP, mini-NP, Cernunnos+cap 15).
-3. Verificar en juego: orientación del sprite estático (flip_h=true puesto a ciegas),
-   escala 0.6/posición (0,-217), y el botón "Invocar (dupe)".
+1. Playtest: perillas en DESIGN-MORGAN.md §11 (grifos NP, mini-NP, Cernunnos+cap 15).
+2. Verificar en juego: animaciones de las 3 formas (swap incluido), botón "Invocar (dupe)".
 
 ## (implementado) SIGUIENTE GRAN TAREA: implementar a Morgan (diseño COMPLETO y aprobado)
 

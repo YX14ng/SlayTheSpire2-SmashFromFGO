@@ -6,7 +6,7 @@ extends Node3D
 #   PASS = "save":    renders selected frames cropped to the merged union rect.
 # Run once per form in measure mode, then once per form in save mode.
 
-const PASS := "save"   # "measure" | "save"
+const PASS := "save"   # "measure" | "save" | "list" (lista clips) | "probe" (movimiento por frame)
 const FPS := 30
 const OUT_DIR := "res://frames"
 const CROP_FILE := "res://crop_union.txt"
@@ -18,8 +18,19 @@ const SELECT := {
 	"800100": { "idle": [0, 155, 2], "attack": [27, 53, 1], "cast": [0, 59, 2], "hurt": [0, 16, 1] },
 	"800150": { "idle": [0, 154, 2], "attack": [0, 20, 1], "cast": [0, 79, 2], "hurt": [0, 16, 1] },
 	"800200": { "idle": [0, 156, 2], "attack": [20, 66, 1], "cast": [0, 64, 2], "hurt": [0, 16, 1] },
+	# Morgan: los spell invocan el espejo gigante (llena el canvas) — cast recortado
+	# al gesto previo a que aparezca el prop.
+	"704020": { "idle": [0, 153, 2], "attack": [48, 68, 1], "cast": [0, 5, 1], "hurt": [0, 16, 1] },
+	"505320": { "idle": [0, 153, 2], "attack": [28, 48, 1], "cast": [0, 7, 1], "hurt": [0, 16, 1] },
+	"704030": { "idle": [0, 153, 2], "attack": [48, 68, 1], "cast": [0, 5, 1], "hurt": [0, 16, 1] },
 }
 const CLIP_FOR := { "idle": "wait", "attack": "attack_b", "cast": "spell", "hurt": "damage_01" }
+# Overrides de clip por modelo (vacio por ahora; attack_ex/attack_a de Aesc
+# invocan la concha negra que llena el canvas).
+const CLIP_OVERRIDE := {}
+# Anims excluidas del union de crop: el attack_b de Aesc lanza fragmentos de corona
+# hasta el borde del canvas; en el save esos fragmentos se recortan y la figura queda.
+const MEASURE_SKIP := { "505320": ["attack"] }
 
 const FACE_POSE := {
 	"joint_open_eye": 1.0, "joint_close_eye": 0.0,
@@ -46,20 +57,85 @@ func _ready() -> void:
 	add_child(_model)
 
 	_player = _model.find_child("AnimationPlayer", true, false)
+
+	if PASS == "list":
+		for anim_name in _player.get_animation_list():
+			var a := _player.get_animation(anim_name)
+			print("CLIP: ", anim_name, " len=", a.length, " frames=", int(a.length * FPS))
+		print("=== DONE ===")
+		get_tree().quit(0)
+		return
+
+	# Normaliza con la pose wait f0, no con la pose de reposo del FBX: en algunos
+	# modelos (Morgan Berserker) el reposo es gigante y la pose real queda a media altura.
+	var wait_clip := _find_animation("wait")
+	_player.play(wait_clip)
+	_player.pause()
+	_player.seek(0.0, true)
 	var head_raw := _head_position()
 	var s := 15.0 / head_raw.y if head_raw != Vector3.INF and head_raw.y > 0.0001 else 1000.0
 	_model.scale = Vector3.ONE * s
 	print("SCALE: ", s)
+
+	if PASS == "probe":
+		_probe_motion()
+		print("=== DONE ===")
+		get_tree().quit(0)
+		return
 
 	_setup_meshes()
 	_setup_camera()
 
 	if PASS == "measure":
 		await _measure()
+	elif PASS == "debug":
+		await _debug_snaps()
 	else:
 		await _save_cropped()
 	print("=== DONE ===")
 	get_tree().quit(0)
+
+# Guarda capturas sin recorte (canvas completo) del primer/medio/ultimo frame
+# de cada ventana, para inspeccion visual.
+func _debug_snaps() -> void:
+	for anim in SELECT[_model_id].keys():
+		var clip := _find_animation(_clip_for(anim))
+		_player.play(clip)
+		_player.pause()
+		var frames := _selected_frames(anim)
+		var picks := [frames[0], frames[frames.size() / 2], frames[frames.size() - 1]]
+		var anchor_z := INF
+		for i in picks:
+			anchor_z = await _pose_anchored(clip, i, anchor_z)
+			var img := _capture()
+			img.save_webp(ProjectSettings.globalize_path("res://debug_%s_%03d.webp" % [anim, i]), true, 0.9)
+		print("DEBUG ", anim, ": ", picks)
+
+# Imprime cuanto se mueve el esqueleto por frame en los clips de accion,
+# para elegir las ventanas SELECT sin renderizar.
+func _probe_motion() -> void:
+	for clip_short in ["attack_a", "attack_b", "attack_q", "attack_ex", "spell", "damage_01"]:
+		var clip := _find_animation(clip_short)
+		_player.play(clip)
+		_player.pause()
+		var total := int(_player.get_animation(clip).length * FPS)
+		var prev := {}
+		for i in range(total):
+			_player.seek(float(i) / FPS, true)
+			var cur := {}
+			var motion := 0.0
+			for b in range(_skeleton.get_bone_count()):
+				var p: Vector3 = _skeleton.get_bone_global_pose(b).origin
+				cur[b] = p
+				if prev.has(b):
+					motion += prev[b].distance_to(p)
+			prev = cur
+			print("MOTION %s %d %.3f" % [clip_short, i, motion])
+
+func _clip_for(anim: String) -> String:
+	if CLIP_OVERRIDE.has(_model_id) and CLIP_OVERRIDE[_model_id].has(anim):
+		return CLIP_OVERRIDE[_model_id][anim]
+	return CLIP_FOR[anim]
 
 func _selected_frames(anim: String) -> Array:
 	var w: Array = SELECT[_model_id][anim]
@@ -81,7 +157,9 @@ func _measure() -> void:
 	var union := Rect2i()
 	var first := true
 	for anim in SELECT[_model_id].keys():
-		var clip := _find_animation(CLIP_FOR[anim])
+		if MEASURE_SKIP.has(_model_id) and anim in MEASURE_SKIP[_model_id]:
+			continue
+		var clip := _find_animation(_clip_for(anim))
 		_player.play(clip)
 		_player.pause()
 		var anchor_z := INF
@@ -120,7 +198,7 @@ func _save_cropped() -> void:
 	print("GROUND_ROW_IN_CROP: ", ground_row_full - crop.position.y)
 	print("CAM_CENTER_COL_IN_CROP: ", 1024.0 - crop.position.x)
 	for anim in SELECT[_model_id].keys():
-		var clip := _find_animation(CLIP_FOR[anim])
+		var clip := _find_animation(_clip_for(anim))
 		var dir: String = OUT_DIR + "/" + anim
 		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
 		_player.play(clip)

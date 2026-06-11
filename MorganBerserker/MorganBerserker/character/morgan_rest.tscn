@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Texture2D" path="res://MorganBerserker/character/form_queen.png" id="queen"]
+[ext_resource type="SpriteFrames" path="res://MorganBerserker/character/morgan_frames_queen.tres" id="frames_queen"]
 
 [node name="MorganRestSite" type="Node2D"]
 
@@ -13,7 +13,9 @@ offset_top = -462.0
 offset_right = 137.0
 offset_bottom = 0.0
 
-[node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(0, -217)
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("queen")
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(34.5, -271.4)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("frames_queen")
+animation = &"idle"
+autoplay = "idle"

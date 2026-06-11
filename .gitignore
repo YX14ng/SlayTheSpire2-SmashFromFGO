@@ -26,7 +26,9 @@ publish_log.txt
 /tools/godotpcktool.exe
 /tools/render_project/*.fbx
 /tools/render_project/*.png
+/tools/render_project/*.png.import
 /tools/render_project/frames/
+/tools/render_project/debug_out/
 /tools/render_project/crop_union.txt
 assets/reference/bundles/
 assets/reference/extracted/
