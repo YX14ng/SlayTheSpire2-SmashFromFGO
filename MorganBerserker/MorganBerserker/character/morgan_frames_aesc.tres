@@ -1,0 +1,31 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://MorganBerserker/character/form_aesc.png" id="tex_1"]
+
+[resource]
+animations = [{
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"loop": true,
+"name": &"idle",
+"speed": 5
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"loop": false,
+"name": &"attack",
+"speed": 5
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"loop": false,
+"name": &"cast",
+"speed": 5
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"loop": false,
+"name": &"hurt",
+"speed": 5
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"loop": false,
+"name": &"die",
+"speed": 5
+}]

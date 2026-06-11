@@ -10,5 +10,14 @@
   "FGOCORE-FORM_SHIFTED_POWER.smartDescription": "#玛修本场战斗变换过形态。",
   "FGOCORE-BOND_POWER.title": "羁绊",
   "FGOCORE-BOND_POWER.description": "#玛修本局游戏的羁绊等级。每场战斗开始时提供加成（详见羁绊计量器遗物）。",
-  "FGOCORE-BOND_POWER.smartDescription": "#玛修本局游戏的羁绊等级。每场战斗开始时提供加成（详见羁绊计量器遗物）。"
+  "FGOCORE-BOND_POWER.smartDescription": "#玛修本局游戏的羁绊等级。每场战斗开始时提供加成（详见羁绊计量器遗物）。",
+  "FGOCORE-CURSE_POWER.title": "诅咒",
+  "FGOCORE-CURSE_POWER.description": "#该生物的回合开始时，受到等同于诅咒层数的伤害（无视格挡），随后诅咒减少1层。上限15层。",
+  "FGOCORE-CURSE_POWER.smartDescription": "#该生物的回合开始时，受到等同于诅咒层数的伤害（无视格挡），随后诅咒减少1层。上限15层。",
+  "FGOCORE-GUTS_POWER.title": "毅力",
+  "FGOCORE-GUTS_POWER.description": "#本场战斗中第一次受到致命伤害时：保留1点生命而不会死亡。",
+  "FGOCORE-GUTS_POWER.smartDescription": "#本场战斗中第一次受到致命伤害时：保留1点生命而不会死亡。",
+  "FGOCORE-OVERCHARGE_BLESSING_POWER.title": "伦戈米尼亚德的祝福",
+  "FGOCORE-OVERCHARGE_BLESSING_POWER.description": "#你的下一张宝具牌的超载等级提高，每层+10点。",
+  "FGOCORE-OVERCHARGE_BLESSING_POWER.smartDescription": "#你的下一张宝具牌的超载等级提高，每层+10点。"
 }

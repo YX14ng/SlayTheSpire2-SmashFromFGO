@@ -36,5 +36,15 @@ public static class FormSwitch
         {
             await listener.OnFormChanged(choiceContext);
         }
+        if (creature.Player != null)
+        {
+            foreach (var relic in creature.Player.Relics)
+            {
+                if (relic is IFormChangeListener listener)
+                {
+                    await listener.OnFormChanged(choiceContext);
+                }
+            }
+        }
     }
 }

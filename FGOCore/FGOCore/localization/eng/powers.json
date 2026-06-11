@@ -10,5 +10,14 @@
   "FGOCORE-FORM_SHIFTED_POWER.smartDescription": "#Mash changed form this combat.",
   "FGOCORE-BOND_POWER.title": "Bond",
   "FGOCORE-BOND_POWER.description": "#Mash\u0027s Bond level this run. Grants bonuses at the start of each combat (see the Bond Gauge relic).",
-  "FGOCORE-BOND_POWER.smartDescription": "#Mash\u0027s Bond level this run. Grants bonuses at the start of each combat (see the Bond Gauge relic)."
+  "FGOCORE-BOND_POWER.smartDescription": "#Mash\u0027s Bond level this run. Grants bonuses at the start of each combat (see the Bond Gauge relic).",
+  "FGOCORE-CURSE_POWER.title": "Curse",
+  "FGOCORE-CURSE_POWER.description": "#At the start of its turn, this creature takes damage equal to its Curse (ignores Block); then the Curse decreases by 1. Max 15.",
+  "FGOCORE-CURSE_POWER.smartDescription": "#At the start of its turn, this creature takes damage equal to its Curse (ignores Block); then the Curse decreases by 1. Max 15.",
+  "FGOCORE-GUTS_POWER.title": "Guts",
+  "FGOCORE-GUTS_POWER.description": "#The first time this combat that damage would kill you: you survive at 1 HP instead.",
+  "FGOCORE-GUTS_POWER.smartDescription": "#The first time this combat that damage would kill you: you survive at 1 HP instead.",
+  "FGOCORE-OVERCHARGE_BLESSING_POWER.title": "Blessing of Rhongomyniad",
+  "FGOCORE-OVERCHARGE_BLESSING_POWER.description": "#Your next NP card adds +10 per stack to its Overcharge.",
+  "FGOCORE-OVERCHARGE_BLESSING_POWER.smartDescription": "#Your next NP card adds +10 per stack to its Overcharge."
 }

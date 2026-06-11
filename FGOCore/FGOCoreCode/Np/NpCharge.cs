@@ -75,6 +75,14 @@ public static class NpCharge
         var current = Current(creature);
         var tier = Math.Max(current, minCost);
 
+        // Bendición de Rhongomyniad: +10 al tier de Sobrecarga por carga, se consume.
+        var blessing = creature.GetPower<OverchargeBlessingPower>();
+        if (blessing != null)
+        {
+            tier += blessing.Amount * OverchargeBlessingPower.TierPerStack;
+            await PowerCmd.Remove(blessing);
+        }
+
         var waiver = GetWaiver(creature);
         if (waiver != null)
         {

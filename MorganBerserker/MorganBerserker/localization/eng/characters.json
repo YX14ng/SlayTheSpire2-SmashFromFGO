@@ -1,0 +1,16 @@
+{
+  "MORGANBERSERKER-MORGAN_BERSERKER.title": "Morgan",
+  "MORGANBERSERKER-MORGAN_BERSERKER.titleObject": "the Queen of Fairy Britain",
+  "MORGANBERSERKER-MORGAN_BERSERKER.description": "The tyrant Queen who ruled Fairy Britain for two thousand years - and died countless times to keep it standing. She seeds Curses with replicas of Rhongomyniad, charges her Noble Phantasm across her two lives, and rises from death stronger than before.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounObject": "her",
+  "MORGANBERSERKER-MORGAN_BERSERKER.possessiveAdjective": "her",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounPossessive": "hers",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounSubject": "she",
+  "MORGANBERSERKER-MORGAN_BERSERKER.goldMonologue": "Gold... A queen does not stoop to pick up coins. Consider it tax, collected in person.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.eventDeathPrevention": "Somewhere unseen, Habetrot's thread pulls taut... The Queen has died countless times, and this death was not the one that counts. Morgan rises.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.aromaPrinciple": "It smells of rain over Orkney. For a single breath, the Queen is only Aesc again... She does not call it comfort. But she does not turn away.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.cardsModifierTitle": "Tyrant's Arsenal",
+  "MORGANBERSERKER-MORGAN_BERSERKER.cardsModifierDescription": "Play with Morgan's card pool.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.banter.alive.endTurnPing": "You keep your Queen waiting. Decide.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.banter.dead.endTurnPing": "So... this is the death that counts. How tiresome..."
+}

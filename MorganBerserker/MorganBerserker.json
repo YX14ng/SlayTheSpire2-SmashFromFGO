@@ -1,0 +1,11 @@
+{
+  "id": "MorganBerserker",
+  "name": "Morgan - Queen of Faerie Britain",
+  "author": "Chaldea",
+  "description": "Adds Morgan from Fate/Grand Order as a playable character: the Berserker Queen who curses her enemies, collects the existence tax, and switches into Aesc the Rain Witch (Caster) - two reigns in one body.",
+  "version": "v0.1.0",
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": ["BaseLib", "FGOCore"],
+  "affects_gameplay": true
+}

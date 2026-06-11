@@ -1,0 +1,16 @@
+{
+  "MORGANBERSERKER-MORGAN_BERSERKER.title": "摩根",
+  "MORGANBERSERKER-MORGAN_BERSERKER.titleObject": "妖精国不列颠的女王",
+  "MORGANBERSERKER-MORGAN_BERSERKER.description": "统治妖精国不列颠两千年的暴君女王。她播撒诅咒、征收存在的代价，在妖精女王与雨之魔女两副面孔之间起舞，积蓄宝具值释放止境之枪——并从每一次死亡中重新加冕。",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounObject": "她",
+  "MORGANBERSERKER-MORGAN_BERSERKER.possessiveAdjective": "她的",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounPossessive": "她的",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounSubject": "她",
+  "MORGANBERSERKER-MORGAN_BERSERKER.goldMonologue": "金币吗。在妖精国，这叫税收。如数缴纳，便许你活命。",
+  "MORGANBERSERKER-MORGAN_BERSERKER.eventDeathPrevention": "女王死过无数次，每一次都重新站起。这一次也不例外——摩根睁开了眼睛，目光冰冷如初。",
+  "MORGANBERSERKER-MORGAN_BERSERKER.aromaPrinciple": "闻起来像奥克尼的雨……摩根想起了某个尚未破碎的梦，神色稍霁。",
+  "MORGANBERSERKER-MORGAN_BERSERKER.cardsModifierTitle": "妖精女王的王权",
+  "MORGANBERSERKER-MORGAN_BERSERKER.cardsModifierDescription": "使用摩根的卡池进行游戏。",
+  "MORGANBERSERKER-MORGAN_BERSERKER.banter.alive.endTurnPing": "还不下令吗？本王的耐心，可比凡人的寿命短得多。",
+  "MORGANBERSERKER-MORGAN_BERSERKER.banter.dead.endTurnPing": "……连本王也会倒下吗。无妨。女王，终会归来……"
+}

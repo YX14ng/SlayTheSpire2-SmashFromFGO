@@ -33,7 +33,24 @@ CERRADO o el dll queda lockeado). Última publicación verificada 2026-06-11.
 - El log del juego es siempre el primer lugar para diagnosticar (en Linux:
   `~/.local/share/SlayTheSpire2/logs/godot.log` o equivalente de `user://logs`).
 
-## SIGUIENTE GRAN TAREA: implementar a Morgan (diseño COMPLETO y aprobado)
+## MORGAN IMPLEMENTADA (v1, 2026-06-11) — queda el paso manual de animaciones
+
+El mod **MorganBerserker** está completo y publicado: 76 cartas + 18 powers + 10 reliquias +
+vínculo/dupes/Cáliz + loc trilingüe (255 claves × 3) + arte CE auditado. **Visuales v1 =
+charagraphs estáticos por forma** (swap funciona: Reina 704000b@2 / Aesc 505300a@1 / Reina del
+Invierno 704030a, SpriteFrames de 1 frame). FGOCore ganó: CursePower+Curses (tick estilo Poison,
+cap 15, ICurseAmplifier/ICursePreserver), GutsPower (+IGutsFloorBooster), OverchargeBlessingPower
+(integrada en ConsumeAllForNpCard), FormSwitch notifica también reliquias IFormChangeListener.
+
+PENDIENTE de Morgan:
+1. **Animaciones reales** (v2): export manual AssetStudio GUI ×3 bundles (704020, 505320,
+   704030 — URLs en DESIGN-MORGAN.md §10) → pipeline de render de WORKFLOW-FGO.md §3 →
+   reemplazar los .tres de 1 frame. El FramesPath ya apunta a los nombres correctos.
+2. Playtest: perillas en DESIGN-MORGAN.md §11 (grifos NP, mini-NP, Cernunnos+cap 15).
+3. Verificar en juego: orientación del sprite estático (flip_h=true puesto a ciegas),
+   escala 0.6/posición (0,-217), y el botón "Invocar (dupe)".
+
+## (implementado) SIGUIENTE GRAN TAREA: implementar a Morgan (diseño COMPLETO y aprobado)
 
 [DESIGN-MORGAN.md](DESIGN-MORGAN.md) tiene el diseño terminado **v2** (panel multi-agente +
 jueces; rehecho a pedido del usuario: FIEL AL KIT de FGO como columna — cada skill real de
