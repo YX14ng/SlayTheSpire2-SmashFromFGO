@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbr0smm82ghw0"
-path="res://.godot/imported/spriggans_vigil.png-dd928f20a2ce81c8e1d3346b9619938a.ctex"
+uid="uid://by3ic61ahu1dk"
+path="res://.godot/imported/strike_morgan.png-ae54247fbb75b069acee1a1d8d051df0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MorganBerserker/images/card_portraits/spriggans_vigil.png"
-dest_files=["res://.godot/imported/spriggans_vigil.png-dd928f20a2ce81c8e1d3346b9619938a.ctex"]
+source_file="res://MorganBerserker/images/card_portraits/strike_morgan.png"
+dest_files=["res://.godot/imported/strike_morgan.png-ae54247fbb75b069acee1a1d8d051df0.ctex"]
 
 [params]
 

@@ -10,7 +10,7 @@
   "MASHSHIELDER-SHIELD_RAM.title": "盾牌冲撞",
   "MASHSHIELDER-SHIELD_RAM.description": "#造成!D!点伤害。施加!Vulnerable!层*易伤*。",
   "MASHSHIELDER-SHARPENED_EDGE.title": "锋利盾缘",
-  "MASHSHIELDER-SHARPENED_EDGE.description": "#造成!D!点伤害，你每有1点格挡额外+1（最多+!MaxBonus!）。",
+  "MASHSHIELDER-SHARPENED_EDGE.description": "#造成!D!点伤害，你每有1点格挡额外/+1（最多/+!MaxBonus!）。",
   "MASHSHIELDER-FRONTAL_CHARGE.title": "正面突击",
   "MASHSHIELDER-FRONTAL_CHARGE.description": "#造成!D!点伤害。获得!B!点格挡。",
   "MASHSHIELDER-TWIN_HAFT_STRIKE.title": "双重柄击",

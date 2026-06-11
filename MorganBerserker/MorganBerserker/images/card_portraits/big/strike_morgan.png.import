@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byubygsyrf0ip"
-path="res://.godot/imported/card.png-d2dc0c700b360b8c97b731f59f19d906.ctex"
+uid="uid://bk4kg0e63a4ai"
+path="res://.godot/imported/strike_morgan.png-01654aea5b9c3cb766d0285abb493f65.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MorganBerserker/images/card_portraits/card.png"
-dest_files=["res://.godot/imported/card.png-d2dc0c700b360b8c97b731f59f19d906.ctex"]
+source_file="res://MorganBerserker/images/card_portraits/big/strike_morgan.png"
+dest_files=["res://.godot/imported/strike_morgan.png-01654aea5b9c3cb766d0285abb493f65.ctex"]
 
 [params]
 
