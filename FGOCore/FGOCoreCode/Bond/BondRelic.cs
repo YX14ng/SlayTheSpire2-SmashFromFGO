@@ -43,6 +43,26 @@ public abstract class BondRelic : CustomRelicModel
         }
     }
 
+    /// <summary>Points between each bond level beyond the base cap (Holy Grail territory).</summary>
+    protected virtual int ExtraThresholdStep => 14;
+
+    /// <summary>Max HP gift for each level beyond the base cap.</summary>
+    protected virtual decimal MaxHpGainBeyondCap => 5m;
+
+    /// <summary>Extra levels unlocked by owned <see cref="ILimitBreaker"/> relics.</summary>
+    protected int ExtraLevels
+    {
+        get
+        {
+            var extra = 0;
+            foreach (var relic in Owner.Relics)
+            {
+                if (relic is ILimitBreaker breaker) extra += breaker.ExtraBondLevels;
+            }
+            return extra;
+        }
+    }
+
     public int Level
     {
         get
@@ -51,6 +71,15 @@ public abstract class BondRelic : CustomRelicModel
             foreach (var t in Thresholds)
             {
                 if (Points >= t) lv++;
+            }
+            if (lv >= Thresholds.Length)
+            {
+                var t = Thresholds[^1];
+                for (var i = 0; i < ExtraLevels; i++)
+                {
+                    t += ExtraThresholdStep;
+                    if (Points >= t) lv++;
+                }
             }
             return lv;
         }
@@ -97,7 +126,7 @@ public abstract class BondRelic : CustomRelicModel
         Flash();
         for (var lv = before + 1; lv <= after; lv++)
         {
-            var hp = MaxHpGainAt(lv);
+            var hp = lv <= Thresholds.Length ? MaxHpGainAt(lv) : MaxHpGainBeyondCap;
             if (hp > 0)
             {
                 await CreatureCmd.GainMaxHp(Owner.Creature, Math.Round(hp * MultiplayerFactor));

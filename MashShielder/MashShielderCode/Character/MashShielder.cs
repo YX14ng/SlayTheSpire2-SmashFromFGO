@@ -38,7 +38,8 @@ public class MashShielder : PlaceholderCharacterModel
     public override IReadOnlyList<RelicModel> StartingRelics =>
     [
         ModelDb.Relic<RoundTableFragment>(),
-        ModelDb.Relic<MashBond>()
+        ModelDb.Relic<MashBond>(),
+        ModelDb.Relic<SummonTicket>()
     ];
     
     /// <summary>

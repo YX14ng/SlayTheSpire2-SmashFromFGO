@@ -45,6 +45,8 @@ $relics = @{
     "ortinax_core"         = "$items/6510.png"
     "a_team_diary"         = "$items/6531.png"
     "mash_bond"            = "$items/94006404.png"
+    "summon_ticket"        = "$items/4001.png"
+    "holy_grail"           = "$items/7998.png"
 }
 
 function Get-Cached([string]$url) {

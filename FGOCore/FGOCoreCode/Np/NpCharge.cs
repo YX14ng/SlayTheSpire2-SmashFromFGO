@@ -13,8 +13,9 @@ namespace FGOCore.FGOCoreCode.Np;
 /// </summary>
 public static class NpCharge
 {
-    /// <summary>Fired after a gain leaves the gauge at 100. Handlers decide per-creature
-    /// (check the creature's character) and must be idempotent per peak.</summary>
+    /// <summary>Fired after a gain leaves the gauge at or above 100 (ManifestThreshold).
+    /// Handlers decide per-creature (check the creature's character) and must be
+    /// idempotent per peak.</summary>
     public static event Func<Creature, Task>? GaugeFilled;
 
     /// <summary>Fired after a spend leaves the gauge below 100 (re-arm point for ults).</summary>
@@ -24,7 +25,8 @@ public static class NpCharge
 
     public static bool IsFull(Creature creature) => Current(creature) >= NpChargePower.Max;
 
-    /// <summary>Gain charge, capped at 100. Fires <see cref="GaugeFilled"/> when at max afterwards.</summary>
+    /// <summary>Gain charge, capped at 300. Fires <see cref="GaugeFilled"/> when at or
+    /// above the manifest threshold afterwards.</summary>
     public static async Task Gain(Creature creature, int amount, CardModel? source)
     {
         var toAdd = Math.Min(amount, NpChargePower.Max - Current(creature));
@@ -32,7 +34,7 @@ public static class NpCharge
         {
             await PowerCmd.Apply<NpChargePower>(creature, toAdd, creature, source);
         }
-        if (IsFull(creature) && GaugeFilled != null)
+        if (Current(creature) >= NpChargePower.ManifestThreshold && GaugeFilled != null)
         {
             await GaugeFilled.Invoke(creature);
         }
@@ -46,10 +48,10 @@ public static class NpCharge
         Current(creature) >= amount || GetWaiver(creature) != null;
 
     /// <summary>
-    /// True when the gauge is exactly full — NP cards played now trigger their Overcharge effect.
-    /// Check BEFORE spending.
+    /// True when the gauge reached the 100 threshold — NP cards played now trigger their
+    /// peak effects. Check BEFORE spending.
     /// </summary>
-    public static bool IsOvercharged(Creature creature) => Current(creature) >= NpChargePower.Max;
+    public static bool IsOvercharged(Creature creature) => Current(creature) >= NpChargePower.ManifestThreshold;
 
     /// <summary>Pay an NP card's charge cost. A waiver power covers it for free.</summary>
     public static async Task PayForNpCard(Creature creature, int amount, CardModel source)
@@ -100,7 +102,7 @@ public static class NpCharge
             await PowerCmd.ModifyAmount(power, -amount, creature, source);
         }
 
-        if (Current(creature) < NpChargePower.Max && GaugeDropped != null)
+        if (Current(creature) < NpChargePower.ManifestThreshold && GaugeDropped != null)
         {
             await GaugeDropped.Invoke(creature);
         }

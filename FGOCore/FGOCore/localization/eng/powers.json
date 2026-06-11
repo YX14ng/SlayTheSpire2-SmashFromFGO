@@ -1,7 +1,7 @@
 {
   "FGOCORE-NP_CHARGE_POWER.title": "NP Charge",
-  "FGOCORE-NP_CHARGE_POWER.description": "#Energy for Mash\u0027s Noble Phantasm, up to a maximum of 100. NP cards consume it when played.",
-  "FGOCORE-NP_CHARGE_POWER.smartDescription": "#Energy for Mash\u0027s Noble Phantasm, up to a maximum of 100. NP cards consume it when played.",
+  "FGOCORE-NP_CHARGE_POWER.description": "#Energy for the Noble Phantasm, up to a maximum of 300. The ult manifests at 100; NP cards consume the gauge when played.",
+  "FGOCORE-NP_CHARGE_POWER.smartDescription": "#Energy for the Noble Phantasm, up to a maximum of 300. The ult manifests at 100; NP cards consume the gauge when played.",
   "FGOCORE-BULWARK_POWER.title": "Bulwark",
   "FGOCORE-BULWARK_POWER.description": "#Block up to this amount is not removed at the start of your turn.",
   "FGOCORE-BULWARK_POWER.smartDescription": "#Block up to this amount is not removed at the start of your turn.",

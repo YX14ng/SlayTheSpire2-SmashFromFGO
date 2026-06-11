@@ -34,9 +34,10 @@ public sealed class BlackBarrelFullBurst() : MashShielderCard(2, CardType.Attack
 
         var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
         var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
+        var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + bonus);
 
-        await BlackBarrel.Hit(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue + bonus, Owner.Creature, this);
-        if (tier >= NpChargePower.Max && !cardPlay.Target.IsDead)
+        await BlackBarrel.Hit(choiceContext, cardPlay.Target, damage, Owner.Creature, this);
+        if (tier >= NpChargePower.ManifestThreshold && !cardPlay.Target.IsDead)
         {
             await BlackBarrel.RemoveAllBuffs(cardPlay.Target);
         }

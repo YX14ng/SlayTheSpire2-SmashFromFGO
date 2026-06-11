@@ -33,9 +33,29 @@ CERRADO o el dll queda lockeado). Última publicación verificada 2026-06-11.
 - El log del juego es siempre el primer lugar para diagnosticar (en Linux:
   `~/.local/share/SlayTheSpire2/logs/godot.log` o equivalente de `user://logs`).
 
-## TAREAS PENDIENTES (pedidas por el usuario, NO implementadas — en orden)
+## TAREAS — IMPLEMENTADAS el 2026-06-11 (quedan acá como referencia de diseño)
 
-### 1. Límite de NP a 300 (como en FGO)
+Las tres se implementaron y publicaron en la PC Windows. Lo que quedó:
+
+1. **NP 300**: `NpChargePower.Max=300` + `ManifestThreshold=100`; la ulti se manifiesta
+   al cruzar 100 y se re-arma al caer bajo 100; `IsOvercharged` = ≥100; el strip de buffs
+   del Black Barrel dispara a tier ≥100 (era `>= Max`, se habría roto). El Overcharge
+   sigue LINEAL hasta 300 (decisión: FGO también es lineal por tramo; si en la práctica
+   queda roto, bajar `PerTen` de las cartas NP o capear el tier).
+2. **Dupes**: reliquia starter `SummonTicket` (呼符, contador = NP level 1-5) implementa
+   `INpLevelStore` + `TryModifyCardRewardAlternatives` (el sistema NATIVO de alternativas
+   de recompensa del juego — patrón copiado de la reliquia `PaelsWing`, NO hace falta
+   Harmony). Botón "Invocar (dupe)": renuncia a la carta, 50% +25% pity por fallo
+   (`FGOCore.NpLevels.TryRollDupe`). Cada nivel: +15% en las 5 cartas NP (escalado en
+   OnPlay vía `NpLevels.Scale`; el texto de la carta NO lo muestra, igual que el
+   Overcharge). El título del botón vive en `localization/<lang>/card_reward_ui.json`
+   con clave LITERAL `OPTION_MASH_DUPE.name` (el juego mergea tablas de mods por nombre
+   de archivo). OJO: máximo 2 alternativas por pantalla (guard con alternatives.Count).
+3. **Santo Grial**: reliquia rara `HolyGrail` (icono = Lágrima del Grial 7998):
+   +15 Vida máx al obtenerla, y mientras se tenga implementa `ILimitBreaker` (FGOCore):
+   Vínculo hasta Nv12 (umbrales extra de a 14 pts, +5 Vida máx c/u) y NP level hasta 6.
+
+### Diseño original de referencia — 1. Límite de NP a 300 (como en FGO)
 
 Hoy el medidor está capeado a 100 (`FGOCore/FGOCoreCode/Np/NpChargePower.cs` → `Max = 100`).
 En FGO el NP carga hasta 300%. Cambios propuestos:

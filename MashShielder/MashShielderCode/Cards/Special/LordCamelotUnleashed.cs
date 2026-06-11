@@ -39,6 +39,12 @@ public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill,
         await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
 
         await BlockRetention.GainBulwarkBlock(this, Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
+        // NP level (dupes): +15% per level, added as flat extra Bulwark Block.
+        var npBonus = NpLevels.Scale(Owner, DynamicVars.Block.BaseValue) - DynamicVars.Block.BaseValue;
+        if (npBonus > 0)
+        {
+            await BlockRetention.GainBulwarkBlock(this, Owner.Creature, npBonus);
+        }
         await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
         await PowerCmd.Apply<ProvokePower>(Owner.Creature, DynamicVars["Provoke"].BaseValue, Owner.Creature, this);
     }

@@ -1,7 +1,7 @@
 {
   "FGOCORE-NP_CHARGE_POWER.title": "Carga NP",
-  "FGOCORE-NP_CHARGE_POWER.description": "#Energía para el Noble Phantasm de Mash, hasta un máximo de 100. Las cartas NP la consumen al jugarse.",
-  "FGOCORE-NP_CHARGE_POWER.smartDescription": "#Energía para el Noble Phantasm de Mash, hasta un máximo de 100. Las cartas NP la consumen al jugarse.",
+  "FGOCORE-NP_CHARGE_POWER.description": "#Energía para el Noble Phantasm, hasta un máximo de 300. La ulti se manifiesta a 100; las cartas NP consumen el medidor al jugarse.",
+  "FGOCORE-NP_CHARGE_POWER.smartDescription": "#Energía para el Noble Phantasm, hasta un máximo de 300. La ulti se manifiesta a 100; las cartas NP consumen el medidor al jugarse.",
   "FGOCORE-BULWARK_POWER.title": "Baluarte",
   "FGOCORE-BULWARK_POWER.description": "#El Bloqueo hasta esta cantidad no se elimina al inicio de tu turno.",
   "FGOCORE-BULWARK_POWER.smartDescription": "#El Bloqueo hasta esta cantidad no se elimina al inicio de tu turno.",

@@ -1,7 +1,7 @@
 {
   "FGOCORE-NP_CHARGE_POWER.title": "宝具值",
-  "FGOCORE-NP_CHARGE_POWER.description": "#玛修宝具的能量，上限100。打出宝具牌时消耗。",
-  "FGOCORE-NP_CHARGE_POWER.smartDescription": "#玛修宝具的能量，上限100。打出宝具牌时消耗。",
+  "FGOCORE-NP_CHARGE_POWER.description": "#宝具的能量，上限300。达到100时显现宝具卡；打出宝具牌时消耗。",
+  "FGOCORE-NP_CHARGE_POWER.smartDescription": "#宝具的能量，上限300。达到100时显现宝具卡；打出宝具牌时消耗。",
   "FGOCORE-BULWARK_POWER.title": "壁垒",
   "FGOCORE-BULWARK_POWER.description": "#不超过此数值的格挡在你的回合开始时不会消失。",
   "FGOCORE-BULWARK_POWER.smartDescription": "#不超过此数值的格挡在你的回合开始时不会消失。",

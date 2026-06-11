@@ -33,12 +33,15 @@ public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRar
     {
         var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
         var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
+        // NP level (dupes): +15% per level over the full amount, added as flat extra.
+        var total = DynamicVars.Block.BaseValue + bonus;
+        var extra = bonus + NpLevels.Scale(Owner, total) - total;
 
         await BlockRetention.GainBulwarkBlock(this, Owner.Creature,
             (BlockVar)DynamicVars.Block, cardPlay);
-        if (bonus > 0)
+        if (extra > 0)
         {
-            await BlockRetention.GainBulwarkBlock(this, Owner.Creature, bonus);
+            await BlockRetention.GainBulwarkBlock(this, Owner.Creature, extra);
         }
     }
 
