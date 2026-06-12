@@ -1,4 +1,4 @@
-﻿using BaseLib.Abstracts;
+using BaseLib.Abstracts;
 using BaseLib.Utils.NodeFactories;
 using MashShielder.MashShielderCode.Cards.Basic;
 using MashShielder.MashShielderCode.Extensions;
@@ -20,7 +20,8 @@ public class MashShielder : PlaceholderCharacterModel
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Feminine;
-    public override int StartingHp => 85;
+    // +10 en el re-stat vs jefes de JeanneAlter (peleas de 12-20 turnos con goteo imbloqueable).
+    public override int StartingHp => 95;
     
     // Rediseño v2, parche P7 del juez: 2 Golpe / 2 Defender / 1 Buster / 2 Arts /
     // 1 Quick / ShieldBash / ProtectSenpai = 10 cartas. Enseña las 4 economías el

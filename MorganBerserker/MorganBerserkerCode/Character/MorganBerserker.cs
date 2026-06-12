@@ -19,7 +19,8 @@ public class MorganBerserker : PlaceholderCharacterModel
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Feminine;
-    public override int StartingHp => 78;
+    // +10 en el re-stat vs jefes de JeanneAlter (peleas de 12-20 turnos con goteo imbloqueable).
+    public override int StartingHp => 88;
 
     /// <summary>
     /// Rediseño v2, parche P6 — mazo inicial fiel al command deck REAL de Morgan en

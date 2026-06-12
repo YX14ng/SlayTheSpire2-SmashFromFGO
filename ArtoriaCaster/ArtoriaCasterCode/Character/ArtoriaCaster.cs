@@ -20,7 +20,8 @@ public class ArtoriaCaster : PlaceholderCharacterModel
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Feminine;
-    public override int StartingHp => 70;
+    // +10 en el re-stat vs jefes de JeanneAlter (peleas de 12-20 turnos con goteo imbloqueable).
+    public override int StartingHp => 80;
 
     // Mazo QAABB del rediseño v2 (paridad con Mash/Morgan): la economía completa
     // desde el turno 1, sesgado a soporte (2 Defender) con las 2 firmas-cambio.

@@ -17,7 +17,26 @@ pinneado). El repo tiene DOS proyectos de mod:
   `<Reference>` con `Private=false` al dll publicado en `mods/`).
 
 Ambos publican limpio con `dotnet publish -c Release` (FGOCore primero; el juego debe estar
-CERRADO o el dll queda lockeado). Última publicación verificada 2026-06-11.
+CERRADO o el dll queda lockeado). Última publicación verificada 2026-06-12 (los 4 mods juntos).
+
+## RE-STAT vs jefes de JeanneAlter (2026-06-12)
+
+El usuario no podía con los 3 jefes custom del mod JeanneAlter (Kirei/U-Olga/Beast VII:
+HP ×2.3-3.1, HardenedShell 200 = cap de daño/turno, strip de buffs VANILLA a umbrales de
+HP, Artifact 99, goteo imbloqueable — peleas de 12-20 turnos). Cambios aplicados:
+
+- `FGOCore/BondRelic`: `ServantDamageMultiplier`/`ServantBlockMultiplier` 1.25 → **1.4**
+  (NO subir más — el cap desperdicia el burst) + nuevo **`ServantRegenPerTurn => 3m`**
+  (cura 3 al final del turno vía `AfterTurnEnd`; a prueba de strip porque no es power).
+- HP inicial +10 en los tres: Mash 95, Morgan 88, Artoria 80.
+- Loc actualizada en eng/esp/zhs ("40%" + mención del regen) en FGOCore powers.json y
+  los relics.json de los 3 mods.
+- Reglas de diseño derivadas en la skill §1.ter (techo de saturación 180-220/turno,
+  multi-hit anti-Buffer, no depender de debuffs, escalar en motores FGOCore que
+  sobreviven al strip).
+
+OJO: los 4 mods deben publicarse SIEMPRE juntos (la firma de `NpCharge.CanPay` y ahora
+`BondRelic` cambiaron — un dll viejo contra FGOCore nuevo tira `MissingMethodException`).
 
 ## Entorno en esta PC (Linux)
 

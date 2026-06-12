@@ -18,7 +18,7 @@
   "MASHSHIELDER-A_TEAM_DIARY.description": "#Whenever you enter a room, gain 1 Max HP.",
   "MASHSHIELDER-A_TEAM_DIARY.flavor": "The records of those who should have climbed instead. She carries them all.",
   "MASHSHIELDER-MASH_BOND.title": "Bond Gauge",
-  "MASHSHIELDER-MASH_BOND.description": "#Mash earns Bond points from combat victories (/+2, Elites /+3, Bosses /+5) and from entering events, shops and rest sites (/+1). Each *Bond* level grants permanent gifts: Max HP (Lv 1/3/6/9), starting *NP *Charge (Lv 2/5/8), starting Block (Lv 4/7) - and at Lv 10, she will not let you fall: survive lethal damage at 1 HP once per combat. As an ascended Servant, your damage and Block are increased by 25%. In multiplayer, the Max HP and Block gifts scale with the player count.",
+  "MASHSHIELDER-MASH_BOND.description": "#Mash earns Bond points from combat victories (/+2, Elites /+3, Bosses /+5) and from entering events, shops and rest sites (/+1). Each *Bond* level grants permanent gifts: Max HP (Lv 1/3/6/9), starting *NP *Charge (Lv 2/5/8), starting Block (Lv 4/7) - and at Lv 10, she will not let you fall: survive lethal damage at 1 HP once per combat. As an ascended Servant, your damage and Block are increased by 40%, and you heal 3 HP at the end of your turn. In multiplayer, the Max HP and Block gifts scale with the player count.",
   "MASHSHIELDER-MASH_BOND.flavor": "Senpai... I will protect you.",
   "MASHSHIELDER-SUMMON_TICKET.title": "Summon Tickets",
   "MASHSHIELDER-SUMMON_TICKET.description": "#At card rewards you may give up the card to roll the gacha: 50% chance of a dupe, +25% per failed roll. A dupe raises Mash's NP level (the counter, max 5), increasing her Noble Phantasm cards' power by 15% per level.",

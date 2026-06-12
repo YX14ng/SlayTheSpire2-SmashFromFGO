@@ -44,6 +44,24 @@ El usuario NO juega vanilla. Juega con **HextechRunes** (dificultad) + **BetterC
 4. Los topes/candados anti-degeneración se conservan ESTRUCTURALMENTE (1/turno,
    1/combate, condición de forma) pero sus montos se presupuestan al techo nuevo.
 
+### 1.ter Los jefes del mod JeanneAlter (re-stat 2026-06-12, análisis del decompilado)
+
+El usuario también enfrenta los 3 jefes custom de JeanneAlter (Kirei acto 1 / U-Olga
+acto 2 / Beast VII acto 3): HP ×2.3-3.1 sobre vanilla, **HardenedShell 200 (cap de daño
+por turno)**, strips de TODOS los buffs vanilla a umbrales de HP, Artifact 99 (debuffs
+muertos), flood de 5 status/turno, Nemesis (Intangible turno por medio), Buffer 30, y
+goteo de daño NO bloqueable. Peleas de 12-20 turnos. Reglas derivadas:
+1. Multiplicador del BondRelic = **×1.4** (calibrado: cruza los breakpoints ~60/85 DPS
+   sostenido sin trivializar vanilla). NO subir más: el cap desperdicia el burst.
+2. **Techo de saturación por turno ≈ 180-220** para cartas NP y payoffs (= saturar el
+   cap sin desperdicio). No diseñar nukes de 300+.
+3. HP iniciales +10 (95/88/80) y **ServantRegenPerTurn 3 en BondRelic** (curación
+   a prueba de strip — Regen vanilla SÍ se borra) para el goteo imbloqueable.
+4. Tech estructural obligatoria en cada pool: multi-hit barato repetible (anti-Buffer
+   30), purga/exhaust de cartas de status (anti-flood), y daño que NO dependa de
+   debuffear al jefe (Artifact 99). Los motores FGOCore (NP/Baluarte/Formas/Estrellas)
+   SOBREVIVEN al strip — escalar ahí, no en Strength/Dexterity vanilla.
+
 1. **Números sobre tasa SOLO embudados por mecánica propia.** Una carta puede superar
    el baseline si su exceso está pagado por: un recurso que hay que construir (Carga NP),
    costo de HP, Exhaust, condición de forma/stance, o renunciar a otra cosa (dupes).
