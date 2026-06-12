@@ -1,0 +1,34 @@
+{
+    "servantId":  2800100,
+    "collectionNo":  316,
+    "charagraphs":  [
+                        "https://static.atlasacademy.io/JP/CharaGraph/2800100/2800100a@1.png (asc 1, HTTP 200)",
+                        "https://static.atlasacademy.io/JP/CharaGraph/2800100/2800100a@2.png (asc 2, HTTP 200)",
+                        "https://static.atlasacademy.io/JP/CharaGraph/2800100/2800100b@1.png (asc 3, HTTP 200)",
+                        "https://static.atlasacademy.io/JP/CharaGraph/2800100/2800100b@2.png (asc 4, HTTP 200)",
+                        "https://static.atlasacademy.io/JP/CharaGraph/2800130/2800130a.png (variante story 2800130, HTTP 200)",
+                        "https://static.atlasacademy.io/JP/CharaGraph/2800140/2800140a.png (variante story 2800140, HTTP 200)"
+                    ],
+    "battleModels":  [
+                         "2800100 (ascension 0 / stage 1) — manifest 200, bundle https://static.atlasacademy.io/JP/Servants/2800100/2800100 (200), textura https://static.atlasacademy.io/JP/Servants/2800100/textures/2800100.png (200)",
+                         "2800110 (ascensions 1-2 / stage 2) — manifest 200, bundle https://static.atlasacademy.io/JP/Servants/2800110/2800110 (200), textura https://static.atlasacademy.io/JP/Servants/2800110/textures/2800110.png (200)",
+                         "2800120 (ascensions 3-4 / stage 3, forma Vortigern) — manifest 200, bundle https://static.atlasacademy.io/JP/Servants/2800120/2800120 (200), textura https://static.atlasacademy.io/JP/Servants/2800120/textures/2800120.png (200)",
+                         "2800130 (variante story, listada como \u0027costume\u0027 en extraAssets) — manifest 200, bundle https://static.atlasacademy.io/JP/Servants/2800130/2800130 (200), textura https://static.atlasacademy.io/JP/Servants/2800130/textures/2800130.png (200)",
+                         "2800140 (variante story, listada como \u0027costume\u0027 en extraAssets) — manifest 200, bundle https://static.atlasacademy.io/JP/Servants/2800140/2800140 (200), textura https://static.atlasacademy.io/JP/Servants/2800140/textures/2800140.png (200)"
+                     ],
+    "faces":  [
+                  "https://static.atlasacademy.io/JP/Faces/f_28001000.png (asc 1, HTTP 200)",
+                  "https://static.atlasacademy.io/JP/Faces/f_28001001.png (asc 2, HTTP 200)",
+                  "https://static.atlasacademy.io/JP/Faces/f_28001002.png (asc 3, HTTP 200)",
+                  "https://static.atlasacademy.io/JP/Faces/f_28001003.png (asc 4, HTTP 200)",
+                  "https://static.atlasacademy.io/JP/Faces/f_28001300.png (variante 2800130, HTTP 200)",
+                  "https://static.atlasacademy.io/JP/Faces/f_28001400.png (variante 2800140, HTTP 200)"
+              ],
+    "skillIcons":  [
+                       "Skill 1 \u0027Evening Shroud EX\u0027 (id 902650): https://static.atlasacademy.io/JP/SkillIcons/skill_00302.png (HTTP 200)",
+                       "Skill 2 \u0027Morning Lark EX\u0027 (id 903650): https://static.atlasacademy.io/JP/SkillIcons/skill_00601.png (HTTP 200)",
+                       "Skill 3 \u0027Ending of Dreams EX\u0027 (id 904650): https://static.atlasacademy.io/JP/SkillIcons/skill_00306.png (HTTP 200)",
+                       "NP \u0027Rye Rhyme Goodfellow\u0027 (id 2800101) card art: https://static.atlasacademy.io/JP/Servants/Commands/2800100/card_servant_np.png (HTTP 200)"
+                   ],
+    "notes":  "Oberon (Pretender, JP collectionNo 316), id interno 2800100, verificado via https://api.atlasacademy.io/nice/JP/servant/316?lang=en el 2026-06-11. Todas las URLs listadas devolvieron HTTP 200 (HEAD) en static.atlasacademy.io. Mapeo spriteModel por ascension segun extraAssets.spriteModel.ascension: asc 0 -\u003e 2800100, asc 1-2 -\u003e 2800110, asc 3-4 -\u003e 2800120 (Vortigern). Cada manifest.json declara exactamente 2 archivos: el bundle \u0027\u003cmodelId\u003e\u0027 (tipo \u0027Modified Unity3D\u0027) y \u0027textures/\u003cmodelId\u003e.png\u0027 (Texture2D) — confirma el patron del pipeline del repo: son puppets Unity 2D, no spritesheets por frame; requieren re-rig en Godot. Los modelos 2800130 y 2800140 aparecen bajo \u0027costume\u0027 en extraAssets (charaGraph, faces y spriteModel) pero profile.costume esta vacio y no hay svtChange/overWriteServantName: son variantes de historia (formas de LB6/Vortigern usadas como NPC), no costumes jugables; tienen charagraph sin sufijo @ (2800130a.png / 2800140a.png). charaGraphEx tambien existe (solo \u0027ascension\u0027). battleName: \u0027Oberon\u0027 sin overrides por ascension."
+}

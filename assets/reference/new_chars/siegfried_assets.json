@@ -1,0 +1,31 @@
+{
+    "servantId":  100800,
+    "collectionNo":  6,
+    "charagraphs":  [
+                        "https://static.atlasacademy.io/JP/CharaGraph/100800/100800a@1.png (asc 1, HTTP 200)",
+                        "https://static.atlasacademy.io/JP/CharaGraph/100800/100800a@2.png (asc 2, HTTP 200)",
+                        "https://static.atlasacademy.io/JP/CharaGraph/100800/100800b@1.png (asc 3, HTTP 200)",
+                        "https://static.atlasacademy.io/JP/CharaGraph/100800/100800b@2.png (asc 4, HTTP 200)",
+                        "https://static.atlasacademy.io/JP/CharaGraph/100830/100830a.png (costume 100830, HTTP 200)"
+                    ],
+    "battleModels":  [
+                         "100800 (asc 1-4, modelo UNICO — spriteModel.ascension solo expone la clave \u00270\u0027) -\u003e bundle: https://static.atlasacademy.io/JP/Servants/100800/100800 (HTTP 200, 7,523,485 bytes, UnityFS \u0027Modified Unity3D\u0027) | textura: https://static.atlasacademy.io/JP/Servants/100800/textures/100800.png (HTTP 200, 2,404,247 bytes) | manifest: https://static.atlasacademy.io/JP/Servants/100800/manifest.json (HTTP 200)",
+                         "100830 (costume \u0027traje de verano\u0027, spriteModel.costume) -\u003e bundle: https://static.atlasacademy.io/JP/Servants/100830/100830 (HTTP 200, 4,376,702 bytes) | textura: https://static.atlasacademy.io/JP/Servants/100830/textures/100830.png (HTTP 200, 1,246,840 bytes) | manifest: https://static.atlasacademy.io/JP/Servants/100830/manifest.json (HTTP 200)",
+                         "100810 -\u003e HTTP 404 (manifest, bundle y textura) — NO existe",
+                         "100820 -\u003e HTTP 404 (manifest, bundle y textura) — NO existe"
+                     ],
+    "faces":  [
+                  "https://static.atlasacademy.io/JP/Faces/f_1008000.png (asc 1, HTTP 200)",
+                  "https://static.atlasacademy.io/JP/Faces/f_1008001.png (asc 2, HTTP 200)",
+                  "https://static.atlasacademy.io/JP/Faces/f_1008002.png (asc 3, HTTP 200)",
+                  "https://static.atlasacademy.io/JP/Faces/f_1008003.png (asc 4, HTTP 200)",
+                  "https://static.atlasacademy.io/JP/Faces/f_1008300.png (costume 100830, HTTP 200)"
+              ],
+    "skillIcons":  [
+                       "skill 1 \u0027Golden Rule C-\u0027 (id 97349) -\u003e https://static.atlasacademy.io/JP/SkillIcons/skill_00602.png (HTTP 200)",
+                       "skill 1 upgrade \u0027Avaricious Gold A\u0027 (id 2077550) -\u003e https://static.atlasacademy.io/JP/SkillIcons/skill_00601.png (HTTP 200)",
+                       "skill 2 \u0027Disengage A\u0027 (id 12550) -\u003e https://static.atlasacademy.io/JP/SkillIcons/skill_00608.png (HTTP 200)",
+                       "skill 3 \u0027Dragon-Slayer A / A++\u0027 (ids 103550 / 103552) -\u003e https://static.atlasacademy.io/JP/SkillIcons/skill_00301.png (HTTP 200)"
+                   ],
+    "notes":  "DISCREPANCIA EN LA PREMISA: collectionNo 17 en JP NO es Siegfried — https://api.atlasacademy.io/nice/JP/servant/17 devuelve Cu Chulainn (Lancer 3 estrellas, id 300100). Siegfried es collectionNo 6, id interno 100800 (Saber 4 estrellas), verificado via /nice/JP/servant/search?name=Siegfried y /nice/JP/servant/6?lang=en. SOBRE LOS MODELOS: el patron \u003cid\u003e00/\u003cid\u003e10/\u003cid\u003e20 por ascension NO aplica a Siegfried — es un servant de lanzamiento cuyo sprite de batalla no cambia entre ascensiones; usa un unico modelId 100800 para asc 1-4 (100810 y 100820 devuelven 404 en static.atlasacademy.io). Si tiene un segundo modelo: el costume 100830 (charaGraph/faces/spriteModel.costume), con bundle y textura propios verificados HTTP 200. El bundle 100800 pesa 7.5 MB (puppet Unity 2D, requiere re-rig en Godot segun docs/WORKFLOW-FGO.md). Extra: el NP Balmung (ids 100801/100802, ambas versiones pre/post strengthening) usa card art en https://static.atlasacademy.io/JP/Servants/Commands/100800/card_servant_np.png. Total verificado: 5 charagraphs, 5 faces, 4 iconos de skill, 2 modelos (manifest+bundle+textura cada uno) — todos HTTP 200."
+}

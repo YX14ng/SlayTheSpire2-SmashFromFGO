@@ -66,6 +66,29 @@ Fixes post-playtest (2026-06-11 tarde, feedback del usuario):
   Bruja por turno; Invierno hereda ambas), Cetro +10 NP en el primer cambio. Si sigue
   floja: siguientes perillas en DESIGN-MORGAN.md §11.
 
+PERSONAJES NUEVOS EN CURSO (2026-06-12 madrugada — bloqueados por límite de sesión
+hasta las 4am; TODO resumible):
+- **Estado del roster**: Mash/Morgan/Artoria TERMINADOS y publicados (solo animaciones
+  de Artoria pendientes del export manual). Siegfried/Mordred/Gilgamesh/Okita/Oberon
+  en pipeline.
+- **Siegfried**: diseño GANADOR juzgado ✓ (new_chars/siegfried_design_a.json + verdict),
+  scaffold completo en SiegfriedSaber/ + assets visuales hechos (visuals/charui/select
+  bg Das Rheingold/bundle 100800). Implementación murió ANTES de escribir código →
+  relanzar: Workflow scriptPath workflows/scripts/siegfried-implementation-wf_bad409a3-728.js
+  con resumeFromRunId wf_bad409a3-728. Después: arte CE (matching) + iconos + publish.
+- **Mordred**: kit+assets verificados ✓ (id 102100? ver mordred_assets.json), 1 diseño
+  (mordred_design_b) — falta la propuesta "formas" + juez → resume del workflow
+  wf_7bd87182-9ab. Luego scaffold (clonar patrón SiegfriedSaber) + implementación.
+- **Gilgamesh/Okita/Oberon**: kits+assets+2 diseños c/u guardados en new_chars/ —
+  faltan los 3 JUECES → resume del workflow wf_b2ba9974-e42. Luego scaffold+implementación.
+- **EXPORTS DE ANIMACIONES PARA HOY (todos juntos, AssetStudio GUI)** — bundles ya
+  bajados en assets/reference/bundles/, carpetas extracted/<id>_anim/ creadas con texturas:
+  1. 504520 (Artoria regalia/Avalon), 2. 704710 (Artoria Berserker verano),
+  3. 704720 (Artoria diosa radiante), 4. 100800 (Siegfried, modelo único).
+  Mordred/Gil/Okita/Oberon: bajar bundles cuando sus mods estén implementados (ids en
+  new_chars/*_assets.json). Procedimiento: WORKFLOW-FGO.md §3 paso 1 (Animator + TODOS
+  los clips → "Export Animator + selected AnimationClips" → extracted/<id>_anim/).
+
 REDISEÑO v2 DE POOLS (2026-06-11 trasnoche): a pedido del usuario, ambos pools
 rediseñados con los idiomas de JeanneAlter (decompilado en `decompiled/_jeannealter`,
 análisis en `assets/reference/jeanne_anatomy.json`, tablas+veredictos en

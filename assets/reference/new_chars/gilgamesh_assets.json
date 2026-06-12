@@ -1,0 +1,27 @@
+{
+    "servantId":  200200,
+    "collectionNo":  12,
+    "charagraphs":  [
+                        "https://static.atlasacademy.io/JP/CharaGraph/200200/200200a@1.png",
+                        "https://static.atlasacademy.io/JP/CharaGraph/200200/200200a@2.png",
+                        "https://static.atlasacademy.io/JP/CharaGraph/200200/200200b@1.png",
+                        "https://static.atlasacademy.io/JP/CharaGraph/200200/200200b@2.png"
+                    ],
+    "battleModels":  [
+                         "200200 (asc 0) | bundle: https://static.atlasacademy.io/JP/Servants/200200/200200 (6,464,524 bytes, HTTP 200) | textura: https://static.atlasacademy.io/JP/Servants/200200/textures/200200.png (2,837,386 bytes, HTTP 200)",
+                         "200210 (asc 1-2) | bundle: https://static.atlasacademy.io/JP/Servants/200210/200210 (7,140,309 bytes, HTTP 200) | textura: https://static.atlasacademy.io/JP/Servants/200210/textures/200210.png (2,858,096 bytes, HTTP 200)",
+                         "200220 (asc 3-4) | bundle: https://static.atlasacademy.io/JP/Servants/200220/200220 (7,068,380 bytes, HTTP 200) | textura: https://static.atlasacademy.io/JP/Servants/200220/textures/200220.png (2,888,893 bytes, HTTP 200)"
+                     ],
+    "faces":  [
+                  "https://static.atlasacademy.io/JP/Faces/f_2002000.png",
+                  "https://static.atlasacademy.io/JP/Faces/f_2002001.png",
+                  "https://static.atlasacademy.io/JP/Faces/f_2002002.png",
+                  "https://static.atlasacademy.io/JP/Faces/f_2002003.png"
+              ],
+    "skillIcons":  [
+                       "https://static.atlasacademy.io/JP/SkillIcons/skill_00300.png",
+                       "https://static.atlasacademy.io/JP/SkillIcons/skill_00602.png",
+                       "https://static.atlasacademy.io/JP/SkillIcons/skill_00311.png"
+                   ],
+    "notes":  "Gilgamesh (Archer, 5*), id interno 200200, collectionNo 12, API nice/JP lang=en. TODOS los assets listados verificados HTTP 200 via HEAD. spriteModel por ascension segun extraAssets.spriteModel.ascension: asc 0 -\u003e modelId 200200; asc 1 y 2 -\u003e modelId 200210; asc 3 y 4 -\u003e modelId 200220 (3 modelos unicos para 5 entradas). Cada manifest.json en static.atlasacademy.io/JP/Servants/\u003cmodelId\u003e/manifest.json confirma exactamente 2 archivos: \u0027\u003cmodelId\u003e\u0027 (tipo \u0027Modified Unity3D\u0027, el bundle del puppet 2D — NO spritesheet, requiere re-rig como en el pipeline de Mash) y \u0027textures/\u003cmodelId\u003e.png\u0027 (Texture2D, atlas ~2048px). charaGraph: patron a@1/a@2 (asc 1-2) y b@1/b@2 (asc 3-4); no hay charaGraphEx (vacio). Faces: f_2002000..f_2002003. Iconos de skill (deduplicados): skill_00300 = Charisma A+ (id 5551) y tambien su upgrade He Who Saw the Deep EX (id 2167650); skill_00602 = Golden Rule A (id 97550); skill_00311 = Collector EX (id 6650) y su upgrade Treasury of Babylon EX (id 302650). Icono de carta NP (Enuma Elish, ids 200201/200202): https://static.atlasacademy.io/JP/Servants/Commands/200200/card_servant_np.png (tambien HTTP 200)."
+}

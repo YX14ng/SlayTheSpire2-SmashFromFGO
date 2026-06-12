@@ -1,0 +1,30 @@
+{
+    "servantId":  102700,
+    "collectionNo":  68,
+    "charagraphs":  [
+                        "https://static.atlasacademy.io/JP/CharaGraph/102700/102700a@1.png",
+                        "https://static.atlasacademy.io/JP/CharaGraph/102700/102700a@2.png",
+                        "https://static.atlasacademy.io/JP/CharaGraph/102700/102700b@1.png",
+                        "https://static.atlasacademy.io/JP/CharaGraph/102700/102700b@2.png",
+                        "https://static.atlasacademy.io/JP/CharaGraph/102730/102730a.png"
+                    ],
+    "battleModels":  [
+                         "102700 — asc 0 (base): https://static.atlasacademy.io/JP/Servants/102700/ — bundle \u0027102700\u0027 (Modified Unity3D) HTTP 200 + \u0027textures/102700.png\u0027 HTTP 200",
+                         "102710 — asc 1-2: https://static.atlasacademy.io/JP/Servants/102710/ — bundle \u0027102710\u0027 HTTP 200 + \u0027textures/102710.png\u0027 HTTP 200",
+                         "102720 — asc 3-4: https://static.atlasacademy.io/JP/Servants/102720/ — bundle \u0027102720\u0027 HTTP 200 + \u0027textures/102720.png\u0027 HTTP 200",
+                         "102730 — costume \u0027Simple Spiritron Dress: Asagi no Haori Hakama\u0027 (costumeCollectionNo 47): https://static.atlasacademy.io/JP/Servants/102730/ — bundle \u0027102730\u0027 HTTP 200 + \u0027textures/102730.png\u0027 HTTP 200"
+                     ],
+    "faces":  [
+                  "https://static.atlasacademy.io/JP/Faces/f_1027000.png",
+                  "https://static.atlasacademy.io/JP/Faces/f_1027001.png",
+                  "https://static.atlasacademy.io/JP/Faces/f_1027002.png",
+                  "https://static.atlasacademy.io/JP/Faces/f_1027003.png",
+                  "https://static.atlasacademy.io/JP/Faces/f_1027300.png"
+              ],
+    "skillIcons":  [
+                       "https://static.atlasacademy.io/JP/SkillIcons/skill_00304.png",
+                       "https://static.atlasacademy.io/JP/SkillIcons/skill_00311.png",
+                       "https://static.atlasacademy.io/JP/SkillIcons/skill_00402.png"
+                   ],
+    "notes":  "Okita Souji (Saber, 5*, id 102700, collectionNo 68), API nice/JP lang=en. TODOS los assets verificados HTTP 200 via curl. charaGraphs: 4 de ascension (a@1, a@2, b@1, b@2 — solo 2 artes distintas con/sin frame) + 1 costume (102730a). faces: 4 ascension (f_1027000..f_1027003) + 1 costume (f_1027300). spriteModel.ascension del API mapea: key 0 -\u003e 102700, keys 1-2 -\u003e 102710, keys 3-4 -\u003e 102720; costume 102730 = \u0027Kan\u0027i Reii: Asagi no Haori Hakama\u0027 (costumeCollectionNo 47). Cada manifest.json en static.atlasacademy.io/JP/Servants/\u003cmodelId\u003e/ lista exactamente 2 archivos: bundle \u0027\u003cmodelId\u003e\u0027 (tipo \u0027Modified Unity3D\u0027) y \u0027textures/\u003cmodelId\u003e.png\u0027 (Texture2D); los 8 archivos (4 bundles + 4 texturas) devolvieron HTTP 200. Igual que Mash (800100), son puppets Unity 2D, NO spritesheets — requieren re-rig en Godot. Skills (con upgrades): num1 Shukuchi B (id 119450) / B+ (119451) -\u003e skill_00304; num2 Weak Constitution A (118550) / Zettou A (942550) -\u003e skill_00311 (mismo icono en ambas versiones segun API); num3 Mind\u0027s Eye (Fake) A (36550) -\u003e skill_00402. 3 iconos unicos, todos HTTP 200. JSON crudo guardado en %TEMP%\\okita68.json y %TEMP%\\okita68lore.json."
+}
