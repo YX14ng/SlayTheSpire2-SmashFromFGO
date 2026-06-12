@@ -73,5 +73,8 @@
   "MASHSHIELDER-CAMELOT_MANIFESTED_POWER.smartDescription": "#宝具回应了满槽的宝具值：罗德·卡美洛已加入你的手牌。消耗宝具值并重新充满至100即可再次显现。",
   "MASHSHIELDER-BOND_POWER.title": "羁绊",
   "MASHSHIELDER-BOND_POWER.description": "#玛修本局游戏的羁绊等级。每场战斗开始时提供加成（详见羁绊计量器遗物）。",
-  "MASHSHIELDER-BOND_POWER.smartDescription": "#玛修本局游戏的羁绊等级。每场战斗开始时提供加成（详见羁绊计量器遗物）。"
+  "MASHSHIELDER-BOND_POWER.smartDescription": "#玛修本局游戏的羁绊等级。每场战斗开始时提供加成（详见羁绊计量器遗物）。",
+  "MASHSHIELDER-COMBAT_ANALYSIS_POWER.title": "战斗分析",
+  "MASHSHIELDER-COMBAT_ANALYSIS_POWER.description": "#在你的回合开始时：获得等同于此能力层数的*暴击星*。每当你获得*暴击*时：抽1张牌。",
+  "MASHSHIELDER-COMBAT_ANALYSIS_POWER.smartDescription": "#在你的回合开始时：获得等同于此能力层数的*暴击星*。每当你获得*暴击*时：抽1张牌。"
 }

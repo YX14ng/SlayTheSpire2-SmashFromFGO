@@ -7,7 +7,10 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
-/// <summary>Colmillo de Barghest (巴格斯特之牙) — 16 de daño; si el objetivo tiene Maldición: cura 4 HP.</summary>
+/// <summary>
+/// Colmillo de Barghest (巴格斯特之牙) — 16 de daño; si el objetivo tiene Maldición:
+/// cura 4 HP. Rediseño v2: glow dorado cuando hay un enemigo maldito (lector de Maldición).
+/// </summary>
 public sealed class BarghestsFang() : MorganCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -17,6 +20,9 @@ public sealed class BarghestsFang() : MorganCard(2, CardType.Attack, CardRarity.
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
+
+    protected override bool ShouldGlowGoldInternal =>
+        Curses.MostCursed(Owner.Creature.CombatState, Owner.Creature) != null;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

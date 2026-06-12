@@ -20,7 +20,7 @@ public sealed class HopeWillCamelotUnleashed() : ArtoriaCard(0, CardType.Attack,
     public const int ChargeCost = 100;
     public const int CritCost = 5;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

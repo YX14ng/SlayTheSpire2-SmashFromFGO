@@ -6,8 +6,12 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Cards.Uncommon;
 
-/// <summary>Simulacro de Entrenamiento — draw + Block.</summary>
-public sealed class TrainingSimulation() : MashShielderCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+/// <summary>Simulacro de Entrenamiento — draw + Block.
+/// REEMPLAZADA por FormDrill (que hereda su slot de arte). Sin mecanismo limpio de
+/// exclusión de pool en BaseLib, se usa el mismo truco que las Unleashed:
+/// CardRarity.Event no aparece en recompensas pero las runs guardadas la resuelven.
+/// Removida del pool en rediseño v2; borrar en la próxima versión.</summary>
+public sealed class TrainingSimulation() : MashShielderCard(1, CardType.Skill, CardRarity.Event, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

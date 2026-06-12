@@ -11,7 +11,7 @@ namespace MashShielder.MashShielderCode.Cards.Rare;
 /// LORD CHALDEAS — NP card (min 50 charge, consumes ALL): a fortress of Bulwark Block.
 /// FGO Overcharge: +Block per 10 charge consumed beyond the minimum.
 /// </summary>
-public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
+public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self), IMashNpCard
 {
     public const int ChargeCost = 50;
 
@@ -25,7 +25,7 @@ public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRar
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<BulwarkPower>()];
 
-    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost);
+    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost, this);
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 

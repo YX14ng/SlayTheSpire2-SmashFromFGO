@@ -8,16 +8,20 @@ using MorganBerserker.MorganBerserkerCode.Powers.Forms;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#10 Furia de la Reina (女王之怒) — 10 de daño; en forma Reina: Carga NP +8.</summary>
+/// <summary>#10 Furia de la Reina (女王之怒) — retocada v2: 10 de daño; en forma
+/// Reina/Invierno: Carga NP +10. Glow dorado en la forma correcta. (up +3 / NP→20)</summary>
 public sealed class QueensFury() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(10m, ValueProp.Move),
-        new DynamicVar("NpCharge", 8)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
+
+    protected override bool ShouldGlowGoldInternal =>
+        Owner.Creature.HasPower<FairyQueenFormPower>() || Owner.Creature.HasPower<WinterQueenFormPower>();
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -34,6 +38,6 @@ public sealed class QueensFury() : MorganCard(1, CardType.Attack, CardRarity.Com
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["NpCharge"].UpgradeValueBy(2m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

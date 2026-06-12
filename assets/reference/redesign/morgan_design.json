@@ -1,0 +1,502 @@
+{
+    "gramatica":  "RECURSOS DE MORGAN (5): 1) Carga NP (FGOCore, 0-300; a 100 se auto-manifiesta la Unleashed de la forma activa, gratis, que al jugarse consume TODA la carga con mín. 100 y escala PerTen). 2) Estrellas de Crítico (FGOCore compartido, NUEVO en uso: contador 0-100+; a 100 se descuentan 100 automáticamente y otorgan 1 CRÍTICO LISTO = próximo Ataque ×2, se consume). NO es el contador chico con candado de forma de Artoria: el de Morgan/Jeanne es global, auto-payoff a 100, sin gate — documentado en el doccomment de CritStarsPower. 3) Maldición (cap 25/enemigo, decae 1; la pasiva de forma Reina/Invierno aplica +2/+1 extra). 4) Vida propia como moneda (cada EVENTO de pérdida de Vida → +10 estrellas vía Cetro rediseñado + 10 NP vía Refuerzo de Locura: sangrar es generar — MUY Berserker). 5) Forma activa (Reina: 1ª vez que dañás Vida por turno +10 NP y Maldición +2; Bruja: +12 NP/turno, ataques -2; Invierno: ambas, permanente).\n\nDENOMINACIONES FIJAS (regla Jeanne: toda carta habla la misma aritmética): NP: 10 = rider de común · 20 = paquete de skill · 30 = básica Arts · 50 = jackpot/espejo · gates 50 (mini-NP Rhongo) y 70 (NP reales) · 100 = umbral del ulti. Estrellas: 10 = rider · 20 = paquete · 30 = básica Quick · 50 = espejo · 100 = umbral (o patrón \"Black\": Carga de la Cacería las da todas juntas ANTES de su golpe). Maldición: 2 = sello básico (con pasiva Reina deposita 4: los riders \"si tiene Maldición\" piden exactamente eso → siempre casi encendidos pero se sienten combo) · 3 = sello cargado · payoff escalar paga por cada 3. Vida: 1/2/4 por carta; cada evento = +10 estrellas garantizadas.\n\nREGLA DE CONVERSIÓN (fungibilidad total, ningún contador muere): par espejo a 0⚡ MistVeil (−50 NP → +50 estrellas) / Vassalage (−50 estrellas → +50 NP), upgrade: consumen 30 (calcado de 等价交换A/B de Jeanne). Salidas restantes: Maldición→daño (Cobro Final), →curación (Impuesto Extraordinario), →NP (Recaudación, reliquia Impuesto de Existencia), →Bloqueo (Acero del Invierno, Barrido escalar); Vida→estrellas+NP (Cetro+Locura); estrellas→×2 (umbral) y →NP (espejo); NP→ulti gratis (umbral) o →daño PerTen (NPs manuales).\n\nCÓMO ENTRAN BUSTER/ARTS/QUICK: básicas de AMBOS personajes vía bases compartidas en FGOCore — Buster 1⚡ 10 daño (up +3), Arts 1⚡ 6 daño + 30 NP (up +3/+20), Quick 1⚡ 6 daño + 30 estrellas (up +3/+20). Números de Jeanne adoptados tal cual: su economía rápida es el objetivo y el techo §1.bis (Hextech + BetterCharacters) la respalda.\n\nAUDITORÍA ANTI-DEGENERACIÓN DEL CICLO NP (pedida): con Arts a 30, el ciclo da ~1 Unleashed cada 2-2.5 turnos (igual feel que JeanneNP) — sano porque la Unleashed consume TODO al jugarse: sobrecargar a 200-300 paga PerTen pero cuesta ciclos de ulti (decisión real, no loop). Único ajuste necesario: RhongomyniadRain mín 40→50 (gate de denominación; a mín 40 con economía rápida se spameaba con carga trivial). Roadless/Memory quedan en mín 70 (su nicho: disparar ANTES del auto-ulti de 100) y los PerTen 3/4 quedan: a cap 300, Rhongo+ = ~128 single-target por 1⚡ pagando ~9 cartas de generación — dentro del techo ×1.5 de §1.bis. La Bendición de Rhongomyniad (+10 tier/stack, se consume) no encadena porque solo la generan los Roadless.\n\nGLOW DORADO (regla global): TODA condicional brilla con ShouldGlowGoldInternal — riders de Maldición, condicionales de forma, espejos pagables, Alzarse-riders, NPs jugables (ya lo hacen) y umbrales de Vida.",
+    "reliquiaInicial":  "QUEENSSCEPTER (\"Rhongomyniad, el Cetro de la Reina\") — REDISEÑAR sumando la lección 焰刑地狱 (la starter convierte eventos universales en recursos del kit): (1) MANTIENE: al iniciar combate entra en forma Reina de las Hadas (y dispara la precarga de FormVisuals). (2) MANTIENE: la primera vez que cambiás de forma cada combate: +1 Energía, robá 1 carta y +10 NP. (3) AGREGA: cada vez que Morgan pierde Vida (cualquier fuente: ataques enemigos, autodaño, Pacto de Sangre): +10 Estrellas de Crítico — sangrar→estrellas, el espejo Berserker del \"perder HP→+20 NP\" de Jeanne (el hilo NP de Morgan ya lo bombean las formas; el evento-vida alimenta el recurso nuevo). Esto garantiza FUENTE pasiva de estrellas (tanquear 2-3 golpes ≈ 20-30★ por turno malo) y calibra los espejos: Quick (30) + 2 pérdidas = 50 = exactamente el coste del espejo Vassalage. Las 8 reliquias del pool no cambian (ExistenceTax ya es el conversor Maldición→NP; MirrorClanGlass/WorldsEndCoronation engordan el hilo de formas; HabetrotThread el de Alzarse).",
+    "basicas":  [
+                    "NUEVO:BusterMorgan — 1⚡ Ataque: Inflige 10 de daño. (up: +3) [carta de comando roja; daño puro; idéntica base FGOCore que la de Mash]",
+                    "NUEVO:ArtsMorgan — 1⚡ Ataque: Inflige 6 de daño. Obtén 30 de Carga NP. (up: +3 / +20) [comando azul; enseña el hilo NP desde el turno 1]",
+                    "NUEVO:QuickMorgan — 1⚡ Ataque: Inflige 6 de daño. Obtén 30 Estrellas de Crítico. (up: +3 / +20) [comando verde; enseña el hilo de estrellas desde el turno 1]",
+                    "StrikeMorgan (Golpe) — MANTENER (6 daño, up +3) pero SALE del mazo inicial: queda registrada como básica para compat (si StS2 tagea \u0027Strike\u0027 para eventos/sinergias, BusterMorgan debe heredar ese tag).",
+                    "DefendMorgan (Defender) — MANTENER (5 Bloqueo, up +3).",
+                    "LanceOfTheWorldsEnd (Lanza del Confín, firma S1) — MANTENER: 8 daño + 2 Maldición (con pasiva Reina deposita 4 → enciende todos los riders \u0027≥ tiene Maldición\u0027). (up +3/+1)",
+                    "QueensMandate (Mandato de la Reina, firma S2) — RETOCAR: 5 Bloqueo + 10 NP; si algún enemigo tiene Maldición: +3 Bloqueo (igual) + AGREGAR glow dorado cuando la condición se cumple. (up +2/+5)",
+                    "MAZO INICIAL (10, estilo Jeanne ajustado \u0027Morgan más Buster\u0027): 3× Buster + 2× Arts + 1× Quick + 2× Defender + 1× Lanza del Confín + 1× Mandato de la Reina. Cero Golpes vanilla — una Berserker abre con 3 Busters; las 6 cartas de comando + 2 firmas codifican las 3 economías (daño/NP+Maldición/estrellas) desde el turno 1. HP 78 y starters (Cetro, Vínculo, Sello) sin cambios."
+                ],
+    "tabla":  [
+                  {
+                      "carta":  "NUEVO:BusterMorgan",
+                      "accion":  "NUEVO (básica)",
+                      "efectoNuevo":  "1⚡ At: 10 daño. (up +3)",
+                      "hilo":  "Daño puro / blanco natural del ×2 de Crítico"
+                  },
+                  {
+                      "carta":  "NUEVO:ArtsMorgan",
+                      "accion":  "NUEVO (básica)",
+                      "efectoNuevo":  "1⚡ At: 6 daño + 30 Carga NP. (up +3/+20)",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "NUEVO:QuickMorgan",
+                      "accion":  "NUEVO (básica)",
+                      "efectoNuevo":  "1⚡ At: 6 daño + 30 Estrellas. (up +3/+20)",
+                      "hilo":  "Estrellas/Crítico"
+                  },
+                  {
+                      "carta":  "StrikeMorgan",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Neutral (sale del mazo inicial; compat)"
+                  },
+                  {
+                      "carta":  "DefendMorgan",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Neutral"
+                  },
+                  {
+                      "carta":  "LanceOfTheWorldsEnd",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición (siembra los riders desde la básica)"
+                  },
+                  {
+                      "carta":  "QueensMandate",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Igual (5 Bloqueo + 10 NP; +3 Bloqueo si algún enemigo tiene Maldición) + glow dorado condicional. (up +2/+5)",
+                      "hilo":  "Maldición→Bloqueo/NP"
+                  },
+                  {
+                      "carta":  "ReplicaLance",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "1⚡ At: 9 daño. Obtén 10 Estrellas (las réplicas se astillan en luz). (up +3/+10)",
+                      "hilo":  "Estrellas/Crítico"
+                  },
+                  {
+                      "carta":  "CursedBolt",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición"
+                  },
+                  {
+                      "carta":  "QueensScorn",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Igual (0⚡: 4 daño; +3 si el objetivo tiene Maldición; up +2/+1) + glow dorado.",
+                      "hilo":  "Maldición (lector)"
+                  },
+                  {
+                      "carta":  "MadLunge",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Autodaño→Estrellas (la pérdida de 2 HP ahora paga +10★ vía Cetro)"
+                  },
+                  {
+                      "carta":  "TyrantsSweep",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "1⚡ At AoE: 6 daño a TODOS, +1 por cada 3 de Maldición de cada objetivo (individual; a cap 25 = +8). Glow si algún enemigo tiene Maldición. (up: 6→9)",
+                      "hilo":  "Maldición (PAYOFF ESCALAR en común — checklist)"
+                  },
+                  {
+                      "carta":  "ScepterBlow",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "8 daño + 10 NP (denominación). (up +3/+5)",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "TwinReplicas",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "4 daño ×2 + 10 NP. (up +2/+5)",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "RoyalPunishment",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "2⚡ At: 12 daño + 2 Vulnerable; si el objetivo tiene Maldición: +10 NP (la Corona cobra el castigo). Glow. (up +4)",
+                      "hilo":  "Maldición→NP"
+                  },
+                  {
+                      "carta":  "TyrantsBlood",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Autodaño→Estrellas (0⚡: 6 daño, −1 HP → +10★ vía Cetro)"
+                  },
+                  {
+                      "carta":  "QueensFury",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "10 daño; en forma Reina/Invierno: +10 NP. Glow dorado en forma correcta. (up +3 / NP→20)",
+                      "hilo":  "Formas→NP"
+                  },
+                  {
+                      "carta":  "MistVeil",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "0⚡ Hab: si tenés ≥50 NP: perdé 50 de Carga NP y obtené 50 Estrellas (el maná se dispersa en niebla refulgente). Glow cuando pagable. (up: consume 30)",
+                      "hilo":  "Conversión (espejo A, NP→estrellas, 0⚡ — par 等价交换)"
+                  },
+                  {
+                      "carta":  "CursedRain",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "2 Maldición a TODOS + 10 NP. (up +1/+5)",
+                      "hilo":  "Maldición+NP"
+                  },
+                  {
+                      "carta":  "WitchsMark",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición"
+                  },
+                  {
+                      "carta":  "TaxCollection",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1⚡ Hab: 20 NP; si algún enemigo tiene Maldición: +20. Glow. (up: base 20→30)",
+                      "hilo":  "Maldición→NP"
+                  },
+                  {
+                      "carta":  "RoyalEdict",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Roba 2 + 10 NP. (up: +10 NP)",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "ProtectiveFrost",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "6 Bloqueo + 10 NP. (up +3/+5)",
+                      "hilo":  "Bloqueo→NP"
+                  },
+                  {
+                      "carta":  "QueensGaze",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "0⚡: 1 Débil + 10 NP. (up +1/+5)",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "RainChant",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "1⚡ Hab: Entrá en forma Bruja de la Lluvia. Obtené 5 de Bloqueo. (up: Bloqueo 5→8) — el ACCESO COMÚN a Bruja que faltaba; barata + efecto inmediato chico (regla §5 de formas).",
+                      "hilo":  "Formas (desbloquea Bruja desde común — checklist)"
+                  },
+                  {
+                      "carta":  "WinterSteel",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "2⚡ Hab: 13 Bloqueo; si algún enemigo tiene Maldición: +5 Bloqueo. Glow. (up +4/+2)",
+                      "hilo":  "Maldición→Bloqueo"
+                  },
+                  {
+                      "carta":  "Vassalage",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "0⚡ Hab: si tenés ≥50 Estrellas: perdelas y obtené 50 de Carga NP (los vasallos tributan a la Corona). Glow cuando pagable. (up: consume 30)",
+                      "hilo":  "Conversión (espejo B, estrellas→NP, 0⚡)"
+                  },
+                  {
+                      "carta":  "SillyMama",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "0⚡: roba 1 + 10 NP; mejorada: además +10 Estrellas (la nena te tira estrellitas).",
+                      "hilo":  "NP/Estrellas (meme)"
+                  },
+                  {
+                      "carta":  "AdversitysFury",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Igual (8; +4 a ≤75%, +4 más a ≤50%; up +2) + glow dorado en cada umbral alcanzado.",
+                      "hilo":  "Vida baja"
+                  },
+                  {
+                      "carta":  "AlbionsBreath",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "3⚡ At: 9 daño ×3. Si tenés CRÍTICO LISTO: lo consume y LOS TRES golpes critican (×2) — arregla que el multi-hit desperdicie el crítico. Glow si tenés Crítico Listo. (up: 9→11)",
+                      "hilo":  "Estrellas/Crítico (payoff \u0027si tenés CRÍTICO LISTO\u0027)"
+                  },
+                  {
+                      "carta":  "BaobhanSithsShriek",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "1⚡ At: 9 daño + 20 Estrellas (Baobhan Sith ES el hada de los críticos). (up +3/+10)",
+                      "hilo":  "Estrellas/Crítico"
+                  },
+                  {
+                      "carta":  "BarghestsFang",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Igual (16; si Maldición: cura 4; up +5/+2) + glow dorado.",
+                      "hilo":  "Maldición (lector)"
+                  },
+                  {
+                      "carta":  "CallOfTheFairyKnights",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Igual (2 Maldición AoE + 1 Débil AoE + 6 Bloqueo, Exhaust) + añade 1 Arma del Caballero a tu mano (los caballeros traen sus espadas). (up +1/+1/+3)",
+                      "hilo":  "Maldición + Armas del Caballero (2º generador, poco común)"
+                  },
+                  {
+                      "carta":  "CharismaOfYearning",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "2 Fuerza + 1 Vulnerable AoE + 20 NP (denominación skill). (up +1/+10)",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "CurseHarvest",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Duplica la Maldición del objetivo, máx +6→+10 (acompaña el cap 25). Glow si tiene Maldición.",
+                      "hilo":  "Maldición (amplificador)"
+                  },
+                  {
+                      "carta":  "EmbraceOfTheLake",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Igual (12 Bloqueo, solo en Bruja/Invierno; up +4) + glow dorado cuando jugable. Ahora viable: RainChant común da acceso a Bruja.",
+                      "hilo":  "Formas (payoff Bruja)"
+                  },
+                  {
+                      "carta":  "FairyEyes",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición (motor)"
+                  },
+                  {
+                      "carta":  "FairyOfTheRainland",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Al jugarla: 15→20 NP; motor +5/turno igual. (up +5/+3)",
+                      "hilo":  "NP (motor)"
+                  },
+                  {
+                      "carta":  "FairyQueenForm",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Formas (+Maldición)"
+                  },
+                  {
+                      "carta":  "ItemConstruction",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición (amplificador global)"
+                  },
+                  {
+                      "carta":  "MadnessEnhancement",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Cada pérdida de Vida en tu turno: +6→+10 NP (denominación), máx 2/turno. (up: máx 2→3 veces/turno en vez de +monto)",
+                      "hilo":  "Autodaño→NP (lección 焰刑地狱)"
+                  },
+                  {
+                      "carta":  "MelusinesTalon",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "1⚡ At: 12 daño + 10 NP (Melusine carga su propio NP en FGO). (up +4/+5)",
+                      "hilo":  "NP (era isla vanilla — checklist riders propios)"
+                  },
+                  {
+                      "carta":  "MemoryOfTheAshTree",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "0⚡ Exhaust: 20 NP + roba 1. (up +10)",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "MirrorClansTrick",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Formas (toggle ping-pong)"
+                  },
+                  {
+                      "carta":  "MirrorStrike",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Igual (6×2; ×3 si cambiaste de forma este combate; up +2) + glow dorado con la condición cumplida.",
+                      "hilo":  "Formas (payoff)"
+                  },
+                  {
+                      "carta":  "ProtectionOfTheLake",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Igual (20 NP; en Bruja/Invierno: roba 1; up +8) + glow dorado en forma correcta.",
+                      "hilo":  "NP/Formas"
+                  },
+                  {
+                      "carta":  "RainWitchForm",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Formas (switch premium 0⚡ + NP 10)"
+                  },
+                  {
+                      "carta":  "ReplicaBarrage",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "NP (5/golpe que dañe Vida — sinergia pasiva Reina)"
+                  },
+                  {
+                      "carta":  "RoyalExecution",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "14 daño; si mata: NP 25→30 (denominación) + 2 Maldición a TODOS. (up +4/+5)",
+                      "hilo":  "NP/Maldición"
+                  },
+                  {
+                      "carta":  "SaviorsTears",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Igual (cura 5; ≤50%: cura 9; Exhaust; up +2/+3) + glow dorado a ≤50%.",
+                      "hilo":  "Vida baja"
+                  },
+                  {
+                      "carta":  "StormsWrath",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición (+ golpe grande: blanco natural del ×2 de Crítico Listo)"
+                  },
+                  {
+                      "carta":  "TerritoryCreation",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Poder: al final de tu turno: 4 Bloqueo + 5 NP (el territorio canaliza maná). (up +2 Bloqueo)",
+                      "hilo":  "Bloqueo→NP (era isla)"
+                  },
+                  {
+                      "carta":  "WildHuntCharge",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "2⚡ At AoE: Obtené 100 Estrellas (dispara el umbral → CRÍTICO LISTO) y LUEGO infligí 10 de daño a TODOS (el primer impacto sale ×2). Patrón 黑闪/Black de Jeanne: la carta que dispara el umbral y se cobra a sí misma. La Cacería Salvaje cabalga una lluvia de estrellas. (up +4)",
+                      "hilo":  "Estrellas/Crítico (carta-combo modelo)"
+                  },
+                  {
+                      "carta":  "WinterCourt",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "2⚡ Poder: al inicio de tu turno: añade 1 Arma del Caballero a tu mano. Cuando jugás un Arma del Caballero: +10 Estrellas (las espadas de los caídos vuelven como luz). (up: −1⚡) — generador sostenido + PAYOFF por jugarlas en una sola carta.",
+                      "hilo":  "Armas del Caballero→Estrellas (checklist: desentierra la sub-mecánica)"
+                  },
+                  {
+                      "carta":  "WinterDecree",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición+Bloqueo"
+                  },
+                  {
+                      "carta":  "WinterThorns",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición+Bloqueo (defensa que siembra)"
+                  },
+                  {
+                      "carta":  "AHomeWithMorgan",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "+3 Vida máx y cura 3; si tenés ALZARSE: ambos se duplican (un hogar = algo por lo que vivir). Glow. Exhaust. (up +2/+2)",
+                      "hilo":  "Alzarse (lector 1 — era isla)"
+                  },
+                  {
+                      "carta":  "CharismaOfAdversity",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Vida baja (escalador)"
+                  },
+                  {
+                      "carta":  "CurseOfCernunnos",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición (sin decay)"
+                  },
+                  {
+                      "carta":  "ExtraordinaryTax",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición→curación"
+                  },
+                  {
+                      "carta":  "FaeBloodPact",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Autodaño→NP (con el Cetro nuevo el tick de −2 HP también paga +10★/turno)"
+                  },
+                  {
+                      "carta":  "FinalCollection",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Igual (consume TODA la Maldición del objetivo: 2 daño/punto; up 3/punto) + glow dorado si el objetivo tiene Maldición. Con cap 25 + Cernunnos: hasta 50-75.",
+                      "hilo":  "Maldición (payoff escalar rara)"
+                  },
+                  {
+                      "carta":  "FromTheWorldsEnd",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Alzarse (otorgador: 1 HP + 3 Fuerza + 50 NP al activarse)"
+                  },
+                  {
+                      "carta":  "HailstormWall",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición+Bloqueo"
+                  },
+                  {
+                      "carta":  "LastResort",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Alzarse/NP (gate de turno 5 — fidelidad FGO)"
+                  },
+                  {
+                      "carta":  "MemoryOfLondinium",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "NP/Armas del Caballero (NP real de Aesc, mín 70 auditado: su nicho es disparar antes del auto-ulti)"
+                  },
+                  {
+                      "carta":  "PerpetualWinter",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Maldición (motor)"
+                  },
+                  {
+                      "carta":  "RhongomyniadRain",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Mín. de carga 40→50 (gate de denominación: evita el spam con carga trivial en la economía rápida nueva). PerTen 4, base 18 y up +6 sin cambios.",
+                      "hilo":  "NP (mini-NP spameable, piso de la economía)"
+                  },
+                  {
+                      "carta":  "RoadlessCamelot",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "NP (auditado: mín 70 + PerTen 3 + Bendición no degeneran — consumir todo cuesta ciclos de ulti)"
+                  },
+                  {
+                      "carta":  "SaviorsVengeance",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Vida baja (escala con Vida faltante)"
+                  },
+                  {
+                      "carta":  "SovereignOfTwoFaces",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Poder: cada cambio de forma: roba 2 + 10 NP + 10 Estrellas (los poderes engordan TODOS los hilos, no abren nuevos).",
+                      "hilo":  "Formas→NP/Estrellas"
+                  },
+                  {
+                      "carta":  "SprigganVigil",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "Poder: al inicio de cada turno: 5 Bloqueo + 5 NP (Spriggan custodia el tesoro de la Reina). (up +2 Bloqueo)",
+                      "hilo":  "Bloqueo→NP (era isla)"
+                  },
+                  {
+                      "carta":  "TyrantsLance",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "24 daño; perdés 4 HP (→ +10★ vía Cetro); si tenés ALZARSE: +10 daño (la tirana pelea sin miedo a morir). Glow. (up +6)",
+                      "hilo":  "Autodaño + Alzarse (lector 2)"
+                  },
+                  {
+                      "carta":  "UnderTheWorldTree",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "ViviansGift",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Armas del Caballero (burst de 2-3)"
+                  },
+                  {
+                      "carta":  "WinterCoronation",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Formas/Maldición (clímax permanente)"
+                  },
+                  {
+                      "carta":  "KnightsArm",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "Armas del Caballero (token 0⚡ Exhaust; WinterCourt le paga +10★ al jugarla)"
+                  },
+                  {
+                      "carta":  "RoadlessCamelotUnleashed",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "NP (ulti auto a 100, forma Reina/Invierno)"
+                  },
+                  {
+                      "carta":  "MemoryOfLondiniumUnleashed",
+                      "accion":  "MANTENER",
+                      "efectoNuevo":  "",
+                      "hilo":  "NP/Armas (ulti auto a 100, forma Bruja — pega más fuerte por ser la forma lenta)"
+                  }
+              ],
+    "hilosResultantes":  [
+                             "HILO NP — empieza en BÁSICA (Arts +30, Mandato +10): comunes a denominación 10/20 (Cetro/Réplica Doble/Edicto/Escarcha/Mirada/Recaudación 20+20), pasivas de forma (+10 Reina al dañar, +12 Bruja/turno), motores (Hada del País 20+5/t, Locura 10/pérdida, Pacto de Sangre 12/t), conversor Vassalage (50★→50 NP) y reliquia ExistenceTax (Maldición→NP). Cobradores: ulti auto a 100 (gratis, consume todo con PerTen), Rhongo mín 50 (spam), Roadless/Memory mín 70 (antes del auto-ulti). Todo +X es progreso visible hacia un finisher gratis — el corazón Jeanne.",
+                             "HILO ESTRELLAS→CRÍTICO (NUEVO) — empieza en BÁSICA (Quick +30): fuentes ReplicaLance/Mamá Boba (10), Chillido de Baobhan (20), espejo MistVeil (50), Cacería Salvaje (100 instantáneas, patrón Black), Cetro (+10 por CADA pérdida de Vida: tanquear y sangrar generan), WinterCourt (+10 por Arma jugada), Soberana (+10 por switch). Payoffs: umbral 100 → CRÍTICO LISTO ×2 automático; Aliento de Albion lo consume para triplicar críticos; los golpes grandes (Ira de la Tormenta 26, Lanza de la Tirana 24, NPs) son los blancos naturales del ×2; espejo Vassalage la convierte en NP si sobra.",
+                             "HILO MALDICIÓN ESCALAR — la básica Lanza del Confín + pasiva Reina (+2) depositan 4: los riders \u0027¿tiene Maldición?\u0027 (Desdén, Mandato, Recaudación, Castigo Real, Acero, Colmillo) están casi siempre encendidos pero se sienten combo (riders calibrados a la fuente pasiva). Payoff POR PUNTO ahora a tres alturas: Barrido de la Tirana (común, +1 daño AoE cada 3), Cobro Final (rara, 2-3/punto consumido), DoT pasivo cap 25; amplificadores ItemConstruction/CurseHarvest/Cernunnos/PerpetualWinter y la reliquia BottledMors la reciclan.",
+                             "HILO AUTODAÑO/VIDA BAJA — el costo es recurso (lección 焰刑地狱 doble): cada evento de pérdida de Vida = +10★ (Cetro) y +10 NP (Refuerzo de Locura), así Embestida/Sangre de Tirana/Lanza de la Tirana/Pacto de Sangre se auto-pagan en DOS economías. Payoffs de estar herida: Furia/Carisma de la Adversidad, Venganza/Lágrimas de la Salvadora. La red: Alzarse + Hilo de Habetrot.",
+                             "HILO FORMAS (ping-pong Reina↔Bruja) — acceso ahora en COMÚN (Canto de la Lluvia entra a Bruja) + poco común (RainWitchForm 0⚡, FairyQueenForm, Truco del Espejo toggle) + clímax permanente (Coronación). El Cetro paga el 1er switch (+1⚡, roba 1, +10 NP); payoffs condicionales Furia de la Reina / Canto viejo→ProtectionOfTheLake / Abrazo del Lago / Golpe del Espejo; motores Soberana de Dos Rostros (+roba 2/+10 NP/+10★) y reliquias MirrorClanGlass/WorldsEndCoronation. Cada forma cambia el ULTI manifestado (Roadless vs Memory) — las decisiones cambian, no solo los números.",
+                             "HILO ARMAS DEL CABALLERO — desenterrado: generadores en poco común (Corte del Invierno: 1/turno; Llamado de los Caballeros Hada: +1) además de las raras (Regalo de Vivian, Memory of Londinium); payoff por jugarlas (+10★ cada una vía Corte del Invierno) conecta la tribu al hilo de estrellas. El pool se cita a sí mismo: ulti→tokens→estrellas→crítico→ulti.",
+                             "HILO CONVERSIÓN/FUNGIBILIDAD — íntegramente común: par espejo 0⚡ MistVeil (NP→★) / Vassalage (★→NP) a 50↔50 (up: consumen 30), Recaudación y ExistenceTax (Maldición→NP), Cobro Final (Maldición→daño), Impuesto Extraordinario (Maldición→curación), Cetro+Locura (Vida→★+NP). Ningún contador se estanca; cualquier común que genere CUALQUIER recurso es jugable en cualquier mazo de Morgan.",
+                             "HILO ALZARSE/SACRIFICIO — otorgadores raros (Desde el Confín: +3 Fuerza +50 NP al dispararse; Último Recurso: gate turno 5) + reliquias (Habetrot, Vínculo Nv10); ahora con LECTORES explícitos: «Un Hogar con Morgan» (duplica con Alzarse) y Lanza de la Tirana (+10 daño con Alzarse) — el seguro de vida se vuelve plan de juego, cierre natural del hilo de autodaño."
+                         ],
+    "locImpacto":  "Archivos: MorganBerserker/MorganBerserker/localization/{esp,eng,zhs}/cards.json y relics.json + FGOCore (loc nueva de powers/keywords/cartas de comando). Cartas: 3 entradas nuevas (Buster/Arts/Quick — pueden vivir en FGOCore como loc compartida con title/description únicos), 11 descripciones REDISEÑAR reescritas (ReplicaLance, TyrantsSweep, RoyalPunishment, MistVeil, RainChant, WinterSteel, Vassalage, AlbionsBreath, BaobhanSithsShriek, MelusinesTalon, WildHuntCharge, WinterCourt — títulos se CONSERVAN todos, solo cambian descripciones y algún flavor), ~20 RETOCAR con cambio de número/rider (la mayoría solo re-verificar texto porque usan !VARS!; ~8 necesitan frase nueva: TaxCollection, SillyMama, CallOfTheFairyKnights, MadnessEnhancement up, TerritoryCreation, SovereignOfTwoFaces, SprigganVigil, TyrantsLance, AHomeWithMorgan, RhongomyniadRain mín). Reliquias: QueensScepter (descripción + flavor). Keywords nuevos trilingües: \u0027Estrellas de Crítico / Critical Stars / 暴击星\u0027 y \u0027Crítico Listo / Crit Ready / 暴击\u0027 (hover tips en FGOCore, citados por ~10 cartas de Morgan). Total estimado: ~45 claves modificadas/nuevas × 3 idiomas ≈ 135 strings. OJO escapes de SimpleLoc ya conocidos (+/−/paréntesis literales, commit 9ce6bbe).",
+    "fgoCoreNuevo":  "YA EXISTE en FGOCore (verificado, listo para consumir): Stars/CritStarsPower.cs (contador 0-100+, while ≥100 → −100 y +1 CritReady; patrón AfterPowerAmountChanged + _isProcessing calcado de decompiled\\_jeannealter\\JeanneAlter.Powers\\CritPower.cs; doccomment ya documenta que NO es el contador con candado de forma de Artoria), Stars/CritReadyPower.cs (×2 al próximo Ataque vía ModifyDamageMultiplicative + Decrement en AfterDamageGiven — los críticos hacen cola), y helper estático CritStars (Of/Gain/CanPay, espejo de NpCharge.Gain). FALTA CREAR: (1) Cards/Command/: bases abstractas BusterCardBase / ArtsCardBase / QuickCardBase (1⚡ Attack, Basic; números compartidos 10 / 6+30NP / 6+30★; up +3 / +3+20 / +3+20; cada mod las subclasea solo para [Pool], arte y prefijo de ID — mismo patrón que MemeCard) + tag/flag \u0027Strike\u0027 heredable si StS2 lo usa en eventos. (2) Helper CritReady.TryConsume(creature) → bool para payoffs manuales tipo Aliento de Albion (consumir 1 stack sin pasar por AfterDamageGiven). (3) Loc trilingüe compartida de los 2 powers + las 3 cartas de comando + iconos (estrella dorada / destello 暴击) en FGOCore/resources. (4) Hook opcional NO necesario: el umbral es auto-contenido; no agregar eventos hasta que una carta los pida. (5) Doc: nota en docs/DESIGN-MORGAN.md y WORKFLOW-FGO.md de que Estrellas es economía FGOCore compartida (Mash la hereda con sus propias fuentes) y la diferencia explícita con el sistema de Artoria. Implementación de Morgan que la consume: rediseño del QueensScepter (evento pérdida de Vida → CritStars.Gain 10) y las ~10 cartas de la tabla."
+}

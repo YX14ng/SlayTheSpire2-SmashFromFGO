@@ -35,7 +35,7 @@ public sealed class SummerDoubleSlash() : ArtoriaCard(1, CardType.Attack, CardRa
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        if (Owner.Creature.HasPower<SummerBerserkerFormPower>())
+        if (Owner.Creature.HasPower<SummerBerserkerFormPower>() || Owner.Creature.HasPower<AvalonFormPower>())
         {
             var hpHits = attack.Results.Count(r => r.UnblockedDamage > 0);
             if (hpHits > 0)

@@ -52,5 +52,8 @@
   "MORGANBERSERKER-WINTER_COURT_POWER.smartDescription": "#Draw this many additional cards each turn.",
   "MORGANBERSERKER-WINTER_THORNS_POWER.title": "Winter Thorns",
   "MORGANBERSERKER-WINTER_THORNS_POWER.description": "#This turn, enemies that attack you gain this much Curse.",
-  "MORGANBERSERKER-WINTER_THORNS_POWER.smartDescription": "#This turn, enemies that attack you gain this much Curse."
+  "MORGANBERSERKER-WINTER_THORNS_POWER.smartDescription": "#This turn, enemies that attack you gain this much Curse.",
+  "MORGANBERSERKER-WINTER_COURT_DRAW_POWER.title": "Winter Court: Insight",
+  "MORGANBERSERKER-WINTER_COURT_DRAW_POWER.description": "#At the start of your turn: draw 1 card.",
+  "MORGANBERSERKER-WINTER_COURT_DRAW_POWER.smartDescription": "#At the start of your turn: draw 1 card."
 }

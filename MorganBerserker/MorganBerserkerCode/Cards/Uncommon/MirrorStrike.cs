@@ -6,10 +6,15 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
-/// <summary>Golpe del Espejo (镜之一击) — 6 de daño ×2; si cambiaste de forma este combate: ×3.</summary>
+/// <summary>
+/// Golpe del Espejo (镜之一击) — 6 de daño ×2; si cambiaste de forma este combate: ×3.
+/// Rediseño v2: glow dorado con la condición cumplida.
+/// </summary>
 public sealed class MirrorStrike() : MorganCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Move)];
+
+    protected override bool ShouldGlowGoldInternal => Owner.Creature.HasPower<FormShiftedPower>();
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

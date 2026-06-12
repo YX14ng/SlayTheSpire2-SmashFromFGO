@@ -7,7 +7,10 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Cards.Rare;
 
-/// <summary>Campo de Nieve del Adiós — a great farewell wall + NP Charge. Exhaust.</summary>
+/// <summary>
+/// Campo de Nieve del Adiós — a great farewell wall + NP Charge. Exhaust.
+/// Rediseño v2: 20 Bloqueo con Baluarte (up +6) + 20 NP (up +10; antes +5 — denominación).
+/// </summary>
 public sealed class FarewellSnowfield() : MashShielderCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
@@ -30,6 +33,6 @@ public sealed class FarewellSnowfield() : MashShielderCard(2, CardType.Skill, Ca
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(6m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

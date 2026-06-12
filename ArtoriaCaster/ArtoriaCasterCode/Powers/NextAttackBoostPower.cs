@@ -18,7 +18,9 @@ public sealed class NextAttackBoostPower : ArtoriaPower
 {
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Single;
+    // Counter: el monto del boost vive en Amount (con Single el apply podría
+    // normalizarlo a 1; mismo patrón que MobileWallPower de Mash).
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     // ModifyDamageAdditive es DELTA (default 0).
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)

@@ -19,5 +19,11 @@
   "FGOCORE-GUTS_POWER.smartDescription": "#The first time this combat that damage would kill you: you survive at 1 HP instead.",
   "FGOCORE-OVERCHARGE_BLESSING_POWER.title": "Blessing of Rhongomyniad",
   "FGOCORE-OVERCHARGE_BLESSING_POWER.description": "#Your next NP card adds +10 per stack to its Overcharge.",
-  "FGOCORE-OVERCHARGE_BLESSING_POWER.smartDescription": "#Your next NP card adds +10 per stack to its Overcharge."
+  "FGOCORE-OVERCHARGE_BLESSING_POWER.smartDescription": "#Your next NP card adds +10 per stack to its Overcharge.",
+  "FGOCORE-CRIT_STARS_POWER.title": "Critical Stars",
+  "FGOCORE-CRIT_STARS_POWER.description": "#Critical star gauge. At 100: 100 stars are spent automatically and you gain 1 Critical Ready.",
+  "FGOCORE-CRIT_STARS_POWER.smartDescription": "#Critical star gauge. At 100: 100 stars are spent automatically and you gain 1 Critical Ready.",
+  "FGOCORE-CRIT_READY_POWER.title": "Critical Ready",
+  "FGOCORE-CRIT_READY_POWER.description": "#Your next Attack deals double damage.",
+  "FGOCORE-CRIT_READY_POWER.smartDescription": "#Your next Attack deals double damage."
 }

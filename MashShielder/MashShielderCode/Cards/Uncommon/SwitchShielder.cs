@@ -7,10 +7,11 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace MashShielder.MashShielderCode.Cards.Uncommon;
 
-/// <summary>Cambio: ¡Shielder! — return to the defensive form, recovering NP Charge.</summary>
+/// <summary>Cambio: ¡Shielder! — return to the defensive form, recovering NP Charge.
+/// Rediseño v2: 20 NP (up +10; antes 15/25 — denominación fija).</summary>
 public sealed class SwitchShielder() : MashShielderCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("NpCharge", 15)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("NpCharge", 20)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ShielderFormPower>()];
 

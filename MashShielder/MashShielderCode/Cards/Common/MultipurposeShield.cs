@@ -11,6 +11,7 @@ namespace MashShielder.MashShielderCode.Cards.Common;
 /// <summary>
 /// 盾娘's multipurpose shield — cutting board, frying pan, sled, table...
 /// (Learning with Manga! canon.) Oh, and it also blocks.
+/// Retoque v2: 6 Bloqueo (up +2), roba 1, +10 NP (up +10; antes 5/10 — denominación).
 /// </summary>
 public sealed class MultipurposeShield() : MashShielderCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
@@ -18,7 +19,7 @@ public sealed class MultipurposeShield() : MashShielderCard(1, CardType.Skill, C
     [
         new BlockVar(6m, ValueProp.Move),
         new CardsVar(1),
-        new DynamicVar("NpCharge", 5)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
@@ -33,6 +34,6 @@ public sealed class MultipurposeShield() : MashShielderCard(1, CardType.Skill, C
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(2m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

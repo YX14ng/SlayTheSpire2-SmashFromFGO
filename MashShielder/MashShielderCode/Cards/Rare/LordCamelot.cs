@@ -10,12 +10,13 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MashShielder.MashShielderCode.Cards.Rare;
 
 /// <summary>
-/// LORD CAMELOT — NP card (min 70 charge, consumes ALL): the Castle of the Distant Utopia.
+/// LORD CAMELOT — NP card (min 100 charge, consumes ALL): the Castle of the Distant Utopia.
 /// FGO Overcharge: +Block per 10 extra charge. Strength and Intercept always included.
+/// Rediseño v2 (AUDITORÍA + fidelidad FGO: NP al 100%): mínimo 70 → 100.
 /// </summary>
-public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRarity.Rare, TargetType.Self)
+public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRarity.Rare, TargetType.Self), IMashNpCard
 {
-    public const int ChargeCost = 70;
+    public const int ChargeCost = 100;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -29,7 +30,7 @@ public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRari
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<BulwarkPower>(), HoverTipFactory.FromPower<ProvokePower>()];
 
-    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost);
+    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost, this);
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 

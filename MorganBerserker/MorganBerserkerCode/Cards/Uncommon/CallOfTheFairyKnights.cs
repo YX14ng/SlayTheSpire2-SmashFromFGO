@@ -11,6 +11,8 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 /// <summary>
 /// Llamado de los Caballeros Hada (妖精骑士召集) — 2 de Maldición a TODOS (Barghest),
 /// 1 de Débil a TODOS (Baobhan Sith), 6 de Bloqueo (Melusine). Exhaust.
+/// Rediseño v2: además añade 1 Arma del Caballero a tu mano (los caballeros traen
+/// sus espadas — 2º generador de la tribu, en poco común). (up +1/+1/+3)
 /// </summary>
 public sealed class CallOfTheFairyKnights() : MorganCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
@@ -20,7 +22,8 @@ public sealed class CallOfTheFairyKnights() : MorganCard(2, CardType.Skill, Card
     [
         new DynamicVar("Curse", 2),
         new PowerVar<WeakPower>("Weak", 1m),
-        new BlockVar(6m, ValueProp.Move)
+        new BlockVar(6m, ValueProp.Move),
+        new CardsVar(1)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -43,6 +46,12 @@ public sealed class CallOfTheFairyKnights() : MorganCard(2, CardType.Skill, Card
             }
         }
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
+        for (var i = 0; i < DynamicVars.Cards.IntValue; i++)
+        {
+            var card = Owner.Creature.CombatState.CreateCard<Special.KnightsArm>(Owner);
+            CardCmd.PreviewCardPileAdd(
+                await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 0.8f);
+        }
     }
 
     protected override void OnUpgrade()

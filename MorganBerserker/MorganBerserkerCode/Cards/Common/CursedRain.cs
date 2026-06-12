@@ -5,13 +5,13 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#12 Lluvia Maldita (诅咒之雨) — 2 de Maldición a TODOS + Carga NP 5.</summary>
+/// <summary>#12 Lluvia Maldita (诅咒之雨) — 2 de Maldición a TODOS + Carga NP 10 (denominación). (up +1/+5)</summary>
 public sealed class CursedRain() : MorganCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Curse", 2),
-        new DynamicVar("NpCharge", 5)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -32,6 +32,6 @@ public sealed class CursedRain() : MorganCard(1, CardType.Skill, CardRarity.Comm
     protected override void OnUpgrade()
     {
         DynamicVars["Curse"].UpgradeValueBy(1m);
-        DynamicVars["NpCharge"].UpgradeValueBy(3m);
+        DynamicVars["NpCharge"].UpgradeValueBy(5m);
     }
 }

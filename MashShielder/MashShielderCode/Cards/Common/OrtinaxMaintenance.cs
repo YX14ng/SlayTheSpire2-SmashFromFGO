@@ -7,7 +7,10 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace MashShielder.MashShielderCode.Cards.Common;
 
-/// <summary>Mantenimiento del Ortinax — convert all Block into NP Charge (capped).</summary>
+/// <summary>
+/// Mantenimiento del Ortinax — retoque v2: pierde TODO tu Bloqueo → esa cantidad de
+/// Carga NP, máx 30 (up: máx 50 — antes 40: denominación fija).
+/// </summary>
 public sealed class OrtinaxMaintenance() : MashShielderCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("MaxCharge", 30)];
@@ -25,6 +28,6 @@ public sealed class OrtinaxMaintenance() : MashShielderCard(1, CardType.Skill, C
 
     protected override void OnUpgrade()
     {
-        DynamicVars["MaxCharge"].UpgradeValueBy(10m);
+        DynamicVars["MaxCharge"].UpgradeValueBy(20m);
     }
 }

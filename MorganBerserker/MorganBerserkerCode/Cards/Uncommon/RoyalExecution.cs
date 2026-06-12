@@ -7,13 +7,16 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
-/// <summary>Ejecución Real (女王处刑) — 14 de daño; si mata: Carga NP +25 y 2 de Maldición a TODOS.</summary>
+/// <summary>
+/// Ejecución Real (女王处刑) — 14 de daño; si mata: Carga NP +30 y 2 de Maldición
+/// a TODOS. Rediseño v2: NP 25→30 (denominación "básica Arts"). (up +4/+5)
+/// </summary>
 public sealed class RoyalExecution() : MorganCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(14m, ValueProp.Move),
-        new DynamicVar("NpCharge", 25),
+        new DynamicVar("NpCharge", 30),
         new DynamicVar("Curse", 2)
     ];
 

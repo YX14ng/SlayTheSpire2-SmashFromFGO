@@ -6,26 +6,38 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Cards.Common;
 
-/// <summary>Aplastamiento — big damage, lose some Block.</summary>
-public sealed class Crush() : MashShielderCard(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+/// <summary>
+/// Aplastamiento — rediseño v2: 1E Ataque; consume hasta 10 de tu Bloqueo (up 15)
+/// e inflige 8 daño (up 11) +1 por punto consumido. De anti-sinergia («pierde 4
+/// Bloqueo») a gasto VOLUNTARIO de Bloqueo como munición — combea con Ortinax.
+/// </summary>
+public sealed class Crush() : MashShielderCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(16m, ValueProp.Move),
-        new DynamicVar("BlockLoss", 4)
+        new DamageVar(8m, ValueProp.Move),
+        new DynamicVar("MaxConsume", 10)
     ];
+
+    protected override bool ShouldGlowGoldInternal => Owner.Creature.Block > 0;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_blunt", null, "heavy_attack.mp3")
+        var consumed = Math.Min(Owner.Creature.Block, DynamicVars["MaxConsume"].IntValue);
+        if (consumed > 0)
+        {
+            await CreatureCmd.LoseBlock(Owner.Creature, consumed);
+        }
+
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + consumed).FromCard(this).Targeting(cardPlay.Target)
+            .WithHitFx("vfx/vfx_heavy_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);
-        await CreatureCmd.LoseBlock(Owner.Creature, DynamicVars["BlockLoss"].IntValue);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(5m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["MaxConsume"].UpgradeValueBy(5m);
     }
 }

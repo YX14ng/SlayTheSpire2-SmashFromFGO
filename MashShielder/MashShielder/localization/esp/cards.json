@@ -173,5 +173,19 @@
   "MASHSHIELDER-FOU_BEAST_IV.title": "Fou (¿Bestia IV?)",
   "MASHSHIELDER-FOU_BEAST_IV.description": "#Inflige !D! de daño. Si mata al objetivo: cura !H! de Vida y obtén !NpCharge! de *Carga *NP. Kyu.",
   "MASHSHIELDER-MULTIPURPOSE_SHIELD.title": "Escudo Multiusos",
-  "MASHSHIELDER-MULTIPURPOSE_SHIELD.description": "#Obtén !B! de Bloqueo, roba !C! carta(s) y obtén !NpCharge! de *Carga *NP. Tabla de picar, sartén, trineo... y también escudo."
+  "MASHSHIELDER-MULTIPURPOSE_SHIELD.description": "#Obtén !B! de Bloqueo, roba !C! carta(s) y obtén !NpCharge! de *Carga *NP. Tabla de picar, sartén, trineo... y también escudo.",
+  "MASHSHIELDER-BUSTER_MASH.title": "Buster",
+  "MASHSHIELDER-BUSTER_MASH.description": "#Carta de Comando: inflige !D! de daño.",
+  "MASHSHIELDER-ARTS_MASH.title": "Arts",
+  "MASHSHIELDER-ARTS_MASH.description": "#Carta de Comando: inflige !D! de daño. Obtén !NpCharge! de *Carga *NP.",
+  "MASHSHIELDER-QUICK_MASH.title": "Quick",
+  "MASHSHIELDER-QUICK_MASH.description": "#Carta de Comando: inflige !D! de daño. Obtén !Stars! *Estrellas *de *Crítico.",
+  "MASHSHIELDER-CYLINDER_VENT.title": "Purga del Cilindro",
+  "MASHSHIELDER-CYLINDER_VENT.description": "#Solo jugable con !NpCost! de *Carga *NP: gástala. Obtén !Stars! *Estrellas *de *Crítico.",
+  "MASHSHIELDER-CYLINDER_SEAL.title": "Sellado del Cilindro",
+  "MASHSHIELDER-CYLINDER_SEAL.description": "#Solo jugable con !StarCost! *Estrellas *de *Crítico: gástalas. Obtén !NpCharge! de *Carga *NP.",
+  "MASHSHIELDER-COMBAT_ANALYSIS.title": "Análisis de Combate",
+  "MASHSHIELDER-COMBAT_ANALYSIS.description": "#Al inicio de tu turno: obtén !CombatAnalysis! *Estrellas *de *Crítico. Cada vez que obtienes *Crítico *Listo: roba 1 carta.",
+  "MASHSHIELDER-FORM_DRILL.title": "Simulacro de Cambio",
+  "MASHSHIELDER-FORM_DRILL.description": "#Cambia a tu otra forma. En forma Paladín: obtén !NpCharge! de *Carga *NP en su lugar.+ Roba !C! carta(s).+"
 }

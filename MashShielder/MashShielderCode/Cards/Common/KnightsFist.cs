@@ -9,9 +9,14 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Cards.Common;
 
-/// <summary>Puño del Caballero — damage; in Ortinax/Paladin form also charges NP.</summary>
+/// <summary>
+/// Puño del Caballero — damage; in Ortinax/Paladin form also charges NP.
+/// Rediseño v2: glow dorado cuando el rider de forma está activo (barrido global).
+/// </summary>
 public sealed class KnightsFist() : MashShielderCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
+    protected override bool ShouldGlowGoldInternal => Forms.InOffensiveForm(Owner.Creature);
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(10m, ValueProp.Move),

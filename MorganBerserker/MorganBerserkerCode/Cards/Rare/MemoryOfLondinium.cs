@@ -10,18 +10,23 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 
 /// <summary>
 /// MEMORY OF LONDINIUM (圣剑遥远梦之遗痕) — Aesc's real NP (min 70, consumes ALL):
-/// AoE damage + Intangible 1 + Knight's Arms in hand. At 100+ consumed: +1 Arm.
+/// AoE damage + Knight's Arms in hand. At 100+ consumed: Intangible 1 y +1 Arm.
+/// Parche del juez P1 (rediseño v2): el Intangible se mueve al overcharge (tier
+/// >= 100) — sin gate, ciclaba cada ~1.5 turnos como WraithForm gratis.
 /// </summary>
 public sealed class MemoryOfLondinium() : MorganCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
 {
     public const int ChargeCost = 70;
 
+    /// <summary>Tier de sobrecarga: con esta carga consumida o más, también da Intangible y +1 Arma.</summary>
+    public const int OverchargeTier = 100;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(18m, ValueProp.Move),
+        new DamageVar(28m, ValueProp.Move),
         new CardsVar(2),
         new DynamicVar("ChargeCost", ChargeCost),
-        new DynamicVar("PerTen", 2)
+        new DynamicVar("PerTen", 4)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
@@ -40,9 +45,12 @@ public sealed class MemoryOfLondinium() : MorganCard(2, CardType.Attack, CardRar
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
 
-        await PowerCmd.Apply<IntangiblePower>(Owner.Creature, 1m, Owner.Creature, this);
+        if (tier >= OverchargeTier)
+        {
+            await PowerCmd.Apply<IntangiblePower>(Owner.Creature, 1m, Owner.Creature, this);
+        }
 
-        var arms = DynamicVars.Cards.IntValue + (tier >= 100 ? 1 : 0);
+        var arms = DynamicVars.Cards.IntValue + (tier >= OverchargeTier ? 1 : 0);
         for (var i = 0; i < arms; i++)
         {
             var card = Owner.Creature.CombatState.CreateCard<Special.KnightsArm>(Owner);

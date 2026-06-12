@@ -37,8 +37,16 @@ function Crop-Card([string]$srcPath, [string]$outPath, [int]$outW, [int]$outH) {
 $rows = Import-Csv $MappingCsv
 $ok = 0; $fail = @()
 foreach ($r in $rows) {
-    $url = "https://static.atlasacademy.io/JP/CharaGraph/$($r.assetId)/$($r.assetId)a.png"
-    $cached = "$cache\$($r.assetId).png"
+    if ($r.assetId -like "CHARA:*") {
+        # charagraph de servant: CHARA:504500a@1 -> CharaGraph/504500/504500a@1.png
+        $cid = $r.assetId.Substring(6)
+        $svt = $cid.Substring(0, 6)
+        $url = "https://static.atlasacademy.io/JP/CharaGraph/$svt/$cid.png"
+        $cached = "$cache\chara_$($cid -replace '@','_').png"
+    } else {
+        $url = "https://static.atlasacademy.io/JP/CharaGraph/$($r.assetId)/$($r.assetId)a.png"
+        $cached = "$cache\$($r.assetId).png"
+    }
     try {
         if (-not (Test-Path $cached)) { Invoke-WebRequest $url -OutFile $cached }
         Crop-Card $cached "$imgDir\$($r.file).png" 500 380

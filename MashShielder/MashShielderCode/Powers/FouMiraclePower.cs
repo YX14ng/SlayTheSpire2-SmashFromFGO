@@ -9,11 +9,14 @@ namespace MashShielder.MashShielderCode.Powers;
 
 /// <summary>
 /// El Milagro de Fou — the first time this combat that damage would kill you,
-/// you survive at this power's Amount HP and gain a burst of Block.
+/// you survive at this power's Amount HP, gain a burst of Block and NP Charge
+/// (rediseño v2: +50 NP — el milagro arma la ult de la remontada).
 /// </summary>
 public sealed class FouMiraclePower : MashShielderPower
 {
     public const int RescueBlock = 25;
+
+    public const int RescueNpCharge = 50;
 
     public override PowerType Type => PowerType.Buff;
 
@@ -39,6 +42,7 @@ public sealed class FouMiraclePower : MashShielderPower
         if (!_triggered || target != Owner) return;
         Flash();
         await CreatureCmd.GainBlock(Owner, RescueBlock, ValueProp.Unpowered, null);
+        await NpCharge.Gain(Owner, RescueNpCharge, null);
         await PowerCmd.Remove(this);
     }
 }

@@ -7,7 +7,10 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Cards.Basic;
 
-/// <summary>¡Proteger a Senpai! — signature starter skill: Block + NP Charge.</summary>
+/// <summary>
+/// ¡Proteger a Senpai! — signature starter skill: 8 Bloqueo + 10 NP (up +3/+10;
+/// rediseño v2: el up de NP pasó de +5 a +10 — denominación fija).
+/// </summary>
 public sealed class ProtectSenpai() : MashShielderCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -25,6 +28,6 @@ public sealed class ProtectSenpai() : MashShielderCard(1, CardType.Skill, CardRa
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(3m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

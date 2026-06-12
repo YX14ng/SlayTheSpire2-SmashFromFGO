@@ -9,7 +9,7 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
 /// <summary>
 /// Carisma del Anhelo (渴望的魅力) — Morgan S1: 2 de Fuerza, 1 de Vulnerable a TODOS,
-/// Carga NP +10.
+/// Carga NP +20. Rediseño v2: NP 10→20 (denominación "paquete de skill"). (up +1/+10)
 /// </summary>
 public sealed class CharismaOfYearning() : MorganCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
@@ -17,7 +17,7 @@ public sealed class CharismaOfYearning() : MorganCard(2, CardType.Skill, CardRar
     [
         new PowerVar<StrengthPower>("Strength", 2m),
         new PowerVar<VulnerablePower>("Vulnerable", 1m),
-        new DynamicVar("NpCharge", 10)
+        new DynamicVar("NpCharge", 20)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -39,6 +39,6 @@ public sealed class CharismaOfYearning() : MorganCard(2, CardType.Skill, CardRar
     protected override void OnUpgrade()
     {
         DynamicVars["Strength"].UpgradeValueBy(1m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

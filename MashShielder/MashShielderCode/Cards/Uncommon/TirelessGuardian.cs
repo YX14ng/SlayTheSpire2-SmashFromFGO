@@ -6,10 +6,12 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace MashShielder.MashShielderCode.Cards.Uncommon;
 
-/// <summary>Guardiana Incansable — Power: permanent Intercept.</summary>
+/// <summary>Guardiana Incansable — Power: permanent Intercept.
+/// Rediseño v2: +5 Intercepción permanente (up +3; antes 4/6) — más masa sostenida
+/// para los payoffs de golpe detenido.</summary>
 public sealed class TirelessGuardian() : MashShielderCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<InterceptPower>("Intercept", 4m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<InterceptPower>("Intercept", 5m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -18,6 +20,6 @@ public sealed class TirelessGuardian() : MashShielderCard(1, CardType.Power, Car
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Intercept"].UpgradeValueBy(2m);
+        DynamicVars["Intercept"].UpgradeValueBy(3m);
     }
 }

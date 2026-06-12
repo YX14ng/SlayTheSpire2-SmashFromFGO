@@ -6,6 +6,7 @@
 param([string[]]$Roots = @(
         "f:\Programs\SlayTheSpire2-SmashFromFGO\MashShielder\MashShielder\localization",
         "f:\Programs\SlayTheSpire2-SmashFromFGO\MorganBerserker\MorganBerserker\localization",
+        "f:\Programs\SlayTheSpire2-SmashFromFGO\ArtoriaCaster\ArtoriaCaster\localization",
         "f:\Programs\SlayTheSpire2-SmashFromFGO\FGOCore\FGOCore\localization"))
 
 # Copias exactas de los patrones de SimpleLoc.cs (decompilado BaseLib 3.2.1)

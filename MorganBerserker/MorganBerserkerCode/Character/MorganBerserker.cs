@@ -21,13 +21,19 @@ public class MorganBerserker : PlaceholderCharacterModel
     public override CharacterGender Gender => CharacterGender.Feminine;
     public override int StartingHp => 78;
 
+    /// <summary>
+    /// Rediseño v2, parche P6 — mazo inicial fiel al command deck REAL de Morgan en
+    /// FGO (QAABB = 1 Quick, 2 Arts, 2 Buster): codifica las 3 economías
+    /// (daño / NP / estrellas) desde el turno 1. El StrikeMorgan restante conserva
+    /// el tag Strike vivo en el mazo (compat con eventos vanilla).
+    /// </summary>
     public override IEnumerable<CardModel> StartingDeck => [
+        ModelDb.Card<BusterMorgan>(),
+        ModelDb.Card<BusterMorgan>(),
+        ModelDb.Card<ArtsMorgan>(),
+        ModelDb.Card<ArtsMorgan>(),
+        ModelDb.Card<QuickMorgan>(),
         ModelDb.Card<StrikeMorgan>(),
-        ModelDb.Card<StrikeMorgan>(),
-        ModelDb.Card<StrikeMorgan>(),
-        ModelDb.Card<StrikeMorgan>(),
-        ModelDb.Card<DefendMorgan>(),
-        ModelDb.Card<DefendMorgan>(),
         ModelDb.Card<DefendMorgan>(),
         ModelDb.Card<DefendMorgan>(),
         ModelDb.Card<LanceOfTheWorldsEnd>(),

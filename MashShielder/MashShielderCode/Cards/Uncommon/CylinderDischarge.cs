@@ -11,12 +11,14 @@ namespace MashShielder.MashShielderCode.Cards.Uncommon;
 /// <summary>
 /// Descarga del Cilindro — costs no Energy: consumes ALL NP Charge (in 10s)
 /// and deals one hit per 10 consumed. The leftover (&lt;10) is kept.
+/// Rediseño v2 (AUDITORÍA): 4 de daño por cada 10 consumidos (up 5; antes 10 —
+/// la conversión 1:1 NP→daño rompía la tasa). A 300 = 120/150: dump all-in.
 /// </summary>
 public sealed class CylinderDischarge() : MashShielderCard(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     private const int ChargePerHit = 10;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4m, ValueProp.Move)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
@@ -40,6 +42,6 @@ public sealed class CylinderDischarge() : MashShielderCard(0, CardType.Attack, C
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(1m);
     }
 }

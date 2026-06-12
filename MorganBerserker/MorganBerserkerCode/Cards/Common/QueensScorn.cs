@@ -7,7 +7,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#3 Desdén de la Reina (女王的轻蔑) — 4 de daño; +3 si el objetivo tiene Maldición.</summary>
+/// <summary>#3 Desdén de la Reina (女王的轻蔑) — 4 de daño; +3 si el objetivo tiene Maldición.
+/// Rediseño v2: glow dorado cuando hay un enemigo maldito.</summary>
 public sealed class QueensScorn() : MorganCard(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -17,6 +18,9 @@ public sealed class QueensScorn() : MorganCard(0, CardType.Attack, CardRarity.Co
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
+
+    protected override bool ShouldGlowGoldInternal =>
+        Curses.MostCursed(Owner.Creature.CombatState, Owner.Creature) != null;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

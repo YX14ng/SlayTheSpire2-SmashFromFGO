@@ -7,9 +7,14 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Powers;
 
-/// <summary>Servomotores del Ortinax — end your turn having played 2+ Attacks: gain this much Block.</summary>
+/// <summary>Servomotores del Ortinax — end your turn having played 2+ Attacks: gain this much
+/// Block AND +10 NP Charge (rediseño v2: los servos reponen el Bloqueo gastado atacando
+/// y cargan el medidor — el plan del Ortinax por fin paga).</summary>
 public sealed class OrtinaxServosPower : MashShielderPower
 {
+    /// <summary>NP fijo por proc (denominación 10; no escala con el upgrade).</summary>
+    public const int NpPerProc = 10;
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -36,5 +41,6 @@ public sealed class OrtinaxServosPower : MashShielderPower
         if (side != CombatSide.Player || Owner.Side != side || _attacksThisTurn < 2) return;
         Flash();
         await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Move, null);
+        await NpCharge.Gain(Owner, NpPerProc, null);
     }
 }

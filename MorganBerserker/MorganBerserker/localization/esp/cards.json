@@ -150,5 +150,11 @@
   "MORGANBERSERKER-MEMORY_OF_LONDINIUM_UNLEASHED.title": "MEMORY OF LONDINIUM: Desatado",
   "MORGANBERSERKER-MEMORY_OF_LONDINIUM_UNLEASHED.description": "#NP (!ChargeCost! de Carga): inflige !D! de daño a TODOS los enemigos, /+!PerTen! por cada 10 de Carga sobre el mínimo. Obtén 1 de *Intangible. Añade !C! *Armas *del *Caballero a tu mano, /+1 si tu Carga llega a 200.",
   "MORGANBERSERKER-KNIGHTS_ARM.title": "Arma del Caballero",
-  "MORGANBERSERKER-KNIGHTS_ARM.description": "#Inflige !D! de daño. Las espadas de los caballeros del pasado, el presente y el futuro."
+  "MORGANBERSERKER-KNIGHTS_ARM.description": "#Inflige !D! de daño. Las espadas de los caballeros del pasado, el presente y el futuro.",
+  "MORGANBERSERKER-BUSTER_MORGAN.title": "Buster",
+  "MORGANBERSERKER-BUSTER_MORGAN.description": "#Carta de Comando: inflige !D! de daño.",
+  "MORGANBERSERKER-ARTS_MORGAN.title": "Arts",
+  "MORGANBERSERKER-ARTS_MORGAN.description": "#Carta de Comando: inflige !D! de daño. Obtén !NpCharge! de *Carga *NP.",
+  "MORGANBERSERKER-QUICK_MORGAN.title": "Quick",
+  "MORGANBERSERKER-QUICK_MORGAN.description": "#Carta de Comando: inflige !D! de daño. Obtén !Stars! *Estrellas *de *Crítico."
 }

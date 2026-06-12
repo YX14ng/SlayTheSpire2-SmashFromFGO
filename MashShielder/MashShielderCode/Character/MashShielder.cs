@@ -22,15 +22,19 @@ public class MashShielder : PlaceholderCharacterModel
     public override CharacterGender Gender => CharacterGender.Feminine;
     public override int StartingHp => 85;
     
+    // Rediseño v2, parche P7 del juez: 2 Golpe / 2 Defender / 1 Buster / 2 Arts /
+    // 1 Quick / ShieldBash / ProtectSenpai = 10 cartas. Enseña las 4 economías el
+    // turno 1 (daño de ciclo ~49, paridad Jeanne) sin perder la identidad defensiva
+    // (la retención de 10 de la starter hace el trabajo del 3er Defender).
     public override IEnumerable<CardModel> StartingDeck => [
         ModelDb.Card<StrikeMash>(),
         ModelDb.Card<StrikeMash>(),
-        ModelDb.Card<StrikeMash>(),
-        ModelDb.Card<StrikeMash>(),
         ModelDb.Card<DefendMash>(),
         ModelDb.Card<DefendMash>(),
-        ModelDb.Card<DefendMash>(),
-        ModelDb.Card<DefendMash>(),
+        ModelDb.Card<BusterMash>(),
+        ModelDb.Card<ArtsMash>(),
+        ModelDb.Card<ArtsMash>(),
+        ModelDb.Card<QuickMash>(),
         ModelDb.Card<ShieldBash>(),
         ModelDb.Card<ProtectSenpai>()
     ];

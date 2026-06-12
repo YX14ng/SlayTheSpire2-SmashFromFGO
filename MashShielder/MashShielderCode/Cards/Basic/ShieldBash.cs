@@ -7,7 +7,10 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Cards.Basic;
 
-/// <summary>Golpe de Escudo — signature starter attack: damage + NP Charge.</summary>
+/// <summary>
+/// Golpe de Escudo — signature starter attack: 9 daño + 10 NP (up +3/+10;
+/// rediseño v2: el up de NP pasó de +5 a +10 — denominación fija).
+/// </summary>
 public sealed class ShieldBash() : MashShielderCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -28,6 +31,6 @@ public sealed class ShieldBash() : MashShielderCard(1, CardType.Attack, CardRari
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

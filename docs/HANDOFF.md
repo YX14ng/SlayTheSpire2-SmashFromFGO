@@ -66,6 +66,23 @@ Fixes post-playtest (2026-06-11 tarde, feedback del usuario):
   Bruja por turno; Invierno hereda ambas), Cetro +10 NP en el primer cambio. Si sigue
   floja: siguientes perillas en DESIGN-MORGAN.md §11.
 
+REDISEÑO v2 DE POOLS (2026-06-11 trasnoche): a pedido del usuario, ambos pools
+rediseñados con los idiomas de JeanneAlter (decompilado en `decompiled/_jeannealter`,
+análisis en `assets/reference/jeanne_anatomy.json`, tablas+veredictos en
+`assets/reference/redesign/`). Nuevo en FGOCore: **Estrellas de Crítico**
+(`CritStarsPower`: a 100 auto-paga 1 `CritReadyPower` = próximo Ataque ×2, un stack
+por carta) y waivers de NP que excluyen Event y resuelven a tier mínimo. Ambos mods:
+básicas **Buster/Arts/Quick** (mazos iniciales estilo QAABB), comunes como engranajes
+de conversión (pares espejo NP↔estrellas), starters con conversión eventos→recursos
+(caps 3/turno), conectividad 75→97.6% (Mash) y 83→97% (Morgan). Retain en las 7 ultis
+generadas; ulti de la Bruja 40 AoE/PerTen 4/Intangible gated a 200. **ArtoriaCaster
+v1 estrenada** (pool completo, loc ×3, arte ×78, visuales estáticos; animaciones
+pendientes del export manual: bundles 504520/704710/704720 ya en assets/reference).
+PENDIENTE INMEDIATO: barrido de ~50 descripciones de loc desactualizadas por el
+rediseño (workflow wf_e9ba1b22-b0e; si murió por límite de sesión, relanzar con
+resume) → republicar Mash+Morgan tras el barrido. OJO: NpCharge.CanPay cambió de
+firma (source opcional) — FGOCore y los 3 personajes deben publicarse JUNTOS siempre.
+
 RE-BALANCE v3 (2026-06-11 noche): el usuario juega **HextechRunes + BetterCharacters**
 ("recién los vanilla mejorados se juegan cómodo") → REPLANTEO del techo de balance,
 medido del decompilado de ambos mods (skill sts2-mechanics-design §1.bis tiene los

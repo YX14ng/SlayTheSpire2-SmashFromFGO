@@ -1,3 +1,4 @@
+using MashShielder.MashShielderCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -8,12 +9,15 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Cards.Uncommon;
 
-/// <summary>Tiro de Supresión — damage + Weak.</summary>
+/// <summary>Tiro de Supresión — Black Barrel round + Weak.
+/// Rediseño v2: 9 daño de Black Barrel (up +3) + 2 Débil (up +1). La supresión ahora es
+/// munición conceptual: tercer miembro de la familia BB en común/poco común
+/// (conserva clase y arte — el disparo).</summary>
 public sealed class SuppressingShot() : MashShielderCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(9m, ValueProp.Move),
+        new DamageVar(9m, ValueProp.Move | ValueProp.Unblockable),
         new PowerVar<WeakPower>("Weak", 2m)
     ];
 
@@ -22,10 +26,11 @@ public sealed class SuppressingShot() : MashShielderCard(1, CardType.Attack, Car
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_dramatic_stab")
-            .Execute(choiceContext);
-        await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+        await BlackBarrel.Hit(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, Owner.Creature, this);
+        if (!cardPlay.Target.IsDead)
+        {
+            await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+        }
     }
 
     protected override void OnUpgrade()

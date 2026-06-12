@@ -73,5 +73,8 @@
   "MASHSHIELDER-CAMELOT_MANIFESTED_POWER.smartDescription": "#The Noble Phantasm answered the full gauge: LORD CAMELOT was added to your hand. Spend Charge and refill to 100 to manifest it again.",
   "MASHSHIELDER-BOND_POWER.title": "Bond",
   "MASHSHIELDER-BOND_POWER.description": "#Mash's Bond level this run. Grants bonuses at the start of each combat (see the Bond Gauge relic).",
-  "MASHSHIELDER-BOND_POWER.smartDescription": "#Mash's Bond level this run. Grants bonuses at the start of each combat (see the Bond Gauge relic)."
+  "MASHSHIELDER-BOND_POWER.smartDescription": "#Mash's Bond level this run. Grants bonuses at the start of each combat (see the Bond Gauge relic).",
+  "MASHSHIELDER-COMBAT_ANALYSIS_POWER.title": "Combat Analysis",
+  "MASHSHIELDER-COMBAT_ANALYSIS_POWER.description": "#At the start of your turn: gain *Critical *Stars equal to this power. Whenever you gain *Critical *Ready: draw 1 card.",
+  "MASHSHIELDER-COMBAT_ANALYSIS_POWER.smartDescription": "#At the start of your turn: gain *Critical *Stars equal to this power. Whenever you gain *Critical *Ready: draw 1 card."
 }

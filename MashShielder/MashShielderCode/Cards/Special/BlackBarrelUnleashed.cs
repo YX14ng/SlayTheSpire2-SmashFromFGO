@@ -12,11 +12,11 @@ namespace MashShielder.MashShielderCode.Cards.Special;
 /// conceptual cannon of the Atlas Institute that kills the immortal: a massive
 /// unblockable shot that strips ALL the target's buffs.
 /// </summary>
-public sealed class BlackBarrelUnleashed() : MashShielderCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
+public sealed class BlackBarrelUnleashed() : MashShielderCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), IMashNpCard
 {
     public const int ChargeCost = 100;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -27,7 +27,9 @@ public sealed class BlackBarrelUnleashed() : MashShielderCard(0, CardType.Attack
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
-    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost);
+    // Pasar la carta: el waiver de Pioneer NO cubre Event (parche P3) — sin él,
+    // CanPay daría glow/playable falsos con el medidor vacío y un waiver activo.
+    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost, this);
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 

@@ -7,13 +7,15 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace MashShielder.MashShielderCode.Cards.Uncommon;
 
-/// <summary>Lentes de Mash — free draw + a little NP focus.</summary>
+/// <summary>Lentes de Mash — free draw + NP focus.
+/// Rediseño v2: roba 1 + 10 NP (up: roba 2; el NP queda fijo en 10 — parche MENORES del juez:
+/// el cantrip no debe ser estrictamente positivo en ambas dimensiones).</summary>
 public sealed class MashsGlasses() : MashShielderCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(1),
-        new DynamicVar("NpCharge", 5)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
@@ -27,6 +29,5 @@ public sealed class MashsGlasses() : MashShielderCard(0, CardType.Skill, CardRar
     protected override void OnUpgrade()
     {
         DynamicVars.Cards.UpgradeValueBy(1m);
-        DynamicVars["NpCharge"].UpgradeValueBy(3m);
     }
 }

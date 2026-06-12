@@ -8,12 +8,14 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 
 /// <summary>
-/// Lluvia de Rhongomyniad (伦戈米尼亚德之雨) — the spammable mini-NP (min 40,
-/// consumes ALL): the floor of the NP economy.
+/// Lluvia de Rhongomyniad (伦戈米尼亚德之雨) — the spammable mini-NP (min 50,
+/// consumes ALL): the floor of the NP economy. Rediseño v2: min 40→50 (gate de
+/// denominación — evita el spam con carga trivial en la economía rápida nueva).
+/// Auditoría (P9, números corregidos): Rhongo+ a cap 300 = (300−50)/10×4 + 24 = 124.
 /// </summary>
 public sealed class RhongomyniadRain() : MorganCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
-    public const int ChargeCost = 40;
+    public const int ChargeCost = 50;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

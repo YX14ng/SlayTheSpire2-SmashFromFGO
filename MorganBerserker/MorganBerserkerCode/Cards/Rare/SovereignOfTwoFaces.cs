@@ -9,14 +9,19 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 
 /// <summary>
 /// Soberana de Dos Rostros (双面君主) — Poder: cada vez que cambias de forma,
-/// roba 2 y Carga NP +10. Mejora: coste 0⚡ (el power es de stack único).
+/// roba 2, Carga NP +10 y +10 Estrellas de Crítico (rediseño v2: los poderes
+/// engordan TODOS los hilos, no abren nuevos). Mejora: coste 0⚡ (stack único).
 /// </summary>
 public sealed class SovereignOfTwoFaces() : MorganCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new PowerVar<SovereignOfTwoFacesPower>("Stacks", 1m)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromPower<NpChargePower>(),
+        HoverTipFactory.FromPower<FGOCore.FGOCoreCode.Stars.CritStarsPower>()
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

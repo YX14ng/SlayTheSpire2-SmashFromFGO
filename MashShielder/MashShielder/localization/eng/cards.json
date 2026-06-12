@@ -173,5 +173,19 @@
   "MASHSHIELDER-FOU_BEAST_IV.title": "Fou (Beast IV?)",
   "MASHSHIELDER-FOU_BEAST_IV.description": "#Deal !D! damage. If this kills the target: heal !H! HP and gain !NpCharge! *NP *Charge. Kyu.",
   "MASHSHIELDER-MULTIPURPOSE_SHIELD.title": "Multipurpose Shield",
-  "MASHSHIELDER-MULTIPURPOSE_SHIELD.description": "#Gain !B! Block, draw !C! card(s) and gain !NpCharge! *NP *Charge. Cutting board, frying pan, sled... and also a shield."
+  "MASHSHIELDER-MULTIPURPOSE_SHIELD.description": "#Gain !B! Block, draw !C! card(s) and gain !NpCharge! *NP *Charge. Cutting board, frying pan, sled... and also a shield.",
+  "MASHSHIELDER-BUSTER_MASH.title": "Buster",
+  "MASHSHIELDER-BUSTER_MASH.description": "#Command Card: deal !D! damage.",
+  "MASHSHIELDER-ARTS_MASH.title": "Arts",
+  "MASHSHIELDER-ARTS_MASH.description": "#Command Card: deal !D! damage. Gain !NpCharge! *NP *Charge.",
+  "MASHSHIELDER-QUICK_MASH.title": "Quick",
+  "MASHSHIELDER-QUICK_MASH.description": "#Command Card: deal !D! damage. Gain !Stars! *Critical *Stars.",
+  "MASHSHIELDER-CYLINDER_VENT.title": "Cylinder Vent",
+  "MASHSHIELDER-CYLINDER_VENT.description": "#Only playable with !NpCost! *NP *Charge: spend it. Gain !Stars! *Critical *Stars.",
+  "MASHSHIELDER-CYLINDER_SEAL.title": "Cylinder Seal",
+  "MASHSHIELDER-CYLINDER_SEAL.description": "#Only playable with !StarCost! *Critical *Stars: spend them. Gain !NpCharge! *NP *Charge.",
+  "MASHSHIELDER-COMBAT_ANALYSIS.title": "Combat Analysis",
+  "MASHSHIELDER-COMBAT_ANALYSIS.description": "#At the start of your turn: gain !CombatAnalysis! *Critical *Stars. Whenever you gain *Critical *Ready: draw 1 card.",
+  "MASHSHIELDER-FORM_DRILL.title": "Form Drill",
+  "MASHSHIELDER-FORM_DRILL.description": "#Switch to your other form. In Paladin form: gain !NpCharge! *NP *Charge instead.+ Draw !C! card(s).+"
 }

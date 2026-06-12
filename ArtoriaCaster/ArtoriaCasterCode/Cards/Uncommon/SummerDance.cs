@@ -33,7 +33,7 @@ public sealed class SummerDance() : ArtoriaCard(1, CardType.Attack, CardRarity.U
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        var stars = Owner.Creature.HasPower<SummerBerserkerFormPower>()
+        var stars = Owner.Creature.HasPower<SummerBerserkerFormPower>() || Owner.Creature.HasPower<AvalonFormPower>()
             ? DynamicVars["BerserkerStars"].IntValue
             : DynamicVars["Stars"].IntValue;
         await Stars.Gain(Owner.Creature, stars, this);

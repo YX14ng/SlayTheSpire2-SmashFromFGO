@@ -6,8 +6,12 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Cards.Common;
 
-/// <summary>Escaramuza — sword and board: damage + Block.</summary>
-public sealed class Skirmish() : MashShielderCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+/// <summary>
+/// Escaramuza — sword and board: damage + Block.
+/// Removida del pool en rediseño v2 (reemplazada por CylinderVent); la rareza Event
+/// la saca de las recompensas sin romper runs guardadas. Borrar en la próxima versión.
+/// </summary>
+public sealed class Skirmish() : MashShielderCard(1, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

@@ -7,12 +7,15 @@ using MorganBerserker.MorganBerserkerCode.Powers;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
-/// <summary>Hada del País de la Lluvia (雨之国的妖精) — al jugarla: Carga NP +15; al inicio de cada turno: +5.</summary>
+/// <summary>
+/// Hada del País de la Lluvia (雨之国的妖精) — al jugarla: Carga NP +20; al inicio
+/// de cada turno: +5. Rediseño v2: burst 15→20 (denominación "paquete"). (up +5/+3)
+/// </summary>
 public sealed class FairyOfTheRainland() : MorganCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("NpCharge", 15),
+        new DynamicVar("NpCharge", 20),
         new PowerVar<FairyOfTheRainlandPower>("Stacks", 5m)
     ];
 

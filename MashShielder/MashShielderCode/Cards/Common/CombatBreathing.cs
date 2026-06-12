@@ -6,10 +6,13 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace MashShielder.MashShielderCode.Cards.Common;
 
-/// <summary>Respiración de Combate — free NP Charge.</summary>
+/// <summary>
+/// Respiración de Combate — retoque v2: 0E Habilidad, +30 de Carga NP (up +20 → 50;
+/// antes 12/18). El 魔力装填 de Mash: ahora habla la denominación 30/50.
+/// </summary>
 public sealed class CombatBreathing() : MashShielderCard(0, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("NpCharge", 12)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("NpCharge", 30)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
@@ -20,6 +23,6 @@ public sealed class CombatBreathing() : MashShielderCard(0, CardType.Skill, Card
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NpCharge"].UpgradeValueBy(6m);
+        DynamicVars["NpCharge"].UpgradeValueBy(20m);
     }
 }

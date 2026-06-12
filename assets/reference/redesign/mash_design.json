@@ -1,0 +1,491 @@
+{
+    "gramatica":  "RECURSOS DE MASH: (1) Carga NP 0-300 — a 100 se auto-manifiesta GRATIS en mano la ult de la forma activa (Retain+Exhaust, ConsumeAllForNpCard \u003e=100); el excedente hasta 300 es banco de Sobrecarga (+PerTen por cada 10 sobre el minimo). (2) Estrellas de Critico 0-100+ (FGOCore compartido, NO es el contador con candado de forma de Artoria): a 100 se descuentan 100 automaticamente y dan 1 CRITICO LISTO (proximo Ataque x2, se consume; hacen cola). (3) Bloqueo/Baluarte: Bloqueo con Baluarte persiste entre turnos; la starter retiene hasta 10 siempre. (4) Intercepcion: golpe enemigo totalmente bloqueado -\u003e dano al atacante. DENOMINACIONES FIJAS: 5 (pasiva de forma por turno), 10 (rider de comun / conversion pasiva de la reliquia), 20 (paquete chico), 30 (paquete de basica: Arts/Quick/CombatBreathing/ReinforcementOrder), 50 (gate y par de conversion), 100 (umbral/ult), 300 (cap-banco). REGLA DE CONVERSION (fungibilidad total): par espejo 0 energia en COMUN CylinderVent/CylinderSeal (50 NP \u003c-\u003e 50 estrellas, up consume 30); Bloqueo-\u003eNP (OrtinaxMaintenance, max 30/50); Bloqueo-\u003edano (Crush hasta 10, BunkerBolt todo, pasiva Ortinax 5); estrellas-\u003erobo+Bloqueo (GuardStep -30 -\u003e 2 cartas +4); NP-\u003edano (CylinderDischarge 4 por cada 10); NP-\u003eBloqueo sin gastar (UtopianFortress). COMO ENTRAN LAS ESTRELLAS: Quick (+30), reliquia inicial (golpe totalmente bloqueado -\u003e +10: TANQUEAR ES GENERAR, el mismo trigger de Intercepcion), DefensiveSweep/ChaldeaManual (+10), CombatAnalysis (+10/turno), PioneerOfTheStars (+30 por carta NP), CylinderVent (50). COMO ENTRAN BUSTER/ARTS/QUICK: 3 basicas nuevas via bases compartidas de FGOCore — Buster 1E 10 dano (up +3) / Arts 1E 6 dano +30 NP (up +3/+20) / Quick 1E 6 dano +30 estrellas (up +3/+20); ensenan las tres economias desde el turno 1 (feel Jeanne, respaldado por el techo §1.bis del entorno modded). AUDITORIA ANTI-DEGENERACION del ciclo NP (economia rapida + ConsumeAllForNpCard/overcharge): (a) minimos de los NP grandes 70-\u003e100 (Rhongomyniad, LordCamelot — fidelidad FGO: NP al 100%); (b) PerTen de los NP de DANO recortado ~30% (BlackBarrelFullBurst 4-\u003e3 up+1, Rhongo 7-\u003e5 up+2; los defensivos conservan el suyo: el Bloqueo no snowballea kills); (c) PioneerOfTheStars: el waiver ahora resuelve a Sobrecarga MINIMA (mata el doble-dip \u0027NP gratis a tier 300 con medidor intacto\u0027); (d) CylinderDischarge 10-\u003e4 de dano por cada 10 (la conversion 1:1 NP-\u003edano rompia la tasa: 30 NP ~ 0.6-0.7 energia, no 3). Glow dorado (ShouldGlowGoldInternal) en TODA condicional del pool — barrido global, incluye las MANTENER con gate (CoveringFire, KnightsVow, PaladinAssault, VanguardStrike, ChaldeaSandwich, KnightsFist, Regroup).",
+    "reliquiaInicial":  "RoundTableFragment (RETOCAR — de retencion pasiva a MOTOR estilo la reliquia de Jeanne): conserva la retencion actual (al final de tu turno conserva hasta 10 de Bloqueo, entra en forma Shielder) y SUMA dos conversiones evento-\u003erecurso: (1) cada vez que un golpe enemigo NO atraviesa tu Bloqueo -\u003e +10 Estrellas de Critico — las estrellas NACEN de interceptar/bloquear del todo (chispas del escudo, MUY Mash); es el MISMO trigger de Intercepcion/SenpaiPromise/Reprisal, asi que tanquear bien alimenta dos economias a la vez, y los riders del pool quedan calibrados contra este +10 garantizado; (2) cada vez que pierdes Vida -\u003e +10 de Carga NP — el truco de Jeanne (costo=recurso): des-huerfana TragicShield, ParadoxCylinder y el chip damage. LordCamelotRestored (la reliquia-upgrade existente): ademas de la retencion total, duplica ambas conversiones (+20 estrellas / +20 NP) — arco igual a Hellup de Jeanne. Implementacion mod-local: AfterDamageReceived + result.WasFullyBlocked (patron SenpaiPromisePower) y hook de perdida de HP; cero cambios de core.",
+    "basicas":  [
+                    "StrikeMash — Golpe (MANTENER): 1E Ataque, 6 dano (up +3).",
+                    "DefendMash — Defender (MANTENER): 1E Habilidad, 5 Bloqueo (up +3).",
+                    "NUEVO: BusterMash — Carta de Comando: Buster (deriva de BusterCardBase de FGOCore, marco rojo): 1E Ataque, 10 dano (up +3). El dano puro: la salida simple de la economia.",
+                    "NUEVO: ArtsMash — Carta de Comando: Arts (ArtsCardBase, marco azul): 1E Ataque, 6 dano + 30 Carga NP (up +3/+20). El motor del ciclo de ults desde el turno 1.",
+                    "NUEVO: QuickMash — Carta de Comando: Quick (QuickCardBase, marco verde): 1E Ataque, 6 dano + 30 Estrellas de Critico (up +3/+20). La entrada activa de estrellas.",
+                    "ShieldBash — Golpe de Escudo (RETOCAR, firma): 1E Ataque, 9 dano + 10 NP (up +3/+10; antes el up de NP era +5 — denominacion fija).",
+                    "ProtectSenpai — Proteger a Senpai (RETOCAR, firma): 1E Habilidad, 8 Bloqueo + 10 NP (up +3/+10).",
+                    "MAZO INICIAL (10 cartas, estilo Jeanne ajustado a \u0027Mash mas Defender\u0027): 1x Golpe, 3x Defender, 1x Buster, 2x Arts, 1x Quick, 1x Golpe de Escudo, 1x Proteger a Senpai. Ensena las 4 economias el turno 1: 2 Arts + 2 firmas = ~80 NP por ciclo de mazo (ult cada ~3 turnos), Quick + reliquia (bloqueo total -\u003e +10) = primer CRITICO LISTO dentro del acto 1, 3 Defender + retencion 10 = Baluarte desde el inicio."
+                ],
+    "tabla":  [
+                  {
+                      "carta":  "StrikeMash",
+                      "accion":  "MANTENER",
+                      "hilo":  "pan y manteca"
+                  },
+                  {
+                      "carta":  "DefendMash",
+                      "accion":  "MANTENER",
+                      "hilo":  "Baluarte (materia prima)"
+                  },
+                  {
+                      "carta":  "NUEVO:BusterMash",
+                      "accion":  "NUEVA (basica de comando, base FGOCore)",
+                      "efectoNuevo":  "1E Ataque: 10 dano (up +3). Numeros de Jeanne adoptados tal cual.",
+                      "hilo":  "dano puro"
+                  },
+                  {
+                      "carta":  "NUEVO:ArtsMash",
+                      "accion":  "NUEVA (basica de comando, base FGOCore)",
+                      "efectoNuevo":  "1E Ataque: 6 dano + 30 Carga NP (up +3/+20).",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "NUEVO:QuickMash",
+                      "accion":  "NUEVA (basica de comando, base FGOCore)",
+                      "efectoNuevo":  "1E Ataque: 6 dano + 30 Estrellas de Critico (up +3/+20).",
+                      "hilo":  "Estrellas"
+                  },
+                  {
+                      "carta":  "ShieldBash",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E At: 9 dano + 10 NP (up +3/+10; antes up NP +5 — denominacion).",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "ProtectSenpai",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Hab: 8 Bloqueo + 10 NP (up +3/+10).",
+                      "hilo":  "NP + Baluarte"
+                  },
+                  {
+                      "carta":  "SharpenedEdge",
+                      "accion":  "MANTENER",
+                      "hilo":  "block-scaling"
+                  },
+                  {
+                      "carta":  "FrontalCharge",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "2E At: 12 dano (up +4). Si conservaste Bloqueo del turno anterior (Baluarte): +6 dano y +10 NP (up: rider +20 NP). Glow dorado. EL payoff explicito de Baluarte en comun, calibrado a la retencion de 10 de la starter: casi siempre encendido si jugas el plan, nunca gratis.",
+                      "hilo":  "Baluarte (payoff explicito)"
+                  },
+                  {
+                      "carta":  "TwinHaftStrike",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E At: 5 dano x2 + 10 NP (up +1/+10; antes 5 NP — denominacion).",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "Crush",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "1E At (antes 2E): consume hasta 10 de tu Bloqueo; inflige 8 dano +1 por punto consumido (up: 11 dano y consume hasta 15). Glow con Bloqueo\u003e0. De anti-sinergia (\u0027pierde 4 Bloqueo\u0027) a gasto VOLUNTARIO de Bloqueo como municion — checklist; combea con Ortinax.",
+                      "hilo":  "conversion Bloqueo-\u003edano"
+                  },
+                  {
+                      "carta":  "CoveringFire",
+                      "accion":  "MANTENER",
+                      "hilo":  "block-scaling (gate 8+, glow por barrido global)"
+                  },
+                  {
+                      "carta":  "DefensiveSweep",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E At AoE: 6 dano a TODOS (up +2) + 10 Estrellas (up +10). El barrido del escudo saca chispas; antes Bloqueo vanilla.",
+                      "hilo":  "Estrellas"
+                  },
+                  {
+                      "carta":  "Skirmish",
+                      "accion":  "REEMPLAZAR(por CylinderVent — \u0027Purga del Cilindro\u0027)",
+                      "efectoNuevo":  "0E Hab: si tenes 50+ de Carga NP: pierde 50 NP -\u003e +50 Estrellas (up: consume solo 30). Glow dorado. Espejo de 等价交换A de Jeanne. Mata al duplicado funcional de FrontalCharge; arte nuevo (vapor del cilindro del Ortinax).",
+                      "hilo":  "conversion espejo NP-\u003eestrellas"
+                  },
+                  {
+                      "carta":  "ChalkWall",
+                      "accion":  "REEMPLAZAR(por CylinderSeal — \u0027Sellado del Cilindro\u0027)",
+                      "efectoNuevo":  "0E Hab: si tenes 50+ Estrellas: pierde 50 -\u003e +50 de Carga NP (up: consume solo 30). Glow dorado. Espejo exacto del anterior; ambos COMUNES a 0E: ningun contador sobra nunca. Mata al tercer Defend disfrazado.",
+                      "hilo":  "conversion espejo estrellas-\u003eNP"
+                  },
+                  {
+                      "carta":  "FirmStance",
+                      "accion":  "MANTENER",
+                      "hilo":  "Baluarte (fuente)"
+                  },
+                  {
+                      "carta":  "CombatBreathing",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "0E Hab: +30 Carga NP (up +20 -\u003e 50; antes 12/18). El 魔力装填 de Mash: ahora habla la denominacion 30/50.",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "ShieldsUp",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "2E Hab: 12 Bloqueo (up +4) + 3 Intercepcion este turno (up +2). De segundo Defend pelado a muro que devuelve.",
+                      "hilo":  "Intercepcion"
+                  },
+                  {
+                      "carta":  "OrtinaxMaintenance",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Hab: pierde TODO tu Bloqueo -\u003e esa cantidad de Carga NP (max 30; up max 50 — antes 40: denominacion).",
+                      "hilo":  "conversion Bloqueo-\u003eNP"
+                  },
+                  {
+                      "carta":  "ReinforcementOrder",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "1E Hab: +30 Carga NP y roba 1 (up +20). El 高速咏唱 de Mash. Antes Bloqueo+robo, triplicado funcional de GuardStep/TrainingSimulation.",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "GuardStep",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "1E Hab: si tenes 30+ Estrellas: consume 30 -\u003e roba 2 y obten 4 de Bloqueo (up: consume solo 20). Glow dorado. El 忘却补正 de Mash con sabor defensivo; conserva clase y arte (paso de guardia leyendo trayectorias).",
+                      "hilo":  "conversion estrellas-\u003erobo"
+                  },
+                  {
+                      "carta":  "ChaldeaManual",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Hab: roba 3, descarta 1, +10 Estrellas (up: no descartas). Teoria de combate -\u003e prediccion.",
+                      "hilo":  "Estrellas"
+                  },
+                  {
+                      "carta":  "Provoke",
+                      "accion":  "MANTENER",
+                      "hilo":  "Intercepcion"
+                  },
+                  {
+                      "carta":  "Regroup",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Hab: 5 Bloqueo (up +2); si no tenias Bloqueo: +20 NP (up +10; antes 12/18 — denominacion). Glow dorado.",
+                      "hilo":  "NP (arranque)"
+                  },
+                  {
+                      "carta":  "KnightsFist",
+                      "accion":  "MANTENER",
+                      "hilo":  "Formas (payoff comun; glow en Ortinax/Paladin)"
+                  },
+                  {
+                      "carta":  "ConceptualRound",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E At: 6 dano de Black Barrel (up +3). Si elimino un buff: +20 Carga NP (up +10). Glow si el objetivo tiene buffs. La bala que desarma alimenta el canon: primer payoff de strip de la familia.",
+                      "hilo":  "Black Barrel -\u003e NP"
+                  },
+                  {
+                      "carta":  "MultipurposeShield",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Hab: 6 Bloqueo (up +2), roba 1, +10 NP (up +10; antes 5/10 — denominacion).",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "ShieldRam",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "1E At: 8 dano (up +3). Si tenes CRITICO LISTO: aplica 2 Vulnerable (up +1). Glow dorado. El embate pasa a ser EL golpe que queres doblar (el x2 lo consume y deja Vulnerable para el resto del turno). Antes dano+Vulnerable vanilla.",
+                      "hilo":  "Estrellas/CRITICO LISTO"
+                  },
+                  {
+                      "carta":  "AmalgamGoad",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Hab: +3 Intercepcion PERMANENTE (up +2; antes 6 \u0027este turno\u0027) + 20 NP (up +10; antes 15). Segunda fuente sostenida de Intercepcion — hueco del checklist.",
+                      "hilo":  "Intercepcion (fuente sostenida) + NP"
+                  },
+                  {
+                      "carta":  "BlackBarrelBurst",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E At: 5 dano de Black Barrel x2 (up x3). Por cada buff eliminado: +10 Estrellas. Generador-payoff de la familia BB.",
+                      "hilo":  "Black Barrel -\u003e estrellas"
+                  },
+                  {
+                      "carta":  "BunkerBolt",
+                      "accion":  "MANTENER",
+                      "hilo":  "conversion Bloqueo-\u003edano"
+                  },
+                  {
+                      "carta":  "BunkerProtocol",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Hab: en forma Shielder: +30 NP (up +10; antes 25/35 — denominacion); si no: 14 Bloqueo (up +4). Glow.",
+                      "hilo":  "Formas + NP"
+                  },
+                  {
+                      "carta":  "CamelotRam",
+                      "accion":  "MANTENER",
+                      "hilo":  "block-scaling (clímax con CRITICO LISTO: dano=Bloqueo x2)"
+                  },
+                  {
+                      "carta":  "ChaldeaLibrary",
+                      "accion":  "REEMPLAZAR(por CombatAnalysis — \u0027Analisis de Combate\u0027)",
+                      "efectoNuevo":  "1E Poder: al inicio de tu turno +10 Estrellas; cada vez que obtenes CRITICO LISTO: roba 1 (up: +20 Estrellas/turno). Hereda el slot de arte (biblioteca -\u003e sala de analisis de Chaldea). El robo generico isla pasa a ser el motor de estrellas (el 契约天使 de Mash).",
+                      "hilo":  "Estrellas (motor per-turno)"
+                  },
+                  {
+                      "carta":  "ChaldeaSandwich",
+                      "accion":  "MANTENER",
+                      "hilo":  "block-scaling (gate 12+, glow)"
+                  },
+                  {
+                      "carta":  "ConceptualAmmo",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "2E Poder: una vez por turno, tu primer Ataque cuenta como Black Barrel: ignora Bloqueo y elimina 1 buff (up: dos veces por turno). Antes replicaba el efecto SIN la etiqueta; ahora ES el generador de la familia: cualquier ataque tuyo dispara los payoffs de strip (ConceptualRound/Burst).",
+                      "hilo":  "Black Barrel (generador)"
+                  },
+                  {
+                      "carta":  "CylinderDischarge",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "0E At: consume TODA tu Carga NP; 4 de dano por cada 10 consumidos (up 5; antes 10 — la conversion 1:1 rompia la tasa: AUDITORIA). A 300 = 120/150: dump all-in que sacrifica el ciclo de ults.",
+                      "hilo":  "conversion NP-\u003edano"
+                  },
+                  {
+                      "carta":  "DefensiveFormation",
+                      "accion":  "MANTENER",
+                      "hilo":  "Bloqueo/Baluarte (amplificador)"
+                  },
+                  {
+                      "carta":  "FouBeastIv",
+                      "accion":  "MANTENER",
+                      "hilo":  "NP (kill -\u003e 20 NP + cura)"
+                  },
+                  {
+                      "carta":  "IronWill",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Poder: al final de tu turno +4 de Bloqueo CON BALUARTE (up +2). Antes Bloqueo suelto borderline; ahora apila sobre la retencion y enciende los riders de Baluarte (FrontalCharge).",
+                      "hilo":  "Baluarte (fuente per-turno)"
+                  },
+                  {
+                      "carta":  "KnightsJudgment",
+                      "accion":  "MANTENER",
+                      "hilo":  "Intercepcion"
+                  },
+                  {
+                      "carta":  "MashsGlasses",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "0E Hab: roba 1 + 10 NP (up: roba 2; antes 5/8 NP — denominacion).",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "MobileWall",
+                      "accion":  "MANTENER",
+                      "hilo":  "puente Bloqueo-\u003eAtaque"
+                  },
+                  {
+                      "carta":  "MoldCamelot",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "2E Hab: 11 Bloqueo con Baluarte (up +3) + 10 NP (up +10; antes 12/18 — denominacion). Sigue siendo el objetivo de GalahadsLegacy.",
+                      "hilo":  "Baluarte + NP"
+                  },
+                  {
+                      "carta":  "OrtinaxServos",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Poder: al final de tu turno, si jugaste 2+ Ataques: +6 Bloqueo (up +2) y +10 NP. Ahora si paga el plan del Ortinax: gastas Bloqueo atacando y los servos lo reponen y cargan el medidor — deja de ser borderline.",
+                      "hilo":  "Formas (Ortinax) + NP"
+                  },
+                  {
+                      "carta":  "ParadoxCylinder",
+                      "accion":  "MANTENER",
+                      "hilo":  "Vida-\u003eNP + Intercepcion (la reliquia nueva le paga +10 NP por la perdida de Vida: conexion gratis)"
+                  },
+                  {
+                      "carta":  "PrayerToGalahad",
+                      "accion":  "MANTENER",
+                      "hilo":  "Bloqueo (amplificador)"
+                  },
+                  {
+                      "carta":  "Reprisal",
+                      "accion":  "MANTENER",
+                      "hilo":  "Intercepcion (payoff de golpe detenido)"
+                  },
+                  {
+                      "carta":  "SiegeLance",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "3E At: 24 dano (up +6) + 20 NP (up +10; antes +5 — denominacion).",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "SnowflakeWall",
+                      "accion":  "MANTENER",
+                      "hilo":  "Baluarte (fuente)"
+                  },
+                  {
+                      "carta":  "SuppressingShot",
+                      "accion":  "REDISEÑAR",
+                      "efectoNuevo":  "1E At: 9 dano de Black Barrel (up +3) + 2 Debil (up +1). La supresion ahora es municion conceptual: tercer miembro de la familia en comun/poco comun. Conserva clase y arte (disparo).",
+                      "hilo":  "Black Barrel"
+                  },
+                  {
+                      "carta":  "SwitchOrtinax",
+                      "accion":  "MANTENER",
+                      "hilo":  "Formas"
+                  },
+                  {
+                      "carta":  "SwitchShielder",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "0E Hab: entra en forma Shielder + 20 NP (up +10; antes 15/25 — denominacion).",
+                      "hilo":  "Formas + NP"
+                  },
+                  {
+                      "carta":  "TirelessGuardian",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Poder: +5 Intercepcion permanente (up +3; antes 4/6). Mas masa sostenida para los payoffs de golpe detenido.",
+                      "hilo":  "Intercepcion (motor)"
+                  },
+                  {
+                      "carta":  "TragicShield",
+                      "accion":  "MANTENER",
+                      "hilo":  "Vida-\u003eNP (la reliquia lo des-huerfana: -3 Vida -\u003e 11 Bloqueo + 10 NP implicito)"
+                  },
+                  {
+                      "carta":  "TrainingSimulation",
+                      "accion":  "REEMPLAZAR(por FormDrill — \u0027Simulacro de Cambio\u0027)",
+                      "efectoNuevo":  "0E Hab: cambia a la otra forma (Shielder\u003c-\u003eOrtinax; en Paladin: +10 NP en su lugar) y roba 1 (up: +10 NP siempre). Hereda el slot de arte (simulador de entrenamiento). EL pan-y-manteca de formas que faltaba: habilita el ping-pong de HomunculusHeart/VanguardStrike/KnightsFist sin esperar una Switch; mata al tercer block-cantrip duplicado.",
+                      "hilo":  "Formas (switcher barato)"
+                  },
+                  {
+                      "carta":  "VanguardStrike",
+                      "accion":  "MANTENER",
+                      "hilo":  "Formas (payoff FormShifted, glow)"
+                  },
+                  {
+                      "carta":  "VividIronDance",
+                      "accion":  "MANTENER",
+                      "hilo":  "Bloqueo (hibrido ataque/muro)"
+                  },
+                  {
+                      "carta":  "WallDoctrine",
+                      "accion":  "MANTENER",
+                      "hilo":  "NP (motor: 1a carta de Bloqueo/turno -\u003e 10 NP)"
+                  },
+                  {
+                      "carta":  "AbsoluteWall",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "2E Hab Exhaust: hasta tu proximo turno tu Vida no puede bajar; los golpes detenidos por este efecto cuentan como totalmente bloqueados (disparan Intercepcion, SenpaiPromise y las estrellas de la reliquia). Una linea y la isla queda cosida a tres hilos.",
+                      "hilo":  "Intercepcion"
+                  },
+                  {
+                      "carta":  "BlackBarrelFullBurst",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "2E At: NP manual — consume TODA la Carga (min 50). 35 dano BB (up +10), +3 por cada 10 sobre el minimo (up +1; antes 4/5 — recorte de AUDITORIA por economia rapida). Al 100: elimina TODOS los buffs. Glow al poder pagarse.",
+                      "hilo":  "Black Barrel + NP"
+                  },
+                  {
+                      "carta":  "DawnStrike",
+                      "accion":  "MANTENER",
+                      "hilo":  "NP (kill -\u003e +50 NP + cura)"
+                  },
+                  {
+                      "carta":  "DemiServant",
+                      "accion":  "MANTENER",
+                      "hilo":  "Baluarte (motor per-turno)"
+                  },
+                  {
+                      "carta":  "DistantUtopiaCastle",
+                      "accion":  "MANTENER",
+                      "hilo":  "Baluarte (techo: retencion total)"
+                  },
+                  {
+                      "carta":  "FarewellSnowfield",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "2E Hab Exhaust: 20 Bloqueo con Baluarte (up +6) + 20 NP (up +10; antes +5 — denominacion).",
+                      "hilo":  "Baluarte + NP"
+                  },
+                  {
+                      "carta":  "FousMiracle",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Hab Exhaust: este combate, la primera vez que fueras a morir: sobrevive con 1 (up 12) de Vida, +25 de Bloqueo y +50 de Carga NP — el milagro arma la ult de la remontada. Deja de ser guts generico aislado.",
+                      "hilo":  "Vida-\u003eNP / sacrificio"
+                  },
+                  {
+                      "carta":  "GalahadsLegacy",
+                      "accion":  "MANTENER",
+                      "hilo":  "cita al pool (genera MoldCamelot+)"
+                  },
+                  {
+                      "carta":  "HomunculusHeart",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "1E Poder: cada cambio de forma -\u003e roba 2 (up 3) y +10 NP (up +20; antes 15 — denominacion). Con FormDrill a 0E por fin tiene gasolina para el ping-pong.",
+                      "hilo":  "Formas (motor)"
+                  },
+                  {
+                      "carta":  "KnightsVow",
+                      "accion":  "MANTENER",
+                      "hilo":  "block-scaling (gate 20+ -\u003e Fuerza, glow)"
+                  },
+                  {
+                      "carta":  "LastOrder",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "0E Hab Exhaust: +50 NP (up +50 -\u003e 100: la Ultima Orden invoca la ult al instante; antes up +25 — denominacion).",
+                      "hilo":  "NP"
+                  },
+                  {
+                      "carta":  "LordCamelot",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "3E Hab: NP manual — minimo 70-\u003e100 (AUDITORIA + fidelidad FGO: NP al 100%). 23 Bloqueo con Baluarte (up +10), +4 por cada 10 sobre el minimo, +3 Fuerza (up +1), 12 Intercepcion este turno. Glow al poder pagarse.",
+                      "hilo":  "NP + Baluarte + Intercepcion"
+                  },
+                  {
+                      "carta":  "LordChaldeas",
+                      "accion":  "MANTENER",
+                      "hilo":  "NP + Baluarte (min 50 se queda: el despliegue \u0027parcial\u0027 del escudo es identidad; PerTen 3 defensivo no snowballea)"
+                  },
+                  {
+                      "carta":  "PaladinAssault",
+                      "accion":  "MANTENER",
+                      "hilo":  "Formas (payoff gated, glow)"
+                  },
+                  {
+                      "carta":  "PaladinVocation",
+                      "accion":  "MANTENER",
+                      "hilo":  "Formas (climax permanente)"
+                  },
+                  {
+                      "carta":  "PioneerOfTheStars",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "3E Poder: la primera carta NP de cada combate no consume Carga y se resuelve con Sobrecarga MINIMA (AUDITORIA: mata el doble-dip \u0027tier 300 gratis + medidor intacto\u0027). Ademas, cada carta NP que jugas: +30 Estrellas (up +50) — los NP generan estrellas como en FGO y el nombre por fin es literal.",
+                      "hilo":  "NP + Estrellas (cruce de medidores)"
+                  },
+                  {
+                      "carta":  "RhongomyniadReplica",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "3E At Exhaust: NP manual — minimo 70-\u003e100. 39 dano de Black Barrel (up +15), +5 por cada 10 sobre el minimo (up +2; antes 7/9 — recorte de AUDITORIA), +3 Vulnerable. Con CRITICO LISTO es el climax del hilo de estrellas (x2 sobre dano imbloqueable).",
+                      "hilo":  "Black Barrel + NP (finisher)"
+                  },
+                  {
+                      "carta":  "RoundTablePunishment",
+                      "accion":  "MANTENER",
+                      "hilo":  "block-scaling (AoE = Bloqueo)"
+                  },
+                  {
+                      "carta":  "SenpaiPromise",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "2E Poder: cada golpe enemigo totalmente bloqueado -\u003e +10 NP (up +5; antes 6/9 — denominacion). Con la reliquia, cada golpe detenido = +10 NP y +10 Estrellas: el turno perfecto de tanqueo paga las dos economias.",
+                      "hilo":  "Intercepcion -\u003e NP (motor)"
+                  },
+                  {
+                      "carta":  "UtopianFortress",
+                      "accion":  "MANTENER",
+                      "hilo":  "NP -\u003e Bloqueo (lee el banco sin gastarlo; Exhaust lo contiene)"
+                  },
+                  {
+                      "carta":  "LordChaldeasUnleashed",
+                      "accion":  "MANTENER",
+                      "hilo":  "NP (ult auto de Shielder: 35 Baluarte, PerTen 3, costo 100)"
+                  },
+                  {
+                      "carta":  "LordCamelotUnleashed",
+                      "accion":  "MANTENER",
+                      "hilo":  "NP (ult auto de Paladin: 30 Baluarte + 3 Fuerza + 12 Intercepcion, PerTen 3)"
+                  },
+                  {
+                      "carta":  "BlackBarrelUnleashed",
+                      "accion":  "MANTENER",
+                      "hilo":  "NP + Black Barrel (ult auto de Ortinax: 32 imbloqueable + strip total, PerTen 3; a 300 = 92, presupuestado: bancar 300 renuncia a 2 ults)"
+                  },
+                  {
+                      "carta":  "BehindMeSenpai",
+                      "accion":  "RETOCAR",
+                      "efectoNuevo":  "0E Hab Ethereal Exhaust (generada cada turno en co-op por la forma): cubre a tus aliados hasta tu proximo turno + obten 3 de Intercepcion este turno y 5 de Bloqueo. Cubrir es contraatacar: cada golpe que detengas tambien paga +10 Estrellas via reliquia — de isla co-op a pieza del hilo de Intercepcion.",
+                      "hilo":  "Intercepcion (co-op)"
+                  }
+              ],
+    "hilosResultantes":  [
+                             "HILO NP — empieza en BASICA (Arts +30, firmas +10): comunes CombatBreathing 30/50, ReinforcementOrder 30+robo, Regroup 20 condicional, TwinHaft/MultipurposeShield/MashsGlasses 10, ConceptualRound 20 por strip, OrtinaxMaintenance (Bloqueo-\u003e30/50), CylinderSeal (50 estrellas-\u003e50 NP); motores WallDoctrine, SenpaiPromise, OrtinaxServos, pasiva Shielder (+5), reliquia (perder Vida-\u003e+10). Payoffs: ult auto a 100 por forma, raras manuales (gates 50/100), CylinderDischarge (dump), UtopianFortress (lee sin gastar), banco 300 de Sobrecarga. Todo +X es progreso visible hacia la ult — patron Jeanne.",
+                             "HILO ESTRELLAS — empieza en BASICA (Quick +30) y en la RELIQUIA (golpe totalmente bloqueado -\u003e +10: tanquear ES generar): DefensiveSweep/ChaldeaManual +10, CombatAnalysis +10/turno, PioneerOfTheStars +30 por NP jugado, CylinderVent 50. A 100: CRITICO LISTO (x2 auto). Consumidores: GuardStep (-30 -\u003e robo+Bloqueo), CylinderSeal (-50 -\u003e NP), ShieldRam (rider con CRITICO LISTO). Climax: CamelotRam/BunkerBolt/SiegeLance/Rhongomyniad x2. Diferencia documentada vs el contador con candado de forma de Artoria.",
+                             "HILO BALUARTE — fuentes: FirmStance, SnowflakeWall, IronWill (nuevo per-turno), MoldCamelot, DemiServant, FarewellSnowfield, LordChaldeas/Camelot, retencion 10 de la starter. Payoff EXPLICITO nuevo en comun: FrontalCharge (\u0027si conservaste Bloqueo: +6 dano +10 NP\u0027) calibrado a la retencion garantizada; payoffs implicitos: todo el block-scaling (SharpenedEdge, CamelotRam, RoundTablePunishment, CoveringFire, Sandwich, KnightsVow) + pasiva Shielder; techo: DistantUtopiaCastle.",
+                             "HILO INTERCEPCION — el trigger \u0027golpe totalmente bloqueado\u0027 ahora paga TRES monedas a la vez: dano (Intercepcion), NP (SenpaiPromise 10) y Estrellas (reliquia 10). Fuentes este-turno: Provoke, ShieldsUp (nueva comun), KnightsJudgment, LordCamelot/Unleashed, BehindMeSenpai; sostenidas: TirelessGuardian 5 y AmalgamGoad 3 permanente (nueva — cierra el hueco de 1 sola fuente). Payoffs: Reprisal, SenpaiPromise, AbsoluteWall (sus golpes detenidos cuentan como bloqueados).",
+                             "HILO FORMAS — pan y manteca nuevo: FormDrill 0E (cambia y roba) + SwitchOrtinax/SwitchShielder + PaladinVocation (climax). Payoffs: KnightsFist (comun), BunkerProtocol, VanguardStrike, PaladinAssault, HomunculusHeart (motor con gasolina por fin). Las formas deciden el DESTINO del Bloqueo: Shielder lo vuelve NP, Ortinax lo vuelve dano — misma carta, decision distinta (regla §5 de la skill).",
+                             "HILO BLACK BARREL — familia etiquetada con generador-payoff: generador ConceptualAmmo (tus ataques SE VUELVEN Black Barrel); miembros ConceptualRound (comun), SuppressingShot (nuevo BB+Debil), BlackBarrelBurst, FullBurst, Rhongomyniad, BlackBarrelUnleashed; payoffs de strip: -\u003eNP (Round +20) y -\u003eEstrellas (Burst +10 c/u). Rol estrategico: anti-buff contra los hexes de HextechRunes.",
+                             "HILO CONVERSION/FUNGIBILIDAD — integramente comun: par espejo 0E CylinderVent/CylinderSeal (50 NP\u003c-\u003e50 estrellas), OrtinaxMaintenance (Bloqueo-\u003eNP), GuardStep (estrellas-\u003erobo), Crush/BunkerBolt (Bloqueo-\u003edano), CylinderDischarge (NP-\u003edano), UtopianFortress (NP-\u003eBloqueo). Ningun recurso muere; cualquier comun generadora es jugable en cualquier mazo de Mash — la razon estructural de que \u0027todo conecte\u0027.",
+                             "HILO VIDA-\u003eNP — la reliquia convierte cada perdida de Vida en +10 NP: TragicShield y ParadoxCylinder pasan de costo huerfano a segundo modo de carga; FousMiracle remata con +50 NP en el ultimo aliento. Costo = recurso (leccion 6 de Jeanne).",
+                             "HILO CITA AL POOL — el medidor genera las 3 Unleashed por forma; GalahadsLegacy genera MoldCamelot+; CombatAnalysis premia cada CRITICO LISTO; las basicas de comando son citadas por toda la aritmetica (cada \u0027+30\u0027 del pool ES una Arts/Quick). El pool se referencia a si mismo constantemente."
+                         ],
+    "fgoCoreNuevo":  "YA EXISTE en FGOCore (verificado en f:\\Programs\\SlayTheSpire2-SmashFromFGO\\FGOCore\\FGOCoreCode\\Stars\\): CritStarsPower.cs — contador 0-100+, a 100 se descuentan 100 automaticamente y aplica 1 CritReadyPower; patron AfterPowerAmountChanged + flag _isProcessing + while para cruces de 200+ (copiado de decompiled\\_jeannealter\\JeanneAlter.Powers\\CritPower.cs) — y CritReadyPower.cs (proximo Ataque x2 via ModifyDamageMultiplicative, Decrement para que varios criticos hagan cola), con helper estatico CritStars (Of/Gain/CanPay, espejo de NpCharge). FALTA CONSTRUIR: (1) localizacion compartida en FGOCore x3 idiomas (card_keywords + static_hover_tips: \u0027Estrellas de Critico\u0027 y \u0027CRITICO LISTO\u0027 / Critical Stars / 暴击星·暴击), documentando explicitamente que NO es el contador chico con candado de forma de ArtoriaCaster (mecanica mod-local distinta); (2) iconos de power para ambos; (3) NUEVO FGOCoreCode/CommandCards/: bases abstractas BusterCardBase / ArtsCardBase / QuickCardBase (1E Attack; numeros estandar 10 / 6+30 NP / 6+30 estrellas; up +3 / +3+20 / +3+20) + arte compartido rojo/azul/verde estilo command card en el .pck de FGOCore — cada personaje deriva su triada (BusterMash : BusterCardBase) fijando CardRarity.Basic y su pool, asi Mash y Morgan comparten numeros, arte y loc sin duplicar; (4) nada mas de core: el glow dorado es override ShouldGlowGoldInternal por carta (patron BaseLib) y las conversiones de la starter (golpe totalmente bloqueado -\u003e estrellas, perder Vida -\u003e NP) usan AfterDamageReceived + result.WasFullyBlocked (patron SenpaiPromisePower), ambos mod-locales en MashShielder.",
+    "locImpacto":  "MashShielder/MashShielder/localization/{esp,eng,zhs}/cards.json: 4 cartas con ID nuevo (CylinderVent, CylinderSeal, CombatAnalysis, FormDrill — las dos ultimas reciclan el arte de ChaldeaLibrary y TrainingSimulation; las dos primeras estrenan arte) + ~38 descripciones retocadas/rediseñadas (todas las RETOCAR/REDISEÑAR de la tabla) x3 idiomas. Las 3 cartas de comando viven en FGOCore/localization (title+description x3 idiomas, compartidas por ambos personajes). relics.json: RoundTableFragment y LordCamelotRestored reescritas x3 idiomas. FGOCore: card_keywords.json + static_hover_tips.json nuevos para Estrellas de Critico / CRITICO LISTO x3 idiomas (terminologia Mooncell: 暴击星 / 暴击) + powers.json para CritStarsPower/CritReadyPower/CombatAnalysisPower/los powers retocados (AmalgamGoad permanente usa InterceptPower existente). Total estimado ~150 strings nuevos o modificados entre ambos mods. OJO: escapes de SimpleLoc para +, - y parentesis literales (fix del commit 9ce6bbe); cualquier cambio de loc requiere Publish, no solo Build. Los REEMPLAZAR que conservan clase (GuardStep, SuppressingShot) no rompen IDs ni arte; los nombres de clase existentes retocados no se renombran jamas (regla de manifiesto)."
+}

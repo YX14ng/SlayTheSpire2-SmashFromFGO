@@ -7,13 +7,13 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#16 Escarcha Protectora (护身之霜) — 6 de Bloqueo + Carga NP 6.</summary>
+/// <summary>#16 Escarcha Protectora (护身之霜) — retocada v2: 6 de Bloqueo + Carga NP 10. (up +3/+5)</summary>
 public sealed class ProtectiveFrost() : MorganCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(6m, ValueProp.Move),
-        new DynamicVar("NpCharge", 6)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
@@ -26,7 +26,7 @@ public sealed class ProtectiveFrost() : MorganCard(1, CardType.Skill, CardRarity
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2m);
-        DynamicVars["NpCharge"].UpgradeValueBy(4m);
+        DynamicVars.Block.UpgradeValueBy(3m);
+        DynamicVars["NpCharge"].UpgradeValueBy(5m);
     }
 }

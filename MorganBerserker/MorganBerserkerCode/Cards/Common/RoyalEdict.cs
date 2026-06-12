@@ -6,13 +6,13 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#15 Edicto Real (女王敕令) — roba 2 + Carga NP 5.</summary>
+/// <summary>#15 Edicto Real (女王敕令) — retocada v2: roba 2 + Carga NP 10. (up: +10 NP)</summary>
 public sealed class RoyalEdict() : MorganCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(2),
-        new DynamicVar("NpCharge", 5)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
@@ -25,6 +25,6 @@ public sealed class RoyalEdict() : MorganCard(1, CardType.Skill, CardRarity.Comm
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

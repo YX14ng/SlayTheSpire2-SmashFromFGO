@@ -19,5 +19,11 @@
   "FGOCORE-GUTS_POWER.smartDescription": "#本场战斗中第一次受到致命伤害时：保留1点生命而不会死亡。",
   "FGOCORE-OVERCHARGE_BLESSING_POWER.title": "伦戈米尼亚德的祝福",
   "FGOCORE-OVERCHARGE_BLESSING_POWER.description": "#你的下一张宝具牌的超载等级提高，每层+10点。",
-  "FGOCORE-OVERCHARGE_BLESSING_POWER.smartDescription": "#你的下一张宝具牌的超载等级提高，每层+10点。"
+  "FGOCORE-OVERCHARGE_BLESSING_POWER.smartDescription": "#你的下一张宝具牌的超载等级提高，每层+10点。",
+  "FGOCORE-CRIT_STARS_POWER.title": "暴击星",
+  "FGOCORE-CRIT_STARS_POWER.description": "#暴击星计量槽。达到100时：自动消耗100颗，获得1层暴击。",
+  "FGOCORE-CRIT_STARS_POWER.smartDescription": "#暴击星计量槽。达到100时：自动消耗100颗，获得1层暴击。",
+  "FGOCORE-CRIT_READY_POWER.title": "暴击",
+  "FGOCORE-CRIT_READY_POWER.description": "#你的下一张攻击牌造成双倍伤害。",
+  "FGOCORE-CRIT_READY_POWER.smartDescription": "#你的下一张攻击牌造成双倍伤害。"
 }

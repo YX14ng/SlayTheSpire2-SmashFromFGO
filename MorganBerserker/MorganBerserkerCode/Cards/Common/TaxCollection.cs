@@ -5,17 +5,21 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#14 Recaudación (征税) — Carga NP 12; si algún enemigo tiene Maldición: +8 adicional.</summary>
+/// <summary>#14 Recaudación (征税) — retocada v2 (denominación skill): Carga NP 20;
+/// si algún enemigo tiene Maldición: +20 adicional. Glow dorado. (up: base 20→30)</summary>
 public sealed class TaxCollection() : MorganCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("NpCharge", 12),
-        new DynamicVar("Bonus", 8)
+        new DynamicVar("NpCharge", 20),
+        new DynamicVar("Bonus", 20)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<CursePower>()];
+
+    protected override bool ShouldGlowGoldInternal =>
+        Curses.CursedEnemies(Owner.Creature.CombatState, Owner.Creature) > 0;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -29,7 +33,6 @@ public sealed class TaxCollection() : MorganCard(1, CardType.Skill, CardRarity.C
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NpCharge"].UpgradeValueBy(4m);
-        DynamicVars["Bonus"].UpgradeValueBy(4m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

@@ -19,7 +19,7 @@ public sealed class AroundCaliburnUnleashed() : ArtoriaCard(0, CardType.Skill, C
 {
     public const int ChargeCost = 100;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

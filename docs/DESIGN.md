@@ -266,3 +266,23 @@ Con el pool cerrado (sección 5), el siguiente paso es asignar arte a las 72 car
 9. **Imágenes de cartas** (fase de arte, sección 7).
 10. **Visual v2**: rig de partes con Skeleton2D, animación por forma.
 11. **Publicar**: mods local → Steam Workshop.
+
+
+## REDISEÑO v2 DE POOLS (2026-06-11, post-playtest, estilo JeanneAlter)
+
+A pedido del usuario, ambos pools (Mash y Morgan) se rediseñaron con los idiomas de
+diseño del mod JeanneAlter (decompilado y analizado en `assets/reference/jeanne_anatomy.json`;
+auditoría previa en `pools_audit.json`; tablas completas y veredictos de jueces en
+`assets/reference/redesign/*.json` — LA FUENTE DE VERDAD del pool actual es el CÓDIGO):
+
+- **Estrellas de Crítico** (FGOCore `CritStarsPower`): contador compartido; a 100 se
+  descuentan solas y dan 1 **Crítico Listo** (`CritReadyPower`: próximo Ataque ×2, un
+  stack por carta). NO confundir con el contador chico de Artoria.
+- **Buster/Arts/Quick** como básicas de comando en ambos mazos iniciales (números
+  Jeanne: 10 daño / 6 + 30 NP / 6 + 30 estrellas).
+- Comunes = engranajes de conversión (pares espejo NP↔estrellas a 0⚡, denominaciones
+  fijas 10/20/30/50/100); conectividad 75%→97.6% (Mash) y 83%→97% (Morgan).
+- Starters como motores de conversión de eventos→recursos con topes de 3 procs/turno:
+  Mash (golpe totalmente bloqueado→estrellas, perder Vida→NP), Morgan (perder Vida→estrellas).
+- Cartas excluidas del pool sin borrar (compat con runs guardadas): rarity→Event +
+  comentario; borrar en la próxima versión.

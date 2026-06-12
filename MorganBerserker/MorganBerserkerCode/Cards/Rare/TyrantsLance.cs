@@ -1,24 +1,41 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 
-/// <summary>Lanza de la Tirana (暴君之枪) — 24 de daño; pierdes 4 HP.</summary>
+/// <summary>
+/// Lanza de la Tirana (暴君之枪) — 24 de daño; pierdes 4 HP (→ +10★ vía el Cetro
+/// rediseñado); si tienes Alzarse: +10 de daño (la tirana pelea sin miedo a morir).
+/// Rediseño v2: lector explícito 2 del hilo Alzarse + glow dorado.
+/// </summary>
 public sealed class TyrantsLance() : MorganCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(24m, ValueProp.Move),
-        new HpLossVar(4m)
+        new HpLossVar(4m),
+        new DynamicVar("Bonus", 10)
     ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<GutsPower>()];
+
+    protected override bool ShouldGlowGoldInternal => Owner.Creature.HasPower<GutsPower>();
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+
+        var damage = DynamicVars.Damage.BaseValue;
+        if (Owner.Creature.HasPower<GutsPower>())
+        {
+            damage += DynamicVars["Bonus"].BaseValue;
+        }
+
+        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
         await CreatureCmd.Damage(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue,

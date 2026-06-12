@@ -6,8 +6,12 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Cards.Common;
 
-/// <summary>Muro de Tiza — efficient Block (from Obscurant Wall of Chalk).</summary>
-public sealed class ChalkWall() : MashShielderCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+/// <summary>
+/// Muro de Tiza — efficient Block (from Obscurant Wall of Chalk).
+/// Removida del pool en rediseño v2 (reemplazada por CylinderSeal); la rareza Event
+/// la saca de las recompensas sin romper runs guardadas. Borrar en la próxima versión.
+/// </summary>
+public sealed class ChalkWall() : MashShielderCard(1, CardType.Skill, CardRarity.Event, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(9m, ValueProp.Move)];
 

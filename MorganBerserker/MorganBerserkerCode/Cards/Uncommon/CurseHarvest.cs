@@ -5,10 +5,13 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
-/// <summary>Cosecha de Maldiciones (诅咒收割) — duplica la Maldición de UN enemigo (máx. +6).</summary>
+/// <summary>
+/// Cosecha de Maldiciones (诅咒收割) — duplica la Maldición de UN enemigo (máx. +10).
+/// Rediseño v2: máx 6→10 (acompaña el cap 25 de Maldición). (up: máx +4)
+/// </summary>
 public sealed class CurseHarvest() : MorganCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Max", 6)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Max", 10)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
 

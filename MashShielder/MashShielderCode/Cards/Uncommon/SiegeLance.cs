@@ -8,7 +8,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Cards.Uncommon;
 
-/// <summary>Lanza de Asedio — heavy hit + big NP Charge.</summary>
+/// <summary>Lanza de Asedio — heavy hit + big NP Charge.
+/// Rediseño v2: 24 daño (up +6) + 20 NP (up +10; antes +5 — denominación fija).</summary>
 public sealed class SiegeLance() : MashShielderCard(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -31,6 +32,6 @@ public sealed class SiegeLance() : MashShielderCard(3, CardType.Attack, CardRari
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(6m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

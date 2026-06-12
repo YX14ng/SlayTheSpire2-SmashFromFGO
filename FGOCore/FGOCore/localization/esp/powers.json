@@ -19,5 +19,11 @@
   "FGOCORE-GUTS_POWER.smartDescription": "#La primera vez en este combate que el daño fuera a matarte: sobrevives con 1 de Vida.",
   "FGOCORE-OVERCHARGE_BLESSING_POWER.title": "Bendición de Rhongomyniad",
   "FGOCORE-OVERCHARGE_BLESSING_POWER.description": "#Tu próxima carta NP suma +10 por carga a su Sobrecarga.",
-  "FGOCORE-OVERCHARGE_BLESSING_POWER.smartDescription": "#Tu próxima carta NP suma +10 por carga a su Sobrecarga."
+  "FGOCORE-OVERCHARGE_BLESSING_POWER.smartDescription": "#Tu próxima carta NP suma +10 por carga a su Sobrecarga.",
+  "FGOCORE-CRIT_STARS_POWER.title": "Estrellas de Crítico",
+  "FGOCORE-CRIT_STARS_POWER.description": "#Medidor de estrellas de crítico. Al llegar a 100: se gastan 100 automáticamente y obtienes 1 de Crítico Listo.",
+  "FGOCORE-CRIT_STARS_POWER.smartDescription": "#Medidor de estrellas de crítico. Al llegar a 100: se gastan 100 automáticamente y obtienes 1 de Crítico Listo.",
+  "FGOCORE-CRIT_READY_POWER.title": "Crítico Listo",
+  "FGOCORE-CRIT_READY_POWER.description": "#Tu próximo Ataque inflige el doble de daño.",
+  "FGOCORE-CRIT_READY_POWER.smartDescription": "#Tu próximo Ataque inflige el doble de daño."
 }

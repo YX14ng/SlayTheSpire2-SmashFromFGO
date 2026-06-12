@@ -6,14 +6,17 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
-/// <summary>Memoria del Fresno (梣树之忆) — Carga NP +8, roba 1. Exhaust.</summary>
+/// <summary>
+/// Memoria del Fresno (梣树之忆) — 0⚡: Carga NP +20, roba 1. Exhaust.
+/// Rediseño v2: NP 8→20 (denominación "paquete"). (up +10)
+/// </summary>
 public sealed class MemoryOfTheAshTree() : MorganCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("NpCharge", 8),
+        new DynamicVar("NpCharge", 20),
         new CardsVar(1)
     ];
 
@@ -27,6 +30,6 @@ public sealed class MemoryOfTheAshTree() : MorganCard(0, CardType.Skill, CardRar
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NpCharge"].UpgradeValueBy(6m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

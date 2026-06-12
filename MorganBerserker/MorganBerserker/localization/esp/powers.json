@@ -52,5 +52,8 @@
   "MORGANBERSERKER-WINTER_COURT_POWER.smartDescription": "#Roba esta cantidad de cartas adicionales cada turno.",
   "MORGANBERSERKER-WINTER_THORNS_POWER.title": "Espinas del Invierno",
   "MORGANBERSERKER-WINTER_THORNS_POWER.description": "#Este turno, los enemigos que te ataquen ganan esta cantidad de Maldición.",
-  "MORGANBERSERKER-WINTER_THORNS_POWER.smartDescription": "#Este turno, los enemigos que te ataquen ganan esta cantidad de Maldición."
+  "MORGANBERSERKER-WINTER_THORNS_POWER.smartDescription": "#Este turno, los enemigos que te ataquen ganan esta cantidad de Maldición.",
+  "MORGANBERSERKER-WINTER_COURT_DRAW_POWER.title": "Corte de Invierno: Clarividencia",
+  "MORGANBERSERKER-WINTER_COURT_DRAW_POWER.description": "#Al inicio de tu turno: roba 1 carta.",
+  "MORGANBERSERKER-WINTER_COURT_DRAW_POWER.smartDescription": "#Al inicio de tu turno: roba 1 carta."
 }

@@ -7,13 +7,13 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#6 Golpe de Cetro (王笏之击) — 8 de daño + Carga NP 5.</summary>
+/// <summary>#6 Golpe de Cetro (王笏之击) — 8 de daño + Carga NP 10 (denominación rider de común). (up +3/+5)</summary>
 public sealed class ScepterBlow() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(8m, ValueProp.Move),
-        new DynamicVar("NpCharge", 5)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
@@ -30,6 +30,6 @@ public sealed class ScepterBlow() : MorganCard(1, CardType.Attack, CardRarity.Co
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["NpCharge"].UpgradeValueBy(3m);
+        DynamicVars["NpCharge"].UpgradeValueBy(5m);
     }
 }

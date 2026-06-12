@@ -6,7 +6,10 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
-/// <summary>Furia de la Adversidad (逆境之怒) — 8 de daño; +4 si HP ≤75%, +4 más si ≤50%.</summary>
+/// <summary>
+/// Furia de la Adversidad (逆境之怒) — 8 de daño; +4 si HP ≤75%, +4 más si ≤50%.
+/// Rediseño v2: glow dorado cuando algún umbral de Vida está alcanzado (≤75%).
+/// </summary>
 public sealed class AdversitysFury() : MorganCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -14,6 +17,9 @@ public sealed class AdversitysFury() : MorganCard(1, CardType.Attack, CardRarity
         new DamageVar(8m, ValueProp.Move),
         new DynamicVar("Bonus", 4)
     ];
+
+    protected override bool ShouldGlowGoldInternal =>
+        Owner.Creature.CurrentHp * 4 <= Owner.Creature.MaxHp * 3;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

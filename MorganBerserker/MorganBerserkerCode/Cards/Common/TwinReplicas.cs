@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#7 Réplica Doble (双重复制) — 4 de daño ×2 + Carga NP 4.</summary>
+/// <summary>#7 Réplica Doble (双重复制) — 4 de daño ×2 + Carga NP 10 (denominación rider de común). (up +2/+5)</summary>
 public sealed class TwinReplicas() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     private const int Hits = 2;
@@ -15,7 +15,7 @@ public sealed class TwinReplicas() : MorganCard(1, CardType.Attack, CardRarity.C
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(4m, ValueProp.Move),
-        new DynamicVar("NpCharge", 4)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
@@ -33,6 +33,6 @@ public sealed class TwinReplicas() : MorganCard(1, CardType.Attack, CardRarity.C
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["NpCharge"].UpgradeValueBy(2m);
+        DynamicVars["NpCharge"].UpgradeValueBy(5m);
     }
 }

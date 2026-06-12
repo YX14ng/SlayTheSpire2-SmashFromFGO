@@ -7,13 +7,15 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Cards.Uncommon;
 
-/// <summary>Mold Camelot — manifest the shield: Bulwark Block + NP Charge.</summary>
+/// <summary>Mold Camelot — manifest the shield: Bulwark Block + NP Charge.
+/// Rediseño v2: 11 Bloqueo con Baluarte (up +3) + 10 NP (up +10; antes 12/18 — denominación fija).
+/// Sigue siendo el objetivo de GalahadsLegacy.</summary>
 public sealed class MoldCamelot() : MashShielderCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(11m, ValueProp.Move),
-        new DynamicVar("NpCharge", 12)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -28,6 +30,6 @@ public sealed class MoldCamelot() : MashShielderCard(2, CardType.Skill, CardRari
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(3m);
-        DynamicVars["NpCharge"].UpgradeValueBy(6m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

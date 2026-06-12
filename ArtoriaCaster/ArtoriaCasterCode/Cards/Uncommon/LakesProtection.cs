@@ -26,7 +26,7 @@ public sealed class LakesProtection() : ArtoriaCard(1, CardType.Skill, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var charge = DynamicVars["NpCharge"].IntValue;
-        if (Owner.Creature.HasPower<ProphecyCasterFormPower>())
+        if (Owner.Creature.HasPower<ProphecyCasterFormPower>() || Owner.Creature.HasPower<AvalonFormPower>())
         {
             charge += DynamicVars["CasterBonus"].IntValue;
         }

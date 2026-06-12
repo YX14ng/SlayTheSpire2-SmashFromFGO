@@ -150,5 +150,11 @@
   "MORGANBERSERKER-MEMORY_OF_LONDINIUM_UNLEASHED.title": "圣剑遥远梦之遗痕·全解放",
   "MORGANBERSERKER-MEMORY_OF_LONDINIUM_UNLEASHED.description": "#宝具（!ChargeCost!点宝具值）：对所有敌人造成!D!点伤害，超出最低值的每10点宝具值额外/+!PerTen!。获得1层*无实体*。将!C!张*骑士的武器*加入手牌；消耗满200时再/+1张。",
   "MORGANBERSERKER-KNIGHTS_ARM.title": "骑士的武器",
-  "MORGANBERSERKER-KNIGHTS_ARM.description": "#造成!D!点伤害。过去、现在与未来的骑士之剑。"
+  "MORGANBERSERKER-KNIGHTS_ARM.description": "#造成!D!点伤害。过去、现在与未来的骑士之剑。",
+  "MORGANBERSERKER-BUSTER_MORGAN.title": "Buster",
+  "MORGANBERSERKER-BUSTER_MORGAN.description": "#指令卡：造成!D!点伤害。",
+  "MORGANBERSERKER-ARTS_MORGAN.title": "Arts",
+  "MORGANBERSERKER-ARTS_MORGAN.description": "#指令卡：造成!D!点伤害。获得!NpCharge!点*宝具值*。",
+  "MORGANBERSERKER-QUICK_MORGAN.title": "Quick",
+  "MORGANBERSERKER-QUICK_MORGAN.description": "#指令卡：造成!D!点伤害。获得!Stars!颗*暴击星*。"
 }

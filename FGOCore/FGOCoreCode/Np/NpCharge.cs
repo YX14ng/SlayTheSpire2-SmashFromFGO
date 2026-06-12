@@ -40,12 +40,17 @@ public static class NpCharge
         }
     }
 
-    private static INpCostWaiver? GetWaiver(Creature creature) =>
-        creature.GetPowerInstances<PowerModel>().OfType<INpCostWaiver>().FirstOrDefault(w => !w.Used);
+    // Parche P3 del panel de rediseño: los waivers NUNCA cubren las ultis
+    // auto-manifestadas (CardRarity.Event) — solo las cartas NP manuales del pool.
+    private static INpCostWaiver? GetWaiver(Creature creature, CardModel? source)
+    {
+        if (source != null && source.Rarity == MegaCrit.Sts2.Core.Entities.Cards.CardRarity.Event) return null;
+        return creature.GetPowerInstances<PowerModel>().OfType<INpCostWaiver>().FirstOrDefault(w => !w.Used);
+    }
 
     /// <summary>Can an NP card costing <paramref name="amount"/> be played right now?</summary>
-    public static bool CanPay(Creature creature, int amount) =>
-        Current(creature) >= amount || GetWaiver(creature) != null;
+    public static bool CanPay(Creature creature, int amount, CardModel? source = null) =>
+        Current(creature) >= amount || GetWaiver(creature, source) != null;
 
     /// <summary>
     /// True when the gauge reached the 100 threshold — NP cards played now trigger their
@@ -56,7 +61,7 @@ public static class NpCharge
     /// <summary>Pay an NP card's charge cost. A waiver power covers it for free.</summary>
     public static async Task PayForNpCard(Creature creature, int amount, CardModel source)
     {
-        var waiver = GetWaiver(creature);
+        var waiver = GetWaiver(creature, source);
         if (waiver != null)
         {
             waiver.Used = true;
@@ -68,12 +73,14 @@ public static class NpCharge
     /// <summary>
     /// FGO-style Overcharge: an NP card consumes ALL the gauge (at least its minimum cost)
     /// and its power scales with what was consumed. Returns the effective charge tier
-    /// (>= minCost). A waiver makes the NP free without lowering the tier.
+    /// (>= minCost). Parche P3: con waiver el NP sale gratis pero resuelve a tier
+    /// MÍNIMO (sin doble-dip de banco lleno + medidor intacto).
     /// </summary>
     public static async Task<int> ConsumeAllForNpCard(Creature creature, int minCost, CardModel source)
     {
         var current = Current(creature);
-        var tier = Math.Max(current, minCost);
+        var waiver = GetWaiver(creature, source);
+        var tier = waiver != null ? minCost : Math.Max(current, minCost);
 
         // Bendición de Rhongomyniad: +10 al tier de Sobrecarga por carga, se consume.
         var blessing = creature.GetPower<OverchargeBlessingPower>();
@@ -83,7 +90,6 @@ public static class NpCharge
             await PowerCmd.Remove(blessing);
         }
 
-        var waiver = GetWaiver(creature);
         if (waiver != null)
         {
             waiver.Used = true;

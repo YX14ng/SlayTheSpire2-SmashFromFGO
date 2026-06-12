@@ -52,5 +52,8 @@
   "MORGANBERSERKER-WINTER_COURT_POWER.smartDescription": "#每回合额外抽此数值的牌。",
   "MORGANBERSERKER-WINTER_THORNS_POWER.title": "寒冬荆棘",
   "MORGANBERSERKER-WINTER_THORNS_POWER.description": "#本回合，攻击你的敌人获得此数值的诅咒。回合结束后失效。",
-  "MORGANBERSERKER-WINTER_THORNS_POWER.smartDescription": "#本回合，攻击你的敌人获得此数值的诅咒。回合结束后失效。"
+  "MORGANBERSERKER-WINTER_THORNS_POWER.smartDescription": "#本回合，攻击你的敌人获得此数值的诅咒。回合结束后失效。",
+  "MORGANBERSERKER-WINTER_COURT_DRAW_POWER.title": "冬之宫廷·明察",
+  "MORGANBERSERKER-WINTER_COURT_DRAW_POWER.description": "#在你的回合开始时：抽1张牌。",
+  "MORGANBERSERKER-WINTER_COURT_DRAW_POWER.smartDescription": "#在你的回合开始时：抽1张牌。"
 }

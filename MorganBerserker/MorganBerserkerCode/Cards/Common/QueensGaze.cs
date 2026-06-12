@@ -7,13 +7,13 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#17 Mirada de la Reina (女王的凝视) — 0⚡: aplica 1 de Débil + Carga NP 5.</summary>
+/// <summary>#17 Mirada de la Reina (女王的凝视) — retocada v2: 0⚡, aplica 1 de Débil + Carga NP 10. (up +1/+5)</summary>
 public sealed class QueensGaze() : MorganCard(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new PowerVar<WeakPower>("Weak", 1m),
-        new DynamicVar("NpCharge", 5)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -29,6 +29,6 @@ public sealed class QueensGaze() : MorganCard(0, CardType.Skill, CardRarity.Comm
     protected override void OnUpgrade()
     {
         DynamicVars["Weak"].UpgradeValueBy(1m);
-        DynamicVars["NpCharge"].UpgradeValueBy(3m);
+        DynamicVars["NpCharge"].UpgradeValueBy(5m);
     }
 }

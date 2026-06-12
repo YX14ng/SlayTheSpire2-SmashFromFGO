@@ -173,5 +173,19 @@
   "MASHSHIELDER-FOU_BEAST_IV.title": "芙芙（Ⅳ号兽？）",
   "MASHSHIELDER-FOU_BEAST_IV.description": "#造成!D!点伤害。如果击杀目标：回复!H!点生命并获得!NpCharge!点*宝具值*。咕。",
   "MASHSHIELDER-MULTIPURPOSE_SHIELD.title": "万能盾牌",
-  "MASHSHIELDER-MULTIPURPOSE_SHIELD.description": "#获得!B!点格挡，抽!C!张牌，并获得!NpCharge!点*宝具值*。砧板、平底锅、雪橇……顺便还是面盾牌。"
+  "MASHSHIELDER-MULTIPURPOSE_SHIELD.description": "#获得!B!点格挡，抽!C!张牌，并获得!NpCharge!点*宝具值*。砧板、平底锅、雪橇……顺便还是面盾牌。",
+  "MASHSHIELDER-BUSTER_MASH.title": "Buster",
+  "MASHSHIELDER-BUSTER_MASH.description": "#指令卡：造成!D!点伤害。",
+  "MASHSHIELDER-ARTS_MASH.title": "Arts",
+  "MASHSHIELDER-ARTS_MASH.description": "#指令卡：造成!D!点伤害。获得!NpCharge!点*宝具值*。",
+  "MASHSHIELDER-QUICK_MASH.title": "Quick",
+  "MASHSHIELDER-QUICK_MASH.description": "#指令卡：造成!D!点伤害。获得!Stars!颗*暴击星*。",
+  "MASHSHIELDER-CYLINDER_VENT.title": "气缸排放",
+  "MASHSHIELDER-CYLINDER_VENT.description": "#仅当你有!NpCost!点*宝具值*时可打出：失去之。获得!Stars!颗*暴击星*。",
+  "MASHSHIELDER-CYLINDER_SEAL.title": "气缸封存",
+  "MASHSHIELDER-CYLINDER_SEAL.description": "#仅当你有!StarCost!颗*暴击星*时可打出：失去之。获得!NpCharge!点*宝具值*。",
+  "MASHSHIELDER-COMBAT_ANALYSIS.title": "战斗分析",
+  "MASHSHIELDER-COMBAT_ANALYSIS.description": "#在你的回合开始时：获得!CombatAnalysis!颗*暴击星*。每当你获得*暴击*时：抽1张牌。",
+  "MASHSHIELDER-FORM_DRILL.title": "换装演习",
+  "MASHSHIELDER-FORM_DRILL.description": "#变换至另一形态。处于圣骑士形态时：改为获得!NpCharge!点*宝具值*。+抽!C!张牌。+"
 }

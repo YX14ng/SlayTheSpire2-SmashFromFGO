@@ -150,5 +150,11 @@
   "MORGANBERSERKER-MEMORY_OF_LONDINIUM_UNLEASHED.title": "MEMORY OF LONDINIUM: Unleashed",
   "MORGANBERSERKER-MEMORY_OF_LONDINIUM_UNLEASHED.description": "#NP (!ChargeCost! Charge): deal !D! damage to ALL enemies, /+!PerTen! per 10 Charge beyond the minimum. Gain 1 *Intangible. Add !C! *Knight's *Arms to your hand, /+1 if your Charge reaches 200.",
   "MORGANBERSERKER-KNIGHTS_ARM.title": "Knight's Arm",
-  "MORGANBERSERKER-KNIGHTS_ARM.description": "#Deal !D! damage. Swords of knights past, present and future."
+  "MORGANBERSERKER-KNIGHTS_ARM.description": "#Deal !D! damage. Swords of knights past, present and future.",
+  "MORGANBERSERKER-BUSTER_MORGAN.title": "Buster",
+  "MORGANBERSERKER-BUSTER_MORGAN.description": "#Command Card: deal !D! damage.",
+  "MORGANBERSERKER-ARTS_MORGAN.title": "Arts",
+  "MORGANBERSERKER-ARTS_MORGAN.description": "#Command Card: deal !D! damage. Gain !NpCharge! *NP *Charge.",
+  "MORGANBERSERKER-QUICK_MORGAN.title": "Quick",
+  "MORGANBERSERKER-QUICK_MORGAN.description": "#Command Card: deal !D! damage. Gain !Stars! *Critical *Stars."
 }

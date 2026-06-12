@@ -10,8 +10,9 @@ namespace MashShielder.MashShielderCode.Cards.Rare;
 /// <summary>
 /// BLACK BARREL — Disparo Pleno. NP card (min 50 charge, consumes ALL): huge Black Barrel shot.
 /// FGO Overcharge: +damage per 10 extra charge; at a full 100 it strips ALL the target's buffs.
+/// Rediseño v2 (AUDITORÍA, economía rápida): PerTen 4 → 3 (up +1 = 4); 35 daño (up +10).
 /// </summary>
-public sealed class BlackBarrelFullBurst() : MashShielderCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+public sealed class BlackBarrelFullBurst() : MashShielderCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IMashNpCard
 {
     public const int ChargeCost = 50;
 
@@ -19,12 +20,12 @@ public sealed class BlackBarrelFullBurst() : MashShielderCard(2, CardType.Attack
     [
         new DamageVar(35m, ValueProp.Move | ValueProp.Unblockable),
         new DynamicVar("ChargeCost", ChargeCost),
-        new DynamicVar("PerTen", 4)
+        new DynamicVar("PerTen", 3)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
-    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost);
+    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost, this);
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 

@@ -1,0 +1,16 @@
+{
+  "ARTORIACASTER-ARTORIA_CASTER.title": "阿尔托莉雅·卡斯特",
+  "ARTORIACASTER-ARTORIA_CASTER.titleObject": "妖精国的预言之子",
+  "ARTORIACASTER-ARTORIA_CASTER.description": "背负着拯救妖精国不列颠之预言的魔术师少女。她以预言之子之姿锻造暴击星、积蓄宝具值守护同伴，再换上夏日狂战士的面孔将星辰兑作毁灭性的暴击——在两副面孔之间起舞，直到圣剑的守护者降临阿瓦隆。",
+  "ARTORIACASTER-ARTORIA_CASTER.pronounObject": "她",
+  "ARTORIACASTER-ARTORIA_CASTER.possessiveAdjective": "她的",
+  "ARTORIACASTER-ARTORIA_CASTER.pronounPossessive": "她的",
+  "ARTORIACASTER-ARTORIA_CASTER.pronounSubject": "她",
+  "ARTORIACASTER-ARTORIA_CASTER.goldMonologue": "哇，金币！旅、旅费有着落了……这次绝对不会再把钱包弄丢了。大概！",
+  "ARTORIACASTER-ARTORIA_CASTER.eventDeathPrevention": "预言还没有完成，希望之星不会在这里陨落——阿尔托莉雅抹掉眼泪，再次站了起来。",
+  "ARTORIACASTER-ARTORIA_CASTER.aromaPrinciple": "闻起来像湖畔的花田与雨后的青草……阿尔托莉雅想起了旅途的起点，悄悄握紧了法杖。",
+  "ARTORIACASTER-ARTORIA_CASTER.cardsModifierTitle": "预言之子的旅途",
+  "ARTORIACASTER-ARTORIA_CASTER.cardsModifierDescription": "使用阿尔托莉雅·卡斯特的卡池进行游戏。",
+  "ARTORIACASTER-ARTORIA_CASTER.banter.alive.endTurnPing": "那、那个……还没轮到我们吗？没关系！再一起想想看吧！",
+  "ARTORIACASTER-ARTORIA_CASTER.banter.dead.endTurnPing": "对不起……明明想成为、大家的希望来着……"
+}
