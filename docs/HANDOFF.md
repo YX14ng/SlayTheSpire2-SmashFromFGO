@@ -87,9 +87,13 @@ Fixes post-playtest (2026-06-11 tarde, feedback del usuario):
 
 PERSONAJES NUEVOS EN CURSO (2026-06-12 madrugada — bloqueados por límite de sesión
 hasta las 4am; TODO resumible):
-- **Estado del roster**: Mash/Morgan/Artoria TERMINADOS y publicados (solo animaciones
-  de Artoria pendientes del export manual). Siegfried/Mordred/Gilgamesh/Okita/Oberon
-  en pipeline.
+- **Estado del roster**: Mash/Morgan/Artoria TERMINADOS y publicados, **Artoria ya
+  con animaciones reales v2** (2026-06-12: las 3 formas renderizadas de 504520/704710/
+  704720 con tools/render_all_artoria.ps1; gotchas nuevos en WORKFLOW-FGO §3 — clips
+  con sufijo `_level_N`, props dentro de la malla weapon ocultados por HUESO
+  [HIDE_BONES], attack_q como único ataque de piso de 704710, piano de hielo del
+  spell de 704720 recortado por ventana [76..96]). Siegfried/Mordred/Gilgamesh/
+  Okita/Oberon en pipeline, PAUSADOS por pedido del usuario.
 - **Siegfried**: diseño GANADOR juzgado ✓ (new_chars/siegfried_design_a.json + verdict),
   scaffold completo en SiegfriedSaber/ + assets visuales hechos (visuals/charui/select
   bg Das Rheingold/bundle 100800). Implementación murió ANTES de escribir código →
@@ -100,13 +104,15 @@ hasta las 4am; TODO resumible):
   wf_7bd87182-9ab. Luego scaffold (clonar patrón SiegfriedSaber) + implementación.
 - **Gilgamesh/Okita/Oberon**: kits+assets+2 diseños c/u guardados en new_chars/ —
   faltan los 3 JUECES → resume del workflow wf_b2ba9974-e42. Luego scaffold+implementación.
-- **EXPORTS DE ANIMACIONES PARA HOY (todos juntos, AssetStudio GUI)** — bundles ya
-  bajados en assets/reference/bundles/, carpetas extracted/<id>_anim/ creadas con texturas:
-  1. 504520 (Artoria regalia/Avalon), 2. 704710 (Artoria Berserker verano),
-  3. 704720 (Artoria diosa radiante), 4. 100800 (Siegfried, modelo único).
-  Mordred/Gil/Okita/Oberon: bajar bundles cuando sus mods estén implementados (ids en
-  new_chars/*_assets.json). Procedimiento: WORKFLOW-FGO.md §3 paso 1 (Animator + TODOS
-  los clips → "Export Animator + selected AnimationClips" → extracted/<id>_anim/).
+- **EXPORTS DE ANIMACIONES**: 504520/704710/704720 (Artoria) HECHOS y renderizados ✓
+  (2026-06-12). FALTA: 100800 (Siegfried, sin FBX en extracted/100800_anim/ — solo
+  textura). Mordred/Gil/Okita/Oberon: bajar bundles cuando sus mods estén implementados
+  (ids en new_chars/*_assets.json). Procedimiento: WORKFLOW-FGO.md §3 paso 1 (Animator
+  + TODOS los clips → "Export Animator + selected AnimationClips" → extracted/<id>_anim/).
+- **PUBLISH PENDIENTE de ArtoriaCaster** (frames v2): el juego estaba abierto al
+  terminar el pipeline. Flujo: publish → tools/patch_webp_imports.ps1 -Dir
+  ArtoriaCaster -SizeLimit 1024 → publish DE NUEVO (los .webp.import nacen en el
+  primer publish). El scale 0.9717 de los .tscn ya asume size_limit 1024.
 
 REDISEÑO v2 DE POOLS (2026-06-11 trasnoche): a pedido del usuario, ambos pools
 rediseñados con los idiomas de JeanneAlter (decompilado en `decompiled/_jeannealter`,

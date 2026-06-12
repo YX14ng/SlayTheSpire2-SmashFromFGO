@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
+[ext_resource type="Script" path="res://ArtoriaCaster/character/artoria_sprite.gd" id="script_1"]
 [ext_resource type="SpriteFrames" path="res://ArtoriaCaster/character/artoria_frames_caster.tres" id="frames_caster"]
 
 [node name="ArtoriaVisuals" type="Control"]
@@ -8,12 +9,13 @@
 unique_name_in_owner = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Visuals"]
-position = Vector2(0, -217)
-scale = Vector2(0.6, 0.6)
+position = Vector2(14.5, -291.9)
+scale = Vector2(0.9717, 0.9717)
 flip_h = true
 sprite_frames = ExtResource("frames_caster")
 animation = &"idle"
 autoplay = "idle"
+script = ExtResource("script_1")
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true

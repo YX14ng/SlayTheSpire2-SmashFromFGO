@@ -24,14 +24,33 @@ const SELECT := {
 	"704020": { "idle": [0, 153, 1], "attack": [48, 68, 1], "cast": [0, 5, 1], "hurt": [0, 16, 1] },
 	"505320": { "idle": [0, 153, 1], "attack": [28, 48, 1], "cast": [0, 7, 1], "hurt": [0, 16, 1] },
 	"704030": { "idle": [0, 153, 1], "attack": [48, 68, 1], "cast": [0, 5, 1], "hurt": [0, 16, 1] },
+	# Artoria: Castoria (504520, clips *_level_3) y las dos formas Berserker de
+	# verano (704710 lv2 / 704720 lv3). attack de 704710 = attack_q (override):
+	# attack_b/attack_a son surfs aereos con root motion salvaje. cast de 704720 =
+	# el final del spell [76..96]: el resto invoca el piano de hielo gigante
+	# (mismo caso que el espejo de Morgan). Idle a step 1 (30fps, regla Morgan).
+	"504520": { "idle": [0, 153, 1], "attack": [28, 68, 1], "cast": [0, 72, 2], "hurt": [0, 16, 1] },
+	"704710": { "idle": [0, 154, 1], "attack": [3, 33, 1], "cast": [0, 74, 2], "hurt": [0, 16, 1] },
+	"704720": { "idle": [0, 154, 1], "attack": [20, 62, 1], "cast": [76, 96, 1], "hurt": [0, 16, 1] },
 }
 const CLIP_FOR := { "idle": "wait", "attack": "attack_b", "cast": "spell", "hurt": "damage_01" }
-# Overrides de clip por modelo (vacio por ahora; attack_ex/attack_a de Aesc
-# invocan la concha negra que llena el canvas).
-const CLIP_OVERRIDE := {}
+# Overrides de clip por modelo: el attack_q de la Berserker de verano es el
+# unico ataque a nivel de piso (lanza las espadas telequineticamente + patada
+# acrobatica); attack_b y attack_a son surfs aereos sobre la espada.
+const CLIP_OVERRIDE := { "704710": { "attack": "attack_q" } }
 # Anims excluidas del union de crop: el attack_b de Aesc lanza fragmentos de corona
 # hasta el borde del canvas; en el save esos fragmentos se recortan y la figura queda.
-const MEASURE_SKIP := { "505320": ["attack"] }
+# El attack_q de 704710 lanza las espadas telequineticas por TODO el canvas
+# (union 2048x2048 = recorte muerto) — mismo tratamiento: las espadas se cortan
+# en el borde del crop durante el ataque, la figura queda intacta.
+const MEASURE_SKIP := { "505320": ["attack"], "704710": ["attack"] }
+# Mallas de props ocultadas por modelo (patrones, match por contiene).
+const HIDE_MESHES := {}
+# Huesos colapsados a escala 0 en cada pose (mismo truco que FACE_POSE): las 4
+# espadas teal del NP de Castoria viven DENTRO de la malla weapon (no se pueden
+# ocultar por nodo) colgadas de joint_weaponA-D; en el juego solo aparecen en el
+# NP (clips treasureArms). joint_sword es el baculo — NO tocarlo.
+const HIDE_BONES := { "504520": ["joint_weaponA", "joint_weaponB", "joint_weaponC", "joint_weaponD"] }
 
 const FACE_POSE := {
 	"joint_open_eye": 1.0, "joint_close_eye": 0.0,
@@ -63,6 +82,12 @@ func _ready() -> void:
 		for anim_name in _player.get_animation_list():
 			var a := _player.get_animation(anim_name)
 			print("CLIP: ", anim_name, " len=", a.length, " frames=", int(a.length * FPS))
+		for child in _model.find_children("*", "MeshInstance3D", true, false):
+			print("MESH: ", child.name)
+		var sk: Skeleton3D = _model.find_child("Skeleton3D", true, false)
+		if sk != null:
+			for b in range(sk.get_bone_count()):
+				print("BONE: ", sk.get_bone_name(b))
 		print("=== DONE ===")
 		get_tree().quit(0)
 		return
@@ -104,7 +129,8 @@ func _debug_snaps() -> void:
 		_player.play(clip)
 		_player.pause()
 		var frames := _selected_frames(anim)
-		var picks := [frames[0], frames[frames.size() / 2], frames[frames.size() - 1]]
+		# Todos los frames de la ventana (el step de SELECT controla la densidad).
+		var picks := frames
 		var anchor_z := INF
 		for i in picks:
 			anchor_z = await _pose_anchored(clip, i, anchor_z)
@@ -235,6 +261,10 @@ func _setup_meshes() -> void:
 		var mi := child as MeshInstance3D
 		var nm := String(mi.name)
 		var show := not nm.begins_with("body") or nm == best_body
+		if HIDE_MESHES.has(_model_id):
+			for pat in HIDE_MESHES[_model_id]:
+				if nm.contains(pat):
+					show = false
 		mi.visible = show
 		if not show:
 			continue
@@ -283,6 +313,14 @@ func _find_animation(clip: String) -> String:
 	for anim_name in _player.get_animation_list():
 		if anim_name == clip or anim_name.ends_with("|" + clip) or anim_name.ends_with("/" + clip):
 			return anim_name
+	# Modelos de verano/Castoria: clips con sufijo de ascension ("wait_level_3").
+	# El prefijo con "_level" evita que "attack_b" agarre "attack_b02_level_3".
+	for anim_name in _player.get_animation_list():
+		if anim_name.begins_with(clip + "_level"):
+			return anim_name
+	for anim_name in _player.get_animation_list():
+		if anim_name.begins_with(clip):
+			return anim_name
 	return clip
 
 func _apply_face_pose() -> void:
@@ -292,3 +330,8 @@ func _apply_face_pose() -> void:
 		var idx := _skeleton.find_bone(joint)
 		if idx >= 0:
 			_skeleton.set_bone_pose_scale(idx, Vector3.ONE * FACE_POSE[joint])
+	if HIDE_BONES.has(_model_id):
+		for joint in HIDE_BONES[_model_id]:
+			var idx := _skeleton.find_bone(joint)
+			if idx >= 0:
+				_skeleton.set_bone_pose_scale(idx, Vector3.ONE * 0.0001)

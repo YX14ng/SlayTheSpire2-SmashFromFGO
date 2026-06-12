@@ -46,9 +46,9 @@ public class ArtoriaCaster : PlaceholderCharacterModel
     ];
 
     /// <summary>
-    /// v1 combat visual: static charagraph per form (one-frame SpriteFrames swapped
-    /// by FGOCore FormVisuals). The animated puppets (504520/704710/704720) come in
-    /// v2 after the manual AssetStudio export — same pipeline as Mash/Morgan.
+    /// v2 combat visual: real animated frames of the three FGO battle models
+    /// (504520 Castoria / 704710 Summer Berserker / 704720 Avalon), rendered with
+    /// tools/render_project and swapped by FGOCore FormVisuals.
     /// </summary>
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/artoria_visuals.tscn";
 

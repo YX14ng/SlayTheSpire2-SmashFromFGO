@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Texture2D" path="res://ArtoriaCaster/character/form_caster.png" id="caster"]
+[ext_resource type="SpriteFrames" path="res://ArtoriaCaster/character/artoria_frames_caster.tres" id="frames_caster"]
 
 [node name="ArtoriaRestSite" type="Node2D"]
 
@@ -13,7 +13,10 @@ offset_top = -462.0
 offset_right = 137.0
 offset_bottom = 0.0
 
-[node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(0, -217)
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("caster")
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(14.5, -291.9)
+scale = Vector2(0.9717, 0.9717)
+flip_h = true
+sprite_frames = ExtResource("frames_caster")
+animation = &"idle"
+autoplay = "idle"
