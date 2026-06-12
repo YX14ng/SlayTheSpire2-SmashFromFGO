@@ -23,6 +23,10 @@ public sealed class QueensMandate() : MorganCard(1, CardType.Skill, CardRarity.B
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<CursePower>()];
 
+    // Glow del rediseño v2 (auditoría de completitud: era la única condicional sin brillo).
+    protected override bool ShouldGlowGoldInternal =>
+        Curses.CursedEnemies(Owner.Creature.CombatState, Owner.Creature) > 0;
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);

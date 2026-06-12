@@ -22,15 +22,17 @@ public class ArtoriaCaster : PlaceholderCharacterModel
     public override CharacterGender Gender => CharacterGender.Feminine;
     public override int StartingHp => 70;
 
+    // Mazo QAABB del rediseño v2 (paridad con Mash/Morgan): la economía completa
+    // desde el turno 1, sesgado a soporte (2 Defender) con las 2 firmas-cambio.
     public override IEnumerable<CardModel> StartingDeck => [
         ModelDb.Card<StrikeArtoria>(),
         ModelDb.Card<StrikeArtoria>(),
-        ModelDb.Card<StrikeArtoria>(),
-        ModelDb.Card<StrikeArtoria>(),
         ModelDb.Card<DefendArtoria>(),
         ModelDb.Card<DefendArtoria>(),
-        ModelDb.Card<DefendArtoria>(),
-        ModelDb.Card<DefendArtoria>(),
+        ModelDb.Card<BusterArtoria>(),
+        ModelDb.Card<ArtsArtoria>(),
+        ModelDb.Card<ArtsArtoria>(),
+        ModelDb.Card<QuickArtoria>(),
         ModelDb.Card<SummerOutburst>(),
         ModelDb.Card<SongOfProphecy>()
     ];

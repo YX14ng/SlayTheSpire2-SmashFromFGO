@@ -24,6 +24,11 @@ public sealed class BlackBarrelBurst() : MashShielderCard(1, CardType.Attack, Ca
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritStarsPower>()];
 
+    // Glow del rediseño v2 (auditoría: su hermana ConceptualRound ya lo tenía).
+    protected override bool ShouldGlowGoldInternal =>
+        Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature)
+            .Any(e => !e.IsDead && e.GetPowerInstances<PowerModel>().Any(p => p.Type == PowerType.Buff));
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);

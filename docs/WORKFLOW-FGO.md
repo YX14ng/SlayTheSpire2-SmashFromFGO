@@ -78,9 +78,34 @@ ID del servant: buscar en https://apps.atlasacademy.io/db (Mash=800100; trajes t
 - Multijugador sincroniza mods por versión: mods chicos y estables = menos fricción.
 - El `id` del manifest es inmutable: no hay vuelta atrás de un mod general.
 
-**FGOCore** (`FGOCore/` en este repo) contiene lo compartido: sistema de Carga NP (eventos `NpCharge.GaugeFilled`/`GaugeDropped` para que cada personaje enganche su ulti; `INpCostWaiver` para "primer NP gratis"), sistema de formas (`FormPower` base con `FramesPath`/`IsPermanent`, `FormSwitch.Enter<T>`, `IFormChangeListener`, `FormVisuals.RegisterFrames` + precarga), retención de Bloqueo (`BulwarkPower` + `BlockRetention` + `IBlockRetentionSource`), sistema de 好感度 (`BondRelic` abstracto con curvas/capstone virtuales + `BondPower`), y las cartas meme incoloras (viven SOLO acá — no copiarlas a mods de personaje). Los iconos de los powers core (NP, Baluarte, vínculo, FormShifted) y el arte de memes viven en el pck de FGOCore; los powers/reliquias del personaje que extienden clases core deben re-overridear las rutas de imagen a su propio mod (ver `MashFormPower`/`MashBond`). Los mods de personaje declaran `"dependencies": ["BaseLib", "FGOCore"]` y referencian `FGOCore.dll` con `Private=false` (el dll lo distribuye solo FGOCore; el loader del juego resuelve por nombre). **Orden de build: FGOCore primero** (Mash referencia el dll publicado en `mods/`). ⚠️ Migrar modelos entre mods cambia su ID (prefijo) — los saves de runs A MEDIO TERMINAR que contengan esas cartas/powers se rompen; terminar la run antes de actualizar.
+**FGOCore** (`FGOCore/` en este repo) contiene lo compartido: sistema de Carga NP (eventos `NpCharge.GaugeFilled`/`GaugeDropped` para que cada personaje enganche su ulti; `INpCostWaiver` para "primer NP gratis" — los waivers EXCLUYEN cartas Event y resuelven a tier mínimo), **Estrellas de Crítico** (`CritStarsPower`: a 100 se auto-pagan y dan 1 `CritReadyPower` = próximo Ataque ×2, un stack por carta), sistema de formas (`FormPower` base con `FramesPath`/`IsPermanent`, `FormSwitch.Enter<T>`, `IFormChangeListener`, `FormVisuals.RegisterFrames` + precarga), retención de Bloqueo (`BulwarkPower` + `BlockRetention` + `IBlockRetentionSource`), Maldición (`CursePower` cap 25 + `Curses` + `ICurseAmplifier`/`ICursePreserver`), Alzarse (`GutsPower` + `IGutsFloorBooster`), dupes/NP level (`INpLevelStore` + `NpLevels.Scale` +15%/nivel + botón Invocar), `OverchargeBlessingPower`, sistema de 好感度 (`BondRelic` abstracto con curvas/capstone virtuales + `BondPower` **+ `ServantDamage/BlockMultiplier` ×1.25 global** — el techo del entorno modded, skill §1.bis), y las cartas meme incoloras (viven SOLO acá — no copiarlas a mods de personaje). ⚠️ **PUBLICAR SIEMPRE JUNTOS**: FGOCore y TODOS los mods de personaje en la misma pasada — las firmas de FGOCore cambian (ej. `NpCharge.CanPay` ganó un parámetro) y un dll de personaje viejo contra un FGOCore nuevo tira `MissingMethodException` en runtime. Los iconos de los powers core (NP, Baluarte, vínculo, FormShifted) y el arte de memes viven en el pck de FGOCore; los powers/reliquias del personaje que extienden clases core deben re-overridear las rutas de imagen a su propio mod (ver `MashFormPower`/`MashBond`). Los mods de personaje declaran `"dependencies": ["BaseLib", "FGOCore"]` y referencian `FGOCore.dll` con `Private=false` (el dll lo distribuye solo FGOCore; el loader del juego resuelve por nombre). **Orden de build: FGOCore primero** (Mash referencia el dll publicado en `mods/`). ⚠️ Migrar modelos entre mods cambia su ID (prefijo) — los saves de runs A MEDIO TERMINAR que contengan esas cartas/powers se rompen; terminar la run antes de actualizar.
 
 Checklist del personaje nuevo: copiar `MashShielder/` como plantilla → cambiar id/nombres → borrar contenido Mash-específico → seguir §2-§4 para assets → mecánicas nuevas sobre las bases de FGOCore.
+
+## 4.6 Diseño de pools (estilo JeanneAlter — estándar desde el rediseño v2, 2026-06-11)
+
+Análisis fuente: `assets/reference/jeanne_anatomy.json` (anatomía del mod JeanneAlter, la
+referencia del usuario) y `pools_audit.json`. Reglas que TODO pool nuevo cumple:
+
+1. **Básicas de comando Buster/Arts/Quick** en cada personaje (1⚡: 10 daño / 6 + 30 NP /
+   6 + 30 estrellas; arte = retrato `card_servant_1.png` de Atlas con 3 bandas de crop).
+   Mazo inicial estilo QAABB sesgado a la identidad (Mash más Defender, Morgan más Buster).
+2. **Conectividad ≥90% en comunes**: cada común lee o escribe ≥1 recurso propio. Las
+   comunes son ENGRANAJES DE CONVERSIÓN, no vanilla-with-numbers. Pares espejo a 0⚡
+   (50 NP ↔ 50 estrellas) garantizan que ningún medidor se estanque.
+3. **Denominaciones fijas** 10/20/30/50/100 (básica=30, gate=50, umbral/payoff=100).
+4. **Starter relic = motor**: convierte eventos universales en recursos del kit
+   (golpe-totalmente-bloqueado→estrellas en Mash; perder-Vida→estrellas en Morgan),
+   SIEMPRE con cap de 3 procs/turno (reset en `AfterSideTurnStart` lado jugador = cubre
+   la ronda entera). Los riders del pool se calibran contra ese flujo garantizado.
+5. **Glow dorado** (`ShouldGlowGoldInternal`) en TODA carta condicional — hace visibles
+   los hilos en la mano.
+6. **Los poderes engordan hilos existentes**, no abren nuevos.
+7. **Pipeline**: diseño por panel (2+ propuestas con lentes distintas + jueces
+   adversariales; los parches del juez MANDAN) → implementación por lotes de rareza →
+   loc sync ("el código manda") → `tools/audit_simpleloc.ps1` → publish conjunto.
+   Sacar una carta del pool sin romper saves: `CardRarity.Event` + comentario (borrar
+   en la versión siguiente).
 
 ## 5. Gotchas de código (LA LISTA QUE DUELE — leer antes de escribir cartas)
 
@@ -91,7 +116,7 @@ Checklist del personaje nuevo: copiar `MashShielder/` como plantilla → cambiar
 | **BOM** | PowerShell 5.1 `Set-Content -Encoding utf8` escribe BOM → Godot no parsea `.tscn`/`.tres` EN RUNTIME ("Parse Error: Expected '['"; el import headless NO lo detecta, el log del juego SÍ). Escribir siempre con `[IO.File]::WriteAllText(..., UTF8Encoding($false))`. |
 | **IDs con mayúsculas seguidas** | El splitter parte `QP`→`Q_P`, `IV`→`I_V`. Nombrar clases `InsufficientQp`, `FouBeastIv`. |
 | **Localización de powers** | Necesitan `description` Y `smartDescription`. Diálogos del Architect van en `ancients.json`. Formato: claves planas con puntos. |
-| **SimpleLoc** | `#texto` activa; `!Var!`=diff; `*Palabra` dorado termina en `[\s*.,|}]` ASCII → **en chino cerrar explícito** `*词*`; `-quitar-+agregar+` al mejorar; UN `(s)` plural por variable y por frase. |
+| **SimpleLoc** | `#texto` activa; `!Var!`=diff; `*Palabra` dorado termina en `[\s*.,|}]` ASCII → **en chino cerrar explícito** `*词*`; `-quitar-+agregar+` al mejorar; UN `(s)` plural por variable y por frase. ⚠️ **ESCAPES OBLIGATORIOS**: un `+`/`-` LITERAL se escribe `/+` `/-` (los PARES se interpretan como upgrade-swap y COMEN texto — bug real del vínculo: `（+2，精英+3）`→`{IfUpgraded...}`); un paréntesis tras `!var!` se escapa `/(` (dispara el pluralize). Correr `tools/audit_simpleloc.ps1` ANTES de cada publish (corre los regex reales del decompilado; los hits de pares de upgrade y `carta(s)` intencionales son la baseline). |
 | **Bloqueo retenido** | El juego elige UN solo preventer de limpieza de Bloqueo → todos los preventers propios deben delegar en un helper de tope compartido (ver `BlockRetention`). |
 | **GDScript** | `var x := DICT[key] + ...` no infiere tipo → tipar explícito. No pipear la corrida del renderer por `Select-Object -First` (mata el proceso a mitad de render). |
 | **PS 5.1 + exes** | stderr de exes + `$ErrorActionPreference=Stop` + redirecciones = aborto espurio. Leer archivos UTF-8 con `-Encoding UTF8`. |
@@ -99,6 +124,9 @@ Checklist del personaje nuevo: copiar `MashShielder/` como plantilla → cambiar
 | **Cartas incoloras** | `[Pool(typeof(ColorlessCardPool))]` sobre una subclase de `CustomCardModel` → aparecen para cualquier personaje. |
 | **VFX inexistente = carta congelada** | `WithHitFx("vfx/...")` con un path que no existe → NRE en `VfxCmd.PlayVfx` → la PlayCardAction aborta y la carta queda flotando en pantalla sin terminar de resolverse. Validar SIEMPRE contra el catálogo real: `grep '"vfx/' decompiled/` (no existe `vfx_attack_pierce`; para perforante usar `vfx_dramatic_stab`). |
 | **Log del juego** | `%APPDATA%\SlayTheSpire2\logs\godot.log` — SIEMPRE el primer lugar para diagnosticar. Si una carta "se cuelga", buscar `completed with exception`. |
+| **PowerShell aplana arrays** | `@(@("a","b"))` con UN solo par interior SE APLANA → `foreach ($pair in ...)` itera strings y `$pair[0]` es el PRIMER CARÁCTER (corrupción real: `额`→`外` ×13). Coma unaria obligatoria: `@(, @("a","b"))`. Y los .ps1 con CJK necesitan BOM para PS 5.1. |
+| **Iconos de ESTADOS** | Powers que son estados del juego original (Maldición, quemadura…) usan `static.atlasacademy.io/JP/BuffIcons/bufficon_XXX.png` (sacarlo de `buffs[].icon` del JSON de un servant que lo aplique; Curse=521, estrellas=320, crit=325), NO SkillIcons — los jugadores de FGO reconocen el estado. |
+| **Agentes y límite de sesión** | Los subagentes pueden morir por session-limit A MITAD de escritura → SIEMPRE inventariar archivos existentes antes de relanzar/reescribir; los workflows se retoman con `resumeFromRunId` (lo completado vuelve de caché). |
 
 ## 6. Patrones de implementación probados (copiar de este repo)
 
