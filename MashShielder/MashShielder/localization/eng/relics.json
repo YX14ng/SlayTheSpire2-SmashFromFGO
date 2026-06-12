@@ -1,9 +1,9 @@
 {
   "MASHSHIELDER-ROUND_TABLE_FRAGMENT.title": "Round Table Fragment",
-  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.description": "#At the end of your turn, retain up to !B! Block.",
+  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.description": "#You begin each combat in *Shielder form. At the end of your turn, retain up to !B! Block. Whenever an enemy hit fails to get through your Block: gain !Stars! *Critical *Stars. Whenever you lose HP: gain !NpCharge! *NP *Charge. Each conversion triggers at most !MaxProcs! times per turn.",
   "MASHSHIELDER-ROUND_TABLE_FRAGMENT.flavor": "A splinter of the great table of Camelot. Even broken, it remembers how to protect.",
   "MASHSHIELDER-LORD_CAMELOT_RESTORED.title": "Lord Camelot (Restored)",
-  "MASHSHIELDER-LORD_CAMELOT_RESTORED.description": "#At the end of your turn, retain up to !B! Block. Replaces the Round Table Fragment's retention.",
+  "MASHSHIELDER-LORD_CAMELOT_RESTORED.description": "#At the end of your turn, retain up to !B! Block. Whenever an enemy hit fails to get through your Block: gain !Stars! *Critical *Stars. Whenever you lose HP: gain !NpCharge! *NP *Charge. Each conversion triggers at most !MaxProcs! times per turn. Replaces the Round Table Fragment's retention and conversions.",
   "MASHSHIELDER-LORD_CAMELOT_RESTORED.flavor": "The Castle of the Distant Utopia, whole once more. The wall that protected humanity's final journey.",
   "MASHSHIELDER-FOU_AMULET.title": "Fou's Amulet",
   "MASHSHIELDER-FOU_AMULET.description": "#Once per combat, the first time you would die: survive at 1 HP.",

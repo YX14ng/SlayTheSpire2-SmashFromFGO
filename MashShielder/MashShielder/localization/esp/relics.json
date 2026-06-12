@@ -1,9 +1,9 @@
 {
   "MASHSHIELDER-ROUND_TABLE_FRAGMENT.title": "Fragmento de la Mesa Redonda",
-  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.description": "#Al final de tu turno, conserva hasta !B! de Bloqueo.",
+  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.description": "#Comienza cada combate en forma *Shielder. Al final de tu turno, conserva hasta !B! de Bloqueo. Cuando un golpe enemigo no atraviese tu Bloqueo: obtén !Stars! *Estrellas *de *Crítico. Cuando pierdas Vida: obtén !NpCharge! de *Carga *NP. Cada conversión: máx. !MaxProcs! veces por turno.",
   "MASHSHIELDER-ROUND_TABLE_FRAGMENT.flavor": "Una astilla de la gran mesa de Camelot. Incluso rota, recuerda cómo proteger.",
   "MASHSHIELDER-LORD_CAMELOT_RESTORED.title": "Lord Camelot (Restaurado)",
-  "MASHSHIELDER-LORD_CAMELOT_RESTORED.description": "#Al final de tu turno, conserva hasta !B! de Bloqueo. Reemplaza la retención del Fragmento de la Mesa Redonda.",
+  "MASHSHIELDER-LORD_CAMELOT_RESTORED.description": "#Comienza cada combate en forma *Shielder. Al final de tu turno, conserva hasta !B! de Bloqueo. Cuando un golpe enemigo no atraviese tu Bloqueo: obtén !Stars! *Estrellas *de *Crítico. Cuando pierdas Vida: obtén !NpCharge! de *Carga *NP. Cada conversión: máx. !MaxProcs! veces por turno. Reemplaza al Fragmento de la Mesa Redonda.",
   "MASHSHIELDER-LORD_CAMELOT_RESTORED.flavor": "El Castillo de la Utopía Lejana, entero una vez más. El muro que protegió el último viaje de la humanidad.",
   "MASHSHIELDER-FOU_AMULET.title": "Amuleto de Fou",
   "MASHSHIELDER-FOU_AMULET.description": "#Una vez por combate, la primera vez que fueras a morir: sobrevive con 1 de Vida.",

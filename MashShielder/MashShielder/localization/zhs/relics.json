@@ -1,9 +1,9 @@
 {
   "MASHSHIELDER-ROUND_TABLE_FRAGMENT.title": "圆桌的碎片",
-  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.description": "#在你的回合结束时，保留至多!B!点格挡。",
+  "MASHSHIELDER-ROUND_TABLE_FRAGMENT.description": "#战斗开始时进入*盾兵*形态。在你的回合结束时，保留至多!B!点格挡。每当敌人的攻击未能击穿你的格挡：获得!Stars!颗*暴击星*。每当你失去生命：获得!NpCharge!点*宝具值*。每种转化每回合至多触发!MaxProcs!次。",
   "MASHSHIELDER-ROUND_TABLE_FRAGMENT.flavor": "卡美洛巨桌的一块碎片。即使破碎，它仍记得如何守护。",
   "MASHSHIELDER-LORD_CAMELOT_RESTORED.title": "罗德·卡美洛（修复）",
-  "MASHSHIELDER-LORD_CAMELOT_RESTORED.description": "#在你的回合结束时，保留至多!B!点格挡。取代圆桌碎片的保留效果。",
+  "MASHSHIELDER-LORD_CAMELOT_RESTORED.description": "#战斗开始时进入*盾兵*形态。在你的回合结束时，保留至多!B!点格挡。每当敌人的攻击未能击穿你的格挡：获得!Stars!颗*暴击星*。每当你失去生命：获得!NpCharge!点*宝具值*。每种转化每回合至多触发!MaxProcs!次。取代圆桌的碎片的效果。",
   "MASHSHIELDER-LORD_CAMELOT_RESTORED.flavor": "遥远理想乡的城堡，再度完整。守护人理最后旅途的壁垒。",
   "MASHSHIELDER-FOU_AMULET.title": "芙芙的护身符",
   "MASHSHIELDER-FOU_AMULET.description": "#每场战斗一次，你第一次将要死亡时：以1点生命存活。",

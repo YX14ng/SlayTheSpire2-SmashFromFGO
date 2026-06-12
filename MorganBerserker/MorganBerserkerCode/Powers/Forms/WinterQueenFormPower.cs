@@ -19,7 +19,9 @@ public sealed class WinterQueenFormPower : MorganFormPower, ICurseAmplifier
 
     public override bool IsPermanent => true;
 
-    public int ExtraCurse => 1;
+    // Hereda el amplificador de la Reina (subio a 2 en el re-balance v3; detectado
+    // desincronizado por el barrido de loc).
+    public int ExtraCurse => 2;
 
     private bool _npThisTurn;
 
