@@ -44,8 +44,15 @@ public sealed class Balmung() : SiegfriedCard(2, CardType.Attack, CardRarity.Rar
     protected override bool ShouldGlowGoldInternal =>
         IsPlayable && Owner.Creature.GetPowerAmount<DragonScalesPower>() >= ScaledThreshold;
 
+    private const int RefundFull = 20;     // refund EX la 1ª carta-NP del turno
+    private const int RefundReduced = 10;  // refund EX si ya resolvió una carta-NP este turno (P5)
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        // P5: capturá si YA resolvió una carta-NP este turno ANTES de consumir (ConsumeAllForNpCard
+        // setea el flag) — el refund EX paga full la 1ª ult del turno, reducido en las siguientes.
+        var alreadyResolved = NpCharge.WasNpResolvedThisTurn(Owner.Creature);
+
         var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
         var scaled = Owner.Creature.GetPowerAmount<DragonScalesPower>() >= ScaledThreshold;
         var perTen = scaled ? OverchargePerTenScaled : OverchargePerTen;
@@ -55,9 +62,14 @@ public sealed class Balmung() : SiegfriedCard(2, CardType.Attack, CardRarity.Rar
         await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
+
+        // Rank-Up A+ → EX (§6): el refund +20 NP es el único rider plano, y SÓLO en la EX.
+        if (IsUpgraded)
+        {
+            await NpCharge.RefundAfterNpCard(Owner.Creature, RefundFull, RefundReduced, alreadyResolved, this);
+        }
     }
 
-    // Rank-Up A+ → EX (§6): la base sube el daño del NP. (El refund +20 + P5 se añaden con la
-    // infraestructura de refund en el chunk siguiente.)
+    // Rank-Up A+ → EX (§6): el up sube el daño del NP y habilita el refund +20 (arriba, en OnPlay).
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(10m);
 }

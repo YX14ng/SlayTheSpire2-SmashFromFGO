@@ -4,5 +4,17 @@
   "SIEGFRIEDSABER-DEFEND.title": "防御",
   "SIEGFRIEDSABER-DEFEND.description": "#获得!B!点格挡。",
   "SIEGFRIEDSABER-BALMUNG.title": "幻想大剑·天魔失坠",
-  "SIEGFRIEDSABER-BALMUNG.description": "#消耗你全部的NP值，至少100。对所有敌人造成!D!点伤害，每超过100的10点NP值再追加1点——当你的龙血护甲达到3或以上时，则改为每10点追加2点。"
+  "SIEGFRIEDSABER-BALMUNG.description": "#消耗你全部的NP值，至少100。对所有敌人造成!D!点伤害，每超过100的10点NP值再追加1点——当你的龙血护甲达到3或以上时，则改为每10点追加2点。",
+  "SIEGFRIEDSABER-EXPOSED_BACK.title": "露背一击",
+  "SIEGFRIEDSABER-EXPOSED_BACK.description": "#造成!D!点伤害。本回合，你的龙血护甲不再减免任何受到的攻击。",
+  "SIEGFRIEDSABER-LINDEN_SCAR.title": "菩提叶之伤痕",
+  "SIEGFRIEDSABER-LINDEN_SCAR.description": "#每当有攻击穿透你的*龙血护甲时，获得1点龙血护甲和!Scar!点*NP值。",
+  "SIEGFRIEDSABER-DRAGONBLOOD_CUT.title": "屠龙之击",
+  "SIEGFRIEDSABER-DRAGONBLOOD_CUT.description": "#造成!D!点伤害。当你的*龙血护甲达到3或以上时，再追加!Bonus!点伤害。获得!Np!点*NP值。",
+  "SIEGFRIEDSABER-BLOOD_BAPTISM.title": "浴血之躯",
+  "SIEGFRIEDSABER-BLOOD_BAPTISM.description": "#获得!B!点格挡、!Scales!点*龙血护甲和!Np!点*NP值。",
+  "SIEGFRIEDSABER-GRANI_STALK.title": "格拉尼的潜行",
+  "SIEGFRIEDSABER-GRANI_STALK.description": "#获得!Stars!颗*暴击星*。",
+  "SIEGFRIEDSABER-GOLDEN_RULE.title": "黄金律",
+  "SIEGFRIEDSABER-GOLDEN_RULE.description": "#本场战斗中你每次获得*NP值时，多获得50%。+并获得1点*力量。+"
 }

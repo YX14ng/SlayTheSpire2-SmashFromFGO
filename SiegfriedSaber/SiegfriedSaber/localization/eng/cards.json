@@ -4,5 +4,17 @@
   "SIEGFRIEDSABER-DEFEND.title": "Defend",
   "SIEGFRIEDSABER-DEFEND.description": "#Gain !B! Block.",
   "SIEGFRIEDSABER-BALMUNG.title": "Balmung: Unleashed",
-  "SIEGFRIEDSABER-BALMUNG.description": "#Consume ALL your NP Charge, at least 100. Deal !D! damage to ALL enemies, plus 1 for every 10 NP Charge above 100 — or 2 instead while your Dragon Scales are 3 or higher."
+  "SIEGFRIEDSABER-BALMUNG.description": "#Consume ALL your NP Charge, at least 100. Deal !D! damage to ALL enemies, plus 1 for every 10 NP Charge above 100 — or 2 instead while your Dragon Scales are 3 or higher.",
+  "SIEGFRIEDSABER-EXPOSED_BACK.title": "Exposed Back",
+  "SIEGFRIEDSABER-EXPOSED_BACK.description": "#Deal !D! damage. This turn, your Dragon Scales reduce NO incoming hits.",
+  "SIEGFRIEDSABER-LINDEN_SCAR.title": "Linden Scar",
+  "SIEGFRIEDSABER-LINDEN_SCAR.description": "#Each time an attack pierces your *Dragon Scales, gain 1 Dragon Scale and !Scar! *NP Charge.",
+  "SIEGFRIEDSABER-DRAGONBLOOD_CUT.title": "Dragon-Slayer Strike",
+  "SIEGFRIEDSABER-DRAGONBLOOD_CUT.description": "#Deal !D! damage. Deal !Bonus! more while your *Dragon Scales are 3 or higher. Gain !Np! *NP Charge.",
+  "SIEGFRIEDSABER-BLOOD_BAPTISM.title": "Blood Baptism",
+  "SIEGFRIEDSABER-BLOOD_BAPTISM.description": "#Gain !B! Block, !Scales! *Dragon Scales, and !Np! *NP Charge.",
+  "SIEGFRIEDSABER-GRANI_STALK.title": "Grani's Stalk",
+  "SIEGFRIEDSABER-GRANI_STALK.description": "#Gain !Stars! *Critical *Stars.",
+  "SIEGFRIEDSABER-GOLDEN_RULE.title": "Golden Rule",
+  "SIEGFRIEDSABER-GOLDEN_RULE.description": "#Whenever you gain *NP Charge this combat, gain 50% more.+ Also gain 1 *Strength.+"
 }

@@ -4,5 +4,17 @@
   "SIEGFRIEDSABER-DEFEND.title": "Defensa",
   "SIEGFRIEDSABER-DEFEND.description": "#Gana !B! de Bloqueo.",
   "SIEGFRIEDSABER-BALMUNG.title": "Balmung: Desatado",
-  "SIEGFRIEDSABER-BALMUNG.description": "#Consume TODA tu Carga NP, mínimo 100. Inflige !D! de daño a TODOS los enemigos, más 1 por cada 10 de Carga NP por encima de 100 — o 2 en su lugar mientras tu Sangre de Dragón sea 3 o más."
+  "SIEGFRIEDSABER-BALMUNG.description": "#Consume TODA tu Carga NP, mínimo 100. Inflige !D! de daño a TODOS los enemigos, más 1 por cada 10 de Carga NP por encima de 100 — o 2 en su lugar mientras tu Sangre de Dragón sea 3 o más.",
+  "SIEGFRIEDSABER-EXPOSED_BACK.title": "Espalda Expuesta",
+  "SIEGFRIEDSABER-EXPOSED_BACK.description": "#Inflige !D! de daño. Este turno, tu Sangre de Dragón NO reduce ningún golpe entrante.",
+  "SIEGFRIEDSABER-LINDEN_SCAR.title": "Cicatriz del Tilo",
+  "SIEGFRIEDSABER-LINDEN_SCAR.description": "#Cada vez que un golpe atraviesa tu *Sangre de Dragón, gana 1 de Sangre de Dragón y !Scar! de *Carga NP.",
+  "SIEGFRIEDSABER-DRAGONBLOOD_CUT.title": "Tajo Cazadragones",
+  "SIEGFRIEDSABER-DRAGONBLOOD_CUT.description": "#Inflige !D! de daño. Inflige !Bonus! más mientras tu *Sangre de Dragón sea 3 o más. Gana !Np! de *Carga NP.",
+  "SIEGFRIEDSABER-BLOOD_BAPTISM.title": "Bautismo de Sangre",
+  "SIEGFRIEDSABER-BLOOD_BAPTISM.description": "#Gana !B! de Bloqueo, !Scales! de *Sangre de Dragón y !Np! de *Carga NP.",
+  "SIEGFRIEDSABER-GRANI_STALK.title": "Acecho de Grani",
+  "SIEGFRIEDSABER-GRANI_STALK.description": "#Obtén !Stars! *Estrellas *de *Crítico.",
+  "SIEGFRIEDSABER-GOLDEN_RULE.title": "Regla de Oro",
+  "SIEGFRIEDSABER-GOLDEN_RULE.description": "#Cada vez que ganes *Carga NP este combate, gana un 50% más.+ Además gana 1 de *Fuerza.+"
 }
