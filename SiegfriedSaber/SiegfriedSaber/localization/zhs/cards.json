@@ -36,5 +36,11 @@
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.title": "期望之重",
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.description": "#在你的回合结束时，若本回合你未打出攻击牌，则获得!NpGain!点*NP值与1点*龙血护甲。每回合最多触发2次。",
   "SIEGFRIEDSABER-LAST_WILL.title": "最后的意志",
-  "SIEGFRIEDSABER-LAST_WILL.description": "#获得!Np!点*NP值。"
+  "SIEGFRIEDSABER-LAST_WILL.description": "#获得!Np!点*NP值。",
+  "SIEGFRIEDSABER-DRAGON_HUNTER_STRIKE.title": "猎手",
+  "SIEGFRIEDSABER-DRAGON_HUNTER_STRIKE.description": "#造成!D!点伤害。当你的*龙血护甲达到!Threshold!或更高时，额外造成!Bonus!点伤害。+本回合获得2点*力量。+",
+  "SIEGFRIEDSABER-FAFNIRS_EXECUTIONER.title": "法夫纳的处刑者",
+  "SIEGFRIEDSABER-FAFNIRS_EXECUTIONER.description": "#造成!D!点伤害。你每拥有4点*龙血护甲，则额外造成1点，至多额外6点。屠龙：对精英或首领额外造成6点。",
+  "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.title": "屠龙之刃",
+  "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.description": "#造成!D!点伤害，每拥有1点*龙血护甲再追加1点（至多!MaxBonus!点）。"
 }

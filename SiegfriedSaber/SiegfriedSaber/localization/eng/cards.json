@@ -36,5 +36,11 @@
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.title": "The Weight of Expectations",
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.description": "#At the end of your turn, if you played no Attacks this turn, gain !NpGain! *NP Charge and 1 *Dragon Scales. Up to 2 triggers per turn.",
   "SIEGFRIEDSABER-LAST_WILL.title": "Last Will",
-  "SIEGFRIEDSABER-LAST_WILL.description": "#Gain !Np! *NP Charge."
+  "SIEGFRIEDSABER-LAST_WILL.description": "#Gain !Np! *NP Charge.",
+  "SIEGFRIEDSABER-DRAGON_HUNTER_STRIKE.title": "Hunter",
+  "SIEGFRIEDSABER-DRAGON_HUNTER_STRIKE.description": "#Deal !D! damage. Deal !Bonus! more while your *Dragon Scales are !Threshold! or higher.+ Gain 2 *Strength this turn.+",
+  "SIEGFRIEDSABER-FAFNIRS_EXECUTIONER.title": "Fafnir's Executioner",
+  "SIEGFRIEDSABER-FAFNIRS_EXECUTIONER.description": "#Deal !D! damage. Deal 1 more for every 4 *Dragon Scales, up to 6 more. Dragon Slayer: deal 6 more to an Elite or Boss.",
+  "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.title": "Dragon Slayer's Edge",
+  "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.description": "#Deal !D! damage, plus 1 for every *Dragon Scales you have (maximum !MaxBonus!)."
 }

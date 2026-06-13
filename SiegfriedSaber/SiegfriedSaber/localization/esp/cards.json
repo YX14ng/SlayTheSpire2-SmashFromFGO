@@ -36,5 +36,11 @@
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.title": "El Peso de las Expectativas",
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.description": "#Al final de tu turno, si no jugaste Ataques este turno, gana !NpGain! de *Carga NP y 1 de *Sangre de Dragón. Hasta 2 activaciones por turno.",
   "SIEGFRIEDSABER-LAST_WILL.title": "Última Voluntad",
-  "SIEGFRIEDSABER-LAST_WILL.description": "#Gana !Np! de *Carga NP."
+  "SIEGFRIEDSABER-LAST_WILL.description": "#Gana !Np! de *Carga NP.",
+  "SIEGFRIEDSABER-DRAGON_HUNTER_STRIKE.title": "Cazador",
+  "SIEGFRIEDSABER-DRAGON_HUNTER_STRIKE.description": "#Inflige !D! de daño. Inflige !Bonus! adicional mientras tu *Sangre de Dragón sea !Threshold! o más.+ Gana 2 de *Fuerza este turno.+",
+  "SIEGFRIEDSABER-FAFNIRS_EXECUTIONER.title": "Verdugo de Fafnir",
+  "SIEGFRIEDSABER-FAFNIRS_EXECUTIONER.description": "#Inflige !D! de daño. Inflige 1 más por cada 4 de *Sangre de Dragón, hasta 6 más. Cazadragones: inflige 6 más a una Élite o un Jefe.",
+  "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.title": "Filo del Cazadragones",
+  "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.description": "#Inflige !D! de daño, más 1 por cada *Sangre de Dragón que tengas (máximo !MaxBonus!)."
 }
