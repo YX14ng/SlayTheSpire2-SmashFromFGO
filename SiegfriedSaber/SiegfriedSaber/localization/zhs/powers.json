@@ -13,5 +13,8 @@
   "SIEGFRIEDSABER-MATURING_SCALES_POWER.smartDescription": "#每回合开始时，获得此数值的龙血护甲。",
   "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.title": "法夫纳的洗礼",
   "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.description": "#当一次攻击穿透你的龙血护甲时，获得此数值的NP值。",
-  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.smartDescription": "#当一次攻击穿透你的龙血护甲时，获得此数值的NP值。"
+  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.smartDescription": "#当一次攻击穿透你的龙血护甲时，获得此数值的NP值。",
+  "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.title": "无双之冠",
+  "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.description": "#每回合第一次穿透你龙血护甲的攻击不造成伤害，并移除你身上1个减益效果。",
+  "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.smartDescription": "#每回合第一次穿透你龙血护甲的攻击不造成伤害，并移除你身上1个减益效果。"
 }

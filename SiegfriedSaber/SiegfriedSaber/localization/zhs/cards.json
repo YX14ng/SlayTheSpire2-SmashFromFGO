@@ -46,5 +46,9 @@
   "SIEGFRIEDSABER-DRAGONBLOOD_ASCENDANT.title": "龙血渐厚",
   "SIEGFRIEDSABER-DRAGONBLOOD_ASCENDANT.description": "#每回合开始时，获得!ScalesPerTurn!点*龙血护甲。打出时，获得!Entry!点*龙血护甲。",
   "SIEGFRIEDSABER-DEAD_DRAGONS_EDGE.title": "亡鳞砺刃",
-  "SIEGFRIEDSABER-DEAD_DRAGONS_EDGE.description": "#消耗。获得!Blessing!层过载祝福。获得!Np!点*NP值。"
+  "SIEGFRIEDSABER-DEAD_DRAGONS_EDGE.description": "#消耗。获得!Blessing!层过载祝福。获得!Np!点*NP值。",
+  "SIEGFRIEDSABER-STRATEGIC_WITHDRAWAL.title": "战略撤退",
+  "SIEGFRIEDSABER-STRATEGIC_WITHDRAWAL.description": "#消耗。获得!B!点*壁垒格挡。移除你自身所有的减益效果。",
+  "SIEGFRIEDSABER-CROWN_OF_THE_PEERLESS.title": "无双之冠",
+  "SIEGFRIEDSABER-CROWN_OF_THE_PEERLESS.description": "#每回合第一次穿透你*龙血护甲的攻击不造成伤害，并移除你身上1个减益。+触发时，获得5点*NP值。+"
 }

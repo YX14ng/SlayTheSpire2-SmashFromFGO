@@ -46,5 +46,9 @@
   "SIEGFRIEDSABER-DRAGONBLOOD_ASCENDANT.title": "Sangre de Dragón Ascendente",
   "SIEGFRIEDSABER-DRAGONBLOOD_ASCENDANT.description": "#Al inicio de cada turno, gana !ScalesPerTurn! de *Sangre de Dragón. Al jugarla, gana !Entry! de *Sangre de Dragón.",
   "SIEGFRIEDSABER-DEAD_DRAGONS_EDGE.title": "Afilado en Escamas Muertas",
-  "SIEGFRIEDSABER-DEAD_DRAGONS_EDGE.description": "#Agotar. Gana !Blessing! de Bendición de Sobrecarga. Gana !Np! de *Carga NP."
+  "SIEGFRIEDSABER-DEAD_DRAGONS_EDGE.description": "#Agotar. Gana !Blessing! de Bendición de Sobrecarga. Gana !Np! de *Carga NP.",
+  "SIEGFRIEDSABER-STRATEGIC_WITHDRAWAL.title": "Retirada Estratégica",
+  "SIEGFRIEDSABER-STRATEGIC_WITHDRAWAL.description": "#Agotar. Gana !B! de Bloqueo *Baluarte. Elimina todos los Debuffs de ti mismo.",
+  "SIEGFRIEDSABER-CROWN_OF_THE_PEERLESS.title": "Corona del Sin Par",
+  "SIEGFRIEDSABER-CROWN_OF_THE_PEERLESS.description": "#El primer ataque que atraviesa tu *Sangre de Dragón cada turno no inflige daño y te elimina 1 Debuff.+ Cuando se activa, gana 5 de *Carga NP.+"
 }

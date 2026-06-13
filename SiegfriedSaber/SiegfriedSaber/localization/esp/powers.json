@@ -13,5 +13,8 @@
   "SIEGFRIEDSABER-MATURING_SCALES_POWER.smartDescription": "#Al inicio de cada turno, gana esta cantidad de Sangre de Dragón.",
   "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.title": "Bautismo de Fafnir",
   "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.description": "#Cuando un ataque atraviesa tu Sangre de Dragón, gana esta cantidad de Carga NP.",
-  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.smartDescription": "#Cuando un ataque atraviesa tu Sangre de Dragón, gana esta cantidad de Carga NP."
+  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.smartDescription": "#Cuando un ataque atraviesa tu Sangre de Dragón, gana esta cantidad de Carga NP.",
+  "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.title": "Corona del Sin Par",
+  "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.description": "#El primer ataque que atraviesa tu Sangre de Dragón cada turno no inflige daño y te elimina 1 Debuff.",
+  "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.smartDescription": "#El primer ataque que atraviesa tu Sangre de Dragón cada turno no inflige daño y te elimina 1 Debuff."
 }
