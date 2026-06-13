@@ -57,6 +57,14 @@ const CLIP_OVERRIDE := {
 const MEASURE_SKIP := { "505320": ["attack"], "704710": ["attack"] }
 # Mallas de props ocultadas por modelo (patrones, match por contiene).
 const HIDE_MESHES := {}
+# Modelos con VARIOS atlas de textura (1 mesh, N superficies, cada una su atlas). Para estos
+# se preserva la textura importada por superficie en vez de pisar todo con un atlas unico; el
+# staging copia los N atlas con su nombre original (<id>_01/_02/_03.png) para que el import resuelva.
+const MULTI_ATLAS := ["9935410"]  # Tiamat Bestia (3 atlas)
+# Factor extra sobre la escala normalizada por cabeza, para modelos GIGANTES (superGiant)
+# cuyo cuerpo desborda el canvas aunque la cabeza quede a tamano normal (la Bestia de Tiamat:
+# alas/colas enormes respecto de la cabeza). <1 achica para que entre toda la figura.
+const SCALE_MULT := { "9935410": 0.42 }
 # Huesos colapsados a escala 0 en cada pose (mismo truco que FACE_POSE): las 4
 # espadas teal del NP de Castoria viven DENTRO de la malla weapon (no se pueden
 # ocultar por nodo) colgadas de joint_weaponA-D; en el juego solo aparecen en el
@@ -90,7 +98,10 @@ func _ready() -> void:
 
 	for f in DirAccess.get_files_at("res://"):
 		if f.ends_with(".png") and not f.begins_with("debug"):
-			_model_id = f.get_basename()
+			# Multi-atlas: los atlas se llaman <id>_01/_02/_03.png — el id del modelo es sin el sufijo.
+			var rx := RegEx.new()
+			rx.compile("_\\d+$")
+			_model_id = rx.sub(f.get_basename(), "")
 			break
 	print("MODEL: ", _model_id, "  PASS: ", PASS)
 
@@ -122,6 +133,14 @@ func _ready() -> void:
 			if m.mesh != null:
 				for bs in range(m.mesh.get_blend_shape_count()):
 					print("BLENDSHAPE: ", m.mesh.get_blend_shape_name(bs))
+				# Volcado de superficie -> material -> textura (para multi-atlas: que superficie usa que atlas).
+				for su in range(m.mesh.get_surface_count()):
+					var mat := m.get_active_material(su)
+					var mname := mat.resource_name if mat != null else "<null>"
+					var tex := ""
+					if mat is BaseMaterial3D and (mat as BaseMaterial3D).albedo_texture != null:
+						tex = (mat as BaseMaterial3D).albedo_texture.resource_path
+					print("  SURFACE ", su, " mat=", mname, " tex=", tex)
 		for sk in _model.find_children("*", "Skeleton3D", true, false):
 			print("SKELETON: ", sk.name, " bones=", (sk as Skeleton3D).get_bone_count())
 			for b in range((sk as Skeleton3D).get_bone_count()):
@@ -138,6 +157,8 @@ func _ready() -> void:
 	_player.seek(0.0, true)
 	var head_raw := _head_position()
 	var s := 15.0 / head_raw.y if head_raw != Vector3.INF and head_raw.y > 0.0001 else 1000.0
+	if SCALE_MULT.has(_model_id):
+		s *= float(SCALE_MULT[_model_id])
 	_model.scale = Vector3.ONE * s
 	print("SCALE: ", s)
 
@@ -353,7 +374,13 @@ func _pose_anchored(clip: String, frame_idx: int, anchor_z: float) -> float:
 	return anchor_z
 
 func _setup_meshes() -> void:
-	var atlas: Texture2D = load("res://" + _model_id + ".png")
+	var multi := _model_id in MULTI_ATLAS
+	# Modelos de 1 textura: atlas unico cargado a mano. En multi-atlas (p.ej. la Bestia de
+	# Tiamat, 3 atlas) cada superficie ya trae su textura resuelta por el import (los N atlas
+	# se stagean con su nombre original) — se preserva por superficie.
+	var atlas: Texture2D = null
+	if not multi and ResourceLoader.exists("res://" + _model_id + ".png"):
+		atlas = load("res://" + _model_id + ".png")
 	var best_body := ""
 	for child in _model.find_children("*", "MeshInstance3D", true, false):
 		var nm := String(child.name)
@@ -370,13 +397,19 @@ func _setup_meshes() -> void:
 		mi.visible = show
 		if not show:
 			continue
-		var mat := StandardMaterial3D.new()
-		mat.albedo_texture = atlas
-		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
-		mat.alpha_scissor_threshold = 0.4
-		mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-		for su in range(mi.get_surface_override_material_count()):
+		var surf_count := mi.mesh.get_surface_count() if mi.mesh != null else mi.get_surface_override_material_count()
+		for su in range(surf_count):
+			var tex := atlas
+			if multi:
+				var src := mi.get_active_material(su)
+				if src is BaseMaterial3D and (src as BaseMaterial3D).albedo_texture != null:
+					tex = (src as BaseMaterial3D).albedo_texture
+			var mat := StandardMaterial3D.new()
+			mat.albedo_texture = tex
+			mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+			mat.alpha_scissor_threshold = 0.4
+			mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 			mi.set_surface_override_material(su, mat)
 
 func _setup_camera() -> void:

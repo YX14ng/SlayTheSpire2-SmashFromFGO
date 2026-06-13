@@ -41,13 +41,17 @@ $forms = @(
 if ($Only) { $forms = @($forms | Where-Object { $_.id -eq $Only }) }
 
 function Stage-Form($f) {
-    Get-ChildItem $rp -Filter "*.png" | Where-Object { $_.Name -match '^\d{6,7}\.png$' } | Remove-Item -Force
+    Get-ChildItem $rp -Filter "*.png" | Where-Object { $_.BaseName -match '^[0-9]' } | ForEach-Object { Remove-Item $_.FullName -Force }
+    Remove-Item "$rp\chr.fbx" -Force -ErrorAction SilentlyContinue
     if (-not (Test-Path "$($f.src)\$($f.fbx)")) {
         Write-Output "  [X] falta $($f.src)\$($f.fbx) — extraer primero con la GUI (ver cabecera del script)"
         return $false
     }
     Copy-Item "$($f.src)\$($f.fbx)" "$rp\chr.fbx" -Force
-    Copy-Item $f.tex "$rp\$($f.id).png" -Force
+    # Copiar TODOS los atlas hermanos del FBX con su nombre original, para que el import resuelva
+    # las texturas por superficie (la Bestia es multi-atlas: 9935410_01/_02/_03.png). El detector
+    # de _model_id en render.gd ignora el sufijo _NN.
+    Get-ChildItem "$($f.src)" -Filter "*.png" | ForEach-Object { Copy-Item $_.FullName "$rp\$($_.Name)" -Force }
     Remove-Item "$rp\.godot" -Recurse -Force -ErrorAction SilentlyContinue
     & $md --headless --path $rp --import 2>&1 | Out-Null
     return $true
