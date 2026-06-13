@@ -7,5 +7,17 @@
   "SIEGFRIEDSABER-DAS_RHEINGOLD.flavor": "巨龙盘踞守护的宝藏。他取走黄金的方式与取走其他一切并无二致——径直走入烈焰之中。",
   "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.title": "法夫纳的心头血",
   "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.description": "#每回合当一次攻击穿透你的龙血护甲（暴露的后背使你失去生命）时，伤口受洗：获得20点NP值。",
-  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.flavor": "他浴于所斩巨龙的心头血中，直至皮肤化为鳞甲。血所及处，龙便回应——连他自身的创伤也磨砺着剑锋。"
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.flavor": "他浴于所斩巨龙的心头血中，直至皮肤化为鳞甲。血所及处，龙便回应——连他自身的创伤也磨砺着剑锋。",
+  "SIEGFRIEDSABER-DRAGON_HEART_SCALE.title": "龙心之鳞",
+  "SIEGFRIEDSABER-DRAGON_HEART_SCALE.description": "#每场战斗开始时，获得1点*龙血护甲。",
+  "SIEGFRIEDSABER-DRAGON_HEART_SCALE.flavor": "他沐浴于龙血之中，所生之鳞今可更厚。",
+  "SIEGFRIEDSABER-DRAGON_SCALE_AEGIS.title": "龙鳞战盾",
+  "SIEGFRIEDSABER-DRAGON_SCALE_AEGIS.description": "#你的回合开始时，保留至多8点格挡。",
+  "SIEGFRIEDSABER-DRAGON_SCALE_AEGIS.flavor": "龙鳞锻成的胸甲，在两击之间不曾凹陷。",
+  "SIEGFRIEDSABER-RHINEGOLD_SHARD.title": "莱茵黄金碎片",
+  "SIEGFRIEDSABER-RHINEGOLD_SHARD.description": "#每场战斗开始时，你的下一张宝具牌获得+20过载。",
+  "SIEGFRIEDSABER-RHINEGOLD_SHARD.flavor": "从恶龙巢穴中夺来的尼伯龙根宝藏的一片。",
+  "SIEGFRIEDSABER-FAFNIRS_BANE.title": "法夫纳之灾",
+  "SIEGFRIEDSABER-FAFNIRS_BANE.description": "#当你的*龙血护甲不低于3时，你的屠龙牌额外造成5点伤害。",
+  "SIEGFRIEDSABER-FAFNIRS_BANE.flavor": "屠龙者亦身流龙血——其锋刃噬同类最深。"
 }

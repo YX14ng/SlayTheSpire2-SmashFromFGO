@@ -7,5 +7,17 @@
   "SIEGFRIEDSABER-DAS_RHEINGOLD.flavor": "The hoard the dragon coiled around. He took the gold the way he took everything — by walking straight into the fire.",
   "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.title": "Fafnir's Heartblood",
   "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.description": "#Each turn, when an attack pierces your Dragon Scales (your exposed back costs you HP), the wound is baptized: gain 20 NP Charge.",
-  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.flavor": "He bathed in the slain dragon's heartblood until his skin was scales. Where the blood reaches, the dragon answers — even his own wounds sharpen the blade."
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.flavor": "He bathed in the slain dragon's heartblood until his skin was scales. Where the blood reaches, the dragon answers — even his own wounds sharpen the blade.",
+  "SIEGFRIEDSABER-DRAGON_HEART_SCALE.title": "Dragon-Heart Scale",
+  "SIEGFRIEDSABER-DRAGON_HEART_SCALE.description": "#At the start of each combat, gain 1 *Dragon Scales.",
+  "SIEGFRIEDSABER-DRAGON_HEART_SCALE.flavor": "He bathed in the dragon's blood; the scales that grew are now his to thicken.",
+  "SIEGFRIEDSABER-DRAGON_SCALE_AEGIS.title": "Dragonscale Aegis",
+  "SIEGFRIEDSABER-DRAGON_SCALE_AEGIS.description": "#At the start of your turn, retain up to 8 Block.",
+  "SIEGFRIEDSABER-DRAGON_SCALE_AEGIS.flavor": "Plate forged from dragonscale does not buckle between blows.",
+  "SIEGFRIEDSABER-RHINEGOLD_SHARD.title": "Rhinegold Shard",
+  "SIEGFRIEDSABER-RHINEGOLD_SHARD.description": "#At the start of each combat, your next NP card gains +20 Overcharge.",
+  "SIEGFRIEDSABER-RHINEGOLD_SHARD.flavor": "A sliver of the cursed Nibelung hoard he won from the worm's hollow.",
+  "SIEGFRIEDSABER-FAFNIRS_BANE.title": "Fafnir's Bane",
+  "SIEGFRIEDSABER-FAFNIRS_BANE.description": "#While your *Dragon Scales are 3 or higher, your Dragon Slayer cards deal 5 more damage.",
+  "SIEGFRIEDSABER-FAFNIRS_BANE.flavor": "The dragon's slayer, dragon-blooded himself — his edge bites deepest into his own kind."
 }

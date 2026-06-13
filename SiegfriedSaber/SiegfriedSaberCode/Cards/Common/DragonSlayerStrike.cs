@@ -11,7 +11,7 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Cards.Common;
 /// por SdD≥3 (condición de estado que puede fallar; §3 paga +20-30%). "Cazadragones" leído como SdD
 /// propio (él ES el dragón, §4), NO trait de enemigo (no existe en vanilla). Sin NP (rol distinto del
 /// Tajo básico DragonbloodCut). El bonus condicional y el umbral no suben con el up (no inflar el techo).</summary>
-public sealed class DragonSlayerStrike() : SiegfriedCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+public sealed class DragonSlayerStrike() : SiegfriedCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IDragonSlayerCard
 {
     private const int ScalesThreshold = 3;
 

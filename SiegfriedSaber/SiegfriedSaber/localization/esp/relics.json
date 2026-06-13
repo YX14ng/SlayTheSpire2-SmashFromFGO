@@ -7,5 +7,17 @@
   "SIEGFRIEDSABER-DAS_RHEINGOLD.flavor": "El tesoro que el dragón abrazaba enroscado. Tomó el oro como tomó todo lo demás: caminando de frente hacia el fuego.",
   "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.title": "Sangre del Corazón de Fafnir",
   "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.description": "#Cada turno, cuando un ataque atraviesa tu Sangre de Dragón (tu espalda expuesta te cuesta HP), la herida es bautizada: gana 20 de Carga NP.",
-  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.flavor": "Se bañó en la sangre del corazón del dragón abatido hasta que su piel fue escama. Donde la sangre llega, el dragón responde — hasta sus propias heridas afilan el filo."
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.flavor": "Se bañó en la sangre del corazón del dragón abatido hasta que su piel fue escama. Donde la sangre llega, el dragón responde — hasta sus propias heridas afilan el filo.",
+  "SIEGFRIEDSABER-DRAGON_HEART_SCALE.title": "Escama del Corazón de Dragón",
+  "SIEGFRIEDSABER-DRAGON_HEART_SCALE.description": "#Al iniciar cada combate, gana 1 de *Sangre de Dragón.",
+  "SIEGFRIEDSABER-DRAGON_HEART_SCALE.flavor": "Se bañó en la sangre del dragón; las escamas que le crecieron ahora puede engrosarlas.",
+  "SIEGFRIEDSABER-DRAGON_SCALE_AEGIS.title": "Égida de Escamas",
+  "SIEGFRIEDSABER-DRAGON_SCALE_AEGIS.description": "#Al iniciar tu turno, conserva hasta 8 de Bloqueo.",
+  "SIEGFRIEDSABER-DRAGON_SCALE_AEGIS.flavor": "El peto forjado de escama de dragón no cede entre golpe y golpe.",
+  "SIEGFRIEDSABER-RHINEGOLD_SHARD.title": "Esquirla del Oro del Rin",
+  "SIEGFRIEDSABER-RHINEGOLD_SHARD.description": "#Al iniciar cada combate, tu próxima carta-NP gana +20 de Sobrecarga.",
+  "SIEGFRIEDSABER-RHINEGOLD_SHARD.flavor": "Una esquirla del maldito tesoro de los Nibelungos, arrancada del antro del dragón.",
+  "SIEGFRIEDSABER-FAFNIRS_BANE.title": "Perdición de Fafnir",
+  "SIEGFRIEDSABER-FAFNIRS_BANE.description": "#Mientras tu *Sangre de Dragón sea 3 o más, tus cartas Cazadragones infligen 5 de daño adicional.",
+  "SIEGFRIEDSABER-FAFNIRS_BANE.flavor": "El matador de dragones, dragón él mismo: su filo muerde más hondo en los de su clase."
 }

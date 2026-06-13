@@ -26,7 +26,7 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Cards.Basic;
 /// la base de 10 a 9. Techo: 12/1⚡ &lt; el ×1.5 de motor / ×1.25 de tasa cruda (SKILL §1.bis: 10×1.25
 /// = 12.5). No es loop AFK: el +NP exige JUGAR la carta y conectar el ataque.
 /// </summary>
-public sealed class DragonbloodCut() : SiegfriedCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+public sealed class DragonbloodCut() : SiegfriedCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IDragonSlayerCard
 {
     private const int ScalesThreshold = 3;  // mismo umbral que afila a Balmung (§4)
     private const int NpGain = 6;           // SKILL §2: ~10 NP ≈ ½⚡; 6 ≈ 0.3⚡ recortado de la base
