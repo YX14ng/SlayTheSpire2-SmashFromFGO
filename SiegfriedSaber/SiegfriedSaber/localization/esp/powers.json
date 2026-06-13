@@ -7,5 +7,8 @@
   "SIEGFRIEDSABER-LINDEN_SCAR_POWER.smartDescription": "#Cada vez que un golpe atraviesa tu Sangre de Dragón, gana 1 de Sangre de Dragón y esta cantidad de Carga NP.",
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.title": "El Peso de las Expectativas",
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.description": "#Al final de tu turno, si no jugaste Ataques, gana Carga NP y 1 de Sangre de Dragón. Hasta 2 activaciones por turno.",
-  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.smartDescription": "#Al final de tu turno, si no jugaste Ataques, gana Carga NP y 1 de Sangre de Dragón. Hasta 2 activaciones por turno."
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.smartDescription": "#Al final de tu turno, si no jugaste Ataques, gana Carga NP y 1 de Sangre de Dragón. Hasta 2 activaciones por turno.",
+  "SIEGFRIEDSABER-MATURING_SCALES_POWER.title": "Escamas que Maduran",
+  "SIEGFRIEDSABER-MATURING_SCALES_POWER.description": "#Al inicio de cada turno, gana esta cantidad de Sangre de Dragón.",
+  "SIEGFRIEDSABER-MATURING_SCALES_POWER.smartDescription": "#Al inicio de cada turno, gana esta cantidad de Sangre de Dragón."
 }

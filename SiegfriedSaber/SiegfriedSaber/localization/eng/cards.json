@@ -42,5 +42,9 @@
   "SIEGFRIEDSABER-FAFNIRS_EXECUTIONER.title": "Fafnir's Executioner",
   "SIEGFRIEDSABER-FAFNIRS_EXECUTIONER.description": "#Deal !D! damage. Deal 1 more for every 4 *Dragon Scales, up to 6 more. Dragon Slayer: deal 6 more to an Elite or Boss.",
   "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.title": "Dragon Slayer's Edge",
-  "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.description": "#Deal !D! damage, plus 1 for every *Dragon Scales you have (maximum !MaxBonus!)."
+  "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.description": "#Deal !D! damage, plus 1 for every *Dragon Scales you have (maximum !MaxBonus!).",
+  "SIEGFRIEDSABER-DRAGONBLOOD_ASCENDANT.title": "Dragonblood Ascendant",
+  "SIEGFRIEDSABER-DRAGONBLOOD_ASCENDANT.description": "#At the start of each turn, gain !ScalesPerTurn! *Dragon Scales. When played, gain !Entry! *Dragon Scales.",
+  "SIEGFRIEDSABER-DEAD_DRAGONS_EDGE.title": "Whetted on Dead Scales",
+  "SIEGFRIEDSABER-DEAD_DRAGONS_EDGE.description": "#Exhaust. Gain !Blessing! Overcharge Blessing. Gain !Np! *NP Charge."
 }

@@ -7,5 +7,8 @@
   "SIEGFRIEDSABER-LINDEN_SCAR_POWER.smartDescription": "#每当有攻击穿透你的龙血护甲时，获得1点龙血护甲和此数值的NP值。",
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.title": "期望之重",
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.description": "#在你的回合结束时，若你未打出攻击牌，则获得NP值与1点龙血护甲。每回合最多触发2次。",
-  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.smartDescription": "#在你的回合结束时，若你未打出攻击牌，则获得NP值与1点龙血护甲。每回合最多触发2次。"
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.smartDescription": "#在你的回合结束时，若你未打出攻击牌，则获得NP值与1点龙血护甲。每回合最多触发2次。",
+  "SIEGFRIEDSABER-MATURING_SCALES_POWER.title": "渐厚之鳞",
+  "SIEGFRIEDSABER-MATURING_SCALES_POWER.description": "#每回合开始时，获得此数值的龙血护甲。",
+  "SIEGFRIEDSABER-MATURING_SCALES_POWER.smartDescription": "#每回合开始时，获得此数值的龙血护甲。"
 }

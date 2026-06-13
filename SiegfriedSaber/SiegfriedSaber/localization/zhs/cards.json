@@ -42,5 +42,9 @@
   "SIEGFRIEDSABER-FAFNIRS_EXECUTIONER.title": "法夫纳的处刑者",
   "SIEGFRIEDSABER-FAFNIRS_EXECUTIONER.description": "#造成!D!点伤害。你每拥有4点*龙血护甲，则额外造成1点，至多额外6点。屠龙：对精英或首领额外造成6点。",
   "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.title": "屠龙之刃",
-  "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.description": "#造成!D!点伤害，每拥有1点*龙血护甲再追加1点（至多!MaxBonus!点）。"
+  "SIEGFRIEDSABER-DRAGON_SLAYERS_EDGE.description": "#造成!D!点伤害，每拥有1点*龙血护甲再追加1点（至多!MaxBonus!点）。",
+  "SIEGFRIEDSABER-DRAGONBLOOD_ASCENDANT.title": "龙血渐厚",
+  "SIEGFRIEDSABER-DRAGONBLOOD_ASCENDANT.description": "#每回合开始时，获得!ScalesPerTurn!点*龙血护甲。打出时，获得!Entry!点*龙血护甲。",
+  "SIEGFRIEDSABER-DEAD_DRAGONS_EDGE.title": "亡鳞砺刃",
+  "SIEGFRIEDSABER-DEAD_DRAGONS_EDGE.description": "#消耗。获得!Blessing!层过载祝福。获得!Np!点*NP值。"
 }
