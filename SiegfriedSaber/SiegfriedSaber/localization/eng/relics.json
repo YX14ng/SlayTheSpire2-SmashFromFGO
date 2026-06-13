@@ -1,5 +1,11 @@
 {
   "SIEGFRIEDSABER-LINDEN_LEAF.title": "Linden Leaf",
   "SIEGFRIEDSABER-LINDEN_LEAF.description": "#At the start of each combat, gain 2 Dragon Scales. The first attack that reaches you each turn ignores them. When a reduced attack still deals 1 or more damage, gain 5 NP Charge (up to 3 times per turn).",
-  "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "A single leaf clung to his back as he bathed in the dragon's blood. One palm of skin the blood never touched — and a hero's only death."
+  "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "A single leaf clung to his back as he bathed in the dragon's blood. One palm of skin the blood never touched — and a hero's only death.",
+  "SIEGFRIEDSABER-DAS_RHEINGOLD.title": "Das Rheingold",
+  "SIEGFRIEDSABER-DAS_RHEINGOLD.description": "#The first NP card you play each turn: gain 20 Critical Stars and draw 1.",
+  "SIEGFRIEDSABER-DAS_RHEINGOLD.flavor": "The hoard the dragon coiled around. He took the gold the way he took everything — by walking straight into the fire.",
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.title": "Fafnir's Heartblood",
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.description": "#Each turn, when an attack pierces your Dragon Scales (your exposed back costs you HP), the wound is baptized: gain 20 NP Charge.",
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.flavor": "He bathed in the slain dragon's heartblood until his skin was scales. Where the blood reaches, the dragon answers — even his own wounds sharpen the blade."
 }

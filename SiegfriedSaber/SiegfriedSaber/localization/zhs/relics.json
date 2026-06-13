@@ -1,5 +1,11 @@
 {
   "SIEGFRIEDSABER-LINDEN_LEAF.title": "菩提叶",
   "SIEGFRIEDSABER-LINDEN_LEAF.description": "#每场战斗开始时，获得2点龙血护甲。每回合第一次击中你的攻击无视龙血护甲。当被削减的攻击仍造成至少1点伤害时，获得5点NP值（每回合至多3次）。",
-  "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "他浴于龙血之时，一片菩提叶贴在了背上。一掌之地的皮肤未被龙血浸染——也是英雄唯一的死穴。"
+  "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "他浴于龙血之时，一片菩提叶贴在了背上。一掌之地的皮肤未被龙血浸染——也是英雄唯一的死穴。",
+  "SIEGFRIEDSABER-DAS_RHEINGOLD.title": "莱茵的黄金",
+  "SIEGFRIEDSABER-DAS_RHEINGOLD.description": "#每回合你打出的第一张宝具牌：获得20颗暴击星，并抽1张牌。",
+  "SIEGFRIEDSABER-DAS_RHEINGOLD.flavor": "巨龙盘踞守护的宝藏。他取走黄金的方式与取走其他一切并无二致——径直走入烈焰之中。",
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.title": "法夫纳的心头血",
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.description": "#每回合当一次攻击穿透你的龙血护甲（暴露的后背使你失去生命）时，伤口受洗：获得20点NP值。",
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.flavor": "他浴于所斩巨龙的心头血中，直至皮肤化为鳞甲。血所及处，龙便回应——连他自身的创伤也磨砺着剑锋。"
 }

@@ -10,5 +10,8 @@
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.smartDescription": "#在你的回合结束时，若你未打出攻击牌，则获得NP值与1点龙血护甲。每回合最多触发2次。",
   "SIEGFRIEDSABER-MATURING_SCALES_POWER.title": "渐厚之鳞",
   "SIEGFRIEDSABER-MATURING_SCALES_POWER.description": "#每回合开始时，获得此数值的龙血护甲。",
-  "SIEGFRIEDSABER-MATURING_SCALES_POWER.smartDescription": "#每回合开始时，获得此数值的龙血护甲。"
+  "SIEGFRIEDSABER-MATURING_SCALES_POWER.smartDescription": "#每回合开始时，获得此数值的龙血护甲。",
+  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.title": "法夫纳的洗礼",
+  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.description": "#当一次攻击穿透你的龙血护甲时，获得此数值的NP值。",
+  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.smartDescription": "#当一次攻击穿透你的龙血护甲时，获得此数值的NP值。"
 }

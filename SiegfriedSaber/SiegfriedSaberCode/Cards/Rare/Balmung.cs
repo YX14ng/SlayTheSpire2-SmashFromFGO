@@ -18,7 +18,7 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Cards.Rare;
 /// El refund +20 NP NO se hornea en la base: se gana con el Rank-Up (A+ → EX, §6) junto con el
 /// flag anti-doble-refund (P5). Esta es la base (sin refund).
 /// </summary>
-public sealed class Balmung() : SiegfriedCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
+public sealed class Balmung() : SiegfriedCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), ISiegfriedNpCard
 {
     // Mínimo = la manifestación a 100 (NP a full, fiel a FGO).
     public const int ChargeCost = 100;

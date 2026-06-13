@@ -10,5 +10,8 @@
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.smartDescription": "#Al final de tu turno, si no jugaste Ataques, gana Carga NP y 1 de Sangre de Dragón. Hasta 2 activaciones por turno.",
   "SIEGFRIEDSABER-MATURING_SCALES_POWER.title": "Escamas que Maduran",
   "SIEGFRIEDSABER-MATURING_SCALES_POWER.description": "#Al inicio de cada turno, gana esta cantidad de Sangre de Dragón.",
-  "SIEGFRIEDSABER-MATURING_SCALES_POWER.smartDescription": "#Al inicio de cada turno, gana esta cantidad de Sangre de Dragón."
+  "SIEGFRIEDSABER-MATURING_SCALES_POWER.smartDescription": "#Al inicio de cada turno, gana esta cantidad de Sangre de Dragón.",
+  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.title": "Bautismo de Fafnir",
+  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.description": "#Cuando un ataque atraviesa tu Sangre de Dragón, gana esta cantidad de Carga NP.",
+  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.smartDescription": "#Cuando un ataque atraviesa tu Sangre de Dragón, gana esta cantidad de Carga NP."
 }

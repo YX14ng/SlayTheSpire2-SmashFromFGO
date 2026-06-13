@@ -10,5 +10,8 @@
   "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.smartDescription": "#At the end of your turn, if you played no Attacks, gain NP Charge and 1 Dragon Scale. Up to 2 triggers per turn.",
   "SIEGFRIEDSABER-MATURING_SCALES_POWER.title": "Maturing Scales",
   "SIEGFRIEDSABER-MATURING_SCALES_POWER.description": "#At the start of each turn, gain this many Dragon Scales.",
-  "SIEGFRIEDSABER-MATURING_SCALES_POWER.smartDescription": "#At the start of each turn, gain this many Dragon Scales."
+  "SIEGFRIEDSABER-MATURING_SCALES_POWER.smartDescription": "#At the start of each turn, gain this many Dragon Scales.",
+  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.title": "Baptism of Fafnir",
+  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.description": "#When an attack pierces your Dragon Scales, gain this much NP Charge.",
+  "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.smartDescription": "#When an attack pierces your Dragon Scales, gain this much NP Charge."
 }

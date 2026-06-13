@@ -1,5 +1,11 @@
 {
   "SIEGFRIEDSABER-LINDEN_LEAF.title": "La Hoja de Tilo",
   "SIEGFRIEDSABER-LINDEN_LEAF.description": "#Al inicio de cada combate, gana 2 de Sangre de Dragón. El primer ataque que te alcanza cada turno la ignora. Cuando un ataque reducido aún inflige 1 o más de daño, gana 5 de Carga NP (hasta 3 veces por turno).",
-  "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "Una sola hoja se pegó a su espalda mientras se bañaba en la sangre del dragón. Una palma de piel que la sangre nunca tocó — y la única muerte de un héroe."
+  "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "Una sola hoja se pegó a su espalda mientras se bañaba en la sangre del dragón. Una palma de piel que la sangre nunca tocó — y la única muerte de un héroe.",
+  "SIEGFRIEDSABER-DAS_RHEINGOLD.title": "El Oro del Rin",
+  "SIEGFRIEDSABER-DAS_RHEINGOLD.description": "#La primera carta NP que juegues cada turno: gana 20 Estrellas de Crítico y roba 1.",
+  "SIEGFRIEDSABER-DAS_RHEINGOLD.flavor": "El tesoro que el dragón abrazaba enroscado. Tomó el oro como tomó todo lo demás: caminando de frente hacia el fuego.",
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.title": "Sangre del Corazón de Fafnir",
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.description": "#Cada turno, cuando un ataque atraviesa tu Sangre de Dragón (tu espalda expuesta te cuesta HP), la herida es bautizada: gana 20 de Carga NP.",
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.flavor": "Se bañó en la sangre del corazón del dragón abatido hasta que su piel fue escama. Donde la sangre llega, el dragón responde — hasta sus propias heridas afilan el filo."
 }
