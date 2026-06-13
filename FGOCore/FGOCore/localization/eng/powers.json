@@ -31,5 +31,8 @@
   "FGOCORE-LAHMU_SWARM_POWER.smartDescription": "#Tiamat's brood, max 6. At the start of the enemy turn, each Laḫmu grants 2 Block and bites the most-cursed enemy for 1, both raised by Nurture.",
   "FGOCORE-LAHMU_NURTURE_POWER.title": "Nurture",
   "FGOCORE-LAHMU_NURTURE_POWER.description": "#Global brood nurturing. Each point raises the Block and bite of every Laḫmu by 1.",
-  "FGOCORE-LAHMU_NURTURE_POWER.smartDescription": "#Global brood nurturing. Each point raises the Block and bite of every Laḫmu by 1."
+  "FGOCORE-LAHMU_NURTURE_POWER.smartDescription": "#Global brood nurturing. Each point raises the Block and bite of every Laḫmu by 1.",
+  "FGOCORE-DRAGON_SCALES_POWER.title": "Dragonblood",
+  "FGOCORE-DRAGON_SCALES_POWER.description": "#Reduce each incoming attack by this amount, after Block. These are your scales: not Block, never spent, and they persist between turns.",
+  "FGOCORE-DRAGON_SCALES_POWER.smartDescription": "#Reduce each incoming attack by this amount, after Block. These are your scales: not Block, never spent, and they persist between turns."
 }

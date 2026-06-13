@@ -31,5 +31,8 @@
   "FGOCORE-LAHMU_SWARM_POWER.smartDescription": "#蒂亚马特的子嗣，最多6只。在敌方回合开始时，每只拉夫姆提供2点格挡，并对诅咒最高的敌人造成1点啃咬伤害，两者均随养育提升。",
   "FGOCORE-LAHMU_NURTURE_POWER.title": "养育",
   "FGOCORE-LAHMU_NURTURE_POWER.description": "#群体的全局养育。每点使每只拉夫姆的格挡与啃咬各提升1。",
-  "FGOCORE-LAHMU_NURTURE_POWER.smartDescription": "#群体的全局养育。每点使每只拉夫姆的格挡与啃咬各提升1。"
+  "FGOCORE-LAHMU_NURTURE_POWER.smartDescription": "#群体的全局养育。每点使每只拉夫姆的格挡与啃咬各提升1。",
+  "FGOCORE-DRAGON_SCALES_POWER.title": "龙血护甲",
+  "FGOCORE-DRAGON_SCALES_POWER.description": "#减少每次受到的攻击伤害（在格挡之后结算），减少量等于此值。这是你的龙鳞——并非格挡，不会消耗，且回合之间持续存在。",
+  "FGOCORE-DRAGON_SCALES_POWER.smartDescription": "#减少每次受到的攻击伤害（在格挡之后结算），减少量等于此值。这是你的龙鳞——并非格挡，不会消耗，且回合之间持续存在。"
 }
