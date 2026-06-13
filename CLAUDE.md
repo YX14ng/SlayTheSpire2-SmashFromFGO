@@ -17,6 +17,8 @@ A custom character mod for **Slay the Spire 2** (Early Access, Godot 4 / C#). Th
 
 The user communicates in Spanish — respond in Spanish. Card/mechanic names in the design are Spanish with English localization planned.
 
+**Lore de personajes (regla):** investigá siempre en fuentes **japonesas Y chino simplificado a la vez** (Wikipedia日本語/TYPE-MOON Wiki + Mooncell `fgo.wiki`/Moegirl) para corroborar; el **japonés es la línea base** de diseño y traducción. Las frases/voces se escriben **ORIGINALES** (no transcripciones del juego); el JP queda en [docs/VOICE-LINES.md](docs/VOICE-LINES.md). Detalle en WORKFLOW-FGO §2.
+
 ## Key facts
 
 - StS2 runs on **MegaDot** (Mega Crit's Godot 4 fork, https://megadot.megacrit.com/) with game logic in C#. Mods are distributed as `<Id>.json` (manifest) + `<Id>.dll` (code) + `<Id>.pck` (assets) in the game's `mods/` folder.

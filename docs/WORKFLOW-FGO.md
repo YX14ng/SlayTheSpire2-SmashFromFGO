@@ -41,6 +41,15 @@ ID del servant: buscar en https://apps.atlasacademy.io/db (Mash=800100; trajes t
 
 ⚠️ La API rate-limitea: `Start-Sleep -Milliseconds 800` entre requests en loops.
 
+**Regla de LORE (obligatoria):** al investigar el lore/voz/kit de un personaje, buscá en fuentes
+**japonesas Y chino simplificado a la vez para corroborar** (no una sola): JP = Wikipedia日本語,
+TYPE-MOON Wiki/typemoon.wiki, ニコニコ大百科, pixiv百科, 円谷プロ (tokusatsu); 中文 = Mooncell `fgo.wiki`,
+Moegirl `mzh.moegirl.org.cn`, Baidu百科, zh.wikipedia. El **japonés es la línea base** del que derivan
+diseño y traducciones. Las **frases/voces se escriben ORIGINALES** (inspiradas en la personalidad
+canónica, NO transcripciones del juego). Patrón reutilizable: el workflow por-personaje de
+`fgo-voice-redesign` (1 agente JP+中文 por personaje → frases en JP/ES/EN/中文). El japonés se registra
+en `docs/VOICE-LINES.md`.
+
 **Descargar bundles**: `tools/fetch_fgo_bundle.ps1 -Ids <id>[,<id>...] [-Texture]` → baja a
 `assets/reference/bundles/<id>.bundle`, verifica el magic `UnityFS` y rate-limitea (las bundles
 están **gitignoradas** — son binarios descargables on-demand). Para hallar/verificar IDs:
