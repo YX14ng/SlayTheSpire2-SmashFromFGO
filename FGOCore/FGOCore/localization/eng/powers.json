@@ -21,9 +21,15 @@
   "FGOCORE-OVERCHARGE_BLESSING_POWER.description": "#Your next NP card adds +10 per stack to its Overcharge.",
   "FGOCORE-OVERCHARGE_BLESSING_POWER.smartDescription": "#Your next NP card adds +10 per stack to its Overcharge.",
   "FGOCORE-CRIT_STARS_POWER.title": "Critical Stars",
-  "FGOCORE-CRIT_STARS_POWER.description": "#Critical star gauge. At 100: 100 stars are spent automatically and you gain 1 Critical Ready.",
-  "FGOCORE-CRIT_STARS_POWER.smartDescription": "#Critical star gauge. At 100: 100 stars are spent automatically and you gain 1 Critical Ready.",
+  "FGOCORE-CRIT_STARS_POWER.description": "#Critical star gauge. By default, at 100 it auto-spends 100 stars for 1 Critical Ready; some characters bank stars to spend manually.",
+  "FGOCORE-CRIT_STARS_POWER.smartDescription": "#Critical star gauge. By default, at 100 it auto-spends 100 stars for 1 Critical Ready; some characters bank stars to spend manually.",
   "FGOCORE-CRIT_READY_POWER.title": "Critical Ready",
   "FGOCORE-CRIT_READY_POWER.description": "#Your next Attack deals double damage.",
-  "FGOCORE-CRIT_READY_POWER.smartDescription": "#Your next Attack deals double damage."
+  "FGOCORE-CRIT_READY_POWER.smartDescription": "#Your next Attack deals double damage.",
+  "FGOCORE-LAHMU_SWARM_POWER.title": "Laḫmu Swarm",
+  "FGOCORE-LAHMU_SWARM_POWER.description": "#Tiamat's brood, max 6. At the start of the enemy turn, each Laḫmu grants 2 Block and bites the most-cursed enemy for 1, both raised by Nurture.",
+  "FGOCORE-LAHMU_SWARM_POWER.smartDescription": "#Tiamat's brood, max 6. At the start of the enemy turn, each Laḫmu grants 2 Block and bites the most-cursed enemy for 1, both raised by Nurture.",
+  "FGOCORE-LAHMU_NURTURE_POWER.title": "Nurture",
+  "FGOCORE-LAHMU_NURTURE_POWER.description": "#Global brood nurturing. Each point raises the Block and bite of every Laḫmu by 1.",
+  "FGOCORE-LAHMU_NURTURE_POWER.smartDescription": "#Global brood nurturing. Each point raises the Block and bite of every Laḫmu by 1."
 }
