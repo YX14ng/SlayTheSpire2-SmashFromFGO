@@ -16,5 +16,7 @@
   "TIAMAT-ELEVEN_BEL_LAHMU.title": "Once Bel Laḫmu",
   "TIAMAT-ELEVEN_BEL_LAHMU.description": "#Parí hasta !Lahmu! Laḫmu. Obtén Crianza igual a tus Laḫmu en campo. Obtén !NpCharge! de Carga NP.",
   "TIAMAT-BROKEN_HORN.title": "Cuerno Roto",
-  "TIAMAT-BROKEN_HORN.description": "#Devorá TODOS tus Laḫmu. Por cada uno devorado, inflige !PerHorn! de daño a TODOS los enemigos, aumentado en !PerNurture! por Crianza. Obtén !NpPerLahmu! de Carga NP por Laḫmu."
+  "TIAMAT-BROKEN_HORN.description": "#Devorá TODOS tus Laḫmu. Por cada uno devorado, inflige !PerHorn! de daño a TODOS los enemigos, aumentado en !PerNurture! por Crianza. Obtén !NpPerLahmu! de Carga NP por Laḫmu.",
+  "TIAMAT-ENUMA_ELIS.title": "Enūma Eliš",
+  "TIAMAT-ENUMA_ELIS.description": "#Jugable con !ChargeCost! de Carga NP. Consume TODA la Carga NP, reabastece tus Laḫmu y luego inflige !D! de daño a TODOS más !PerLahmu! por Laḫmu, aumentado en !PerNurture! por Crianza y !PerTen! por cada 10 de Carga sobre !ChargeCost!."
 }

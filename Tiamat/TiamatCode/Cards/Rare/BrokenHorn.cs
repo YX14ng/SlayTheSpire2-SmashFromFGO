@@ -31,6 +31,7 @@ public sealed class BrokenHorn() : TiamatCard(0, CardType.Attack, CardRarity.Rar
         if (eaten <= 0) return;
 
         var dmg = eaten * (DynamicVars["PerHorn"].IntValue + DynamicVars["PerNurture"].IntValue * nurture);
+        dmg = dmg * Lahmu.DevourBonusMultiplierPct(Owner.Creature) / 100; // forma Bestia: Devorar +50%
         foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).ToList())
         {
             if (enemy.IsDead) continue;

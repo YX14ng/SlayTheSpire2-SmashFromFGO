@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace FGOCore.FGOCoreCode.Lahmu;
@@ -46,10 +47,14 @@ public sealed class LahmuSwarmPower : FGOCorePower
 
         await CreatureCmd.GainBlock(Owner, Amount * (BlockPerLahmu + nurture), ValueProp.Unpowered, null);
 
-        var target = CursesHelper.MostCursed(combatState, Owner)
-                     ?? combatState.GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
-        if (target != null && !target.IsDead)
+        // La forma Bestia muerde DOS veces (ISwarmBiteAmplifier.ExtraBites=1). Se re-resuelve el
+        // objetivo en cada mordida porque el más maldito puede morir entre golpes.
+        var bites = 1 + Owner.GetPowerInstances<PowerModel>().OfType<ISwarmBiteAmplifier>().Sum(a => a.ExtraBites);
+        for (var i = 0; i < bites; i++)
         {
+            var target = CursesHelper.MostCursed(combatState, Owner)
+                         ?? combatState.GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
+            if (target == null || target.IsDead) break;
             await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), target,
                 Amount * (BitePerLahmu + nurture), ValueProp.Unpowered, Owner, null);
         }

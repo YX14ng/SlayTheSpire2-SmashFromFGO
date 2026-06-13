@@ -25,6 +25,7 @@ public sealed class Mitosis() : TiamatCard(1, CardType.Attack, CardRarity.Uncomm
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await Lahmu.Devour(Owner.Creature, 1);
         var dmg = DynamicVars.Damage.BaseValue + DynamicVars["PerNurture"].IntValue * Lahmu.NurtureOf(Owner.Creature);
+        dmg = dmg * Lahmu.DevourBonusMultiplierPct(Owner.Creature) / 100m; // forma Bestia: Devorar +50%
         await DamageCmd.Attack(dmg).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);

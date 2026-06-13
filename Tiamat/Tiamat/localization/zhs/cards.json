@@ -16,5 +16,7 @@
   "TIAMAT-ELEVEN_BEL_LAHMU.title": "十一贝尔·拉夫姆",
   "TIAMAT-ELEVEN_BEL_LAHMU.description": "#孕育至多!Lahmu!只拉夫姆。获得等同于你场上拉夫姆数量的养育。获得!NpCharge!点宝具值。",
   "TIAMAT-BROKEN_HORN.title": "断折之角",
-  "TIAMAT-BROKEN_HORN.description": "#吞噬你所有的拉夫姆。每吞噬一只，对所有敌人造成!PerHorn!点伤害，每点养育额外增加!PerNurture!点。每吞噬一只拉夫姆获得!NpPerLahmu!点宝具值。"
+  "TIAMAT-BROKEN_HORN.description": "#吞噬你所有的拉夫姆。每吞噬一只，对所有敌人造成!PerHorn!点伤害，每点养育额外增加!PerNurture!点。每吞噬一只拉夫姆获得!NpPerLahmu!点宝具值。",
+  "TIAMAT-ENUMA_ELIS.title": "Enūma Eliš",
+  "TIAMAT-ENUMA_ELIS.description": "#需要!ChargeCost!点宝具值可用。消耗全部宝具值，补满你的拉夫姆，然后对所有敌人造成!D!点伤害，外加每只拉夫姆!PerLahmu!点，每点养育增加!PerNurture!点，每超出!ChargeCost!的10点宝具值增加!PerTen!点。"
 }

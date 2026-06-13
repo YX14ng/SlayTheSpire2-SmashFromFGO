@@ -1,5 +1,7 @@
+using System.Linq;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 
 namespace FGOCore.FGOCoreCode.Lahmu;
@@ -47,6 +49,23 @@ public static class Lahmu
         {
             await PowerCmd.ModifyAmount(power, -eaten, creature, null);
         }
+        // Avisar a las reliquias que escuchan el devorar (p.ej. Lágrimas de la Madre cura).
+        // Se hace tras consumir las larvas para que reflejen el estado ya actualizado.
+        if (eaten > 0 && creature.Player?.Relics is { } relics)
+        {
+            foreach (var relic in relics)
+            {
+                if (relic is ILahmuDevourListener listener)
+                {
+                    await listener.OnLahmuDevoured(creature, eaten);
+                }
+            }
+        }
         return eaten;
     }
+
+    /// <summary>150 si la dueña tiene un <see cref="IDevourAmplifier"/> (forma Bestia: Devorar
+    /// +50%), si no 100. Las cartas que devoran multiplican su daño por este valor / 100.</summary>
+    public static int DevourBonusMultiplierPct(Creature creature) =>
+        creature.GetPowerInstances<PowerModel>().OfType<IDevourAmplifier>().Any() ? 150 : 100;
 }

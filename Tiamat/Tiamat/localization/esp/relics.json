@@ -1,5 +1,11 @@
 {
   "TIAMAT-SEA_OF_LIFE_WOMB.title": "Útero del Mar de Vida",
   "TIAMAT-SEA_OF_LIFE_WOMB.description": "#Al inicio de cada combate, entrás en forma Femme Fatale y parís 1 Laḫmu.",
-  "TIAMAT-SEA_OF_LIFE_WOMB.flavor": "Del útero descartado de la Génesis, la vida aún brota: infinita, no pedida, y suya."
+  "TIAMAT-SEA_OF_LIFE_WOMB.flavor": "Del útero descartado de la Génesis, la vida aún brota: infinita, no pedida, y suya.",
+  "TIAMAT-MOTHERS_TEARS.title": "Lágrimas de la Madre",
+  "TIAMAT-MOTHERS_TEARS.description": "#Cada vez que Devorás Laḫmu, curás 2 HP por cada Laḫmu devorado.",
+  "TIAMAT-MOTHERS_TEARS.flavor": "Llora por cada hijo que consume, y esa pena es lo que la mantiene en pie.",
+  "TIAMAT-KING_HASSANS_HORN.title": "Cuerno de King Hassan",
+  "TIAMAT-KING_HASSANS_HORN.description": "#Al inicio del combate, ganás Agallas: la primera vez que caerías, revivís a 1 HP y parís 3 Laḫmu.",
+  "TIAMAT-KING_HASSANS_HORN.flavor": "Solo otorgándole la muerte se la vence, así que ella le responde a la muerte con más hijos."
 }
