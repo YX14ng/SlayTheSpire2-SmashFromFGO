@@ -58,8 +58,10 @@ public class Siegfried : PlaceholderCharacterModel
         }
     }
 
-    public override string CustomIconTexturePath => "char_icon.png".CharacterUiPath();
-    public override string CustomCharacterSelectIconPath => "char_select.png".CharacterUiPath();
-    public override string CustomCharacterSelectLockedIconPath => "char_select_locked.png".CharacterUiPath();
-    public override string CustomMapMarkerPath => "map_marker.png".CharacterUiPath();
+    // NOTA: usan los placeholders del scaffold (sufijo _char_name) hasta el pase de arte real (render
+    // del modelo 100800 + charagraph). Renombrar a char_icon/char_select/... cuando llegue el arte.
+    public override string CustomIconTexturePath => "character_icon_char_name.png".CharacterUiPath();
+    public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
+    public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
+    public override string CustomMapMarkerPath => "map_marker_char_name.png".CharacterUiPath();
 }
