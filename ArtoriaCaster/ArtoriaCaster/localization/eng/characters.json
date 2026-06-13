@@ -6,11 +6,11 @@
   "ARTORIACASTER-ARTORIA_CASTER.possessiveAdjective": "her",
   "ARTORIACASTER-ARTORIA_CASTER.pronounPossessive": "hers",
   "ARTORIACASTER-ARTORIA_CASTER.pronounSubject": "she",
-  "ARTORIACASTER-ARTORIA_CASTER.goldMonologue": "Gold? That is... a lot of gold. I will keep it safe for everyone! As the party fund! ...Perhaps one souvenir.",
-  "ARTORIACASTER-ARTORIA_CASTER.eventDeathPrevention": "The staff glows warm and sighs in a lazy, flowery voice: not yet, little star. Artoria wipes her eyes, plants the Staff of Selection, and stands back up. Let's try it. One more time.",
-  "ARTORIACASTER-ARTORIA_CASTER.aromaPrinciple": "It smells of morning bread and rain on hay, like the village before the pilgrimage. She keeps smiling, the way the Child of Prophecy must. Nobody needs to know about the tears.",
+  "ARTORIACASTER-ARTORIA_CASTER.goldMonologue": "I won't hoard this shine for myself. If I can turn it into someone's hope, that's enough for me.",
+  "ARTORIACASTER-ARTORIA_CASTER.eventDeathPrevention": "It's not over yet. As long as I still hold the hope I was lent, I'll rise again as many times as it takes.",
+  "ARTORIACASTER-ARTORIA_CASTER.aromaPrinciple": "Even the smallest star can become hope, so long as someone looks up at it—I am that kind of light.",
   "ARTORIACASTER-ARTORIA_CASTER.cardsModifierTitle": "Arsenal of Hope",
   "ARTORIACASTER-ARTORIA_CASTER.cardsModifierDescription": "Play with Artoria's card pool.",
-  "ARTORIACASTER-ARTORIA_CASTER.banter.alive.endTurnPing": "Um, whenever you're ready! No pressure! ...Okay, maybe a little pressure. Let's try it!",
-  "ARTORIACASTER-ARTORIA_CASTER.banter.dead.endTurnPing": "So the prophecy was wrong about me after all... I'm sorry... I really did want to save everyone..."
+  "ARTORIACASTER-ARTORIA_CASTER.banter.alive.endTurnPing": "The real fight starts here. Come on, chin up—let's move forward together!",
+  "ARTORIACASTER-ARTORIA_CASTER.banter.dead.endTurnPing": "I'm sorry… for being so weak. But I can still stand. Just a little longer—I'll keep going."
 }

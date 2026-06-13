@@ -6,11 +6,11 @@
   "MASHSHIELDER-MASH_SHIELDER.possessiveAdjective": "su",
   "MASHSHIELDER-MASH_SHIELDER.pronounPossessive": "suya",
   "MASHSHIELDER-MASH_SHIELDER.pronounSubject": "ella",
-  "MASHSHIELDER-MASH_SHIELDER.goldMonologue": "Chaldea nunca me pagó un sueldo... Senpai, ¿esto es lo que llaman presupuesto?",
-  "MASHSHIELDER-MASH_SHIELDER.eventDeathPrevention": "Una criatura blanca y familiar chilla en algún lugar lejano... Fou gasta su milagro una vez más, y Mash abre los ojos.",
-  "MASHSHIELDER-MASH_SHIELDER.aromaPrinciple": "Huele como la cafetería de Chaldea... como sándwiches. Mash se siente en paz.",
+  "MASHSHIELDER-MASH_SHIELDER.goldMonologue": "Esto es… un recurso para proteger a todos, ¿verdad? Lo cuidaré, no lo desperdiciaré.",
+  "MASHSHIELDER-MASH_SHIELDER.eventDeathPrevention": "No puedo… permitirme caer. Si decidí proteger, me levantaré las veces que haga falta, senpai.",
+  "MASHSHIELDER-MASH_SHIELDER.aromaPrinciple": "Soy el escudo que da un paso al frente para cubrir la espalda de alguien… esa es mi forma de ser.",
   "MASHSHIELDER-MASH_SHIELDER.cardsModifierTitle": "Arsenal de la Shielder",
   "MASHSHIELDER-MASH_SHIELDER.cardsModifierDescription": "Juega con el pool de cartas de Mash Kyrielight.",
-  "MASHSHIELDER-MASH_SHIELDER.banter.alive.endTurnPing": "¡Senpai, sus órdenes!",
-  "MASHSHIELDER-MASH_SHIELDER.banter.dead.endTurnPing": "Lo siento, Senpai... no pude protegerte..."
+  "MASHSHIELDER-MASH_SHIELDER.banter.alive.endTurnPing": "Senpai, de esto me encargo yo. El escudo aún no tiembla… avancemos tranquilos.",
+  "MASHSHIELDER-MASH_SHIELDER.banter.dead.endTurnPing": "Me… falta el aliento, lo siento, senpai. Aun así… este escudo no lo bajaré."
 }

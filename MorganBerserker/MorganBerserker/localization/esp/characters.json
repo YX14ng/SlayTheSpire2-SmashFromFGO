@@ -6,11 +6,11 @@
   "MORGANBERSERKER-MORGAN_BERSERKER.possessiveAdjective": "su",
   "MORGANBERSERKER-MORGAN_BERSERKER.pronounPossessive": "suya",
   "MORGANBERSERKER-MORGAN_BERSERKER.pronounSubject": "ella",
-  "MORGANBERSERKER-MORGAN_BERSERKER.goldMonologue": "¿Oro? En la Britania de las Hadas a esto se le llama impuesto. Págalo completo y se te permitirá vivir.",
-  "MORGANBERSERKER-MORGAN_BERSERKER.eventDeathPrevention": "La Reina ha muerto incontables veces, y de cada una volvió a levantarse. Esta no es la excepción: Morgan abre los ojos, con la mirada tan fría como siempre.",
-  "MORGANBERSERKER-MORGAN_BERSERKER.aromaPrinciple": "Huele a la lluvia de Orkney... Morgan recuerda un sueño que aún no se había roto, y su expresión se suaviza apenas un instante.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.goldMonologue": "El oro no es más que un juguete; lo único que deseo es el trono que debo gobernar.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.eventDeathPrevention": "No importa cuántas veces muera: una reina se alza precisamente desde el final.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.aromaPrinciple": "Soy lluvia congelada: una reina que no se aferra a nadie y abraza su reino a solas.",
   "MORGANBERSERKER-MORGAN_BERSERKER.cardsModifierTitle": "Regalía de la Reina de las Hadas",
   "MORGANBERSERKER-MORGAN_BERSERKER.cardsModifierDescription": "Juega con el pool de cartas de Morgan.",
-  "MORGANBERSERKER-MORGAN_BERSERKER.banter.alive.endTurnPing": "¿Todavía sin órdenes? La paciencia de la Reina es bastante más corta que la vida de un mortal.",
-  "MORGANBERSERKER-MORGAN_BERSERKER.banter.dead.endTurnPing": "...Conque hasta la Reina cae. No importa. La Reina... siempre regresa..."
+  "MORGANBERSERKER-MORGAN_BERSERKER.banter.alive.endTurnPing": "Observa: nadie se alza contra el designio de una reina.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.banter.dead.endTurnPing": "Doblegarme por una herida tan nimia... a una reina no le está permitido."
 }

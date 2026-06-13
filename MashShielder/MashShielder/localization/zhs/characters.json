@@ -6,11 +6,11 @@
   "MASHSHIELDER-MASH_SHIELDER.possessiveAdjective": "她的",
   "MASHSHIELDER-MASH_SHIELDER.pronounPossessive": "她的",
   "MASHSHIELDER-MASH_SHIELDER.pronounSubject": "她",
-  "MASHSHIELDER-MASH_SHIELDER.goldMonologue": "迦勒底从来没给我发过工资……前辈，这就是所谓的预算吗？",
-  "MASHSHIELDER-MASH_SHIELDER.eventDeathPrevention": "远处传来熟悉的白色生物的叫声……芙芙再次献出了它的奇迹，玛修睁开了眼睛。",
-  "MASHSHIELDER-MASH_SHIELDER.aromaPrinciple": "闻起来像迦勒底的食堂……像三明治。玛修安心了下来。",
+  "MASHSHIELDER-MASH_SHIELDER.goldMonologue": "这是…为守护大家而备下的资财吧。我会珍惜，绝不浪费。",
+  "MASHSHIELDER-MASH_SHIELDER.eventDeathPrevention": "我…不能倒下。既已立誓守护，无论多少次，我都会重新站起，前辈。",
+  "MASHSHIELDER-MASH_SHIELDER.aromaPrinciple": "我是为守护他人之背而挺身向前的盾——这，便是我的形状。",
   "MASHSHIELDER-MASH_SHIELDER.cardsModifierTitle": "盾兵的武装",
   "MASHSHIELDER-MASH_SHIELDER.cardsModifierDescription": "使用玛修·基列莱特的卡池进行游戏。",
-  "MASHSHIELDER-MASH_SHIELDER.banter.alive.endTurnPing": "前辈，请下指示！",
-  "MASHSHIELDER-MASH_SHIELDER.banter.dead.endTurnPing": "对不起，前辈……我没能保护好你……"
+  "MASHSHIELDER-MASH_SHIELDER.banter.alive.endTurnPing": "前辈，这里交给我。盾还稳如初——请放心，向前走吧。",
+  "MASHSHIELDER-MASH_SHIELDER.banter.dead.endTurnPing": "气息…紊乱了，对不起，前辈。即便如此——唯独这面盾，我绝不放下。"
 }

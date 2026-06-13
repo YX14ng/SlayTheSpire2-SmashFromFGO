@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Texture2D" path="res://MashShielder/character/select_bg_fanart.png" id="fanart"]
+[ext_resource type="Texture2D" path="res://MashShielder/character/select_bg_charagraph.png" id="fanart"]
 
 [node name="MashSelectBg" type="Control"]
 anchors_preset = 15
