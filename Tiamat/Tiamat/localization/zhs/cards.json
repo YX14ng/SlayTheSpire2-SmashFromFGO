@@ -1,0 +1,14 @@
+{
+  "TIAMAT-CHAOS_TIDE.title": "混沌之潮",
+  "TIAMAT-CHAOS_TIDE.description": "#造成!D!点伤害。",
+  "TIAMAT-CARAPACE.title": "甲壳",
+  "TIAMAT-CARAPACE.description": "#获得!B!点格挡。",
+  "TIAMAT-SPAWN_LAHMU.title": "孕育拉夫姆",
+  "TIAMAT-SPAWN_LAHMU.description": "#孕育!Lahmu!只拉夫姆。获得!NpCharge!点宝具值。",
+  "TIAMAT-BLACK_MUD.title": "黑泥",
+  "TIAMAT-BLACK_MUD.description": "#对一个敌人施加!Curse!层诅咒。获得!Nurture!点养育。",
+  "TIAMAT-SUCKLE.title": "哺育",
+  "TIAMAT-SUCKLE.description": "#获得!Nurture!点养育。若你有3只或更多拉夫姆，抽1张牌。",
+  "TIAMAT-MITOSIS.title": "有丝分裂",
+  "TIAMAT-MITOSIS.description": "#吞噬1只拉夫姆：造成!D!点伤害，每点养育额外造成!PerNurture!点。然后孕育1只拉夫姆。"
+}

@@ -1,0 +1,16 @@
+{
+  "TIAMAT-TIAMAT.title": "Tiamat",
+  "TIAMAT-TIAMAT.titleObject": "the Mother Goddess",
+  "TIAMAT-TIAMAT.description": "Beast II, the Sea of Life from which all life first poured. She does not fight — she breeds: spreading Chaos Tide over her foes and birthing Laḫmu that shield her and bite on their own. Spawn, nurture, or devour your brood, and overflow into the giant Draconic Form. An only-summoner archetype driven by an overwhelming, ruinous mother's love.",
+  "TIAMAT-TIAMAT.pronounObject": "her",
+  "TIAMAT-TIAMAT.possessiveAdjective": "her",
+  "TIAMAT-TIAMAT.pronounPossessive": "hers",
+  "TIAMAT-TIAMAT.pronounSubject": "she",
+  "TIAMAT-TIAMAT.goldMonologue": "Gold. Trinkets of the children who no longer need me. I will gather them anyway — a mother keeps everything her little ones leave behind.",
+  "TIAMAT-TIAMAT.eventDeathPrevention": "The Sea of Life wells up black and warm. Death has no concept here, no purchase on the Mother. From the tide, new children crawl forth, and she rises again upon them.",
+  "TIAMAT-TIAMAT.aromaPrinciple": "It smells of the first ocean, of amniotic warmth and rot together. She would hold the whole world to her breast — and that embrace would drown it.",
+  "TIAMAT-TIAMAT.cardsModifierTitle": "Brood of the Sea",
+  "TIAMAT-TIAMAT.cardsModifierDescription": "Play with Tiamat's card pool.",
+  "TIAMAT-TIAMAT.banter.alive.endTurnPing": "Come, children. There is so much more world to remake.",
+  "TIAMAT-TIAMAT.banter.dead.endTurnPing": "My children... were you not enough? Was I... not enough...?"
+}

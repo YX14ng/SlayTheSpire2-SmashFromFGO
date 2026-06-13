@@ -1,0 +1,14 @@
+{
+  "TIAMAT-CHAOS_TIDE.title": "Chaos Tide",
+  "TIAMAT-CHAOS_TIDE.description": "#Deal !D! damage.",
+  "TIAMAT-CARAPACE.title": "Carapace",
+  "TIAMAT-CARAPACE.description": "#Gain !B! Block.",
+  "TIAMAT-SPAWN_LAHMU.title": "Spawn Laḫmu",
+  "TIAMAT-SPAWN_LAHMU.description": "#Spawn !Lahmu! Laḫmu. Gain !NpCharge! NP Charge.",
+  "TIAMAT-BLACK_MUD.title": "Black Mud",
+  "TIAMAT-BLACK_MUD.description": "#Apply !Curse! Curse to an enemy. Gain !Nurture! Nurture.",
+  "TIAMAT-SUCKLE.title": "Suckle",
+  "TIAMAT-SUCKLE.description": "#Gain !Nurture! Nurture. If you have 3 or more Laḫmu, draw 1 card.",
+  "TIAMAT-MITOSIS.title": "Mitosis",
+  "TIAMAT-MITOSIS.description": "#Devour 1 Laḫmu: deal !D! damage, plus !PerNurture! for each Nurture. Then spawn 1 Laḫmu."
+}

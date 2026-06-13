@@ -1,0 +1,16 @@
+{
+  "TIAMAT-TIAMAT.title": "Tiamat",
+  "TIAMAT-TIAMAT.titleObject": "la Madre Diosa",
+  "TIAMAT-TIAMAT.description": "Beast II, el Mar de Vida del que brotó toda la vida. No pelea: cría. Esparce Marea de Caos sobre sus enemigos y pare Laḫmu que la escudan y muerden solos. Parí, alimentá o devorá a tu cría, y desbordá en la Forma Dracónica gigante. Un arquetipo único de invocación movido por un amor maternal abrumador y ruinoso.",
+  "TIAMAT-TIAMAT.pronounObject": "her",
+  "TIAMAT-TIAMAT.possessiveAdjective": "her",
+  "TIAMAT-TIAMAT.pronounPossessive": "hers",
+  "TIAMAT-TIAMAT.pronounSubject": "she",
+  "TIAMAT-TIAMAT.goldMonologue": "Oro. Baratijas de los hijos que ya no me necesitan. Lo juntaré igual: una madre guarda todo lo que sus pequeños dejan atrás.",
+  "TIAMAT-TIAMAT.eventDeathPrevention": "El Mar de Vida brota negro y tibio. La muerte no tiene concepto aquí, ningún asidero sobre la Madre. De la marea reptan nuevos hijos, y ella se alza sobre ellos otra vez.",
+  "TIAMAT-TIAMAT.aromaPrinciple": "Huele al primer océano, a calor amniótico y podredumbre a la vez. Sostendría al mundo entero contra su pecho, y ese abrazo lo ahogaría.",
+  "TIAMAT-TIAMAT.cardsModifierTitle": "Cría del Mar",
+  "TIAMAT-TIAMAT.cardsModifierDescription": "Jugá con el mazo de Tiamat.",
+  "TIAMAT-TIAMAT.banter.alive.endTurnPing": "Vengan, hijos. Queda tanto mundo por rehacer.",
+  "TIAMAT-TIAMAT.banter.dead.endTurnPing": "Hijos míos... ¿no les bastó? ¿No... no bastó yo...?"
+}

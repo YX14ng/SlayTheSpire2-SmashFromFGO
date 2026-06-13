@@ -1,0 +1,14 @@
+{
+  "TIAMAT-CHAOS_TIDE.title": "Marea de Caos",
+  "TIAMAT-CHAOS_TIDE.description": "#Inflige !D! de daño.",
+  "TIAMAT-CARAPACE.title": "Caparazón",
+  "TIAMAT-CARAPACE.description": "#Obtén !B! de Bloqueo.",
+  "TIAMAT-SPAWN_LAHMU.title": "Engendrar Laḫmu",
+  "TIAMAT-SPAWN_LAHMU.description": "#Parí !Lahmu! Laḫmu. Obtén !NpCharge! de Carga NP.",
+  "TIAMAT-BLACK_MUD.title": "Lodo Negro",
+  "TIAMAT-BLACK_MUD.description": "#Aplica !Curse! de Maldición a un enemigo. Obtén !Nurture! de Crianza.",
+  "TIAMAT-SUCKLE.title": "Amamantar",
+  "TIAMAT-SUCKLE.description": "#Obtén !Nurture! de Crianza. Si tenés 3 o más Laḫmu, robá 1 carta.",
+  "TIAMAT-MITOSIS.title": "Mitosis",
+  "TIAMAT-MITOSIS.description": "#Devorá 1 Laḫmu: inflige !D! de daño, más !PerNurture! por cada Crianza. Luego parí 1 Laḫmu."
+}
