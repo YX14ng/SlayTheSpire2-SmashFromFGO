@@ -3,10 +3,12 @@ $dir = "f:\Programs\SlayTheSpire2-SmashFromFGO\ArtoriaCaster\ArtoriaCaster\chara
 $res = "res://ArtoriaCaster/character"
 $utf8 = New-Object System.Text.UTF8Encoding($false)
 
-function New-FramesTres([string]$framesFolder, [string]$outFile) {
+function New-FramesTres([string]$framesFolder, [string]$outFile, [double]$idleSpeed = 30.0) {
     $anims = @(
-        # idle renderizado a 30fps (step 1), regla aprendida del playtest de Morgan
-        @{ name = "idle"; src = "idle"; loop = "true"; speed = 30.0 },
+        # idle renderizado a 30fps (step 1), regla aprendida del playtest de Morgan.
+        # Las formas de verano (berserker/avalon) usan un idle re-ventaneado de 10 frames
+        # (el tramo cabeza-arriba del cabeceo) => velocidad menor para un cabeceo calmo.
+        @{ name = "idle"; src = "idle"; loop = "true"; speed = $idleSpeed },
         @{ name = "attack"; src = "attack"; loop = "false"; speed = 30.0 },
         @{ name = "cast"; src = "cast"; loop = "false"; speed = 15.0 },
         @{ name = "hurt"; src = "hurt"; loop = "false"; speed = 30.0 },
@@ -37,6 +39,6 @@ function New-FramesTres([string]$framesFolder, [string]$outFile) {
 }
 
 New-FramesTres "frames_caster" "artoria_frames_caster.tres"
-New-FramesTres "frames_berserker" "artoria_frames_berserker.tres"
-New-FramesTres "frames_avalon" "artoria_frames_avalon.tres"
+New-FramesTres "frames_berserker" "artoria_frames_berserker.tres" 14.0
+New-FramesTres "frames_avalon" "artoria_frames_avalon.tres" 14.0
 Write-Output "LISTO"

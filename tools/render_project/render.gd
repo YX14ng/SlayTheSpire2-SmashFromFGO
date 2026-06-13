@@ -57,6 +57,17 @@ const FACE_POSE := {
 	"joint_open_mouth": 0.0, "joint_close_mouth": 1.0,
 	"joint_eyebrow": 1.0, "joint_eyebrow_attack": 0.0,
 }
+# Lista EXPLICITA de frames por modelo/anim (gana sobre la ventana [from,to,step] de
+# SELECT). Las Berserker de verano (704710/704720) tienen un idle (wait) que agacha la
+# cabeza ~94% del ciclo => ojos tapados por el flequillo "la mayor parte del tiempo"
+# (los ojos renderizan perfecto, el problema es la pose). La cabeza solo esta arriba en
+# la costura del loop (154->0, que ES el punto de loop natural del clip). Re-ventaneamos
+# el idle a ese tramo cabeza-arriba: la secuencia se guarda 000,001,... en ESTE orden y
+# loopea sin salto porque cruza 154->0. El save usa contador secuencial (no el indice).
+const FRAMES_OVERRIDE := {
+	"704710": { "idle": [150, 151, 152, 153, 154, 0, 1, 2, 3, 4] },
+	"704720": { "idle": [150, 151, 152, 153, 154, 0, 1, 2, 3, 4] },
+}
 
 var _model: Node3D
 var _player: AnimationPlayer
@@ -82,12 +93,28 @@ func _ready() -> void:
 		for anim_name in _player.get_animation_list():
 			var a := _player.get_animation(anim_name)
 			print("CLIP: ", anim_name, " len=", a.length, " frames=", int(a.length * FPS))
+		# Volcar las pistas de los clips de ojos para saber qué animan (hueso o blendshape).
+		for anim_name in _player.get_animation_list():
+			if anim_name.contains("eye"):
+				var a := _player.get_animation(anim_name)
+				for ti in range(a.get_track_count()):
+					print("EYETRACK ", anim_name, " type=", a.track_get_type(ti), " path=", a.track_get_path(ti))
+		# El Skeleton3D y sus huesos no se materializan hasta que el AnimationPlayer
+		# reproduce una vez (mismo motivo por el que el probe sí los halla y un dump
+		# en frio no). Reproducir wait + esperar un frame antes de volcar.
+		_player.play(_find_animation("wait"))
+		_player.seek(0.0, true)
+		await RenderingServer.frame_post_draw
 		for child in _model.find_children("*", "MeshInstance3D", true, false):
 			print("MESH: ", child.name)
-		var sk: Skeleton3D = _model.find_child("Skeleton3D", true, false)
-		if sk != null:
-			for b in range(sk.get_bone_count()):
-				print("BONE: ", sk.get_bone_name(b))
+			var m := child as MeshInstance3D
+			if m.mesh != null:
+				for bs in range(m.mesh.get_blend_shape_count()):
+					print("BLENDSHAPE: ", m.mesh.get_blend_shape_name(bs))
+		for sk in _model.find_children("*", "Skeleton3D", true, false):
+			print("SKELETON: ", sk.name, " bones=", (sk as Skeleton3D).get_bone_count())
+			for b in range((sk as Skeleton3D).get_bone_count()):
+				print("BONE: ", (sk as Skeleton3D).get_bone_name(b))
 		print("=== DONE ===")
 		get_tree().quit(0)
 		return
@@ -103,6 +130,13 @@ func _ready() -> void:
 	_model.scale = Vector3.ONE * s
 	print("SCALE: ", s)
 
+	# Volcado de huesos en el contexto donde el esqueleto SI existe (el list pass
+	# en frio devuelve 0 huesos). Solo en debug, para diagnosticar nombres de cara.
+	if PASS == "debug" and _skeleton != null:
+		print("RBONECOUNT: ", _skeleton.get_bone_count())
+		for b in range(_skeleton.get_bone_count()):
+			print("RBONE: ", _skeleton.get_bone_name(b))
+
 	if PASS == "probe":
 		_probe_motion()
 		print("=== DONE ===")
@@ -116,10 +150,65 @@ func _ready() -> void:
 		await _measure()
 	elif PASS == "debug":
 		await _debug_snaps()
+	elif PASS == "faceexp":
+		await _face_experiment()
 	else:
 		await _save_cropped()
 	print("=== DONE ===")
 	get_tree().quit(0)
+
+# Experimento de diagnostico: en el frame idle 77 barre cada hueso de expresion de
+# ojos por separado, prueba reproducir el clip eye_open, y baja el alpha scissor,
+# para descubrir QUE realmente muestra los ojos del modelo de verano (704710).
+func _face_experiment() -> void:
+	var clip := _find_animation("wait")
+	var frame := 77
+	var eyes := ["joint_eye_normal", "joint_eye_close", "joint_eye_re", "joint_eye_smile"]
+	# 0) eye_open clip encima de la pose body (test fresco, antes de tocar huesos)
+	_player.play(clip); _player.pause()
+	await _pose_anchored(clip, frame, INF)
+	var eo := _find_animation("eye_open")
+	if _player.has_animation(eo):
+		_player.play(eo); _player.seek(_player.get_animation(eo).length, true)
+		_player.play(clip); _player.seek(float(frame) / FPS, true)
+		await RenderingServer.frame_post_draw
+		_capture().save_webp(ProjectSettings.globalize_path("res://faceexp_eyeopen.webp"), true, 0.95)
+		print("FACEEXP eyeopen")
+	# 1) barrido de cada expresion de ojos (resto a 0)
+	var configs := {
+		"normal": "joint_eye_normal", "re": "joint_eye_re",
+		"smile": "joint_eye_smile", "close": "joint_eye_close",
+	}
+	for cfg in configs:
+		_player.play(clip); _player.seek(float(frame) / FPS, true)
+		for j in eyes:
+			var bi := _skeleton.find_bone(j)
+			if bi >= 0: _skeleton.set_bone_pose_scale(bi, Vector3.ONE * (1.0 if j == configs[cfg] else 0.0))
+		await RenderingServer.frame_post_draw
+		_capture().save_webp(ProjectSettings.globalize_path("res://faceexp_%s.webp" % cfg), true, 0.95)
+		print("FACEEXP ", cfg)
+	# 2) todas las expresiones de ojos a 1 (por si el rig las quiere todas visibles)
+	_player.play(clip); _player.seek(float(frame) / FPS, true)
+	for j in eyes:
+		var bi := _skeleton.find_bone(j)
+		if bi >= 0: _skeleton.set_bone_pose_scale(bi, Vector3.ONE)
+	await RenderingServer.frame_post_draw
+	_capture().save_webp(ProjectSettings.globalize_path("res://faceexp_all1.webp"), true, 0.95)
+	print("FACEEXP all1")
+	# 3) alpha scissor bajo + normal=1 (por si la linea del ojo cae bajo el umbral 0.4)
+	for child in _model.find_children("*", "MeshInstance3D", true, false):
+		var mi := child as MeshInstance3D
+		if not mi.visible: continue
+		for su in range(mi.get_surface_override_material_count()):
+			var m := mi.get_surface_override_material(su) as StandardMaterial3D
+			if m != null: m.alpha_scissor_threshold = 0.02
+	_player.play(clip); _player.seek(float(frame) / FPS, true)
+	for j in eyes:
+		var bi := _skeleton.find_bone(j)
+		if bi >= 0: _skeleton.set_bone_pose_scale(bi, Vector3.ONE * (1.0 if j == "joint_eye_normal" else 0.0))
+	await RenderingServer.frame_post_draw
+	_capture().save_webp(ProjectSettings.globalize_path("res://faceexp_lowalpha.webp"), true, 0.95)
+	print("FACEEXP lowalpha")
 
 # Guarda capturas sin recorte (canvas completo) del primer/medio/ultimo frame
 # de cada ventana, para inspeccion visual.
@@ -165,6 +254,8 @@ func _clip_for(anim: String) -> String:
 	return CLIP_FOR[anim]
 
 func _selected_frames(anim: String) -> Array:
+	if FRAMES_OVERRIDE.has(_model_id) and FRAMES_OVERRIDE[_model_id].has(anim):
+		return FRAMES_OVERRIDE[_model_id][anim].duplicate()
 	var w: Array = SELECT[_model_id][anim]
 	var frames := []
 	var i: int = w[0]

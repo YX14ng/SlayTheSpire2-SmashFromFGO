@@ -31,7 +31,7 @@ function Stage-Form($f) {
 
 function Set-Pass([string]$pass) {
     $gd = [IO.File]::ReadAllText("$rp\render.gd")
-    $gd = $gd -replace 'const PASS := "(measure|save|list|probe|debug)"', "const PASS := `"$pass`""
+    $gd = $gd -replace 'const PASS := "(measure|save|list|probe|debug|faceexp)"', "const PASS := `"$pass`""
     [IO.File]::WriteAllText("$rp\render.gd", $gd, (New-Object System.Text.UTF8Encoding($false)))
 }
 
