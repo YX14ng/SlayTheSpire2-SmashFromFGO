@@ -68,13 +68,16 @@
   "MASHSHIELDER-COVER_POWER.title": "掩护",
   "MASHSHIELDER-COVER_POWER.description": "#直到你的下个回合，击穿队友防御的伤害改由玛修承受。",
   "MASHSHIELDER-COVER_POWER.smartDescription": "#直到你的下个回合，击穿队友防御的伤害改由玛修承受。",
-  "MASHSHIELDER-CAMELOT_MANIFESTED_POWER.title": "卡美洛已显现",
-  "MASHSHIELDER-CAMELOT_MANIFESTED_POWER.description": "#宝具回应了满槽的宝具值：罗德·卡美洛已加入你的手牌。消耗宝具值并重新充满至100即可再次显现。",
-  "MASHSHIELDER-CAMELOT_MANIFESTED_POWER.smartDescription": "#宝具回应了满槽的宝具值：罗德·卡美洛已加入你的手牌。消耗宝具值并重新充满至100即可再次显现。",
+  "MASHSHIELDER-CAMELOT_MANIFESTED_POWER.title": "宝具已达巅峰",
+  "MASHSHIELDER-CAMELOT_MANIFESTED_POWER.description": "#本周期你的宝具值已达到100，绝对堡垒已开启。将宝具值消耗至100以下以重新蓄势。",
+  "MASHSHIELDER-CAMELOT_MANIFESTED_POWER.smartDescription": "#本周期你的宝具值已达到100，绝对堡垒已开启。将宝具值消耗至100以下以重新蓄势。",
   "MASHSHIELDER-BOND_POWER.title": "羁绊",
   "MASHSHIELDER-BOND_POWER.description": "#玛修本局游戏的羁绊等级。每场战斗开始时提供加成（详见羁绊计量器遗物）。",
   "MASHSHIELDER-BOND_POWER.smartDescription": "#玛修本局游戏的羁绊等级。每场战斗开始时提供加成（详见羁绊计量器遗物）。",
   "MASHSHIELDER-COMBAT_ANALYSIS_POWER.title": "战斗分析",
   "MASHSHIELDER-COMBAT_ANALYSIS_POWER.description": "#在你的回合开始时：获得等同于此能力层数的*暴击星*。每当你获得*暴击*时：抽1张牌。",
-  "MASHSHIELDER-COMBAT_ANALYSIS_POWER.smartDescription": "#在你的回合开始时：获得等同于此能力层数的*暴击星*。每当你获得*暴击*时：抽1张牌。"
+  "MASHSHIELDER-COMBAT_ANALYSIS_POWER.smartDescription": "#在你的回合开始时：获得等同于此能力层数的*暴击星*。每当你获得*暴击*时：抽1张牌。",
+  "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.title": "绝对堡垒",
+  "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.description": "#本回合，你的攻击牌造成等同于你当前格挡值的额外伤害。在宝具值达到100时开启。",
+  "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.smartDescription": "#本回合，你的攻击牌造成等同于你当前格挡值的额外伤害。在宝具值达到100时开启。"
 }

@@ -4,6 +4,7 @@ using MashShielder.MashShielderCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
 
@@ -28,38 +29,30 @@ public partial class MainFile : Node
             $"{ResPath}/character/mash_frames_ortinax.tres",
             $"{ResPath}/character/mash_frames_paladin.tres");
 
-        // Ult cycle: reaching 100 NP manifests Lord Camelot for free; spending below
-        // 100 re-arms it so the next full gauge manifests it again.
-        NpCharge.GaugeFilled += TryManifestUlt;
+        // Modelo de NP nuevo (2026-06-12): cruzar 100 NP NO genera una carta-ulti gratis
+        // (eclipsaba a las cartas NP drafteadas — feedback del usuario). Abre la VENTANA
+        // "Baluarte Absoluto" 1 turno (potencia el mazo + devuelve recursos); las cartas
+        // NP drafteadas (Lord Camelot, etc.) son el clímax que elegís jugar DENTRO de ella.
+        // Gastar por debajo de 100 re-arma la ventana para el próximo pico.
+        NpCharge.GaugeFilled += TryOpenNpWindow;
         NpCharge.GaugeDropped += DisarmUltMarker;
     }
 
-    private static async Task TryManifestUlt(Creature creature)
+    private static async Task TryOpenNpWindow(Creature creature)
     {
         if (creature.Player?.Character is not Character.MashShielder) return;
         if (creature.HasPower<CamelotManifestedPower>()) return;
 
+        // Marker: la ventana ya se abrió este pico (se re-arma al bajar < 100).
         await PowerCmd.Apply<CamelotManifestedPower>(creature, 1m, creature, null);
+        await PowerCmd.Apply<AbsoluteBulwarkWindowPower>(creature, 1m, creature, null);
 
-        // The ult matches the active form, like her FGO kit: Shielder → LORD CHALDEAS
-        // (her true NP), Ortinax → BLACK BARREL (her Lostbelt armament), Paladin →
-        // LORD CAMELOT (the shield's true name). The generated card stays fixed if
-        // the form changes afterwards — the decision is in which form you cross 100.
-        CardModel card;
-        if (creature.HasPower<Powers.Forms.OrtinaxFormPower>())
+        // Devuelve recursos: arranca el turno grande, no lo reemplaza (modelo Phrolova).
+        if (creature.Player != null)
         {
-            card = creature.CombatState.CreateCard<Cards.Special.BlackBarrelUnleashed>(creature.Player);
+            await PlayerCmd.GainEnergy(1, creature.Player);
+            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 1, creature.Player);
         }
-        else if (creature.HasPower<Powers.Forms.ShielderFormPower>())
-        {
-            card = creature.CombatState.CreateCard<Cards.Special.LordChaldeasUnleashed>(creature.Player);
-        }
-        else
-        {
-            card = creature.CombatState.CreateCard<Cards.Special.LordCamelotUnleashed>(creature.Player);
-        }
-        CardCmd.PreviewCardPileAdd(
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 1.5f);
     }
 
     private static async Task DisarmUltMarker(Creature creature)
