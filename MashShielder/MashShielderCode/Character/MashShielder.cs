@@ -20,8 +20,9 @@ public class MashShielder : PlaceholderCharacterModel
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Feminine;
-    // +10 en el re-stat vs jefes de JeanneAlter (peleas de 12-20 turnos con goteo imbloqueable).
-    public override int StartingHp => 95;
+    // HP de ecosistema (revertido el +10 del re-stat de JeanneAlter): la tanque va al
+    // tope del rango ~80. Valor puente; el rediseño desde 0 lo confirma.
+    public override int StartingHp => 80;
     
     // Rediseño v2, parche P7 del juez: 2 Golpe / 2 Defender / 1 Buster / 2 Arts /
     // 1 Quick / ShieldBash / ProtectSenpai = 10 cartas. Enseña las 4 economías el

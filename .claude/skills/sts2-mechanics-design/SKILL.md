@@ -32,35 +32,34 @@ El usuario NO juega vanilla. Juega con **HextechRunes** (dificultad) + **BetterC
   combate) — no toca números, pero implica que la VARIANZA es barata: diseños de techo
   alto que a veces fallan son aceptables.
 
-**Reglas operativas del replanteo**:
-1. Los baselines de §2 siguen siendo el VOCABULARIO (qué es una tasa vanilla), pero el
-   TECHO de diseño es ~×1.5 sobre ellos en motores/payoffs y ~×1.25 en tasa cruda.
-2. La subida de tasa cruda va por **palanca central**: `BondRelic.ServantDamageMultiplier`
-   / `ServantBlockMultiplier` (FGOCore, ×1.25, herencia automática en todos los
-   personajes) — NO inflando carta por carta. Perilla: 1.25 → 1.4 si sigue floja.
-3. Los MOTORES sí se suben en sus números propios (estilo BetterCharacters: duplicar el
-   escalador del arquetipo, acelerar la economía del recurso, levantar topes que ahogan
-   en peleas largas — Maldición 15→25 fue el primer caso).
-4. Los topes/candados anti-degeneración se conservan ESTRUCTURALMENTE (1/turno,
-   1/combate, condición de forma) pero sus montos se presupuestan al techo nuevo.
+**Reglas operativas del replanteo (CORREGIDAS 2026-06-12, análisis de 15 mods del ecosistema)**:
+1. Los baselines de §2 siguen siendo el VOCABULARIO. HextechRunes+BetterCharacters
+   LEVANTAN a TODOS por igual (enemigos Y pares), así que el objetivo NO es un techo
+   absoluto más alto: es **PARIDAD con los otros mods de personaje** jugados bajo el
+   mismo entorno. Acheron/Kafka/MeiLin/Mordekaiser/WineFox son el listón.
+2. **PROHIBIDO el multiplicador global de daño/bloqueo desde el starter.** Fue el error
+   que dejó los mods "demasiado rotos" (el viejo `BondRelic` ×1.4 global + regen 3/turno).
+   NINGUNO de los 15 mods del ecosistema lo hace — ni uno. El daño roto SIEMPRE emerge de
+   un MOTOR gateado por setup (apilar recurso, cruzar umbral, condición de forma), NUNCA
+   de un ×daño plano ni de inflar el statline base de las cartas.
+3. La reliquia starter es un **MOTOR evento→recurso** (convierte algo que pasa en combate
+   en el recurso del personaje) o regalos por umbral (estilo Mordekaiser: HP/cartas por
+   nivel). NUNCA un stat-stick ni regen pasiva por turno. Multiplicadores admisibles solo
+   si son **condicionales y chicos** (×1.05-1.20 atados a un estado) y viven en POWERS que
+   se obtienen DURANTE la run, no en el starter.
+4. Los MOTORES sí escalan fuerte (estilo BetterCharacters): el burst gateado puede llegar
+   a 13-30 dmg/⚡ SIEMPRE condicionado a gastar/construir el recurso. Los topes
+   anti-degeneración se conservan estructuralmente (1/turno, 1/combate, condición de forma).
+5. HP inicial en el rango del ecosistema: **66-80, centro ~75**. Bajar el HP si el kit es
+   explosivo; el tanque (Mash) puede ir al tope ~80. NO inflar para sobrevivir.
 
-### 1.ter Los jefes del mod JeanneAlter (re-stat 2026-06-12, análisis del decompilado)
+### 1.ter (OBSOLETO desde 2026-06-12) Los jefes del mod JeanneAlter
 
-El usuario también enfrenta los 3 jefes custom de JeanneAlter (Kirei acto 1 / U-Olga
-acto 2 / Beast VII acto 3): HP ×2.3-3.1 sobre vanilla, **HardenedShell 200 (cap de daño
-por turno)**, strips de TODOS los buffs vanilla a umbrales de HP, Artifact 99 (debuffs
-muertos), flood de 5 status/turno, Nemesis (Intangible turno por medio), Buffer 30, y
-goteo de daño NO bloqueable. Peleas de 12-20 turnos. Reglas derivadas:
-1. Multiplicador del BondRelic = **×1.4** (calibrado: cruza los breakpoints ~60/85 DPS
-   sostenido sin trivializar vanilla). NO subir más: el cap desperdicia el burst.
-2. **Techo de saturación por turno ≈ 180-220** para cartas NP y payoffs (= saturar el
-   cap sin desperdicio). No diseñar nukes de 300+.
-3. HP iniciales +10 (95/88/80) y **ServantRegenPerTurn 3 en BondRelic** (curación
-   a prueba de strip — Regen vanilla SÍ se borra) para el goteo imbloqueable.
-4. Tech estructural obligatoria en cada pool: multi-hit barato repetible (anti-Buffer
-   30), purga/exhaust de cartas de status (anti-flood), y daño que NO dependa de
-   debuffear al jefe (Artifact 99). Los motores FGOCore (NP/Baluarte/Formas/Estrellas)
-   SOBREVIVEN al strip — escalar ahí, no en Strength/Dexterity vanilla.
+El usuario **SACÓ el mod JeanneAlter** por sus jefes rotos. El re-stat ×1.4 global + regen
++ HP+10 que se calibró contra ellos quedó sin sentido y fue **revertido** (esa inflación de
+tasa global resultó ser el error de diseño — ver regla 2). Se conserva esta nota solo como
+registro. ÚNICA guía que sobrevive de ese análisis: el **techo de saturación por turno
+~180-220** para cartas NP/payoffs sigue siendo razonable para no diseñar nukes de 300+.
 
 1. **Números sobre tasa SOLO embudados por mecánica propia.** Una carta puede superar
    el baseline si su exceso está pagado por: un recurso que hay que construir (Carga NP),

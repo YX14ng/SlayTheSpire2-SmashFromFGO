@@ -28,43 +28,13 @@ public abstract class BondRelic : CustomRelicModel
 {
     private int _points;
 
-    /// <summary>
-    /// Servant Ascendido: subida de tasa global para el entorno modded real del
-    /// usuario (HextechRunes ×1.2-1.5 a enemigos, vanilla con BetterCharacters,
-    /// y los JEFES del mod JeanneAlter: HP ×2.3-3.1 con cap de daño 200/turno,
-    /// strip de buffs vanilla y goteo no bloqueable — análisis 2026-06-12).
-    /// 1.25 → 1.4 calibrado contra esos jefes: cruza los breakpoints de DPS
-    /// sostenido (acto 1 ~60, acto 2 ~85) sin trivializar los vanilla. NO subir
-    /// más: el cap de HardenedShell desperdicia el exceso de burst.
-    /// </summary>
-    public virtual decimal ServantDamageMultiplier => 1.4m;
-
-    public virtual decimal ServantBlockMultiplier => 1.4m;
-
-    /// <summary>
-    /// Regeneración de Servant: cura al final de tu turno. Sustain a prueba de
-    /// strip (NO es un power vanilla tipo Regen — los jefes de JeanneAlter borran
-    /// esos): las peleas de 12-20 turnos con goteo imbloqueable lo exigen.
-    /// </summary>
-    public virtual decimal ServantRegenPerTurn => 3m;
-
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Combat.CombatSide side)
-    {
-        if (side != Owner.Creature.Side || Owner.Creature.IsDead || ServantRegenPerTurn <= 0) return;
-        await CreatureCmd.Heal(Owner.Creature, ServantRegenPerTurn);
-    }
-
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
-    {
-        if (dealer != Owner.Creature || !props.IsPoweredAttack()) return 1m;
-        return ServantDamageMultiplier;
-    }
-
-    public override decimal ModifyBlockMultiplicative(Creature target, decimal block, ValueProp props, CardModel? cardSource, MegaCrit.Sts2.Core.Entities.Cards.CardPlay? cardPlay)
-    {
-        if (target != Owner.Creature) return 1m;
-        return ServantBlockMultiplier;
-    }
+    // 2026-06-12: ELIMINADO el multiplicador global de daño/bloqueo (×1.4) y la regen
+    // por turno (3) que se habían metido para los jefes del mod JeanneAlter. El usuario
+    // sacó ese mod, y el análisis de 15 mods del ecosistema confirmó que NINGUNO usa un
+    // ×daño global desde el starter — era la causa raíz de "demasiado rotos" (skill §1.bis
+    // regla 2). El Bond vuelve a ser SOLO regalos por umbral (HP/NP/Bloqueo + capstone),
+    // estilo Mordekaiser soulcrown. La potencia del personaje viene de sus motores
+    // gateados (Carga NP, Formas, Estrellas, Baluarte), no de una tasa plana.
 
     public override bool ShowCounter => true;
 

@@ -19,8 +19,9 @@ public class MorganBerserker : PlaceholderCharacterModel
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Feminine;
-    // +10 en el re-stat vs jefes de JeanneAlter (peleas de 12-20 turnos con goteo imbloqueable).
-    public override int StartingHp => 88;
+    // HP de ecosistema (revertido el +10 del re-stat de JeanneAlter): berserker glass-cannon.
+    // Valor puente; el rediseño desde 0 lo confirma.
+    public override int StartingHp => 72;
 
     /// <summary>
     /// Rediseño v2, parche P6 — mazo inicial fiel al command deck REAL de Morgan en
