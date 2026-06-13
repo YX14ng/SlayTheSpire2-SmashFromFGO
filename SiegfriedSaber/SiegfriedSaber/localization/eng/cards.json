@@ -2,5 +2,7 @@
   "SIEGFRIEDSABER-STRIKE.title": "Strike",
   "SIEGFRIEDSABER-STRIKE.description": "#Deal !D! damage.",
   "SIEGFRIEDSABER-DEFEND.title": "Defend",
-  "SIEGFRIEDSABER-DEFEND.description": "#Gain !B! Block."
+  "SIEGFRIEDSABER-DEFEND.description": "#Gain !B! Block.",
+  "SIEGFRIEDSABER-BALMUNG.title": "Balmung: Unleashed",
+  "SIEGFRIEDSABER-BALMUNG.description": "#Consume ALL your NP Charge, at least 100. Deal !D! damage to ALL enemies, plus 1 for every 10 NP Charge above 100 — or 2 instead while your Dragon Scales are 3 or higher."
 }

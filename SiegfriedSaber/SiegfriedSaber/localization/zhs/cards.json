@@ -2,5 +2,7 @@
   "SIEGFRIEDSABER-STRIKE.title": "打击",
   "SIEGFRIEDSABER-STRIKE.description": "#造成!D!点伤害。",
   "SIEGFRIEDSABER-DEFEND.title": "防御",
-  "SIEGFRIEDSABER-DEFEND.description": "#获得!B!点格挡。"
+  "SIEGFRIEDSABER-DEFEND.description": "#获得!B!点格挡。",
+  "SIEGFRIEDSABER-BALMUNG.title": "幻想大剑·天魔失坠",
+  "SIEGFRIEDSABER-BALMUNG.description": "#消耗你全部的NP值，至少100。对所有敌人造成!D!点伤害，每超过100的10点NP值再追加1点——当你的龙血护甲达到3或以上时，则改为每10点追加2点。"
 }

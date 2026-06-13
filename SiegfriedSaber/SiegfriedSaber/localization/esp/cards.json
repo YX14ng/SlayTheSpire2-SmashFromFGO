@@ -2,5 +2,7 @@
   "SIEGFRIEDSABER-STRIKE.title": "Golpe",
   "SIEGFRIEDSABER-STRIKE.description": "#Inflige !D! de daño.",
   "SIEGFRIEDSABER-DEFEND.title": "Defensa",
-  "SIEGFRIEDSABER-DEFEND.description": "#Gana !B! de Bloqueo."
+  "SIEGFRIEDSABER-DEFEND.description": "#Gana !B! de Bloqueo.",
+  "SIEGFRIEDSABER-BALMUNG.title": "Balmung: Desatado",
+  "SIEGFRIEDSABER-BALMUNG.description": "#Consume TODA tu Carga NP, mínimo 100. Inflige !D! de daño a TODOS los enemigos, más 1 por cada 10 de Carga NP por encima de 100 — o 2 en su lugar mientras tu Sangre de Dragón sea 3 o más."
 }
