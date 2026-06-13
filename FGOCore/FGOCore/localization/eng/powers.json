@@ -34,5 +34,11 @@
   "FGOCORE-LAHMU_NURTURE_POWER.smartDescription": "#Global brood nurturing. Each point raises the Block and bite of every Laḫmu by 1.",
   "FGOCORE-DRAGON_SCALES_POWER.title": "Dragonblood",
   "FGOCORE-DRAGON_SCALES_POWER.description": "#Reduce each incoming attack by this amount, after Block. These are your scales: not Block, never spent, and they persist between turns.",
-  "FGOCORE-DRAGON_SCALES_POWER.smartDescription": "#Reduce each incoming attack by this amount, after Block. These are your scales: not Block, never spent, and they persist between turns."
+  "FGOCORE-DRAGON_SCALES_POWER.smartDescription": "#Reduce each incoming attack by this amount, after Block. These are your scales: not Block, never spent, and they persist between turns.",
+  "FGOCORE-GOLDEN_RULE_POWER.title": "Golden Rule",
+  "FGOCORE-GOLDEN_RULE_POWER.description": "#The NP Charge you gain this combat is increased by 50% per stack.",
+  "FGOCORE-GOLDEN_RULE_POWER.smartDescription": "#The NP Charge you gain this combat is increased by 50% per stack.",
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.title": "NP Resolved",
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.description": "#An NP card has resolved this turn.",
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.smartDescription": "#An NP card has resolved this turn."
 }

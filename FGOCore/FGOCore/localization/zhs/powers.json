@@ -34,5 +34,11 @@
   "FGOCORE-LAHMU_NURTURE_POWER.smartDescription": "#群体的全局养育。每点使每只拉夫姆的格挡与啃咬各提升1。",
   "FGOCORE-DRAGON_SCALES_POWER.title": "龙血护甲",
   "FGOCORE-DRAGON_SCALES_POWER.description": "#减少每次受到的攻击伤害（在格挡之后结算），减少量等于此值。这是你的龙鳞——并非格挡，不会消耗，且回合之间持续存在。",
-  "FGOCORE-DRAGON_SCALES_POWER.smartDescription": "#减少每次受到的攻击伤害（在格挡之后结算），减少量等于此值。这是你的龙鳞——并非格挡，不会消耗，且回合之间持续存在。"
+  "FGOCORE-DRAGON_SCALES_POWER.smartDescription": "#减少每次受到的攻击伤害（在格挡之后结算），减少量等于此值。这是你的龙鳞——并非格挡，不会消耗，且回合之间持续存在。",
+  "FGOCORE-GOLDEN_RULE_POWER.title": "黄金律",
+  "FGOCORE-GOLDEN_RULE_POWER.description": "#本场战斗中你获得的NP值提升50%（每层）。",
+  "FGOCORE-GOLDEN_RULE_POWER.smartDescription": "#本场战斗中你获得的NP值提升50%（每层）。",
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.title": "宝具已发动",
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.description": "#本回合已发动过一张宝具牌。",
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.smartDescription": "#本回合已发动过一张宝具牌。"
 }

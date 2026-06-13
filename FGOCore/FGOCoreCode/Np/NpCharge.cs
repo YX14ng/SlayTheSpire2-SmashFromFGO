@@ -98,7 +98,33 @@ public static class NpCharge
         {
             await Spend(creature, current, source);
         }
+
+        // P5: marca que UNA carta-NP resolvió este turno (último paso, tras consumir
+        // OverchargeBlessing y el medidor). Único punto por el que pasan TODAS las cartas-NP,
+        // así que el flag cubre cualquier ult del ecosistema sin duplicar el set por carta.
+        await MarkNpResolvedThisTurn(creature);
         return tier;
+    }
+
+    /// <summary>True if an NP card already resolved this turn (P5). Capture this BEFORE
+    /// calling <see cref="ConsumeAllForNpCard"/> (which sets it) to size a refund.</summary>
+    public static bool WasNpResolvedThisTurn(Creature creature) => creature.HasPower<NpResolvedThisTurnPower>();
+
+    /// <summary>Set the once-per-turn "an NP card resolved" marker (auto-removed next turn).</summary>
+    public static async Task MarkNpResolvedThisTurn(Creature creature)
+    {
+        if (!creature.HasPower<NpResolvedThisTurnPower>())
+        {
+            await PowerCmd.Apply<NpResolvedThisTurnPower>(creature, 1m, creature, null);
+        }
+    }
+
+    /// <summary>Refund NP after an NP card: <paramref name="full"/> if this was the first NP
+    /// card of the turn, else <paramref name="reduced"/> (P5 anti-double-refund). Pass the
+    /// value of <see cref="WasNpResolvedThisTurn"/> captured BEFORE the consume.</summary>
+    public static async Task RefundAfterNpCard(Creature creature, int full, int reduced, bool wasAlreadyResolvedBeforeThisCard, CardModel? source)
+    {
+        await Gain(creature, wasAlreadyResolvedBeforeThisCard ? reduced : full, source);
     }
 
     /// <summary>Spend charge. Returns false (and spends nothing) if there isn't enough.</summary>

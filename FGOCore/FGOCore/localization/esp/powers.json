@@ -34,5 +34,11 @@
   "FGOCORE-LAHMU_NURTURE_POWER.smartDescription": "#Crianza global de la cría. Cada punto aumenta en 1 el Bloqueo y la mordida de cada Laḫmu.",
   "FGOCORE-DRAGON_SCALES_POWER.title": "Sangre de Dragón",
   "FGOCORE-DRAGON_SCALES_POWER.description": "#Reduce cada ataque entrante en esta cantidad, tras el Bloqueo. Son tus escamas: no es Bloqueo, no se gasta y persiste entre turnos.",
-  "FGOCORE-DRAGON_SCALES_POWER.smartDescription": "#Reduce cada ataque entrante en esta cantidad, tras el Bloqueo. Son tus escamas: no es Bloqueo, no se gasta y persiste entre turnos."
+  "FGOCORE-DRAGON_SCALES_POWER.smartDescription": "#Reduce cada ataque entrante en esta cantidad, tras el Bloqueo. Son tus escamas: no es Bloqueo, no se gasta y persiste entre turnos.",
+  "FGOCORE-GOLDEN_RULE_POWER.title": "Regla de Oro",
+  "FGOCORE-GOLDEN_RULE_POWER.description": "#La Carga NP que ganas este combate aumenta un 50% por stack.",
+  "FGOCORE-GOLDEN_RULE_POWER.smartDescription": "#La Carga NP que ganas este combate aumenta un 50% por stack.",
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.title": "NP Resuelto",
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.description": "#Una carta-NP resolvió este turno.",
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.smartDescription": "#Una carta-NP resolvió este turno."
 }
