@@ -50,5 +50,9 @@
   "SIEGFRIEDSABER-STRATEGIC_WITHDRAWAL.title": "Retirada Estratégica",
   "SIEGFRIEDSABER-STRATEGIC_WITHDRAWAL.description": "#Agotar. Gana !B! de Bloqueo *Baluarte. Elimina todos los Debuffs de ti mismo.",
   "SIEGFRIEDSABER-CROWN_OF_THE_PEERLESS.title": "Corona del Sin Par",
-  "SIEGFRIEDSABER-CROWN_OF_THE_PEERLESS.description": "#El primer ataque que atraviesa tu *Sangre de Dragón cada turno no inflige daño y te elimina 1 Debuff.+ Cuando se activa, gana 5 de *Carga NP.+"
+  "SIEGFRIEDSABER-CROWN_OF_THE_PEERLESS.description": "#El primer ataque que atraviesa tu *Sangre de Dragón cada turno no inflige daño y te elimina 1 Debuff.+ Cuando se activa, gana 5 de *Carga NP.+",
+  "SIEGFRIEDSABER-NIBELUNG_HOARD.title": "El Tesoro de los Nibelungos",
+  "SIEGFRIEDSABER-NIBELUNG_HOARD.description": "#Agotar. Gana !Scales! de *Sangre de Dragón y !Np! de *Carga NP. Agrega permanentemente un Arrepentimiento a tu mazo.",
+  "SIEGFRIEDSABER-TARNKAPPE.title": "Manto de las Sombras",
+  "SIEGFRIEDSABER-TARNKAPPE.description": "#Agotar. Gana !Scales! de *Sangre de Dragón. El resto del combate tu espalda deja de estar expuesta: el primer golpe que te alcanza cada turno se reduce con tu Sangre de Dragón como cualquier otro. Mientras esté activa, tus escamas ya no se traspasan y la Hoja de Tilo no te da Carga NP."
 }

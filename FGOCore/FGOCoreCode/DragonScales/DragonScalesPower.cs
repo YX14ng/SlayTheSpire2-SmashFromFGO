@@ -39,10 +39,23 @@ public sealed class DragonScalesPower : FGOCorePower
         // Only blows (powered attacks). Curse/Poison/HP-cost are Unpowered and ignore the scales.
         if (!props.IsPoweredAttack()) return amount;
 
-        if (ShouldPierce(props, dealer)) return amount; // exposed back — scales bypassed
+        // Whole-turn suppression (Espalda Expuesta): the scales reduce nothing this turn.
+        if (IsSuppressed()) return amount;
+
+        if (ShouldPierce(props, dealer)) return amount; // exposed back — first reaching hit bypassed
 
         Flash();
         return System.Math.Max(amount - base.Amount, 0m);
+    }
+
+    // Pure read (preview-safe): any ISdDSuppressor power on the owner disables all reduction this turn.
+    private bool IsSuppressed()
+    {
+        foreach (var p in Owner.GetPowerInstances<PowerModel>())
+        {
+            if (p is ISdDSuppressor suppressor && suppressor.SuppressScales) return true;
+        }
+        return false;
     }
 
     private bool ShouldPierce(ValueProp props, Creature? dealer)

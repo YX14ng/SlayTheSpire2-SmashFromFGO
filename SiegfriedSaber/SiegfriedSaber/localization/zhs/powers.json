@@ -16,5 +16,8 @@
   "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.smartDescription": "#当一次攻击穿透你的龙血护甲时，获得此数值的NP值。",
   "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.title": "无双之冠",
   "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.description": "#每回合第一次穿透你龙血护甲的攻击不造成伤害，并移除你身上1个减益效果。",
-  "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.smartDescription": "#每回合第一次穿透你龙血护甲的攻击不造成伤害，并移除你身上1个减益效果。"
+  "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.smartDescription": "#每回合第一次穿透你龙血护甲的攻击不造成伤害，并移除你身上1个减益效果。",
+  "SIEGFRIEDSABER-TARNKAPPE_POWER.title": "隐身斗篷",
+  "SIEGFRIEDSABER-TARNKAPPE_POWER.description": "#你的背部不再暴露：每回合第一个命中你的攻击也会像其他攻击一样被龙血护甲减免。菩提叶不再为命中你的攻击提供NP值。",
+  "SIEGFRIEDSABER-TARNKAPPE_POWER.smartDescription": "#你的背部不再暴露：每回合第一个命中你的攻击也会像其他攻击一样被龙血护甲减免。菩提叶不再为命中你的攻击提供NP值。"
 }

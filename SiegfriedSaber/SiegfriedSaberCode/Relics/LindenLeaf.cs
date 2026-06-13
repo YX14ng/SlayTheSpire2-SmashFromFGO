@@ -37,7 +37,11 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer
 
     // LECTURA PURA: no muta estado (el consumo va en AfterDamageReceived). Pasa el primer
     // golpe que alcanza cada turno; los siguientes chocan contra las escamas.
-    public bool ShouldPierceScales(ValueProp props, Creature? dealer) => !_piercedThisTurn;
+    public bool ShouldPierceScales(ValueProp props, Creature? dealer)
+    {
+        if (IsPierceSuppressed()) return false; // Tarnkappe: la espalda ya no está expuesta
+        return !_piercedThisTurn;
+    }
 
     public override async Task BeforeCombatStartLate()
     {
@@ -62,6 +66,9 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer
         if (target != Owner.Creature) return;
         if (!props.IsPoweredAttack()) return;
         if (result.WasFullyBlocked) return; // no te alcanzó (espejo del amount>0 del power)
+        // Tarnkappe (IDragonScalePierceSuppressor): la espalda cubierta corta el pierce Y toda vía de NP que
+        // el golpe-que-alcanza alimentaría (el +5 NP de abajo y el broadcast del pierce a los listeners).
+        if (IsPierceSuppressed()) return;
 
         // Espeja la decisión del power para ESTE golpe que alcanza: si el cupo seguía libre,
         // el power dejó pasar el golpe (espalda expuesta) → consumilo. Acá, en el camino REAL
@@ -83,5 +90,15 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer
             Flash();
             await NpCharge.Gain(Owner.Creature, NpPerReducedHit, null);
         }
+    }
+
+    // ¿Hay un power que cubre la espalda expuesta (Tarnkappe)? Lectura pura, preview-safe.
+    private bool IsPierceSuppressed()
+    {
+        foreach (var power in Owner.Creature.GetPowerInstances<PowerModel>())
+        {
+            if (power is IDragonScalePierceSuppressor suppressor && suppressor.SuppressPierce) return true;
+        }
+        return false;
     }
 }

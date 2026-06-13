@@ -16,5 +16,8 @@
   "SIEGFRIEDSABER-BAPTISM_OF_FAFNIR_POWER.smartDescription": "#Cuando un ataque atraviesa tu Sangre de Dragón, gana esta cantidad de Carga NP.",
   "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.title": "Corona del Sin Par",
   "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.description": "#El primer ataque que atraviesa tu Sangre de Dragón cada turno no inflige daño y te elimina 1 Debuff.",
-  "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.smartDescription": "#El primer ataque que atraviesa tu Sangre de Dragón cada turno no inflige daño y te elimina 1 Debuff."
+  "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.smartDescription": "#El primer ataque que atraviesa tu Sangre de Dragón cada turno no inflige daño y te elimina 1 Debuff.",
+  "SIEGFRIEDSABER-TARNKAPPE_POWER.title": "Manto de las Sombras",
+  "SIEGFRIEDSABER-TARNKAPPE_POWER.description": "#Tu espalda ya no está expuesta: el primer golpe que te alcanza cada turno se reduce con tu Sangre de Dragón como cualquier otro. La Hoja de Tilo no te da Carga NP por golpes que alcanzan.",
+  "SIEGFRIEDSABER-TARNKAPPE_POWER.smartDescription": "#Tu espalda ya no está expuesta: el primer golpe que te alcanza cada turno se reduce con tu Sangre de Dragón como cualquier otro. La Hoja de Tilo no te da Carga NP por golpes que alcanzan."
 }

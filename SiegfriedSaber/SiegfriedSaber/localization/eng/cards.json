@@ -50,5 +50,9 @@
   "SIEGFRIEDSABER-STRATEGIC_WITHDRAWAL.title": "Strategic Withdrawal",
   "SIEGFRIEDSABER-STRATEGIC_WITHDRAWAL.description": "#Exhaust. Gain !B! *Bulwark Block. Remove all Debuffs from yourself.",
   "SIEGFRIEDSABER-CROWN_OF_THE_PEERLESS.title": "Crown of the Peerless",
-  "SIEGFRIEDSABER-CROWN_OF_THE_PEERLESS.description": "#The first attack that pierces your *Dragon Scales each turn deals no damage and removes 1 Debuff from you.+ When this triggers, gain 5 *NP Charge.+"
+  "SIEGFRIEDSABER-CROWN_OF_THE_PEERLESS.description": "#The first attack that pierces your *Dragon Scales each turn deals no damage and removes 1 Debuff from you.+ When this triggers, gain 5 *NP Charge.+",
+  "SIEGFRIEDSABER-NIBELUNG_HOARD.title": "Hort der Nibelungen",
+  "SIEGFRIEDSABER-NIBELUNG_HOARD.description": "#Exhaust. Gain !Scales! *Dragon Scales and !Np! *NP Charge. Permanently add a Regret to your deck.",
+  "SIEGFRIEDSABER-TARNKAPPE.title": "Tarnkappe",
+  "SIEGFRIEDSABER-TARNKAPPE.description": "#Exhaust. Gain !Scales! *Dragon Scales. For the rest of combat your back is no longer exposed: the first attack that reaches you each turn is reduced by your Dragon Scales like every other. While active, your scales no longer pierce and the Linden Leaf grants no NP Charge."
 }
