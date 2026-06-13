@@ -32,12 +32,23 @@ const SELECT := {
 	"504520": { "idle": [0, 153, 1], "attack": [28, 68, 1], "cast": [0, 72, 2], "hurt": [0, 16, 1] },
 	"704710": { "idle": [0, 154, 1], "attack": [3, 33, 1], "cast": [0, 74, 2], "hurt": [0, 16, 1] },
 	"704720": { "idle": [0, 154, 1], "attack": [20, 62, 1], "cast": [76, 96, 1], "hurt": [0, 16, 1] },
+	# Tiamat (Beast II). VENTANAS PLACEHOLDER — medir tras el primer render exploratorio
+	# (-Mode list/probe con render_all_tiamat.ps1). 9935400 (Femme Fatale humanoide) NO
+	# tiene clip attack -> CLIP_OVERRIDE mapea attack->spell. 9935410 (Bestia) tiene 8
+	# clips y 3 ATLAS de textura (multi-atlas NO soportado aun por _setup_meshes).
+	"9935400": { "idle": [0, 153, 2], "attack": [0, 72, 2], "cast": [0, 72, 2], "hurt": [0, 16, 1] },
+	"9935410": { "idle": [0, 153, 2], "attack": [0, 72, 1], "cast": [0, 72, 2], "hurt": [0, 16, 1] },
 }
 const CLIP_FOR := { "idle": "wait", "attack": "attack_b", "cast": "spell", "hurt": "damage_01" }
 # Overrides de clip por modelo: el attack_q de la Berserker de verano es el
 # unico ataque a nivel de piso (lanza las espadas telequineticamente + patada
 # acrobatica); attack_b y attack_a son surfs aereos sobre la espada.
-const CLIP_OVERRIDE := { "704710": { "attack": "attack_q" } }
+const CLIP_OVERRIDE := {
+	"704710": { "attack": "attack_q" },
+	# Tiamat Femme Fatale (9935400) no tiene clip de ataque (solo wait/spell/damage_01):
+	# usar spell como stand-in de attack hasta portar/improvisar uno.
+	"9935400": { "attack": "spell" },
+}
 # Anims excluidas del union de crop: el attack_b de Aesc lanza fragmentos de corona
 # hasta el borde del canvas; en el save esos fragmentos se recortan y la figura queda.
 # El attack_q de 704710 lanza las espadas telequineticas por TODO el canvas

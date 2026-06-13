@@ -89,11 +89,30 @@ si estás en humanoide te volvés **Bestia gratis**. Las cartas-NP drafteadas so
 - [ ] Cartas (básicas+firmas+6 clave+pool) + carta-NP "Enūma Eliš" (`ConsumeAllForNpCard`).
 - [ ] Reliquias (Útero starter, Lágrimas, Cuerno de King Hassan) + BondRelic sin ×global.
 - [ ] Loc eng/esp/zhs + íconos por power.
-**Assets a verificar (HTTP 200 antes de codear):**
-- [ ] Servant NA #149 / ID 9935400 (charagraph humanoide Femme Fatale).
-- [ ] Forma Dragonoid (¿sprite de batalla o riggear desde charagraph? FGO usa puppets — WORKFLOW-FGO §3/§7).
-- [ ] Sprites de Laḫmu / Bel Laḫmu (enemigos de Singularidad 7, war 107). ⚠️ Riesgo: puede no
-  haber sprite limpio → fallback = ícono estilizado del contador del swarm.
+**Assets — IDs de modelo de batalla VERIFICADOS (HTTP 200 + UnityFS, Atlas Academy, 2026-06-13).**
+Bundles descargados con `tools/fetch_fgo_bundle.ps1 -Ids 9935400,9935410,9937130,9937140,9937150 -Texture`
+→ `assets/reference/bundles/`. Patrón: bundle `static.atlasacademy.io/JP/Servants/<id>/<id>`,
+texturas `…/<id>/textures/<id>[_NN].png`. Staging post-extracción: `tools/render_all_tiamat.ps1`.
+
+| forma | id | tamaño | clips del puppet | uso |
+|---|---|---|---|---|
+| **Femme Fatale** (humanoide) | `9935400` | 2.9 MB, 1 atlas 2048 | ⚠️ SOLO `wait/spell/damage_01` (sin attack/die) | forma criadora; `attack`→`spell` (CLIP_OVERRIDE) |
+| **Bestia/Dragón** (Beast II) | `9935410` | 12.4 MB, **3 atlas** 2048 | ✅ 8: `wait, attack_a/a02/b/b02/q, spell, damage_01` | forma devoradora (clímax) |
+| Laḫmu (Lancer) | `9937130` | 1.6 MB, 1 atlas 1024 | ✅ 9 clips | swarm / arte de carta (opcional) |
+| Bel Laḫmu Ground (Saber) | `9937140` | 2.1 MB, 1 atlas 2048 | ✅ 9 clips | swarm / arte (opcional) |
+| Bel Laḫmu Flight (Beast II) | `9937150` | 1.4 MB, 1 atlas 1024 | ✅ 9 clips | swarm / arte (opcional) |
+
+⚠️ **Caveats antes de renderizar** (ver cabecera de `render_all_tiamat.ps1`):
+1. **Femme Fatale (9935400) no tiene clip de ataque** — `CLIP_OVERRIDE` usa `spell` como stand-in;
+   si se quiere un ataque propio hay que portarlo de la Bestia (rigs distintos 662 vs 416 joints, NO 1:1) o improvisarlo en Godot.
+2. **Bestia (9935410) tiene 3 atlas de textura** — `render.gd:_setup_meshes` hoy aplica UN atlas a
+   todas las superficies → la Bestia NO renderiza bien hasta agregar mapeo multi-atlas (surface→atlas). **BLOQUEANTE de la forma Bestia.**
+3. **Escala gigante (superGiant)** — auto-normalizada por `joint_head` (15.0/head_raw.y), igual que Morgan Berserker; no tocar.
+4. Próximo paso MANUAL (GUI): AssetStudioMod → Load `<id>.bundle` → Animator `chr` + clips → "Export Animator + selected AnimationClips" → `assets/reference/extracted/<id>_anim/` (docs/ANIMATIONS.md §1).
+
+Distractores DESCARTADOS (NO son la jefa): `205400` (Larva/Tiamat Archer playable, CN 450),
+`1001600` (Larva/Tiamat Alter Ego playable, CN 376). No existe un "dragón negro puro" como puppet
+separado: la silueta gigante del combate final es arte de escenario estático.
 
 ## Riesgos / knobs de playtest
 - Carga cognitiva del swarm → mostrar "Laḫmu: N / Crianza: M" + previsualizar bloque+mordida (o el agregado).

@@ -41,6 +41,24 @@ ID del servant: buscar en https://apps.atlasacademy.io/db (Mash=800100; trajes t
 
 ⚠️ La API rate-limitea: `Start-Sleep -Milliseconds 800` entre requests en loops.
 
+**Descargar bundles**: `tools/fetch_fgo_bundle.ps1 -Ids <id>[,<id>...] [-Texture]` → baja a
+`assets/reference/bundles/<id>.bundle`, verifica el magic `UnityFS` y rate-limitea (las bundles
+están **gitignoradas** — son binarios descargables on-demand). Para hallar/verificar IDs:
+`.claude/workflows` o la query `api.atlasacademy.io/basic/JP/svt/search?name=<nombre>`.
+
+**Gotchas de assets (aprendidos con Tiamat, 2026-06-13):**
+- **`manifest.json` nuevo**: AA ahora sirve `…/Servants/<id>/manifest.json` listando los paths, pero
+  el patrón viejo `…/Servants/<id>/<id>` (sin extensión) SIGUE devolviendo el UnityFS — el fetch script vale.
+- **Texturas en `/textures/`** (no la raíz) y un modelo puede tener **VARIOS atlas** (`<id>_01/_02/_03.png`).
+  ⚠️ `render.gd:_setup_meshes` aplica UN atlas a todas las superficies → un modelo multi-atlas NO
+  renderiza bien sin agregar mapeo surface→atlas (pendiente; bloquea p.ej. la forma Bestia de Tiamat).
+- **Enemies/jefes**: una entidad puede tener DOS svtIds — uno `enemyCollectionDetail` (la "ficha",
+  puppet a veces INCOMPLETO: solo wait/spell/damage) y otro `type=enemy` (la instancia de combate, clips
+  completos). Verificar los AnimationClips reales (UnityPy `pip install unitypy`, o el pass `list`) antes
+  de elegir. Caso Tiamat: 9935400=ficha (3 clips, sin attack) vs 9935410=combate (8 clips).
+- **Jefes gigantes (`superGiant`)**: pueden SÍ tener puppet extraíble (Tiamat Beast 9935410 lo tiene);
+  no asumir que no. La escala gigante la normaliza el renderer por `joint_head`.
+
 ## 3. Animaciones del modelo original (el pipeline estrella)
 
 1. **Export GUI (manual, ~2 min por forma)**: AssetStudioGUI → Load `<id>.bundle` → seleccionar Animator `chr` + TODOS los AnimationClips → click derecho → **"Export Animator + selected AnimationClips"** → `assets/reference/extracted/<id>_anim/`. El FBX debe pesar MUCHO más que sin clips (Mash: 8-80MB). El CLI NO puede hacer este paso (v0.19).
