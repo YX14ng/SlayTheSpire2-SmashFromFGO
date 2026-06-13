@@ -52,10 +52,13 @@ public static class Stars
         return bonus;
     }
 
-    /// <summary>True if the owner is in a crit-capable form (Berserker/Avalon) with ≥cost stars.</summary>
+    /// <summary>True if the owner can crit (Berserker/Avalon form, OR the Around Caliburn
+    /// NP window is open) and has ≥cost stars.</summary>
     public static bool CanCrit(Creature creature, int cost)
     {
-        if (!creature.HasPower<SummerBerserkerFormPower>() && !creature.HasPower<AvalonFormPower>()) return false;
+        if (!creature.HasPower<SummerBerserkerFormPower>()
+            && !creature.HasPower<AvalonFormPower>()
+            && !creature.HasPower<AroundCaliburnWindowPower>()) return false;
         return Of(creature) >= DiscountedCost(creature, cost);
     }
 
