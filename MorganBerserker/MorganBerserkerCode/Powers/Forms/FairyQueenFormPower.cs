@@ -1,4 +1,6 @@
+using FGOCore.FGOCoreCode.Curses;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
@@ -7,20 +9,19 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MorganBerserker.MorganBerserkerCode.Powers.Forms;
 
 /// <summary>
-/// La Reina (Berserker, 妖精女王) — Morgan's starting form.
-/// (a) The first time you damage an enemy's HP each turn: NP Charge +5.
-/// (b) Your cards that apply Curse apply +1 (ICurseAmplifier).
+/// La Reina (Berserker, 妖精女王) — forma inicial de Morgan. EL DETONADOR del motor de
+/// dos tiempos (rediseño 2026-06-12): es donde COSECHÁS la maldición sembrada en Caster.
+/// (a) "Sentencia": cuando un Ataque tuyo daña HP de un enemigo maldito, consume TODA
+///     su Maldición y le inflige daño adicional igual a lo consumido (golpe aparte).
+///     Genera poca maldición propia → te empuja a sembrar en Caster y volver a cosechar.
+/// (b) La primera vez que dañás HP enemigo cada turno: +10 NP.
+/// Ya NO amplifica Maldición (ICurseAmplifier se movió a la Bruja/Caster, que siembra).
 /// </summary>
-public sealed class FairyQueenFormPower : MorganFormPower, ICurseAmplifier
+public sealed class FairyQueenFormPower : MorganFormPower
 {
-    // 5 -> 8 (primer pase) -> 10 (re-balance v3 al entorno Hextech+BetterCharacters).
     public const int NpOnDamage = 10;
 
     public override string FramesPath => $"{MainFile.ResPath}/character/morgan_frames_queen.tres";
-
-    // 1 -> 2 en el re-balance v3 (estilo BetterCharacters: duplicar el escalador del
-    // arquetipo; acompaña el tope de Maldicion 15 -> 25).
-    public int ExtraCurse => 2;
 
     private bool _npThisTurn;
 
@@ -37,11 +38,27 @@ public sealed class FairyQueenFormPower : MorganFormPower, ICurseAmplifier
     {
         await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
 
-        if (_npThisTurn || dealer != Owner || target.IsPlayer) return;
+        if (dealer != Owner || target.IsPlayer || target.IsDead) return;
         if (!props.IsPoweredAttack() || result.UnblockedDamage <= 0) return;
 
-        _npThisTurn = true;
+        // (b) Primera carga NP por daño del turno.
+        if (!_npThisTurn)
+        {
+            _npThisTurn = true;
+            Flash();
+            await NpCharge.Gain(Owner, NpOnDamage, null);
+        }
+
+        // (a) Sentencia: detoná la Maldición del objetivo. El golpe extra es Unpowered
+        // (no re-dispara este hook ni la carga por daño; con la Maldición ya en 0 sería
+        // no-op de todos modos).
+        var curse = Curses.Of(target);
+        if (curse <= 0) return;
+        var consumed = await Curses.Consume(target, curse);
+        if (consumed <= 0) return;
+
         Flash();
-        await NpCharge.Gain(Owner, NpOnDamage, null);
+        await CreatureCmd.Damage(choiceContext, target, consumed,
+            ValueProp.Unpowered | ValueProp.SkipHurtAnim, Owner, null);
     }
 }
