@@ -34,8 +34,9 @@ $modChar = "f:\Programs\SlayTheSpire2-SmashFromFGO\Tiamat\Tiamat\character"
 # tex: atlas descargado de AA (assets/reference/bundles). La bestia usa _01 (PARCIAL —
 # faltan _02/_03 hasta tener multi-atlas en render.gd).
 $forms = @(
-    @{ id = "9935400"; src = "$ex\9935400_anim\Animator\chr"; fbx = "chr.fbx"; tex = "$bn\9935400.png";    dest = "frames_femme" },
-    @{ id = "9935410"; src = "$ex\9935410_anim\Animator\chr"; fbx = "chr.fbx"; tex = "$bn\9935410_01.png"; dest = "frames_beast" }
+    @{ id = "9935400"; src = "$ex\9935400_anim\Animator\chr";   fbx = "chr.fbx";   tex = "$bn\9935400.png";    dest = "frames_femme" },
+    # El Beast exporto como Animator\model\model.fbx (como Castoria 504520), no chr.fbx.
+    @{ id = "9935410"; src = "$ex\9935410_anim\Animator\model"; fbx = "model.fbx"; tex = "$bn\9935410_01.png"; dest = "frames_beast" }
 )
 if ($Only) { $forms = @($forms | Where-Object { $_.id -eq $Only }) }
 
