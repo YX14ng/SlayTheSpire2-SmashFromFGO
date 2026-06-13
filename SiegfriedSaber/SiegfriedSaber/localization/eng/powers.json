@@ -1,0 +1,11 @@
+{
+  "SIEGFRIEDSABER-EXPOSED_BACK_POWER.title": "Exposed Back",
+  "SIEGFRIEDSABER-EXPOSED_BACK_POWER.description": "#This turn your Dragon Scales reduce NO incoming hits.",
+  "SIEGFRIEDSABER-EXPOSED_BACK_POWER.smartDescription": "#This turn your Dragon Scales reduce NO incoming hits.",
+  "SIEGFRIEDSABER-LINDEN_SCAR_POWER.title": "Linden Scar",
+  "SIEGFRIEDSABER-LINDEN_SCAR_POWER.description": "#Each time an attack pierces your Dragon Scales, gain 1 Dragon Scale and this much NP Charge.",
+  "SIEGFRIEDSABER-LINDEN_SCAR_POWER.smartDescription": "#Each time an attack pierces your Dragon Scales, gain 1 Dragon Scale and this much NP Charge.",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.title": "The Weight of Expectations",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.description": "#At the end of your turn, if you played no Attacks, gain NP Charge and 1 Dragon Scale. Up to 2 triggers per turn.",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.smartDescription": "#At the end of your turn, if you played no Attacks, gain NP Charge and 1 Dragon Scale. Up to 2 triggers per turn."
+}

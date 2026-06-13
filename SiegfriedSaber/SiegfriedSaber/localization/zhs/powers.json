@@ -1,0 +1,11 @@
+{
+  "SIEGFRIEDSABER-EXPOSED_BACK_POWER.title": "露背",
+  "SIEGFRIEDSABER-EXPOSED_BACK_POWER.description": "#本回合你的龙血护甲不再减免任何受到的攻击。",
+  "SIEGFRIEDSABER-EXPOSED_BACK_POWER.smartDescription": "#本回合你的龙血护甲不再减免任何受到的攻击。",
+  "SIEGFRIEDSABER-LINDEN_SCAR_POWER.title": "菩提叶之伤痕",
+  "SIEGFRIEDSABER-LINDEN_SCAR_POWER.description": "#每当有攻击穿透你的龙血护甲时，获得1点龙血护甲和此数值的NP值。",
+  "SIEGFRIEDSABER-LINDEN_SCAR_POWER.smartDescription": "#每当有攻击穿透你的龙血护甲时，获得1点龙血护甲和此数值的NP值。",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.title": "期望之重",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.description": "#在你的回合结束时，若你未打出攻击牌，则获得NP值与1点龙血护甲。每回合最多触发2次。",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.smartDescription": "#在你的回合结束时，若你未打出攻击牌，则获得NP值与1点龙血护甲。每回合最多触发2次。"
+}

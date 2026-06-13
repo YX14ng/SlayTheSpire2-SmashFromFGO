@@ -25,13 +25,16 @@ public class Siegfried : PlaceholderCharacterModel
     // Sangre de Dragón inicial 2 (Hoja de Tilo), NO HP extra.
     public override int StartingHp => 80;
 
-    // PROVISIONAL: mazo inicial mínimo jugable (5 Golpe Buster + 5 Defensa) mientras se construyen
-    // las firmas y el NP Balmung. Objetivo de diseño = QAABB fiel, ~52 daño/ciclo (§5). El "Golpe"
-    // vive DENTRO del mazo (P6 Morgan, compat del tag Strike).
+    // Mazo inicial QAABB fiel (§5): 4 Golpe Buster + 4 Defensa + 2 FIRMAS (Tajo Cazadragones =
+    // Buster con sinergia SdD; Bautismo de Sangre = construcción de SdD+NP). El "Golpe" vive DENTRO
+    // del mazo (P6 Morgan, compat del tag Strike). Las firmas enseñan las dos identidades (armadura
+    // y medidor) y el mazo gana el acto 1 sin el motor armado (Balmung NO está en el mazo inicial).
     public override IEnumerable<CardModel> StartingDeck =>
     [
-        ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(),
-        ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>()
+        ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(),
+        ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(),
+        ModelDb.Card<DragonbloodCut>(),
+        ModelDb.Card<BloodBaptism>()
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<LindenLeaf>()];

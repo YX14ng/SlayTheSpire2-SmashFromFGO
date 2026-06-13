@@ -1,0 +1,11 @@
+{
+  "SIEGFRIEDSABER-EXPOSED_BACK_POWER.title": "Espalda Expuesta",
+  "SIEGFRIEDSABER-EXPOSED_BACK_POWER.description": "#Este turno tu Sangre de Dragón NO reduce ningún golpe entrante.",
+  "SIEGFRIEDSABER-EXPOSED_BACK_POWER.smartDescription": "#Este turno tu Sangre de Dragón NO reduce ningún golpe entrante.",
+  "SIEGFRIEDSABER-LINDEN_SCAR_POWER.title": "Cicatriz del Tilo",
+  "SIEGFRIEDSABER-LINDEN_SCAR_POWER.description": "#Cada vez que un golpe atraviesa tu Sangre de Dragón, gana 1 de Sangre de Dragón y esta cantidad de Carga NP.",
+  "SIEGFRIEDSABER-LINDEN_SCAR_POWER.smartDescription": "#Cada vez que un golpe atraviesa tu Sangre de Dragón, gana 1 de Sangre de Dragón y esta cantidad de Carga NP.",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.title": "El Peso de las Expectativas",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.description": "#Al final de tu turno, si no jugaste Ataques, gana Carga NP y 1 de Sangre de Dragón. Hasta 2 activaciones por turno.",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS_POWER.smartDescription": "#Al final de tu turno, si no jugaste Ataques, gana Carga NP y 1 de Sangre de Dragón. Hasta 2 activaciones por turno."
+}

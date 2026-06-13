@@ -32,5 +32,9 @@
   "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.title": "屠龙斩",
   "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.description": "#造成!D!点伤害。当你的*龙血护甲达到!Threshold!或更高时，额外造成!Bonus!点伤害。",
   "SIEGFRIEDSABER-GATHER_PROWESS.title": "积蓄武勇",
-  "SIEGFRIEDSABER-GATHER_PROWESS.description": "#消耗。获得!Np!点*NP值。获得!Scales!点*龙血护甲。"
+  "SIEGFRIEDSABER-GATHER_PROWESS.description": "#消耗。获得!Np!点*NP值。获得!Scales!点*龙血护甲。",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.title": "期望之重",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.description": "#在你的回合结束时，若本回合你未打出攻击牌，则获得!NpGain!点*NP值与1点*龙血护甲。每回合最多触发2次。",
+  "SIEGFRIEDSABER-LAST_WILL.title": "最后的意志",
+  "SIEGFRIEDSABER-LAST_WILL.description": "#获得!Np!点*NP值。"
 }

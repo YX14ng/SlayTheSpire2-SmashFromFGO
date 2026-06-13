@@ -32,5 +32,9 @@
   "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.title": "Tajo Cazadragones",
   "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.description": "#Inflige !D! de daño. Inflige !Bonus! adicional mientras tu *Sangre de Dragón sea !Threshold! o más.",
   "SIEGFRIEDSABER-GATHER_PROWESS.title": "Reunir Bravura",
-  "SIEGFRIEDSABER-GATHER_PROWESS.description": "#Agotar. Gana !Np! de *Carga NP. Gana !Scales! de *Sangre de Dragón."
+  "SIEGFRIEDSABER-GATHER_PROWESS.description": "#Agotar. Gana !Np! de *Carga NP. Gana !Scales! de *Sangre de Dragón.",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.title": "El Peso de las Expectativas",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.description": "#Al final de tu turno, si no jugaste Ataques este turno, gana !NpGain! de *Carga NP y 1 de *Sangre de Dragón. Hasta 2 activaciones por turno.",
+  "SIEGFRIEDSABER-LAST_WILL.title": "Última Voluntad",
+  "SIEGFRIEDSABER-LAST_WILL.description": "#Gana !Np! de *Carga NP."
 }

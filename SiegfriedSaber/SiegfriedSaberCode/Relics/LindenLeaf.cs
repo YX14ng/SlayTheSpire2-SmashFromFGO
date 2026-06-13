@@ -64,11 +64,14 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer
         if (result.WasFullyBlocked) return; // no te alcanzó (espejo del amount>0 del power)
 
         // Espeja la decisión del power para ESTE golpe que alcanza: si el cupo seguía libre,
-        // el power dejó pasar el golpe (espalda expuesta) → consumilo. (La carta Cicatriz del
-        // Tilo se engancha al pierce; por ahora la reliquia no añade efecto propio al pierce.)
+        // el power dejó pasar el golpe (espalda expuesta) → consumilo. Acá, en el camino REAL
+        // del daño (no en la lectura pura ShouldPierceScales, que un preview podría disparar),
+        // avisamos a los listeners del pierce (p.ej. la carta Cicatriz del Tilo). La reliquia
+        // no añade efecto propio al pierce; los riders viven en los listeners.
         if (!_piercedThisTurn)
         {
             _piercedThisTurn = true;
+            await DragonScalesPierce.Broadcast(Owner.Creature, choiceContext);
             return;
         }
 

@@ -32,5 +32,9 @@
   "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.title": "Dragon Slayer Strike",
   "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.description": "#Deal !D! damage. Deal !Bonus! more while your *Dragon Scales are !Threshold! or higher.",
   "SIEGFRIEDSABER-GATHER_PROWESS.title": "Gather Prowess",
-  "SIEGFRIEDSABER-GATHER_PROWESS.description": "#Exhaust. Gain !Np! *NP Charge. Gain !Scales! *Dragon Scales."
+  "SIEGFRIEDSABER-GATHER_PROWESS.description": "#Exhaust. Gain !Np! *NP Charge. Gain !Scales! *Dragon Scales.",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.title": "The Weight of Expectations",
+  "SIEGFRIEDSABER-WEIGHT_OF_EXPECTATIONS.description": "#At the end of your turn, if you played no Attacks this turn, gain !NpGain! *NP Charge and 1 *Dragon Scales. Up to 2 triggers per turn.",
+  "SIEGFRIEDSABER-LAST_WILL.title": "Last Will",
+  "SIEGFRIEDSABER-LAST_WILL.description": "#Gain !Np! *NP Charge."
 }
