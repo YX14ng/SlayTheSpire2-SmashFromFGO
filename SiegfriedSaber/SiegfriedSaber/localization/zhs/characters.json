@@ -1,0 +1,16 @@
+{
+  "SIEGFRIEDSABER-SIEGFRIED.title": "齐格弗里德",
+  "SIEGFRIEDSABER-SIEGFRIED.titleObject": "龙血骑士",
+  "SIEGFRIEDSABER-SIEGFRIED.description": "《尼伯龙根之歌》中的屠龙英雄，浴于法夫纳之血而周身坚硬：龙血护甲可弹开几乎一切攻击——唯独挡不住找上他后背的那一击。他以坚忍蓄起Balmung，护甲撑得越久，宝具便斩得越利。一位无私而总在致歉的猛士，毫无魔术抗性。Sumanai（抱歉）。",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounObject": "他",
+  "SIEGFRIEDSABER-SIEGFRIED.possessiveAdjective": "他的",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounPossessive": "他的",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounSubject": "他",
+  "SIEGFRIEDSABER-SIEGFRIED.goldMonologue": "金子？给那些还有梦想要买的人吧。我只需要一把剑，和一个挥剑的理由。",
+  "SIEGFRIEDSABER-SIEGFRIED.eventDeathPrevention": "还不行——还有我没能护到底的人。抱歉，我不能倒在这里。",
+  "SIEGFRIEDSABER-SIEGFRIED.aromaPrinciple": "为了我曾是的那条龙，也为了我未能成为的英雄，我将以此剑赎罪——为了你，而非为我。",
+  "SIEGFRIEDSABER-SIEGFRIED.cardsModifierTitle": "尼伯龙根之刃",
+  "SIEGFRIEDSABER-SIEGFRIED.cardsModifierDescription": "使用齐格弗里德的卡组游玩。",
+  "SIEGFRIEDSABER-SIEGFRIED.banter.alive.endTurnPing": "站到我身后。正面来的一切，我的护甲都会替你挡下——前线交给骑士便好。",
+  "SIEGFRIEDSABER-SIEGFRIED.banter.dead.endTurnPing": "护甲渐薄……那就以血肉去接下一击吧，本就该如此。"
+}

@@ -1,0 +1,16 @@
+{
+  "SIEGFRIEDSABER-SIEGFRIED.title": "Siegfried",
+  "SIEGFRIEDSABER-SIEGFRIED.titleObject": "el Caballero de Sangre de Dragón",
+  "SIEGFRIEDSABER-SIEGFRIED.description": "El cazador de dragones del Cantar de los Nibelungos, con la piel endurecida por un baño en la sangre de Fafnir: la Sangre de Dragón desvía casi todos los golpes — todos menos el que halla su espalda. Resiste, carga Balmung, y cuanto más aguantan sus escamas más afilado corta su Noble Phantasm. Un bruiser abnegado y disculpón, sin Resistencia Mágica. Sumanai.",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounObject": "él",
+  "SIEGFRIEDSABER-SIEGFRIED.possessiveAdjective": "su",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounPossessive": "suyo",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounSubject": "él",
+  "SIEGFRIEDSABER-SIEGFRIED.goldMonologue": "¿Oro? Dáselo a quienes aún tengan sueños que comprar. Yo solo necesito una espada y una razón para alzarla.",
+  "SIEGFRIEDSABER-SIEGFRIED.eventDeathPrevention": "Todavía no — aún quedan aquellos a los que no terminé de proteger. Perdóname. No puedo caer aquí.",
+  "SIEGFRIEDSABER-SIEGFRIED.aromaPrinciple": "Por el dragón que fui, y el héroe que no supe ser, expiaré con esta espada — por tu bien, no por el mío.",
+  "SIEGFRIEDSABER-SIEGFRIED.cardsModifierTitle": "La Hoja del Nibelungo",
+  "SIEGFRIEDSABER-SIEGFRIED.cardsModifierDescription": "Juega con el mazo de Siegfried.",
+  "SIEGFRIEDSABER-SIEGFRIED.banter.alive.endTurnPing": "Quédate detrás de mí. Todo lo que venga de frente, mis escamas lo desviarán — déjale el frente a un caballero.",
+  "SIEGFRIEDSABER-SIEGFRIED.banter.dead.endTurnPing": "Mis escamas se adelgazan... entonces recibiré el próximo golpe con la carne, como siempre debí hacer."
+}

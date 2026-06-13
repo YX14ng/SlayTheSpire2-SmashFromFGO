@@ -1,0 +1,16 @@
+{
+  "SIEGFRIEDSABER-SIEGFRIED.title": "Siegfried",
+  "SIEGFRIEDSABER-SIEGFRIED.titleObject": "the Dragon-Blooded Knight",
+  "SIEGFRIEDSABER-SIEGFRIED.description": "The dragon-slayer of the Nibelungenlied, his skin hardened by a bath in Fafnir's blood: Dragon Scales turn aside almost every blow — all but the one that finds his back. He endures, charges Balmung, and the longer his scales hold the sharper his Noble Phantasm cuts. A selfless, apologetic bruiser with no Magic Resistance. Sumanai.",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounObject": "him",
+  "SIEGFRIEDSABER-SIEGFRIED.possessiveAdjective": "his",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounPossessive": "his",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounSubject": "he",
+  "SIEGFRIEDSABER-SIEGFRIED.goldMonologue": "Gold? Give it to those who still have dreams left to buy. I need only a blade and a reason to raise it.",
+  "SIEGFRIEDSABER-SIEGFRIED.eventDeathPrevention": "Not yet — there are still those I have not finished protecting. Forgive me. I cannot fall here.",
+  "SIEGFRIEDSABER-SIEGFRIED.aromaPrinciple": "For the dragon I was, and the hero I could not be, I will atone with this blade — for your sake, not my own.",
+  "SIEGFRIEDSABER-SIEGFRIED.cardsModifierTitle": "Blade of the Nibelung",
+  "SIEGFRIEDSABER-SIEGFRIED.cardsModifierDescription": "Play with Siegfried's card pool.",
+  "SIEGFRIEDSABER-SIEGFRIED.banter.alive.endTurnPing": "Stay behind me. Everything before me, my scales will turn — leave the front to a knight.",
+  "SIEGFRIEDSABER-SIEGFRIED.banter.dead.endTurnPing": "My scales run thin... then I will meet the next blow with flesh, as I always should have."
+}
