@@ -10,5 +10,11 @@
   "TIAMAT-SUCKLE.title": "哺育",
   "TIAMAT-SUCKLE.description": "#获得!Nurture!点养育。若你有3只或更多拉夫姆，抽1张牌。",
   "TIAMAT-MITOSIS.title": "有丝分裂",
-  "TIAMAT-MITOSIS.description": "#吞噬1只拉夫姆：造成!D!点伤害，每点养育额外造成!PerNurture!点。然后孕育1只拉夫姆。"
+  "TIAMAT-MITOSIS.description": "#吞噬1只拉夫姆：造成!D!点伤害，每点养育额外造成!PerNurture!点。然后孕育1只拉夫姆。",
+  "TIAMAT-BLACK_DELUGE.title": "黑色洪流",
+  "TIAMAT-BLACK_DELUGE.description": "#对所有敌人施加!Curse!层诅咒。每个被诅咒的敌人使你获得!Nurture!点养育。",
+  "TIAMAT-ELEVEN_BEL_LAHMU.title": "十一贝尔·拉夫姆",
+  "TIAMAT-ELEVEN_BEL_LAHMU.description": "#孕育至多!Lahmu!只拉夫姆。获得等同于你场上拉夫姆数量的养育。获得!NpCharge!点宝具值。",
+  "TIAMAT-BROKEN_HORN.title": "断折之角",
+  "TIAMAT-BROKEN_HORN.description": "#吞噬你所有的拉夫姆。每吞噬一只，对所有敌人造成!PerHorn!点伤害，每点养育额外增加!PerNurture!点。每吞噬一只拉夫姆获得!NpPerLahmu!点宝具值。"
 }

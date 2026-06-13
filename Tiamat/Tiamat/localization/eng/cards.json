@@ -10,5 +10,11 @@
   "TIAMAT-SUCKLE.title": "Suckle",
   "TIAMAT-SUCKLE.description": "#Gain !Nurture! Nurture. If you have 3 or more Laḫmu, draw 1 card.",
   "TIAMAT-MITOSIS.title": "Mitosis",
-  "TIAMAT-MITOSIS.description": "#Devour 1 Laḫmu: deal !D! damage, plus !PerNurture! for each Nurture. Then spawn 1 Laḫmu."
+  "TIAMAT-MITOSIS.description": "#Devour 1 Laḫmu: deal !D! damage, plus !PerNurture! for each Nurture. Then spawn 1 Laḫmu.",
+  "TIAMAT-BLACK_DELUGE.title": "Black Deluge",
+  "TIAMAT-BLACK_DELUGE.description": "#Apply !Curse! Curse to ALL enemies. Gain !Nurture! Nurture for each enemy cursed.",
+  "TIAMAT-ELEVEN_BEL_LAHMU.title": "Eleven Bel Laḫmu",
+  "TIAMAT-ELEVEN_BEL_LAHMU.description": "#Spawn up to !Lahmu! Laḫmu. Gain Nurture equal to your Laḫmu in play. Gain !NpCharge! NP Charge.",
+  "TIAMAT-BROKEN_HORN.title": "Broken Horn",
+  "TIAMAT-BROKEN_HORN.description": "#Devour ALL your Laḫmu. For each one devoured, deal !PerHorn! damage to ALL enemies, increased by !PerNurture! per Nurture. Gain !NpPerLahmu! NP Charge per Laḫmu."
 }

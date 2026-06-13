@@ -10,5 +10,11 @@
   "TIAMAT-SUCKLE.title": "Amamantar",
   "TIAMAT-SUCKLE.description": "#Obtén !Nurture! de Crianza. Si tenés 3 o más Laḫmu, robá 1 carta.",
   "TIAMAT-MITOSIS.title": "Mitosis",
-  "TIAMAT-MITOSIS.description": "#Devorá 1 Laḫmu: inflige !D! de daño, más !PerNurture! por cada Crianza. Luego parí 1 Laḫmu."
+  "TIAMAT-MITOSIS.description": "#Devorá 1 Laḫmu: inflige !D! de daño, más !PerNurture! por cada Crianza. Luego parí 1 Laḫmu.",
+  "TIAMAT-BLACK_DELUGE.title": "Diluvio Negro",
+  "TIAMAT-BLACK_DELUGE.description": "#Aplica !Curse! de Maldición a TODOS los enemigos. Obtén !Nurture! de Crianza por cada enemigo maldecido.",
+  "TIAMAT-ELEVEN_BEL_LAHMU.title": "Once Bel Laḫmu",
+  "TIAMAT-ELEVEN_BEL_LAHMU.description": "#Parí hasta !Lahmu! Laḫmu. Obtén Crianza igual a tus Laḫmu en campo. Obtén !NpCharge! de Carga NP.",
+  "TIAMAT-BROKEN_HORN.title": "Cuerno Roto",
+  "TIAMAT-BROKEN_HORN.description": "#Devorá TODOS tus Laḫmu. Por cada uno devorado, inflige !PerHorn! de daño a TODOS los enemigos, aumentado en !PerNurture! por Crianza. Obtén !NpPerLahmu! de Carga NP por Laḫmu."
 }
