@@ -54,5 +54,11 @@
   "SIEGFRIEDSABER-NIBELUNG_HOARD.title": "尼伯龙根的宝藏",
   "SIEGFRIEDSABER-NIBELUNG_HOARD.description": "#消耗。获得!Scales!点*龙血护甲与!Np!点*NP值。将一张「悔恨」永久加入你的牌组。",
   "SIEGFRIEDSABER-TARNKAPPE.title": "隐身斗篷",
-  "SIEGFRIEDSABER-TARNKAPPE.description": "#消耗。获得!Scales!点*龙血护甲。本场战斗剩余时间内，你的背部不再暴露：每回合第一个命中你的攻击也会像其他攻击一样被龙血护甲减免。生效期间，你的龙血护甲不再被穿透，菩提叶也不再为你提供NP值。"
+  "SIEGFRIEDSABER-TARNKAPPE.description": "#消耗。获得!Scales!点*龙血护甲。本场战斗剩余时间内，你的背部不再暴露：每回合第一个命中你的攻击也会像其他攻击一样被龙血护甲减免。生效期间，你的龙血护甲不再被穿透，菩提叶也不再为你提供NP值。",
+  "SIEGFRIEDSABER-BY_MY_CONVICTION.title": "凭吾之信念",
+  "SIEGFRIEDSABER-BY_MY_CONVICTION.description": "#消耗。选择一项：获得50点*NP值，或3点*龙血护甲。+升级后：两者皆得。+",
+  "SIEGFRIEDSABER-CONVICTION_CHARGE.title": "蓄能",
+  "SIEGFRIEDSABER-CONVICTION_CHARGE.description": "#获得50点*NP值。",
+  "SIEGFRIEDSABER-CONVICTION_SCALES.title": "硬化",
+  "SIEGFRIEDSABER-CONVICTION_SCALES.description": "#获得3点*龙血护甲。"
 }

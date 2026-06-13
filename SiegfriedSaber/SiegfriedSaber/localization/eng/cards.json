@@ -54,5 +54,11 @@
   "SIEGFRIEDSABER-NIBELUNG_HOARD.title": "Hort der Nibelungen",
   "SIEGFRIEDSABER-NIBELUNG_HOARD.description": "#Exhaust. Gain !Scales! *Dragon Scales and !Np! *NP Charge. Permanently add a Regret to your deck.",
   "SIEGFRIEDSABER-TARNKAPPE.title": "Tarnkappe",
-  "SIEGFRIEDSABER-TARNKAPPE.description": "#Exhaust. Gain !Scales! *Dragon Scales. For the rest of combat your back is no longer exposed: the first attack that reaches you each turn is reduced by your Dragon Scales like every other. While active, your scales no longer pierce and the Linden Leaf grants no NP Charge."
+  "SIEGFRIEDSABER-TARNKAPPE.description": "#Exhaust. Gain !Scales! *Dragon Scales. For the rest of combat your back is no longer exposed: the first attack that reaches you each turn is reduced by your Dragon Scales like every other. While active, your scales no longer pierce and the Linden Leaf grants no NP Charge.",
+  "SIEGFRIEDSABER-BY_MY_CONVICTION.title": "By My Own Conviction",
+  "SIEGFRIEDSABER-BY_MY_CONVICTION.description": "#Exhaust. Choose one: gain 50 *NP Charge or 3 *Dragon Scales.+ Upgraded: gain both.+",
+  "SIEGFRIEDSABER-CONVICTION_CHARGE.title": "Charge",
+  "SIEGFRIEDSABER-CONVICTION_CHARGE.description": "#Gain 50 *NP Charge.",
+  "SIEGFRIEDSABER-CONVICTION_SCALES.title": "Harden",
+  "SIEGFRIEDSABER-CONVICTION_SCALES.description": "#Gain 3 *Dragon Scales."
 }

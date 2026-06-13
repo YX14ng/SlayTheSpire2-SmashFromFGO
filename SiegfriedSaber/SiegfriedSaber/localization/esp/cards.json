@@ -54,5 +54,11 @@
   "SIEGFRIEDSABER-NIBELUNG_HOARD.title": "El Tesoro de los Nibelungos",
   "SIEGFRIEDSABER-NIBELUNG_HOARD.description": "#Agotar. Gana !Scales! de *Sangre de Dragón y !Np! de *Carga NP. Agrega permanentemente un Arrepentimiento a tu mazo.",
   "SIEGFRIEDSABER-TARNKAPPE.title": "Manto de las Sombras",
-  "SIEGFRIEDSABER-TARNKAPPE.description": "#Agotar. Gana !Scales! de *Sangre de Dragón. El resto del combate tu espalda deja de estar expuesta: el primer golpe que te alcanza cada turno se reduce con tu Sangre de Dragón como cualquier otro. Mientras esté activa, tus escamas ya no se traspasan y la Hoja de Tilo no te da Carga NP."
+  "SIEGFRIEDSABER-TARNKAPPE.description": "#Agotar. Gana !Scales! de *Sangre de Dragón. El resto del combate tu espalda deja de estar expuesta: el primer golpe que te alcanza cada turno se reduce con tu Sangre de Dragón como cualquier otro. Mientras esté activa, tus escamas ya no se traspasan y la Hoja de Tilo no te da Carga NP.",
+  "SIEGFRIEDSABER-BY_MY_CONVICTION.title": "Por Convicción Propia",
+  "SIEGFRIEDSABER-BY_MY_CONVICTION.description": "#Agotar. Elegí una: gana 50 de *Carga NP o 3 de *Sangre de Dragón.+ Mejorada: gana ambas.+",
+  "SIEGFRIEDSABER-CONVICTION_CHARGE.title": "Carga",
+  "SIEGFRIEDSABER-CONVICTION_CHARGE.description": "#Gana 50 de *Carga NP.",
+  "SIEGFRIEDSABER-CONVICTION_SCALES.title": "Endurecer",
+  "SIEGFRIEDSABER-CONVICTION_SCALES.description": "#Gana 3 de *Sangre de Dragón."
 }
