@@ -1,5 +1,4 @@
-using System.Linq;
-using FGOCore.FGOCoreCode.Curses;
+using FGOCore.FGOCoreCode.Stars;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
@@ -8,7 +7,6 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
 using MorganBerserker.MorganBerserkerCode.Powers;
 
 namespace MorganBerserker.MorganBerserkerCode;
@@ -32,11 +30,11 @@ public partial class MainFile : Node
             $"{ResPath}/character/morgan_frames_aesc.tres",
             $"{ResPath}/character/morgan_frames_winter.tres");
 
-        // Modelo de NP nuevo (2026-06-12): cruzar 100 NP NO genera una carta-ulti gratis
-        // (eclipsaba a las cartas NP drafteadas — feedback del usuario). Abre la
-        // "Sentencia de la Reina": detona la Maldición de TODOS los enemigos a la vez
-        // (el clímax del motor: cosechás lo que sembraste) + devuelve recursos. Las cartas
-        // NP drafteadas (Roadless Camelot, etc.) son el clímax que elegís jugar aparte.
+        // Modelo de NP nuevo: cruzar 100 NP NO genera una carta-ulti gratis (eclipsaba a las
+        // NP drafteadas). Abre la "Sentencia de la Reina": un TURNO DE DESCARGA de estrellas
+        // — un Crítico gratis + un lote de Estrellas para volcar en Ataques Buster + recursos
+        // (evoca el +300% star gather de su skill real "From the World's End"). Re-centrada en
+        // Buster/crítico (rediseño 2026-06-13), no en detonar maldición.
         NpCharge.GaugeFilled += TryOpenNpWindow;
         NpCharge.GaugeDropped += DisarmUltMarker;
     }
@@ -49,18 +47,9 @@ public partial class MainFile : Node
         // Marker: la Sentencia ya se disparó este pico (se re-arma al bajar < 100).
         await PowerCmd.Apply<NpManifestedPower>(creature, 1m, creature, null);
 
-        // Sentencia de la Reina: detoná la Maldición de TODOS los enemigos (clímax AoE).
-        var ctx = new BlockingPlayerChoiceContext();
-        foreach (var enemy in creature.CombatState.GetOpponentsOf(creature).ToList())
-        {
-            if (enemy.IsDead) continue;
-            var consumed = await Curses.Consume(enemy, CursePower.MaxPerEnemy);
-            if (consumed > 0)
-            {
-                await CreatureCmd.Damage(ctx, enemy, consumed,
-                    ValueProp.Unpowered | ValueProp.SkipHurtAnim, creature, null);
-            }
-        }
+        // Un Crítico gratis (próximo Ataque Buster ×2) + un lote de Estrellas para más críticos.
+        await PowerCmd.Apply<CritReadyPower>(creature, 1m, creature, null);
+        await CritStars.Gain(creature, 40, null);
 
         // Devuelve recursos: arranca el turno grande, no lo reemplaza (modelo Phrolova).
         if (creature.Player != null)

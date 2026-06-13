@@ -1,16 +1,18 @@
+using FGOCore.FGOCoreCode.Stars;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using MorganBerserker.MorganBerserkerCode.Powers;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 
 /// <summary>
-/// Lanza de la Tirana (暴君之枪) — 24 de daño; pierdes 4 HP (→ +10★ vía el Cetro
-/// rediseñado); si tienes Alzarse: +10 de daño (la tirana pelea sin miedo a morir).
-/// Rediseño v2: lector explícito 2 del hilo Alzarse + glow dorado.
+/// Lanza de la Tirana (暴君之枪) — 24 de daño; pierdes 4 HP (→ +10★ vía el Cetro);
+/// si tienes Alzarse: +10 de daño. "Crítico": el blanco ideal del ×2 — gastá 50★ y
+/// este golpazo hace ×2 (el pico Buster de Morgan). Rediseño 2026-06-13.
 /// </summary>
 public sealed class TyrantsLance() : MorganCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
@@ -21,13 +23,16 @@ public sealed class TyrantsLance() : MorganCard(2, CardType.Attack, CardRarity.R
         new DynamicVar("Bonus", 10)
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<GutsPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromPower<GutsPower>(), HoverTipFactory.FromPower<CritStarsPower>(), HoverTipFactory.FromPower<CritReadyPower>()];
 
-    protected override bool ShouldGlowGoldInternal => Owner.Creature.HasPower<GutsPower>();
+    protected override bool ShouldGlowGoldInternal => Owner.Creature.HasPower<GutsPower>() || Crit.CanCrit(Owner.Creature);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
+
+        await Crit.TrySpend(Owner.Creature, this);
 
         var damage = DynamicVars.Damage.BaseValue;
         if (Owner.Creature.HasPower<GutsPower>())
