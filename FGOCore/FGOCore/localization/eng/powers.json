@@ -32,7 +32,7 @@
   "FGOCORE-LAHMU_NURTURE_POWER.title": "Nurture",
   "FGOCORE-LAHMU_NURTURE_POWER.description": "#Global brood nurturing. Each point raises the Block and bite of every Laḫmu by 1.",
   "FGOCORE-LAHMU_NURTURE_POWER.smartDescription": "#Global brood nurturing. Each point raises the Block and bite of every Laḫmu by 1.",
-  "FGOCORE-DRAGON_SCALES_POWER.title": "Dragonblood",
+  "FGOCORE-DRAGON_SCALES_POWER.title": "Dragon Scales",
   "FGOCORE-DRAGON_SCALES_POWER.description": "#Reduce each incoming attack by this amount, after Block. These are your scales: not Block, never spent, and they persist between turns.",
   "FGOCORE-DRAGON_SCALES_POWER.smartDescription": "#Reduce each incoming attack by this amount, after Block. These are your scales: not Block, never spent, and they persist between turns.",
   "FGOCORE-GOLDEN_RULE_POWER.title": "Golden Rule",

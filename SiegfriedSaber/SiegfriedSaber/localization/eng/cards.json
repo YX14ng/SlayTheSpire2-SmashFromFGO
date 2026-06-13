@@ -16,5 +16,21 @@
   "SIEGFRIEDSABER-GRANI_STALK.title": "Grani's Stalk",
   "SIEGFRIEDSABER-GRANI_STALK.description": "#Gain !Stars! *Critical *Stars.",
   "SIEGFRIEDSABER-GOLDEN_RULE.title": "Golden Rule",
-  "SIEGFRIEDSABER-GOLDEN_RULE.description": "#Whenever you gain *NP Charge this combat, gain 50% more.+ Also gain 1 *Strength.+"
+  "SIEGFRIEDSABER-GOLDEN_RULE.description": "#Whenever you gain *NP Charge this combat, gain 50% more.+ Also gain 1 *Strength.+",
+  "SIEGFRIEDSABER-IRON_GUARD.title": "Iron Guard",
+  "SIEGFRIEDSABER-IRON_GUARD.description": "#Gain !B! Block.",
+  "SIEGFRIEDSABER-BALMUNG_SWING.title": "Balmung Swing",
+  "SIEGFRIEDSABER-BALMUNG_SWING.description": "#Deal !D! damage. Gain !Np! *NP Charge.",
+  "SIEGFRIEDSABER-BRAVE_RESOLVE.title": "Brave Resolve",
+  "SIEGFRIEDSABER-BRAVE_RESOLVE.description": "#Gain !B! Block. Gain !Np! *NP Charge.",
+  "SIEGFRIEDSABER-DRAGON_SCALE_GUARD.title": "Dragon-Scale Guard",
+  "SIEGFRIEDSABER-DRAGON_SCALE_GUARD.description": "#Gain !B! Block. Gain !Scales! *Dragon Scales.",
+  "SIEGFRIEDSABER-HEAVY_BLOW.title": "Heavy Blow",
+  "SIEGFRIEDSABER-HEAVY_BLOW.description": "#Deal !D! damage. Gain !Scales! *Dragon Scales.",
+  "SIEGFRIEDSABER-HEROS_BACKSWING.title": "Hero's Backswing",
+  "SIEGFRIEDSABER-HEROS_BACKSWING.description": "#Deal !D! damage plus your *Dragon Scales.",
+  "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.title": "Dragon Slayer Strike",
+  "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.description": "#Deal !D! damage. Deal !Bonus! more while your *Dragon Scales are !Threshold! or higher.",
+  "SIEGFRIEDSABER-GATHER_PROWESS.title": "Gather Prowess",
+  "SIEGFRIEDSABER-GATHER_PROWESS.description": "#Exhaust. Gain !Np! *NP Charge. Gain !Scales! *Dragon Scales."
 }

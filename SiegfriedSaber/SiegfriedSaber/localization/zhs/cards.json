@@ -16,5 +16,21 @@
   "SIEGFRIEDSABER-GRANI_STALK.title": "格拉尼的潜行",
   "SIEGFRIEDSABER-GRANI_STALK.description": "#获得!Stars!颗*暴击星*。",
   "SIEGFRIEDSABER-GOLDEN_RULE.title": "黄金律",
-  "SIEGFRIEDSABER-GOLDEN_RULE.description": "#本场战斗中你每次获得*NP值时，多获得50%。+并获得1点*力量。+"
+  "SIEGFRIEDSABER-GOLDEN_RULE.description": "#本场战斗中你每次获得*NP值时，多获得50%。+并获得1点*力量。+",
+  "SIEGFRIEDSABER-IRON_GUARD.title": "铁壁防御",
+  "SIEGFRIEDSABER-IRON_GUARD.description": "#获得!B!点格挡。",
+  "SIEGFRIEDSABER-BALMUNG_SWING.title": "巴尔蒙克挥斩",
+  "SIEGFRIEDSABER-BALMUNG_SWING.description": "#造成!D!点伤害。获得!Np!点*NP值。",
+  "SIEGFRIEDSABER-BRAVE_RESOLVE.title": "勇者决意",
+  "SIEGFRIEDSABER-BRAVE_RESOLVE.description": "#获得!B!点格挡。获得!Np!点*NP值。",
+  "SIEGFRIEDSABER-DRAGON_SCALE_GUARD.title": "龙鳞守势",
+  "SIEGFRIEDSABER-DRAGON_SCALE_GUARD.description": "#获得!B!点格挡。获得!Scales!点*龙血护甲。",
+  "SIEGFRIEDSABER-HEAVY_BLOW.title": "重斩",
+  "SIEGFRIEDSABER-HEAVY_BLOW.description": "#造成!D!点伤害。获得!Scales!点*龙血护甲。",
+  "SIEGFRIEDSABER-HEROS_BACKSWING.title": "英雄回斩",
+  "SIEGFRIEDSABER-HEROS_BACKSWING.description": "#造成!D!点伤害，再加上你的*龙血护甲值。",
+  "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.title": "屠龙斩",
+  "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.description": "#造成!D!点伤害。当你的*龙血护甲达到!Threshold!或更高时，额外造成!Bonus!点伤害。",
+  "SIEGFRIEDSABER-GATHER_PROWESS.title": "积蓄武勇",
+  "SIEGFRIEDSABER-GATHER_PROWESS.description": "#消耗。获得!Np!点*NP值。获得!Scales!点*龙血护甲。"
 }

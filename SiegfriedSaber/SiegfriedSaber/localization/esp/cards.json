@@ -16,5 +16,21 @@
   "SIEGFRIEDSABER-GRANI_STALK.title": "Acecho de Grani",
   "SIEGFRIEDSABER-GRANI_STALK.description": "#Obtén !Stars! *Estrellas *de *Crítico.",
   "SIEGFRIEDSABER-GOLDEN_RULE.title": "Regla de Oro",
-  "SIEGFRIEDSABER-GOLDEN_RULE.description": "#Cada vez que ganes *Carga NP este combate, gana un 50% más.+ Además gana 1 de *Fuerza.+"
+  "SIEGFRIEDSABER-GOLDEN_RULE.description": "#Cada vez que ganes *Carga NP este combate, gana un 50% más.+ Además gana 1 de *Fuerza.+",
+  "SIEGFRIEDSABER-IRON_GUARD.title": "Guardia de Hierro",
+  "SIEGFRIEDSABER-IRON_GUARD.description": "#Gana !B! de Bloqueo.",
+  "SIEGFRIEDSABER-BALMUNG_SWING.title": "Mandoble de Balmung",
+  "SIEGFRIEDSABER-BALMUNG_SWING.description": "#Inflige !D! de daño. Gana !Np! de *Carga NP.",
+  "SIEGFRIEDSABER-BRAVE_RESOLVE.title": "Resolución Valiente",
+  "SIEGFRIEDSABER-BRAVE_RESOLVE.description": "#Gana !B! de Bloqueo. Gana !Np! de *Carga NP.",
+  "SIEGFRIEDSABER-DRAGON_SCALE_GUARD.title": "Guardia de Escamas",
+  "SIEGFRIEDSABER-DRAGON_SCALE_GUARD.description": "#Gana !B! de Bloqueo. Gana !Scales! de *Sangre de Dragón.",
+  "SIEGFRIEDSABER-HEAVY_BLOW.title": "Golpe Pesado",
+  "SIEGFRIEDSABER-HEAVY_BLOW.description": "#Inflige !D! de daño. Gana !Scales! de *Sangre de Dragón.",
+  "SIEGFRIEDSABER-HEROS_BACKSWING.title": "Revés del Héroe",
+  "SIEGFRIEDSABER-HEROS_BACKSWING.description": "#Inflige !D! de daño más tu *Sangre de Dragón.",
+  "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.title": "Tajo Cazadragones",
+  "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.description": "#Inflige !D! de daño. Inflige !Bonus! adicional mientras tu *Sangre de Dragón sea !Threshold! o más.",
+  "SIEGFRIEDSABER-GATHER_PROWESS.title": "Reunir Bravura",
+  "SIEGFRIEDSABER-GATHER_PROWESS.description": "#Agotar. Gana !Np! de *Carga NP. Gana !Scales! de *Sangre de Dragón."
 }
