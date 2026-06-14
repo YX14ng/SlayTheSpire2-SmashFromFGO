@@ -38,6 +38,14 @@ const SELECT := {
 	# clips y 3 ATLAS de textura (multi-atlas NO soportado aun por _setup_meshes).
 	"9935400": { "idle": [0, 153, 2], "attack": [0, 72, 2], "cast": [0, 72, 2], "hurt": [0, 16, 1] },
 	"9935410": { "idle": [0, 153, 2], "attack": [0, 72, 1], "cast": [0, 72, 2], "hurt": [0, 16, 1] },
+	# Personajes nuevos (forma única). Ventanas PRIMER PASE: idle = loop completo step 2 (15fps;
+	# subir a step 1 si entrecortado, regla Morgan), attack/cast = clip completo step 2, hurt corto.
+	# Refinar con -Mode probe/debug si attack/cast trae wind-up largo u off-canvas.
+	"100800":  { "idle": [0, 201, 2], "attack": [0, 74, 1],  "cast": [0, 201, 2], "hurt": [0, 16, 1] },
+	"100900":  { "idle": [0, 153, 2], "attack": [0, 153, 2], "cast": [0, 77, 1],  "hurt": [0, 16, 1] },
+	"200200":  { "idle": [0, 153, 2], "attack": [0, 153, 2], "cast": [0, 77, 1],  "hurt": [0, 16, 1] },
+	"102700":  { "idle": [0, 153, 2], "attack": [0, 153, 2], "cast": [0, 153, 2], "hurt": [0, 14, 1] },
+	"2800100": { "idle": [0, 153, 2], "attack": [0, 153, 2], "cast": [0, 153, 2], "hurt": [0, 14, 1] },
 }
 const CLIP_FOR := { "idle": "wait", "attack": "attack_b", "cast": "spell", "hurt": "damage_01" }
 # Overrides de clip por modelo: el attack_q de la Berserker de verano es el
