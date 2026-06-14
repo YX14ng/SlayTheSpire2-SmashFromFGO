@@ -3,7 +3,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
-namespace Tiamat.TiamatCode.Cards.Rare;
+namespace TiamatBeast.TiamatCode.Cards.Rare;
 
 /// <summary>Once Bel Laḫmu — parís una camada entera de golpe (hasta el tope del enjambre) y
 /// ganás Crianza igual a tus Laḫmu en campo. La explosion de poblacion. Exhaust.</summary>

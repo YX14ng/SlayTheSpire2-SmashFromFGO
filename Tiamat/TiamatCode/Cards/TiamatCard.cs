@@ -3,10 +3,10 @@ using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
-using Tiamat.TiamatCode.Character;
-using Tiamat.TiamatCode.Extensions;
+using TiamatBeast.TiamatCode.Character;
+using TiamatBeast.TiamatCode.Extensions;
 
-namespace Tiamat.TiamatCode.Cards;
+namespace TiamatBeast.TiamatCode.Cards;
 
 [Pool(typeof(TiamatCardPool))]
 public abstract class TiamatCard(int cost, CardType type, CardRarity rarity, TargetType target) :

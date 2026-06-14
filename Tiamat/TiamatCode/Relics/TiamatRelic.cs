@@ -1,10 +1,10 @@
 using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using BaseLib.Utils;
-using Tiamat.TiamatCode.Character;
-using Tiamat.TiamatCode.Extensions;
+using TiamatBeast.TiamatCode.Character;
+using TiamatBeast.TiamatCode.Extensions;
 
-namespace Tiamat.TiamatCode.Relics;
+namespace TiamatBeast.TiamatCode.Relics;
 
 [Pool(typeof(TiamatRelicPool))]
 public abstract class TiamatRelic : CustomRelicModel

@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
-namespace Tiamat.TiamatCode.Cards.Common;
+namespace TiamatBeast.TiamatCode.Cards.Common;
 
 /// <summary>Amamantar — ALIMENTAR: +2 Crianza (escala a todo el enjambre). Si tenés 3+ Laḫmu, robá 1.</summary>
 public sealed class Suckle() : TiamatCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)

@@ -1,7 +1,7 @@
 using BaseLib.Extensions;
-using Tiamat.TiamatCode.Extensions;
+using TiamatBeast.TiamatCode.Extensions;
 
-namespace Tiamat.TiamatCode.Powers.Forms;
+namespace TiamatBeast.TiamatCode.Powers.Forms;
 
 /// <summary>Base de las formas de Tiamat sobre el FormPower de FGOCore. Íconos en este mod.</summary>
 public abstract class TiamatFormPower : FormPower

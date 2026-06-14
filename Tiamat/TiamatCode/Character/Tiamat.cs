@@ -5,11 +5,11 @@ using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Relics;
-using Tiamat.TiamatCode.Cards.Basic;
-using Tiamat.TiamatCode.Extensions;
-using Tiamat.TiamatCode.Relics;
+using TiamatBeast.TiamatCode.Cards.Basic;
+using TiamatBeast.TiamatCode.Extensions;
+using TiamatBeast.TiamatCode.Relics;
 
-namespace Tiamat.TiamatCode.Character;
+namespace TiamatBeast.TiamatCode.Character;
 
 public class Tiamat : PlaceholderCharacterModel
 {

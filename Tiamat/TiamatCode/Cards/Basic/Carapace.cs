@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 
-namespace Tiamat.TiamatCode.Cards.Basic;
+namespace TiamatBeast.TiamatCode.Cards.Basic;
 
 /// <summary>Caparazón — bloqueo básico.</summary>
 public sealed class Carapace() : TiamatCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self)

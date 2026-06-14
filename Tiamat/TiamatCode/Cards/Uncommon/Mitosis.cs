@@ -5,7 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 
-namespace Tiamat.TiamatCode.Cards.Uncommon;
+namespace TiamatBeast.TiamatCode.Cards.Uncommon;
 
 /// <summary>Mitosis — DEVORAR: sacrificás 1 Laḫmu, infligís 4 + 3 por Crianza, y parís 1 nuevo
 /// (la Unit Mitosis canónica: desgarrar y rehacer). El pico gateado por haber criado.</summary>

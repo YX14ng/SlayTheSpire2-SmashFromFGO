@@ -1,0 +1,16 @@
+{
+  "TIAMATBEAST-TIAMAT.title": "Tiamat",
+  "TIAMATBEAST-TIAMAT.titleObject": "la Madre Diosa",
+  "TIAMATBEAST-TIAMAT.description": "Beast II, el Mar de Vida del que brotó toda la vida. No pelea: cría. Esparce Marea de Caos sobre sus enemigos y pare Laḫmu que la escudan y muerden solos. Parí, alimentá o devorá a tu cría, y desbordá en la Forma Dracónica gigante. Un arquetipo único de invocación movido por un amor maternal abrumador y ruinoso.",
+  "TIAMATBEAST-TIAMAT.pronounObject": "her",
+  "TIAMATBEAST-TIAMAT.possessiveAdjective": "her",
+  "TIAMATBEAST-TIAMAT.pronounPossessive": "hers",
+  "TIAMATBEAST-TIAMAT.pronounSubject": "she",
+  "TIAMATBEAST-TIAMAT.goldMonologue": "Eso tan duro y frío... hundámoslo en el mar materno y volvamos a parirlo, ya tibio.",
+  "TIAMATBEAST-TIAMAT.eventDeathPrevention": "¿El final? No... yo no conozco la \"muerte\": toda vida termina por regresar a su madre.",
+  "TIAMATBEAST-TIAMAT.aromaPrinciple": "Soy el mar que solo pare, cría y ama; mi abrazo es tan hondo que ahogaría al mundo.",
+  "TIAMATBEAST-TIAMAT.cardsModifierTitle": "Cría del Mar",
+  "TIAMATBEAST-TIAMAT.cardsModifierDescription": "Jugá con el mazo de Tiamat.",
+  "TIAMATBEAST-TIAMAT.banter.alive.endTurnPing": "Vengan, mis amados... duerman despacio entre los brazos de su madre.",
+  "TIAMATBEAST-TIAMAT.banter.dead.endTurnPing": "El mar se adelgaza... y aun así, mis brazos todavía no te sueltan."
+}

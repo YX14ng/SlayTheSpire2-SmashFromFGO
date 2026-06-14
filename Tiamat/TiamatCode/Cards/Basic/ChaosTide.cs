@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 
-namespace Tiamat.TiamatCode.Cards.Basic;
+namespace TiamatBeast.TiamatCode.Cards.Basic;
 
 /// <summary>Marea de Caos — golpe básico (el lodo negro del Mar de Vida).</summary>
 public sealed class ChaosTide() : TiamatCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)

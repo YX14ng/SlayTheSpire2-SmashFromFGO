@@ -1,6 +1,6 @@
 using MegaCrit.Sts2.Core.Entities.Powers;
 
-namespace Tiamat.TiamatCode.Powers;
+namespace TiamatBeast.TiamatCode.Powers;
 
 /// <summary>
 /// Marker: la ventana de NP "Génesis" ya se abrió este pico (la carga llegó a 100). Se

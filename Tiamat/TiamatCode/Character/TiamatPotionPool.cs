@@ -1,8 +1,8 @@
 using BaseLib.Abstracts;
 using Godot;
-using Tiamat.TiamatCode.Extensions;
+using TiamatBeast.TiamatCode.Extensions;
 
-namespace Tiamat.TiamatCode.Character;
+namespace TiamatBeast.TiamatCode.Character;
 
 public class TiamatPotionPool : CustomPotionPoolModel
 {

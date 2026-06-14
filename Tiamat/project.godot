@@ -10,9 +10,9 @@ config_version=5
 
 [application]
 
-config/name="Tiamat"
+config/name="TiamatBeast"
 config/features=PackedStringArray("4.5", "C#", "Mobile")
-config/icon="res://Tiamat/mod_image.png"
+config/icon="res://TiamatBeast/mod_image.png"
 
 [display]
 
@@ -24,7 +24,7 @@ window/stretch/aspect="expand"
 
 [dotnet]
 
-project/assembly_name="Tiamat"
+project/assembly_name="TiamatBeast"
 
 [rendering]
 

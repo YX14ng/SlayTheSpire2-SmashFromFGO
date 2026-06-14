@@ -5,15 +5,18 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
-using Tiamat.TiamatCode.Powers;
-using Tiamat.TiamatCode.Powers.Forms;
+using TiamatBeast.TiamatCode.Powers;
+using TiamatBeast.TiamatCode.Powers.Forms;
 
-namespace Tiamat.TiamatCode;
+namespace TiamatBeast.TiamatCode;
 
 [ModInitializer(nameof(Initialize))]
 public partial class MainFile : Node
 {
-    public const string ModId = "Tiamat";
+    // Renombrado de "Tiamat" a "TiamatBeast" para coexistir con el otro Tiamat (D&D, mismo id "Tiamat")
+    // en un mismo install. BaseLib carga la loc desde res://{id}/localization/, así que el namespace
+    // res:// completo se renombró a res://TiamatBeast/ (assets + loc) — namespaces separados, cero colisión.
+    public const string ModId = "TiamatBeast";
     public const string ResPath = $"res://{ModId}";
 
     public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } = new(ModId, MegaCrit.Sts2.Core.Logging.LogType.Generic);

@@ -1,8 +1,8 @@
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
-using Tiamat.TiamatCode.Powers.Forms;
+using TiamatBeast.TiamatCode.Powers.Forms;
 
-namespace Tiamat.TiamatCode.Relics;
+namespace TiamatBeast.TiamatCode.Relics;
 
 /// <summary>
 /// Útero del Mar de Vida — reliquia starter (el motor de Tiamat). Al iniciar cada combate

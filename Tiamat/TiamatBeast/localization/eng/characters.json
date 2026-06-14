@@ -1,0 +1,16 @@
+{
+  "TIAMATBEAST-TIAMAT.title": "Tiamat",
+  "TIAMATBEAST-TIAMAT.titleObject": "the Mother Goddess",
+  "TIAMATBEAST-TIAMAT.description": "Beast II, the Sea of Life from which all life first poured. She does not fight — she breeds: spreading Chaos Tide over her foes and birthing Laḫmu that shield her and bite on their own. Spawn, nurture, or devour your brood, and overflow into the giant Draconic Form. An only-summoner archetype driven by an overwhelming, ruinous mother's love.",
+  "TIAMATBEAST-TIAMAT.pronounObject": "her",
+  "TIAMATBEAST-TIAMAT.possessiveAdjective": "her",
+  "TIAMATBEAST-TIAMAT.pronounPossessive": "hers",
+  "TIAMATBEAST-TIAMAT.pronounSubject": "she",
+  "TIAMATBEAST-TIAMAT.goldMonologue": "Such hard, cold things—let them sink into the mother-sea, and I shall birth them anew, warm.",
+  "TIAMATBEAST-TIAMAT.eventDeathPrevention": "An ending? No... I know no \"death\": every life returns to its mother in the end.",
+  "TIAMATBEAST-TIAMAT.aromaPrinciple": "I am the sea that only births, raises, and adores—an embrace so deep it would drown the world.",
+  "TIAMATBEAST-TIAMAT.cardsModifierTitle": "Brood of the Sea",
+  "TIAMATBEAST-TIAMAT.cardsModifierDescription": "Play with Tiamat's card pool.",
+  "TIAMATBEAST-TIAMAT.banter.alive.endTurnPing": "Come, my dear ones—rest slowly here, within your mother's arms.",
+  "TIAMATBEAST-TIAMAT.banter.dead.endTurnPing": "The sea is thinning away... and yet my arms will not let you go just yet."
+}

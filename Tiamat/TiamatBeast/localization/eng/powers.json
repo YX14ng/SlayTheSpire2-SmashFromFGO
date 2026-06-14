@@ -1,0 +1,14 @@
+{
+  "TIAMATBEAST-TIAMAT_FEMME_FATALE_POWER.title": "Femme Fatale",
+  "TIAMATBEAST-TIAMAT_FEMME_FATALE_POWER.description": "#Humanoid form, the brood-mother. At the start of your turn: gain 1 Nurture. Build the swarm cheaply here, then cash it in as the Beast.",
+  "TIAMATBEAST-TIAMAT_FEMME_FATALE_POWER.smartDescription": "#Humanoid form, the brood-mother. At the start of your turn: gain 1 Nurture. Build the swarm cheaply here, then cash it in as the Beast.",
+  "TIAMATBEAST-TIAMAT_BEAST_POWER.title": "Draconic Form",
+  "TIAMATBEAST-TIAMAT_BEAST_POWER.description": "#Beast II form, the devourer. Your cards apply 1 more Curse, and at the start of your turn you apply 1 Curse to an enemy on your own. The climax form, entered through the Genesis window.",
+  "TIAMATBEAST-TIAMAT_BEAST_POWER.smartDescription": "#Beast II form, the devourer. Your cards apply 1 more Curse, and at the start of your turn you apply 1 Curse to an enemy on your own. The climax form, entered through the Genesis window.",
+  "TIAMATBEAST-GENESIS_SPENT_POWER.title": "Genesis Spent",
+  "TIAMATBEAST-GENESIS_SPENT_POWER.description": "#Your gauge reached 100 this cycle and Genesis already triggered. Spend NP Charge below 100 to re-arm it.",
+  "TIAMATBEAST-GENESIS_SPENT_POWER.smartDescription": "#Your gauge reached 100 this cycle and Genesis already triggered. Spend NP Charge below 100 to re-arm it.",
+  "TIAMATBEAST-MOTHER_GUTS_POWER.title": "Mother's Guts",
+  "TIAMATBEAST-MOTHER_GUTS_POWER.description": "#The first time you would die this combat, revive at 1 HP and spawn 3 Laḫmu.",
+  "TIAMATBEAST-MOTHER_GUTS_POWER.smartDescription": "#The first time you would die this combat, revive at 1 HP and spawn 3 Laḫmu."
+}

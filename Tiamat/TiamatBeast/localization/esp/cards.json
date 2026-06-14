@@ -1,0 +1,22 @@
+{
+  "TIAMATBEAST-CHAOS_TIDE.title": "Marea de Caos",
+  "TIAMATBEAST-CHAOS_TIDE.description": "#Inflige !D! de daño.",
+  "TIAMATBEAST-CARAPACE.title": "Caparazón",
+  "TIAMATBEAST-CARAPACE.description": "#Obtén !B! de Bloqueo.",
+  "TIAMATBEAST-SPAWN_LAHMU.title": "Engendrar Laḫmu",
+  "TIAMATBEAST-SPAWN_LAHMU.description": "#Parí !Lahmu! Laḫmu. Obtén !NpCharge! de Carga NP.",
+  "TIAMATBEAST-BLACK_MUD.title": "Lodo Negro",
+  "TIAMATBEAST-BLACK_MUD.description": "#Aplica !Curse! de Maldición a un enemigo. Obtén !Nurture! de Crianza.",
+  "TIAMATBEAST-SUCKLE.title": "Amamantar",
+  "TIAMATBEAST-SUCKLE.description": "#Obtén !Nurture! de Crianza. Si tenés 3 o más Laḫmu, robá 1 carta.",
+  "TIAMATBEAST-MITOSIS.title": "Mitosis",
+  "TIAMATBEAST-MITOSIS.description": "#Devorá 1 Laḫmu: inflige !D! de daño, más !PerNurture! por cada Crianza. Luego parí 1 Laḫmu.",
+  "TIAMATBEAST-BLACK_DELUGE.title": "Diluvio Negro",
+  "TIAMATBEAST-BLACK_DELUGE.description": "#Aplica !Curse! de Maldición a TODOS los enemigos. Obtén !Nurture! de Crianza por cada enemigo maldecido.",
+  "TIAMATBEAST-ELEVEN_BEL_LAHMU.title": "Once Bel Laḫmu",
+  "TIAMATBEAST-ELEVEN_BEL_LAHMU.description": "#Parí hasta !Lahmu! Laḫmu. Obtén Crianza igual a tus Laḫmu en campo. Obtén !NpCharge! de Carga NP.",
+  "TIAMATBEAST-BROKEN_HORN.title": "Cuerno Roto",
+  "TIAMATBEAST-BROKEN_HORN.description": "#Devorá TODOS tus Laḫmu. Por cada uno devorado, inflige !PerHorn! de daño a TODOS los enemigos, aumentado en !PerNurture! por Crianza. Obtén !NpPerLahmu! de Carga NP por Laḫmu.",
+  "TIAMATBEAST-ENUMA_ELIS.title": "Enūma Eliš",
+  "TIAMATBEAST-ENUMA_ELIS.description": "#Jugable con !ChargeCost! de Carga NP. Consume TODA la Carga NP, reabastece tus Laḫmu y luego inflige !D! de daño a TODOS más !PerLahmu! por Laḫmu, aumentado en !PerNurture! por Crianza y !PerTen! por cada 10 de Carga sobre !ChargeCost!."
+}

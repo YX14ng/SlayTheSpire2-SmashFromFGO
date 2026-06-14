@@ -1,7 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
-namespace Tiamat.TiamatCode.Powers.Forms;
+namespace TiamatBeast.TiamatCode.Powers.Forms;
 
 /// <summary>
 /// Femme Fatale (humanoide) — la CRIADORA. Forma inicial de Tiamat. Al inicio de tu turno:

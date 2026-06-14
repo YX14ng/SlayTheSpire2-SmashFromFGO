@@ -3,7 +3,7 @@ using FGOCore.FGOCoreCode.Curses;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
-namespace Tiamat.TiamatCode.Powers.Forms;
+namespace TiamatBeast.TiamatCode.Powers.Forms;
 
 /// <summary>
 /// Forma Dracónica (Bestia II) — la DEVORADORA. (1) Amplifica la Maldición que aplicás (+1,

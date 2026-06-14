@@ -1,0 +1,14 @@
+{
+  "TIAMATBEAST-TIAMAT_FEMME_FATALE_POWER.title": "Femme Fatale",
+  "TIAMATBEAST-TIAMAT_FEMME_FATALE_POWER.description": "#Forma humanoide, la madre criadora. Al inicio de tu turno: obtén 1 de Crianza. Acá construís el enjambre barato; lo cobrás como Bestia.",
+  "TIAMATBEAST-TIAMAT_FEMME_FATALE_POWER.smartDescription": "#Forma humanoide, la madre criadora. Al inicio de tu turno: obtén 1 de Crianza. Acá construís el enjambre barato; lo cobrás como Bestia.",
+  "TIAMATBEAST-TIAMAT_BEAST_POWER.title": "Forma Dracónica",
+  "TIAMATBEAST-TIAMAT_BEAST_POWER.description": "#Forma Beast II, la devoradora. Tus cartas aplican 1 de Maldición extra, y al inicio de tu turno aplicás 1 de Maldición a un enemigo por tu cuenta. La forma clímax, se entra por la ventana Génesis.",
+  "TIAMATBEAST-TIAMAT_BEAST_POWER.smartDescription": "#Forma Beast II, la devoradora. Tus cartas aplican 1 de Maldición extra, y al inicio de tu turno aplicás 1 de Maldición a un enemigo por tu cuenta. La forma clímax, se entra por la ventana Génesis.",
+  "TIAMATBEAST-GENESIS_SPENT_POWER.title": "Génesis Usada",
+  "TIAMATBEAST-GENESIS_SPENT_POWER.description": "#Tu medidor llegó a 100 este ciclo y Génesis ya se disparó. Gasta Carga NP por debajo de 100 para re-armarla.",
+  "TIAMATBEAST-GENESIS_SPENT_POWER.smartDescription": "#Tu medidor llegó a 100 este ciclo y Génesis ya se disparó. Gasta Carga NP por debajo de 100 para re-armarla.",
+  "TIAMATBEAST-MOTHER_GUTS_POWER.title": "Agallas de la Madre",
+  "TIAMATBEAST-MOTHER_GUTS_POWER.description": "#La primera vez que caerías este combate, revivís a 1 HP y parís 3 Laḫmu.",
+  "TIAMATBEAST-MOTHER_GUTS_POWER.smartDescription": "#La primera vez que caerías este combate, revivís a 1 HP y parís 3 Laḫmu."
+}

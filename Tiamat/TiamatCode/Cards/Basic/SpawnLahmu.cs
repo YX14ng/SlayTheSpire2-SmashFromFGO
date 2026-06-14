@@ -3,7 +3,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
-namespace Tiamat.TiamatCode.Cards.Basic;
+namespace TiamatBeast.TiamatCode.Cards.Basic;
 
 /// <summary>Engendrar — firma: parí 1 Laḫmu y cargá NP. PARIR sube el techo del enjambre.</summary>
 public sealed class SpawnLahmu() : TiamatCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self)

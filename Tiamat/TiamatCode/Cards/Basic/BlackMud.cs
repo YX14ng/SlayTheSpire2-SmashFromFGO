@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
-namespace Tiamat.TiamatCode.Cards.Basic;
+namespace TiamatBeast.TiamatCode.Cards.Basic;
 
 /// <summary>Lodo Negro — firma: esparcís Marea de Caos (Maldición) y alimentás al enjambre.</summary>
 public sealed class BlackMud() : TiamatCard(1, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy)

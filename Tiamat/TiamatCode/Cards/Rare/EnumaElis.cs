@@ -5,7 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 
-namespace Tiamat.TiamatCode.Cards.Rare;
+namespace TiamatBeast.TiamatCode.Cards.Rare;
 
 /// <summary>Enūma Eliš (carta-NP) — consume TODA la Carga NP: revive la cría hasta el tope del
 /// enjambre y muerde a TODOS con ella por Laḫmu × Crianza (+ overcharge). El estallido de la madre.

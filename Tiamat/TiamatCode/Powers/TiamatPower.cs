@@ -1,7 +1,7 @@
 using BaseLib.Extensions;
-using Tiamat.TiamatCode.Extensions;
+using TiamatBeast.TiamatCode.Extensions;
 
-namespace Tiamat.TiamatCode.Powers;
+namespace TiamatBeast.TiamatCode.Powers;
 
 /// <summary>Base de los powers de Tiamat: los íconos viven en los recursos de este mod.</summary>
 public abstract class TiamatPower : FGOCorePower

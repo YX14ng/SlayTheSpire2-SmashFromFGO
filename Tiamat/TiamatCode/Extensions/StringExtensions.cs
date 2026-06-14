@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Tiamat.TiamatCode.Extensions;
+namespace TiamatBeast.TiamatCode.Extensions;
 
 // Utilidades para rutas de assets (espejo del helper de los otros personajes FGO).
 public static class StringExtensions

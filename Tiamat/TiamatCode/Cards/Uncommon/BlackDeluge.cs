@@ -3,7 +3,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
-namespace Tiamat.TiamatCode.Cards.Uncommon;
+namespace TiamatBeast.TiamatCode.Cards.Uncommon;
 
 /// <summary>Diluvio Negro — esparcís Maldición a TODOS los enemigos; el enjambre se nutre de
 /// cada presa cursada (Crianza por enemigo alcanzado). El AoE de control + sustain del motor.</summary>

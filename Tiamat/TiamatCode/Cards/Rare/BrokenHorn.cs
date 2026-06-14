@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
-namespace Tiamat.TiamatCode.Cards.Rare;
+namespace TiamatBeast.TiamatCode.Cards.Rare;
 
 /// <summary>Cuerno Roto — devorás TODA la cria de un golpe: daño AoE por cada Laḫmu devorado,
 /// escalado por la Crianza, y cargás NP por cabeza. El boton de cosecha. 0 maná, Exhaust.</summary>

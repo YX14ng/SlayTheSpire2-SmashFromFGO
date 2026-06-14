@@ -1,8 +1,8 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
-using Tiamat.TiamatCode.Powers;
+using TiamatBeast.TiamatCode.Powers;
 
-namespace Tiamat.TiamatCode.Relics;
+namespace TiamatBeast.TiamatCode.Relics;
 
 /// <summary>Cuerno de King Hassan — al iniciar el combate ganás Agallas (Guts): la 1ª vez que
 /// caerías, revivís a 1 HP pariendo 3 Laḫmu. 1/combate. (La inmortalidad del Rey de la Montaña
