@@ -66,7 +66,7 @@
   "GILGAMESHARCHER-CASTER_OF_CU_VAJRA.title": "Trueno de Vajra",
   "GILGAMESHARCHER-CASTER_OF_CU_VAJRA.description": "#Inflige !D! de daño a TODOS los enemigos. Gana !Np! de *Carga NP.",
   "GILGAMESHARCHER-KIT_CHARISMA.title": "Carisma A+",
-  "GILGAMESHARCHER-KIT_CHARISMA.description": "#Consumir. Gana !Strength! de *Fuerza. Gana !Np! de *Carga NP.",
+  "GILGAMESHARCHER-KIT_CHARISMA.description": "#Consumir. Gana !Strength! de *Fuerza. Gana !Np! de *Carga NP. En co-op, cada aliado gana 1 de *Fuerza.",
   "GILGAMESHARCHER-KIT_COLLECTOR.title": "Coleccionista EX",
   "GILGAMESHARCHER-KIT_COLLECTOR.description": "#Consumir. Gana !Stars! *Estrellas de *Crítico.+ Roba 1 carta.+",
   "GILGAMESHARCHER-THOROUGH_APPRAISAL.title": "Tasación Exhaustiva",

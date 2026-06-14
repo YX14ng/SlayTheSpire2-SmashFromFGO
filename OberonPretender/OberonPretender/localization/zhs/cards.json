@@ -54,7 +54,7 @@
   "OBERONPRETENDER-RIDE_THE_HAWK_MOTH.description": "#抽 !Draw! 张牌。获得 !Stars! 点暴击星。",
 
   "OBERONPRETENDER-EVENING_SHROUD.title": "夜之帷幕",
-  "OBERONPRETENDER-EVENING_SHROUD.description": "#获得 !Charge! 点*宝具充能。接下来 !Duration! 个回合，你的宝具牌伤害提高 !BonusPct!%。",
+  "OBERONPRETENDER-EVENING_SHROUD.description": "#获得 !Charge! 点*宝具充能。接下来 !Duration! 个回合，你的宝具牌伤害提高 !BonusPct!%。 协作模式下，队友也获得此增益和10点*NP值。",
   "OBERONPRETENDER-MORNING_LARK_ALT.title": "朝之云雀+",
   "OBERONPRETENDER-MORNING_LARK_ALT.description": "#获得 !Charge! 点*宝具充能。获得 !Stars! 点暴击星。承担 !Debt! 点*借贷。",
   "OBERONPRETENDER-ROYAL_LOAN.title": "王室借贷",

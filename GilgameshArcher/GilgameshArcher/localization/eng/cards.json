@@ -66,7 +66,7 @@
   "GILGAMESHARCHER-CASTER_OF_CU_VAJRA.title": "Vajra's Thunder",
   "GILGAMESHARCHER-CASTER_OF_CU_VAJRA.description": "#Deal !D! damage to ALL enemies. Gain !Np! *NP Charge.",
   "GILGAMESHARCHER-KIT_CHARISMA.title": "Charisma A+",
-  "GILGAMESHARCHER-KIT_CHARISMA.description": "#Exhaust. Gain !Strength! *Strength. Gain !Np! *NP Charge.",
+  "GILGAMESHARCHER-KIT_CHARISMA.description": "#Exhaust. Gain !Strength! *Strength. Gain !Np! *NP Charge. In co-op, each ally gains 1 *Strength.",
   "GILGAMESHARCHER-KIT_COLLECTOR.title": "Collector EX",
   "GILGAMESHARCHER-KIT_COLLECTOR.description": "#Exhaust. Gain !Stars! *Critical *Stars.+ Draw 1 card.+",
   "GILGAMESHARCHER-THOROUGH_APPRAISAL.title": "Thorough Appraisal",

@@ -54,7 +54,7 @@
   "OBERONPRETENDER-RIDE_THE_HAWK_MOTH.description": "#Draw !Draw!. Gain !Stars! Critical Stars.",
 
   "OBERONPRETENDER-EVENING_SHROUD.title": "Evening Shroud",
-  "OBERONPRETENDER-EVENING_SHROUD.description": "#Gain !Charge! *NP Charge. For !Duration! turns, your NP cards deal !BonusPct!% more damage.",
+  "OBERONPRETENDER-EVENING_SHROUD.description": "#Gain !Charge! *NP Charge. For !Duration! turns, your NP cards deal !BonusPct!% more damage. In co-op, allies also gain this buff and 10 *NP Charge.",
   "OBERONPRETENDER-MORNING_LARK_ALT.title": "Morning Lark+",
   "OBERONPRETENDER-MORNING_LARK_ALT.description": "#Gain !Charge! *NP Charge. Gain !Stars! Critical Stars. Take !Debt! *Debt.",
   "OBERONPRETENDER-ROYAL_LOAN.title": "Royal Loan",

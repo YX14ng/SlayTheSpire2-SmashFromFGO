@@ -66,7 +66,7 @@
   "GILGAMESHARCHER-CASTER_OF_CU_VAJRA.title": "金刚杵之雷",
   "GILGAMESHARCHER-CASTER_OF_CU_VAJRA.description": "#对所有敌人造成 !D! 点伤害。获得 !Np! 点*宝具充能。",
   "GILGAMESHARCHER-KIT_CHARISMA.title": "卡里斯玛 A+",
-  "GILGAMESHARCHER-KIT_CHARISMA.description": "#消耗。获得 !Strength! 点*力量。获得 !Np! 点*宝具充能。",
+  "GILGAMESHARCHER-KIT_CHARISMA.description": "#消耗。获得 !Strength! 点*力量。获得 !Np! 点*宝具充能。 协作模式下，每个队友获得1点*力量。",
   "GILGAMESHARCHER-KIT_COLLECTOR.title": "收藏家 EX",
   "GILGAMESHARCHER-KIT_COLLECTOR.description": "#消耗。获得 !Stars! 颗*暴击星。+抽 1 张牌。+",
   "GILGAMESHARCHER-THOROUGH_APPRAISAL.title": "详尽鉴定",

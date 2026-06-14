@@ -1,3 +1,4 @@
+using System.Linq;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -24,6 +25,10 @@ public sealed class KitCharisma() : GilgameshCard(2, CardType.Skill, CardRarity.
     {
         await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
         await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        // Co-op (DESIGN-GILGAMESH §6 «buffer secundario»): Carisma le da 1 de Fuerza a CADA aliado.
+        // En 1 jugador, PlayerCreatures es solo el Owner -> el foreach queda vacío (fiel a 1 jugador).
+        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
+            await PowerCmd.Apply<StrengthPower>(ally, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
