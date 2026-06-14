@@ -1,0 +1,16 @@
+{
+  "GILGAMESHARCHER-GILGAMESH.title": "吉尔伽美什",
+  "GILGAMESHARCHER-GILGAMESH.titleObject": "英雄王",
+  "GILGAMESHARCHER-GILGAMESH.description": "乌鲁克的英雄王，集齐大地一切财宝的完全超越者。他不以双手作战：王之财宝射出有史以来一切武器的原典，这趟旅途的金币便是他的弹药；当杂种令他厌倦时，他便拔出乖离剑·Ea，吟咏那劈开天地的开辟之风。难以驾驭，无可匹敌。",
+  "GILGAMESHARCHER-GILGAMESH.pronounObject": "他",
+  "GILGAMESHARCHER-GILGAMESH.possessiveAdjective": "他的",
+  "GILGAMESHARCHER-GILGAMESH.pronounPossessive": "他的",
+  "GILGAMESHARCHER-GILGAMESH.pronounSubject": "他",
+  "GILGAMESHARCHER-GILGAMESH.goldMonologue": "黄金？杂种，这世上的每一枚硬币早已是我的。我不过是准许你替我保管几枚罢了。",
+  "GILGAMESHARCHER-GILGAMESH.eventDeathPrevention": "哼。王岂会败于此等之物。开门吧，王之财宝。",
+  "GILGAMESHARCHER-GILGAMESH.aromaPrinciple": "这世间一切财宝皆归我所有。跪下吧，或许我会让你一睹乖离剑·Ea。",
+  "GILGAMESHARCHER-GILGAMESH.cardsModifierTitle": "王之财宝",
+  "GILGAMESHARCHER-GILGAMESH.cardsModifierDescription": "使用吉尔伽美什的卡组进行游戏。",
+  "GILGAMESHARCHER-GILGAMESH.banter.alive.endTurnPing": "感激吧，杂种——朕已决定，你值得朕的财宝赏你一击。",
+  "GILGAMESHARCHER-GILGAMESH.banter.dead.endTurnPing": "不可能……王……岂会……是倒在此处之人……"
+}

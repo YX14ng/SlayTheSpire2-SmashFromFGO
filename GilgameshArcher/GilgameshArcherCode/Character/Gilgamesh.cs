@@ -15,36 +15,41 @@ public class Gilgamesh : PlaceholderCharacterModel
 {
     public const string CharacterId = "Gilgamesh";
 
-    // Azul acero del Sanador de Dragones (armadura) con un dejo de sangre de dragón.
-    public static readonly Color Color = new("37597a");
+    // Dorado imperial (sobre el rojo vino de los relámpagos de Ea) — DESIGN-GILGAMESH §7.
+    public static readonly Color Color = new("d4af37");
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Masculine;
 
-    // HP = 80 — ancla Ironclad exacta (DESIGN-SIEGFRIED §5, P1). La identidad bruiser la paga la
-    // Sangre de Dragón inicial 2 (Hoja de Tilo), NO HP extra.
-    public override int StartingHp => 80;
+    // HP = 72 — ancla entre Silent 70 e Ironclad 80 (DESIGN-GILGAMESH §7). Semidiós 2/3 pero END C y
+    // demasiado arrogante para defender con su cuerpo: su defensa REAL es la Puerta, no su carne. El
+    // kit es explosivo (economía de oro → picos de burst comprado), por eso baja del 75 que proponía B.
+    public override int StartingHp => 72;
 
-    // Mazo inicial QAABB fiel (§5): 4 Golpe Buster + 4 Defensa + 2 FIRMAS (Tajo Cazadragones =
-    // Buster con sinergia SdD; Bautismo de Sangre = construcción de SdD+NP). El "Golpe" vive DENTRO
-    // del mazo (P6 Morgan, compat del tag Strike). Las firmas enseñan las dos identidades (armadura
-    // y medidor) y el mazo gana el acto 1 sin el motor armado (Balmung NO está en el mazo inicial).
+    // Mazo inicial (fase ESPINA): 4 Golpe + 4 Defensa + 2 FIRMAS de comando que enseñan los dos hilos
+    // FGOCore vivos — Arts (Carga NP → Enuma Elish auto a 100) y Quick (Estrellas → Crítico Listo ×2).
+    // El "Golpe" vive DENTRO del mazo (compat del tag Strike, patrón Morgan/Siegfried). Las FIRMAS de
+    // oro/armas del diseño (Puerta de Babilonia, Regla de Oro) entran cuando aterricen los módulos
+    // Arsenal/Gold de FGOCore (checklist §10) — no bloquean el arranque del personaje.
     public override IEnumerable<CardModel> StartingDeck =>
     [
         ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(),
         ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(),
-        ModelDb.Card<DragonbloodCut>(),
-        ModelDb.Card<BloodBaptism>()
+        ModelDb.Card<Arts>(),
+        ModelDb.Card<Quick>()
     ];
 
-    public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<LindenLeaf>()];
+    // Starter de fase ESPINA: el Juramento del Rey de Uruk (BondRelic ×1.25 heredado + Nv7 +20 NP inicial
+    // + capstone Nv10 = empezás con 1 Crítico Listo). La starter-MOTOR del diseño (Bab-ilu, la Llave del
+    // Tesoro) se suma cuando exista el módulo Arsenal de FGOCore — DESIGN-GILGAMESH §6/§7, checklist §10.
+    public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<OathOfUruk>()];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<GilgameshCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<GilgameshRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<GilgameshPotionPool>();
 
-    // Visuales: placeholder por ahora (el modelo de batalla 200200 espera el export GUI del bundle;
-    // DESIGN-SIEGFRIED §11). El render directo (modelo único) vendrá tras el export.
+    // Visuales: modelo de batalla único (200200, sin formas — §3.5). El swap cosmético opcional con
+    // NP≥100 (200210→200220) es no-bloqueante y NO se enchufa en la espina (no requiere FormPower).
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/gilgamesh_visuals.tscn";
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/gilgamesh_select_bg.tscn";
 
@@ -58,8 +63,8 @@ public class Gilgamesh : PlaceholderCharacterModel
         }
     }
 
-    // NOTA: usan los placeholders del scaffold (sufijo _char_name) hasta el pase de arte real (render
-    // del modelo 200200 + charagraph). Renombrar a char_icon/char_select/... cuando llegue el arte.
+    // NOTA: usan los placeholders del scaffold (sufijo _char_name) hasta el pase de arte real (render del
+    // modelo 200200 + charagraph, DESIGN-GILGAMESH §8). Renombrar a char_icon/char_select/... con el arte.
     public override string CustomIconTexturePath => "character_icon_char_name.png".CharacterUiPath();
     public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
     public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();

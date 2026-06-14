@@ -1,0 +1,23 @@
+{
+  "GILGAMESHARCHER-OATH_OF_URUK.title": "Oath of the King of Uruk",
+  "GILGAMESHARCHER-OATH_OF_URUK.description": "#Bond: earn points from victories, events, shops and rest sites. Each level grants permanent gifts (Max HP, starting NP Charge, starting Block). At Bond 7 you start each combat with 20 NP Charge. At Bond 10 you start each combat with 1 Critical Hit ready.",
+  "GILGAMESHARCHER-OATH_OF_URUK.flavor": "The covenant between the King and the city he was born to rule. While the bond holds, the King of Heroes wields his treasures at full weight.",
+  "GILGAMESHARCHER-CATALOG_OF_THE_ROYAL_TREASURY.title": "Catalog of the Royal Treasury",
+  "GILGAMESHARCHER-CATALOG_OF_THE_ROYAL_TREASURY.description": "#At card rewards, give up the card to roll for a dupe. A dupe raises your NP Level (up to 5), boosting your Noble Phantasm cards by 15% per level.",
+  "GILGAMESHARCHER-CATALOG_OF_THE_ROYAL_TREASURY.flavor": "Every treasure ever forged, indexed by the King's own hand. He owns the originals; everything since is a copy.",
+  "GILGAMESHARCHER-KINGS_WINE_CUP.title": "King's Wine Cup",
+  "GILGAMESHARCHER-KINGS_WINE_CUP.description": "#At the end of each combat, gain !Gold! Gold.",
+  "GILGAMESHARCHER-KINGS_WINE_CUP.flavor": "The King drinks, and the treasury fills. Wealth flows to him the way rivers flow to the sea.",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.title": "Mantle of Arrogance",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.description": "#Whenever one of your attacks kills an enemy while you have *Critical *Ready, gain !Gold! Gold (up to 15 per combat).",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.flavor": "He does not loot the dead. The dead simply surrender their gold to the one who was always its rightful owner.",
+  "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.title": "Vimana, the Golden Throne",
+  "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.description": "#The first time you play 2 or more Treasure Arms in a single turn each combat, draw !Cards!.",
+  "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.flavor": "The flying throne of the King. Why march to war when the war can be made to come to you?",
+  "GILGAMESHARCHER-MAGIC_RESISTANCE_AMULET.title": "Trinket of Trifling Magecraft",
+  "GILGAMESHARCHER-MAGIC_RESISTANCE_AMULET.description": "#The first *Weak you would receive each combat is negated.",
+  "GILGAMESHARCHER-MAGIC_RESISTANCE_AMULET.flavor": "Rank E Magic Resistance: only the pettiest sorcery slides off. A king does not deign to dodge the rest.",
+  "GILGAMESHARCHER-THE_ORIGINAL_CHALICE.title": "The Original Chalice",
+  "GILGAMESHARCHER-THE_ORIGINAL_CHALICE.description": "#Gain !MaxHp! Max HP. While held, limits break: Bond can reach level 12 and NP Level can reach 6.",
+  "GILGAMESHARCHER-THE_ORIGINAL_CHALICE.flavor": "A Holy Grail? Mongrel. I have thousands of them in my vault — this is merely the first."
+}

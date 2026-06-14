@@ -1,0 +1,23 @@
+{
+  "GILGAMESHARCHER-OATH_OF_URUK.title": "乌鲁克王之誓约",
+  "GILGAMESHARCHER-OATH_OF_URUK.description": "#羁绊：在战斗胜利、事件、商店与休息处获得羁绊点数。每个等级授予永久奖励（最大生命、初始宝具充能、初始格挡）。羁绊 7 级时，每场战斗开始获得 20 点宝具充能。羁绊 10 级时，每场战斗开始拥有 1 次暴击就绪。",
+  "GILGAMESHARCHER-OATH_OF_URUK.flavor": "王与他生来统治之城之间的契约。羁绊存续之时，英雄王便以全部分量挥舞他的财宝。",
+  "GILGAMESHARCHER-CATALOG_OF_THE_ROYAL_TREASURY.title": "王室宝库目录",
+  "GILGAMESHARCHER-CATALOG_OF_THE_ROYAL_TREASURY.description": "#在卡牌奖励处，可放弃该卡牌以掷骰获取一个复刻。复刻会提升你的宝具等级（最高 5 级），使你的宝具牌每级强化 15%。",
+  "GILGAMESHARCHER-CATALOG_OF_THE_ROYAL_TREASURY.flavor": "古往今来锻造的每一件宝物，皆由王亲手编录。原典归他所有；此后一切不过是复制品。",
+  "GILGAMESHARCHER-KINGS_WINE_CUP.title": "王之酒杯",
+  "GILGAMESHARCHER-KINGS_WINE_CUP.description": "#每场战斗结束时，获得!Gold!金币。",
+  "GILGAMESHARCHER-KINGS_WINE_CUP.flavor": "王举杯而饮，宝库随之充盈。财富归向他，如百川归海。",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.title": "傲慢之披风",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.description": "#当你在拥有*暴击*时以一次攻击击杀敌人，获得!Gold!金币（每场战斗至多 15）。",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.flavor": "他不掠夺亡者。亡者只是将其金币交还给那位本就是其正当主人的存在。",
+  "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.title": "维摩那·黄金王座",
+  "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.description": "#每场战斗中，当你首次在同一回合内打出 2 张或更多王之财宝·武具时，抽!Cards!张牌。",
+  "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.flavor": "王之飞行王座。既然能令战争来到面前，又何须出征？",
+  "GILGAMESHARCHER-MAGIC_RESISTANCE_AMULET.title": "对魔力 E 护符",
+  "GILGAMESHARCHER-MAGIC_RESISTANCE_AMULET.description": "#每场战斗中，你将受到的第一层*虚弱*被抵消。",
+  "GILGAMESHARCHER-MAGIC_RESISTANCE_AMULET.flavor": "对魔力 E 级：唯有最微不足道的法术能被弹开。其余的，王不屑闪避。",
+  "GILGAMESHARCHER-THE_ORIGINAL_CHALICE.title": "原典圣杯",
+  "GILGAMESHARCHER-THE_ORIGINAL_CHALICE.description": "#生命上限提高!MaxHp!点。持有时突破上限：羁绊最高可达 12 级，宝具等级最高可达 6 级。",
+  "GILGAMESHARCHER-THE_ORIGINAL_CHALICE.flavor": "圣杯？杂种。我的宝库里有千万个——这不过是其中第一个。"
+}

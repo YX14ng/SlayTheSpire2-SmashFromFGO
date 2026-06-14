@@ -1,0 +1,23 @@
+{
+  "GILGAMESHARCHER-OATH_OF_URUK.title": "Juramento del Rey de Uruk",
+  "GILGAMESHARCHER-OATH_OF_URUK.description": "#Vínculo: gana puntos en victorias, eventos, tiendas y hogueras. Cada nivel otorga regalos permanentes (Vida máx., Carga NP inicial, Bloqueo inicial). En Vínculo 7 empezás cada combate con 20 de Carga NP. En Vínculo 10 empezás cada combate con 1 Crítico Listo.",
+  "GILGAMESHARCHER-OATH_OF_URUK.flavor": "El pacto entre el Rey y la ciudad que nació para gobernar. Mientras el vínculo se sostiene, el Rey de los Héroes blande sus tesoros con todo su peso.",
+  "GILGAMESHARCHER-CATALOG_OF_THE_ROYAL_TREASURY.title": "Catálogo de la Tesorería Real",
+  "GILGAMESHARCHER-CATALOG_OF_THE_ROYAL_TREASURY.description": "#En las recompensas de carta, renuncia a la carta para tirar por un dupe. Un dupe sube tu Nivel de NP (hasta 5), reforzando tus cartas-NP 15% por nivel.",
+  "GILGAMESHARCHER-CATALOG_OF_THE_ROYAL_TREASURY.flavor": "Cada tesoro jamás forjado, catalogado por la mano del propio Rey. Él posee los originales; todo lo demás es una copia.",
+  "GILGAMESHARCHER-KINGS_WINE_CUP.title": "Copa de Vino del Rey",
+  "GILGAMESHARCHER-KINGS_WINE_CUP.description": "#Al final de cada combate, gana !Gold! de Oro.",
+  "GILGAMESHARCHER-KINGS_WINE_CUP.flavor": "El Rey bebe, y el tesoro se llena. La riqueza fluye hacia él como los ríos fluyen hacia el mar.",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.title": "Manto de la Arrogancia",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.description": "#Cuando un ataque tuyo con un *Crítico *Listo mata a un enemigo, gana !Gold! de Oro (máx. 15 por combate).",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.flavor": "No saquea a los muertos. Los muertos simplemente le rinden su oro al que siempre fue su legítimo dueño.",
+  "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.title": "Vimana, el Trono Dorado",
+  "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.description": "#La primera vez que juegas 2 o más Armas del Tesoro en un mismo turno cada combate, roba !Cards!.",
+  "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.flavor": "El trono volador del Rey. ¿Para qué marchar a la guerra cuando la guerra puede ser traída ante ti?",
+  "GILGAMESHARCHER-MAGIC_RESISTANCE_AMULET.title": "Amuleto de Pacotilla",
+  "GILGAMESHARCHER-MAGIC_RESISTANCE_AMULET.description": "#El primer *Débil que recibirías cada combate se anula.",
+  "GILGAMESHARCHER-MAGIC_RESISTANCE_AMULET.flavor": "Resistencia Mágica rango E: solo la hechicería más insignificante resbala. Un rey no se digna a esquivar el resto.",
+  "GILGAMESHARCHER-THE_ORIGINAL_CHALICE.title": "El Cáliz Original",
+  "GILGAMESHARCHER-THE_ORIGINAL_CHALICE.description": "#Gana !MaxHp! de Vida máxima. Mientras lo tengas, los límites se rompen: el Vínculo puede llegar al nivel 12 y el Nivel de NP a 6.",
+  "GILGAMESHARCHER-THE_ORIGINAL_CHALICE.flavor": "¿Un Santo Grial? Mestizo. Tengo miles en mi bóveda — este apenas es el primero."
+}

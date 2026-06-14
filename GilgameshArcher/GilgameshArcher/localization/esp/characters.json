@@ -1,0 +1,16 @@
+{
+  "GILGAMESHARCHER-GILGAMESH.title": "Gilgamesh",
+  "GILGAMESHARCHER-GILGAMESH.titleObject": "el Rey de los Héroes",
+  "GILGAMESHARCHER-GILGAMESH.description": "El Rey de los Héroes de Uruk, el transcendente completo que reunió todos los tesoros de la tierra. No combate con sus manos: la Puerta de Babilonia dispara los prototipos de toda arma jamás forjada, el oro de la run es su munición, y cuando los mestizos lo aburren, desenfunda a Ea y recita el viento de la creación que partió cielo y tierra. Difícil de jugar, imposible de igualar.",
+  "GILGAMESHARCHER-GILGAMESH.pronounObject": "él",
+  "GILGAMESHARCHER-GILGAMESH.possessiveAdjective": "su",
+  "GILGAMESHARCHER-GILGAMESH.pronounPossessive": "suyo",
+  "GILGAMESHARCHER-GILGAMESH.pronounSubject": "él",
+  "GILGAMESHARCHER-GILGAMESH.goldMonologue": "¿Oro? Mestizo, cada moneda de este mundo ya es mía. Sólo te permito cargar con algunas.",
+  "GILGAMESHARCHER-GILGAMESH.eventDeathPrevention": "Hmph. El Rey no cae ante semejante cosa. Ábrete, Puerta de Babilonia.",
+  "GILGAMESHARCHER-GILGAMESH.aromaPrinciple": "Todos los tesoros del mundo son míos. Arrodíllate, y quizá te deje contemplar a Ea.",
+  "GILGAMESHARCHER-GILGAMESH.cardsModifierTitle": "Puerta de Babilonia",
+  "GILGAMESHARCHER-GILGAMESH.cardsModifierDescription": "Juega con el mazo de Gilgamesh.",
+  "GILGAMESHARCHER-GILGAMESH.banter.alive.endTurnPing": "Agradécelo, mestizo: he decidido que vales un solo disparo de mi Puerta.",
+  "GILGAMESHARCHER-GILGAMESH.banter.dead.endTurnPing": "Imposible... el Rey... no puede... ser quien caiga aquí..."
+}

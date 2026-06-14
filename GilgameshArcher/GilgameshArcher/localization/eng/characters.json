@@ -1,0 +1,16 @@
+{
+  "GILGAMESHARCHER-GILGAMESH.title": "Gilgamesh",
+  "GILGAMESHARCHER-GILGAMESH.titleObject": "the King of Heroes",
+  "GILGAMESHARCHER-GILGAMESH.description": "The King of Heroes of Uruk, the complete transcendent who gathered every treasure of the earth. He does not fight with his hands: the Gate of Babylon fires the prototypes of every weapon ever forged, the gold of the run is his ammunition, and when the mongrels bore him he draws Ea and recites the wind of creation that split heaven and earth. Hard to play, impossible to equal.",
+  "GILGAMESHARCHER-GILGAMESH.pronounObject": "him",
+  "GILGAMESHARCHER-GILGAMESH.possessiveAdjective": "his",
+  "GILGAMESHARCHER-GILGAMESH.pronounPossessive": "his",
+  "GILGAMESHARCHER-GILGAMESH.pronounSubject": "he",
+  "GILGAMESHARCHER-GILGAMESH.goldMonologue": "Gold? Mongrel, every coin in this world is already mine. I merely permit you to carry some.",
+  "GILGAMESHARCHER-GILGAMESH.eventDeathPrevention": "Hmph. The King does not fall to the likes of this. Open, Gate of Babylon.",
+  "GILGAMESHARCHER-GILGAMESH.aromaPrinciple": "All the treasures of the world are mine. Kneel, and perhaps I shall let you witness Ea.",
+  "GILGAMESHARCHER-GILGAMESH.cardsModifierTitle": "Gate of Babylon",
+  "GILGAMESHARCHER-GILGAMESH.cardsModifierDescription": "Play with Gilgamesh's card pool.",
+  "GILGAMESHARCHER-GILGAMESH.banter.alive.endTurnPing": "Be grateful, mongrel — I have decided you are worth a single shot from my Gate.",
+  "GILGAMESHARCHER-GILGAMESH.banter.dead.endTurnPing": "Impossible... the King... cannot... be the one to fall here..."
+}
