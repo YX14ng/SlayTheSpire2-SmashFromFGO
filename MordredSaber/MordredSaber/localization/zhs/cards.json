@@ -82,7 +82,7 @@
   "MORDREDSABER-CHAINED_LIGHTNING.title": "连锁闪电",
   "MORDREDSABER-CHAINED_LIGHTNING.description": "#对所有敌人造成!D!点伤害。若你本回合消耗过暴击：对所有敌人额外造成!Bonus!点。",
   "MORDREDSABER-DRAGONS_BLOOD.title": "龙之血",
-  "MORDREDSABER-DRAGONS_BLOOD.description": "#在你的回合开始时，获得!NpCharge!点*NP值与!B!点格挡。",
+  "MORDREDSABER-DRAGONS_BLOOD.description": "#在你的回合开始时，获得!NpCharge!点*NP值与!Block!点格挡。",
   "MORDREDSABER-ACCUMULATED_HATRED.title": "积怨",
   "MORDREDSABER-ACCUMULATED_HATRED.description": "#每当你失去生命时，获得10点*NP值（每回合至多!MaxProcs!次）。",
   "MORDREDSABER-BANNER_OF_REBELLION.title": "叛逆旗帜",

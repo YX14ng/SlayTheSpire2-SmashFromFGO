@@ -82,7 +82,7 @@
   "MORDREDSABER-CHAINED_LIGHTNING.title": "Relámpago Encadenado",
   "MORDREDSABER-CHAINED_LIGHTNING.description": "#Inflige !D! de daño a TODOS los enemigos. Si consumiste un Crítico este turno: inflige !Bonus! más a todos.",
   "MORDREDSABER-DRAGONS_BLOOD.title": "Sangre de Dragón",
-  "MORDREDSABER-DRAGONS_BLOOD.description": "#Al inicio de tu turno, gana !NpCharge! de *Carga NP y !B! de Bloqueo.",
+  "MORDREDSABER-DRAGONS_BLOOD.description": "#Al inicio de tu turno, gana !NpCharge! de *Carga NP y !Block! de Bloqueo.",
   "MORDREDSABER-ACCUMULATED_HATRED.title": "Odio Acumulado",
   "MORDREDSABER-ACCUMULATED_HATRED.description": "#Cada vez que perdés Vida, gana 10 de *Carga NP (hasta !MaxProcs! veces por turno).",
   "MORDREDSABER-BANNER_OF_REBELLION.title": "Estandarte de la Rebelión",
