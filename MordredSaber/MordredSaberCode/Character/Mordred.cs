@@ -15,36 +15,41 @@ public class Mordred : PlaceholderCharacterModel
 {
     public const string CharacterId = "Mordred";
 
-    // Azul acero del Sanador de Dragones (armadura) con un dejo de sangre de dragón.
-    public static readonly Color Color = new("37597a");
+    // Carmesí de la Saber of Red (la armadura roja-sangre / el relámpago de Clarent).
+    public static readonly Color Color = new("b03030");
 
     public override Color NameColor => Color;
-    public override CharacterGender Gender => CharacterGender.Masculine;
+    // Saberface: meme-lore aparte, su género de trato es "no la trates como mujer ni de hombre
+    // obviamente" (perfil oficial). Femenino a efectos del motor; las reglas de trato viven en las cartas.
+    public override CharacterGender Gender => CharacterGender.Feminine;
 
-    // HP = 80 — ancla Ironclad exacta (DESIGN-SIEGFRIED §5, P1). La identidad bruiser la paga la
-    // Sangre de Dragón inicial 2 (Hoja de Tilo), NO HP extra.
-    public override int StartingHp => 80;
+    // HP = 75 (DESIGN-MORDRED §7): entre Ironclad 80 / Morgan 78 y Silent 70 / Artoria 70 — END A y
+    // armadura completa, pero su plan ofensivo (Rebelión recibe +2/golpe) la deja sin armadura.
+    public override int StartingHp => 75;
 
-    // Mazo inicial QAABB fiel (§5): 4 Golpe Buster + 4 Defensa + 2 FIRMAS (Tajo Cazadragones =
-    // Buster con sinergia SdD; Bautismo de Sangre = construcción de SdD+NP). El "Golpe" vive DENTRO
-    // del mazo (P6 Morgan, compat del tag Strike). Las firmas enseñan las dos identidades (armadura
-    // y medidor) y el mazo gana el acto 1 sin el motor armado (Balmung NO está en el mazo inicial).
+    // Mazo inicial de 10 (DESIGN-MORDRED §5.0/§7), QAABB sesgado a Buster. En esta ESPINA las cartas
+    // de comando Buster/Arts/Quick (fase Content) aún no existen, así que el starter usa las básicas
+    // genéricas + las DOS FIRMAS (los cambios de forma): 4 Golpe + 4 Defensa + Rebelión + Bajar la
+    // Visera. La danza del casco ya está en el mazo inicial (arrancás Enmascarada vía la starter).
+    // Cuando Content añada Buster/Arts/Quick, este deck se ajusta a 3B/2A/1Q/2D/2 firmas.
     public override IEnumerable<CardModel> StartingDeck =>
     [
         ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(),
         ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(),
-        ModelDb.Card<DragonbloodCut>(),
-        ModelDb.Card<BloodBaptism>()
+        ModelDb.Card<Rebellion>(),
+        ModelDb.Card<LowerTheVisor>()
     ];
 
-    public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<LindenLeaf>()];
+    // Starter: Clarent, la Espada Robada (entra en Enmascarado + motor ★/NP). Las otras starters
+    // (Juramento = BondRelic; Sello de Invocación = INpLevelStore) las añade la fase Content.
+    public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<ClarentTheStolenSword>()];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<MordredCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<MordredRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<MordredPotionPool>();
 
     // Visuales: placeholder por ahora (el modelo de batalla 100900 espera el export GUI del bundle;
-    // DESIGN-SIEGFRIED §11). El render directo (modelo único) vendrá tras el export.
+    // DESIGN-MORDRED §8). Las 3 formas se renderizan como attach/detach del casco sobre el MISMO rig.
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/mordred_visuals.tscn";
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/mordred_select_bg.tscn";
 

@@ -1,0 +1,16 @@
+{
+  "MORDREDSABER-MORDRED.title": "Mordred",
+  "MORDREDSABER-MORDRED.titleObject": "the Knight of Treachery",
+  "MORDREDSABER-MORDRED.description": "The Knight of Treachery. Tank your rage behind the Helm, then tear it off to cash it in as crimson-lightning Crits and Clarent Blood Arthur — the blade that strikes hardest against those who sit higher than you.",
+  "MORDREDSABER-MORDRED.pronounObject": "her",
+  "MORDREDSABER-MORDRED.possessiveAdjective": "her",
+  "MORDREDSABER-MORDRED.pronounPossessive": "hers",
+  "MORDREDSABER-MORDRED.pronounSubject": "she",
+  "MORDREDSABER-MORDRED.goldMonologue": "Gold? Keep it. The only throne I ever wanted couldn't be bought.",
+  "MORDREDSABER-MORDRED.eventDeathPrevention": "Not here. Not before I've torn that crown off his head.",
+  "MORDREDSABER-MORDRED.aromaPrinciple": "I am no one's daughter and no one's pawn. I am Mordred — and I will be acknowledged.",
+  "MORDREDSABER-MORDRED.cardsModifierTitle": "Clarent Blood Arthur",
+  "MORDREDSABER-MORDRED.cardsModifierDescription": "Play with Mordred's card pool.",
+  "MORDREDSABER-MORDRED.banter.alive.endTurnPing": "Come on, then. I'll take that helm off when I'm good and ready — and you'll wish I hadn't.",
+  "MORDREDSABER-MORDRED.banter.dead.endTurnPing": "The helm... stays on a while longer. Tch. Fine. I can still bleed you from behind it."
+}

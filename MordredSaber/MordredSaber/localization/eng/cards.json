@@ -1,0 +1,14 @@
+{
+  "MORDREDSABER-STRIKE.title": "Strike",
+  "MORDREDSABER-STRIKE.description": "#Deal !D! damage.",
+  "MORDREDSABER-DEFEND.title": "Defend",
+  "MORDREDSABER-DEFEND.description": "#Gain !B! Block.",
+  "MORDREDSABER-REBELLION.title": "Rebellion",
+  "MORDREDSABER-REBELLION.description": "#Deal !D! damage, then take off your helm: enter *Rebellion.",
+  "MORDREDSABER-LOWER_THE_VISOR.title": "Lower the Visor",
+  "MORDREDSABER-LOWER_THE_VISOR.description": "#Put your helm on: enter *Masked Knight. Gain !B! Block and !NpCharge! *NP Charge.",
+  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_UNLEASHED.title": "Clarent Blood Arthur: Unleashed",
+  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_UNLEASHED.description": "#Retain. Exhaust. If *Masked, first tear off your helm. Consume ALL your *NP Charge, at least 100. Deal !D! damage !Hits! times to ALL enemies; against Elites and Bosses, !Authority! more per hit; plus 1 per hit for every 20 NP Charge above 100. Then gain !Refund! *NP Charge.",
+  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.title": "Clarent Blood Arthur: Interlude",
+  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.description": "#Retain. Exhaust. Consume ALL your *NP Charge, at least 100. Deal !D! damage !Hits! times to ALL enemies; against Elites and Bosses, !Authority! more per hit; plus 1 per hit for every 15 NP Charge above 100. Then gain !Refund! *NP Charge."
+}

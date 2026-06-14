@@ -1,0 +1,16 @@
+{
+  "MORDREDSABER-MORDRED.title": "Mordred",
+  "MORDREDSABER-MORDRED.titleObject": "la Caballero de la Traición",
+  "MORDREDSABER-MORDRED.description": "La Caballero de la Traición. Tanqueá tu rabia tras el Yelmo, después arráncatelo para cobrarla en Críticos de relámpago carmesí y en Clarent Blood Arthur — la espada que más fuerte hiere a quien se sienta más alto que vos.",
+  "MORDREDSABER-MORDRED.pronounObject": "ella",
+  "MORDREDSABER-MORDRED.possessiveAdjective": "su",
+  "MORDREDSABER-MORDRED.pronounPossessive": "suyo",
+  "MORDREDSABER-MORDRED.pronounSubject": "ella",
+  "MORDREDSABER-MORDRED.goldMonologue": "¿Oro? Quédatelo. El único trono que alguna vez quise no se podía comprar.",
+  "MORDREDSABER-MORDRED.eventDeathPrevention": "Aquí no. No antes de arrancarle esa corona de la cabeza.",
+  "MORDREDSABER-MORDRED.aromaPrinciple": "No soy hija de nadie ni peón de nadie. Soy Mordred — y seré reconocida.",
+  "MORDREDSABER-MORDRED.cardsModifierTitle": "Clarent Blood Arthur",
+  "MORDREDSABER-MORDRED.cardsModifierDescription": "Juega con el mazo de Mordred.",
+  "MORDREDSABER-MORDRED.banter.alive.endTurnPing": "Vamos, entonces. Me quitaré ese yelmo cuando se me dé la gana — y vas a desear que no lo hubiera hecho.",
+  "MORDREDSABER-MORDRED.banter.dead.endTurnPing": "El yelmo... se queda puesto un rato más. Tch. Bien. Aún puedo sangrarte desde detrás de él."
+}

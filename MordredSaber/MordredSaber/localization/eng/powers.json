@@ -1,0 +1,23 @@
+{
+  "MORDREDSABER-MASKED_KNIGHT_FORM_POWER.title": "Masked Knight",
+  "MORDREDSABER-MASKED_KNIGHT_FORM_POWER.description": "#The helm is on, your parameters sealed. Your Attacks deal 2 less. At the start of your turn, gain 5 NP Charge. At the end of your turn, retain up to 10 Block.",
+  "MORDREDSABER-MASKED_KNIGHT_FORM_POWER.smartDescription": "#The helm is on, your parameters sealed. Your Attacks deal 2 less. At the start of your turn, gain 5 NP Charge. At the end of your turn, retain up to 10 Block.",
+  "MORDREDSABER-REBELLION_FORM_POWER.title": "Rebellion",
+  "MORDREDSABER-REBELLION_FORM_POWER.description": "#The helm is off. Your Attacks deal 2 more. You take 2 more damage from each enemy hit.",
+  "MORDREDSABER-REBELLION_FORM_POWER.smartDescription": "#The helm is off. Your Attacks deal 2 more. You take 2 more damage from each enemy hit.",
+  "MORDREDSABER-CRIMSON_LIGHTNING_FORM_POWER.title": "Crimson Lightning",
+  "MORDREDSABER-CRIMSON_LIGHTNING_FORM_POWER.description": "#Wreathed in crimson lightning. Your Attacks deal 2 more. At the start of your turn, gain 5 NP Charge. At the end of your turn, retain up to 10 Block. No penalty. This form cannot be replaced.",
+  "MORDREDSABER-CRIMSON_LIGHTNING_FORM_POWER.smartDescription": "#Wreathed in crimson lightning. Your Attacks deal 2 more. At the start of your turn, gain 5 NP Charge. At the end of your turn, retain up to 10 Block. No penalty. This form cannot be replaced.",
+  "MORDREDSABER-RED_LIGHTNING_CHANNEL_POWER.title": "Red Lightning Channel",
+  "MORDREDSABER-RED_LIGHTNING_CHANNEL_POWER.description": "#Whenever you consume a Critical, channel its hatred into Clarent.",
+  "MORDREDSABER-RED_LIGHTNING_CHANNEL_POWER.smartDescription": "#Whenever you consume a Critical, channel its hatred into Clarent.",
+  "MORDREDSABER-CRIT_CONSUMED_THIS_TURN_POWER.title": "Critical Consumed",
+  "MORDREDSABER-CRIT_CONSUMED_THIS_TURN_POWER.description": "#You consumed a Critical this turn.",
+  "MORDREDSABER-CRIT_CONSUMED_THIS_TURN_POWER.smartDescription": "#You consumed a Critical this turn.",
+  "MORDREDSABER-CLARENT_MANIFESTED_POWER.title": "Clarent Manifested",
+  "MORDREDSABER-CLARENT_MANIFESTED_POWER.description": "#Your Noble Phantasm has already manifested this peak.",
+  "MORDREDSABER-CLARENT_MANIFESTED_POWER.smartDescription": "#Your Noble Phantasm has already manifested this peak.",
+  "MORDREDSABER-LIGHTNING_VISIT_RETURN_POWER.title": "Lightning Return",
+  "MORDREDSABER-LIGHTNING_VISIT_RETURN_POWER.description": "#At the end of your turn, return to your previous form.",
+  "MORDREDSABER-LIGHTNING_VISIT_RETURN_POWER.smartDescription": "#At the end of your turn, return to your previous form."
+}
