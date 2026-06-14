@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Texture2D" path="res://TiamatBeast/character/select_bg_charagraph.png" id="charagraph"]
+[ext_resource type="Texture2D" path="res://TiamatBeast/character/select_bg_charagraph.png" id="bg"]
 
 [node name="TiamatSelectBg" type="Control"]
 anchors_preset = 15
@@ -13,18 +13,14 @@ grow_vertical = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.05, 0.02, 0.04, 1)
+color = Color(0.02, 0.04, 0.09, 1)
 
-[node name="Charagraph" type="TextureRect" parent="."]
+[node name="Art" type="TextureRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-modulate = Color(0.52, 0.46, 0.5, 1)
-texture = ExtResource("charagraph")
+modulate = Color(0.62, 0.6, 0.66, 1)
+texture = ExtResource("bg")
 expand_mode = 1
 stretch_mode = 6
 
@@ -32,6 +28,4 @@ stretch_mode = 6
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.04, 0.015, 0.04, 0.45)
+color = Color(0.02, 0.03, 0.07, 0.45)
