@@ -1,0 +1,31 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://MordredSaber/character/form_mordred.png" id="tex_1"]
+
+[resource]
+animations = [{
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"loop": true,
+"name": &"idle",
+"speed": 15.0
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"loop": false,
+"name": &"attack",
+"speed": 15.0
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"loop": false,
+"name": &"cast",
+"speed": 15.0
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"loop": false,
+"name": &"hurt",
+"speed": 15.0
+}, {
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}],
+"loop": false,
+"name": &"die",
+"speed": 15.0
+}]

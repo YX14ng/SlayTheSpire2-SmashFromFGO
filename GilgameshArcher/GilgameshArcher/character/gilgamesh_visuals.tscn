@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://GilgameshArcher/character/gilgamesh_frames.tres" id="frames"]
+
+[node name="GilgameshVisuals" type="Control"]
+
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Visuals"]
+position = Vector2(0, -217)
+scale = Vector2(0.6, 0.6)
+flip_h = true
+sprite_frames = ExtResource("frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+offset_left = -130.0
+offset_top = -440.0
+offset_right = 130.0
+offset_bottom = 0.0
+
+[node name="IntentPosition" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -470)
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -230)

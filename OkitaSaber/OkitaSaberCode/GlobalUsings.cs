@@ -1,0 +1,6 @@
+// Mecánicas compartidas del mod-librería FGOCore.
+global using FGOCore.FGOCoreCode;
+global using FGOCore.FGOCoreCode.Np;
+global using FGOCore.FGOCoreCode.Bond;
+global using FGOCore.FGOCoreCode.Stars;
+global using FGOCore.FGOCoreCode.DragonScales;

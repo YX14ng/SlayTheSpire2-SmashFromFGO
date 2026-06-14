@@ -1,0 +1,14 @@
+﻿{
+    "id":  "MordredSaber",
+    "name":  "Mordred - Knight of Treachery",
+    "author":  "Chaldea",
+    "description":  "Adds Mordred (Saber of Red) from Fate/Grand Order: the Knight of Rebellion who tanks behind the Helm of Infidelity, tears it off to cash crimson-lightning crits with Clarent, and crowns it with Clarent Blood Arthur. Saberface, but do NOT call her a girl.",
+    "version":  "v0.1.0",
+    "has_pck":  true,
+    "has_dll":  true,
+    "dependencies":  [
+                         "BaseLib",
+                         "FGOCore"
+                     ],
+    "affects_gameplay":  true
+}

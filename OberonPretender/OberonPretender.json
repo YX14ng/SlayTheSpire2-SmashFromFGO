@@ -1,0 +1,14 @@
+﻿{
+    "id":  "OberonPretender",
+    "name":  "Oberon - King of Avalon le Fae",
+    "author":  "Chaldea",
+    "description":  "Adds Oberon (Pretender) from Fate/Grand Order: the traitor fairy whose every blessing comes due as debt with interest - the loan collected when you wake.",
+    "version":  "v0.1.0",
+    "has_pck":  true,
+    "has_dll":  true,
+    "dependencies":  [
+                         "BaseLib",
+                         "FGOCore"
+                     ],
+    "affects_gameplay":  true
+}

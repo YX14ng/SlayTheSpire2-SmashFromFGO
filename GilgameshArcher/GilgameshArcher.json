@@ -1,0 +1,14 @@
+﻿{
+    "id":  "GilgameshArcher",
+    "name":  "Gilgamesh - King of Heroes",
+    "author":  "Chaldea",
+    "description":  "Adds Gilgamesh (Archer) from Fate/Grand Order: the King of Uruk who pays for everything in gold, rains the Gate of Babylon on the unworthy, and judges all with Enuma Elish.",
+    "version":  "v0.1.0",
+    "has_pck":  true,
+    "has_dll":  true,
+    "dependencies":  [
+                         "BaseLib",
+                         "FGOCore"
+                     ],
+    "affects_gameplay":  true
+}

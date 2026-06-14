@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://OberonPretender/character/form_oberon.png" id="sieg"]
+
+[node name="OberonMerchant" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -217)
+scale = Vector2(0.6, 0.6)
+flip_h = true
+texture = ExtResource("sieg")
