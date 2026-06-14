@@ -1,0 +1,16 @@
+{
+  "OKITASABER-OKITA.title": "冲田总司",
+  "OKITASABER-OKITA.titleObject": "新选组一番队队长",
+  "OKITASABER-OKITA.description": "新选组一番队队长，幕末最强的剑士，天然理心流的天才，少女之龄便已取得免许皆传。她不格挡，只进攻。每一记斩击都会卷起樱花花瓣，化作回到她手中的暴击星；当速度登峰造极时，她的拔刀快得肉眼无法追及，无明三段突的三连同时刺击能贯穿任何防御。脆弱却致命：她唯一真正的极限，是这具因肺痨而缓缓走向终结的身躯所剩的吐息。一回合的荣光，一声咯血，然后再次呼吸。",
+  "OKITASABER-OKITA.pronounObject": "她",
+  "OKITASABER-OKITA.possessiveAdjective": "她的",
+  "OKITASABER-OKITA.pronounPossessive": "她的",
+  "OKITASABER-OKITA.pronounSubject": "她",
+  "OKITASABER-OKITA.goldMonologue": "黄金？我宁愿拿去买团子，在樱花树下度过一个安静的午后。不过钱财能让刀刃保持锋利，所以我就收下了。",
+  "OKITASABER-OKITA.eventDeathPrevention": "还不行。这一次我发过誓，要战斗到最后一口气——咯血也好，我依然站着。",
+  "OKITASABER-OKITA.aromaPrinciple": "放慢？我可是幕末最快的剑。眨眼之间，花瓣早已落尽。",
+  "OKITASABER-OKITA.cardsModifierTitle": "天然理心流",
+  "OKITASABER-OKITA.cardsModifierDescription": "使用冲田总司的卡组进行游戏。",
+  "OKITASABER-OKITA.banter.alive.endTurnPing": "待在我身边就不会受半点伤——在敌人靠近你之前，我会斩落一切来犯之物。",
+  "OKITASABER-OKITA.banter.dead.endTurnPing": "啊……原来终点在这里。至少……我战斗到了最后一口气……"
+}

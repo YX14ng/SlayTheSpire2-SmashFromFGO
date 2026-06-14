@@ -1,0 +1,16 @@
+{
+  "OKITASABER-OKITA.title": "Okita Souji",
+  "OKITASABER-OKITA.titleObject": "la Capitana de la Primera Unidad",
+  "OKITASABER-OKITA.description": "Capitana de la Primera Unidad del Shinsengumi y la espadachina más fuerte del Bakumatsu, un prodigio del Tennen Rishin-ryū que alcanzó el menkyo kaiden siendo apenas una adolescente. No bloquea: ataca. Cada tajo que conecta levanta pétalos de sakura que vuelven como Estrellas de Crítico, y en la cima de su velocidad desenvaina más rápido de lo que el ojo alcanza a seguir, con las tres estocadas simultáneas de Mumyou Sandanzuki perforando cualquier guardia. Frágil pero letal: su único límite real es el aliento de un cuerpo que se muere despacio de tuberculosis. Un turno de gloria, una tos, y vuelve a respirar.",
+  "OKITASABER-OKITA.pronounObject": "ella",
+  "OKITASABER-OKITA.possessiveAdjective": "su",
+  "OKITASABER-OKITA.pronounPossessive": "suyo",
+  "OKITASABER-OKITA.pronounSubject": "ella",
+  "OKITASABER-OKITA.goldMonologue": "¿Oro? Prefiero gastarlo en dango y una tarde tranquila bajo los cerezos. Pero las monedas mantienen el filo afilado, así que las acepto.",
+  "OKITASABER-OKITA.eventDeathPrevention": "Todavía no. Esta vez juré que pelearía hasta el último aliento — con tos o sin tos, sigo en pie.",
+  "OKITASABER-OKITA.aromaPrinciple": "¿Más despacio? Soy la hoja más veloz del Bakumatsu. Parpadeá, y los pétalos ya cayeron.",
+  "OKITASABER-OKITA.cardsModifierTitle": "Tennen Rishin-ryū",
+  "OKITASABER-OKITA.cardsModifierDescription": "Juega con el mazo de Okita.",
+  "OKITASABER-OKITA.banter.alive.endTurnPing": "Quedate cerca mío y no te van a tocar ni un pelo — corto cualquier cosa que se mueva antes de que llegue a vos.",
+  "OKITASABER-OKITA.banter.dead.endTurnPing": "Ah... así que aquí termina. Al menos... peleé hasta el último aliento..."
+}

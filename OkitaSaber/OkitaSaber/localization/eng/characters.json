@@ -1,0 +1,16 @@
+{
+  "OKITASABER-OKITA.title": "Okita Souji",
+  "OKITASABER-OKITA.titleObject": "the Captain of the First Unit",
+  "OKITASABER-OKITA.description": "Captain of the First Unit of the Shinsengumi and the strongest swordswoman of the Bakumatsu, a prodigy of the Tennen Rishin-ryu who earned the menkyo kaiden as a teenager. She does not block; she attacks. Every cut she lands scatters sakura petals that return as Critical Stars, and at the height of her speed she draws faster than the eye can follow, the three simultaneous thrusts of Mumyou Sandanzuki tearing past any guard. Fragile but lethal: her only true limit is the breath of a body slowly dying of consumption. One turn of glory, one cough, and she breathes again.",
+  "OKITASABER-OKITA.pronounObject": "her",
+  "OKITASABER-OKITA.possessiveAdjective": "her",
+  "OKITASABER-OKITA.pronounPossessive": "hers",
+  "OKITASABER-OKITA.pronounSubject": "she",
+  "OKITASABER-OKITA.goldMonologue": "Gold? I'd rather spend it on dango and a quiet afternoon under the cherry blossoms. But coin keeps a blade sharp, so I'll take it.",
+  "OKITASABER-OKITA.eventDeathPrevention": "Not yet. I swore I would fight to the very end this time — cough or no cough, I'm still standing.",
+  "OKITASABER-OKITA.aromaPrinciple": "Slow down? I am the fastest blade of the Bakumatsu. Blink, and the petals have already fallen.",
+  "OKITASABER-OKITA.cardsModifierTitle": "Tennen Rishin-ryu",
+  "OKITASABER-OKITA.cardsModifierDescription": "Play with Okita's card pool.",
+  "OKITASABER-OKITA.banter.alive.endTurnPing": "Stay close to me and you won't get a scratch — I'll cut down anything that moves before it reaches you.",
+  "OKITASABER-OKITA.banter.dead.endTurnPing": "Ah... so this is where it ends. At least... I fought to the last breath..."
+}
