@@ -1,0 +1,16 @@
+{
+  "OBERONPRETENDER-OBERON.title": "Oberon",
+  "OBERONPRETENDER-OBERON.titleObject": "the Fae King of Dreams",
+  "OBERONPRETENDER-OBERON.description": "The Fae King who lends you the greatest dream of your life, then collects at dawn. Every battery and buff is a loan that comes due at end of turn; cross the ult threshold before anyone else, and bleed for it tomorrow. Pay your debts to mint Critical Stars, or default — become Vortigern, the worm of the end, and make the world pay the bill.",
+  "OBERONPRETENDER-OBERON.pronounObject": "him",
+  "OBERONPRETENDER-OBERON.possessiveAdjective": "his",
+  "OBERONPRETENDER-OBERON.pronounPossessive": "his",
+  "OBERONPRETENDER-OBERON.pronounSubject": "he",
+  "OBERONPRETENDER-OBERON.goldMonologue": "Gold? A charming little dream of its own. Borrow all you like — I always collect at dawn.",
+  "OBERONPRETENDER-OBERON.eventDeathPrevention": "Not yet. The story isn't over, and the bill isn't paid. Dream on a little longer.",
+  "OBERONPRETENDER-OBERON.aromaPrinciple": "Every sweet night is a loan. I am only the one who comes to collect.",
+  "OBERONPRETENDER-OBERON.cardsModifierTitle": "Loans Come Due",
+  "OBERONPRETENDER-OBERON.cardsModifierDescription": "Play with Oberon's card pool.",
+  "OBERONPRETENDER-OBERON.banter.alive.endTurnPing": "Sleep, sweet thing. I'll keep the books while you dream.",
+  "OBERONPRETENDER-OBERON.banter.dead.endTurnPing": "So the dream ends... and even I cannot defer this one."
+}

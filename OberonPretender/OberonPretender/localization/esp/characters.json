@@ -1,0 +1,16 @@
+{
+  "OBERONPRETENDER-OBERON.title": "Oberon",
+  "OBERONPRETENDER-OBERON.titleObject": "el Rey Hada de los Sueños",
+  "OBERONPRETENDER-OBERON.description": "El Rey Hada que te presta el mejor sueño de tu vida y cobra al amanecer. Cada bateria y cada buff es un prestamo que vence al final del turno; cruza el umbral del ulti antes que nadie, y sangra por el mañana. Paga tus deudas para acuñar Estrellas de Critico, o cae en default: vuelvete Vortigern, el gusano del fin, y haz que el mundo pague la cuenta.",
+  "OBERONPRETENDER-OBERON.pronounObject": "lo",
+  "OBERONPRETENDER-OBERON.possessiveAdjective": "su",
+  "OBERONPRETENDER-OBERON.pronounPossessive": "suyo",
+  "OBERONPRETENDER-OBERON.pronounSubject": "el",
+  "OBERONPRETENDER-OBERON.goldMonologue": "¿Oro? Un sueñito encantador. Pide prestado cuanto quieras — siempre cobro al amanecer.",
+  "OBERONPRETENDER-OBERON.eventDeathPrevention": "Todavia no. El cuento no termino, y la cuenta no esta saldada. Sigue soñando un poco mas.",
+  "OBERONPRETENDER-OBERON.aromaPrinciple": "Cada noche dulce es un prestamo. Yo solo soy el que viene a cobrar.",
+  "OBERONPRETENDER-OBERON.cardsModifierTitle": "Los Prestamos Vencen",
+  "OBERONPRETENDER-OBERON.cardsModifierDescription": "Juega con el mazo de Oberon.",
+  "OBERONPRETENDER-OBERON.banter.alive.endTurnPing": "Duerme, dulzura. Yo llevo las cuentas mientras sueñas.",
+  "OBERONPRETENDER-OBERON.banter.dead.endTurnPing": "Asi termina el sueño... y ni yo puedo diferir este."
+}

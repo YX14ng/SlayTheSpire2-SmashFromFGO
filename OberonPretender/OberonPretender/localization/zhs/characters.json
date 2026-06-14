@@ -1,0 +1,16 @@
+{
+  "OBERONPRETENDER-OBERON.title": "奥伯龙",
+  "OBERONPRETENDER-OBERON.titleObject": "梦之妖精王",
+  "OBERONPRETENDER-OBERON.description": "借你一生最美之梦、并在黎明催收的妖精王。每一份充能与增益都是在回合结束时到期的贷款；抢在所有人之前越过宝具阈值，再于明日为之流血。偿还债务以铸造暴击星，或宣告违约——化为终焉之虫沃提庚，让世界来付账。",
+  "OBERONPRETENDER-OBERON.pronounObject": "他",
+  "OBERONPRETENDER-OBERON.possessiveAdjective": "他的",
+  "OBERONPRETENDER-OBERON.pronounPossessive": "他的",
+  "OBERONPRETENDER-OBERON.pronounSubject": "他",
+  "OBERONPRETENDER-OBERON.goldMonologue": "金币？也是个迷人的小梦罢了。尽管借吧——我总会在黎明催收。",
+  "OBERONPRETENDER-OBERON.eventDeathPrevention": "还不行。故事尚未结束，账单尚未付清。再多做一会儿梦吧。",
+  "OBERONPRETENDER-OBERON.aromaPrinciple": "每一个甜美的夜晚都是贷款。我只是前来催收的那个。",
+  "OBERONPRETENDER-OBERON.cardsModifierTitle": "贷款到期",
+  "OBERONPRETENDER-OBERON.cardsModifierDescription": "使用奥伯龙的卡牌池游戏。",
+  "OBERONPRETENDER-OBERON.banter.alive.endTurnPing": "睡吧，可人儿。你做梦时，账由我来记。",
+  "OBERONPRETENDER-OBERON.banter.dead.endTurnPing": "梦就此终结……连我也无法将这一笔延期了。"
+}
