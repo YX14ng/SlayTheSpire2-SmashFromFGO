@@ -46,6 +46,13 @@ public class Siegfried : PlaceholderCharacterModel
     // Visuales: placeholder por ahora (el modelo de batalla 100800 espera el export GUI del bundle;
     // DESIGN-SIEGFRIED §11). El render directo (modelo único) vendrá tras el export.
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/siegfried_visuals.tscn";
+
+    // Multiplayer/perf: precargar los frames pesados en el set residente de la run; si no, Godot
+    // los carga sincrónicamente al entrar a combate (freeze -> timeout/desconexión en MP).
+    protected override IEnumerable<string> ExtraAssetPaths =>
+    [
+        $"{MainFile.ResPath}/character/siegfried_frames.tres",
+    ];
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/siegfried_select_bg.tscn";
 
     public override Control CustomIcon

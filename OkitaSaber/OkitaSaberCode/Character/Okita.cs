@@ -48,6 +48,13 @@ public class Okita : PlaceholderCharacterModel
     // Modelo de batalla único 102710 (traje blanco); el clímax «Flor del Bakumatsu» hace el swap a
     // 102720 (haori asagi) vía FormVisuals (DESIGN-OKITA §3.4/§8). El render directo vendrá tras el export.
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/okita_visuals.tscn";
+
+    // Multiplayer/perf: precargar los frames pesados en el set residente de la run; si no, Godot
+    // los carga sincrónicamente al entrar a combate (freeze -> timeout/desconexión en MP).
+    protected override IEnumerable<string> ExtraAssetPaths =>
+    [
+        $"{MainFile.ResPath}/character/okita_frames.tres",
+    ];
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/okita_select_bg.tscn";
 
     public override Control CustomIcon

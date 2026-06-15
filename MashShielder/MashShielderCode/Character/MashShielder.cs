@@ -55,6 +55,15 @@ public class MashShielder : PlaceholderCharacterModel
     /// </summary>
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/mash_visuals.tscn";
 
+    // Multiplayer/perf: precargar los frames pesados en el set residente de la run; si no, Godot
+    // los carga sincrónicamente al entrar a combate (freeze -> timeout/desconexión en MP).
+    protected override IEnumerable<string> ExtraAssetPaths =>
+    [
+        $"{MainFile.ResPath}/character/mash_frames_base.tres",
+        $"{MainFile.ResPath}/character/mash_frames_ortinax.tres",
+        $"{MainFile.ResPath}/character/mash_frames_paladin.tres",
+    ];
+
     /// <summary>Character select background: the golden Castle of the Distant Utopia, dimmed.</summary>
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/mash_select_bg.tscn";
 

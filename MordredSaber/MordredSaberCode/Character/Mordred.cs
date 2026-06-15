@@ -51,6 +51,14 @@ public class Mordred : PlaceholderCharacterModel
     // Visuales: placeholder por ahora (el modelo de batalla 100900 espera el export GUI del bundle;
     // DESIGN-MORDRED §8). Las 3 formas se renderizan como attach/detach del casco sobre el MISMO rig.
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/mordred_visuals.tscn";
+
+    // Multiplayer/perf: los frames de combate son pesados. Sin precarga, Godot los carga
+    // sincrónicamente al entrar a combate (freeze de segundos -> timeout/desconexión en MP).
+    // ExtraAssetPaths los mete en el set residente de la run (precarga en la pantalla de carga).
+    protected override IEnumerable<string> ExtraAssetPaths =>
+    [
+        $"{MainFile.ResPath}/character/mordred_frames.tres",
+    ];
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/mordred_select_bg.tscn";
 
     public override Control CustomIcon

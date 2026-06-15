@@ -41,6 +41,14 @@ public class Tiamat : PlaceholderCharacterModel
     // Visuales: placeholders por ahora (faltan el render de las formas humano/Bestia y los
     // assets de selección — pase de arte; ver DESIGN-TIAMAT.md, riesgo de sprite de Laḫmu).
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/tiamat_visuals.tscn";
+
+    // Multiplayer/perf: precargar los frames pesados en el set residente de la run; si no, Godot
+    // los carga sincrónicamente al entrar a combate (freeze -> timeout/desconexión en MP).
+    protected override IEnumerable<string> ExtraAssetPaths =>
+    [
+        $"{MainFile.ResPath}/character/tiamat_frames_human.tres",
+        $"{MainFile.ResPath}/character/tiamat_frames_beast.tres",
+    ];
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/tiamat_select_bg.tscn";
 
     public override Control CustomIcon

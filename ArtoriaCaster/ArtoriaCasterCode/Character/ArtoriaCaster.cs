@@ -53,6 +53,15 @@ public class ArtoriaCaster : PlaceholderCharacterModel
     /// </summary>
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/artoria_visuals.tscn";
 
+    // Multiplayer/perf: precargar los frames pesados en el set residente de la run; si no, Godot
+    // los carga sincrónicamente al entrar a combate (freeze -> timeout/desconexión en MP).
+    protected override IEnumerable<string> ExtraAssetPaths =>
+    [
+        $"{MainFile.ResPath}/character/artoria_frames_caster.tres",
+        $"{MainFile.ResPath}/character/artoria_frames_berserker.tres",
+        $"{MainFile.ResPath}/character/artoria_frames_avalon.tres",
+    ];
+
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/artoria_select_bg.tscn";
 
     public override string CustomMerchantAnimPath => $"{MainFile.ResPath}/character/artoria_merchant.tscn";

@@ -56,6 +56,15 @@ public class MorganBerserker : PlaceholderCharacterModel
     /// </summary>
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/morgan_visuals.tscn";
 
+    // Multiplayer/perf: precargar los frames pesados en el set residente de la run; si no, Godot
+    // los carga sincrónicamente al entrar a combate (freeze -> timeout/desconexión en MP).
+    protected override IEnumerable<string> ExtraAssetPaths =>
+    [
+        $"{MainFile.ResPath}/character/morgan_frames_queen.tres",
+        $"{MainFile.ResPath}/character/morgan_frames_aesc.tres",
+        $"{MainFile.ResPath}/character/morgan_frames_winter.tres",
+    ];
+
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/morgan_select_bg.tscn";
 
     /// <summary>Merchant/rest-site visuals (static, replacing the Ironclad placeholders).</summary>

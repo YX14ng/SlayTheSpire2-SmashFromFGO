@@ -51,6 +51,13 @@ public class Gilgamesh : PlaceholderCharacterModel
     // Visuales: modelo de batalla único (200200, sin formas — §3.5). El swap cosmético opcional con
     // NP≥100 (200210→200220) es no-bloqueante y NO se enchufa en la espina (no requiere FormPower).
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/gilgamesh_visuals.tscn";
+
+    // Multiplayer/perf: precargar los frames pesados en el set residente de la run; si no, Godot
+    // los carga sincrónicamente al entrar a combate (freeze -> timeout/desconexión en MP).
+    protected override IEnumerable<string> ExtraAssetPaths =>
+    [
+        $"{MainFile.ResPath}/character/gilgamesh_frames.tres",
+    ];
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/gilgamesh_select_bg.tscn";
 
     public override Control CustomIcon
