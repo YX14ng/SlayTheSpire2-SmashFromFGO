@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://1p8hvbp05ec6"
-path="res://.godot/imported/map_marker_char_name.png-0bc78edaed7e3119a5cc35df4749c2f5.ctex"
+path="res://.godot/imported/map_marker_char_name.png-b5aaec6f1fbf5c959078b40208b29ef3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SiegfriedSaber/images/charui/map_marker_char_name.png"
-dest_files=["res://.godot/imported/map_marker_char_name.png-0bc78edaed7e3119a5cc35df4749c2f5.ctex"]
+source_file="res://OkitaSaber/images/charui/map_marker_char_name.png"
+dest_files=["res://.godot/imported/map_marker_char_name.png-b5aaec6f1fbf5c959078b40208b29ef3.ctex"]
 
 [params]
 

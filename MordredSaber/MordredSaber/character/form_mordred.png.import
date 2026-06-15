@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cfn1br8r01fgh"
-path="res://.godot/imported/form_siegfried.png-e1f2035132df36e93d11338735ecc787.ctex"
+path="res://.godot/imported/form_mordred.png-10f8cdc5a51bf269eaba4def4d7742c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SiegfriedSaber/character/form_siegfried.png"
-dest_files=["res://.godot/imported/form_siegfried.png-e1f2035132df36e93d11338735ecc787.ctex"]
+source_file="res://MordredSaber/character/form_mordred.png"
+dest_files=["res://.godot/imported/form_mordred.png-10f8cdc5a51bf269eaba4def4d7742c2.ctex"]
 
 [params]
 

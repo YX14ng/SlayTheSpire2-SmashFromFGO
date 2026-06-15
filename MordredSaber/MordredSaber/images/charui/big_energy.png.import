@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ebp4agtwphq1"
-path="res://.godot/imported/big_energy.png-13f8b2c5cb0235524949ac14b1ea1652.ctex"
+path="res://.godot/imported/big_energy.png-d08387490bcb692d8338d0d51543cbbd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SiegfriedSaber/images/charui/big_energy.png"
-dest_files=["res://.godot/imported/big_energy.png-13f8b2c5cb0235524949ac14b1ea1652.ctex"]
+source_file="res://MordredSaber/images/charui/big_energy.png"
+dest_files=["res://.godot/imported/big_energy.png-d08387490bcb692d8338d0d51543cbbd.ctex"]
 
 [params]
 

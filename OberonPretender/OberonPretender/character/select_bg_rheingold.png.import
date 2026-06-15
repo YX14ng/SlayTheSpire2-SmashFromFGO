@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://brqmm1apl8ahj"
-path="res://.godot/imported/select_bg_rheingold.png-a7f5e36ccfc1bf69aafc0e08273aafac.ctex"
+path="res://.godot/imported/select_bg_rheingold.png-8bd490e30d1421915a4576dc7de04a96.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SiegfriedSaber/character/select_bg_rheingold.png"
-dest_files=["res://.godot/imported/select_bg_rheingold.png-a7f5e36ccfc1bf69aafc0e08273aafac.ctex"]
+source_file="res://OberonPretender/character/select_bg_rheingold.png"
+dest_files=["res://.godot/imported/select_bg_rheingold.png-8bd490e30d1421915a4576dc7de04a96.ctex"]
 
 [params]
 

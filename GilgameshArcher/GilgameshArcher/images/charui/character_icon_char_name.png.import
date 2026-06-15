@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dkbbvfjyrrg7c"
-path="res://.godot/imported/character_icon_char_name.png-bb53d001970ea59185decc25e4b2266f.ctex"
+path="res://.godot/imported/character_icon_char_name.png-228da62e4803894e1a5f2ce1e7605ca1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SiegfriedSaber/images/charui/character_icon_char_name.png"
-dest_files=["res://.godot/imported/character_icon_char_name.png-bb53d001970ea59185decc25e4b2266f.ctex"]
+source_file="res://GilgameshArcher/images/charui/character_icon_char_name.png"
+dest_files=["res://.godot/imported/character_icon_char_name.png-228da62e4803894e1a5f2ce1e7605ca1.ctex"]
 
 [params]
 
