@@ -23,12 +23,13 @@ public static class Stars
         await PowerCmd.Apply<CriticalStarsPower>(creature, Math.Min(amount, room), creature, source);
     }
 
-    /// <summary>Critical discount from relics/powers implementing <see cref="ICritDiscount"/> (min cost 1).</summary>
+    /// <summary>Critical discount from POWERS implementing <see cref="ICritDiscount"/> (min cost 1).</summary>
     public static int DiscountedCost(Creature creature, int cost)
     {
-        foreach (var power in creature.GetPowerInstances<MegaCrit.Sts2.Core.Models.PowerModel>())
+        // Sólo powers (Instinto de la Espada): el descuento no vive en reliquias hoy.
+        foreach (var discount in Listeners.PowersOf<ICritDiscount>(creature))
         {
-            if (power is ICritDiscount discount) cost -= discount.CritCostReduction;
+            cost -= discount.CritCostReduction;
         }
         return Math.Max(1, cost);
     }
@@ -37,18 +38,7 @@ public static class Stars
     public static int CritBonus(Creature creature)
     {
         var bonus = 0;
-        foreach (var power in creature.GetPowerInstances<MegaCrit.Sts2.Core.Models.PowerModel>())
-        {
-            if (power is ICritDamageBoost boost) bonus += boost.CritDamageBonus;
-        }
-        var relics = creature.Player?.Relics;
-        if (relics != null)
-        {
-            foreach (var relic in relics)
-            {
-                if (relic is ICritDamageBoost boost) bonus += boost.CritDamageBonus;
-            }
-        }
+        Listeners.ForEach<ICritDamageBoost>(creature, boost => bonus += boost.CritDamageBonus);
         return bonus;
     }
 
@@ -69,16 +59,8 @@ public static class Stars
         var power = creature.GetPowerInstances<CriticalStarsPower>().FirstOrDefault();
         if (power == null) return;
         await PowerCmd.ModifyAmount(power, -spent, creature, source, silent: true);
-        foreach (var p in creature.GetPowerInstances<MegaCrit.Sts2.Core.Models.PowerModel>())
-        {
-            if (p is ICritListener listener) await listener.AfterCritConsumed(spent);
-        }
-        var relics = creature.Player?.Relics;
-        if (relics == null) return;
-        foreach (var relic in relics)
-        {
-            if (relic is ICritListener listener) await listener.AfterCritConsumed(spent);
-        }
+        // Avisa a los listeners (powers primero, luego reliquias) en orden — Lupa, Magia Única.
+        await Listeners.ForEachListener<ICritListener>(creature, listener => listener.AfterCritConsumed(spent));
     }
 }
 

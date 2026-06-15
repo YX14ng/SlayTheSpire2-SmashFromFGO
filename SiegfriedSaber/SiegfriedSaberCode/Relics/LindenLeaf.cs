@@ -94,11 +94,5 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer
 
     // ¿Hay un power que cubre la espalda expuesta (Tarnkappe)? Lectura pura, preview-safe.
     private bool IsPierceSuppressed()
-    {
-        foreach (var power in Owner.Creature.GetPowerInstances<PowerModel>())
-        {
-            if (power is IDragonScalePierceSuppressor suppressor && suppressor.SuppressPierce) return true;
-        }
-        return false;
-    }
+        => Listeners.PowersOf<IDragonScalePierceSuppressor>(Owner.Creature).Any(suppressor => suppressor.SuppressPierce);
 }

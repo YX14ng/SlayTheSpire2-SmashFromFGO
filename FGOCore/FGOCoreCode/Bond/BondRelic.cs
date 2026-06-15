@@ -135,9 +135,21 @@ public abstract class BondRelic : CustomRelicModel
         if (after <= before) return;
 
         Flash();
-        for (var lv = before + 1; lv <= after; lv++)
+        await GrantLevelUpGifts(before, after);
+    }
+
+    /// <summary>
+    /// Concede los regalos de cruzar de nivel (Max HP por umbral) para cada nivel en
+    /// (<paramref name="fromExclusive"/>, <paramref name="toInclusive"/>]. Helper protegido
+    /// NUEVO (2026-06-15) para que el bucle de la curva viva en un solo lugar: la base lo llama
+    /// desde <see cref="AddPoints"/>; las subclases siguen ajustando SÓLO la curva vía
+    /// <see cref="MaxHpGainAt"/> / <see cref="MaxHpGainBeyondCap"/> (API sin cambios). ADITIVO.
+    /// </summary>
+    protected async Task GrantLevelUpGifts(int fromExclusive, int toInclusive)
+    {
+        for (var lv = fromExclusive + 1; lv <= toInclusive; lv++)
         {
-            var hp = lv <= Thresholds.Length ? MaxHpGainAt(lv) : MaxHpGainBeyondCap;
+            var hp = MaxHpGiftAt(lv);
             if (hp > 0)
             {
                 await CreatureCmd.GainMaxHp(Owner.Creature, Math.Round(hp * MultiplayerFactor));
@@ -145,11 +157,28 @@ public abstract class BondRelic : CustomRelicModel
         }
     }
 
+    /// <summary>Max HP del regalo de nivel <paramref name="lv"/>, eligiendo entre la curva base
+    /// (<see cref="MaxHpGainAt"/>, dentro del tope) y la de Santo Grial (<see cref="MaxHpGainBeyondCap"/>,
+    /// más allá del tope). Punto único que decide qué curva aplica. ADITIVO.</summary>
+    protected decimal MaxHpGiftAt(int lv) => lv <= Thresholds.Length ? MaxHpGainAt(lv) : MaxHpGainBeyondCap;
+
     public override async Task BeforeCombatStartLate()
     {
         var lv = Level;
         if (lv <= 0) return;
 
+        await ApplyCombatStartGifts(lv);
+    }
+
+    /// <summary>
+    /// Aplica los regalos de "al empezar el combate" para el nivel <paramref name="lv"/>:
+    /// <see cref="BondPower"/> = nivel, Carga NP inicial (<see cref="StartingNp"/>), Bloqueo
+    /// inicial (<see cref="StartingBlock"/>) y, a nivel 10, <see cref="ApplyCapstone"/>. Helper
+    /// protegido NUEVO (2026-06-15): la base lo llama desde <see cref="BeforeCombatStartLate"/>;
+    /// las subclases siguen ajustando SÓLO los hooks de la curva (API sin cambios). ADITIVO.
+    /// </summary>
+    protected async Task ApplyCombatStartGifts(int lv)
+    {
         await PowerCmd.Apply<BondPower>(Owner.Creature, lv, Owner.Creature, null, silent: true);
 
         var np = StartingNp(lv);

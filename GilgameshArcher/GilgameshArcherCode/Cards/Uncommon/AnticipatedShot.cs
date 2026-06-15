@@ -29,9 +29,7 @@ public sealed class AnticipatedShot() : GilgameshCard(1, CardType.Attack, CardRa
         // Capturado ANTES de pegar: la cuenta puede subir mientras la carta resuelve.
         var first = IsFirstCard;
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
 
         if (first)
         {

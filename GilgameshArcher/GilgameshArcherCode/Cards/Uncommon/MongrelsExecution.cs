@@ -32,9 +32,7 @@ public sealed class MongrelsExecution() : GilgameshCard(2, CardType.Attack, Card
         // Capturado ANTES de pegar: el Crítico Listo se consume al resolver la carta.
         var critReady = HasCritReady;
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
 
         if (critReady && !cardPlay.Target.IsDead)
         {

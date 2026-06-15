@@ -1,3 +1,4 @@
+using MashShielder.MashShielderCode.Extensions;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -19,11 +20,7 @@ public sealed class BunkerBolt() : MashShielderCard(2, CardType.Attack, CardRari
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var block = Owner.Creature.Block;
-        if (block > 0)
-        {
-            await CreatureCmd.LoseBlock(Owner.Creature, block);
-        }
+        var block = await Owner.Creature.ConsumeAllBlock();
         var bonus = block / Math.Max(1, DynamicVars["Divisor"].IntValue);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt", null, "heavy_attack.mp3")

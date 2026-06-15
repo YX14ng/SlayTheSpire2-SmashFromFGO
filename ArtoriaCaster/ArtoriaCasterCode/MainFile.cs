@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
+using FGOCore.FGOCoreCode.Combat;
 using ArtoriaCaster.ArtoriaCasterCode.Powers;
 using ArtoriaCaster.ArtoriaCasterCode.Powers.Forms;
 
@@ -55,10 +56,7 @@ public partial class MainFile : Node
         await Stars.Gain(creature, 6, null);
 
         // Devuelve recursos: arranca el turno grande, no lo reemplaza (modelo Phrolova).
-        if (creature.Player != null)
-        {
-            await PlayerCmd.GainEnergy(1, creature.Player);
-            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 1, creature.Player);
-        }
+        // Cierre común factorizado en FGOCore (mismo +1⚡ / robar 1 que Mash y Tiamat).
+        await NpWindow.ReturnResources(creature, 1, 1);
     }
 }

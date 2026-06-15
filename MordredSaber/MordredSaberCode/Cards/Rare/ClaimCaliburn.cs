@@ -1,4 +1,4 @@
-using MegaCrit.Sts2.Core.Commands;
+using FGOCore.FGOCoreCode.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -35,8 +35,7 @@ public sealed class ClaimCaliburn() : MordredCard(2, CardType.Skill, CardRarity.
         foreach (var card in picks)
         {
             card.EnergyCost.SetThisCombat(0);
-            CardCmd.PreviewCardPileAdd(
-                await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 1.0f);
+            await ManifestCards.ManifestToHand(Owner.Creature, card);
         }
     }
 

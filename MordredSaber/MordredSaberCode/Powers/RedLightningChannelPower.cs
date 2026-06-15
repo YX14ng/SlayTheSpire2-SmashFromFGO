@@ -68,19 +68,12 @@ public sealed class RedLightningChannelPower : MordredPower
 
     private async Task Broadcast(PlayerChoiceContext? choiceContext)
     {
-        foreach (var listener in Owner.GetPowerInstances<PowerModel>().OfType<ICritConsumedListener>().ToList())
+        // FGOCore Listeners.Of<T> = powers (snapshot) primero + reliquias del jugador, mismo orden
+        // que el broadcast manual original. .ToList() para no enumerar perezosamente mientras un
+        // listener pueda mutar la colección de powers (idéntico al .ToList() previo sobre los powers).
+        foreach (var listener in Listeners.Of<ICritConsumedListener>(Owner).ToList())
         {
             await listener.OnCritConsumed(choiceContext);
-        }
-        if (Owner.Player != null)
-        {
-            foreach (var relic in Owner.Player.Relics)
-            {
-                if (relic is ICritConsumedListener listener)
-                {
-                    await listener.OnCritConsumed(choiceContext);
-                }
-            }
         }
     }
 }

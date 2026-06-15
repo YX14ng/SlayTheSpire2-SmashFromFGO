@@ -26,9 +26,7 @@ public sealed class Dainsleif() : GilgameshCard(0, CardType.Attack, CardRarity.E
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
         await CreatureCmd.Damage(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this);
         await ArmsPlayedPower.Record(Owner.Creature);

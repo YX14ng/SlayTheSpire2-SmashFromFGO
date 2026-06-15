@@ -19,9 +19,7 @@ public sealed class VimanaAssault() : GilgameshCard(2, CardType.Attack, CardRari
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
         await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
     }

@@ -43,9 +43,9 @@ public sealed class SleepPower : OberonPower
     // Lectura pura: el atacante tiene un power que ignora el Sueno de este objetivo?
     private bool IgnoredBy(Creature dealer)
     {
-        foreach (var power in dealer.GetPowerInstances<PowerModel>())
+        foreach (var ignorer in Listeners.PowersOf<ISleepIgnorer>(dealer))
         {
-            if (power is ISleepIgnorer ignorer && ignorer.IgnoresSleep(Owner)) return true;
+            if (ignorer.IgnoresSleep(Owner)) return true;
         }
         return false;
     }

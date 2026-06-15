@@ -1,12 +1,10 @@
+using FGOCore.FGOCoreCode.Combat;
 using FGOCore.FGOCoreCode.Stars;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
-using MegaCrit.Sts2.Core.Models;
 using MorganBerserker.MorganBerserkerCode.Powers;
 
 namespace MorganBerserker.MorganBerserkerCode;
@@ -52,11 +50,8 @@ public partial class MainFile : Node
         await CritStars.Gain(creature, 40, null);
 
         // Devuelve recursos: arranca el turno grande, no lo reemplaza (modelo Phrolova).
-        if (creature.Player != null)
-        {
-            await PlayerCmd.GainEnergy(1, creature.Player);
-            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 1, creature.Player);
-        }
+        // Kernel común factorizado en FGOCore (mismo GainEnergy(1) + Draw(1) guardado por Player != null).
+        await NpWindow.ReturnResources(creature, 1, 1);
     }
 
     private static async Task DisarmUltMarker(Creature creature)

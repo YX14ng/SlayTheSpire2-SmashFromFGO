@@ -14,9 +14,7 @@ public sealed class Strike() : GilgameshCard(1, CardType.Attack, CardRarity.Basi
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_blunt")
-            .Execute(choiceContext);
+        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, "vfx/vfx_attack_blunt");
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);

@@ -1,11 +1,9 @@
 using Godot;
 using HarmonyLib;
+using FGOCore.FGOCoreCode.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
-using MegaCrit.Sts2.Core.Models;
 using MordredSaber.MordredSaberCode.Cards.Special;
 using MordredSaber.MordredSaberCode.Powers;
 using MordredSaber.MordredSaberCode.Powers.Forms;
@@ -50,19 +48,12 @@ public partial class MainFile : Node
 
         if (creature.HasPower<CrimsonLightningFormPower>())
         {
-            await ManifestCard<ClarentBloodArthurInterlude>(creature);
+            await ManifestCards.ManifestToHand<ClarentBloodArthurInterlude>(creature);
         }
         else
         {
-            await ManifestCard<ClarentBloodArthurUnleashed>(creature);
+            await ManifestCards.ManifestToHand<ClarentBloodArthurUnleashed>(creature);
         }
-    }
-
-    private static async Task ManifestCard<T>(Creature creature) where T : CardModel
-    {
-        var card = creature.CombatState!.CreateCard<T>(creature.Player!);
-        CardCmd.PreviewCardPileAdd(
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 1.0f);
     }
 
     private static async Task RearmUlt(Creature creature)

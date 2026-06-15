@@ -1,4 +1,5 @@
 using BaseLib.Extensions;
+using FGOCore.FGOCoreCode.Combat;
 using MashShielder.MashShielderCode.Extensions;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -62,9 +63,7 @@ public abstract class MashFormPower : FormPower
         var hasAlly = Owner.CombatState.PlayerCreatures.Any(c => c != Owner && !c.IsDead);
         if (!hasAlly) return;
 
-        var card = Owner.CombatState.CreateCard<Cards.Special.BehindMeSenpai>(Owner.Player);
-        CardCmd.PreviewCardPileAdd(
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 1.0f);
+        await ManifestCards.ManifestToHand<Cards.Special.BehindMeSenpai>(Owner, 1.0f);
     }
 
     public override decimal ModifyBlockAdditive(Creature target, decimal block, ValueProp props, CardModel? cardSource, CardPlay? cardPlay)

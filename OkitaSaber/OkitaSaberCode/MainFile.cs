@@ -1,11 +1,9 @@
+using FGOCore.FGOCoreCode.Combat;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
-using MegaCrit.Sts2.Core.Models;
 using OkitaSaber.OkitaSaberCode.Cards.Special;
 using OkitaSaber.OkitaSaberCode.Powers;
 
@@ -46,9 +44,7 @@ public partial class MainFile : Node
 
         await PowerCmd.Apply<MumyouManifestedPower>(creature, 1m, creature, null);
 
-        var card = creature.CombatState.CreateCard<MumyouUnleashed>(creature.Player);
-        CardCmd.PreviewCardPileAdd(
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 1.0f);
+        await ManifestCards.ManifestToHand<MumyouUnleashed>(creature);
     }
 
     private static async Task DisarmUlt(Creature creature)

@@ -26,9 +26,7 @@ public sealed class ChainsOfHeavenEnkidu() : GilgameshCard(2, CardType.Skill, Ca
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<StrengthPower>()];
 
-    protected override bool ShouldGlowGoldInternal =>
-        Owner.Creature.CombatState?.RunState.CurrentRoom?.RoomType is
-            MegaCrit.Sts2.Core.Rooms.RoomType.Elite or MegaCrit.Sts2.Core.Rooms.RoomType.Boss;
+    protected override bool ShouldGlowGoldInternal => RoyalTrait.IsInDivineRoom(Owner.Creature);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

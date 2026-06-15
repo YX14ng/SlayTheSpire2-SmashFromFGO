@@ -20,11 +20,7 @@ public sealed class ConceptualAmmoPower : MashShielderPower
 
     private int _usesThisTurn;
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
-    {
-        if (side == CombatSide.Player) _usesThisTurn = 0;
-        return Task.CompletedTask;
-    }
+    protected override void OnPlayerTurnStartReset() => _usesThisTurn = 0;
 
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {

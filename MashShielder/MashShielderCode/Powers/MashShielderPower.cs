@@ -1,6 +1,7 @@
 ﻿using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using MashShielder.MashShielderCode.Extensions;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Powers;
 
 namespace MashShielder.MashShielderCode.Powers;
@@ -28,4 +29,20 @@ public abstract class MashShielderPower : CustomPowerModel
     /// Single, but you're suggested to use Single as it is more explicit about how it will work.
     /// </summary>
     public abstract override PowerStackType StackType { get; }
+
+    /// <summary>
+    /// Helper local de modularización (AUDIT-2026-06-15): centraliza el patrón
+    /// "resetear un contador/flag al inicio del turno DEL JUGADOR" que se repetía idéntico en
+    /// varios powers (WallDoctrine, ConceptualAmmo, OrtinaxServos, HomunculusHeart).
+    /// Las subclases sólo sobrescriben <see cref="OnPlayerTurnStartReset"/> con su reset; el
+    /// guard <c>side == CombatSide.Player</c> y el <c>Task.CompletedTask</c> viven una sola vez.
+    /// </summary>
+    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    {
+        if (side == CombatSide.Player) OnPlayerTurnStartReset();
+        return Task.CompletedTask;
+    }
+
+    /// <summary>Se llama una vez al inicio de CADA turno del jugador. Por defecto no hace nada.</summary>
+    protected virtual void OnPlayerTurnStartReset() { }
 }

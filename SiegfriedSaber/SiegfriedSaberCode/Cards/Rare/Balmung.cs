@@ -41,8 +41,7 @@ public sealed class Balmung() : SiegfriedCard(2, CardType.Attack, CardRarity.Rar
 
     protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost);
     // Resplandor dorado cuando es jugable Y la armadura afila el filo (SdD >= 3).
-    protected override bool ShouldGlowGoldInternal =>
-        IsPlayable && Owner.Creature.GetPowerAmount<DragonScalesPower>() >= ScaledThreshold;
+    protected override bool ShouldGlowGoldInternal => IsPlayable && GlowAtScales(ScaledThreshold);
 
     private const int RefundFull = 20;     // refund EX la 1ª carta-NP del turno
     private const int RefundReduced = 10;  // refund EX si ya resolvió una carta-NP este turno (P5)
@@ -54,7 +53,7 @@ public sealed class Balmung() : SiegfriedCard(2, CardType.Attack, CardRarity.Rar
         var alreadyResolved = NpCharge.WasNpResolvedThisTurn(Owner.Creature);
 
         var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
-        var scaled = Owner.Creature.GetPowerAmount<DragonScalesPower>() >= ScaledThreshold;
+        var scaled = Scales >= ScaledThreshold;
         var perTen = scaled ? OverchargePerTenScaled : OverchargePerTen;
         var overcharge = (tier - ChargeCost) / 10 * perTen;
 

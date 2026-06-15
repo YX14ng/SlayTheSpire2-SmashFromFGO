@@ -1,3 +1,4 @@
+using MashShielder.MashShielderCode.Extensions;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -24,11 +25,7 @@ public sealed class Crush() : MashShielderCard(1, CardType.Attack, CardRarity.Co
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        var consumed = Math.Min(Owner.Creature.Block, DynamicVars["MaxConsume"].IntValue);
-        if (consumed > 0)
-        {
-            await CreatureCmd.LoseBlock(Owner.Creature, consumed);
-        }
+        var consumed = await Owner.Creature.ConsumeBlockUpTo(DynamicVars["MaxConsume"].IntValue);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + consumed).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_heavy_blunt", null, "heavy_attack.mp3")

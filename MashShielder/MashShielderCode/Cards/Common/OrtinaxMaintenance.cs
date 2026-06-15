@@ -1,3 +1,4 @@
+using MashShielder.MashShielderCode.Extensions;
 using MashShielder.MashShielderCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -19,10 +20,9 @@ public sealed class OrtinaxMaintenance() : MashShielderCard(1, CardType.Skill, C
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var block = Owner.Creature.Block;
-        if (block <= 0) return;
+        if (Owner.Creature.Block <= 0) return;
 
-        await CreatureCmd.LoseBlock(Owner.Creature, block);
+        var block = await Owner.Creature.ConsumeAllBlock();
         await NpCharge.Gain(Owner.Creature, Math.Min(block, DynamicVars["MaxCharge"].IntValue), this);
     }
 

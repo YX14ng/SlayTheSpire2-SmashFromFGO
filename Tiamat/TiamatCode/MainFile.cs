@@ -1,8 +1,8 @@
+using FGOCore.FGOCoreCode.Combat;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
 using TiamatBeast.TiamatCode.Powers;
@@ -53,11 +53,11 @@ public partial class MainFile : Node
             await FormSwitch.Enter<TiamatBeastPower>(null, creature, null);
         }
 
-        if (creature.Player != null)
-        {
-            await PlayerCmd.GainEnergy(1, creature.Player);
-            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 2, creature.Player);
-        }
+        // Cierre común de la ventana-NP: +1⚡ y robar 2 (factorizado en FGOCore). El marcador
+        // (GenesisSpentPower), el power-ventana (OverchargeBlessing) y los efectos propios
+        // (Lahmu.Spawn/Feed, FormSwitch) siguen gestionándose arriba — este helper solo
+        // reemplaza el bloque GainEnergy+Draw que estaba duplicado en Mash/Artoria/Tiamat.
+        await NpWindow.ReturnResources(creature, 1, 2);
     }
 
     private static async Task DisarmGenesis(Creature creature)

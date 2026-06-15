@@ -1,3 +1,4 @@
+using MashShielder.MashShielderCode.Extensions;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,7 +19,7 @@ public sealed class SharpenedEdge() : MashShielderCard(1, CardType.Attack, CardR
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        var bonus = Math.Min(Owner.Creature.Block, DynamicVars["MaxBonus"].IntValue);
+        var bonus = Owner.Creature.BlockCappedAt(DynamicVars["MaxBonus"].IntValue);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

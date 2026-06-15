@@ -21,11 +21,7 @@ public sealed class OrtinaxServosPower : MashShielderPower
 
     private int _attacksThisTurn;
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
-    {
-        if (side == CombatSide.Player) _attacksThisTurn = 0;
-        return Task.CompletedTask;
-    }
+    protected override void OnPlayerTurnStartReset() => _attacksThisTurn = 0;
 
     public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {

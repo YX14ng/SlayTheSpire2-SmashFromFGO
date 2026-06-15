@@ -48,13 +48,9 @@ public sealed class DebtPower : OberonPower, IResourcePower
     public static int EffectiveCreditLimit(Creature creature)
     {
         var limit = CreditLimit;
-        var relics = creature.Player?.Relics;
-        if (relics != null)
+        foreach (var booster in Listeners.RelicsOf<ICreditLimitBooster>(creature))
         {
-            foreach (var relic in relics)
-            {
-                if (relic is ICreditLimitBooster booster) limit = Math.Max(limit, booster.CreditLimit);
-            }
+            limit = Math.Max(limit, booster.CreditLimit);
         }
         return limit;
     }
@@ -111,17 +107,16 @@ public sealed class DebtPower : OberonPower, IResourcePower
 
     private static async Task NotifyDebtPaid(PlayerChoiceContext? choiceContext, Creature creature, int amountPaid)
     {
-        foreach (var listener in creature.GetPowerInstances<PowerModel>().OfType<IDebtPaidListener>().ToList())
+        // Powers primero (snapshot a lista: OnDebtPaid puede mutar la colección de powers vía CritStars.Gain),
+        // luego reliquias. Son DOS interfaces distintas (lado-power IDebtPaidListener vs lado-reliquia
+        // IDebtPaidRelicListener), así que se escanean por separado con los helpers de FGOCore.
+        foreach (var listener in Listeners.PowersOf<IDebtPaidListener>(creature).ToList())
         {
             await listener.OnDebtPaid(choiceContext, amountPaid);
         }
-        var relics = creature.Player?.Relics;
-        if (relics != null)
+        foreach (var listener in Listeners.RelicsOf<IDebtPaidRelicListener>(creature))
         {
-            foreach (var relic in relics)
-            {
-                if (relic is IDebtPaidRelicListener listener) await listener.OnDebtPaid(choiceContext, amountPaid);
-            }
+            await listener.OnDebtPaid(choiceContext, amountPaid);
         }
     }
 
@@ -165,11 +160,9 @@ public sealed class DebtPower : OberonPower, IResourcePower
 
     private bool ForgivesFirstUnpaid()
     {
-        var relics = Owner.Player?.Relics;
-        if (relics == null) return false;
-        foreach (var relic in relics)
+        foreach (var forgiver in Listeners.RelicsOf<IFirstUnpaidDebtForgiver>(Owner))
         {
-            if (relic is IFirstUnpaidDebtForgiver f && f.ForgivesFirstUnpaidDebtHpThisTurn) return true;
+            if (forgiver.ForgivesFirstUnpaidDebtHpThisTurn) return true;
         }
         return false;
     }

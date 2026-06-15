@@ -21,9 +21,7 @@ public sealed class OpenTreasuryAssault() : GilgameshCard(1, CardType.Attack, Ca
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = ArmsPlayedPower.PlayedThisTurn(Owner.Creature) * DynamicVars["PerArm"].IntValue;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue + bonus);
     }
 
     protected override void OnUpgrade()

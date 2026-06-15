@@ -18,17 +18,13 @@ public sealed class StrikeOfEa() : GilgameshCard(2, CardType.Attack, CardRarity.
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
-    protected override bool ShouldGlowGoldInternal =>
-        Owner.Creature.CombatState?.RunState.CurrentRoom?.RoomType is
-            MegaCrit.Sts2.Core.Rooms.RoomType.Elite or MegaCrit.Sts2.Core.Rooms.RoomType.Boss;
+    protected override bool ShouldGlowGoldInternal => RoyalTrait.IsInDivineRoom(Owner.Creature);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var divineBonus = RoyalTrait.IsDivine(cardPlay.Target) ? DynamicVars["Divine"].IntValue : 0;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + divineBonus).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue + divineBonus);
         await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 

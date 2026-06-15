@@ -46,7 +46,7 @@ public sealed class Tos() : OkitaCard(0, CardType.Status, CardRarity.Status, Tar
         CardCmd.PreviewCardPileAdd(
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, addedByPlayer: false), 0.8f);
 
-        foreach (var listener in creature.GetPowerInstances<PowerModel>().OfType<ILateBloomListener>().ToList())
+        foreach (var listener in Listeners.PowersOf<ILateBloomListener>(creature).ToList())
         {
             await listener.OnTosGained(creature, source);
         }

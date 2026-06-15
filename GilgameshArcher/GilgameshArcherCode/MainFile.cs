@@ -44,9 +44,8 @@ public partial class MainFile : Node
         await PowerCmd.Apply<EnumaManifestedPower>(creature, 1m, creature, null);
 
         // El viento de la creación parte cielo y tierra: la carta-ulti aparece en mano, lista (Retain).
-        var card = creature.CombatState.CreateCard<EnumaElishUnleashed>(creature.Player);
-        CardCmd.PreviewCardPileAdd(
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 1.2f);
+        // Helper compartido de FGOCore (antes: CreateCard + AddGeneratedCardToCombat + PreviewCardPileAdd).
+        await FGOCore.FGOCoreCode.Combat.ManifestCards.ManifestToHand<EnumaElishUnleashed>(creature, 1.2f);
     }
 
     private static async Task DisarmEnumaMarker(Creature creature)

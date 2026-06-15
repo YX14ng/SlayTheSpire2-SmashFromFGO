@@ -15,11 +15,7 @@ public sealed class WallDoctrinePower : MashShielderPower
 
     private bool _usedThisTurn;
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
-    {
-        if (side == CombatSide.Player) _usedThisTurn = false;
-        return Task.CompletedTask;
-    }
+    protected override void OnPlayerTurnStartReset() => _usedThisTurn = false;
 
     public override async Task AfterBlockGained(Creature creature, decimal amount, ValueProp props, CardModel? cardSource)
     {

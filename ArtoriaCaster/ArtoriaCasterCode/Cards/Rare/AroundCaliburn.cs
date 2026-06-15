@@ -49,12 +49,11 @@ public sealed class AroundCaliburn() : ArtoriaCard(2, CardType.Skill, CardRarity
         await CreatureCmd.GainBlock(Owner.Creature, block, ValueProp.Move, cardPlay);
 
         // Co-op: aliados remueven debuffs y ganan 1 de Fuerza.
-        foreach (var player in Owner.RunState.Players)
+        await ForEachAlly(async ally =>
         {
-            if (player == Owner || player.Creature.IsDead) continue;
-            await Cleanse.RemoveDebuffs(player.Creature);
-            await PowerCmd.Apply<StrengthPower>(player.Creature, 1m, Owner.Creature, this);
-        }
+            await Cleanse.RemoveDebuffs(ally);
+            await PowerCmd.Apply<StrengthPower>(ally, 1m, Owner.Creature, this);
+        });
     }
 
     protected override void OnUpgrade()

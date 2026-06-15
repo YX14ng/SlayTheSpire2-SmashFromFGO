@@ -1,11 +1,7 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
 
 namespace OkitaSaber.OkitaSaberCode.Powers;
 
@@ -16,21 +12,12 @@ namespace OkitaSaber.OkitaSaberCode.Powers;
 /// embotellado. Se auto-remueve al terminar tu turno (patrón ExposedBackPower / TemporaryStrength).
 /// Counter: aplicaciones del mismo turno suman.
 /// </summary>
-public sealed class GloryEdgePower : OkitaPower
+public sealed class GloryEdgePower : AttackDamageAdditivePower
 {
-    public override PowerType Type => PowerType.Buff;
-
-    public override PowerStackType StackType => PowerStackType.Counter;
-
-    public override bool ShouldScaleInMultiplayer => false;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritReadyPower>()];
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
-    {
-        if (dealer != Owner || !props.IsPoweredAttack() || cardSource == null) return 0m;
-        return Owner.GetPowerAmount<CritReadyPower>() > 0 ? Amount : 0m;
-    }
+    // Solo el golpe que va a criticar (hay un Crítico Listo en cola) recibe el bono.
+    protected override bool BonusApplies() => Owner.GetPowerAmount<CritReadyPower>() > 0;
 
     public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
     {

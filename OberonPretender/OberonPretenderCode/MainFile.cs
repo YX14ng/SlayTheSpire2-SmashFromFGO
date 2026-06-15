@@ -1,11 +1,10 @@
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
+using FGOCore.FGOCoreCode.Combat;
 using OberonPretender.OberonPretenderCode.Cards.Special;
 using OberonPretender.OberonPretenderCode.Powers;
 using OberonPretender.OberonPretenderCode.Powers.Forms;
@@ -49,12 +48,14 @@ public partial class MainFile : Node
         await PowerCmd.Apply<UltManifestedPower>(creature, 1m, creature, null);
 
         // La Desatada depende de la forma activa: Vortigern usa la suya; Rey/Invierno la del cuento.
+        // El helper de FGOCore (ManifestCards) factoriza el CreateCard ya hecho + AddGeneratedCardToCombat
+        // + PreviewCardPileAdd que estaba duplicado en los MainFile del ecosistema; la elección por forma
+        // (la única parte mod-local) queda en el caller, que pasa la carta ya creada.
         CardModel card = creature.HasPower<VortigernPower>()
             ? creature.CombatState.CreateCard<LieLikeVortigernUnleashed>(creature.Player)
             : creature.CombatState.CreateCard<RyeRhymeGoodfellowUnleashed>(creature.Player);
 
-        CardCmd.PreviewCardPileAdd(
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 1.0f);
+        await ManifestCards.ManifestToHand(creature, card);
     }
 
     private static async Task DisarmUlt(Creature creature)

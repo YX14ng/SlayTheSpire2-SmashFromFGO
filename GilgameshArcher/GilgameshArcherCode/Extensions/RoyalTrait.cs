@@ -19,4 +19,13 @@ public static class RoyalTrait
         if (enemy == null || enemy.IsPlayer) return false;
         return enemy.CombatState?.RunState.CurrentRoom?.RoomType is RoomType.Elite or RoomType.Boss;
     }
+
+    /// <summary>
+    /// ¿La criatura está en una sala de rango divino (Élite/Jefe)? Mismo gloss que
+    /// <see cref="IsDivine"/> pero leído desde el <c>CombatState</c> del PROPIO jugador — el glow
+    /// dorado de las cartas anti-divinas (Golpe de Ea, Cadena del Cielo) lo usa para anticipar el
+    /// rider sin tener un objetivo concreto. Lectura PURA (preview-safe).
+    /// </summary>
+    public static bool IsInDivineRoom(Creature? creature) =>
+        creature?.CombatState?.RunState.CurrentRoom?.RoomType is RoomType.Elite or RoomType.Boss;
 }

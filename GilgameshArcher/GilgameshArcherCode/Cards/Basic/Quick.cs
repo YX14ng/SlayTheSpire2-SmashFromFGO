@@ -32,9 +32,7 @@ public sealed class Quick() : GilgameshCard(1, CardType.Attack, CardRarity.Basic
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
         await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 

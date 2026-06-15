@@ -20,14 +20,12 @@ public sealed class DragonSlayerStrike() : SiegfriedCard(1, CardType.Attack, Car
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DragonScalesPower>()];
 
-    protected override bool ShouldGlowGoldInternal => Owner.Creature.GetPowerAmount<DragonScalesPower>() >= ScalesThreshold;
+    protected override bool ShouldGlowGoldInternal => GlowAtScales(ScalesThreshold);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        var bonus = Owner.Creature.GetPowerAmount<DragonScalesPower>() >= ScalesThreshold
-            ? DynamicVars["Bonus"].IntValue
-            : 0;
+        var bonus = ScaleThresholdBonus(ScalesThreshold, DynamicVars["Bonus"].IntValue);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

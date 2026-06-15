@@ -27,12 +27,7 @@ public sealed class WinterCourtPower : MorganPower
     {
         if (player != Owner.Player || Owner.Player == null || Owner.IsDead) return;
         Flash();
-        for (var i = 0; i < Amount; i++)
-        {
-            var card = Owner.CombatState.CreateCard<KnightsArm>(Owner.Player);
-            CardCmd.PreviewCardPileAdd(
-                await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 0.8f);
-        }
+        await KnightsArm.AddToHand(Owner, Amount);
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)

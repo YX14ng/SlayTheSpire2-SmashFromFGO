@@ -51,12 +51,7 @@ public sealed class MemoryOfLondinium() : MorganCard(2, CardType.Attack, CardRar
         }
 
         var arms = DynamicVars.Cards.IntValue + (tier >= OverchargeTier ? 1 : 0);
-        for (var i = 0; i < arms; i++)
-        {
-            var card = Owner.Creature.CombatState.CreateCard<Special.KnightsArm>(Owner);
-            CardCmd.PreviewCardPileAdd(
-                await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 0.8f);
-        }
+        await Special.KnightsArm.AddToHand(Owner.Creature, arms);
     }
 
     protected override void OnUpgrade()

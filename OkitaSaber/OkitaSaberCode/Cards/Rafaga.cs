@@ -68,20 +68,14 @@ public static class Rafaga
     }
 
     private static IRafagaCostModifier? Modifier(Creature creature)
-    {
-        foreach (var power in creature.GetPowerInstances<PowerModel>())
-        {
-            if (power is IRafagaCostModifier mod) return mod;
-        }
-        return null;
-    }
+        => Listeners.PowersOf<IRafagaCostModifier>(creature).FirstOrDefault();
 
     // «Paso Constante»: la primera Ráfaga de cada turno reembolsa 1 Aliento (cap del descuento).
     private static async Task TryRefundFirst(Creature creature, CardModel? source)
     {
-        foreach (var power in creature.GetPowerInstances<PowerModel>())
+        foreach (var refund in Listeners.PowersOf<IFirstRafagaRefund>(creature))
         {
-            if (power is IFirstRafagaRefund refund && refund.TryConsumeRefund())
+            if (refund.TryConsumeRefund())
             {
                 await Aliento.Gain(creature, refund.RefundAmount, source);
                 if (refund.RefundStars > 0) await CritStars.Gain(creature, refund.RefundStars, source);

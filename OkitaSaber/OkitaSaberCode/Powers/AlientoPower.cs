@@ -47,29 +47,25 @@ public sealed class AlientoPower : OkitaPower
     /// <summary>Marca de que el Aliento ya tocó 0 este turno (cap de 1 Tos/turno por agotamiento).</summary>
     public bool HitZeroThisTurn { get; set; }
 
-    /// <summary>Tope actual = 10 base + lo que sumen los boosters de tope.</summary>
+    /// <summary>Tope actual = 10 base + lo que sumen los boosters de tope (powers + reliquias).</summary>
     public int Cap
     {
         get
         {
             var cap = Max;
-            foreach (var p in Owner.GetPowerInstances<PowerModel>())
-                if (p is IBreathCapBooster b) cap += b.ExtraBreathCap;
-            if (Owner.Player != null)
-                foreach (var r in Owner.Player.Relics)
-                    if (r is IBreathCapBooster b) cap += b.ExtraBreathCap;
+            Listeners.ForEach<IBreathCapBooster>(Owner, b => cap += b.ExtraBreathCap);
             return cap;
         }
     }
 
-    /// <summary>Regen por turno = 2 base + lo que sumen los boosters de regen.</summary>
+    /// <summary>Regen por turno = 2 base + lo que sumen los boosters de regen (solo powers).</summary>
     public int Regen
     {
         get
         {
             var regen = RegenPerTurn;
-            foreach (var p in Owner.GetPowerInstances<PowerModel>())
-                if (p is IBreathRegenBooster b) regen += b.ExtraBreathRegen;
+            foreach (var b in Listeners.PowersOf<IBreathRegenBooster>(Owner))
+                regen += b.ExtraBreathRegen;
             return regen;
         }
     }

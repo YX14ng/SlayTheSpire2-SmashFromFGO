@@ -1,12 +1,10 @@
+using FGOCore.FGOCoreCode.Combat;
 using Godot;
 using HarmonyLib;
 using MashShielder.MashShielderCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
-using MegaCrit.Sts2.Core.Models;
 
 namespace MashShielder.MashShielderCode;
 
@@ -43,16 +41,10 @@ public partial class MainFile : Node
         if (creature.Player?.Character is not Character.MashShielder) return;
         if (creature.HasPower<CamelotManifestedPower>()) return;
 
-        // Marker: la ventana ya se abrió este pico (se re-arma al bajar < 100).
-        await PowerCmd.Apply<CamelotManifestedPower>(creature, 1m, creature, null);
-        await PowerCmd.Apply<AbsoluteBulwarkWindowPower>(creature, 1m, creature, null);
-
-        // Devuelve recursos: arranca el turno grande, no lo reemplaza (modelo Phrolova).
-        if (creature.Player != null)
-        {
-            await PlayerCmd.GainEnergy(1, creature.Player);
-            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 1, creature.Player);
-        }
+        // FGOCore.NpWindow.OpenWindow: aplica el MARCADOR (la ventana ya se abrió este pico,
+        // se re-arma en GaugeDropped) ANTES del power-ventana, y cierra devolviendo recursos
+        // (+1⚡, robar 1) — arranca el turno grande, no lo reemplaza (modelo Phrolova).
+        await NpWindow.OpenWindow<AbsoluteBulwarkWindowPower, CamelotManifestedPower>(creature);
     }
 
     private static async Task DisarmUltMarker(Creature creature)

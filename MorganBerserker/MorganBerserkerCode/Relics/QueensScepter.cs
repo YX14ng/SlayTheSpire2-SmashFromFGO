@@ -34,12 +34,12 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<CritStarsPower>()];
 
     private bool _usedThisCombat;
-    private int _starTriggersThisTurn;
+    private readonly Powers.PerTurnTriggerCounter _starTriggers = new();
 
     public override async Task BeforeCombatStartLate()
     {
         _usedThisCombat = false;
-        _starTriggersThisTurn = 0;
+        _starTriggers.OnSideTurnStart(CombatSide.Player); // reset al arrancar el combate.
         // Forma inicial: Reina. source == null -> no cuenta como "cambio de forma".
         await FormSwitch.Enter<Powers.Forms.FairyQueenFormPower>(null, Owner.Creature, null);
     }
@@ -48,7 +48,7 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
     {
         // Tope P2 por RONDA: se resetea al inicio del turno del jugador y cuenta
         // tanto el autodaño propio como los golpes tanqueados en el turno enemigo.
-        if (side == CombatSide.Player) _starTriggersThisTurn = 0;
+        _starTriggers.OnSideTurnStart(side);
         return Task.CompletedTask;
     }
 
@@ -56,9 +56,8 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
     {
         if (!CombatManager.Instance.IsInProgress || target != Owner.Creature || result.UnblockedDamage <= 0) return;
         if (Powers.FaeBloodPactPower.TickInProgress) return; // P4: el tick del Pacto no genera estrellas.
-        if (_starTriggersThisTurn >= StarTriggersPerTurn) return;
+        if (!_starTriggers.TryConsume(StarTriggersPerTurn)) return;
 
-        _starTriggersThisTurn++;
         Flash();
         await CritStars.Gain(Owner.Creature, StarsPerHpLoss, null);
     }

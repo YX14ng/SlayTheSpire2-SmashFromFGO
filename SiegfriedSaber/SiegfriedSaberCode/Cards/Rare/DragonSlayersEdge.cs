@@ -19,12 +19,12 @@ public sealed class DragonSlayersEdge() : SiegfriedCard(2, CardType.Attack, Card
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DragonScalesPower>()];
 
-    protected override bool ShouldGlowGoldInternal => Owner.Creature.GetPowerAmount<DragonScalesPower>() > 0;
+    protected override bool ShouldGlowGoldInternal => GlowAtScales(1);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        var bonus = System.Math.Min(Owner.Creature.GetPowerAmount<DragonScalesPower>(), DynamicVars["MaxBonus"].IntValue);
+        var bonus = CappedScaleBonus(DynamicVars["MaxBonus"].IntValue);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);

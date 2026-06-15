@@ -46,12 +46,7 @@ public sealed class CallOfTheFairyKnights() : MorganCard(2, CardType.Skill, Card
             }
         }
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        for (var i = 0; i < DynamicVars.Cards.IntValue; i++)
-        {
-            var card = Owner.Creature.CombatState.CreateCard<Special.KnightsArm>(Owner);
-            CardCmd.PreviewCardPileAdd(
-                await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 0.8f);
-        }
+        await Special.KnightsArm.AddToHand(Owner.Creature, DynamicVars.Cards.IntValue);
     }
 
     protected override void OnUpgrade()

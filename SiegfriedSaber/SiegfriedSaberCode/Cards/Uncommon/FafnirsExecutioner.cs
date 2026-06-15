@@ -24,12 +24,12 @@ public sealed class FafnirsExecutioner() : SiegfriedCard(2, CardType.Attack, Car
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DragonScalesPower>()];
 
     // Glow por SdD≥4 (hay escalado activo) — lectura pura del owner (sin Target, igual que Balmung).
-    protected override bool ShouldGlowGoldInternal => Owner.Creature.GetPowerAmount<DragonScalesPower>() >= 4;
+    protected override bool ShouldGlowGoldInternal => GlowAtScales(4);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        var scaleBonus = System.Math.Min(Owner.Creature.GetPowerAmount<DragonScalesPower>() / 4, ScaleCap);
+        var scaleBonus = CappedScaleBonus(4, ScaleCap);
         var tribeBonus = DragonTrait.IsDragon(cardPlay.Target) ? TribeBonus : 0;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + scaleBonus + tribeBonus).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")

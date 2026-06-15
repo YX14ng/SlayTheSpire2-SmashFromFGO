@@ -32,12 +32,7 @@ public sealed class SummerOutburst() : ArtoriaCard(1, CardType.Attack, CardRarit
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var damage = DynamicVars.Damage.BaseValue;
-        if (Stars.CanCrit(Owner.Creature, CritCost))
-        {
-            await Stars.ConsumeForCrit(Owner.Creature, CritCost, this);
-            damage = DynamicVars["Crit"].BaseValue + Stars.CritBonus(Owner.Creature);
-        }
+        var damage = await ResolveCritDamage(CritCost);
         await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

@@ -1,5 +1,7 @@
+using FGOCore.FGOCoreCode.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -12,6 +14,23 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Special;
 /// </summary>
 public sealed class KnightsArm() : MorganCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
 {
+    /// <summary>Preview animado al manifestar cada Arma (el ecosistema usa 0.8f para estos tokens).</summary>
+    public const float ManifestPreviewTime = 0.8f;
+
+    /// <summary>
+    /// Añade <paramref name="count"/> Armas del Caballero a la mano de <paramref name="creature"/>,
+    /// con su preview animado. Centraliza el patrón "crear + AddGeneratedCardToCombat + Preview"
+    /// que estaba duplicado en WinterCourtPower / MemoryOfLondinium / CallOfTheFairyKnights /
+    /// ViviansGift (delega en el helper común <see cref="ManifestCards.ManifestToHand{T}"/>).
+    /// </summary>
+    public static async Task AddToHand(Creature creature, int count)
+    {
+        for (var i = 0; i < count; i++)
+        {
+            await ManifestCards.ManifestToHand<KnightsArm>(creature, ManifestPreviewTime);
+        }
+    }
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m, ValueProp.Move)];

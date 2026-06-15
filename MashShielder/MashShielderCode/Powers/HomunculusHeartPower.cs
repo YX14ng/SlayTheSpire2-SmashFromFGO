@@ -22,11 +22,7 @@ public sealed class HomunculusHeartPower : MashShielderPower, IFormChangeListene
 
     private int _procsThisTurn;
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
-    {
-        if (side == CombatSide.Player) _procsThisTurn = 0;
-        return Task.CompletedTask;
-    }
+    protected override void OnPlayerTurnStartReset() => _procsThisTurn = 0;
 
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
