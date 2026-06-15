@@ -1,3 +1,4 @@
+using System.Linq;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -10,6 +11,7 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 /// <summary>
 /// Carisma del Anhelo (渴望的魅力) — Morgan S1: 2 de Fuerza, 1 de Vulnerable a TODOS,
 /// Carga NP +20. Rediseño v2: NP 10→20 (denominación "paquete de skill"). (up +1/+10)
+/// Co-op: además, +!AllyStrength! de Fuerza a cada aliado (patrón Carisma de Gilgamesh).
 /// </summary>
 public sealed class CharismaOfYearning() : MorganCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
@@ -17,7 +19,8 @@ public sealed class CharismaOfYearning() : MorganCard(2, CardType.Skill, CardRar
     [
         new PowerVar<StrengthPower>("Strength", 2m),
         new PowerVar<VulnerablePower>("Vulnerable", 1m),
-        new DynamicVar("NpCharge", 20)
+        new DynamicVar("NpCharge", 20),
+        new DynamicVar("AllyStrength", 1)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -34,6 +37,10 @@ public sealed class CharismaOfYearning() : MorganCard(2, CardType.Skill, CardRar
             }
         }
         await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        // Co-op (patrón Carisma de Gilgamesh, KitCharisma.cs): el carisma alcanza a cada aliado vivo.
+        // En 1 jugador, PlayerCreatures es solo el Owner -> el foreach queda vacío (fiel a 1 jugador).
+        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
+            await PowerCmd.Apply<StrengthPower>(ally, DynamicVars["AllyStrength"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

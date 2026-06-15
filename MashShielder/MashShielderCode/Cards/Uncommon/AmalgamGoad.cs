@@ -1,3 +1,4 @@
+using System.Linq;
 using MashShielder.MashShielderCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -15,7 +16,8 @@ public sealed class AmalgamGoad() : MashShielderCard(1, CardType.Skill, CardRari
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new PowerVar<InterceptPower>("Intercept", 3m),
-        new DynamicVar("NpCharge", 20)
+        new DynamicVar("NpCharge", 20),
+        new DynamicVar("AllyIntercept", 2)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -25,6 +27,14 @@ public sealed class AmalgamGoad() : MashShielderCard(1, CardType.Skill, CardRari
     {
         await PowerCmd.Apply<InterceptPower>(Owner.Creature, DynamicVars["Intercept"].BaseValue, Owner.Creature, this);
         await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+
+        // Co-op (la provocación convierte al grupo en una línea de contraataque): cada aliado vivo gana
+        // Intercepción. La Carga NP se queda en Mash (es su recurso). En 1 jugador PlayerCreatures es
+        // solo el Owner -> el foreach queda vacío (idéntico a hoy).
+        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
+        {
+            await PowerCmd.Apply<InterceptPower>(ally, DynamicVars["AllyIntercept"].BaseValue, Owner.Creature, this);
+        }
     }
 
     protected override void OnUpgrade()

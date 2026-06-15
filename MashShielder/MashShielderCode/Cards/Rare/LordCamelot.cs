@@ -24,7 +24,9 @@ public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRari
         new PowerVar<StrengthPower>("Strength", 3m),
         new PowerVar<ProvokePower>("Provoke", 12m),
         new DynamicVar("ChargeCost", ChargeCost),
-        new DynamicVar("PerTen", 4)
+        new DynamicVar("PerTen", 4),
+        new DynamicVar("AllyBlock", 12),
+        new DynamicVar("AllyProvoke", 6)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -49,6 +51,16 @@ public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRari
         }
         await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
         await PowerCmd.Apply<ProvokePower>(Owner.Creature, DynamicVars["Provoke"].BaseValue, Owner.Creature, this);
+
+        // Co-op (Lord Camelot = «la fortaleza que escuda a TODA la Mesa Redonda»): cada aliado vivo
+        // recibe una porción de Baluarte y de Intercepción-por-provocación, de modo que también
+        // contraataque los golpes que bloquee. En 1 jugador PlayerCreatures es solo el Owner -> el
+        // foreach queda vacío (idéntico a hoy).
+        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
+        {
+            await BlockRetention.GainBulwarkBlock(this, ally, DynamicVars["AllyBlock"].BaseValue);
+            await PowerCmd.Apply<ProvokePower>(ally, DynamicVars["AllyProvoke"].BaseValue, Owner.Creature, this);
+        }
     }
 
     protected override void OnUpgrade()

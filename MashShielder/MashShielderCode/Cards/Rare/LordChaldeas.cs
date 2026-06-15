@@ -19,7 +19,8 @@ public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRar
     [
         new BlockVar(24m, ValueProp.Move),
         new DynamicVar("ChargeCost", ChargeCost),
-        new DynamicVar("PerTen", 3)
+        new DynamicVar("PerTen", 3),
+        new DynamicVar("AllyBlock", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -42,6 +43,14 @@ public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRar
         if (extra > 0)
         {
             await BlockRetention.GainBulwarkBlock(this, Owner.Creature, extra);
+        }
+
+        // Co-op (NP propio de Mash, la muralla de Chaldeas que ampara a TODOS): cada aliado vivo
+        // recibe una porción fija de Baluarte. En 1 jugador PlayerCreatures es solo el Owner -> el
+        // foreach queda vacío (idéntico a hoy).
+        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
+        {
+            await BlockRetention.GainBulwarkBlock(this, ally, DynamicVars["AllyBlock"].BaseValue);
         }
     }
 
