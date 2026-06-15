@@ -33,6 +33,23 @@ public sealed class AntiPurgePower : ArtoriaPower
     /// <summary>AP annulments this turn that vanilla did NOT count as fully blocked.</summary>
     public int AnnulledThisTurn { get; private set; }
 
+    private bool _isClamping;
+
+    /// <summary>
+    /// Self-clamp to <see cref="Max"/> (5 = the verified Overcharge Count). Every application
+    /// site (cards, relics, co-op grants) uses PowerCmd.Apply directly, so centralizing the cap
+    /// here guarantees no chain of grants pushes the Counter past 5 (mirror of Stars.Gain's cap).
+    /// </summary>
+    public override async Task AfterPowerAmountChanged(MegaCrit.Sts2.Core.Models.PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    {
+        await base.AfterPowerAmountChanged(power, amount, applier, cardSource);
+        if (power != this || _isClamping || Amount <= Max) return;
+
+        _isClamping = true;
+        await PowerCmd.ModifyAmount(this, Max - Amount, Owner, null);
+        _isClamping = false;
+    }
+
     /// <summary>Enemy hits fully stopped this turn: Block-stopped (FormPower) + AP-only annulments.</summary>
     public static int FullyStoppedHits(Creature creature) =>
         FormPower.GetBlockedHits(creature) +

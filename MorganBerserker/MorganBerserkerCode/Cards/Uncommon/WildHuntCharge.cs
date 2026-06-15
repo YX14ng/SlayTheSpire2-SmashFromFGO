@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using MorganBerserker.MorganBerserkerCode.Powers;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
@@ -27,9 +28,12 @@ public sealed class WildHuntCharge() : MorganCard(2, CardType.Attack, CardRarity
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // Estrellas ANTES del golpe: el umbral otorga CRÍTICO LISTO y este mismo
-        // ataque lo consume (orden crítico del patrón "Black").
+        // Estrellas ANTES del golpe. Morgan BANCA estrellas (IBanksCritStars vía su forma),
+        // así que el auto-proc a 100 NO corre para ella: hay que disparar el Crítico a mano.
+        // Crit.TrySpend gasta 50★ y aplica CRÍTICO LISTO a ESTA carta (CritReady es por carta,
+        // así que toda la AoE critica) antes del golpe. Gana 100, gasta 50 → +50 neto al banco.
         await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Crit.TrySpend(Owner.Creature, this);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
             .TargetingAllOpponents(Owner.Creature.CombatState)
             .WithHitFx("vfx/vfx_starry_impact")

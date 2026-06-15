@@ -9,7 +9,7 @@ namespace FGOCore.FGOCoreCode.Curses;
 /// <summary>
 /// Maldición (诅咒) — FGO curse as a debuff: at the start of the cursed creature's
 /// turn it takes damage equal to its Curse (ignores Block), then the Curse decays
-/// by 1. Capped at 15 per enemy (enforced by <see cref="Curses"/>). Mirrors the
+/// by 1. Capped at <see cref="MaxPerEnemy"/> per enemy (enforced by <see cref="Curses"/>). Mirrors the
 /// vanilla PoisonPower pattern exactly (timing, decrement, throwing context).
 /// Personal offense: does NOT scale in multiplayer.
 /// </summary>

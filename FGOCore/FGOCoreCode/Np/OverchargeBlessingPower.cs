@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Powers;
+using FGOCore.FGOCoreCode.Cleanse;
 
 namespace FGOCore.FGOCoreCode.Np;
 
@@ -7,7 +8,7 @@ namespace FGOCore.FGOCoreCode.Np;
 /// real NP: your next NP card adds +10 per stack to its Overcharge tier. Consumed
 /// automatically by <see cref="NpCharge.ConsumeAllForNpCard"/>.
 /// </summary>
-public sealed class OverchargeBlessingPower : FGOCorePower
+public sealed class OverchargeBlessingPower : FGOCorePower, IResourcePower
 {
     public const int TierPerStack = 10;
 

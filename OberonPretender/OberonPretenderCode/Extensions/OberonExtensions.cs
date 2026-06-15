@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using FGOCore.FGOCoreCode.Cleanse;
 using OberonPretender.OberonPretenderCode.Powers.Sleep;
 
 namespace OberonPretender.OberonPretenderCode.Extensions;
@@ -16,19 +17,13 @@ namespace OberonPretender.OberonPretenderCode.Extensions;
 public static class OberonExtensions
 {
     /// <summary>
-    /// Quita SOLO los Debuff efectivos del propio jugador (filtro signado TypeForCurrentAmount,
-    /// patrón <c>SiegfriedExtensions.RemoveAllDebuffs</c>). Los recursos de Oberon (NP/Estrellas/
-    /// Sobrecarga/Deuda-como-Buff) NO se tocan; Maldición/Débil/Vulnerable sí se limpian (deseado).
-    /// Lo usa «Solo un Sueño».
+    /// Quita SOLO los Debuff efectivos del propio jugador, delegando en la API compartida
+    /// <see cref="Cleanse.RemoveDebuffs"/> de FGOCore. Los RECURSOS (NP/Estrellas/Sobrecarga + la Deuda
+    /// de Oberon, que es Debuff-type pero implementa <see cref="IResourcePower"/>) NO se tocan;
+    /// Maldición/Débil/Vulnerable sí se limpian (deseado). Lo usa «Solo un Sueño».
     /// </summary>
-    public static async Task RemoveAllDebuffs(Creature target, int max = int.MaxValue)
-    {
-        var debuffs = target.Powers.Where(p => p.TypeForCurrentAmount == PowerType.Debuff).Take(max).ToList();
-        foreach (var power in debuffs)
-        {
-            await PowerCmd.Remove(power);
-        }
-    }
+    public static Task RemoveAllDebuffs(Creature target, int max = int.MaxValue)
+        => Cleanse.RemoveDebuffs(target, max);
 
     /// <summary>
     /// Remové la Fuerza POSITIVA de todos los enemigos vivos (el strip del NP real de Rye Rhyme

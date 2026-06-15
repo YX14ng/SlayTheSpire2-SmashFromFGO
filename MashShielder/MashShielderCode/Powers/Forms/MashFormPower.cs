@@ -36,6 +36,13 @@ public abstract class MashFormPower : FormPower
 
     private bool _blockCardBonusUsed;
 
+    // Bunker Bolt: el bono se calcula y el Bloqueo se consume UNA sola vez por carta en
+    // BeforeCardPlayed (camino REAL de juego; las previews no lo invocan). _pendingBunkerBonus
+    // queda cacheado para que ModifyDamageAdditive lo devuelva en el PRIMER golpe y lo ponga a 0
+    // (sin doble-dip en multi-hit). En preview _pendingBunkerBonus es 0 → early-return sin mutar,
+    // así que zeroearlo en el hook de daño es seguro (anti-patrón de mutar-en-preview evitado).
+    private int _pendingBunkerBonus;
+
     public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
     {
         await base.AfterSideTurnStart(side, combatState);
@@ -83,22 +90,40 @@ public abstract class MashFormPower : FormPower
         await NpCharge.Gain(Owner, ShielderEndTurnCharge, null);
     }
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
-    {
-        if (!OrtinaxPassive || Owner != dealer || !props.IsPoweredAttack()) return 0m;
-        return Math.Min(BunkerBoltMax, Owner.Block);
-    }
-
-    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    /// <summary>
+    /// Consume hasta 5 de Bloqueo UNA vez por carta (antes de resolver los golpes) y cachea el bono.
+    /// Así un Ataque multi-hit no consume 5 por golpe ni suma +5 a cada golpe (era double-dip).
+    /// </summary>
+    public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
         if (!OrtinaxPassive) return;
         if (cardPlay.Card.Type != CardType.Attack || cardPlay.Card.Owner?.Creature != Owner) return;
 
-        var consume = Math.Min(BunkerBoltMax, Owner.Block);
-        if (consume > 0)
+        var consume = (int)Math.Min(BunkerBoltMax, Owner.Block);
+        if (consume <= 0) return;
+
+        _pendingBunkerBonus = consume;
+        Flash();
+        await CreatureCmd.LoseBlock(Owner, consume);
+    }
+
+    // Lectura del bono cacheado: lo devuelve en el PRIMER golpe del Ataque y lo consume (a 0) para
+    // que los golpes restantes no lo repitan. En preview _pendingBunkerBonus es 0 → no muta nada.
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        if (!OrtinaxPassive || Owner != dealer || !props.IsPoweredAttack() || _pendingBunkerBonus <= 0) return 0m;
+        var bonus = _pendingBunkerBonus;
+        _pendingBunkerBonus = 0;
+        return bonus;
+    }
+
+    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    {
+        // Safety net: si el Ataque no resolvió ningún golpe (fizzle), limpiar el bono cacheado.
+        if (OrtinaxPassive && cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner?.Creature == Owner)
         {
-            Flash();
-            await CreatureCmd.LoseBlock(Owner, consume);
+            _pendingBunkerBonus = 0;
         }
+        return Task.CompletedTask;
     }
 }

@@ -9,7 +9,9 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
 /// <summary>
 /// Colmillo de Barghest (巴格斯特之牙) — 16 de daño; si el objetivo tiene Maldición:
-/// cura 4 HP. Rediseño v2: glow dorado cuando hay un enemigo maldito (lector de Maldición).
+/// cura 4 HP. El bono (cura) depende del OBJETIVO elegido, no del estado global: sin glow
+/// dorado, porque la carta no puede saber a qué enemigo apuntarás (un glow por "hay algún
+/// maldito" mentiría al apuntar a un enemigo sin Maldición). Auditoría 2026-06-15.
 /// </summary>
 public sealed class BarghestsFang() : MorganCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
@@ -20,9 +22,6 @@ public sealed class BarghestsFang() : MorganCard(2, CardType.Attack, CardRarity.
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
-
-    protected override bool ShouldGlowGoldInternal =>
-        Curses.MostCursed(Owner.Creature.CombatState, Owner.Creature) != null;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

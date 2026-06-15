@@ -52,10 +52,7 @@ public sealed class AroundCaliburn() : ArtoriaCard(2, CardType.Skill, CardRarity
         foreach (var player in Owner.RunState.Players)
         {
             if (player == Owner || player.Creature.IsDead) continue;
-            foreach (var debuff in player.Creature.GetPowerInstances<MegaCrit.Sts2.Core.Models.PowerModel>().Where(p => p.Type == MegaCrit.Sts2.Core.Entities.Powers.PowerType.Debuff).ToList())
-            {
-                await PowerCmd.Remove(debuff);
-            }
+            await Cleanse.RemoveDebuffs(player.Creature);
             await PowerCmd.Apply<StrengthPower>(player.Creature, 1m, Owner.Creature, this);
         }
     }

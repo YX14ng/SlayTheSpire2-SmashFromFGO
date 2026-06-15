@@ -36,7 +36,12 @@ public static class NpCharge
         }
         if (Current(creature) >= NpChargePower.ManifestThreshold && GaugeFilled != null)
         {
-            await GaugeFilled.Invoke(creature);
+            // Invoke() de un delegado multicast solo DEVUELVE la Task del último handler:
+            // los demás corrían sin await (fire-and-forget). Esperamos todos en orden.
+            foreach (var handler in GaugeFilled.GetInvocationList().Cast<Func<Creature, Task>>())
+            {
+                await handler(creature);
+            }
         }
     }
 
@@ -144,7 +149,10 @@ public static class NpCharge
 
         if (Current(creature) < NpChargePower.ManifestThreshold && GaugeDropped != null)
         {
-            await GaugeDropped.Invoke(creature);
+            foreach (var handler in GaugeDropped.GetInvocationList().Cast<Func<Creature, Task>>())
+            {
+                await handler(creature);
+            }
         }
         return true;
     }

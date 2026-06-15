@@ -19,8 +19,9 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Special;
 /// - 30 de daño a TODOS los enemigos (plano contra «lo meramente humano» — salas comunes).
 /// - Contra Élites y Jefes (<see cref="RoyalTrait.IsDivine"/>, lo de rango divino del Spire): +15 base,
 ///   y ese bonus anti-divino sube +4 por cada 20 de carga consumida sobre 100 (la Sobrecarga). A
-///   consumo 300 (cap): 30 / 75 vs Élite-Jefe — calca la curva OC100→500 (×1.5→×2.0) usando el cap
-///   300 de FGOCore como OC500. La decisión de ATESORAR hasta 300 ES el Overcharge.
+///   consumo 300 (cap): 30 / 85 vs Élite-Jefe (overcharge = (300-100)/20*4 = 40; divino = 30 + 15 + 40 =
+///   85, antes de NpLevels) — calca la curva OC100→500 (×1.5→×2.0) usando el cap 300 de FGOCore como
+///   OC500. La decisión de ATESORAR hasta 300 ES el Overcharge.
 /// - El daño base escala SOLO con dupes (<see cref="NpLevels.Scale"/>, +15%/nivel = NP1→NP5 300%→500%).
 /// - La <c>OverchargeBlessingPower</c> (El Que Vio el Abismo / Decreto del Rey) ya está horneada en
 ///   <c>ConsumeAllForNpCard</c>: sube el tier consumido antes de calcular el bonus anti-jefe.

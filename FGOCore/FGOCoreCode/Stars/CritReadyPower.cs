@@ -22,21 +22,17 @@ public sealed class CritReadyPower : FGOCorePower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private CardModel? _activeCard;
-
+    // Lectura PURA: ModifyDamage* lo invoca el juego también en PREVIEWS de daño (hover/targeting
+    // de cartas en mano, sin previewMode en la firma), así que NO se puede mutar estado acá — el
+    // latch anterior (_activeCard ??= cardSource) se enganchaba a la carta equivocada en preview.
+    // Patrón vanilla DoubleDamagePower: ×2 mientras Amount>0; cada carta de Ataque jugada consume
+    // 1 stack en AfterCardPlayed (multi-hit = todos los golpes ×2 por una sola carga; sin ×4).
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
-    {
-        if (dealer != Owner || !props.IsPoweredAttack() || Amount <= 0 || cardSource == null) return 1m;
-        // La primera carta de Ataque que pega reclama el crítico; sus demás golpes
-        // también salen ×2, pero una segunda carta necesita su propio stack.
-        _activeCard ??= cardSource;
-        return cardSource == _activeCard ? 2m : 1m;
-    }
+        => (dealer == Owner && props.IsPoweredAttack() && Amount > 0) ? 2m : 1m;
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (_activeCard == null || cardPlay.Card != _activeCard) return;
-        _activeCard = null;
+        if (Amount <= 0 || cardPlay.Card.Type != CardType.Attack) return;
         Flash();
         await PowerCmd.Decrement(this);
     }

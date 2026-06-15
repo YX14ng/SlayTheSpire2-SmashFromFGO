@@ -28,7 +28,7 @@
   "SIEGFRIEDSABER-HEAVY_BLOW.title": "重斩",
   "SIEGFRIEDSABER-HEAVY_BLOW.description": "#造成!D!点伤害。获得!Scales!点*龙血护甲。",
   "SIEGFRIEDSABER-HEROS_BACKSWING.title": "英雄回斩",
-  "SIEGFRIEDSABER-HEROS_BACKSWING.description": "#造成!D!点伤害，再加上你的*龙血护甲值。",
+  "SIEGFRIEDSABER-HEROS_BACKSWING.description": "#造成!D!点伤害，再加上你的*龙血护甲值（至多!MaxBonus!点）。",
   "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.title": "屠龙斩",
   "SIEGFRIEDSABER-DRAGON_SLAYER_STRIKE.description": "#造成!D!点伤害。当你的*龙血护甲达到!Threshold!或更高时，额外造成!Bonus!点伤害。",
   "SIEGFRIEDSABER-GATHER_PROWESS.title": "积蓄武勇",

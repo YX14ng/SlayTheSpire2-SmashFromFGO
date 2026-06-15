@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using SiegfriedSaber.SiegfriedSaberCode.Extensions;
+using FGOCore.FGOCoreCode.Cleanse;
 
 namespace SiegfriedSaber.SiegfriedSaberCode.Powers;
 
@@ -45,7 +45,7 @@ public sealed class PeerlessCrownPower : SiegfriedPower, IDragonScalePierceListe
         if (_consumedThisTurn) return;
         _consumedThisTurn = true;
         Flash();
-        await SiegfriedExtensions.RemoveAllDebuffs(Owner, 1);
+        await Cleanse.RemoveDebuffs(Owner, 1);
         if (Upgraded) await NpCharge.Gain(Owner, NpOnTrigger, null);
     }
 

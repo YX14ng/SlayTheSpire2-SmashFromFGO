@@ -31,6 +31,13 @@ public sealed class IronEyes() : OberonCard(0, CardType.Skill, CardRarity.Common
         var vulnerable = DynamicVars["Vulnerable"].BaseValue + ItemConstructionPower.ExtraDebuffStacks(Owner.Creature);
         await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, vulnerable, Owner.Creature, this);
         await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+
+        // Construcción de Ítems A+ mejorado: +5 NP por el debuff aplicado (paridad con Rocío Tricolor).
+        var construction = Owner.Creature.GetPower<ItemConstructionPower>();
+        if (construction is { RefundsCharge: true })
+        {
+            await NpCharge.Gain(Owner.Creature, ItemConstructionPower.ChargePerApply, this);
+        }
     }
 
     protected override void OnUpgrade() => DynamicVars["Np"].UpgradeValueBy(5m);

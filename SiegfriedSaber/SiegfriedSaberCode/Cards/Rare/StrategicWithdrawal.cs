@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using SiegfriedSaber.SiegfriedSaberCode.Extensions;
+using FGOCore.FGOCoreCode.Cleanse;
 
 namespace SiegfriedSaber.SiegfriedSaberCode.Cards.Rare;
 
@@ -24,7 +24,7 @@ public sealed class StrategicWithdrawal() : SiegfriedCard(1, CardType.Skill, Car
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await BlockRetention.GainBulwarkBlock(this, Owner.Creature, DynamicVars.Block.BaseValue);
-        await SiegfriedExtensions.RemoveAllDebuffs(Owner.Creature);
+        await Cleanse.RemoveDebuffs(Owner.Creature);
     }
 
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(6m);

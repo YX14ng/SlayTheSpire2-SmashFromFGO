@@ -20,12 +20,10 @@ public abstract class ArtoriaCard(int cost, CardType type, CardRarity rarity, Ta
 
     public override string BetaPortraitPath => $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
 
-    /// <summary>Removes every debuff on the owner (Around Caliburn's cleanse).</summary>
-    protected async Task RemoveOwnDebuffs()
-    {
-        foreach (var debuff in Owner.Creature.GetPowerInstances<PowerModel>().Where(p => p.Type == PowerType.Debuff).ToList())
-        {
-            await PowerCmd.Remove(debuff);
-        }
-    }
+    /// <summary>
+    /// Removes every debuff on the owner (Around Caliburn's cleanse). Delegates to the
+    /// shared <see cref="Cleanse.RemoveDebuffs"/> so player resources (IResourcePower:
+    /// NP/Stars/Overcharge) are never swept — single source of truth across FGO mods.
+    /// </summary>
+    protected Task RemoveOwnDebuffs() => Cleanse.RemoveDebuffs(Owner.Creature);
 }

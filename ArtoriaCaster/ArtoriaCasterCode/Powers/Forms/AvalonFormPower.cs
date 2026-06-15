@@ -11,7 +11,8 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Powers.Forms;
 /// Artoria Avalon (Guardiana de la Espada Sagrada, A.A.) — permanent climax form
 /// via Consagración de Avalon. Both passives, no Berserker penalty:
 /// (a) first Skill each turn: +1 Star and NP +3; (b) Attacks +2 and CRITICAL enabled.
-/// While in Avalon, the manifested ult is Around Caliburn: Desatado.
+/// The NP payoff is the "Around Caliburn" window + the drafted NP cards (modelo 2026-06-12),
+/// not an auto-generated ult card.
 /// </summary>
 public sealed class AvalonFormPower : ArtoriaFormPower
 {

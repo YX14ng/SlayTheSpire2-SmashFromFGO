@@ -20,7 +20,12 @@ public sealed class FouMiraclePower : MashShielderPower
 
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Counter;
+    // Single (no Counter): la Vida de rescate es «el mayor gana», NO se apila. Antes, con Counter,
+    // el capstone de MashBond (aplica 1) + la carta FousMiracle (1..12) sumaban sus Amount (p.ej. 13)
+    // y sobrevivías a 13 de Vida en vez del valor previsto. Con Single una nueva aplicación reemplaza
+    // a la anterior (mismo patrón que FGOCore.GutsPower, que generaliza este power). Como el capstone
+    // aplica 1 en BeforeCombatStartLate y la carta aplica >=1 después, el valor final es el de la carta.
+    public override PowerStackType StackType => PowerStackType.Single;
 
     private bool _triggered;
 

@@ -3,6 +3,7 @@ using BaseLib.Utils;
 using FGOCore.FGOCoreCode.Stars;
 using GilgameshArcher.GilgameshArcherCode.Character;
 using GilgameshArcher.GilgameshArcherCode.Extensions;
+using GilgameshArcher.GilgameshArcherCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -40,6 +41,16 @@ public sealed class OathOfUruk : BondRelic
 
     // Append 2 (Load Magical Energy): a Nv 7+, +20 NP inicial (pisa el 10/15 por defecto).
     protected override int StartingNp(int lv) => lv >= 7 ? 20 : lv >= 5 ? 10 : lv >= 2 ? 5 : 0;
+
+    // El contador OCULTO de cartas-del-turno (Disparo Anticipado) DEBE existir desde el primer play del
+    // turno, no auto-instalarse perezosamente recién al jugar la carta (si no, "es la 1ª carta del turno"
+    // daba siempre verdadero porque el power no contó las cartas previas). La starter de Gil está SIEMPRE
+    // presente, así que es el lugar canónico para sembrarlo en cada combate.
+    public override async Task BeforeCombatStartLate()
+    {
+        await base.BeforeCombatStartLate();
+        await CardsThisTurnPower.EnsureInstalled(Owner.Creature);
+    }
 
     // Nv 10 «El Rey de los Héroes»: el primer golpe ya es el juicio despectivo.
     protected override async Task ApplyCapstone()

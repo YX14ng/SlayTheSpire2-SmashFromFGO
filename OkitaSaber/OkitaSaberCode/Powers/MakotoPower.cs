@@ -14,8 +14,11 @@ namespace OkitaSaber.OkitaSaberCode.Powers;
 ///
 /// Detección sin API nueva: el auto-payoff de CritStarsPower a 100 aplica CritReadyPower; lo
 /// leemos en AfterPowerAmountChanged (amount > 0 = un Crítico Listo GANADO = un umbral cumplido),
-/// idéntico al patrón de CombatAnalysisPower de Mash. <see cref="Amount"/> = bono acumulado actual.
-/// Counter (visible). Personal: no escala en multijugador.
+/// idéntico al patrón de CombatAnalysisPower de Mash.
+///
+/// Single (Amount = 1 marcador): el bono acumulado vive en <see cref="Bonus"/>, NO en Amount,
+/// porque PowerCmd.Apply retorna temprano con amount 0 y un Counter en 0 se auto-remueve. Patrón
+/// de ToTheEndPower/SteadyStepPower (Single + campo settable). Personal: no escala en multijugador.
 /// </summary>
 public sealed class MakotoPower : OkitaPower
 {
@@ -25,12 +28,15 @@ public sealed class MakotoPower : OkitaPower
 
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType => PowerStackType.Single;
 
     public override bool ShouldScaleInMultiplayer => false;
 
     /// <summary>Tope del bono acumulado (la carta lo sube a 16 al mejorarse).</summary>
     public int Cap { get; set; } = MaxBonus;
+
+    /// <summary>Bono aditivo acumulado actual (lo que suman tus Ataques). Vive aquí, no en Amount.</summary>
+    public int Bonus { get; private set; }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritStarsPower>(), HoverTipFactory.FromPower<CritReadyPower>()];
@@ -38,16 +44,15 @@ public sealed class MakotoPower : OkitaPower
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (dealer != Owner || !props.IsPoweredAttack() || cardSource == null) return 0m;
-        return Amount;
+        return Bonus;
     }
 
     public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         await base.AfterPowerAmountChanged(power, amount, applier, cardSource);
         if (amount <= 0m || power is not CritReadyPower || power.Owner != Owner) return;
-        if (Amount >= Cap) return;
+        if (Bonus >= Cap) return;
         Flash();
-        var add = Math.Min(PerActivation, Cap - Amount);
-        await PowerCmd.ModifyAmount(this, add, Owner, null);
+        Bonus = Math.Min(Cap, Bonus + PerActivation);
     }
 }

@@ -49,16 +49,23 @@ public static class Lahmu
         {
             await PowerCmd.ModifyAmount(power, -eaten, creature, null);
         }
-        // Avisar a las reliquias que escuchan el devorar (p.ej. Lágrimas de la Madre cura).
-        // Se hace tras consumir las larvas para que reflejen el estado ya actualizado.
-        if (eaten > 0 && creature.Player?.Relics is { } relics)
+        // Avisar a los que escuchan el devorar (reliquias Y powers — la interfaz no es solo de
+        // reliquias). Se hace tras consumir las larvas para que reflejen el estado ya actualizado.
+        if (eaten > 0)
         {
-            foreach (var relic in relics)
+            if (creature.Player?.Relics is { } relics)
             {
-                if (relic is ILahmuDevourListener listener)
+                foreach (var relic in relics)
                 {
-                    await listener.OnLahmuDevoured(creature, eaten);
+                    if (relic is ILahmuDevourListener relicListener)
+                    {
+                        await relicListener.OnLahmuDevoured(creature, eaten);
+                    }
                 }
+            }
+            foreach (var powerListener in creature.GetPowerInstances<PowerModel>().OfType<ILahmuDevourListener>())
+            {
+                await powerListener.OnLahmuDevoured(creature, eaten);
             }
         }
         return eaten;

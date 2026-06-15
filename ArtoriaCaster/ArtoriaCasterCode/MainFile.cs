@@ -35,8 +35,9 @@ public partial class MainFile : Node
         // "Around Caliburn" 1 turno: este turno podés CRITICAR en cualquier forma (cobrás
         // las estrellas acumuladas en Caster) + soporte (estrellas, Anti-Purga) + devuelve
         // recursos. Las cartas NP drafteadas son el clímax que elegís jugar dentro.
+        // La apertura es UNA VEZ POR COMBATE (NpManifestedPower persiste todo el combate):
+        // las cartas-NP vacían el medidor y recargarlo no debe repartir el paquete otra vez.
         NpCharge.GaugeFilled += TryOpenNpWindow;
-        NpCharge.GaugeDropped += DisarmUltMarker;
     }
 
     private static async Task TryOpenNpWindow(Creature creature)
@@ -44,7 +45,8 @@ public partial class MainFile : Node
         if (creature.Player?.Character is not Character.ArtoriaCaster) return;
         if (creature.HasPower<NpManifestedPower>()) return;
 
-        // Marker: la ventana ya se abrió este pico (se re-arma al bajar < 100).
+        // Marker: la ventana ya se abrió este COMBATE. No se remueve al bajar < 100,
+        // así que recargar el medidor el mismo combate no vuelve a repartir el paquete.
         await PowerCmd.Apply<NpManifestedPower>(creature, 1m, creature, null);
         await PowerCmd.Apply<AroundCaliburnWindowPower>(creature, 1m, creature, null);
 
@@ -57,14 +59,6 @@ public partial class MainFile : Node
         {
             await PlayerCmd.GainEnergy(1, creature.Player);
             await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 1, creature.Player);
-        }
-    }
-
-    private static async Task DisarmUltMarker(Creature creature)
-    {
-        if (creature.HasPower<NpManifestedPower>())
-        {
-            await PowerCmd.Remove<NpManifestedPower>(creature);
         }
     }
 }

@@ -46,18 +46,20 @@ public static class Aliento
         var spent = Math.Min(amount, power.Amount);
         if (spent <= 0) return;
 
-        if (spent >= power.Amount) await PowerCmd.Remove(power);
+        // Capturamos si el gasto vacía el Aliento ANTES de remover el power: RemoveInternal NO pone
+        // _amount a 0, así que tras el Remove el power.Amount local sigue valiendo el monto previo.
+        var emptied = spent >= power.Amount;
+        var alreadyHitZero = power.HitZeroThisTurn;
+        // Marcamos el agotamiento ANTES del Remove (la marca se pierde con el power, pero queremos
+        // dejarla seteada por si el power sobrevive en algún camino futuro).
+        if (emptied) power.HitZeroThisTurn = true;
+
+        if (emptied) await PowerCmd.Remove(power);
         else await PowerCmd.ModifyAmount(power, -spent, creature, source);
 
         // Llegar a 0 cuesta una Tos (cap 1/turno por agotamiento).
-        if (Of(creature) <= 0 && power.Amount == 0)
-        {
-            if (!power.HitZeroThisTurn)
-            {
-                power.HitZeroThisTurn = true;
-                await Tos.ShuffleIntoDraw(creature, source);
-            }
-        }
+        if (emptied && !alreadyHitZero)
+            await Tos.ShuffleIntoDraw(creature, source);
     }
 
     /// <summary>Llena el Aliento al tope actual (Cerezo en Plena Floración).</summary>

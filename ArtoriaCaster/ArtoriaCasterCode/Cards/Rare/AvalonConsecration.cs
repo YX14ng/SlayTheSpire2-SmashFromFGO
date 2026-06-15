@@ -7,9 +7,9 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Rare;
 
 /// <summary>
 /// Consagración de Avalon — la carta CLÍMAX 2⚡, Exhaust: entrás en ARTORIA AVALON
-/// (forma permanente: ambas pasivas, sin penalización; la ulti manifestada pasa a
-/// ser Around Caliburn: Desatado). Espejo de Coronación del Invierno de Morgan.
-/// Mejora: coste 1⚡.
+/// (forma permanente: ambas pasivas, sin penalización). El payoff de NP sigue siendo la
+/// ventana "Around Caliburn" + las cartas-NP drafteadas (modelo 2026-06-12), no una
+/// ulti auto-generada. Espejo de Coronación del Invierno de Morgan. Mejora: coste 1⚡.
 /// </summary>
 public sealed class AvalonConsecration() : ArtoriaCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {

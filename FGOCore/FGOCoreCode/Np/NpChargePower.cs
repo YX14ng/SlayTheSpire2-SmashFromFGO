@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Powers;
+using FGOCore.FGOCoreCode.Cleanse;
 
 namespace FGOCore.FGOCoreCode.Np;
 
@@ -8,7 +9,7 @@ namespace FGOCore.FGOCoreCode.Np;
 /// to gain/spend so the cap is always respected. Ults manifest at
 /// <see cref="ManifestThreshold"/> (100), not at the cap.
 /// </summary>
-public sealed class NpChargePower : FGOCorePower
+public sealed class NpChargePower : FGOCorePower, IResourcePower
 {
     public const int Max = 300;
 

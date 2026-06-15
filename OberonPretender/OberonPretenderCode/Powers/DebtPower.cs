@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using FGOCore.FGOCoreCode.Cleanse;
 using OberonPretender.OberonPretenderCode.Powers.Forms;
 
 namespace OberonPretender.OberonPretenderCode.Powers;
@@ -27,7 +28,7 @@ namespace OberonPretender.OberonPretenderCode.Powers;
 /// medidor). Dispara <see cref="IDebtPaidListener"/>/<see cref="IDebtPaidRelicListener"/> con los
 /// puntos saldados con NP (para la starter -> Estrellas y Euforia Nocturna).
 /// </summary>
-public sealed class DebtPower : OberonPower
+public sealed class DebtPower : OberonPower, IResourcePower
 {
     public const int Max = 15;
     public const int CreditLimit = 5;

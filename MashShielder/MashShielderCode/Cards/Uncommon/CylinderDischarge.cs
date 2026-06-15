@@ -22,7 +22,10 @@ public sealed class CylinderDischarge() : MashShielderCard(0, CardType.Attack, C
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
-    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargePerHit);
+    // Gasta Carga DIRECTA (no es IMashNpCard), así que NO debe mirar el waiver de PioneerOfTheStars:
+    // con el waiver activo y Carga 0, CanPay devolvía true pero OnPlay calculaba 0 hits (play en vano).
+    // Mismo gate que CylinderVent: exigir Carga real >= ChargePerHit.
+    protected override bool IsPlayable => NpCharge.Current(Owner.Creature) >= ChargePerHit;
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 

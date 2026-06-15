@@ -14,7 +14,7 @@ public sealed class HerosBackswing() : SiegfriedCard(1, CardType.Attack, CardRar
 {
     private const int ScaleCap = 6; // tope duro del escalado por SdD (techo §1.bis ×1.5)
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Move), new DynamicVar("MaxBonus", ScaleCap)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DragonScalesPower>()];
 
@@ -23,7 +23,7 @@ public sealed class HerosBackswing() : SiegfriedCard(1, CardType.Attack, CardRar
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        var bonus = System.Math.Min(Owner.Creature.GetPowerAmount<DragonScalesPower>(), ScaleCap);
+        var bonus = System.Math.Min(Owner.Creature.GetPowerAmount<DragonScalesPower>(), DynamicVars["MaxBonus"].IntValue);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

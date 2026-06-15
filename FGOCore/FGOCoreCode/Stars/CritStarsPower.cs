@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
+using FGOCore.FGOCoreCode.Cleanse;
 
 namespace FGOCore.FGOCoreCode.Stars;
 
@@ -14,7 +15,7 @@ namespace FGOCore.FGOCoreCode.Stars;
 /// "Crítico" las gastan (50★) para aplicar CritReady — la decisión es del jugador.
 /// NO confundir con el contador chico con candado de forma de ArtoriaCaster (mod-local).
 /// </summary>
-public sealed class CritStarsPower : FGOCorePower
+public sealed class CritStarsPower : FGOCorePower, IResourcePower
 {
     /// <summary>Umbral del auto-proc (★ → próximo Ataque ×2) para quien NO banca.</summary>
     public const int Threshold = 100;

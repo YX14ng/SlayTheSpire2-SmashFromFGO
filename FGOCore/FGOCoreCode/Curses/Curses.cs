@@ -8,7 +8,8 @@ namespace FGOCore.FGOCoreCode.Curses;
 
 /// <summary>
 /// Helpers for the Maldición keyword. ALL curse changes go through here so the
-/// 15-per-enemy cap and the amplifiers (<see cref="ICurseAmplifier"/>) hold everywhere.
+/// per-enemy cap (<see cref="CursePower.MaxPerEnemy"/>) and the amplifiers
+/// (<see cref="ICurseAmplifier"/>) hold everywhere.
 /// </summary>
 public static class Curses
 {

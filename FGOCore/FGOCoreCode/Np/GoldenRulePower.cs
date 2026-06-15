@@ -38,6 +38,8 @@ public sealed class GoldenRulePower : FGOCorePower
         if (amount <= 0m) return;
 
         var extra = (int)System.Math.Floor(amount * Ratio * Amount);
+        // Respetar el tope 0-300 del medidor (ModifyAmount crudo lo ignoraría, igual que NpCharge.Gain capea).
+        extra = System.Math.Min(extra, NpChargePower.Max - (int)np.Amount);
         if (extra <= 0) return;
 
         _amplifying = true;

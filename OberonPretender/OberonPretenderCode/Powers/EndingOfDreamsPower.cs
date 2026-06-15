@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using FGOCore.FGOCoreCode.Cleanse;
 using OberonPretender.OberonPretenderCode.Cards;
 using OberonPretender.OberonPretenderCode.Powers.Forms;
 
@@ -63,14 +64,10 @@ public sealed class EndingOfDreamsPower : OberonPower
         // El Sueño Eterno: no robás el próximo turno.
         await PowerCmd.Apply<NoDrawNextTurnPower>(Owner, 1m, Owner, null);
 
-        // Perdés todos los Poderes positivos (las formas son identidad → se conservan).
-        var buffs = Owner.GetPowerInstances<PowerModel>()
-            .Where(p => p.TypeForCurrentAmount == PowerType.Buff && p is not FormPower)
-            .ToList();
-        foreach (var buff in buffs)
-        {
-            await PowerCmd.Remove(buff);
-        }
+        // Perdés todos los Poderes positivos. Cleanse.RemoveBuffs preserva las formas (FormPower) y los
+        // RECURSOS (IResourcePower: NP/Estrellas/Sobrecarga), que antes el strip por TypeForCurrentAmount
+        // == Buff nukeaba por error (NpChargePower/CritStarsPower/OverchargeBlessingPower son Buff-type).
+        await Cleanse.RemoveBuffs(Owner);
     }
 }
 

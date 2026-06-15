@@ -4,7 +4,8 @@ namespace MorganBerserker.MorganBerserkerCode.Powers;
 
 /// <summary>
 /// Maldición de Cernunnos (科尔努诺斯的诅咒) — your Curses no longer decay after
-/// dealing their damage (the 15-per-enemy cap is the brake; ICursePreserver).
+/// dealing their damage (the per-enemy cap <see cref="FGOCore.FGOCoreCode.Curses.CursePower.MaxPerEnemy"/>
+/// is the brake; ICursePreserver).
 /// </summary>
 public sealed class CurseOfCernunnosPower : MorganPower, ICursePreserver
 {

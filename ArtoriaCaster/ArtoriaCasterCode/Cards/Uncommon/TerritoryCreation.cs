@@ -13,10 +13,14 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Uncommon;
 /// </summary>
 public sealed class TerritoryCreation() : ArtoriaCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
+    // "Boosted" es el valor MOSTRADO del bono "2+ Habilidades" — debe ser SIEMPRE
+    // Stacks×2, que es lo que TerritoryCreationPower.BeforeTurnEnd calcula (Amount*2).
+    // Lo derivamos de "Stacks" (no es un var independiente) para que tooltip y efecto
+    // tengan una sola fuente de verdad y el ×2 no pueda driftar en futuros upgrades.
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new PowerVar<TerritoryCreationPower>("Stacks", 3m),
-        new DynamicVar("Boosted", 6),
+        new DynamicVar("Boosted", 3m * 2m),
         new DynamicVar("Skills", TerritoryCreationPower.SkillThreshold)
     ];
 
@@ -28,6 +32,7 @@ public sealed class TerritoryCreation() : ArtoriaCard(1, CardType.Power, CardRar
     protected override void OnUpgrade()
     {
         DynamicVars["Stacks"].UpgradeValueBy(1m);
-        DynamicVars["Boosted"].UpgradeValueBy(2m);
+        // Mantener Boosted == Stacks×2 (espejo de Amount*2 en el poder), sin literal manual.
+        DynamicVars["Boosted"].BaseValue = DynamicVars["Stacks"].BaseValue * 2m;
     }
 }
