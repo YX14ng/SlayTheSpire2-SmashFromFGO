@@ -1,0 +1,14 @@
+config_version=5
+
+[application]
+
+config/name="CoopDeterminismPatch"
+config/features=PackedStringArray("4.5", "C#", "Mobile")
+
+[dotnet]
+
+project/assembly_name="CoopDeterminismPatch"
+
+[rendering]
+
+renderer/rendering_method="mobile"

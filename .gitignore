@@ -38,3 +38,4 @@ assets/reference/ce/*.json
 assets/reference/fanart/*
 !assets/reference/fanart/CREDITS.txt
 /decompiled/
+CoopDeterminismPatch/Directory.Build.props

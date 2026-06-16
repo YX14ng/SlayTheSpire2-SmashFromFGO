@@ -1,0 +1,11 @@
+{
+  "id": "CoopDeterminismPatch",
+  "name": "Co-op Determinism Patch",
+  "author": "Chaldea",
+  "description": "Parche de multijugador: fuerza el determinismo de la seleccion de Light Relics de Ultraman, que usaba una RNG de recompensas NO sincronizada con la simulacion de combate -> divergencia de estado y desconexion en co-op. En 1 jugador no cambia nada.",
+  "version": "v0.1.0",
+  "has_pck": false,
+  "has_dll": true,
+  "dependencies": ["BaseLib", "Ultraman"],
+  "affects_gameplay": true
+}
