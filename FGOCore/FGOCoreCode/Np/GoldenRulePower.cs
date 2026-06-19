@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace FGOCore.FGOCoreCode.Np;
@@ -30,9 +31,9 @@ public sealed class GoldenRulePower : FGOCorePower
 
     private bool _amplifying;
 
-    public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        await base.AfterPowerAmountChanged(power, amount, applier, cardSource);
+        await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
         if (_amplifying) return;
         if (power is not NpChargePower np || power.Owner != Owner) return;
         if (amount <= 0m) return;
@@ -44,7 +45,7 @@ public sealed class GoldenRulePower : FGOCorePower
 
         _amplifying = true;
         Flash();
-        await PowerCmd.ModifyAmount(np, extra, Owner, cardSource);
+        await PowerCmd.ModifyAmount(choiceContext, np, extra, Owner, cardSource);
         _amplifying = false;
     }
 }

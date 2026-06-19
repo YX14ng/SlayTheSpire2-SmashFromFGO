@@ -21,7 +21,7 @@ public static class FormSwitch
         {
             await PowerCmd.Remove(form);
         }
-        var applied = await PowerCmd.Apply<T>(creature, 1m, creature, source);
+        var applied = await PowerCmd.Apply<T>(choiceContext ?? new BlockingPlayerChoiceContext(), creature, 1m, creature, source);
         if (applied != null)
         {
             FormVisuals.Apply(creature, applied);
@@ -30,7 +30,7 @@ public static class FormSwitch
         // Combat-start setup (source == null) doesn't count as "changing form".
         if (source == null) return;
 
-        await PowerCmd.Apply<FormShiftedPower>(creature, 1m, creature, source, silent: true);
+        await PowerCmd.Apply<FormShiftedPower>(choiceContext ?? new BlockingPlayerChoiceContext(), creature, 1m, creature, source, silent: true);
 
         foreach (var listener in creature.GetPowerInstances<PowerModel>().OfType<IFormChangeListener>().ToList())
         {

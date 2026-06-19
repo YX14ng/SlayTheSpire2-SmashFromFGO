@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -31,7 +32,7 @@ public abstract class FormPower : FGOCorePower
     public static int GetBlockedHits(Creature creature) =>
         creature.GetPowerInstances<FormPower>().FirstOrDefault()?.BlockedHitsThisTurn ?? 0;
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player)
         {

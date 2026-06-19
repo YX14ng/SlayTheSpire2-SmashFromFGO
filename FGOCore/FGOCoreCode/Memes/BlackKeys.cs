@@ -20,7 +20,7 @@ public sealed class BlackKeys() : MemeCard(0, CardType.Attack, CardRarity.Common
 
         var another = CreateClone();
         CardCmd.PreviewCardPileAdd(
-            await CardPileCmd.AddGeneratedCardToCombat(another, PileType.Discard, addedByPlayer: true), 1.2f);
+            await CardPileCmd.AddGeneratedCardToCombat(another, PileType.Discard, Owner), 1.2f);
     }
 
     protected override void OnUpgrade()

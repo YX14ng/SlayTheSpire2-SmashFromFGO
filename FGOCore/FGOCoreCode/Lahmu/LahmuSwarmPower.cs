@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using System.Linq;
 using FGOCore.FGOCoreCode.Curses;
 using CursesHelper = FGOCore.FGOCoreCode.Curses.Curses;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -34,7 +36,7 @@ public sealed class LahmuSwarmPower : FGOCorePower
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<LahmuNurturePower>(), HoverTipFactory.FromPower<CursePower>()];
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         // Actúa al INICIO del turno enemigo (no el del jugador): el bloque protege durante
         // los ataques enemigos y la mordida castiga. (Patrón espejo de CursePower, invertido:
@@ -52,8 +54,8 @@ public sealed class LahmuSwarmPower : FGOCorePower
         var bites = 1 + Owner.GetPowerInstances<PowerModel>().OfType<ISwarmBiteAmplifier>().Sum(a => a.ExtraBites);
         for (var i = 0; i < bites; i++)
         {
-            var target = CursesHelper.MostCursed(combatState, Owner)
-                         ?? combatState.GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
+            var target = CursesHelper.MostCursed((CombatState)combatState, Owner)
+                         ?? ((CombatState)combatState).GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
             if (target == null || target.IsDead) break;
             await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), target,
                 Amount * (BitePerLahmu + nurture), ValueProp.Unpowered, Owner, null);

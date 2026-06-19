@@ -29,7 +29,7 @@ public static class NpWindow
     public static async Task OpenWindow<TWindow>(Creature creature, int energy = 1, int draw = 1)
         where TWindow : PowerModel
     {
-        await PowerCmd.Apply<TWindow>(creature, 1m, creature, null);
+        await PowerCmd.Apply<TWindow>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
         await ReturnResources(creature, energy, draw);
     }
 
@@ -43,8 +43,8 @@ public static class NpWindow
         where TWindow : PowerModel
         where TMarker : PowerModel
     {
-        await PowerCmd.Apply<TMarker>(creature, 1m, creature, null);
-        await PowerCmd.Apply<TWindow>(creature, 1m, creature, null);
+        await PowerCmd.Apply<TMarker>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+        await PowerCmd.Apply<TWindow>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
         await ReturnResources(creature, energy, draw);
     }
 

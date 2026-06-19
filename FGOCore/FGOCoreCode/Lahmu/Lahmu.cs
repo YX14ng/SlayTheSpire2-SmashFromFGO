@@ -2,6 +2,7 @@ using System.Linq;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace FGOCore.FGOCoreCode.Lahmu;
@@ -24,7 +25,7 @@ public static class Lahmu
         var room = LahmuSwarmPower.MaxSwarm - Count(creature);
         var toAdd = Math.Min(n, room);
         if (toAdd <= 0) return 0;
-        await PowerCmd.Apply<LahmuSwarmPower>(creature, toAdd, creature, source);
+        await PowerCmd.Apply<LahmuSwarmPower>(new BlockingPlayerChoiceContext(), creature, toAdd, creature, source);
         return toAdd;
     }
 
@@ -32,7 +33,7 @@ public static class Lahmu
     public static async Task Feed(Creature creature, int n, CardModel? source)
     {
         if (n <= 0) return;
-        await PowerCmd.Apply<LahmuNurturePower>(creature, n, creature, source);
+        await PowerCmd.Apply<LahmuNurturePower>(new BlockingPlayerChoiceContext(), creature, n, creature, source);
     }
 
     /// <summary>Sacrifica hasta <paramref name="n"/> Laḫmu. Devuelve cuántos se devoraron (para escalar el burst).</summary>
@@ -47,7 +48,7 @@ public static class Lahmu
         }
         else
         {
-            await PowerCmd.ModifyAmount(power, -eaten, creature, null);
+            await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -eaten, creature, null);
         }
         // Avisar a los que escuchan el devorar (reliquias Y powers — la interfaz no es solo de
         // reliquias). Se hace tras consumir las larvas para que reflejen el estado ya actualizado.

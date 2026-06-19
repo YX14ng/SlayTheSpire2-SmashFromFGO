@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace FGOCore.FGOCoreCode.Np;
@@ -32,7 +33,7 @@ public static class NpCharge
         var toAdd = Math.Min(amount, NpChargePower.Max - Current(creature));
         if (toAdd > 0)
         {
-            await PowerCmd.Apply<NpChargePower>(creature, toAdd, creature, source);
+            await PowerCmd.Apply<NpChargePower>(new BlockingPlayerChoiceContext(), creature, toAdd, creature, source);
         }
         if (Current(creature) >= NpChargePower.ManifestThreshold && GaugeFilled != null)
         {
@@ -120,7 +121,7 @@ public static class NpCharge
     {
         if (!creature.HasPower<NpResolvedThisTurnPower>())
         {
-            await PowerCmd.Apply<NpResolvedThisTurnPower>(creature, 1m, creature, null);
+            await PowerCmd.Apply<NpResolvedThisTurnPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
         }
     }
 
@@ -144,7 +145,7 @@ public static class NpCharge
         }
         else
         {
-            await PowerCmd.ModifyAmount(power, -amount, creature, source);
+            await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -amount, creature, source);
         }
 
         if (Current(creature) < NpChargePower.ManifestThreshold && GaugeDropped != null)

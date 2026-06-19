@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using FGOCore.FGOCoreCode.Cleanse;
 
@@ -31,9 +32,9 @@ public sealed class CritStarsPower : FGOCorePower, IResourcePower
 
     private bool _isProcessing;
 
-    public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        await base.AfterPowerAmountChanged(power, amount, applier, cardSource);
+        await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
         if (power != this || _isProcessing) return;
 
         // Banco manual (Morgan): sin auto-proc — el gasto va por la keyword "Crítico".
@@ -47,8 +48,8 @@ public sealed class CritStarsPower : FGOCorePower, IResourcePower
         {
             _isProcessing = true;
             Flash();
-            await PowerCmd.ModifyAmount(this, -Threshold, Owner, null);
-            await PowerCmd.Apply<CritReadyPower>(Owner, 1m, Owner, null);
+            await PowerCmd.ModifyAmount(choiceContext, this, -Threshold, Owner, null);
+            await PowerCmd.Apply<CritReadyPower>(choiceContext, Owner, 1m, Owner, null);
             _isProcessing = false;
         }
     }
@@ -72,12 +73,12 @@ public static class CritStars
         if (amount == 0) return;
         if (amount > 0)
         {
-            await PowerCmd.Apply<CritStarsPower>(creature, amount, creature, source);
+            await PowerCmd.Apply<CritStarsPower>(new BlockingPlayerChoiceContext(), creature, amount, creature, source);
             return;
         }
         var power = creature.GetPowerInstances<CritStarsPower>().FirstOrDefault();
         if (power == null) return;
-        await PowerCmd.ModifyAmount(power, Math.Max(amount, -power.Amount), creature, source);
+        await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, Math.Max(amount, -power.Amount), creature, source);
     }
 
     /// <summary>¿Puede pagar un coste de estrellas (conversores estilo 等价交换)?</summary>

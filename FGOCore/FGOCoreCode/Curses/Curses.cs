@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace FGOCore.FGOCoreCode.Curses;
@@ -32,7 +33,7 @@ public static class Curses
         var toAdd = Math.Min(amount, CursePower.MaxPerEnemy - Of(target));
         if (toAdd <= 0) return 0;
 
-        await PowerCmd.Apply<CursePower>(target, toAdd, applier, cardSource);
+        await PowerCmd.Apply<CursePower>(new BlockingPlayerChoiceContext(), target, toAdd, applier, cardSource);
         return toAdd;
     }
 
@@ -50,7 +51,7 @@ public static class Curses
         }
         else
         {
-            await PowerCmd.ModifyAmount(power, -consumed, target, null);
+            await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -consumed, target, null);
         }
         return consumed;
     }

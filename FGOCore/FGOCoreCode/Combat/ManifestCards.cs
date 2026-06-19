@@ -52,6 +52,6 @@ public static class ManifestCards
     {
         if (creature.CombatState == null) return;
         CardCmd.PreviewCardPileAdd(
-            await CardPileCmd.AddGeneratedCardToCombat(card, pile, addedByPlayer: true), previewTime);
+            await CardPileCmd.AddGeneratedCardToCombat(card, pile, creature.Player), previewTime);
     }
 }

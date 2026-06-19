@@ -23,7 +23,7 @@ public sealed class TenPullSummon() : MemeCard(1, CardType.Skill, CardRarity.Unc
         {
             card.EnergyCost.SetThisCombat(0);
             CardCmd.PreviewCardPileAdd(
-                await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true), 1.0f);
+                await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner), 1.0f);
         }
     }
 

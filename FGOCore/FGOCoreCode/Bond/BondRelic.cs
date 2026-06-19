@@ -179,7 +179,7 @@ public abstract class BondRelic : CustomRelicModel
     /// </summary>
     protected async Task ApplyCombatStartGifts(int lv)
     {
-        await PowerCmd.Apply<BondPower>(Owner.Creature, lv, Owner.Creature, null, silent: true);
+        await PowerCmd.Apply<BondPower>(new BlockingPlayerChoiceContext(), Owner.Creature, lv, Owner.Creature, null, silent: true);
 
         var np = StartingNp(lv);
         if (np > 0)
