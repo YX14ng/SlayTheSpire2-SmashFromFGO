@@ -5,8 +5,9 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace TiamatBeast.TiamatCode.Cards.Uncommon;
 
-/// <summary>Diluvio Negro — esparcís Maldición a TODOS los enemigos; el enjambre se nutre de
-/// cada presa cursada (Crianza por enemigo alcanzado). El AoE de control + sustain del motor.</summary>
+/// <summary>Diluvio Negro — esparcís Maldición a TODOS los enemigos; el enjambre se nutre de las
+/// presas que YA cargaban Maldición (Crianza por enemigo ya maldito, antes de este diluvio). El
+/// AoE de control que premia un campo ya sembrado (REDESIGN-TIAMAT §45).</summary>
 public sealed class BlackDeluge() : TiamatCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -20,16 +21,16 @@ public sealed class BlackDeluge() : TiamatCard(2, CardType.Skill, CardRarity.Unc
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var cursed = 0;
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).ToList())
+        var enemies = Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).Where(e => !e.IsDead).ToList();
+        // "Por enemigo YA maldito": contar ANTES de esparcir el diluvio (el campo previo, no este).
+        var alreadyCursed = enemies.Count(e => Curses.Of(e) > 0);
+        foreach (var enemy in enemies)
         {
-            if (enemy.IsDead) continue;
             await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
-            cursed++;
         }
-        if (cursed > 0)
+        if (alreadyCursed > 0)
         {
-            await Lahmu.Feed(Owner.Creature, DynamicVars["Nurture"].IntValue * cursed, this);
+            await Lahmu.Feed(Owner.Creature, DynamicVars["Nurture"].IntValue * alreadyCursed, this);
         }
     }
 

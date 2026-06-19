@@ -5,9 +5,8 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
-using MegaCrit.Sts2.Core.Models;
+using TiamatBeast.TiamatCode.Cards.Special;
 using TiamatBeast.TiamatCode.Powers;
-using TiamatBeast.TiamatCode.Powers.Forms;
 
 namespace TiamatBeast.TiamatCode;
 
@@ -33,35 +32,28 @@ public partial class MainFile : Node
             $"{ResPath}/character/tiamat_frames_human.tres",
             $"{ResPath}/character/tiamat_frames_beast.tres");
 
-        // Ventana de NP "Génesis": a 100, el Mar desborda — estallido de cría + recursos y
-        // te volvés Bestia. NO genera ulti gratis (modelo nuevo). Se re-arma al bajar < 100.
-        NpCharge.GaugeFilled += TryOpenGenesis;
-        NpCharge.GaugeDropped += DisarmGenesis;
+        // Modelo dos-pozas (rediseño, ver docs/REDESIGN-TIAMAT.md): a 100 NO se abre nada solo —
+        // se MANIFIESTA en la mano la carta-NP de apertura «Nammu Dur-an-ki». El jugador decide
+        // CUÁNDO jugarla: a 100 abre una ventana Bestia corta (1 turno), o banquea hasta 300 para
+        // una larga (3). Toda la lógica de apertura (limpiar debuffs, AoE fijo + Sello, cambio a
+        // Bestia, manifestar el mazo Bestia, abrir la ventana, devolver recursos) vive AHORA en la
+        // carta, no acá. El marcador GenesisSpentPower evita re-manifestarla mientras sigas ≥100;
+        // bajar < 100 (al consumirla con ConsumeAll) la re-arma para el próximo ciclo.
+        NpCharge.GaugeFilled += TryManifestGenesis;
+        NpCharge.GaugeDropped += RearmGenesis;
     }
 
-    private static async Task TryOpenGenesis(Creature creature)
+    private static async Task TryManifestGenesis(Creature creature)
     {
         if (creature.Player?.Character is not Character.Tiamat) return;
         if (creature.HasPower<GenesisSpentPower>()) return;
+        if (creature.CombatState == null || creature.Player == null) return;
 
         await PowerCmd.Apply<GenesisSpentPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
-
-        await PowerCmd.Apply<OverchargeBlessingPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
-        await Lahmu.Spawn(creature, 2, null);
-        await Lahmu.Feed(creature, 1, null);
-        if (!creature.HasPower<TiamatBeastPower>())
-        {
-            await FormSwitch.Enter<TiamatBeastPower>(null, creature, null);
-        }
-
-        // Cierre común de la ventana-NP: +1⚡ y robar 2 (factorizado en FGOCore). El marcador
-        // (GenesisSpentPower), el power-ventana (OverchargeBlessing) y los efectos propios
-        // (Lahmu.Spawn/Feed, FormSwitch) siguen gestionándose arriba — este helper solo
-        // reemplaza el bloque GainEnergy+Draw que estaba duplicado en Mash/Artoria/Tiamat.
-        await NpWindow.ReturnResources(creature, 1, 2);
+        await ManifestCards.ManifestToHand<NammuDuranki>(creature);
     }
 
-    private static async Task DisarmGenesis(Creature creature)
+    private static async Task RearmGenesis(Creature creature)
     {
         if (creature.HasPower<GenesisSpentPower>())
         {

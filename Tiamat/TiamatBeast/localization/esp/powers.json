@@ -10,5 +10,17 @@
   "TIAMATBEAST-GENESIS_SPENT_POWER.smartDescription": "#Tu medidor llegó a 100 este ciclo y Génesis ya se disparó. Gasta Carga NP por debajo de 100 para re-armarla.",
   "TIAMATBEAST-MOTHER_GUTS_POWER.title": "Agallas de la Madre",
   "TIAMATBEAST-MOTHER_GUTS_POWER.description": "#La primera vez que caerías este combate, revivís a 1 HP y parís 3 Laḫmu.",
-  "TIAMATBEAST-MOTHER_GUTS_POWER.smartDescription": "#La primera vez que caerías este combate, revivís a 1 HP y parís 3 Laḫmu."
+  "TIAMATBEAST-MOTHER_GUTS_POWER.smartDescription": "#La primera vez que caerías este combate, revivís a 1 HP y parís 3 Laḫmu.",
+  "TIAMATBEAST-TIDAL_CORE_POWER.title": "Núcleo de la Diosa",
+  "TIAMATBEAST-TIDAL_CORE_POWER.description": "#Al inicio de tus turnos, obtenés 5 de Carga NP por acumulación.",
+  "TIAMATBEAST-TIDAL_CORE_POWER.smartDescription": "#Al inicio de tus turnos, obtenés 5 de Carga NP por acumulación.",
+  "TIAMATBEAST-TIDAL_STASIS_POWER.title": "Marea Estancada",
+  "TIAMATBEAST-TIDAL_STASIS_POWER.description": "#Hasta tu próximo turno, las Maldiciones sobre tus enemigos no decaen tras infligir daño.",
+  "TIAMATBEAST-TIDAL_STASIS_POWER.smartDescription": "#Hasta tu próximo turno, las Maldiciones sobre tus enemigos no decaen tras infligir daño.",
+  "TIAMATBEAST-SKILL_SEAL_POWER.title": "Sello de Habilidad",
+  "TIAMATBEAST-SKILL_SEAL_POWER.description": "#Sellado por la Madre. (Provisional: decae 1 al inicio del turno de este enemigo.)",
+  "TIAMATBEAST-SKILL_SEAL_POWER.smartDescription": "#Sellado por la Madre. (Provisional: decae 1 al inicio del turno de este enemigo.)",
+  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.title": "Ventana Bestia",
+  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.description": "#La ventana de la Bestia II dura esta cantidad de turnos. Al inicio de cada turno tuyo baja 1; al llegar a 0 revertís a Lily y el mazo especial Bestia se desvanece.",
+  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.smartDescription": "#La ventana de la Bestia II dura esta cantidad de turnos. Al inicio de cada turno tuyo baja 1; al llegar a 0 revertís a Lily y el mazo especial Bestia se desvanece."
 }

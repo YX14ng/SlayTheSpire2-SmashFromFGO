@@ -20,16 +20,18 @@ public class Tiamat : PlaceholderCharacterModel
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Feminine;
-    public override int StartingHp => 73;
+    public override int StartingHp => 70;
 
-    // Mazo inicial: 4 Marea + 4 Caparazón + 2 firmas (Engendrar / Lodo Negro). Gana el acto 1
-    // sin el motor armado; las firmas enseñan el enjambre y la Marea.
+    // Mazo inicial (redesign two-pool): 4 Marea de Caos (golpe híbrido que siembra Maldición) +
+    // 3 Caparazón Larval (Baluarte que escala con la cría) + 2 firmas (Engendrar = motor de
+    // cría+NP, Ojo de la Estrella Azul = acelerador de ventana + negación). Lily acuña la divisa
+    // que la Bestia gasta; gana el acto 1 sin el motor armado.
     public override IEnumerable<CardModel> StartingDeck =>
     [
         ModelDb.Card<ChaosTide>(), ModelDb.Card<ChaosTide>(), ModelDb.Card<ChaosTide>(), ModelDb.Card<ChaosTide>(),
-        ModelDb.Card<Carapace>(), ModelDb.Card<Carapace>(), ModelDb.Card<Carapace>(), ModelDb.Card<Carapace>(),
+        ModelDb.Card<Carapace>(), ModelDb.Card<Carapace>(), ModelDb.Card<Carapace>(),
         ModelDb.Card<SpawnLahmu>(),
-        ModelDb.Card<BlackMud>()
+        ModelDb.Card<EyeOfTheBlueStar>()
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<SeaOfLifeWomb>()];

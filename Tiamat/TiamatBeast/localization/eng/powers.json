@@ -10,5 +10,17 @@
   "TIAMATBEAST-GENESIS_SPENT_POWER.smartDescription": "#Your gauge reached 100 this cycle and Genesis already triggered. Spend NP Charge below 100 to re-arm it.",
   "TIAMATBEAST-MOTHER_GUTS_POWER.title": "Mother's Guts",
   "TIAMATBEAST-MOTHER_GUTS_POWER.description": "#The first time you would die this combat, revive at 1 HP and spawn 3 Laḫmu.",
-  "TIAMATBEAST-MOTHER_GUTS_POWER.smartDescription": "#The first time you would die this combat, revive at 1 HP and spawn 3 Laḫmu."
+  "TIAMATBEAST-MOTHER_GUTS_POWER.smartDescription": "#The first time you would die this combat, revive at 1 HP and spawn 3 Laḫmu.",
+  "TIAMATBEAST-SKILL_SEAL_POWER.title": "Skill Seal",
+  "TIAMATBEAST-SKILL_SEAL_POWER.description": "#Sealed by the Mother. (Placeholder: decays by 1 at the start of this enemy's turn.)",
+  "TIAMATBEAST-SKILL_SEAL_POWER.smartDescription": "#Sealed by the Mother. (Placeholder: decays by 1 at the start of this enemy's turn.)",
+  "TIAMATBEAST-TIDAL_CORE_POWER.title": "Core of the Goddess",
+  "TIAMATBEAST-TIDAL_CORE_POWER.description": "#At the start of your turns, gain 5 NP Charge per stack.",
+  "TIAMATBEAST-TIDAL_CORE_POWER.smartDescription": "#At the start of your turns, gain 5 NP Charge per stack.",
+  "TIAMATBEAST-TIDAL_STASIS_POWER.title": "Stagnant Tide",
+  "TIAMATBEAST-TIDAL_STASIS_POWER.description": "#Until your next turn, Curses on your enemies do not decay after dealing damage.",
+  "TIAMATBEAST-TIDAL_STASIS_POWER.smartDescription": "#Until your next turn, Curses on your enemies do not decay after dealing damage.",
+  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.title": "Beast Window",
+  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.description": "#The Beast II window lasts this many turns. At the start of each of your turns it drops by 1; at 0 you revert to Lily and the special Beast deck vanishes.",
+  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.smartDescription": "#The Beast II window lasts this many turns. At the start of each of your turns it drops by 1; at 0 you revert to Lily and the special Beast deck vanishes."
 }
