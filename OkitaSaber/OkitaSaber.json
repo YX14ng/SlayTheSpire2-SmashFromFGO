@@ -1,4 +1,4 @@
-﻿{
+{
     "id":  "OkitaSaber",
     "name":  "Okita Souji - Captain of the First Unit",
     "author":  "Chaldea",
@@ -6,9 +6,6 @@
     "version":  "v0.1.0",
     "has_pck":  true,
     "has_dll":  true,
-    "dependencies":  [
-                         "BaseLib",
-                         "FGOCore"
-                     ],
+    "dependencies": [{"id": "BaseLib", "min_version": "v3.3.0"}, {"id": "FGOCore", "min_version": "v0.1.0"}],
     "affects_gameplay":  true
 }
