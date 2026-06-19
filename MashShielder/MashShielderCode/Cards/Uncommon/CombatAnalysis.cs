@@ -22,7 +22,7 @@ public sealed class CombatAnalysis() : MashShielderCard(1, CardType.Power, CardR
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<CombatAnalysisPower>(Owner.Creature, DynamicVars["CombatAnalysis"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<CombatAnalysisPower>(choiceContext, Owner.Creature, DynamicVars["CombatAnalysis"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

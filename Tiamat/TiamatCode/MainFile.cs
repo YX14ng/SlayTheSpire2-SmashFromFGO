@@ -3,6 +3,7 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
 using TiamatBeast.TiamatCode.Powers;
@@ -43,9 +44,9 @@ public partial class MainFile : Node
         if (creature.Player?.Character is not Character.Tiamat) return;
         if (creature.HasPower<GenesisSpentPower>()) return;
 
-        await PowerCmd.Apply<GenesisSpentPower>(creature, 1m, creature, null);
+        await PowerCmd.Apply<GenesisSpentPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
 
-        await PowerCmd.Apply<OverchargeBlessingPower>(creature, 1m, creature, null);
+        await PowerCmd.Apply<OverchargeBlessingPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
         await Lahmu.Spawn(creature, 2, null);
         await Lahmu.Feed(creature, 1, null);
         if (!creature.HasPower<TiamatBeastPower>())

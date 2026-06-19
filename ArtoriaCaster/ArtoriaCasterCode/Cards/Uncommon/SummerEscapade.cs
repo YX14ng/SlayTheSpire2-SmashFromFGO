@@ -35,7 +35,7 @@ public sealed class SummerEscapade() : ArtoriaCard(0, CardType.Skill, CardRarity
             await FormSwitch.Enter<ProphecyCasterFormPower>(choiceContext, Owner.Creature, this);
         }
 
-        await PowerCmd.Apply<EscapadeReturnPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<EscapadeReturnPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         var ret = Owner.Creature.GetPowerInstances<EscapadeReturnPower>().FirstOrDefault();
         if (ret != null)
         {

@@ -25,7 +25,7 @@ public sealed class FaerieEyes() : ArtoriaCard(1, CardType.Power, CardRarity.Unc
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<FaerieEyesPower>(Owner.Creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<FaerieEyesPower>(choiceContext, Owner.Creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
         var power = Owner.Creature.GetPowerInstances<FaerieEyesPower>().FirstOrDefault();
         if (power != null)
         {

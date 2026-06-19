@@ -28,19 +28,19 @@ public sealed class CharismaOfYearning() : MorganCard(2, CardType.Skill, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
         foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead)
             {
-                await PowerCmd.Apply<VulnerablePower>(enemy, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
+                await PowerCmd.Apply<VulnerablePower>(choiceContext, enemy, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
             }
         }
         await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         // Co-op (patrón Carisma de Gilgamesh, KitCharisma.cs): el carisma alcanza a cada aliado vivo.
         // En 1 jugador, PlayerCreatures es solo el Owner -> el foreach queda vacío (fiel a 1 jugador).
         foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
-            await PowerCmd.Apply<StrengthPower>(ally, DynamicVars["AllyStrength"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, ally, DynamicVars["AllyStrength"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

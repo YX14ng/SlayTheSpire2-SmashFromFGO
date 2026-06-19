@@ -22,7 +22,7 @@ public sealed class DeadDragonsEdge() : SiegfriedCard(1, CardType.Skill, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<OverchargeBlessingPower>(Owner.Creature, DynamicVars["Blessing"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<OverchargeBlessingPower>(choiceContext, Owner.Creature, DynamicVars["Blessing"].IntValue, Owner.Creature, this);
         await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 

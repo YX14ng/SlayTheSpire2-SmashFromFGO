@@ -40,13 +40,13 @@ public sealed class AntiPurgePower : ArtoriaPower
     /// site (cards, relics, co-op grants) uses PowerCmd.Apply directly, so centralizing the cap
     /// here guarantees no chain of grants pushes the Counter past 5 (mirror of Stars.Gain's cap).
     /// </summary>
-    public override async Task AfterPowerAmountChanged(MegaCrit.Sts2.Core.Models.PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Models.PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        await base.AfterPowerAmountChanged(power, amount, applier, cardSource);
+        await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
         if (power != this || _isClamping || Amount <= Max) return;
 
         _isClamping = true;
-        await PowerCmd.ModifyAmount(this, Max - Amount, Owner, null);
+        await PowerCmd.ModifyAmount(choiceContext, this, Max - Amount, Owner, null);
         _isClamping = false;
     }
 
@@ -55,7 +55,7 @@ public sealed class AntiPurgePower : ArtoriaPower
         FormPower.GetBlockedHits(creature) +
         ((creature.GetPowerInstances<AntiPurgePower>().FirstOrDefault())?.AnnulledThisTurn ?? 0);
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player)
         {

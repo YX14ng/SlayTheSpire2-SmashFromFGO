@@ -44,7 +44,7 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
         await FormSwitch.Enter<Powers.Forms.FairyQueenFormPower>(null, Owner.Creature, null);
     }
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         // Tope P2 por RONDA: se resetea al inicio del turno del jugador y cuenta
         // tanto el autodaño propio como los golpes tanqueados en el turno enemigo.

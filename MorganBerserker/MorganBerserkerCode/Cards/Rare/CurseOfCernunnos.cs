@@ -20,7 +20,7 @@ public sealed class CurseOfCernunnos() : MorganCard(2, CardType.Power, CardRarit
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<CurseOfCernunnosPower>(Owner.Creature, DynamicVars["Stacks"].BaseValue,
+        await PowerCmd.Apply<CurseOfCernunnosPower>(choiceContext, Owner.Creature, DynamicVars["Stacks"].BaseValue,
             Owner.Creature, this);
     }
 

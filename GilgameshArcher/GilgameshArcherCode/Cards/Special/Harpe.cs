@@ -31,7 +31,7 @@ public sealed class Harpe() : GilgameshCard(0, CardType.Attack, CardRarity.Event
         await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
         if (!cardPlay.Target.IsDead)
         {
-            await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
         }
         await ArmsPlayedPower.Record(Owner.Creature);
     }

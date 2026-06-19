@@ -24,8 +24,8 @@ public sealed class SacredSwordControl() : ArtoriaCard(2, CardType.Power, CardRa
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<AntiPurgePower>(Owner.Creature, DynamicVars["AntiPurge"].BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<SacredSwordControlPower>(Owner.Creature, DynamicVars["Stacks"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<AntiPurgePower>(choiceContext, Owner.Creature, DynamicVars["AntiPurge"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<SacredSwordControlPower>(choiceContext, Owner.Creature, DynamicVars["Stacks"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

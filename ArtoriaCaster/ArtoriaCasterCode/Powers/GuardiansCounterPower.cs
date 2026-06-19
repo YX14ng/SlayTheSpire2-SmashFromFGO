@@ -28,7 +28,7 @@ public sealed class GuardiansCounterPower : ArtoriaPower, IHitAnnulledListener
 
     private int _countersThisTurn;
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player)
         {

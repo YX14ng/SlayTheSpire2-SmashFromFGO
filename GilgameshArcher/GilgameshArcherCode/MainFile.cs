@@ -41,7 +41,7 @@ public partial class MainFile : Node
         if (creature.CombatState == null || creature.Player == null) return;
 
         // Marcador: la ulti ya se manifestó (se re-arma al bajar < 100, abajo).
-        await PowerCmd.Apply<EnumaManifestedPower>(creature, 1m, creature, null);
+        await PowerCmd.Apply<EnumaManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
 
         // El viento de la creación parte cielo y tierra: la carta-ulti aparece en mano, lista (Retain).
         // Helper compartido de FGOCore (antes: CreateCard + AddGeneratedCardToCombat + PreviewCardPileAdd).

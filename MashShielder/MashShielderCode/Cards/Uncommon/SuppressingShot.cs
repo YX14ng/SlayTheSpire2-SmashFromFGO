@@ -29,7 +29,7 @@ public sealed class SuppressingShot() : MashShielderCard(1, CardType.Attack, Car
         await BlackBarrel.Hit(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, Owner.Creature, this);
         if (!cardPlay.Target.IsDead)
         {
-            await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
         }
     }
 

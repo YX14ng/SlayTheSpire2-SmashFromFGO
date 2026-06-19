@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using OkitaSaber.OkitaSaberCode.Powers;
 
@@ -26,6 +27,6 @@ public sealed class KikuIchimonjiNorimune : OkitaRelic
     public override async Task BeforeCombatStartLate()
     {
         await base.BeforeCombatStartLate();
-        await PowerCmd.Apply<SwordGeniusPower>(Owner.Creature, CritBonus, Owner.Creature, null);
+        await PowerCmd.Apply<SwordGeniusPower>(new BlockingPlayerChoiceContext(), Owner.Creature, CritBonus, Owner.Creature, null);
     }
 }

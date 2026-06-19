@@ -1,4 +1,4 @@
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -37,7 +37,7 @@ public sealed class RudeKick() : MordredCard(1, CardType.Attack, CardRarity.Unco
         var vulnerable = HasCritReady
             ? System.Math.Max(CritVulnerable, DynamicVars["Vulnerable"].IntValue)
             : DynamicVars["Vulnerable"].IntValue;
-        await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, vulnerable, Owner.Creature, this);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, vulnerable, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

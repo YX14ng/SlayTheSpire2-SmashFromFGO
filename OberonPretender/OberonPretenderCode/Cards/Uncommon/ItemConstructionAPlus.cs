@@ -20,7 +20,7 @@ public sealed class ItemConstructionAPlus() : OberonCard(1, CardType.Power, Card
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<ItemConstructionPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<ItemConstructionPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null) power.RefundsCharge = IsUpgraded;
     }
 }

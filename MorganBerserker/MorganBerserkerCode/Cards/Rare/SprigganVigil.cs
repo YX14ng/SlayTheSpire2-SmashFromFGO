@@ -24,7 +24,7 @@ public sealed class SprigganVigil() : MorganCard(2, CardType.Power, CardRarity.R
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<SprigganVigilPower>(Owner.Creature, DynamicVars["Stacks"].BaseValue,
+        await PowerCmd.Apply<SprigganVigilPower>(choiceContext, Owner.Creature, DynamicVars["Stacks"].BaseValue,
             Owner.Creature, this);
     }
 

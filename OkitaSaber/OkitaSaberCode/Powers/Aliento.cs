@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using OkitaSaber.OkitaSaberCode.Cards.Special;
 
@@ -25,12 +26,12 @@ public static class Aliento
         var power = Power(creature);
         if (power == null)
         {
-            await PowerCmd.Apply<AlientoPower>(creature, Math.Min(amount, AlientoPower.Max), creature, source);
+            await PowerCmd.Apply<AlientoPower>(new BlockingPlayerChoiceContext(), creature, Math.Min(amount, AlientoPower.Max), creature, source);
             return;
         }
         var room = Math.Max(0, power.Cap - power.Amount);
         var toAdd = Math.Min(amount, room);
-        if (toAdd > 0) await PowerCmd.ModifyAmount(power, toAdd, creature, source);
+        if (toAdd > 0) await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, toAdd, creature, source);
     }
 
     /// <summary>
@@ -55,7 +56,7 @@ public static class Aliento
         if (emptied) power.HitZeroThisTurn = true;
 
         if (emptied) await PowerCmd.Remove(power);
-        else await PowerCmd.ModifyAmount(power, -spent, creature, source);
+        else await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -spent, creature, source);
 
         // Llegar a 0 cuesta una Tos (cap 1/turno por agotamiento).
         if (emptied && !alreadyHitZero)
@@ -68,10 +69,10 @@ public static class Aliento
         var power = Power(creature);
         if (power == null)
         {
-            await PowerCmd.Apply<AlientoPower>(creature, AlientoPower.StartingBreath, creature, source);
+            await PowerCmd.Apply<AlientoPower>(new BlockingPlayerChoiceContext(), creature, AlientoPower.StartingBreath, creature, source);
             return;
         }
         var room = Math.Max(0, power.Cap - power.Amount);
-        if (room > 0) await PowerCmd.ModifyAmount(power, room, creature, source);
+        if (room > 0) await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, room, creature, source);
     }
 }

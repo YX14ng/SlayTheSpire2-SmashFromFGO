@@ -25,7 +25,7 @@ public sealed class ShukuchiBPlus() : OkitaCard(1, CardType.Skill, CardRarity.Un
     {
         await Aliento.Gain(Owner.Creature, DynamicVars["Breath"].IntValue, this);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
-        await PowerCmd.Apply<SwiftStancePower>(Owner.Creature, DynamicVars["SwiftStance"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<SwiftStancePower>(choiceContext, Owner.Creature, DynamicVars["SwiftStance"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

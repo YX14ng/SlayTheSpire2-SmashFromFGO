@@ -17,7 +17,7 @@ public sealed class ShinsengumiWill() : OkitaCard(2, CardType.Power, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<ShinsengumiWillPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<ShinsengumiWillPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1); // 2 -> 1

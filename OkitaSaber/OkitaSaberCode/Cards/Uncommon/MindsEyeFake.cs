@@ -22,7 +22,7 @@ public sealed class MindsEyeFake() : OkitaCard(1, CardType.Skill, CardRarity.Unc
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<IntangiblePower>(Owner.Creature, DynamicVars["Intangible"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<IntangiblePower>(choiceContext, Owner.Creature, DynamicVars["Intangible"].BaseValue, Owner.Creature, this);
         var stars = DynamicVars["Stars"].IntValue;
         if (stars > 0) await CritStars.Gain(Owner.Creature, stars, this);
     }

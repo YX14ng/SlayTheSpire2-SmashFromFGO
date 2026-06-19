@@ -27,7 +27,7 @@ public sealed class StaffsRebuke() : ArtoriaCard(2, CardType.Attack, CardRarity.
             .Execute(choiceContext);
         if (!cardPlay.Target.IsDead)
         {
-            await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
         }
     }
 

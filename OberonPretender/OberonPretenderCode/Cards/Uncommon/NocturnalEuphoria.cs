@@ -22,7 +22,7 @@ public sealed class NocturnalEuphoria() : OberonCard(1, CardType.Power, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<NocturnalEuphoriaPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<NocturnalEuphoriaPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
             power.Charge = DynamicVars["Charge"].IntValue;

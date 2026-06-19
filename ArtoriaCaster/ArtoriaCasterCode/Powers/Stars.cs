@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using ArtoriaCaster.ArtoriaCasterCode.Powers.Forms;
 
@@ -20,7 +21,7 @@ public static class Stars
         var current = Of(creature);
         var room = CriticalStarsPower.Max - current;
         if (room <= 0 || amount <= 0) return;
-        await PowerCmd.Apply<CriticalStarsPower>(creature, Math.Min(amount, room), creature, source);
+        await PowerCmd.Apply<CriticalStarsPower>(new BlockingPlayerChoiceContext(), creature, Math.Min(amount, room), creature, source);
     }
 
     /// <summary>Critical discount from POWERS implementing <see cref="ICritDiscount"/> (min cost 1).</summary>
@@ -58,7 +59,7 @@ public static class Stars
         var spent = DiscountedCost(creature, cost);
         var power = creature.GetPowerInstances<CriticalStarsPower>().FirstOrDefault();
         if (power == null) return;
-        await PowerCmd.ModifyAmount(power, -spent, creature, source, silent: true);
+        await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -spent, creature, source, silent: true);
         // Avisa a los listeners (powers primero, luego reliquias) en orden — Lupa, Magia Única.
         await Listeners.ForEachListener<ICritListener>(creature, listener => listener.AfterCritConsumed(spent));
     }

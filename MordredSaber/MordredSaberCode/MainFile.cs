@@ -3,6 +3,7 @@ using HarmonyLib;
 using FGOCore.FGOCoreCode.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using MordredSaber.MordredSaberCode.Cards.Special;
 using MordredSaber.MordredSaberCode.Powers;
@@ -44,7 +45,7 @@ public partial class MainFile : Node
         if (creature.HasPower<ClarentManifestedPower>()) return;
         if (creature.CombatState == null || creature.Player == null) return;
 
-        await PowerCmd.Apply<ClarentManifestedPower>(creature, 1m, creature, null);
+        await PowerCmd.Apply<ClarentManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
 
         if (creature.HasPower<CrimsonLightningFormPower>())
         {

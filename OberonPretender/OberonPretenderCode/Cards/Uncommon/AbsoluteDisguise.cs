@@ -25,7 +25,7 @@ public sealed class AbsoluteDisguise() : OberonCard(1, CardType.Skill, CardRarit
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<IntangiblePower>(Owner.Creature, DynamicVars["Intangible"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<IntangiblePower>(choiceContext, Owner.Creature, DynamicVars["Intangible"].BaseValue, Owner.Creature, this);
         var charge = DynamicVars["Charge"].IntValue;
         if (charge > 0) await NpCharge.Gain(Owner.Creature, charge, this);
     }

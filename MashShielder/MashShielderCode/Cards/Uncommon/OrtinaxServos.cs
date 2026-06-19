@@ -22,7 +22,7 @@ public sealed class OrtinaxServos() : MashShielderCard(1, CardType.Power, CardRa
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<OrtinaxServosPower>(Owner.Creature, DynamicVars["OrtinaxServos"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<OrtinaxServosPower>(choiceContext, Owner.Creature, DynamicVars["OrtinaxServos"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

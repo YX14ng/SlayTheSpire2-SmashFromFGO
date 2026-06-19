@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -18,7 +19,7 @@ public sealed class CurseHarvest() : MorganCard(1, CardType.Skill, CardRarity.Un
     protected override bool IsPlayable => true;
 
     protected override bool ShouldGlowGoldInternal =>
-        Curses.MostCursed(Owner.Creature.CombatState, Owner.Creature) != null;
+        Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature) != null;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

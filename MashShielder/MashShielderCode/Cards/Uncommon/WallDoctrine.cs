@@ -16,7 +16,7 @@ public sealed class WallDoctrine() : MashShielderCard(1, CardType.Power, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<WallDoctrinePower>(Owner.Creature, DynamicVars["WallDoctrine"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<WallDoctrinePower>(choiceContext, Owner.Creature, DynamicVars["WallDoctrine"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

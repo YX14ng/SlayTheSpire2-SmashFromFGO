@@ -22,7 +22,7 @@ public sealed class ThreatToHumanity() : OberonCard(2, CardType.Power, CardRarit
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<ThreatToHumanityPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<ThreatToHumanityPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
             power.Charge = DynamicVars["Charge"].IntValue;

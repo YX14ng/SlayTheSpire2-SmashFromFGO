@@ -20,7 +20,7 @@ public sealed class WingsOfReverie() : OberonCard(2, CardType.Power, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<WingsOfReveriePower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<WingsOfReveriePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null) power.Stars = DynamicVars["Stars"].IntValue;
     }
 

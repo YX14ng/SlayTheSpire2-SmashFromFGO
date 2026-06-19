@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
@@ -33,7 +34,7 @@ public sealed class RedLightningChannelPower : MordredPower
     private int _lastSeen;
     private bool _isProcessing;
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == Owner.Side) _lastSeen = Owner.GetPowerAmount<CritReadyPower>();
         return Task.CompletedTask;
@@ -56,7 +57,7 @@ public sealed class RedLightningChannelPower : MordredPower
         {
             for (var i = 0; i < consumed; i++)
             {
-                await PowerCmd.Apply<CritConsumedThisTurnPower>(Owner, 1m, Owner, null);
+                await PowerCmd.Apply<CritConsumedThisTurnPower>(context, Owner, 1m, Owner, null);
                 await Broadcast(context);
             }
         }

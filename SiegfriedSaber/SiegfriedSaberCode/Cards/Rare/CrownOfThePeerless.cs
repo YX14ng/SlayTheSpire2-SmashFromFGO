@@ -17,7 +17,7 @@ public sealed class CrownOfThePeerless() : SiegfriedCard(3, CardType.Power, Card
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<PeerlessCrownPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<PeerlessCrownPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null) power.Upgraded = IsUpgraded;
     }
 }

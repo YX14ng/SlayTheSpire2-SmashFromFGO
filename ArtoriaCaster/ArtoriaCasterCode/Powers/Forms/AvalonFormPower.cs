@@ -22,9 +22,9 @@ public sealed class AvalonFormPower : ArtoriaFormPower
 
     private bool _firedThisTurn;
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        await base.AfterSideTurnStart(side, combatState);
+        await base.AfterSideTurnStart(side, participants, combatState);
         if (side == CombatSide.Player)
         {
             _firedThisTurn = false;

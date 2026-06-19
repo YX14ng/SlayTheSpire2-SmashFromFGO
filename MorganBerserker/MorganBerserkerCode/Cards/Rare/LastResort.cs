@@ -31,7 +31,7 @@ public sealed class LastResort() : MorganCard(1, CardType.Skill, CardRarity.Rare
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
-        await PowerCmd.Apply<GutsPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<GutsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

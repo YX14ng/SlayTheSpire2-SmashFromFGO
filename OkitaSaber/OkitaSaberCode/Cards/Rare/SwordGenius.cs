@@ -20,7 +20,7 @@ public sealed class SwordGenius() : OkitaCard(2, CardType.Power, CardRarity.Rare
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<SwordGeniusPower>(Owner.Creature, DynamicVars["CritBonus"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<SwordGeniusPower>(choiceContext, Owner.Creature, DynamicVars["CritBonus"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["CritBonus"].UpgradeValueBy(4m); // +8 -> +12

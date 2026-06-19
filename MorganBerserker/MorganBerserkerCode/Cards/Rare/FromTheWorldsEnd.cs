@@ -23,12 +23,12 @@ public sealed class FromTheWorldsEnd() : MorganCard(2, CardType.Skill, CardRarit
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<WorldsEndGutsPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<WorldsEndGutsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead)
             {
-                await PowerCmd.Apply<WeakPower>(enemy, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+                await PowerCmd.Apply<WeakPower>(choiceContext, enemy, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
             }
         }
     }

@@ -2,6 +2,7 @@ using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using ArtoriaCaster.ArtoriaCasterCode.Character;
 using ArtoriaCaster.ArtoriaCasterCode.Extensions;
@@ -47,6 +48,6 @@ public sealed class ArtoriaBond : BondRelic
 
     protected override async Task ApplyCapstone()
     {
-        await PowerCmd.Apply<AntiPurgePower>(Owner.Creature, 1m, Owner.Creature, null);
+        await PowerCmd.Apply<AntiPurgePower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null);
     }
 }

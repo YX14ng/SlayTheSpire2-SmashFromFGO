@@ -49,8 +49,8 @@ public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRari
         {
             await BlockRetention.GainBulwarkBlock(this, Owner.Creature, extra);
         }
-        await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<ProvokePower>(Owner.Creature, DynamicVars["Provoke"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<ProvokePower>(choiceContext, Owner.Creature, DynamicVars["Provoke"].BaseValue, Owner.Creature, this);
 
         // Co-op (Lord Camelot = «la fortaleza que escuda a TODA la Mesa Redonda»): cada aliado vivo
         // recibe una porción de Baluarte y de Intercepción-por-provocación, de modo que también
@@ -59,7 +59,7 @@ public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRari
         foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
         {
             await BlockRetention.GainBulwarkBlock(this, ally, DynamicVars["AllyBlock"].BaseValue);
-            await PowerCmd.Apply<ProvokePower>(ally, DynamicVars["AllyProvoke"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<ProvokePower>(choiceContext, ally, DynamicVars["AllyProvoke"].BaseValue, Owner.Creature, this);
         }
     }
 

@@ -2,6 +2,7 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
 using FGOCore.FGOCoreCode.Combat;
@@ -45,7 +46,7 @@ public partial class MainFile : Node
         if (creature.HasPower<UltManifestedPower>()) return;
 
         // Marca el pico (se re-arma al bajar < 100). Idempotente por pico.
-        await PowerCmd.Apply<UltManifestedPower>(creature, 1m, creature, null);
+        await PowerCmd.Apply<UltManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
 
         // La Desatada depende de la forma activa: Vortigern usa la suya; Rey/Invierno la del cuento.
         // El helper de FGOCore (ManifestCards) factoriza el CreateCard ya hecho + AddGeneratedCardToCombat

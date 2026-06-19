@@ -52,8 +52,8 @@ public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill,
         {
             await BlockRetention.GainBulwarkBlock(this, Owner.Creature, extra);
         }
-        await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<ProvokePower>(Owner.Creature, DynamicVars["Provoke"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<ProvokePower>(choiceContext, Owner.Creature, DynamicVars["Provoke"].BaseValue, Owner.Creature, this);
 
         // Co-op: misma fantasía/NP que LORD CAMELOT -> espejo exacto de su reparto a aliados.
         // Cada aliado vivo recibe Baluarte e Intercepción-por-provocación. En 1 jugador el foreach
@@ -61,7 +61,7 @@ public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill,
         foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
         {
             await BlockRetention.GainBulwarkBlock(this, ally, DynamicVars["AllyBlock"].BaseValue);
-            await PowerCmd.Apply<ProvokePower>(ally, DynamicVars["AllyProvoke"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<ProvokePower>(choiceContext, ally, DynamicVars["AllyProvoke"].BaseValue, Owner.Creature, this);
         }
     }
 

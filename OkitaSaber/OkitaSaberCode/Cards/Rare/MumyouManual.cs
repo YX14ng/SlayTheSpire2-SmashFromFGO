@@ -57,7 +57,7 @@ public sealed class MumyouManual() : OkitaCard(2, CardType.Attack, CardRarity.Ra
 
         if (!cardPlay.Target.IsDead)
         {
-            await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
         }
     }
 

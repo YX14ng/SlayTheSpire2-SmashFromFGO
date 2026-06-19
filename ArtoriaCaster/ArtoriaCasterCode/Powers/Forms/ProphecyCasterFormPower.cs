@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 namespace ArtoriaCaster.ArtoriaCasterCode.Powers.Forms;
@@ -19,9 +20,9 @@ public sealed class ProphecyCasterFormPower : ArtoriaFormPower
 
     private bool _firedThisTurn;
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        await base.AfterSideTurnStart(side, combatState);
+        await base.AfterSideTurnStart(side, participants, combatState);
         if (side == CombatSide.Player)
         {
             _firedThisTurn = false;

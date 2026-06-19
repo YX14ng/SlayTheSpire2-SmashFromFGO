@@ -43,8 +43,8 @@ public sealed class AroundCaliburn() : ArtoriaCard(2, CardType.Skill, CardRarity
         var ap = Math.Min(AntiPurgePower.Max, DynamicVars["AntiPurge"].IntValue + extraAp);
 
         await RemoveOwnDebuffs();
-        await PowerCmd.Apply<AntiPurgePower>(Owner.Creature, ap, Owner.Creature, this);
-        await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<AntiPurgePower>(choiceContext, Owner.Creature, ap, Owner.Creature, this);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
         var block = NpLevels.Scale(Owner, DynamicVars.Block.BaseValue);
         await CreatureCmd.GainBlock(Owner.Creature, block, ValueProp.Move, cardPlay);
 
@@ -52,7 +52,7 @@ public sealed class AroundCaliburn() : ArtoriaCard(2, CardType.Skill, CardRarity
         await ForEachAlly(async ally =>
         {
             await Cleanse.RemoveDebuffs(ally);
-            await PowerCmd.Apply<StrengthPower>(ally, 1m, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, ally, 1m, Owner.Creature, this);
         });
     }
 

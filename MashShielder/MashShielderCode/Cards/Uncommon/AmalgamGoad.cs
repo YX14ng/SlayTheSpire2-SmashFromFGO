@@ -25,7 +25,7 @@ public sealed class AmalgamGoad() : MashShielderCard(1, CardType.Skill, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<InterceptPower>(Owner.Creature, DynamicVars["Intercept"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<InterceptPower>(choiceContext, Owner.Creature, DynamicVars["Intercept"].BaseValue, Owner.Creature, this);
         await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
 
         // Co-op (la provocación convierte al grupo en una línea de contraataque): cada aliado vivo gana
@@ -33,7 +33,7 @@ public sealed class AmalgamGoad() : MashShielderCard(1, CardType.Skill, CardRari
         // solo el Owner -> el foreach queda vacío (idéntico a hoy).
         foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
         {
-            await PowerCmd.Apply<InterceptPower>(ally, DynamicVars["AllyIntercept"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<InterceptPower>(choiceContext, ally, DynamicVars["AllyIntercept"].BaseValue, Owner.Creature, this);
         }
     }
 

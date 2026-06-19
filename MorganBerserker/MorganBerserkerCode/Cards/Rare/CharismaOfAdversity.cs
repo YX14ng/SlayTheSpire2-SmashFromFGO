@@ -21,12 +21,12 @@ public sealed class CharismaOfAdversity() : MorganCard(1, CardType.Power, CardRa
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<CharismaOfAdversityPower>(Owner.Creature, DynamicVars["Stacks"].BaseValue,
+        await PowerCmd.Apply<CharismaOfAdversityPower>(choiceContext, Owner.Creature, DynamicVars["Stacks"].BaseValue,
             Owner.Creature, this);
         // Co-op (el bono por-HP es inseparable de Morgan; lo que se comparte es el carisma en sí):
         // cada aliado vivo gana algo de Fuerza. En 1 jugador el foreach queda vacío (fiel a 1 jugador).
         foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
-            await PowerCmd.Apply<StrengthPower>(ally, DynamicVars["AllyStrength"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, ally, DynamicVars["AllyStrength"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

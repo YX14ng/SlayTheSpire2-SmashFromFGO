@@ -1,4 +1,4 @@
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -22,7 +22,7 @@ public sealed class Saberface() : MordredCard(1, CardType.Power, CardRarity.Rare
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<SaberfacePower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<SaberfacePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
             power.StarsPerHit = DynamicVars["Stars"].IntValue;

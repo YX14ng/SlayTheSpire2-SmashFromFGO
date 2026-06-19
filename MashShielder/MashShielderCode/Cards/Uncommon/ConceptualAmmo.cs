@@ -16,7 +16,7 @@ public sealed class ConceptualAmmo() : MashShielderCard(2, CardType.Power, CardR
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<ConceptualAmmoPower>(Owner.Creature, DynamicVars["ConceptualAmmo"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<ConceptualAmmoPower>(choiceContext, Owner.Creature, DynamicVars["ConceptualAmmo"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

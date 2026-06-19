@@ -17,14 +17,14 @@ public sealed class TirelessGuardian() : MashShielderCard(1, CardType.Power, Car
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<InterceptPower>(Owner.Creature, DynamicVars["Intercept"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<InterceptPower>(choiceContext, Owner.Creature, DynamicVars["Intercept"].BaseValue, Owner.Creature, this);
 
         // Co-op (la Mesa Redonda contraataca en conjunto): cada aliado vivo gana algo de Intercepción
         // permanente; InterceptPower es agnóstico al Owner (dispara cuando SU portador bloquea un golpe).
         // En 1 jugador PlayerCreatures es solo el Owner -> el foreach queda vacío (idéntico a hoy).
         foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
         {
-            await PowerCmd.Apply<InterceptPower>(ally, DynamicVars["AllyIntercept"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<InterceptPower>(choiceContext, ally, DynamicVars["AllyIntercept"].BaseValue, Owner.Creature, this);
         }
     }
 

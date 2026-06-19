@@ -22,6 +22,6 @@ public sealed class HappyEndingPlanPower : OberonPower
     {
         if (player != Owner.Player || Owner.Player == null || Owner.IsDead) return;
         Flash();
-        await PowerCmd.Apply<OverchargeBlessingPower>(Owner, PerTurn, Owner, null);
+        await PowerCmd.Apply<OverchargeBlessingPower>(choiceContext, Owner, PerTurn, Owner, null);
     }
 }

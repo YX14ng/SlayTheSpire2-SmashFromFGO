@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -38,7 +39,7 @@ public sealed class ArmsPlayedPower : GilgameshPower
     /// <summary>Armas jugadas en todo el combate (gate del Botín del Conquistador).</summary>
     public int ThisCombat { get; private set; }
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == Owner.Side) ThisTurn = 0;
         return Task.CompletedTask;
@@ -66,7 +67,7 @@ public sealed class ArmsPlayedPower : GilgameshPower
         var power = creature.GetPower<ArmsPlayedPower>();
         if (power == null)
         {
-            power = await PowerCmd.Apply<ArmsPlayedPower>(creature, 1m, creature, null);
+            power = await PowerCmd.Apply<ArmsPlayedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
         }
         power?.Bump();
     }

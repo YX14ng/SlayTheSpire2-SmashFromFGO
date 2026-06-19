@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 
 namespace SiegfriedSaber.SiegfriedSaberCode.Relics;
@@ -21,6 +22,6 @@ public sealed class DragonHeartScale : SiegfriedRelic
     {
         await base.BeforeCombatStartLate();
         Flash();
-        await PowerCmd.Apply<DragonScalesPower>(Owner.Creature, ScalesGain, Owner.Creature, null);
+        await PowerCmd.Apply<DragonScalesPower>(new BlockingPlayerChoiceContext(), Owner.Creature, ScalesGain, Owner.Creature, null);
     }
 }

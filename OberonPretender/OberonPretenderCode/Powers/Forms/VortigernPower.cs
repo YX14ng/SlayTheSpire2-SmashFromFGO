@@ -39,7 +39,7 @@ public sealed class VortigernPower : OberonFormPower, ISleepIgnorer
         return AttackBonus;
     }
 
-    public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != Owner.Side || Owner.IsDead) return;
         var debt = DebtPower.Of(Owner);

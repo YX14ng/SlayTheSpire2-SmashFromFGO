@@ -23,7 +23,7 @@ public sealed class WeightOfExpectations() : SiegfriedCard(1, CardType.Power, Ca
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<WeightOfExpectationsPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<WeightOfExpectationsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null) power.NpPerTrigger = DynamicVars["NpGain"].IntValue;
     }
 

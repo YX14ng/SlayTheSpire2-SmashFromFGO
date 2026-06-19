@@ -3,6 +3,7 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using OkitaSaber.OkitaSaberCode.Cards.Special;
 using OkitaSaber.OkitaSaberCode.Powers;
@@ -42,7 +43,7 @@ public partial class MainFile : Node
         if (creature.CombatState == null) return;
         if (creature.HasPower<MumyouManifestedPower>()) return;
 
-        await PowerCmd.Apply<MumyouManifestedPower>(creature, 1m, creature, null);
+        await PowerCmd.Apply<MumyouManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
 
         await ManifestCards.ManifestToHand<MumyouUnleashed>(creature);
     }

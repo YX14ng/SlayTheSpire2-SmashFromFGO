@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FGOCore.FGOCoreCode.Stars;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -21,9 +22,9 @@ public sealed class WinterQueenFormPower : MorganFormPower
 
     private bool _npThisTurn;
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        await base.AfterSideTurnStart(side, combatState);
+        await base.AfterSideTurnStart(side, participants, combatState);
         if (side == CombatSide.Player)
         {
             _npThisTurn = false;

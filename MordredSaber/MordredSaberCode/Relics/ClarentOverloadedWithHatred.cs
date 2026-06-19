@@ -50,10 +50,10 @@ public sealed class ClarentOverloadedWithHatred : MordredRelic, ICritConsumedLis
         _npProcsThisTurn = 0;
         // Hace por su cuenta la precarga de forma + el watcher (la starter cede si coexisten).
         await Forms.Enter<MaskedKnightFormPower>(null, Owner.Creature, null);
-        await PowerCmd.Apply<RedLightningChannelPower>(Owner.Creature, 1m, Owner.Creature, null, silent: true);
+        await PowerCmd.Apply<RedLightningChannelPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null, silent: true);
     }
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player)
         {

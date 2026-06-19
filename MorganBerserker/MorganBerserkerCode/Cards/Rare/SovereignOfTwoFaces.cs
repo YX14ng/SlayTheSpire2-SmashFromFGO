@@ -25,7 +25,7 @@ public sealed class SovereignOfTwoFaces() : MorganCard(1, CardType.Power, CardRa
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<SovereignOfTwoFacesPower>(Owner.Creature, DynamicVars["Stacks"].BaseValue,
+        await PowerCmd.Apply<SovereignOfTwoFacesPower>(choiceContext, Owner.Creature, DynamicVars["Stacks"].BaseValue,
             Owner.Creature, this);
     }
 

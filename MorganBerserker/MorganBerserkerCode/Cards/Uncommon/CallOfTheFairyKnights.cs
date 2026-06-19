@@ -42,7 +42,7 @@ public sealed class CallOfTheFairyKnights() : MorganCard(2, CardType.Skill, Card
         {
             if (!enemy.IsDead)
             {
-                await PowerCmd.Apply<WeakPower>(enemy, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+                await PowerCmd.Apply<WeakPower>(choiceContext, enemy, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
             }
         }
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);

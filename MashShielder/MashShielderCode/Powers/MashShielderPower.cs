@@ -2,6 +2,7 @@
 using BaseLib.Extensions;
 using MashShielder.MashShielderCode.Extensions;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 
 namespace MashShielder.MashShielderCode.Powers;
@@ -37,7 +38,7 @@ public abstract class MashShielderPower : CustomPowerModel
     /// Las subclases sólo sobrescriben <see cref="OnPlayerTurnStartReset"/> con su reset; el
     /// guard <c>side == CombatSide.Player</c> y el <c>Task.CompletedTask</c> viven una sola vez.
     /// </summary>
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player) OnPlayerTurnStartReset();
         return Task.CompletedTask;

@@ -28,7 +28,7 @@ public sealed class ButADream() : OberonCard(1, CardType.Skill, CardRarity.Uncom
         await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
         if (IsUpgraded)
         {
-            await PowerCmd.Apply<ArtifactPower>(Owner.Creature, 1m, Owner.Creature, this);
+            await PowerCmd.Apply<ArtifactPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         }
     }
 }

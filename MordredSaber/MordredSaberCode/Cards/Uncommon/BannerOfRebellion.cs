@@ -1,4 +1,4 @@
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -23,7 +23,7 @@ public sealed class BannerOfRebellion() : MordredCard(2, CardType.Power, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<BannerOfRebellionPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<BannerOfRebellionPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
             power.StarsPerSwitch = DynamicVars["Stars"].IntValue;

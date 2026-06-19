@@ -28,7 +28,7 @@ public sealed class ByMyConviction() : SiegfriedCard(1, CardType.Skill, CardRari
         {
             // "Elegí DOS" de dos = ambas, sin pantalla de elección.
             await NpCharge.Gain(Owner.Creature, ConvictionCharge.NpGain, this);
-            await PowerCmd.Apply<DragonScalesPower>(Owner.Creature, ConvictionScales.ScalesGain, Owner.Creature, this);
+            await PowerCmd.Apply<DragonScalesPower>(choiceContext, Owner.Creature, ConvictionScales.ScalesGain, Owner.Creature, this);
             return;
         }
 

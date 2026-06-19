@@ -20,7 +20,7 @@ public sealed class AvalonBenediction() : ArtoriaCard(2, CardType.Power, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<AvalonBenedictionPower>(Owner.Creature, DynamicVars["NpCharge"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<AvalonBenedictionPower>(choiceContext, Owner.Creature, DynamicVars["NpCharge"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

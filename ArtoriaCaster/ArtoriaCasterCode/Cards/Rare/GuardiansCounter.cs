@@ -23,7 +23,7 @@ public sealed class GuardiansCounter() : ArtoriaCard(2, CardType.Power, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<GuardiansCounterPower>(Owner.Creature, DynamicVars["Damage"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<GuardiansCounterPower>(choiceContext, Owner.Creature, DynamicVars["Damage"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

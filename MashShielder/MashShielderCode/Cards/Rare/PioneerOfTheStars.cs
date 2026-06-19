@@ -23,7 +23,7 @@ public sealed class PioneerOfTheStars() : MashShielderCard(3, CardType.Power, Ca
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<PioneerOfTheStarsPower>(Owner.Creature, DynamicVars["Stars"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<PioneerOfTheStarsPower>(choiceContext, Owner.Creature, DynamicVars["Stars"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

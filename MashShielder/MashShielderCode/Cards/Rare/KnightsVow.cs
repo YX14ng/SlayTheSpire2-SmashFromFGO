@@ -33,7 +33,7 @@ public sealed class KnightsVow() : MashShielderCard(1, CardType.Attack, CardRari
 
         if (Owner.Creature.Block >= RequiredBlock)
         {
-            await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
         }
     }
 

@@ -61,7 +61,7 @@ public sealed class ProphecyChildTalisman : ArtoriaRelic, INpLevelStore
         if (alternatives.Count >= 2) return false;
         if (!NpLevels.CanLevelUp(Owner)) return false;
 
-        alternatives.Add(new CardRewardAlternative(DupeOptionId, OnDupeRoll, PostAlternateCardRewardAction.DismissScreenAndRemoveReward));
+        alternatives.Add(new CardRewardAlternative(DupeOptionId, OnDupeRoll, PostAlternateCardRewardAction.EndSelectionAndCompleteReward));
         return true;
     }
 

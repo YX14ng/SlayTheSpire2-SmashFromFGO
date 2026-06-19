@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Rooms;
 using ArtoriaCaster.ArtoriaCasterCode.Powers;
@@ -21,7 +22,7 @@ public sealed class AntiPurgeCrystal : ArtoriaRelic
         if (room.RoomType is RoomType.Elite or RoomType.Boss)
         {
             Flash();
-            await PowerCmd.Apply<AntiPurgePower>(Owner.Creature, 1m, Owner.Creature, null);
+            await PowerCmd.Apply<AntiPurgePower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null);
         }
     }
 }

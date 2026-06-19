@@ -64,7 +64,7 @@ public sealed class DebtPower : OberonPower, IResourcePower
         if (amount <= 0) return;
         var toAdd = Math.Min(amount, Max - Of(creature));
         if (toAdd <= 0) return;
-        await PowerCmd.Apply<DebtPower>(creature, toAdd, applier, source);
+        await PowerCmd.Apply<DebtPower>(new BlockingPlayerChoiceContext(), creature, toAdd, applier, source);
     }
 
     /// <summary>Condona (remueve) hasta <paramref name="upTo"/> puntos de Deuda -- Palabras Dulces,
@@ -75,7 +75,7 @@ public sealed class DebtPower : OberonPower, IResourcePower
         if (power == null || upTo <= 0) return 0;
         var removed = Math.Min(upTo, power.Amount);
         if (removed >= power.Amount) await PowerCmd.Remove(power);
-        else await PowerCmd.ModifyAmount(power, -removed, creature, null);
+        else await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -removed, creature, null);
         return removed;
     }
 
@@ -120,7 +120,7 @@ public sealed class DebtPower : OberonPower, IResourcePower
         }
     }
 
-    public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != Owner.Side || Owner.IsDead || Amount <= 0) return;
 

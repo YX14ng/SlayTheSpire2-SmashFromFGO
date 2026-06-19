@@ -34,7 +34,7 @@ public sealed class ZettouA() : OkitaCard(1, CardType.Skill, CardRarity.Uncommon
     {
         await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
-        await PowerCmd.Apply<GloryEdgePower>(Owner.Creature, DynamicVars["GloryEdge"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<GloryEdgePower>(choiceContext, Owner.Creature, DynamicVars["GloryEdge"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

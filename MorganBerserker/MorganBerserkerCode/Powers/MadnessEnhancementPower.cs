@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -27,7 +28,7 @@ public sealed class MadnessEnhancementPower : MorganPower
     private bool _isPlayerTurn;
     private readonly PerTurnTriggerCounter _triggers = new();
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         _isPlayerTurn = side == CombatSide.Player;
         _triggers.OnSideTurnStart(side);

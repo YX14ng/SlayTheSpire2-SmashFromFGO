@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
 using OkitaSaber.OkitaSaberCode.Cards;
@@ -38,7 +40,7 @@ public sealed class SteadyStepPower : OkitaPower, IFirstRafagaRefund
         return true;
     }
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == Owner.Side) _usedThisTurn = false;
         return Task.CompletedTask;

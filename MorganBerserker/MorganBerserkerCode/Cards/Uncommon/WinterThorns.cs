@@ -22,7 +22,7 @@ public sealed class WinterThorns() : MorganCard(1, CardType.Skill, CardRarity.Un
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<WinterThornsPower>(Owner.Creature, DynamicVars["Thorns"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<WinterThornsPower>(choiceContext, Owner.Creature, DynamicVars["Thorns"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

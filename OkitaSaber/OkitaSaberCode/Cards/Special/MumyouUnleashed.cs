@@ -68,7 +68,7 @@ public sealed class MumyouUnleashed() : OkitaCard(0, CardType.Attack, CardRarity
         // Tras el daño: Vulnerable (potencia el resto del turno — fidelidad al OC real).
         if (!cardPlay.Target.IsDead)
         {
-            await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
         }
     }
 

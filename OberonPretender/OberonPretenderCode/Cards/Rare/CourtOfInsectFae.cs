@@ -15,7 +15,7 @@ public sealed class CourtOfInsectFae() : OberonCard(2, CardType.Power, CardRarit
 {
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<CourtOfInsectFaePower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<CourtOfInsectFaePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);

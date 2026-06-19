@@ -38,7 +38,7 @@ public sealed class LindenScarPower : SiegfriedPower, IDragonScalePierceListener
     public async Task OnScalesPierced(PlayerChoiceContext choiceContext)
     {
         Flash();
-        await PowerCmd.Apply<DragonScalesPower>(Owner, ScalesPerPierce, Owner, null);
+        await PowerCmd.Apply<DragonScalesPower>(choiceContext, Owner, ScalesPerPierce, Owner, null);
         await NpCharge.Gain(Owner, Amount, null);
     }
 }

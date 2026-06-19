@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using TiamatBeast.TiamatCode.Powers;
 
 namespace TiamatBeast.TiamatCode.Relics;
@@ -15,6 +16,6 @@ public sealed class KingHassansHorn : TiamatRelic
     {
         await base.BeforeCombatStartLate();
         Flash();
-        await PowerCmd.Apply<MotherGutsPower>(Owner.Creature, 1, Owner.Creature, null);
+        await PowerCmd.Apply<MotherGutsPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1, Owner.Creature, null);
     }
 }

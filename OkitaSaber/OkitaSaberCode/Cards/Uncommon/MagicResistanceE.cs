@@ -21,7 +21,7 @@ public sealed class MagicResistanceE() : OkitaCard(1, CardType.Skill, CardRarity
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<ArtifactPower>(Owner.Creature, DynamicVars["Artifact"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<ArtifactPower>(choiceContext, Owner.Creature, DynamicVars["Artifact"].BaseValue, Owner.Creature, this);
         await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 

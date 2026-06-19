@@ -20,7 +20,7 @@ public sealed class ToTheEnd() : OkitaCard(0, CardType.Skill, CardRarity.Rare, T
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<ToTheEndPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<ToTheEndPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null) power.HpCostPerPoint = IsUpgraded ? 1 : 2;
     }
 }

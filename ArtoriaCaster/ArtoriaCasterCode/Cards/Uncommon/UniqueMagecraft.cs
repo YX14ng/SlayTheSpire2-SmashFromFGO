@@ -20,7 +20,7 @@ public sealed class UniqueMagecraft() : ArtoriaCard(1, CardType.Power, CardRarit
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<UniqueMagecraftPower>(Owner.Creature, DynamicVars["Stacks"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<UniqueMagecraftPower>(choiceContext, Owner.Creature, DynamicVars["Stacks"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

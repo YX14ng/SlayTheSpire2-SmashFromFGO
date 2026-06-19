@@ -19,7 +19,7 @@ public sealed class MobileWall() : MashShielderCard(1, CardType.Skill, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<MobileWallPower>(Owner.Creature, DynamicVars["MobileWall"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<MobileWallPower>(choiceContext, Owner.Creature, DynamicVars["MobileWall"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

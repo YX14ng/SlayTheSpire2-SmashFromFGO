@@ -40,7 +40,7 @@ public sealed class ShieldRam() : MashShielderCard(1, CardType.Attack, CardRarit
 
         if (critReady && !cardPlay.Target.IsDead)
         {
-            await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
         }
     }
 

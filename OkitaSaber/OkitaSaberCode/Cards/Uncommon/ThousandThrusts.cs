@@ -22,7 +22,7 @@ public sealed class ThousandThrusts() : OkitaCard(1, CardType.Power, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<ThousandThrustsPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<ThousandThrustsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
             power.StarsGain = DynamicVars["Stars"].IntValue;

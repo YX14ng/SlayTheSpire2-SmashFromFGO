@@ -46,7 +46,7 @@ public sealed class RoadlessCamelot() : MorganCard(2, CardType.Attack, CardRarit
                 await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
             }
         }
-        await PowerCmd.Apply<OverchargeBlessingPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<OverchargeBlessingPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

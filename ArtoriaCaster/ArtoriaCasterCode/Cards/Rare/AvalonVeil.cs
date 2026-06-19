@@ -21,11 +21,11 @@ public sealed class AvalonVeil() : ArtoriaCard(2, CardType.Skill, CardRarity.Rar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<AntiPurgePower>(Owner.Creature, DynamicVars["AntiPurge"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<AntiPurgePower>(choiceContext, Owner.Creature, DynamicVars["AntiPurge"].BaseValue, Owner.Creature, this);
 
         // Co-op: el velo de Avalon ampara a todo el party con 1 Anti-Purga (se auto-capea a 5).
         await ForEachAlly(async ally =>
-            await PowerCmd.Apply<AntiPurgePower>(ally, 1m, Owner.Creature, this));
+            await PowerCmd.Apply<AntiPurgePower>(choiceContext, ally, 1m, Owner.Creature, this));
     }
 
     protected override void OnUpgrade()

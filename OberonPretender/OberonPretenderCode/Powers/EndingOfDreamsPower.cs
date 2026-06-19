@@ -56,13 +56,13 @@ public sealed class EndingOfDreamsPower : OberonPower
         return Task.CompletedTask;
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != Owner.Side || Owner.IsDead) return;
         Flash();
 
         // El Sueño Eterno: no robás el próximo turno.
-        await PowerCmd.Apply<NoDrawNextTurnPower>(Owner, 1m, Owner, null);
+        await PowerCmd.Apply<NoDrawNextTurnPower>(choiceContext, Owner, 1m, Owner, null);
 
         // Perdés todos los Poderes positivos. Cleanse.RemoveBuffs preserva las formas (FormPower) y los
         // RECURSOS (IResourcePower: NP/Estrellas/Sobrecarga), que antes el strip por TypeForCurrentAmount
@@ -94,7 +94,7 @@ public sealed class NoDrawNextTurnPower : OberonPower
         return 0m;
     }
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         // Se aplicó en el AfterTurnEnd del jugador; el primer inicio de turno (enemigo) lo arma para
         // que el robo del PRÓXIMO turno propio sea el que se anula (ModifyHandDraw → 0).

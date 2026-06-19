@@ -34,7 +34,7 @@ public sealed class DragonHunterStrike() : SiegfriedCard(1, CardType.Attack, Car
             .Execute(choiceContext);
         if (IsUpgraded)
         {
-            await PowerCmd.Apply<SiegfriedTemporaryStrengthPower>(Owner.Creature, 2m, Owner.Creature, this);
+            await PowerCmd.Apply<SiegfriedTemporaryStrengthPower>(choiceContext, Owner.Creature, 2m, Owner.Creature, this);
         }
     }
 

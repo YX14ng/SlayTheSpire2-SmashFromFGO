@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -32,7 +33,7 @@ public sealed class ExtraordinaryTax() : MorganCard(1, CardType.Skill, CardRarit
             }
         }
 
-        var cursed = Curses.CursedEnemies(Owner.Creature.CombatState, Owner.Creature);
+        var cursed = Curses.CursedEnemies((CombatState)Owner.Creature.CombatState, Owner.Creature);
         if (cursed > 0)
         {
             await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue * cursed);

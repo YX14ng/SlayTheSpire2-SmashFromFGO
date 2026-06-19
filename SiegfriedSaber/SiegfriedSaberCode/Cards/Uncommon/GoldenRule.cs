@@ -27,10 +27,10 @@ public sealed class GoldenRule() : SiegfriedCard(1, CardType.Power, CardRarity.U
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<GoldenRulePower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<GoldenRulePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (IsUpgraded)
         {
-            await PowerCmd.Apply<StrengthPower>(Owner.Creature, 1m, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         }
     }
 }

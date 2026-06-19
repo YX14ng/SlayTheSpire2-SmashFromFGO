@@ -17,7 +17,7 @@ public sealed class TennenRishinBreath() : OkitaCard(2, CardType.Power, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<TennenRishinBreathPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<TennenRishinBreathPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1); // 2 -> 1

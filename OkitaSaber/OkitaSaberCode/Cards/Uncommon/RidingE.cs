@@ -19,7 +19,7 @@ public sealed class RidingE() : OkitaCard(1, CardType.Power, CardRarity.Uncommon
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<RidingEPower>(Owner.Creature, DynamicVars["Stars"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<RidingEPower>(choiceContext, Owner.Creature, DynamicVars["Stars"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Stars"].UpgradeValueBy(5m); // +5 -> +10

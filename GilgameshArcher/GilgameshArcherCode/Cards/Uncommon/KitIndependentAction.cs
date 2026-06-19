@@ -19,7 +19,7 @@ public sealed class KitIndependentAction() : GilgameshCard(1, CardType.Power, Ca
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<IndependentActionPower>(Owner.Creature, DynamicVars["Action"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<IndependentActionPower>(choiceContext, Owner.Creature, DynamicVars["Action"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Action"].UpgradeValueBy(3m);

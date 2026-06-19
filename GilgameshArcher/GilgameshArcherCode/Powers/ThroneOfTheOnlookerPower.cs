@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using FGOCore.FGOCoreCode.Np;
@@ -26,7 +28,7 @@ public sealed class ThroneOfTheOnlookerPower : GilgameshPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side == Owner.Side && Owner.Block == 0)
         {

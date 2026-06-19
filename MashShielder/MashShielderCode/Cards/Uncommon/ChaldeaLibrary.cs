@@ -18,7 +18,7 @@ public sealed class ChaldeaLibrary() : MashShielderCard(2, CardType.Power, CardR
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<ChaldeaLibraryPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<ChaldeaLibraryPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

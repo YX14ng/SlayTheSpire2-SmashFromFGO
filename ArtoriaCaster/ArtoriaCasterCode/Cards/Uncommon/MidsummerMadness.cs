@@ -21,7 +21,7 @@ public sealed class MidsummerMadness() : ArtoriaCard(1, CardType.Power, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<MidsummerMadnessPower>(Owner.Creature, DynamicVars["Stacks"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<MidsummerMadnessPower>(choiceContext, Owner.Creature, DynamicVars["Stacks"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

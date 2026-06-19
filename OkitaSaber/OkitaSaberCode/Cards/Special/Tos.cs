@@ -30,7 +30,7 @@ public sealed class Tos() : OkitaCard(0, CardType.Status, CardRarity.Status, Tar
     public override bool HasTurnEndInHandEffect => true;
 
     // Mientras esté en tu mano, al fin de tu turno drena 1 Aliento.
-    public override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
+    protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
     {
         await Aliento.Spend(Owner.Creature, BreathDrain, this);
     }
@@ -44,7 +44,7 @@ public sealed class Tos() : OkitaCard(0, CardType.Status, CardRarity.Status, Tar
         if (creature.Player == null || creature.CombatState == null) return;
         var card = creature.CombatState.CreateCard<Tos>(creature.Player);
         CardCmd.PreviewCardPileAdd(
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, addedByPlayer: false), 0.8f);
+            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, creature.Player), 0.8f);
 
         foreach (var listener in Listeners.PowersOf<ILateBloomListener>(creature).ToList())
         {

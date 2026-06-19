@@ -27,7 +27,7 @@ public sealed class SummerFaerie() : ArtoriaCard(1, CardType.Skill, CardRarity.U
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
-        await PowerCmd.Apply<OverchargeBlessingPower>(Owner.Creature, DynamicVars["Blessing"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<OverchargeBlessingPower>(choiceContext, Owner.Creature, DynamicVars["Blessing"].BaseValue, Owner.Creature, this);
 
         // Co-op: un aliado aleatorio recibe el regalo del hada.
         var allies = Owner.RunState.Players.Where(p => p != Owner && !p.Creature.IsDead).ToList();

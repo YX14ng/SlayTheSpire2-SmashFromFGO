@@ -27,7 +27,7 @@ public sealed class ReplicaBarrage() : MorganCard(2, CardType.Attack, CardRarity
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
-        var hpHits = attack.Results.Count(r => r.UnblockedDamage > 0);
+        var hpHits = attack.Results.SelectMany(r => r).Count(r => r.UnblockedDamage > 0);
         if (hpHits > 0)
         {
             await NpCharge.Gain(Owner.Creature, hpHits * DynamicVars["NpCharge"].IntValue, this);

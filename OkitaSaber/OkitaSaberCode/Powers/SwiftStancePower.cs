@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 namespace OkitaSaber.OkitaSaberCode.Powers;
@@ -13,7 +14,7 @@ public sealed class SwiftStancePower : AttackDamageAdditivePower
 {
     // Aplica a TODOS tus Ataques (no requiere Crítico Listo): hereda BonusApplies() => true.
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (Owner.Side == side) await PowerCmd.Remove(this);
     }

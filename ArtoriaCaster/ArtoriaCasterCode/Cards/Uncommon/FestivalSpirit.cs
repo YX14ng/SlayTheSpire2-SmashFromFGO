@@ -24,7 +24,7 @@ public sealed class FestivalSpirit() : ArtoriaCard(1, CardType.Power, CardRarity
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<FestivalSpiritPower>(Owner.Creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<FestivalSpiritPower>(choiceContext, Owner.Creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
         var power = Owner.Creature.GetPowerInstances<FestivalSpiritPower>().FirstOrDefault();
         if (power != null)
         {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -48,10 +49,10 @@ public sealed class HaoriAsagi : OkitaRelic
         await base.BeforeCombatStartLate();
         _attackProcsThisTurn = 0;
         // Aliento inicial del combate (6) — el embudo arranca con margen para una Ráfaga.
-        await PowerCmd.Apply<AlientoPower>(Owner.Creature, AlientoPower.StartingBreath, Owner.Creature, null);
+        await PowerCmd.Apply<AlientoPower>(new BlockingPlayerChoiceContext(), Owner.Creature, AlientoPower.StartingBreath, Owner.Creature, null);
     }
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player) _attackProcsThisTurn = 0;
         return Task.CompletedTask;
@@ -67,7 +68,7 @@ public sealed class HaoriAsagi : OkitaRelic
     }
 
     // amount < 0 sobre CritReadyPower = un Crítico Listo CONSUMIDO (un crítico consumado) → +NP.
-    public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         if (amount >= 0m || power is not CritReadyPower || power.Owner != Owner.Creature) return;
         Flash();

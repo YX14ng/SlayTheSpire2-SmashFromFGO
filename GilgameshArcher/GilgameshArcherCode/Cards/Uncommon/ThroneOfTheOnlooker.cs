@@ -21,7 +21,7 @@ public sealed class ThroneOfTheOnlooker() : GilgameshCard(1, CardType.Power, Car
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<ThroneOfTheOnlookerPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<ThroneOfTheOnlookerPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
             power.Stars = DynamicVars["Stars"].IntValue;

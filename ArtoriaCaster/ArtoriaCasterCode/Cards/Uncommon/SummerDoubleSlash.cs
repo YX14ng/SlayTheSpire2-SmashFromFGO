@@ -37,7 +37,7 @@ public sealed class SummerDoubleSlash() : ArtoriaCard(1, CardType.Attack, CardRa
 
         if (Owner.Creature.HasPower<SummerBerserkerFormPower>() || Owner.Creature.HasPower<AvalonFormPower>())
         {
-            var hpHits = attack.Results.Count(r => r.UnblockedDamage > 0);
+            var hpHits = attack.Results.SelectMany(r => r).Count(r => r.UnblockedDamage > 0);
             if (hpHits > 0)
             {
                 await Stars.Gain(Owner.Creature, hpHits * DynamicVars["Stars"].IntValue, this);

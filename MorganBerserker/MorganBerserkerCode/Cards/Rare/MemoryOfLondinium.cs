@@ -47,7 +47,7 @@ public sealed class MemoryOfLondinium() : MorganCard(2, CardType.Attack, CardRar
 
         if (tier >= OverchargeTier)
         {
-            await PowerCmd.Apply<IntangiblePower>(Owner.Creature, 1m, Owner.Creature, this);
+            await PowerCmd.Apply<IntangiblePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         }
 
         var arms = DynamicVars.Cards.IntValue + (tier >= OverchargeTier ? 1 : 0);

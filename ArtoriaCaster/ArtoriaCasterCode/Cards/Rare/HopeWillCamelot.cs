@@ -46,7 +46,7 @@ public sealed class HopeWillCamelot() : ArtoriaCard(2, CardType.Attack, CardRari
         foreach (var player in Owner.RunState.Players)
         {
             if (player.Creature.IsDead) continue;
-            await PowerCmd.Apply<AntiPurgePower>(player.Creature, 1m, Owner.Creature, this);
+            await PowerCmd.Apply<AntiPurgePower>(choiceContext, player.Creature, 1m, Owner.Creature, this);
         }
     }
 

@@ -44,9 +44,9 @@ public abstract class MashFormPower : FormPower
     // así que zeroearlo en el hook de daño es seguro (anti-patrón de mutar-en-preview evitado).
     private int _pendingBunkerBonus;
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        await base.AfterSideTurnStart(side, combatState);
+        await base.AfterSideTurnStart(side, participants, combatState);
         if (side == CombatSide.Player)
         {
             _blockCardBonusUsed = false;
@@ -82,7 +82,7 @@ public abstract class MashFormPower : FormPower
         return Task.CompletedTask;
     }
 
-    public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (!ShielderPassive || side != CombatSide.Player || Owner.Block < ShielderEndTurnThreshold) return;
         Flash();

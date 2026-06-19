@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -49,7 +50,7 @@ public sealed class PeerlessCrownPower : SiegfriedPower, IDragonScalePierceListe
         if (Upgraded) await NpCharge.Gain(Owner, NpOnTrigger, null);
     }
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player) _consumedThisTurn = false;
         return Task.CompletedTask;

@@ -22,8 +22,8 @@ public sealed class HappyEndingPlan() : OberonCard(2, CardType.Power, CardRarity
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<HappyEndingPlanPower>(Owner.Creature, 1m, Owner.Creature, this);
-        await PowerCmd.Apply<OverchargeBlessingPower>(Owner.Creature, DynamicVars["Entry"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<HappyEndingPlanPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<OverchargeBlessingPower>(choiceContext, Owner.Creature, DynamicVars["Entry"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Entry"].UpgradeValueBy(1m);

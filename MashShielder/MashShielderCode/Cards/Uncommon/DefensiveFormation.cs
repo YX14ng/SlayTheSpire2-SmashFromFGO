@@ -16,7 +16,7 @@ public sealed class DefensiveFormation() : MashShielderCard(1, CardType.Skill, C
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<DefensiveFormationPower>(Owner.Creature, DynamicVars["DefensiveFormation"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<DefensiveFormationPower>(choiceContext, Owner.Creature, DynamicVars["DefensiveFormation"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

@@ -20,7 +20,7 @@ public static class Sleep
 
     /// <summary>Cantidad de enemigos vivos Dormidos (lo leen Sueno Ligero, Mientras el Mundo
     /// Duerme, etc.).</summary>
-    public static int SleepingEnemies(CombatState combatState, Creature ofPlayer)
+    public static int SleepingEnemies(ICombatState combatState, Creature ofPlayer)
     {
         var count = 0;
         foreach (var enemy in combatState.GetOpponentsOf(ofPlayer))
@@ -40,7 +40,7 @@ public static class Sleep
         if (HasInsomnia(target) || IsAsleep(target)) return false;
 
         await CreatureCmd.Stun(target);
-        await PowerCmd.Apply<SleepPower>(target, duration, applier, source);
+        await PowerCmd.Apply<SleepPower>(new BlockingPlayerChoiceContext(), target, duration, applier, source);
         return true;
     }
 }

@@ -27,7 +27,7 @@ public sealed class MakotoBanner : OkitaRelic
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritStarsPower>(), HoverTipFactory.FromPower<NpChargePower>()];
 
-    public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         if (amount <= 0m || power is not CritReadyPower || power.Owner != Owner.Creature || Owner.Creature.Player == null) return;
         Flash();

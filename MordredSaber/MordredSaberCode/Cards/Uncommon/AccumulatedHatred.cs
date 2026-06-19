@@ -1,4 +1,4 @@
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -21,7 +21,7 @@ public sealed class AccumulatedHatred() : MordredCard(1, CardType.Power, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<AccumulatedHatredPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<AccumulatedHatredPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null) power.MaxProcsPerTurn = DynamicVars["MaxProcs"].IntValue;
     }
 

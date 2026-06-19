@@ -27,7 +27,7 @@ public sealed class InfiniteInstant() : OkitaCard(2, CardType.Skill, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<IntangiblePower>(Owner.Creature, DynamicVars["Intangible"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<IntangiblePower>(choiceContext, Owner.Creature, DynamicVars["Intangible"].BaseValue, Owner.Creature, this);
         await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
         if (DynamicVars.Cards.IntValue > 0) await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
     }

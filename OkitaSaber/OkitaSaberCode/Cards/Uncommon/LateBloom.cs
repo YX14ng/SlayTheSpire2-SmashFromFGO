@@ -20,7 +20,7 @@ public sealed class LateBloom() : OkitaCard(1, CardType.Power, CardRarity.Uncomm
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<LateBloomPower>(Owner.Creature, DynamicVars["Stars"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<LateBloomPower>(choiceContext, Owner.Creature, DynamicVars["Stars"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Stars"].UpgradeValueBy(10m); // +20★ -> +30★

@@ -1,6 +1,7 @@
 using FGOCore.FGOCoreCode.Stars;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace MorganBerserker.MorganBerserkerCode.Powers;
@@ -22,7 +23,7 @@ public static class Crit
     {
         if (!CritStars.CanPay(c, CritStarsPower.CritCost)) return false;
         await CritStars.Gain(c, -CritStarsPower.CritCost, card);
-        await PowerCmd.Apply<CritReadyPower>(c, 1m, c, card);
+        await PowerCmd.Apply<CritReadyPower>(new BlockingPlayerChoiceContext(), c, 1m, c, card);
         return true;
     }
 }

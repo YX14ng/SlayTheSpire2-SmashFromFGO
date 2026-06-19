@@ -49,7 +49,7 @@ public sealed class RhongomyniadReplica() : MashShielderCard(3, CardType.Attack,
         await BlackBarrel.Hit(choiceContext, cardPlay.Target, damage, Owner.Creature, this);
         if (!cardPlay.Target.IsDead)
         {
-            await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
         }
     }
 

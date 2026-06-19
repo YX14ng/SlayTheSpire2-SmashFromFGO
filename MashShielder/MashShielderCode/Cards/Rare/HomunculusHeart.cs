@@ -18,7 +18,7 @@ public sealed class HomunculusHeart() : MashShielderCard(1, CardType.Power, Card
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<HomunculusHeartPower>(Owner.Creature, DynamicVars["HomunculusHeart"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<HomunculusHeartPower>(choiceContext, Owner.Creature, DynamicVars["HomunculusHeart"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

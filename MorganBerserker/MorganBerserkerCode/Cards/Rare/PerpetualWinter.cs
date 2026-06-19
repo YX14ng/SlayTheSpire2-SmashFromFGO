@@ -20,7 +20,7 @@ public sealed class PerpetualWinter() : MorganCard(3, CardType.Power, CardRarity
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<PerpetualWinterPower>(Owner.Creature, DynamicVars["Stacks"].BaseValue,
+        await PowerCmd.Apply<PerpetualWinterPower>(choiceContext, Owner.Creature, DynamicVars["Stacks"].BaseValue,
             Owner.Creature, this);
     }
 

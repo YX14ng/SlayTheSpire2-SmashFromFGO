@@ -33,12 +33,12 @@ public sealed class ChainsOfHeavenEnkidu() : GilgameshCard(2, CardType.Skill, Ca
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         if (RoyalTrait.IsDivine(cardPlay.Target))
         {
-            await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["DivineVulnerable"].BaseValue, Owner.Creature, this);
-            await PowerCmd.Apply<StrengthPower>(cardPlay.Target, -DynamicVars["StrengthLoss"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["DivineVulnerable"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, cardPlay.Target, -DynamicVars["StrengthLoss"].BaseValue, Owner.Creature, this);
         }
         else
         {
-            await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
         }
     }
 

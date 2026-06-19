@@ -26,9 +26,9 @@ public sealed class CigaretteLionPower : MordredPower
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritReadyPower>()];
 
-    public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        await base.AfterPowerAmountChanged(power, amount, applier, cardSource);
+        await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
         // Sólo nos importa que el owner GANE un Crítico Listo (amount > 0). Una copia roba 1 por
         // cada crítico obtenido; varias copias multiplican el robo (Counter).
         if (power is not CritReadyPower || power.Owner != Owner || amount <= 0) return;

@@ -46,7 +46,7 @@ public sealed class CoverPower : MashShielderPower
         await CreatureCmd.Damage(choiceContext, Owner, dmg, ValueProp.Move, dealer, null);
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (Owner.Side != side)
         {

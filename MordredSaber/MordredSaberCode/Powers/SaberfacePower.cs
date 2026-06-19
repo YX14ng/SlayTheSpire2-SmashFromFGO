@@ -29,7 +29,7 @@ public sealed class SaberfacePower : MordredPower
 
     private bool _firedThisTurn;
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == Owner.Side) _firedThisTurn = false;
         return Task.CompletedTask;

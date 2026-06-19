@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
@@ -37,20 +39,20 @@ public sealed class WeightOfExpectationsPower : SiegfriedPower
         return Task.CompletedTask;
     }
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player) _playedAttackThisTurn = false;
         return Task.CompletedTask;
     }
 
-    public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side == Owner.Side && !_playedAttackThisTurn)
         {
             for (var i = 0; i < System.Math.Min(Amount, MaxTriggersPerTurn); i++)
             {
                 await NpCharge.Gain(Owner, NpPerTrigger, null);
-                await PowerCmd.Apply<DragonScalesPower>(Owner, ScalesPerTrigger, Owner, null);
+                await PowerCmd.Apply<DragonScalesPower>(choiceContext, Owner, ScalesPerTrigger, Owner, null);
             }
             Flash();
         }

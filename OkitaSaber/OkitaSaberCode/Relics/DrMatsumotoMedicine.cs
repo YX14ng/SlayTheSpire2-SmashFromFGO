@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -37,7 +39,7 @@ public sealed class DrMatsumotoMedicine : OkitaRelic
         return base.BeforeCombatStartLate();
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != Owner.Creature.Side || _firedThisCombat) return;
         if (!HasTos(combatState)) return;
@@ -46,7 +48,7 @@ public sealed class DrMatsumotoMedicine : OkitaRelic
         await NpCharge.Gain(Owner.Creature, NpGain, null);
     }
 
-    private bool HasTos(CombatState combatState)
+    private bool HasTos(ICombatState combatState)
     {
         var player = Owner.Creature.Player;
         if (player == null) return false;

@@ -28,7 +28,7 @@ public sealed class FousMiracle() : MashShielderCard(1, CardType.Skill, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<FouMiraclePower>(Owner.Creature, DynamicVars["FouMiracle"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<FouMiraclePower>(choiceContext, Owner.Creature, DynamicVars["FouMiracle"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

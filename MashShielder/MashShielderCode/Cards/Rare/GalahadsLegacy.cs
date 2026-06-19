@@ -20,7 +20,7 @@ public sealed class GalahadsLegacy() : MashShielderCard(1, CardType.Skill, CardR
         {
             var card = CombatState.CreateCard<MoldCamelot>(Owner);
             card.UpgradeInternal();
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
+            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
         }
     }
 

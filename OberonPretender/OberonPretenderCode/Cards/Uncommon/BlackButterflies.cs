@@ -28,7 +28,7 @@ public sealed class BlackButterflies() : OberonCard(1, CardType.Attack, CardRari
             .TargetingRandomOpponents(Owner.Creature.CombatState)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        var hpHits = attack.Results.Count(r => r.UnblockedDamage > 0);
+        var hpHits = attack.Results.SelectMany(r => r).Count(r => r.UnblockedDamage > 0);
         if (hpHits > 0)
         {
             await NpCharge.Gain(Owner.Creature, hpHits * DynamicVars["ChargePerHit"].IntValue, this);

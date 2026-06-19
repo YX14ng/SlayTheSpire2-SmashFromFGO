@@ -18,7 +18,7 @@ public sealed class IronWill() : MashShielderCard(1, CardType.Power, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<IronWillPower>(Owner.Creature, DynamicVars["IronWill"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<IronWillPower>(choiceContext, Owner.Creature, DynamicVars["IronWill"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

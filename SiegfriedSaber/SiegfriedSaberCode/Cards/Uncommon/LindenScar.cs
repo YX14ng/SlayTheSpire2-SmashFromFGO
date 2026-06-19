@@ -50,7 +50,7 @@ public sealed class LindenScar() : SiegfriedCard(1, CardType.Power, CardRarity.U
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<LindenScarPower>(Owner.Creature, DynamicVars["Scar"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<LindenScarPower>(choiceContext, Owner.Creature, DynamicVars["Scar"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Scar"].UpgradeValueBy(5m);

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -32,7 +33,7 @@ public sealed class CardsThisTurnPower : GilgameshPower
     /// <summary>Cartas propias jugadas en el turno actual (las anteriores a la que se resuelve).</summary>
     public int Played { get; private set; }
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == Owner.Side) Played = 0;
         return Task.CompletedTask;
@@ -53,7 +54,7 @@ public sealed class CardsThisTurnPower : GilgameshPower
     {
         if (creature.GetPower<CardsThisTurnPower>() == null)
         {
-            await PowerCmd.Apply<CardsThisTurnPower>(creature, 1m, creature, null);
+            await PowerCmd.Apply<CardsThisTurnPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
         }
     }
 }

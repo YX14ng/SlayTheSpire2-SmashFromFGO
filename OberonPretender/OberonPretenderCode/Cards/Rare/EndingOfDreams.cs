@@ -26,7 +26,7 @@ public sealed class EndingOfDreams() : OberonCard(2, CardType.Skill, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<EndingOfDreamsPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<EndingOfDreamsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);

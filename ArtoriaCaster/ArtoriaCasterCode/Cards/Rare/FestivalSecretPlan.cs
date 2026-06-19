@@ -21,7 +21,7 @@ public sealed class FestivalSecretPlan() : ArtoriaCard(1, CardType.Skill, CardRa
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<OverchargeBlessingPower>(Owner.Creature, DynamicVars["Blessing"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<OverchargeBlessingPower>(choiceContext, Owner.Creature, DynamicVars["Blessing"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

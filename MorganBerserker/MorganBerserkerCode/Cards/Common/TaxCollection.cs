@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -19,12 +20,12 @@ public sealed class TaxCollection() : MorganCard(1, CardType.Skill, CardRarity.C
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<CursePower>()];
 
     protected override bool ShouldGlowGoldInternal =>
-        Curses.CursedEnemies(Owner.Creature.CombatState, Owner.Creature) > 0;
+        Curses.CursedEnemies((CombatState)Owner.Creature.CombatState, Owner.Creature) > 0;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var amount = DynamicVars["NpCharge"].IntValue;
-        if (Curses.CursedEnemies(Owner.Creature.CombatState, Owner.Creature) > 0)
+        if (Curses.CursedEnemies((CombatState)Owner.Creature.CombatState, Owner.Creature) > 0)
         {
             amount += DynamicVars["Bonus"].IntValue;
         }

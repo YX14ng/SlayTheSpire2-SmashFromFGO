@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 
 namespace SiegfriedSaber.SiegfriedSaberCode.Relics;
@@ -22,6 +23,6 @@ public sealed class RhinegoldShard : SiegfriedRelic
     {
         await base.BeforeCombatStartLate();
         Flash();
-        await PowerCmd.Apply<OverchargeBlessingPower>(Owner.Creature, BlessingStacks, Owner.Creature, null);
+        await PowerCmd.Apply<OverchargeBlessingPower>(new BlockingPlayerChoiceContext(), Owner.Creature, BlessingStacks, Owner.Creature, null);
     }
 }

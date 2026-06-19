@@ -17,7 +17,7 @@ public sealed class NightReading() : OberonCard(2, CardType.Power, CardRarity.Un
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<NightReadingPower>(Owner.Creature, DynamicVars["Draw"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<NightReadingPower>(choiceContext, Owner.Creature, DynamicVars["Draw"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);

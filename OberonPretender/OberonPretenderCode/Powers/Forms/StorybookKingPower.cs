@@ -23,9 +23,9 @@ public sealed class StorybookKingPower : OberonFormPower
 
     private bool _sweetenedThisTurn;
 
-    public override async Task AfterSideTurnStart(MegaCrit.Sts2.Core.Combat.CombatSide side, MegaCrit.Sts2.Core.Combat.CombatState combatState)
+    public override async Task AfterSideTurnStart(MegaCrit.Sts2.Core.Combat.CombatSide side, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Entities.Creatures.Creature> participants, MegaCrit.Sts2.Core.Combat.ICombatState combatState)
     {
-        await base.AfterSideTurnStart(side, combatState);
+        await base.AfterSideTurnStart(side, participants, combatState);
         if (side == MegaCrit.Sts2.Core.Combat.CombatSide.Player) _sweetenedThisTurn = false;
     }
 

@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -30,7 +31,7 @@ public sealed class RoyalPunishment() : MorganCard(2, CardType.Attack, CardRarit
     ];
 
     protected override bool ShouldGlowGoldInternal =>
-        Curses.MostCursed(Owner.Creature.CombatState, Owner.Creature) != null;
+        Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature) != null;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -39,7 +40,7 @@ public sealed class RoyalPunishment() : MorganCard(2, CardType.Attack, CardRarit
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);
-        await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
         if (cursed)
         {
             await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);

@@ -16,7 +16,7 @@ public sealed class EventSaturation() : OkitaCard(2, CardType.Skill, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<EventSaturationPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<EventSaturationPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1); // 2 -> 1

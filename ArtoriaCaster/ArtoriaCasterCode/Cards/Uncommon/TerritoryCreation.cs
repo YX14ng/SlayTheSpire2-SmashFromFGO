@@ -26,7 +26,7 @@ public sealed class TerritoryCreation() : ArtoriaCard(1, CardType.Power, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<TerritoryCreationPower>(Owner.Creature, DynamicVars["Stacks"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<TerritoryCreationPower>(choiceContext, Owner.Creature, DynamicVars["Stacks"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

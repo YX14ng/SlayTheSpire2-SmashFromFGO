@@ -25,7 +25,7 @@ public sealed class AbsoluteWall() : MashShielderCard(2, CardType.Skill, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<AbsoluteWallPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<AbsoluteWallPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

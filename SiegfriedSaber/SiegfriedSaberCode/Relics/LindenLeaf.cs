@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -48,10 +49,10 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer
         await base.BeforeCombatStartLate();
         _piercedThisTurn = false;
         _npProcsThisTurn = 0;
-        await PowerCmd.Apply<DragonScalesPower>(Owner.Creature, StartingScales, Owner.Creature, null);
+        await PowerCmd.Apply<DragonScalesPower>(new BlockingPlayerChoiceContext(), Owner.Creature, StartingScales, Owner.Creature, null);
     }
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player)
         {

@@ -1,4 +1,4 @@
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -24,7 +24,7 @@ public sealed class KnightOfRedLightningAPlus() : MordredCard(2, CardType.Power,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<KnightOfRedLightningPower>(Owner.Creature, DynamicVars["Attack"].BaseValue, Owner.Creature, this);
+        var power = await PowerCmd.Apply<KnightOfRedLightningPower>(choiceContext, Owner.Creature, DynamicVars["Attack"].BaseValue, Owner.Creature, this);
         if (power != null) power.CritBonus = DynamicVars["CritBonus"].IntValue;
     }
 

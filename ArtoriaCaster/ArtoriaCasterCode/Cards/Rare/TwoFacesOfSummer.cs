@@ -27,7 +27,7 @@ public sealed class TwoFacesOfSummer() : ArtoriaCard(1, CardType.Power, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<TwoFacesOfSummerPower>(Owner.Creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<TwoFacesOfSummerPower>(choiceContext, Owner.Creature, DynamicVars["Power"].BaseValue, Owner.Creature, this);
         var power = Owner.Creature.GetPowerInstances<TwoFacesOfSummerPower>().FirstOrDefault();
         if (power != null)
         {

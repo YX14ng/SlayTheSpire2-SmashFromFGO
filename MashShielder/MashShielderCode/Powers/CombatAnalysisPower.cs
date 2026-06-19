@@ -34,7 +34,7 @@ public sealed class CombatAnalysisPower : MashShielderPower
         await CritStars.Gain(Owner, Amount, null);
     }
 
-    public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         if (amount <= 0m || power is not CritReadyPower || power.Owner != Owner || Owner.Player == null) return;
         Flash();

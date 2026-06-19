@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using SiegfriedSaber.SiegfriedSaberCode.Powers;
 
@@ -24,6 +25,6 @@ public sealed class FafnirHeartblood : SiegfriedRelic
     public override async Task BeforeCombatStartLate()
     {
         await base.BeforeCombatStartLate();
-        await PowerCmd.Apply<BaptismOfFafnirPower>(Owner.Creature, NpPerPierce, Owner.Creature, null);
+        await PowerCmd.Apply<BaptismOfFafnirPower>(new BlockingPlayerChoiceContext(), Owner.Creature, NpPerPierce, Owner.Creature, null);
     }
 }

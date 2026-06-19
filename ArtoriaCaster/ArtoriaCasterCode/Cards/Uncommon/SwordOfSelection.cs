@@ -27,8 +27,8 @@ public sealed class SwordOfSelection() : ArtoriaCard(2, CardType.Skill, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<AntiPurgePower>(Owner.Creature, DynamicVars["AntiPurge"].BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<NextAttackBoostPower>(Owner.Creature, DynamicVars["Boost"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<AntiPurgePower>(choiceContext, Owner.Creature, DynamicVars["AntiPurge"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<NextAttackBoostPower>(choiceContext, Owner.Creature, DynamicVars["Boost"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

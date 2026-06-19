@@ -26,7 +26,7 @@ public sealed class FaerieGaze() : ArtoriaCard(0, CardType.Skill, CardRarity.Com
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
         if (DynamicVars["Stars"].IntValue > 0)
         {
             await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);

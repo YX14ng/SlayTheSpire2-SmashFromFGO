@@ -4,6 +4,7 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using MorganBerserker.MorganBerserkerCode.Powers;
 
@@ -43,10 +44,10 @@ public partial class MainFile : Node
         if (creature.HasPower<NpManifestedPower>()) return;
 
         // Marker: la Sentencia ya se disparó este pico (se re-arma al bajar < 100).
-        await PowerCmd.Apply<NpManifestedPower>(creature, 1m, creature, null);
+        await PowerCmd.Apply<NpManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
 
         // Un Crítico gratis (próximo Ataque Buster ×2) + un lote de Estrellas para más críticos.
-        await PowerCmd.Apply<CritReadyPower>(creature, 1m, creature, null);
+        await PowerCmd.Apply<CritReadyPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
         await CritStars.Gain(creature, 40, null);
 
         // Devuelve recursos: arranca el turno grande, no lo reemplaza (modelo Phrolova).

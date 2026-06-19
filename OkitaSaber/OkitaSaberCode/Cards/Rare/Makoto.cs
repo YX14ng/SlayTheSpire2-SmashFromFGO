@@ -21,7 +21,7 @@ public sealed class Makoto() : OkitaCard(2, CardType.Power, CardRarity.Rare, Tar
         // Amount = 1 (marcador Single): PowerCmd.Apply retorna temprano con 0m y un Counter en 0
         // se auto-removería. El bono real arranca en 0 y vive en MakotoPower.Bonus (+2 por umbral
         // de 100★, capeado al Cap).
-        var power = await PowerCmd.Apply<MakotoPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<MakotoPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null) power.Cap = IsUpgraded ? MakotoPower.MaxBonusUpgraded : MakotoPower.MaxBonus;
     }
 }

@@ -22,7 +22,7 @@ public sealed class InterestInMyFavor() : OberonCard(2, CardType.Power, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var power = await PowerCmd.Apply<InterestInMyFavorPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var power = await PowerCmd.Apply<InterestInMyFavorPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
             power.Charge = DynamicVars["Charge"].IntValue;

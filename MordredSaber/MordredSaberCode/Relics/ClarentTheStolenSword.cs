@@ -55,10 +55,10 @@ public sealed class ClarentTheStolenSword : MordredRelic, ICritConsumedListener
         // Forma inicial: Enmascarado (source == null → no cuenta como "cambio de forma").
         await Forms.Enter<MaskedKnightFormPower>(null, Owner.Creature, null);
         // Watcher del motor ★→×2→NP (la pieza que detecta el consumo de Crítico Listo).
-        await PowerCmd.Apply<RedLightningChannelPower>(Owner.Creature, 1m, Owner.Creature, null, silent: true);
+        await PowerCmd.Apply<RedLightningChannelPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null, silent: true);
     }
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player)
         {

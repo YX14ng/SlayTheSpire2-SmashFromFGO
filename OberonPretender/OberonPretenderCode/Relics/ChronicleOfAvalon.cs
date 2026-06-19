@@ -2,6 +2,7 @@ using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using OberonPretender.OberonPretenderCode.Character;
 using OberonPretender.OberonPretenderCode.Extensions;
@@ -51,6 +52,6 @@ public sealed class ChronicleOfAvalon : BondRelic
 
     protected override async Task ApplyCapstone()
     {
-        await PowerCmd.Apply<OverchargeBlessingPower>(Owner.Creature, CapstoneBlessing, Owner.Creature, null);
+        await PowerCmd.Apply<OverchargeBlessingPower>(new BlockingPlayerChoiceContext(), Owner.Creature, CapstoneBlessing, Owner.Creature, null);
     }
 }

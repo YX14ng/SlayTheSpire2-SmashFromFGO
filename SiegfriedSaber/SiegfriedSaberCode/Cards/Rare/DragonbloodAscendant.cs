@@ -20,8 +20,8 @@ public sealed class DragonbloodAscendant() : SiegfriedCard(2, CardType.Power, Ca
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<MaturingScalesPower>(Owner.Creature, DynamicVars["ScalesPerTurn"].IntValue, Owner.Creature, this);
-        await PowerCmd.Apply<DragonScalesPower>(Owner.Creature, DynamicVars["Entry"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<MaturingScalesPower>(choiceContext, Owner.Creature, DynamicVars["ScalesPerTurn"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<DragonScalesPower>(choiceContext, Owner.Creature, DynamicVars["Entry"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

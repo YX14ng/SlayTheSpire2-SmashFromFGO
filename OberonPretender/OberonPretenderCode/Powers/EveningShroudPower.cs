@@ -31,7 +31,7 @@ public sealed class EveningShroudPower : OberonPower
         return 1m + BonusPct / 100m;
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != Owner.Side || Owner.IsDead) return;
         await PowerCmd.Decrement(this);

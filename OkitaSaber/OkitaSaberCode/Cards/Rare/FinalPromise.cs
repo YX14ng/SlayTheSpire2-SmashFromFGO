@@ -21,7 +21,7 @@ public sealed class FinalPromise() : OkitaCard(1, CardType.Skill, CardRarity.Rar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<GutsPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<GutsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 

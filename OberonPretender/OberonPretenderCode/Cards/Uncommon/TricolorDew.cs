@@ -37,8 +37,8 @@ public sealed class TricolorDew() : OberonCard(1, CardType.Skill, CardRarity.Unc
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var extra = ItemConstructionPower.ExtraDebuffStacks(Owner.Creature);
-        await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars["Weak"].BaseValue + extra, Owner.Creature, this);
-        await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars["Vulnerable"].BaseValue + extra, Owner.Creature, this);
+        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue + extra, Owner.Creature, this);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue + extra, Owner.Creature, this);
 
         await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
 

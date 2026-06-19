@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace OkitaSaber.OkitaSaberCode.Powers;
@@ -70,7 +73,7 @@ public sealed class AlientoPower : OkitaPower
         }
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != Owner.Side) return;
         HitZeroThisTurn = false;
@@ -79,7 +82,7 @@ public sealed class AlientoPower : OkitaPower
         if (gain > 0)
         {
             Flash();
-            await PowerCmd.ModifyAmount(this, gain, Owner, null);
+            await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), this, gain, Owner, null);
         }
     }
 }

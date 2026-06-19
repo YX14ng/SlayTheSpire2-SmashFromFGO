@@ -16,7 +16,7 @@ public sealed class KitDivinity() : GilgameshCard(2, CardType.Power, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<DivinityPower>(Owner.Creature, DynamicVars["Divinity"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<DivinityPower>(choiceContext, Owner.Creature, DynamicVars["Divinity"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Divinity"].UpgradeValueBy(1m);

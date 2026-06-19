@@ -5,6 +5,7 @@ using MashShielder.MashShielderCode.Extensions;
 using MashShielder.MashShielderCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 
 namespace MashShielder.MashShielderCode.Relics;
@@ -29,6 +30,6 @@ public sealed class MashBond : BondRelic
 
     protected override async Task ApplyCapstone()
     {
-        await PowerCmd.Apply<FouMiraclePower>(Owner.Creature, 1, Owner.Creature, null);
+        await PowerCmd.Apply<FouMiraclePower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1, Owner.Creature, null);
     }
 }

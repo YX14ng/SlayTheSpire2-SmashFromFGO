@@ -22,7 +22,7 @@ public sealed class BakumatsuSpirit() : OkitaCard(3, CardType.Power, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<BakumatsuSpiritPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<BakumatsuSpiritPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1); // 3 -> 2

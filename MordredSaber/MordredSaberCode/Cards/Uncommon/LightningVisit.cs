@@ -1,4 +1,4 @@
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -33,7 +33,7 @@ public sealed class LightningVisit() : MordredCard(0, CardType.Skill, CardRarity
         {
             await Forms.Enter<MaskedKnightFormPower>(choiceContext, Owner.Creature, this);
         }
-        var ret = await PowerCmd.Apply<LightningVisitReturnPower>(Owner.Creature, 1m, Owner.Creature, this);
+        var ret = await PowerCmd.Apply<LightningVisitReturnPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (ret != null)
         {
             ret.ReturnToMasked = wasMasked;

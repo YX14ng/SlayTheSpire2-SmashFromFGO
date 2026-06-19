@@ -23,8 +23,8 @@ public sealed class Tarnkappe() : SiegfriedCard(2, CardType.Power, CardRarity.An
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<DragonScalesPower>(Owner.Creature, DynamicVars["Scales"].IntValue, Owner.Creature, this);
-        await PowerCmd.Apply<TarnkappePower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<DragonScalesPower>(choiceContext, Owner.Creature, DynamicVars["Scales"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<TarnkappePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Scales"].UpgradeValueBy(2m);

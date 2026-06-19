@@ -14,14 +14,14 @@ public sealed class DistantUtopiaCastle() : MashShielderCard(3, CardType.Power, 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<DistantUtopiaCastlePower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<DistantUtopiaCastlePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
 
         // Co-op (la party entera se atrinchera tras la muralla): cada aliado vivo conserva TODO su
         // Bloqueo entre turnos. El power opera sobre su propio Owner (ShouldClearBlock/RetentionCap
         // referencian su portador). En 1 jugador el foreach queda vacío (idéntico a hoy).
         foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
         {
-            await PowerCmd.Apply<DistantUtopiaCastlePower>(ally, 1m, Owner.Creature, this);
+            await PowerCmd.Apply<DistantUtopiaCastlePower>(choiceContext, ally, 1m, Owner.Creature, this);
         }
     }
 

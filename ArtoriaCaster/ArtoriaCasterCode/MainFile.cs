@@ -48,11 +48,11 @@ public partial class MainFile : Node
 
         // Marker: la ventana ya se abrió este COMBATE. No se remueve al bajar < 100,
         // así que recargar el medidor el mismo combate no vuelve a repartir el paquete.
-        await PowerCmd.Apply<NpManifestedPower>(creature, 1m, creature, null);
-        await PowerCmd.Apply<AroundCaliburnWindowPower>(creature, 1m, creature, null);
+        await PowerCmd.Apply<NpManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+        await PowerCmd.Apply<AroundCaliburnWindowPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
 
         // Around Caliburn (soporte de Castoria): estrellas para cobrar + protección.
-        await PowerCmd.Apply<AntiPurgePower>(creature, 1m, creature, null);
+        await PowerCmd.Apply<AntiPurgePower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
         await Stars.Gain(creature, 6, null);
 
         // Devuelve recursos: arranca el turno grande, no lo reemplaza (modelo Phrolova).

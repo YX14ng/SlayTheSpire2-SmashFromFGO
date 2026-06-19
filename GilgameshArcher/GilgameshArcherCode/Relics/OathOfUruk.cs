@@ -6,6 +6,7 @@ using GilgameshArcher.GilgameshArcherCode.Extensions;
 using GilgameshArcher.GilgameshArcherCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 
 namespace GilgameshArcher.GilgameshArcherCode.Relics;
@@ -55,6 +56,6 @@ public sealed class OathOfUruk : BondRelic
     // Nv 10 «El Rey de los Héroes»: el primer golpe ya es el juicio despectivo.
     protected override async Task ApplyCapstone()
     {
-        await PowerCmd.Apply<CritReadyPower>(Owner.Creature, 1m, Owner.Creature, null);
+        await PowerCmd.Apply<CritReadyPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null);
     }
 }

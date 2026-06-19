@@ -32,13 +32,13 @@ public sealed class RecitalOfCreationPower : GilgameshPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritReadyPower>(), HoverTipFactory.FromPower<NpChargePower>()];
 
-    public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        await base.AfterPowerAmountChanged(power, amount, applier, cardSource);
+        await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
         if (amount <= 0m || power is not EnumaManifestedPower || power.Owner != Owner || Owner.Player == null) return;
 
         Flash();
-        await PowerCmd.Apply<CritReadyPower>(Owner, Amount, Owner, null);
-        await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), DrawPerManifest, Owner.Player);
+        await PowerCmd.Apply<CritReadyPower>(choiceContext, Owner, Amount, Owner, null);
+        await CardPileCmd.Draw(choiceContext, DrawPerManifest, Owner.Player);
     }
 }

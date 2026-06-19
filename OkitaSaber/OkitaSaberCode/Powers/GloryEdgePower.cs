@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 
@@ -19,7 +20,7 @@ public sealed class GloryEdgePower : AttackDamageAdditivePower
     // Solo el golpe que va a criticar (hay un Crítico Listo en cola) recibe el bono.
     protected override bool BonusApplies() => Owner.GetPowerAmount<CritReadyPower>() > 0;
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (Owner.Side == side) await PowerCmd.Remove(this);
     }

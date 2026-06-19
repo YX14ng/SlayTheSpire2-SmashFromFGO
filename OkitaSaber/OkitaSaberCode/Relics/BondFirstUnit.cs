@@ -2,6 +2,7 @@ using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using OkitaSaber.OkitaSaberCode.Character;
 using OkitaSaber.OkitaSaberCode.Extensions;
@@ -63,6 +64,6 @@ public sealed class BondFirstUnit : BondRelic
 
     protected override async Task ApplyCapstone()
     {
-        await PowerCmd.Apply<GutsPower>(Owner.Creature, 1, Owner.Creature, null);
+        await PowerCmd.Apply<GutsPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1, Owner.Creature, null);
     }
 }

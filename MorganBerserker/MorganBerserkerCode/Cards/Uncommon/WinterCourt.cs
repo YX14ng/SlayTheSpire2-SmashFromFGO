@@ -26,10 +26,10 @@ public sealed class WinterCourt() : MorganCard(2, CardType.Power, CardRarity.Unc
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<WinterCourtPower>(Owner.Creature, DynamicVars["Stacks"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<WinterCourtPower>(choiceContext, Owner.Creature, DynamicVars["Stacks"].BaseValue, Owner.Creature, this);
         if (IsUpgraded)
         {
-            await PowerCmd.Apply<WinterCourtDrawPower>(Owner.Creature, 1m, Owner.Creature, this);
+            await PowerCmd.Apply<WinterCourtDrawPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         }
     }
 
