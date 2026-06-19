@@ -6,18 +6,7 @@ About this mod:
 - In co-op, she can shield and protect her allies, not only herself.
 - A custom Affinity (Bond) relic that grows stronger the more you play her.
 
-Requires: FGO Core (library) + BaseLib — subscribe to both.
+Requires: FGO Core (library) + BaseLib - subscribe to both.
 Localization: English, Spanish, Simplified Chinese.
 
-──────────────────────────────
-
-《Fate/Grand Order》的盾兵——玛修·基列莱特，作为可玩角色登场。基于 BaseLib 框架与 FGO 核心库开发。
-
-模组介绍：
-- 新增玛修为完整可玩、带完整动画的角色，拥有专属卡池与初始遗物。
-- 以「壁垒」（格挡保留）与其宝具「Lord Camelot」为核心的防御流玩法：把层层格挡转化为伤害。
-- 在合作模式中，她不仅能保护自己，还能为队友提供护盾与守护。
-- 专属「羁绊」遗物，随你使用她的次数越多而越强。
-
-前置：FGO 核心库 + BaseLib —— 两个都要订阅。
-本地化支持：英语、西班牙语、简体中文。
+Made with the help of Claude Code.

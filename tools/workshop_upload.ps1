@@ -58,16 +58,14 @@ foreach ($m in $targets) {
     Copy-Item (Join-Path $src "$m.json") $dst
     Copy-Item (Join-Path $src "$m.pck")  $dst
 
-    # preview = el mod_image del mod
-    $preview = Join-Path $stage "$m\preview.png"
-    $imgSrc  = Join-Path $repo "$m\$m\mod_image.png"
-    if (Test-Path $imgSrc) { Copy-Item $imgSrc $preview -Force } else { $preview = "" }
-
-    # descripcion (EN + 简体中文) desde archivo; sin comillas dobles para no romper el VDF
+    # descripcion DEFAULT (ingles) desde archivo; sin comillas dobles para no romper el VDF.
+    # NOTA: SteamCMD solo setea UNA descripcion (la default/ingles). Las descripciones por
+    # idioma (es/zh) se ponen aparte (editor web o herramienta Steamworks).
+    # PREVIEW: NO se toca aca a proposito -- el usuario puso fondos/iconos a mano en la web;
+    # re-subir el preview los pisaria.
     $descFile = Join-Path $descDir "$m.txt"
     if (-not (Test-Path $descFile)) { throw "Falta la descripcion: $descFile" }
     $desc = ([System.IO.File]::ReadAllText($descFile)).Trim() -replace '"', "'"
-    $prevLine = if ($preview) { "    `"previewfile`" `"$($preview -replace '\\','\\')`"`n" } else { "" }
 
     $vdf = Join-Path $stage "$m\item.vdf"
     $vdfContent = @"
@@ -76,7 +74,7 @@ foreach ($m in $targets) {
     "appid" "$appid"
     "publishedfileid" "$id"
     "contentfolder" "$($content -replace '\\','\\')"
-$prevLine    "visibility" "$Visibility"
+    "visibility" "$Visibility"
     "title" "$($titles[$m])"
     "description" "$desc"
     "changenote" "Subida via workshop_upload.ps1"
