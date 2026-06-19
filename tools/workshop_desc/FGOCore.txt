@@ -1,9 +1,14 @@
-A shared mechanics library for the Fate/Grand Order Servant character mods, built on the BaseLib framework.
+The shared mechanics library that powers the Fate/Grand Order Servant character mods. Built on the BaseLib framework, it gives every FGO Servant a common foundation so they feel like they belong to the same roster.
 
-About this mod:
-- Provides the core systems every FGO Servant shares: the NP / Overcharge gauge, Form (stance) switching, Bulwark block-retention, Bond affinity bonuses, and Critical Stars.
-- This is a LIBRARY: it adds no playable character on its own. It is REQUIRED by the FGO Servant mods (Mash Kyrielight, Morgan, Artoria Caster, and more).
-- Also requires BaseLib - subscribe to it as well.
+What it provides:
+- NP / Overcharge gauge: a charge meter (0-300) that builds as you fight and unleashes each Servant's Noble Phantasm and overcharge effects.
+- Form switching: stance/aspect changes mid-combat (e.g. Berserker to Caster), each form rewriting how the Servant plays.
+- Bulwark: block that is retained between turns instead of vanishing.
+- Bond (affinity): relics that lift a Servant's damage, block and regen the more you play them.
+- Critical Stars and Curses: shared FGO resources used across the cast.
+- A handful of colorless "FGO meme" cards.
+
+This is a LIBRARY - it adds no playable character on its own, and is REQUIRED by every FGO Servant mod (Mash Kyrielight, Morgan, Artoria Caster, and more). Also requires BaseLib.
 
 Localization: English, Spanish, Simplified Chinese.
 

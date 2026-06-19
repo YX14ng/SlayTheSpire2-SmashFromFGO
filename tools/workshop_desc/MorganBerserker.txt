@@ -1,10 +1,11 @@
-Morgan, the Fairy Queen of Fate/Grand Order, as a playable character. Built on the BaseLib framework and the FGO Core library.
+Morgan, the Fairy Queen of Fate/Grand Order - the tyrant who built Britain on sixty years of vengeance - as a fully playable, fully animated character. Built on the BaseLib framework and the FGO Core library.
 
-About this mod:
-- Adds Morgan as a fully playable, fully animated character.
-- A Buster-crit and Curse playstyle: stack critical power and bury your enemies in Curses.
-- Switch forms mid-combat between her Berserker and Caster aspects.
-- Her Noble Phantasm, Roadless Camelot: the ideal land that can no longer be reached.
+What it adds:
+- A complete character with her own card pool and starting relic.
+- A Buster-crit and Curse playstyle: stack critical power to land devastating attacks, while burying your enemies under stacks of Curse that bleed them every turn.
+- Form switching: shift mid-combat between her Berserker and Caster (Winter Queen) aspects, each one reshaping her deck and her authority.
+- Her Noble Phantasm, Roadless Camelot - "the ideal land that can no longer be reached."
+- Royal relics and curse-payoff cards that reward a patient, escalating game.
 
 Requires: FGO Core (library) + BaseLib.
 Localization: English, Spanish, Simplified Chinese.
