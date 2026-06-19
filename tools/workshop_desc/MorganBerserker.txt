@@ -1,0 +1,23 @@
+Morgan, the Fairy Queen of Fate/Grand Order, as a playable character. Built on the BaseLib framework and the FGO Core library.
+
+About this mod:
+- Adds Morgan as a fully playable, fully animated character.
+- A Buster-crit and Curse playstyle: stack critical power and bury your enemies in Curses.
+- Switch forms mid-combat between her Berserker and Caster aspects.
+- Her Noble Phantasm: the reign of the Queen of the Winter Kingdom.
+
+Requires: FGO Core (library) + BaseLib.
+Localization: English, Spanish, Simplified Chinese.
+
+──────────────────────────────
+
+《Fate/Grand Order》的妖精之女王——摩根，作为可玩角色登场。基于 BaseLib 框架与 FGO 核心库开发。
+
+模组介绍：
+- 新增摩根为完整可玩、带完整动画的角色。
+- 以「Buster 暴击」与「诅咒」为核心的玩法：叠加暴击威力，将敌人埋进诅咒之中。
+- 战斗中可在「狂战士」与「Caster」两种形态间切换。
+- 其宝具：冬之王国女王的统治。
+
+前置：FGO 核心库 + BaseLib。
+本地化支持：英语、西班牙语、简体中文。

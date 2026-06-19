@@ -1,0 +1,19 @@
+A shared mechanics library for the Fate/Grand Order Servant character mods, built on the BaseLib framework.
+
+About this mod:
+- Provides the core systems every FGO Servant shares: the NP / Overcharge gauge, Form (stance) switching, Bulwark block-retention, Bond affinity bonuses, and Critical Stars.
+- This is a LIBRARY: it adds no playable character on its own. It is REQUIRED by the FGO Servant mods (Mash Kyrielight, Morgan, Artoria Caster, and more to come).
+- Also requires BaseLib: subscribe to it as well.
+
+Localization: English, Spanish, Simplified Chinese.
+
+──────────────────────────────
+
+基于 BaseLib 框架开发的共享机制库，供《Fate/Grand Order》从者角色模组使用。
+
+模组介绍：
+- 提供所有 FGO 从者共用的核心系统：宝具 / Overcharge 充能槽、形态（架势）切换、壁垒（格挡保留）、羁绊加成与暴击星。
+- 这是一个【库】，本身不添加任何可玩角色。它是 FGO 从者模组（玛修·基列莱特、摩根、Caster 阿尔托莉雅，以及后续角色）的【必需前置】。
+- 同时需要 BaseLib —— 请一并订阅。
+
+本地化支持：英语、西班牙语、简体中文。

@@ -1,7 +1,9 @@
-# Sube los mods FGO a Steam Workshop de StS2 (appid 2868840) como ITEMS SEPARADOS
+﻿# Sube los mods FGO a Steam Workshop de StS2 (appid 2868840) como ITEMS SEPARADOS
 # (FGOCore + Mash + Morgan + Artoria = 4 items independientes). Requiere SteamCMD + login.
 #
 # StS2 carga mods de Workshop recursivamente; cada item contiene UNA carpeta de mod (dll+json+pck).
+# La descripcion de cada item (EN + 简体中文) vive en tools\workshop_desc\<Mod>.txt (UTF-8);
+# el VDF tambien se escribe en UTF-8 para no romper el chino.
 #
 # USO (primer upload de TODOS, quedan PRIVADOS para testear):
 #   .\tools\workshop_upload.ps1 -SteamUser TU_USUARIO_STEAM
@@ -23,31 +25,21 @@ $ErrorActionPreference = "Stop"
 $appid = "2868840"
 $repo  = Split-Path $PSScriptRoot -Parent
 $stage = Join-Path $repo ".workshop_stage"
+$descDir = Join-Path $PSScriptRoot "workshop_desc"
 
-# --- metadata por mod (titulo + descripcion) ---
-$mods = [ordered]@{
-    FGOCore = @{
-        Title = "FGO Core (libreria) — FGO Servants"
-        Desc  = "Libreria de mecanicas compartidas de los mods de Servants de Fate/Grand Order (medidor NP/Overcharge, cambio de formas, Baluarte, vinculo, estrellas de critico). REQUERIDA por los personajes FGO. Requiere tambien BaseLib (suscribite aparte)."
-    }
-    MashShielder = @{
-        Title = "Mash Kyrielight (Shielder) — FGO"
-        Desc  = "Mash Kyrielight, la Shielder de Fate/Grand Order, como personaje jugable: muralla (Baluarte), Lord Camelot y proteccion de aliados en co-op. Requiere FGO Core (libreria) + BaseLib."
-    }
-    MorganBerserker = @{
-        Title = "Morgan (Berserker -> Caster) — FGO"
-        Desc  = "Morgan, la Reina Hada de Fate/Grand Order: Buster-critico + Maldicion, cambio Berserker->Caster, Reina del Invierno. Requiere FGO Core (libreria) + BaseLib."
-    }
-    ArtoriaCaster = @{
-        Title = "Artoria Caster (Castoria) — FGO"
-        Desc  = "Artoria Caster de Fate/Grand Order: soporte crit-caster que reparte Estrellas, Carga NP y defensa a la party en co-op. Requiere FGO Core (libreria) + BaseLib."
-    }
+# titulo por mod (la descripcion se lee de workshop_desc\<Mod>.txt)
+$titles = [ordered]@{
+    FGOCore         = "FGO Core — shared library / FGO 核心库"
+    MashShielder    = "FGO — Mash Kyrielight 玛修·基列莱特 (Shielder)"
+    MorganBerserker = "FGO — Morgan 摩根 (Berserker → Caster)"
+    ArtoriaCaster   = "FGO — Artoria Caster 卡斯托莉雅 (Caster)"
 }
 
-$targets = if ($Only) { $Only } else { @($mods.Keys) }
+$targets = if ($Only) { $Only } else { @($titles.Keys) }
+$utf8NoBom = New-Object System.Text.UTF8Encoding $false
 
 foreach ($m in $targets) {
-    if (-not $mods.Contains($m)) { Write-Warning "Mod desconocido: $m -- salteo."; continue }
+    if (-not $titles.Contains($m)) { Write-Warning "Mod desconocido: $m -- salteo."; continue }
     $src = Join-Path $ModsRoot $m
     foreach ($ext in @("dll","json","pck")) {
         if (-not (Test-Path (Join-Path $src "$m.$ext"))) { throw "Falta $m.$ext en $src -- publica primero ese mod (dotnet publish)." }
@@ -71,22 +63,26 @@ foreach ($m in $targets) {
     $imgSrc  = Join-Path $repo "$m\$m\mod_image.png"
     if (Test-Path $imgSrc) { Copy-Item $imgSrc $preview -Force } else { $preview = "" }
 
+    # descripcion (EN + 简体中文) desde archivo; sin comillas dobles para no romper el VDF
+    $descFile = Join-Path $descDir "$m.txt"
+    if (-not (Test-Path $descFile)) { throw "Falta la descripcion: $descFile" }
+    $desc = ([System.IO.File]::ReadAllText($descFile)).Trim() -replace '"', "'"
+    $prevLine = if ($preview) { "    `"previewfile`" `"$($preview -replace '\\','\\')`"`n" } else { "" }
+
     $vdf = Join-Path $stage "$m\item.vdf"
-    $desc = ($mods[$m].Desc -replace '"', "'")
-    $prevLine = if ($preview) { "    `"previewfile`" `"$($preview -replace '\\','\\')`"" } else { "" }
-    @"
+    $vdfContent = @"
 "workshopitem"
 {
     "appid" "$appid"
     "publishedfileid" "$id"
     "contentfolder" "$($content -replace '\\','\\')"
-$prevLine
-    "visibility" "$Visibility"
-    "title" "$($mods[$m].Title)"
+$prevLine    "visibility" "$Visibility"
+    "title" "$($titles[$m])"
     "description" "$desc"
     "changenote" "Subida via workshop_upload.ps1"
 }
-"@ | Out-File -FilePath $vdf -Encoding ascii
+"@
+    [System.IO.File]::WriteAllText($vdf, $vdfContent, $utf8NoBom)
 
     Write-Host ""
     Write-Host "==================================================================="
