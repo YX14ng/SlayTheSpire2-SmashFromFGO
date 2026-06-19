@@ -16,7 +16,7 @@ param(
     [Parameter(Mandatory)][string]$SteamUser,
     [ValidateSet("0","1","2")][string]$Visibility = "2",   # 0=publico 1=amigos 2=privado
     [string[]]$Only,
-    [string]$SteamCmd = "C:\ProgramData\CreamInstaller\steamcmd.exe",
+    [string]$SteamCmd = "$PSScriptRoot\steamcmd\steamcmd.exe",
     [string]$ModsRoot = "C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2\mods"
 )
 $ErrorActionPreference = "Stop"

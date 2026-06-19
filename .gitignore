@@ -24,6 +24,10 @@ publish_log.txt
 /tools/AssetStudioCLI/
 /tools/AssetStudioGUI/
 /tools/godotpcktool.exe
+# SteamCMD (binario de Valve, ~190 archivos) y artefactos de subida a Workshop
+/tools/steamcmd/
+/.workshop_stage/
+/tools/.workshop_id_*.txt
 /tools/render_project/*.fbx
 /tools/render_project/*.png
 /tools/render_project/*.png.import
