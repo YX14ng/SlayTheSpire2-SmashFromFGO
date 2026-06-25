@@ -1,18 +1,17 @@
-using FGOCore.FGOCoreCode.Stars;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using MorganBerserker.MorganBerserkerCode.Powers;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 
 /// <summary>
-/// Lanza de la Tirana (暴君之枪) — 24 de daño; pierdes 4 HP (→ +10★ vía el Cetro);
-/// si tienes Alzarse: +10 de daño. "Crítico": el blanco ideal del ×2 — gastá 50★ y
-/// este golpazo hace ×2 (el pico Buster de Morgan). Rediseño 2026-06-13.
+/// Lanza de la Tirana (暴君之枪) — 24 de daño; pierdes 4 HP (→ siembra 3 de Maldición a un
+/// enemigo al azar vía el Cetro); si tienes Alzarse: +10 de daño. En forma Reina/Invierno la
+/// pasiva "Sentencia" le suma la Maldición del objetivo y la consume. Rediseño 2026-06-15
+/// (swap Estrellas→Maldición).
 /// </summary>
 public sealed class TyrantsLance() : MorganCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
@@ -24,15 +23,13 @@ public sealed class TyrantsLance() : MorganCard(2, CardType.Attack, CardRarity.R
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<GutsPower>(), HoverTipFactory.FromPower<CritStarsPower>(), HoverTipFactory.FromPower<CritReadyPower>()];
+        [HoverTipFactory.FromPower<GutsPower>(), HoverTipFactory.FromPower<CursePower>()];
 
-    protected override bool ShouldGlowGoldInternal => Owner.Creature.HasPower<GutsPower>() || Crit.CanCrit(Owner.Creature);
+    protected override bool ShouldGlowGoldInternal => Owner.Creature.HasPower<GutsPower>();
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-
-        await Crit.TrySpend(Owner.Creature, this);
 
         var damage = DynamicVars.Damage.BaseValue;
         if (Owner.Creature.HasPower<GutsPower>())

@@ -51,6 +51,10 @@ public sealed class OathOfUruk : BondRelic
     {
         await base.BeforeCombatStartLate();
         await CardsThisTurnPower.EnsureInstalled(Owner.Creature);
+        // Arrogancia del Rey (riesgo estructural, P1): un Rey no se digna a defender. +daño mientras no
+        // bloquees; se rompe para siempre la 1ª vez que terminás un turno con Bloqueo. Lo siembra la
+        // starter siempre-presente (igual que CardsThisTurnPower). Hasta que exista Bab-ilu, va acá.
+        await PowerCmd.Apply<KingsArrogancePower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null);
     }
 
     // Nv 10 «El Rey de los Héroes»: el primer golpe ya es el juicio despectivo.

@@ -60,5 +60,7 @@
   "SIEGFRIEDSABER-CONVICTION_CHARGE.title": "Carga",
   "SIEGFRIEDSABER-CONVICTION_CHARGE.description": "#Gana 50 de *Carga NP.",
   "SIEGFRIEDSABER-CONVICTION_SCALES.title": "Endurecer",
-  "SIEGFRIEDSABER-CONVICTION_SCALES.description": "#Gana 3 de *Sangre de Dragón."
+  "SIEGFRIEDSABER-CONVICTION_SCALES.description": "#Gana 3 de *Sangre de Dragón.",
+  "SIEGFRIEDSABER-SCALE_ERUPTION.title": "Erupción de Escamas",
+  "SIEGFRIEDSABER-SCALE_ERUPTION.description": "#Consume TODA tu *Sangre de Dragón. Inflige !PerPoint! de daño a TODOS por cada punto consumido, hasta 6 puntos."
 }

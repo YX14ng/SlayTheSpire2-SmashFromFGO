@@ -60,5 +60,7 @@
   "SIEGFRIEDSABER-CONVICTION_CHARGE.title": "蓄能",
   "SIEGFRIEDSABER-CONVICTION_CHARGE.description": "#获得50点*NP值。",
   "SIEGFRIEDSABER-CONVICTION_SCALES.title": "硬化",
-  "SIEGFRIEDSABER-CONVICTION_SCALES.description": "#获得3点*龙血护甲。"
+  "SIEGFRIEDSABER-CONVICTION_SCALES.description": "#获得3点*龙血护甲。",
+  "SIEGFRIEDSABER-SCALE_ERUPTION.title": "鳞片爆发",
+  "SIEGFRIEDSABER-SCALE_ERUPTION.description": "#消耗你全部*龙血护甲。每消耗1点，对所有敌人造成 !PerPoint! 点伤害，至多6点。"
 }

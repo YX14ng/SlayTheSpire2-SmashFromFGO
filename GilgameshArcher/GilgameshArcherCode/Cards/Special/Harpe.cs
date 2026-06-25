@@ -13,7 +13,7 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Special;
 /// Hárpē, la Hoz Inmortal / 不死斩·哈尔贝 (DESIGN-GILGAMESH §5.5, Arma del Tesoro #3) — la hoz que niega
 /// la inmortalidad. Token 0⚡ Exhaust generado (<c>CardRarity.Event</c>). 5 de daño y aplica 1 de Débil.
 /// </summary>
-public sealed class Harpe() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
+public sealed class Harpe() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), ITreasureArm
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

@@ -61,5 +61,8 @@
   "MORDREDSABER-HOMUNCULUS_ACCELERATION_POWER.smartDescription": "#La primera vez por turno que consumís un Crítico, obtené Estrellas de Crítico.",
   "MORDREDSABER-LIGHTNING_VISIT_RETURN_POWER.title": "Retorno Relámpago",
   "MORDREDSABER-LIGHTNING_VISIT_RETURN_POWER.description": "#Al final de tu turno, volvés a tu forma anterior.",
-  "MORDREDSABER-LIGHTNING_VISIT_RETURN_POWER.smartDescription": "#Al final de tu turno, volvés a tu forma anterior."
+  "MORDREDSABER-LIGHTNING_VISIT_RETURN_POWER.smartDescription": "#Al final de tu turno, volvés a tu forma anterior.",
+  "MORDREDSABER-RED_LIGHTNING_SPARK_POWER.title": "Chispa de Relámpago Rojo",
+  "MORDREDSABER-RED_LIGHTNING_SPARK_POWER.description": "#La primera vez que consumís un Crítico cada turno, manifestás una Chispa de Clarent a tu mano.",
+  "MORDREDSABER-RED_LIGHTNING_SPARK_POWER.smartDescription": "#La primera vez que consumís un Crítico cada turno, manifestás una Chispa de Clarent a tu mano."
 }

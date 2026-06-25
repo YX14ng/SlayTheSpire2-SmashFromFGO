@@ -32,10 +32,12 @@ public sealed class HaoriAsagi : OkitaRelic
     public const int StarsPerAttack = 10;
     public const int MaxProcsPerTurn = 3;
     public const int NpPerCrit = 20;
+    public const int BreathPerCrit = 1; // reembolso de Aliento al criticar (cap 1/turno, P1)
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
     private int _attackProcsThisTurn;
+    private bool _breathRefundedThisTurn;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
@@ -48,13 +50,18 @@ public sealed class HaoriAsagi : OkitaRelic
     {
         await base.BeforeCombatStartLate();
         _attackProcsThisTurn = 0;
+        _breathRefundedThisTurn = false;
         // Aliento inicial del combate (6) — el embudo arranca con margen para una Ráfaga.
         await PowerCmd.Apply<AlientoPower>(new BlockingPlayerChoiceContext(), Owner.Creature, AlientoPower.StartingBreath, Owner.Creature, null);
     }
 
     public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side == CombatSide.Player) _attackProcsThisTurn = 0;
+        if (side == CombatSide.Player)
+        {
+            _attackProcsThisTurn = 0;
+            _breathRefundedThisTurn = false;
+        }
         return Task.CompletedTask;
     }
 
@@ -68,10 +75,18 @@ public sealed class HaoriAsagi : OkitaRelic
     }
 
     // amount < 0 sobre CritReadyPower = un Crítico Listo CONSUMIDO (un crítico consumado) → +NP.
+    // FIX HOMOGENEIZACIÓN (P1 Okita): además REEMBOLSA 1 *Aliento (cap 1/turno) — la velocidad se
+    // retroalimenta (el iai perfecto no te deja sin aire). Hace que el Crítico de Okita exprese su
+    // recurso de firma, no solo el ×2 genérico. El cap evita el loop ⚡-positivo (perilla #4 del doc).
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         if (amount >= 0m || power is not CritReadyPower || power.Owner != Owner.Creature) return;
         Flash();
         await NpCharge.Gain(Owner.Creature, NpPerCrit, null);
+        if (!_breathRefundedThisTurn)
+        {
+            _breathRefundedThisTurn = true;
+            await Aliento.Gain(Owner.Creature, BreathPerCrit, null);
+        }
     }
 }

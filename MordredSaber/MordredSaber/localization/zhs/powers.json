@@ -61,5 +61,8 @@
   "MORDREDSABER-HOMUNCULUS_ACCELERATION_POWER.smartDescription": "#每回合你第一次消耗暴击时，获得暴击星。",
   "MORDREDSABER-LIGHTNING_VISIT_RETURN_POWER.title": "雷光回归",
   "MORDREDSABER-LIGHTNING_VISIT_RETURN_POWER.description": "#你的回合结束时，回到之前的形态。",
-  "MORDREDSABER-LIGHTNING_VISIT_RETURN_POWER.smartDescription": "#你的回合结束时，回到之前的形态。"
+  "MORDREDSABER-LIGHTNING_VISIT_RETURN_POWER.smartDescription": "#你的回合结束时，回到之前的形态。",
+  "MORDREDSABER-RED_LIGHTNING_SPARK_POWER.title": "赤雷火花",
+  "MORDREDSABER-RED_LIGHTNING_SPARK_POWER.description": "#每回合首次消耗暴击时，向手牌中显现一张克拉伦特火花。",
+  "MORDREDSABER-RED_LIGHTNING_SPARK_POWER.smartDescription": "#每回合首次消耗暴击时，向手牌中显现一张克拉伦特火花。"
 }

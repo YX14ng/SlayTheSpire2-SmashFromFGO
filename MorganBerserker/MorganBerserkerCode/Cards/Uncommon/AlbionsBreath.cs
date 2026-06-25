@@ -8,19 +8,16 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
 /// <summary>
-/// Aliento de Albion (阿尔比恩的吐息) — rediseño v2: 9 de daño ×3 al mismo objetivo.
-/// Si tenés CRÍTICO LISTO: lo consume y LOS TRES golpes critican (×2) — la semántica
-/// "1 stack por CARTA, todos sus golpes" ya vive en FGOCore.CritReadyPower (parche P8:
-/// sin TryConsume manual ni riesgo de ×4), así que acá solo se enseña/señaliza:
-/// glow dorado con Crítico Listo en cola. (up: daño 9→11)
+/// Aliento de Albion (阿尔比恩的吐息) — rediseño 2026-06-15 (swap Estrellas→Maldición): 9 de
+/// daño ×3 al mismo objetivo. En forma Reina/Invierno la pasiva "Sentencia" suma la Maldición
+/// del objetivo al PRIMER golpe y la consume (sin doble-dip en multi-hit; lo maneja la forma).
+/// El aliento del dragón aplasta a la presa maldita. (up: daño 9→11)
 /// </summary>
 public sealed class AlbionsBreath() : MorganCard(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(9m, ValueProp.Move)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritReadyPower>()];
-
-    protected override bool ShouldGlowGoldInternal => Owner.Creature.HasPower<CritReadyPower>();
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

@@ -7,7 +7,6 @@
   "OKITASABER-SHUKUCHI.description": "#缩地1。消耗1点*吐息。造成!D!点伤害!Hits!次。获得!Stars!颗*暴击星*。",
   "OKITASABER-CATCH_YOUR_BREATH.title": "调息",
   "OKITASABER-CATCH_YOUR_BREATH.description": "#获得!B!点格挡。获得!Breath!点*吐息。",
-
   "OKITASABER-BATTOJUTSU.title": "拔刀术",
   "OKITASABER-BATTOJUTSU.description": "#造成!D!点伤害。若这是你本回合的第一张攻击牌：获得!Stars!颗*暴击星*。",
   "OKITASABER-SAKURA_SLASH.title": "樱斩",
@@ -48,7 +47,6 @@
   "OKITASABER-THIRD_STANCE.description": "#获得!B!点格挡。获得!NpCharge!点*宝具值。",
   "OKITASABER-I_DONT_SHOOT_BEAMS.title": "「我才不会射光线！」",
   "OKITASABER-I_DONT_SHOOT_BEAMS.description": "#消耗。造成!D!点伤害。获得!Stars!颗*暴击星*。",
-
   "OKITASABER-SHUKUCHI_B_PLUS.title": "缩地B+",
   "OKITASABER-SHUKUCHI_B_PLUS.description": "#消耗。获得!Breath!点*吐息。抽!C!张牌。本回合，你的攻击牌额外造成!SwiftStance!点伤害。",
   "OKITASABER-ZETTOU_A.title": "绝刀A",
@@ -105,7 +103,6 @@
   "OKITASABER-STEADY_STEP.description": "#你每回合的第一张*缩地返还1点*吐息。+并额外授予!Stars!颗*暴击星*。+",
   "OKITASABER-SICKLY_CONSTITUTION.title": "病弱A",
   "OKITASABER-SICKLY_CONSTITUTION.description": "#消耗。获得!Stars!颗*暴击星*。获得1张*咯血，洗入你的抽牌堆。+抽!C!张牌。+",
-
   "OKITASABER-MUMYOU_MANUAL.title": "无明三段突",
   "OKITASABER-MUMYOU_MANUAL.description": "#消耗你全部的*宝具值，至少!ChargeCost!点。对一名敌人造成!D!点伤害3次，无视格挡；每超过!ChargeCost!的10点宝具值，每击再追加1点。随后施加!Vulnerable!层易伤。",
   "OKITASABER-MUMYOU_FIRST_THRUST.title": "无明·一之突",
@@ -146,9 +143,8 @@
   "OKITASABER-VEIL_OF_PETALS.description": "#消耗。获得!B!点格挡。获得!Stars!颗*暴击星*。",
   "OKITASABER-CHERRY_IN_FULL_BLOOM.title": "樱花满开",
   "OKITASABER-CHERRY_IN_FULL_BLOOM.description": "#消耗。将你的*吐息回满至上限。获得1张*咯血，洗入你的抽牌堆。+不再获得*咯血。+",
-
   "OKITASABER-MUMYOU_UNLEASHED.title": "无明三段突·解放",
-  "OKITASABER-MUMYOU_UNLEASHED.description": "#保留。消耗。消耗你全部的*宝具值，至少!ChargeCost!点。对一名敌人造成!D!点伤害3次，无视格挡；每超过!ChargeCost!的10点宝具值，每击再追加1点。随后施加!Vulnerable!层易伤。",
+  "OKITASABER-MUMYOU_UNLEASHED.description": "#保留。消耗。消耗你全部的*宝具值，至少!ChargeCost!点。对一名敌人造成!D!点伤害3次，无视格挡；每超过!ChargeCost!的10点宝具值，每击再追加1点。若你拥有至少!BreathCost!点*吐息，则消耗之以追加!BoostHits!次攻击；否则获得1张*咯血。随后施加!Vulnerable!层易伤。",
   "OKITASABER-TOS.title": "咯血",
   "OKITASABER-TOS.description": "#虚无。无法打出。在你的回合结束时，若此牌在你手中：失去1点*吐息。"
 }

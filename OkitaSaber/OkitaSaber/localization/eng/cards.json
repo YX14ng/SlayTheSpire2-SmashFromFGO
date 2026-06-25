@@ -7,7 +7,6 @@
   "OKITASABER-SHUKUCHI.description": "#Dash 1. Costs 1 *Breath. Deal !D! damage !Hits! times. Gain !Stars! *Critical *Stars.",
   "OKITASABER-CATCH_YOUR_BREATH.title": "Catch Your Breath",
   "OKITASABER-CATCH_YOUR_BREATH.description": "#Gain !B! Block. Gain !Breath! *Breath.",
-
   "OKITASABER-BATTOJUTSU.title": "Battōjutsu",
   "OKITASABER-BATTOJUTSU.description": "#Deal !D! damage. If this is your FIRST Attack this turn: gain !Stars! *Critical *Stars.",
   "OKITASABER-SAKURA_SLASH.title": "Sakura Slash",
@@ -48,7 +47,6 @@
   "OKITASABER-THIRD_STANCE.description": "#Gain !B! Block. Gain !NpCharge! *NP Charge.",
   "OKITASABER-I_DONT_SHOOT_BEAMS.title": "\"I Don't Shoot Beams!\"",
   "OKITASABER-I_DONT_SHOOT_BEAMS.description": "#Exhaust. Deal !D! damage. Gain !Stars! *Critical *Stars.",
-
   "OKITASABER-SHUKUCHI_B_PLUS.title": "Shukuchi B+",
   "OKITASABER-SHUKUCHI_B_PLUS.description": "#Exhaust. Gain !Breath! *Breath. Draw !C! cards. This turn, your Attacks deal !SwiftStance! more.",
   "OKITASABER-ZETTOU_A.title": "Zettou A",
@@ -105,7 +103,6 @@
   "OKITASABER-STEADY_STEP.description": "#The first *Dash each turn refunds 1 *Breath.+ It also grants !Stars! *Critical *Stars.+",
   "OKITASABER-SICKLY_CONSTITUTION.title": "Sickly Constitution A",
   "OKITASABER-SICKLY_CONSTITUTION.description": "#Exhaust. Gain !Stars! *Critical *Stars. Gain a *Cough, shuffled into your draw pile.+ Draw !C! card.+",
-
   "OKITASABER-MUMYOU_MANUAL.title": "Mumyou Sandanzuki",
   "OKITASABER-MUMYOU_MANUAL.description": "#Consume ALL your *NP Charge, at least !ChargeCost!. Deal !D! damage 3 times to one enemy, IGNORING Block; +1 per hit for every 10 NP Charge above !ChargeCost!. Then apply !Vulnerable! Vulnerable.",
   "OKITASABER-MUMYOU_FIRST_THRUST.title": "Mumyou: First Thrust",
@@ -146,9 +143,8 @@
   "OKITASABER-VEIL_OF_PETALS.description": "#Exhaust. Gain !B! Block. Gain !Stars! *Critical *Stars.",
   "OKITASABER-CHERRY_IN_FULL_BLOOM.title": "Cherry in Full Bloom",
   "OKITASABER-CHERRY_IN_FULL_BLOOM.description": "#Exhaust. Fill your *Breath to maximum. Gain a *Cough, shuffled into your draw pile.+ No longer gain a *Cough.+",
-
   "OKITASABER-MUMYOU_UNLEASHED.title": "Mumyou Sandanzuki: Unleashed",
-  "OKITASABER-MUMYOU_UNLEASHED.description": "#Retain. Exhaust. Consume ALL your *NP Charge, at least !ChargeCost!. Deal !D! damage 3 times to one enemy, IGNORING Block; +1 per hit for every 10 NP Charge above !ChargeCost!. Then apply !Vulnerable! Vulnerable.",
+  "OKITASABER-MUMYOU_UNLEASHED.description": "#Retain. Exhaust. Consume ALL your *NP Charge, at least !ChargeCost!. Deal !D! damage 3 times to one enemy, IGNORING Block; +1 per hit for every 10 NP Charge above !ChargeCost!. If you have at least !BreathCost! *Breath, spend it for !BoostHits! more hits; otherwise gain a *Cough. Then apply !Vulnerable! Vulnerable.",
   "OKITASABER-TOS.title": "Cough",
   "OKITASABER-TOS.description": "#Ethereal. Unplayable. At the end of your turn, while in your hand: lose 1 *Breath."
 }

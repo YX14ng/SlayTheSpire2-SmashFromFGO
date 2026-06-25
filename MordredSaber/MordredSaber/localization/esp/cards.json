@@ -7,7 +7,6 @@
   "MORDREDSABER-REBELLION.description": "#Inflige !D! de daño, luego te quitás el yelmo: entrás en *Rebelión.",
   "MORDREDSABER-LOWER_THE_VISOR.title": "Bajar la Visera",
   "MORDREDSABER-LOWER_THE_VISOR.description": "#Te ponés el yelmo: entrás en *Caballero Enmascarado. Gana !B! de Bloqueo y !NpCharge! de *Carga NP.",
-
   "MORDREDSABER-SLASH_OF_CLARENT.title": "Tajo de Clarent",
   "MORDREDSABER-SLASH_OF_CLARENT.description": "#Inflige !D! de daño. Obtén !Stars! *Estrellas de *Crítico.",
   "MORDREDSABER-REBELS_DOUBLE_EDGE.title": "Doble Filo Rebelde",
@@ -48,7 +47,6 @@
   "MORDREDSABER-KNIGHTS_STEADFASTNESS.description": "#Gana !B! de Bloqueo. Si estás en forma *Caballero Enmascarado: gana !NpCharge! de *Carga NP.",
   "MORDREDSABER-DONT_CALL_ME_A_GIRL.title": "«¡No me llames niña!»",
   "MORDREDSABER-DONT_CALL_ME_A_GIRL.description": "#Agotar. Obtén !Stars! *Estrellas de *Crítico y !NpCharge! de *Carga NP.",
-
   "MORDREDSABER-MANA_BURST_A.title": "Estallido de Maná A",
   "MORDREDSABER-MANA_BURST_A.description": "#Agotar. Este turno, tus Ataques infligen !Strength! más.",
   "MORDREDSABER-KNIGHT_OF_RED_LIGHTNING_A_PLUS.title": "Caballero del Relámpago Rojo A+",
@@ -105,7 +103,6 @@
   "MORDREDSABER-SCORN_FOR_THE_THRONE.description": "#Gana !NpCharge! de *Carga NP. Contra Élites y Jefes: gana !Authority! más.",
   "MORDREDSABER-TREAT_ME_AS_A_KNIGHT.title": "«Trátame como caballero»",
   "MORDREDSABER-TREAT_ME_AS_A_KNIGHT.description": "#Roba !C! cartas. Si estás en forma *Caballero Enmascarado: roba !MaskedDraw! más.",
-
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_MANUAL.title": "Clarent Blood Arthur",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_MANUAL.description": "#Si estás *Enmascarada, primero te arrancás el yelmo. Consume TODA tu *Carga NP, mínimo !ChargeCost!. Inflige !D! de daño !Hits! veces a TODOS los enemigos; contra Élites y Jefes, !Authority! más por golpe; más 1 por golpe por cada 20 de Carga NP sobre el mínimo. Luego gana !Refund! de *Carga NP.",
   "MORDREDSABER-MANA_BURST_RED_LIGHTNING.title": "Estallido de Maná: Relámpago Rojo",
@@ -146,9 +143,10 @@
   "MORDREDSABER-DOUBLE_EDGE_OF_HATRED.description": "#En *Rebelión, tus Ataques infligen !AttackBonus! más.",
   "MORDREDSABER-MEMORY_OF_TRIFAS.title": "Memoria de Trifas",
   "MORDREDSABER-MEMORY_OF_TRIFAS.description": "#Al inicio de tu turno, cura !Heal! de Vida y gana !NpCharge! de *Carga NP.",
-
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_UNLEASHED.title": "Clarent Blood Arthur: Desatado",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_UNLEASHED.description": "#Retener. Agotar. Si estás *Enmascarada, primero te arrancás el yelmo. Consume TODA tu *Carga NP, mínimo 100. Inflige !D! de daño !Hits! veces a TODOS los enemigos; contra Élites y Jefes, !Authority! más por golpe; más 1 por golpe por cada 20 de Carga NP sobre 100. Luego gana !Refund! de *Carga NP.",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.title": "Clarent Blood Arthur: Interludio",
-  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.description": "#Retener. Agotar. Consume TODA tu *Carga NP, mínimo 100. Inflige !D! de daño !Hits! veces a TODOS los enemigos; contra Élites y Jefes, !Authority! más por golpe; más 1 por golpe por cada 15 de Carga NP sobre 100. Luego gana !Refund! de *Carga NP."
+  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.description": "#Retener. Agotar. Consume TODA tu *Carga NP, mínimo 100. Inflige !D! de daño !Hits! veces a TODOS los enemigos; contra Élites y Jefes, !Authority! más por golpe; más 1 por golpe por cada 15 de Carga NP sobre 100. Luego gana !Refund! de *Carga NP.",
+  "MORDREDSABER-CHISPA_DE_CLARENT.title": "Chispa de Clarent",
+  "MORDREDSABER-CHISPA_DE_CLARENT.description": "#Agotar. Inflige !D! de daño a TODOS los enemigos. (El relámpago carmesí que desprende tu Crítico; pega más fuerte sin el yelmo.)"
 }

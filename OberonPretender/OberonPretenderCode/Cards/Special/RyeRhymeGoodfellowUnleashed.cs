@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using OberonPretender.OberonPretenderCode.Cards;
 using OberonPretender.OberonPretenderCode.Extensions;
+using OberonPretender.OberonPretenderCode.Powers;
 
 namespace OberonPretender.OberonPretenderCode.Cards.Special;
 
@@ -17,12 +18,21 @@ namespace OberonPretender.OberonPretenderCode.Cards.Special;
 ///   SOBRECARGA: +<see cref="PerTen"/> por cada 10 sobre 100. A sobrecarga ≥<see cref="MassSleepTier"/>
 ///   (150): todos los enemigos se DUERMEN (el sueño masivo vive en la sobrecarga, P1 Morgan).
 /// +15%/nivel (NpLevels). Event → ningún waiver la cubre (P3); consume el medidor entero.
+///
+/// REDISEÑO P1 (deshomogeneizar el NP — mejora de revisión): el ulti deja de ser genérico y pasa a
+/// depender del RECURSO DE FIRMA. Tras consumir la carga, consume hasta <see cref="DebtConsumeCap"/> (5)
+/// puntos de Deuda y suma <see cref="DamagePerDebt"/> (2) de daño AoE por punto consumido — el sueño que
+/// el prestamista vendió se cobra contra el mundo (reusa la lógica VortigernPower/LieLikeVortigern de
+/// consumir Deuda → daño). El daño base ya NO es independiente de lo que el mazo construyó: cuanta más
+/// Deuda diferiste, más golpea la Desatada (y te la saca de encima antes del cobro de fin de turno).
 /// </summary>
 public sealed class RyeRhymeGoodfellowUnleashed() : OberonCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IOberonNpCard
 {
     public const int ChargeCost = 100;
     private const int PerTen = 3;
     private const int MassSleepTier = 150;
+    private const int DamagePerDebt = 2;     // +2 daño AoE por punto de Deuda consumido (P1)
+    private const int DebtConsumeCap = 5;    // tope: hasta 5 puntos (espeja DebtPower.VortigernUnpaidCap)
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];
 
@@ -30,10 +40,12 @@ public sealed class RyeRhymeGoodfellowUnleashed() : OberonCard(0, CardType.Attac
     [
         new DamageVar(30m, ValueProp.Move),
         new DynamicVar("ChargeCost", ChargeCost),
-        new DynamicVar("PerTen", PerTen)
+        new DynamicVar("PerTen", PerTen),
+        new DynamicVar("PerDebt", DamagePerDebt)
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<DebtPower>()];
 
     protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost, this);
     protected override bool ShouldGlowGoldInternal => IsPlayable;
@@ -42,7 +54,14 @@ public sealed class RyeRhymeGoodfellowUnleashed() : OberonCard(0, CardType.Attac
     {
         var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
-        var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge);
+
+        // P1: consume hasta 5 puntos de Deuda → +2 daño AoE por punto (el recurso de firma alimenta el
+        // ulti; patrón LieLikeVortigern: Forgive devuelve lo realmente consumido).
+        var consumable = Math.Min(DebtPower.Of(Owner.Creature), DebtConsumeCap);
+        var consumed = await DebtPower.Forgive(Owner.Creature, consumable);
+        var debtBonus = consumed * DynamicVars["PerDebt"].IntValue;
+
+        var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge + debtBonus);
 
         await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState)
             .WithHitFx("vfx/vfx_starry_impact")

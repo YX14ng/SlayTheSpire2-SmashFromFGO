@@ -61,5 +61,8 @@
   "MORDREDSABER-BANNER_OF_REBELLION_POWER.smartDescription": "#Whenever you change form, gain Critical Stars and NP Charge.",
   "MORDREDSABER-HOMUNCULUS_ACCELERATION_POWER.title": "Homunculus Acceleration",
   "MORDREDSABER-HOMUNCULUS_ACCELERATION_POWER.description": "#The first time you consume a Critical each turn, gain Critical Stars.",
-  "MORDREDSABER-HOMUNCULUS_ACCELERATION_POWER.smartDescription": "#The first time you consume a Critical each turn, gain Critical Stars."
+  "MORDREDSABER-HOMUNCULUS_ACCELERATION_POWER.smartDescription": "#The first time you consume a Critical each turn, gain Critical Stars.",
+  "MORDREDSABER-RED_LIGHTNING_SPARK_POWER.title": "Red Lightning Spark",
+  "MORDREDSABER-RED_LIGHTNING_SPARK_POWER.description": "#The first time you consume a Critical each turn, manifest a Spark of Clarent to your hand.",
+  "MORDREDSABER-RED_LIGHTNING_SPARK_POWER.smartDescription": "#The first time you consume a Critical each turn, manifest a Spark of Clarent to your hand."
 }

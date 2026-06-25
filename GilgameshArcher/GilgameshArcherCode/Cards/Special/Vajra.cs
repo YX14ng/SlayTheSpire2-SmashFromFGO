@@ -12,7 +12,7 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Special;
 /// AoE del arsenal. Token 0⚡ Exhaust generado (<c>CardRarity.Event</c>). 4 de daño a TODOS los enemigos
 /// (builder fluido <c>TargetingAllOpponents</c>, patrón ChainedLightning).
 /// </summary>
-public sealed class Vajra() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies)
+public sealed class Vajra() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), ITreasureArm
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

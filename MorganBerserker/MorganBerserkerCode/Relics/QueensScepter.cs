@@ -16,30 +16,31 @@ namespace MorganBerserker.MorganBerserkerCode.Relics;
 /// background preload) — without it Morgan fought FORMLESS until her first switch.
 /// (2) MANTIENE: the first time you change form each combat: +1 Energy, draw 1
 /// and NP +10 (makes the first switch tempo-positive).
-/// (3) AGREGA: every time Morgan loses HP (any source — enemy attacks, self-damage):
-/// +10 Critical Stars, capped at 3 events per turn (parche P2, máx +30/turno —
-/// la calibración "tanquear 2-3 golpes"; mismo patrón _triggersThisTurn que
-/// MadnessEnhancementPower). Sangrar → estrellas: el espejo Berserker del
-/// "perder HP → +NP" de Jeanne. Parche P4: el tick de FaeBloodPact NO cuenta.
+/// (3) AGREGA (rediseño 2026-06-15: swap Estrellas→Maldición): every time Morgan loses HP
+/// (any source — enemy attacks, self-damage): apply 3 Curse to a random living enemy, capped
+/// at 3 events per turn (parche P2; mismo patrón _triggersThisTurn que MadnessEnhancementPower).
+/// Sangrar → SEMBRAR la bomba: el daño propio de Morgan (MadLunge/TyrantsBlood/FaeBloodPact)
+/// y los golpes que tanquea alimentan directamente la Maldición que la Reina cosecha. Parche
+/// P4: el tick de FaeBloodPact NO cuenta. Patrón de enemigo aleatorio calcado de BottledMors.
 /// </summary>
 public sealed class QueensScepter : MorganRelic, IFormChangeListener
 {
     public const int NpOnFirstSwitch = 10;
-    public const int StarsPerHpLoss = 10;
-    public const int StarTriggersPerTurn = 3;
+    public const int CursePerHpLoss = 3;
+    public const int CurseTriggersPerTurn = 3;
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<CritStarsPower>()];
+        [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<CursePower>()];
 
     private bool _usedThisCombat;
-    private readonly Powers.PerTurnTriggerCounter _starTriggers = new();
+    private readonly Powers.PerTurnTriggerCounter _curseTriggers = new();
 
     public override async Task BeforeCombatStartLate()
     {
         _usedThisCombat = false;
-        _starTriggers.OnSideTurnStart(CombatSide.Player); // reset al arrancar el combate.
+        _curseTriggers.OnSideTurnStart(CombatSide.Player); // reset al arrancar el combate.
         // Forma inicial: Reina. source == null -> no cuenta como "cambio de forma".
         await FormSwitch.Enter<Powers.Forms.FairyQueenFormPower>(null, Owner.Creature, null);
     }
@@ -48,18 +49,27 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
     {
         // Tope P2 por RONDA: se resetea al inicio del turno del jugador y cuenta
         // tanto el autodaño propio como los golpes tanqueados en el turno enemigo.
-        _starTriggers.OnSideTurnStart(side);
+        _curseTriggers.OnSideTurnStart(side);
         return Task.CompletedTask;
     }
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (!CombatManager.Instance.IsInProgress || target != Owner.Creature || result.UnblockedDamage <= 0) return;
-        if (Powers.FaeBloodPactPower.TickInProgress) return; // P4: el tick del Pacto no genera estrellas.
-        if (!_starTriggers.TryConsume(StarTriggersPerTurn)) return;
+        if (Powers.FaeBloodPactPower.TickInProgress) return; // P4: el tick del Pacto no siembra Maldición.
+
+        var living = new List<Creature>();
+        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        {
+            if (!enemy.IsDead) living.Add(enemy);
+        }
+        if (living.Count == 0) return;
+        if (!_curseTriggers.TryConsume(CurseTriggersPerTurn)) return;
 
         Flash();
-        await CritStars.Gain(Owner.Creature, StarsPerHpLoss, null);
+        var victim = living[Owner.RunState.Rng.CombatCardGeneration.NextInt(living.Count)];
+        // applier = Owner.Creature para que los amplificadores de Maldición (Caster/Invierno) cuenten.
+        await Curses.Apply(victim, CursePerHpLoss, Owner.Creature, null);
     }
 
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)

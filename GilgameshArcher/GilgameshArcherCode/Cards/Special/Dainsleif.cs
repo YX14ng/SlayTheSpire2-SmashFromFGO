@@ -13,7 +13,7 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Special;
 /// pegador más fuerte del arsenal) a cambio de perder 2 HP — autodaño SIEMPRE con
 /// <c>Unblockable | Unpowered</c> (regla del autodaño, patrón MapoTofu / Black Barrel).
 /// </summary>
-public sealed class Dainsleif() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
+public sealed class Dainsleif() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), ITreasureArm
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

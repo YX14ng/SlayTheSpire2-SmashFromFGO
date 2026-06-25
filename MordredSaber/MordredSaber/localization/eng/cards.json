@@ -7,7 +7,6 @@
   "MORDREDSABER-REBELLION.description": "#Deal !D! damage, then take off your helm: enter *Rebellion.",
   "MORDREDSABER-LOWER_THE_VISOR.title": "Lower the Visor",
   "MORDREDSABER-LOWER_THE_VISOR.description": "#Put your helm on: enter *Masked Knight. Gain !B! Block and !NpCharge! *NP Charge.",
-
   "MORDREDSABER-SLASH_OF_CLARENT.title": "Slash of Clarent",
   "MORDREDSABER-SLASH_OF_CLARENT.description": "#Deal !D! damage. Gain !Stars! *Critical *Stars.",
   "MORDREDSABER-REBELS_DOUBLE_EDGE.title": "Rebel's Double Edge",
@@ -48,7 +47,6 @@
   "MORDREDSABER-KNIGHTS_STEADFASTNESS.description": "#Gain !B! Block. If you are in *Masked Knight form: gain !NpCharge! *NP Charge.",
   "MORDREDSABER-DONT_CALL_ME_A_GIRL.title": "\"Don't Call Me a Girl!\"",
   "MORDREDSABER-DONT_CALL_ME_A_GIRL.description": "#Exhaust. Gain !Stars! *Critical *Stars and !NpCharge! *NP Charge.",
-
   "MORDREDSABER-MANA_BURST_A.title": "Mana Burst A",
   "MORDREDSABER-MANA_BURST_A.description": "#Exhaust. This turn, your Attacks deal !Strength! more.",
   "MORDREDSABER-KNIGHT_OF_RED_LIGHTNING_A_PLUS.title": "Knight of Red Lightning A+",
@@ -105,7 +103,6 @@
   "MORDREDSABER-SCORN_FOR_THE_THRONE.description": "#Gain !NpCharge! *NP Charge. Against Elites and Bosses: gain !Authority! more.",
   "MORDREDSABER-TREAT_ME_AS_A_KNIGHT.title": "\"Treat Me as a Knight\"",
   "MORDREDSABER-TREAT_ME_AS_A_KNIGHT.description": "#Draw !C! cards. If you are in *Masked Knight form: draw !MaskedDraw! more.",
-
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_MANUAL.title": "Clarent Blood Arthur",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_MANUAL.description": "#If *Masked, first tear off your helm. Consume ALL your *NP Charge, at least !ChargeCost!. Deal !D! damage !Hits! times to ALL enemies; against Elites and Bosses, !Authority! more per hit; plus 1 per hit for every 20 NP Charge above the minimum. Then gain !Refund! *NP Charge.",
   "MORDREDSABER-MANA_BURST_RED_LIGHTNING.title": "Mana Burst: Red Lightning",
@@ -146,9 +143,10 @@
   "MORDREDSABER-DOUBLE_EDGE_OF_HATRED.description": "#In *Rebellion, your Attacks deal !AttackBonus! more.",
   "MORDREDSABER-MEMORY_OF_TRIFAS.title": "Memory of Trifas",
   "MORDREDSABER-MEMORY_OF_TRIFAS.description": "#At the start of your turn, heal !Heal! HP and gain !NpCharge! *NP Charge.",
-
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_UNLEASHED.title": "Clarent Blood Arthur: Unleashed",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_UNLEASHED.description": "#Retain. Exhaust. If *Masked, first tear off your helm. Consume ALL your *NP Charge, at least 100. Deal !D! damage !Hits! times to ALL enemies; against Elites and Bosses, !Authority! more per hit; plus 1 per hit for every 20 NP Charge above 100. Then gain !Refund! *NP Charge.",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.title": "Clarent Blood Arthur: Interlude",
-  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.description": "#Retain. Exhaust. Consume ALL your *NP Charge, at least 100. Deal !D! damage !Hits! times to ALL enemies; against Elites and Bosses, !Authority! more per hit; plus 1 per hit for every 15 NP Charge above 100. Then gain !Refund! *NP Charge."
+  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.description": "#Retain. Exhaust. Consume ALL your *NP Charge, at least 100. Deal !D! damage !Hits! times to ALL enemies; against Elites and Bosses, !Authority! more per hit; plus 1 per hit for every 15 NP Charge above 100. Then gain !Refund! *NP Charge.",
+  "MORDREDSABER-CHISPA_DE_CLARENT.title": "Spark of Clarent",
+  "MORDREDSABER-CHISPA_DE_CLARENT.description": "#Exhaust. Deal !D! damage to ALL enemies. (Crimson lightning scattered by your Critical; it strikes harder out of the helm.)"
 }

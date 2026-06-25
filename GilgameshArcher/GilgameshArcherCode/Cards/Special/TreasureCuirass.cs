@@ -13,7 +13,7 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Special;
 /// generado (<c>CardRarity.Event</c>). 5 de Bloqueo. Sigue contando como Arma jugada
 /// (<see cref="ArmsPlayedPower"/>) para los riders y el Botín.
 /// </summary>
-public sealed class TreasureCuirass() : GilgameshCard(0, CardType.Skill, CardRarity.Event, TargetType.Self)
+public sealed class TreasureCuirass() : GilgameshCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), ITreasureArm
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

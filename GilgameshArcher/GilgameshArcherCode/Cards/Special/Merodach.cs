@@ -18,7 +18,7 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Special;
 /// Arma» y el Botín del Conquistador lo leen) — hasta que exista el evento <c>Arsenal.WeaponPlayed</c> de
 /// FGOCore, el registro lo hace la propia carta en OnPlay (regla §10).
 /// </summary>
-public sealed class Merodach() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
+public sealed class Merodach() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), ITreasureArm
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

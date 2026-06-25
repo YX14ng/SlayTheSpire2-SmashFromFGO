@@ -5,15 +5,14 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 namespace MorganBerserker.MorganBerserkerCode.Powers;
 
 /// <summary>
-/// Soberana de Dos Rostros (双面君主) — whenever you change form: draw 2, NP +10
-/// and +10 Critical Stars (rediseño v2: los poderes engordan TODOS los hilos).
+/// Soberana de Dos Rostros (双面君主) — rediseño 2026-06-15 (swap Estrellas→Maldición): whenever
+/// you change form: draw 2 and NP +10 (premia la danza Caster↔Berserker, el corazón del motor).
 /// Notified by FGOCore's FormSwitch via IFormChangeListener.
 /// </summary>
 public sealed class SovereignOfTwoFacesPower : MorganPower, IFormChangeListener
 {
     public const int Draws = 2;
     public const int NpGain = 10;
-    public const int StarsGain = 10;
 
     public override PowerType Type => PowerType.Buff;
 
@@ -27,6 +26,5 @@ public sealed class SovereignOfTwoFacesPower : MorganPower, IFormChangeListener
             await CardPileCmd.Draw(choiceContext, Draws, Owner.Player);
         }
         await NpCharge.Gain(Owner, NpGain, null);
-        await FGOCore.FGOCoreCode.Stars.CritStars.Gain(Owner, StarsGain, null);
     }
 }

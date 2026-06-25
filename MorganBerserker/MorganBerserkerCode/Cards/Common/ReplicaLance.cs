@@ -8,19 +8,20 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
 /// <summary>
-/// #1 Réplica de Lanza (长枪复制品) — rediseño v2: 9 de daño + 10 Estrellas de Crítico
-/// (las réplicas se astillan en luz). Rider de común del hilo de estrellas. (up +3/+10)
+/// #1 Réplica de Lanza (长枪复制品) — rediseño 2026-06-15 (swap Estrellas→Maldición): 9 de daño
+/// + aplica 2 de Maldición (las réplicas de Rhongomyniad hexan al clavarse). Rider de común del
+/// hilo de Maldición. (up +3/+1)
 /// </summary>
 public sealed class ReplicaLance() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(9m, ValueProp.Move),
-        new DynamicVar("Stars", 10)
+        new DynamicVar("Curse", 2)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<FGOCore.FGOCoreCode.Stars.CritStarsPower>()];
+        [HoverTipFactory.FromPower<CursePower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -28,12 +29,12 @@ public sealed class ReplicaLance() : MorganCard(1, CardType.Attack, CardRarity.C
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
-        await FGOCore.FGOCoreCode.Stars.CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Curses.Apply(cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["Stars"].UpgradeValueBy(10m);
+        DynamicVars["Curse"].UpgradeValueBy(1m);
     }
 }

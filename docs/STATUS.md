@@ -19,6 +19,14 @@ El usuario se comunica en **español**.
 
 ## Hecho recientemente
 - **Separación workspace/juego (staging)** implementada y verificada: build/publish → `dist/<ModId>/`; `tools/install-mod.ps1` instala al juego; FGOCore se referencia desde `dist/`. Ver DECISIONS §deploy.
+- **Revisión de diseño vs Togawa** ([DESIGN-REVIEW.md](DESIGN-REVIEW.md)) + **fixes implementados** (76 archivos, 7 mods) — pero **SIN COMPILAR** (juego desinstalado). Morgan→Maldición (deja de ser clon de Castoria); Castoria re-arma su ventana; Okita NP↔Aliento; Gil Enuma consume Armas; Mordred Crítico manifiesta token; Oberon NP↔Deuda; Siegfried sink «Erupción de Escamas». REDESIGN-MORGAN.md reconciliado.
+
+## Build-verify checklist (al reinstalar el juego)
+Los fixes de diseño están redactados+commiteados pero NO compilados. Al volver `sts2.dll`: `dotnet publish` de FGOCore + **los 7 personajes juntos** → `dist/`, y revisar estos puntos que los agentes flagearon:
+- **Morgan**: `CreatureCmd.Damage` 6-arg en MainFile (verificado = calca CursePower ✓); `BeforeCardPlayed`/`cardPlay.Target` (degrada elegante si el target no está resuelto); cap de Maldición = 25 (no se tocó FGOCore).
+- **Gil**: escaneo de mano `PlayerCombatState` (verificado canónico ✓); `KingsArrogancePower` rompe por Bloqueo remanente al fin de turno; Bab-ilu no existe → Arrogancia colgada de `OathOfUruk`.
+- **Siegfried**: `DamageVar(0)` de `ScaleEruption` — chequear que no muestre "0 daño" en tooltip.
+- **Todos**: correr `tools/audit_simpleloc.ps1`; balance sin playtest (Sentencia total de Morgan, +golpes de Okita, +1/Arma de Gil son perillas).
 
 ## Pendiente (orden)
 1. **Re-publicar TODO a Workshop junto**: webp patch (VRAM) + NP fixes + manifests (formato nuevo) + Tiamat + los servants que faltan subir (Mordred/Gilgamesh/Okita/Oberon/Siegfried). Ahora usa el **staging** (`dist/` → install-mod / upload).

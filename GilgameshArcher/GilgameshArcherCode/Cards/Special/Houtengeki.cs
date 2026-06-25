@@ -12,7 +12,7 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Special;
 /// Houtengeki, la Alabarda Lunar / 方天戟 (DESIGN-GILGAMESH §5.5, Arma del Tesoro #6) — la alabarda que
 /// carga el medidor. Token 0⚡ Exhaust generado (<c>CardRarity.Event</c>). 6 de daño + 10 Carga NP.
 /// </summary>
-public sealed class Houtengeki() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
+public sealed class Houtengeki() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), ITreasureArm
 {
     private const int NpGain = 10;
 

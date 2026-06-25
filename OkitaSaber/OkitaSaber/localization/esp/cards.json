@@ -7,7 +7,6 @@
   "OKITASABER-SHUKUCHI.description": "#Ráfaga 1. Cuesta 1 de *Aliento. Inflige !D! de daño !Hits! veces. Obtén !Stars! *Estrellas de *Crítico.",
   "OKITASABER-CATCH_YOUR_BREATH.title": "Recuperar el Aliento",
   "OKITASABER-CATCH_YOUR_BREATH.description": "#Gana !B! de Bloqueo. Gana !Breath! de *Aliento.",
-
   "OKITASABER-BATTOJUTSU.title": "Battōjutsu",
   "OKITASABER-BATTOJUTSU.description": "#Inflige !D! de daño. Si es tu PRIMER Ataque del turno: obtén !Stars! *Estrellas de *Crítico.",
   "OKITASABER-SAKURA_SLASH.title": "Tajo de Sakura",
@@ -48,7 +47,6 @@
   "OKITASABER-THIRD_STANCE.description": "#Gana !B! de Bloqueo. Gana !NpCharge! de *Carga NP.",
   "OKITASABER-I_DONT_SHOOT_BEAMS.title": "«¡No disparo rayos!»",
   "OKITASABER-I_DONT_SHOOT_BEAMS.description": "#Exhaustar. Inflige !D! de daño. Obtén !Stars! *Estrellas de *Crítico.",
-
   "OKITASABER-SHUKUCHI_B_PLUS.title": "Shukuchi B+",
   "OKITASABER-SHUKUCHI_B_PLUS.description": "#Exhaustar. Gana !Breath! de *Aliento. Roba !C! cartas. Este turno, tus Ataques infligen !SwiftStance! más.",
   "OKITASABER-ZETTOU_A.title": "Zettou A",
@@ -105,7 +103,6 @@
   "OKITASABER-STEADY_STEP.description": "#La primera *Ráfaga de cada turno reembolsa 1 de *Aliento.+ Otorga también !Stars! *Estrellas de *Crítico.+",
   "OKITASABER-SICKLY_CONSTITUTION.title": "Constitución Enfermiza A",
   "OKITASABER-SICKLY_CONSTITUTION.description": "#Exhaustar. Obtén !Stars! *Estrellas de *Crítico. Ganás una *Tos, barajada en tu mazo de robo.+ Roba !C! carta.+",
-
   "OKITASABER-MUMYOU_MANUAL.title": "Mumyou Sandanzuki",
   "OKITASABER-MUMYOU_MANUAL.description": "#Consume TODA tu *Carga NP, mínimo !ChargeCost!. Inflige !D! de daño 3 veces a un enemigo, IGNORANDO el Bloqueo; +1 por golpe por cada 10 de Carga NP sobre !ChargeCost!. Luego aplica !Vulnerable! de Vulnerable.",
   "OKITASABER-MUMYOU_FIRST_THRUST.title": "Mumyou: Primera Estocada",
@@ -146,9 +143,8 @@
   "OKITASABER-VEIL_OF_PETALS.description": "#Exhaustar. Gana !B! de Bloqueo. Obtén !Stars! *Estrellas de *Crítico.",
   "OKITASABER-CHERRY_IN_FULL_BLOOM.title": "Cerezo en Plena Floración",
   "OKITASABER-CHERRY_IN_FULL_BLOOM.description": "#Exhaustar. Tu *Aliento se llena al máximo. Ganás una *Tos, barajada en tu mazo de robo.+ Ya no ganás una *Tos.+",
-
   "OKITASABER-MUMYOU_UNLEASHED.title": "Mumyou Sandanzuki: Desatado",
-  "OKITASABER-MUMYOU_UNLEASHED.description": "#Retener. Exhaustar. Consume TODA tu *Carga NP, mínimo !ChargeCost!. Inflige !D! de daño 3 veces a un enemigo, IGNORANDO el Bloqueo; +1 por golpe por cada 10 de Carga NP sobre !ChargeCost!. Luego aplica !Vulnerable! de Vulnerable.",
+  "OKITASABER-MUMYOU_UNLEASHED.description": "#Retener. Exhaustar. Consume TODA tu *Carga NP, mínimo !ChargeCost!. Inflige !D! de daño 3 veces a un enemigo, IGNORANDO el Bloqueo; +1 por golpe por cada 10 de Carga NP sobre !ChargeCost!. Si tenés al menos !BreathCost! de *Aliento, lo gastás por !BoostHits! golpes más; si no, ganás una *Tos. Luego aplica !Vulnerable! de Vulnerable.",
   "OKITASABER-TOS.title": "Tos",
   "OKITASABER-TOS.description": "#Etérea. No jugable. Al final de tu turno, mientras esté en tu mano: perdés 1 de *Aliento."
 }

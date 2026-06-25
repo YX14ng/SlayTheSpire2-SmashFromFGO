@@ -30,7 +30,8 @@ public sealed class EnumaElishUnleashed() : GilgameshCard(0, CardType.Attack, Ca
 {
     public const int ChargeCost = 100;
 
-    private const int PerTwenty = 4; // +4 al bonus anti-divino por cada 20 de carga sobre 100
+    private const int PerTwenty = 4;     // +4 al bonus anti-divino por cada 20 de carga sobre 100
+    private const int PerArmInHand = 1;  // +1 al bonus anti-divino por cada Arma del Tesoro exhaustada (P2)
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];
 
@@ -58,6 +59,20 @@ public sealed class EnumaElishUnleashed() : GilgameshCard(0, CardType.Attack, Ca
         // 1) Consume TODA la carga; tier = lo realmente consumido (>= 100, + OverchargeBlessing).
         var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / 20 * PerTwenty; // SÓLO escala el bonus anti-divino
+
+        // 1.bis) FIX HOMOGENEIZACIÓN (P2): las Armas del Tesoro que queden en la mano se EXHAUSTAN como
+        //   Sobrecarga extra de la PROPIA tribu de Gil (+1 al bonus anti-divino c/u) — el gasto del NP
+        //   depende de su arsenal, no solo de la carga genérica del medidor. Fiel al OC: SÓLO escala el
+        //   bonus anti-divino, nunca el daño base contra «lo meramente humano».
+        if (Owner.PlayerCombatState != null)
+        {
+            var arms = Owner.PlayerCombatState.Hand.Cards.OfType<ITreasureArm>().Cast<CardModel>().ToList();
+            overcharge += arms.Count * PerArmInHand;
+            foreach (var arm in arms)
+            {
+                await CardCmd.Exhaust(choiceContext, arm);
+            }
+        }
 
         // 2) El bonus anti-divino se calcula POR objetivo: a cada enemigo según sea o no de rango divino.
         //    El daño base (30) es plano para todos; sólo Élites/Jefes reciben +Divine (+overcharge).

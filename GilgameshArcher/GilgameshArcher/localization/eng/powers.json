@@ -22,5 +22,8 @@
   "GILGAMESHARCHER-GOLDEN_ARROGANCE_POWER.smartDescription": "#The first time you lose HP each turn, gain Critical Stars.",
   "GILGAMESHARCHER-RECITAL_OF_CREATION_POWER.title": "Recital of Creation",
   "GILGAMESHARCHER-RECITAL_OF_CREATION_POWER.description": "#Whenever your Enuma Elish manifests, gain 1 *Critical Hit ready and draw 1 card.",
-  "GILGAMESHARCHER-RECITAL_OF_CREATION_POWER.smartDescription": "#Whenever your Enuma Elish manifests, gain 1 *Critical Hit ready and draw 1 card."
+  "GILGAMESHARCHER-RECITAL_OF_CREATION_POWER.smartDescription": "#Whenever your Enuma Elish manifests, gain 1 *Critical Hit ready and draw 1 card.",
+  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.title": "King's Arrogance",
+  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.description": "#While you have not defended this combat, your Attacks deal 3 more. The first time you end a turn with Block, this is lost for the rest of combat.",
+  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.smartDescription": "#While you have not defended this combat, your Attacks deal 3 more. The first time you end a turn with Block, this is lost for the rest of combat."
 }

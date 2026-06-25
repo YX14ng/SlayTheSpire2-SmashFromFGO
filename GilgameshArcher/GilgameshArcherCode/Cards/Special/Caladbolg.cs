@@ -13,7 +13,7 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Special;
 /// (Unblockable). El builder fluido no expone Unblockable, así que el golpe va por
 /// <c>CreatureCmd.Damage</c> con la ValueProp explícita (patrón ConceptualRound / MumyouUnleashed).
 /// </summary>
-public sealed class Caladbolg() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
+public sealed class Caladbolg() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), ITreasureArm
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

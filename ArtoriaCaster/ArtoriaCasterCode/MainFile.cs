@@ -36,9 +36,12 @@ public partial class MainFile : Node
         // "Around Caliburn" 1 turno: este turno podés CRITICAR en cualquier forma (cobrás
         // las estrellas acumuladas en Caster) + soporte (estrellas, Anti-Purga) + devuelve
         // recursos. Las cartas NP drafteadas son el clímax que elegís jugar dentro.
-        // La apertura es UNA VEZ POR COMBATE (NpManifestedPower persiste todo el combate):
-        // las cartas-NP vacían el medidor y recargarlo no debe repartir el paquete otra vez.
+        // RE-ARME (fix 2026-06-15): la ventana se RE-ARMA al bajar < 100 (como Mash/Morgan),
+        // restaurando el loop cargar→ventana→soltar NP→recargar. Antes era 1/combate, lo que
+        // hacía a Castoria más lineal que sus pares. Al volverlo reincidente se RECORTÓ el
+        // paquete (Anti-Purga 1 + 3★, SIN +1⚡ — evita un loop de energía positiva al recargar).
         NpCharge.GaugeFilled += TryOpenNpWindow;
+        NpCharge.GaugeDropped += DisarmManifest;
     }
 
     private static async Task TryOpenNpWindow(Creature creature)
@@ -46,17 +49,24 @@ public partial class MainFile : Node
         if (creature.Player?.Character is not Character.ArtoriaCaster) return;
         if (creature.HasPower<NpManifestedPower>()) return;
 
-        // Marker: la ventana ya se abrió este COMBATE. No se remueve al bajar < 100,
-        // así que recargar el medidor el mismo combate no vuelve a repartir el paquete.
+        // Marker: la ventana ya se abrió este pico (se re-arma en GaugeDropped al bajar < 100).
         await PowerCmd.Apply<NpManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
         await PowerCmd.Apply<AroundCaliburnWindowPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
 
         // Around Caliburn (soporte de Castoria): estrellas para cobrar + protección.
+        // Paquete recortado por ser reincidente: 1 Anti-Purga + 3★ (antes 6★).
         await PowerCmd.Apply<AntiPurgePower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
-        await Stars.Gain(creature, 6, null);
+        await Stars.Gain(creature, 3, null);
 
-        // Devuelve recursos: arranca el turno grande, no lo reemplaza (modelo Phrolova).
-        // Cierre común factorizado en FGOCore (mismo +1⚡ / robar 1 que Mash y Tiamat).
-        await NpWindow.ReturnResources(creature, 1, 1);
+        // Devuelve SOLO robar 1 (sin +1⚡): re-armar cada pico no debe ser energía-positivo.
+        await NpWindow.ReturnResources(creature, 0, 1);
+    }
+
+    private static async Task DisarmManifest(Creature creature)
+    {
+        if (creature.HasPower<NpManifestedPower>())
+        {
+            await PowerCmd.Remove<NpManifestedPower>(creature);
+        }
     }
 }

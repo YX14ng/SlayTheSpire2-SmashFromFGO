@@ -7,7 +7,6 @@
   "MORDREDSABER-REBELLION.description": "#造成!D!点伤害，随后摘下头盔：进入*叛逆形态。",
   "MORDREDSABER-LOWER_THE_VISOR.title": "落下面甲",
   "MORDREDSABER-LOWER_THE_VISOR.description": "#戴上头盔：进入*假面骑士形态。获得!B!点格挡与!NpCharge!点*NP值。",
-
   "MORDREDSABER-SLASH_OF_CLARENT.title": "克拉伦特斩",
   "MORDREDSABER-SLASH_OF_CLARENT.description": "#造成!D!点伤害。获得!Stars!颗*暴击星*。",
   "MORDREDSABER-REBELS_DOUBLE_EDGE.title": "叛逆双刃",
@@ -48,7 +47,6 @@
   "MORDREDSABER-KNIGHTS_STEADFASTNESS.description": "#获得!B!点格挡。若你处于*假面骑士形态：获得!NpCharge!点*NP值。",
   "MORDREDSABER-DONT_CALL_ME_A_GIRL.title": "别叫我小姑娘！",
   "MORDREDSABER-DONT_CALL_ME_A_GIRL.description": "#消耗。获得!Stars!颗*暴击星*与!NpCharge!点*NP值。",
-
   "MORDREDSABER-MANA_BURST_A.title": "魔力放出A",
   "MORDREDSABER-MANA_BURST_A.description": "#消耗。本回合，你的攻击牌额外造成!Strength!点伤害。",
   "MORDREDSABER-KNIGHT_OF_RED_LIGHTNING_A_PLUS.title": "赤雷骑士A+",
@@ -105,7 +103,6 @@
   "MORDREDSABER-SCORN_FOR_THE_THRONE.description": "#获得!NpCharge!点*NP值。对精英与首领：额外获得!Authority!点。",
   "MORDREDSABER-TREAT_ME_AS_A_KNIGHT.title": "把我当骑士对待",
   "MORDREDSABER-TREAT_ME_AS_A_KNIGHT.description": "#抽!C!张牌。若你处于*假面骑士形态：额外抽!MaskedDraw!张。",
-
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_MANUAL.title": "克拉伦特·血染亚瑟",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_MANUAL.description": "#若你处于*假面状态，先摘下头盔。消耗你全部的*NP值，至少!ChargeCost!点。对所有敌人造成!D!点伤害!Hits!次；对精英与首领，每击额外!Authority!点；每超过最低值20点NP值，每击再追加1点。随后获得!Refund!点*NP值。",
   "MORDREDSABER-MANA_BURST_RED_LIGHTNING.title": "魔力放出·赤雷",
@@ -146,9 +143,10 @@
   "MORDREDSABER-DOUBLE_EDGE_OF_HATRED.description": "#处于*叛逆形态时，你的攻击牌额外造成!AttackBonus!点伤害。",
   "MORDREDSABER-MEMORY_OF_TRIFAS.title": "特里法斯的记忆",
   "MORDREDSABER-MEMORY_OF_TRIFAS.description": "#在你的回合开始时，回复!Heal!点生命并获得!NpCharge!点*NP值。",
-
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_UNLEASHED.title": "克拉伦特·血染亚瑟：解放",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_UNLEASHED.description": "#保留。消耗。若你处于*假面状态，先摘下头盔。消耗你全部的*NP值，至少100点。对所有敌人造成!D!点伤害!Hits!次；对精英与首领，每击额外!Authority!点；每超过100的20点NP值，每击再追加1点。随后获得!Refund!点*NP值。",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.title": "克拉伦特·血染亚瑟：幕间",
-  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.description": "#保留。消耗。消耗你全部的*NP值，至少100点。对所有敌人造成!D!点伤害!Hits!次；对精英与首领，每击额外!Authority!点；每超过100的15点NP值，每击再追加1点。随后获得!Refund!点*NP值。"
+  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.description": "#保留。消耗。消耗你全部的*NP值，至少100点。对所有敌人造成!D!点伤害!Hits!次；对精英与首领，每击额外!Authority!点；每超过100的15点NP值，每击再追加1点。随后获得!Refund!点*NP值。",
+  "MORDREDSABER-CHISPA_DE_CLARENT.title": "克拉伦特火花",
+  "MORDREDSABER-CHISPA_DE_CLARENT.description": "#消耗。对所有敌人造成!D!点伤害。（你的暴击迸发的绯红雷霆；脱下头盔时打得更狠。）"
 }

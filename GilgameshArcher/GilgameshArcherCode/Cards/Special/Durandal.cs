@@ -13,7 +13,7 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Special;
 /// de la espada que nunca se rompe; alimenta el hilo de las Estrellas. Token 0⚡ Exhaust generado
 /// (<c>CardRarity.Event</c>). 6 de daño + 10 Estrellas de Crítico (reusa <c>CritStars</c> de FGOCore).
 /// </summary>
-public sealed class Durandal() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
+public sealed class Durandal() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), ITreasureArm
 {
     private const int StarsGain = 10;
 

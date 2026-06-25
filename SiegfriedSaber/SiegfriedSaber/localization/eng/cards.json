@@ -60,5 +60,7 @@
   "SIEGFRIEDSABER-CONVICTION_CHARGE.title": "Charge",
   "SIEGFRIEDSABER-CONVICTION_CHARGE.description": "#Gain 50 *NP Charge.",
   "SIEGFRIEDSABER-CONVICTION_SCALES.title": "Harden",
-  "SIEGFRIEDSABER-CONVICTION_SCALES.description": "#Gain 3 *Dragon Scales."
+  "SIEGFRIEDSABER-CONVICTION_SCALES.description": "#Gain 3 *Dragon Scales.",
+  "SIEGFRIEDSABER-SCALE_ERUPTION.title": "Scale Eruption",
+  "SIEGFRIEDSABER-SCALE_ERUPTION.description": "#Consume ALL your *Dragon Scales. Deal !PerPoint! damage to ALL enemies for each point consumed, up to 6 points."
 }

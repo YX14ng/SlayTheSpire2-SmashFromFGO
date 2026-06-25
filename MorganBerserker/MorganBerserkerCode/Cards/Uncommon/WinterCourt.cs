@@ -8,9 +8,9 @@ using MorganBerserker.MorganBerserkerCode.Powers;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
 /// <summary>
-/// Corte del Invierno (冬之宫廷) — rediseño v2: 2⚡ Poder. Al inicio de tu turno:
-/// añade 1 Arma del Caballero a tu mano. Cuando jugás un Arma del Caballero:
-/// +10 Estrellas de Crítico (generador sostenido + payoff de la tribu en una carta).
+/// Corte del Invierno (冬之宫廷) — rediseño 2026-06-15 (swap Estrellas→Maldición): 2⚡ Poder.
+/// Al inicio de tu turno: añade 1 Arma del Caballero a tu mano. Cuando jugás un Arma del
+/// Caballero: +5 de Carga NP (generador sostenido + payoff de la tribu en una carta).
 /// Mejora: −1⚡ y además roba 1 al inicio del turno (parche P10: devuelve el robo
 /// sostenido que el rediseño le quitó al pool).
 /// </summary>
@@ -19,10 +19,10 @@ public sealed class WinterCourt() : MorganCard(2, CardType.Power, CardRarity.Unc
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new PowerVar<WinterCourtPower>("Stacks", 1m),
-        new DynamicVar("Stars", WinterCourtPower.StarsPerArm)
+        new DynamicVar("NpCharge", WinterCourtPower.NpPerArm)
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritStarsPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

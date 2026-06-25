@@ -22,5 +22,8 @@
   "GILGAMESHARCHER-GOLDEN_ARROGANCE_POWER.smartDescription": "#La primera vez que pierdas Vida cada turno, gana Estrellas de Crítico.",
   "GILGAMESHARCHER-RECITAL_OF_CREATION_POWER.title": "Recital de la Creación",
   "GILGAMESHARCHER-RECITAL_OF_CREATION_POWER.description": "#Cada vez que se manifiesta tu Enuma Elish, gana 1 *Crítico Listo y roba 1 carta.",
-  "GILGAMESHARCHER-RECITAL_OF_CREATION_POWER.smartDescription": "#Cada vez que se manifiesta tu Enuma Elish, gana 1 *Crítico Listo y roba 1 carta."
+  "GILGAMESHARCHER-RECITAL_OF_CREATION_POWER.smartDescription": "#Cada vez que se manifiesta tu Enuma Elish, gana 1 *Crítico Listo y roba 1 carta.",
+  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.title": "Arrogancia del Rey",
+  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.description": "#Mientras no hayas defendido este combate, tus Ataques hacen 3 más. La primera vez que terminás un turno con Bloqueo, lo perdés por el resto del combate.",
+  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.smartDescription": "#Mientras no hayas defendido este combate, tus Ataques hacen 3 más. La primera vez que terminás un turno con Bloqueo, lo perdés por el resto del combate."
 }

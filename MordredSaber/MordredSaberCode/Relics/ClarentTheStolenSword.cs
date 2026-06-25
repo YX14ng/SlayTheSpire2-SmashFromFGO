@@ -56,6 +56,9 @@ public sealed class ClarentTheStolenSword : MordredRelic, ICritConsumedListener
         await Forms.Enter<MaskedKnightFormPower>(null, Owner.Creature, null);
         // Watcher del motor ★→×2→NP (la pieza que detecta el consumo de Crítico Listo).
         await PowerCmd.Apply<RedLightningChannelPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null, silent: true);
+        // Motor «Chispa de Clarent»: al consumir un Crítico (cap 1/turno) manifiesta el token efímero
+        // AoE que escala con la forma — el Crítico de Mordred EXPRESA su identidad, no solo el ×2.
+        await PowerCmd.Apply<RedLightningSparkPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null, silent: true);
     }
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
