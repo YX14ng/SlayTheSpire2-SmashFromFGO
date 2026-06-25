@@ -9,6 +9,7 @@ Patrón tomado de `iryuko/sts2-mod-dev`. Estado vivo → [STATUS.md](STATUS.md).
 
 ## Deploy
 - **Workshop-only**: los mods FGO no viven en `mods/` del juego; se cargan desde suscripciones de Workshop.
+- **Staging (separación workspace/juego, estilo `iryuko/sts2-mod-dev`)**: build/publish van SIEMPRE a `dist/<ModId>/` del repo (gitignoreado), NUNCA a la carpeta del juego. La referencia a FGOCore sale de `dist/` (`$(StagingPath)`) → el build no depende de tener el juego ni FGOCore instalado. Instalar al juego solo vía `tools/install-mod.ps1 -Mod <Id>` / `-All`; `-Clean` restaura Workshop-only. Atajo sin script: `/p:DeployToGame=true`. (Implementado en `Sts2PathDiscovery.props`: `StagingPath`/`DeployDir`/`DeployToGame`.)
 - **FGOCore.dll no puede estar local Y en Workshop a la vez** (mismo id → duplicado → crash). El build local de FGOCore es **temporal** y se borra al terminar.
 - Cuando cambia la API pública de FGOCore, **los 10 mods se republican JUNTOS** (dll viejo contra FGOCore nuevo → `MissingMethodException`/`ReflectionTypeLoadException`, falla silenciosa). Nunca shippear FGOCore solo.
 - Descripciones **localizadas** de Workshop: solo por web UI o Steamworks API (SteamCMD/VDF setea una sola, la default).

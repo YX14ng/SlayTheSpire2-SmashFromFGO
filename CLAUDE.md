@@ -42,9 +42,11 @@ When FGOCore's public API changes (e.g. a method signature like `NpCharge.CanPay
 
 Requires **.NET 9 SDK** and a **MegaDot 4.5.1** export binary (the game won't load a `.pck` exported by a newer Godot). Machine-local paths (`GodotPath`, `Sts2Path`) live in each project's `Directory.Build.props`, which is **gitignored** — `Sts2PathDiscovery.props` autodetects when possible. There is no `.sln`; build/publish each project from its own directory.
 
-- **Build** (`dotnet build`) compiles code only and copies `.dll/.pdb/.json` to `mods/<Name>/` (see `CopyToModsFolderOnBuild` target). Use only when you changed *just* C#.
-- **Publish** (`dotnet publish -c Release`) compiles the dll **and** runs MegaDot headless `--export-pack` to rebuild the `.pck`, copying all three files to `mods/<Name>/`. **Any non-code change (localization JSON, images, scenes) requires Publish, not Build.**
-- **Order:** publish `FGOCore` first, then characters. **The game must be CLOSED** or the dll is locked.
+- **Staging (separación workspace/juego, estilo `iryuko/sts2-mod-dev`):** build/publish copian a la **staging del repo `dist/<Name>/`**, NUNCA a la carpeta del juego. Las mods de personaje referencian FGOCore desde `dist/FGOCore/FGOCore.dll` (`$(StagingPath)`), así el build NO depende de tener FGOCore en el juego (solo de buildear FGOCore primero). `dist/` está gitignoreado.
+- **Build** (`dotnet build`) compila código y copia `.dll/.pdb/.json` a `dist/<Name>/` (target `CopyToModsFolderOnBuild`). Usar cuando cambiaste *solo* C#.
+- **Publish** (`dotnet publish -c Release`) compila el dll **y** corre MegaDot headless `--export-pack` para el `.pck`, todo a `dist/<Name>/`. **Cualquier cambio no-código (loc JSON, imágenes, escenas) requiere Publish, no Build.**
+- **Instalar al juego:** `tools/install-mod.ps1 -Mod <Id>` (o `-All`) copia `dist/<Id>/` → la `mods/` del juego; `-Clean` saca todos los mods FGO (restaura Workshop-only). Es la ÚNICA vía a la carpeta del juego. Atajo sin script: build/publish con `/p:DeployToGame=true`.
+- **Orden:** buildear/publicar `FGOCore` primero (a `dist/`), después los personajes. El build ya NO necesita el juego cerrado (va a `dist/`); solo **instalar** al juego pide el juego cerrado si ese mod está cargado.
 - **Game log is the first place to diagnose** a non-loading mod (`user://logs/godot.log`). A "mod X won't load" symptom can actually be a *different* mod crashing — read the log before assuming.
 - First build of a new character template emits localization errors — fix via the `Alchyr.Sts2.ModAnalyzers` "Generate localization" quick-fix and move strings into the localization JSON.
 

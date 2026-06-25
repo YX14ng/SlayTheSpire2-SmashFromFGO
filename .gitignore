@@ -43,3 +43,6 @@ assets/reference/fanart/*
 !assets/reference/fanart/CREDITS.txt
 /decompiled/
 CoopDeterminismPatch/Directory.Build.props
+
+# Staging de build (separación workspace/juego)
+/dist/

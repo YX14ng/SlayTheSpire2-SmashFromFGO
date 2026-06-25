@@ -17,12 +17,16 @@ El usuario se comunica en **español**.
 - Tiamat: 27 cartas (código verde) + arte (match-ce-art) + loc eng/esp/zhs. Commits `115c8fe` (código) + `b86d618` (arte).
 - Los crashes recientes del juego son de mods de **otros autores** (ver FINDINGS §mods rotos), no nuestros.
 
+## Hecho recientemente
+- **Separación workspace/juego (staging)** implementada y verificada: build/publish → `dist/<ModId>/`; `tools/install-mod.ps1` instala al juego; FGOCore se referencia desde `dist/`. Ver DECISIONS §deploy.
+
 ## Pendiente (orden)
-1. **Re-publicar TODO a Workshop junto**: webp patch (VRAM) + NP fixes + manifests (formato nuevo) + Tiamat + los servants que faltan subir (Mordred/Gilgamesh/Okita/Oberon/Siegfried). Requiere **staging** (ver DECISIONS §deploy).
+1. **Re-publicar TODO a Workshop junto**: webp patch (VRAM) + NP fixes + manifests (formato nuevo) + Tiamat + los servants que faltan subir (Mordred/Gilgamesh/Okita/Oberon/Siegfried). Ahora usa el **staging** (`dist/` → install-mod / upload).
 2. **Mod de optimización de VRAM** (lazy character loading) — DESPUÉS de Tiamat.
 3. Telemetría RitsuLib (futuro).
 
 ## Bloqueado / a decidir
+- ⚠️ **El juego está desinstalado/ausente** (2026-06-25): la carpeta `Slay the Spire 2` quedó con solo `mods/` + `window_state.json` — falta `data_sts2_windows_x86_64`/`sts2.dll` y no hay `appmanifest`. **Bloquea compilar** (no hay `sts2.dll` que referenciar) **y jugar**. Reinstalar por Steam. El cambio de staging quedó verificado por resolución de propiedades + dry-run del script; falta el build→dist real cuando vuelva el juego.
 - Cómo hacer Tiamat jugable para playtest: **local-rápido vs re-publish a Workshop** (pendiente decisión del user).
 - NP fixes que requieren decisión del user: Okita romaji vs EN oficial; Artoria "Hopewill"/"Round of Avalon". (Siegfried `失坐`→`失坠` es fix claro, aplicar.)
 

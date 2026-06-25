@@ -29,7 +29,7 @@
              Private=false: el dll lo distribuye solo el mod FGOCore; el loader del juego
              lo resuelve por nombre vía dependencies del manifest. -->
         <Reference Include="FGOCore">
-            <HintPath>$(ModsPath)FGOCore/FGOCore.dll</HintPath>
+            <HintPath>$(StagingPath)FGOCore/FGOCore.dll</HintPath>
             <Private>false</Private>
         </Reference>
     </ItemGroup>
@@ -82,15 +82,15 @@
     
     <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
         <Message Text="Copying .dll .pdb and .json to mods folder." Importance="high" />
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
-        <Copy SourceFiles="$(AssemblyName).json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
-        <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DeployDir)$(MSBuildProjectName)/" />
+        <Copy SourceFiles="$(AssemblyName).json" DestinationFolder="$(DeployDir)$(MSBuildProjectName)/" />
+        <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(DeployDir)$(MSBuildProjectName)/" />
     </Target>
 
     <Target Name="CopyQuickPck" AfterTargets="PackPck" Condition="Exists('$(PckPackerOutputPath)') And '$(PckPackerSkipped)' != 'true'">
         <Message Text="Copying quick .pck to mods folder." Importance="high"/>
         <Copy SourceFiles="$(PckPackerOutputPath)"
-              DestinationFolder="$(ModsPath)/$(MSBuildProjectName)" />
+              DestinationFolder="$(DeployDir)/$(MSBuildProjectName)" />
     </Target>
     
     <Target Name="NeedGodotForPublish" BeforeTargets="Publish">
@@ -100,7 +100,7 @@
     
     <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
         <Message Text="Exporting Godot .pck to mods folder" Importance="high"/>
-        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(DeployDir)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
               EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
               ContinueOnError="WarnAndContinue"/>
     </Target>

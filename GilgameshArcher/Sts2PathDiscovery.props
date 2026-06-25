@@ -44,4 +44,16 @@
         <ModsPath>$(Sts2Path)/SlayTheSpire2.app/Contents/MacOS/mods/</ModsPath>
         <Sts2DataDir>$(Sts2Path)/SlayTheSpire2.app/Contents/Resources/data_sts2_macos_x86_64</Sts2DataDir>
     </PropertyGroup>
+
+    <!-- Deploy destination (separación workspace/juego, estilo iryuko/sts2-mod-dev).
+         Por defecto build/publish va al STAGING del repo (dist/<ModId>/), NO a la carpeta del
+         juego. Para instalar al juego: tools/install-mod.ps1, o build/publish con
+         /p:DeployToGame=true. La referencia a FGOCore.dll también sale del staging
+         ($(StagingPath)), así el build NO depende de tener FGOCore en la carpeta del juego. -->
+    <PropertyGroup>
+        <StagingPath Condition="'$(StagingPath)' == ''">$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '..', 'dist'))</StagingPath>
+        <DeployToGame Condition="'$(DeployToGame)' == ''">false</DeployToGame>
+        <DeployDir Condition="'$(DeployToGame)' == 'true'">$(ModsPath)</DeployDir>
+        <DeployDir Condition="'$(DeployDir)' == ''">$(StagingPath)</DeployDir>
+    </PropertyGroup>
 </Project>
