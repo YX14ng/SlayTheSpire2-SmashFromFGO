@@ -19,7 +19,8 @@ El usuario se comunica en **español**.
 
 ## Hecho recientemente
 - **Separación workspace/juego (staging)** implementada y verificada: build/publish → `dist/<ModId>/`; `tools/install-mod.ps1` instala al juego; FGOCore se referencia desde `dist/`. Ver DECISIONS §deploy.
-- **Revisión de diseño vs Togawa** ([DESIGN-REVIEW.md](DESIGN-REVIEW.md)) + **fixes implementados** (76 archivos, 7 mods) — pero **SIN COMPILAR** (juego desinstalado). Morgan→Maldición (deja de ser clon de Castoria); Castoria re-arma su ventana; Okita NP↔Aliento; Gil Enuma consume Armas; Mordred Crítico manifiesta token; Oberon NP↔Deuda; Siegfried sink «Erupción de Escamas». REDESIGN-MORGAN.md reconciliado.
+- **Revisión de diseño vs Togawa** ([DESIGN-REVIEW.md](DESIGN-REVIEW.md)) + **fixes implementados, COMPILADOS verde y PUBLICADOS**: Morgan→Maldición (deja de ser clon de Castoria); Castoria re-arma su ventana; Okita NP↔Aliento; Gil Enuma consume Armas; Mordred Crítico manifiesta token; Oberon NP↔Deuda; Siegfried sink «Erupción de Escamas». REDESIGN-MORGAN.md reconciliado.
+- **Republish a Workshop COMPLETO** (2026-06-25): los 10 mods FGO en Workshop, **PRIVADOS**, sin webp patch, desde `dist/`. IDs: FGOCore `3747876334` · Mash `3747876464` · Morgan `3747876731` · Artoria `3747876956` · Mordred `3751610432` · Gilgamesh `3751610575` · Okita `3751610728` · Oberon `3751610867` · Siegfried `3751611015` · Tiamat `3751611145`. **Falta**: suscribir los 6 nuevos + playtest + decidir hacerlos públicos.
 
 ## Playtest watch-list (ya compila verde)
 Los fixes **compilan** a `dist/`. Falta **playtest** (balance) + **publish (.pck) + install** a G:. Puntos a vigilar EN JUEGO (los riesgos de compilación ya se resolvieron):
