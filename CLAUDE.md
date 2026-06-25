@@ -21,7 +21,7 @@ The repo is a **multi-mod monorepo**: one shared mechanics library (`FGOCore/`) 
 | `SiegfriedSaber/` | `SiegfriedSaber` | Siegfried (Saber) | implemented |
 | `Tiamat/` | `TiamatBeast` | Tiamat (Beast) | in progress (folder ≠ project name) |
 
-> Always check [docs/HANDOFF.md](docs/HANDOFF.md) for live status — it overrides the table above. Read it FIRST if picking up development on a new machine.
+> **Estado + orden de lectura** (método adoptado de `iryuko/sts2-mod-dev`): al retomar una sesión, leé PRIMERO [docs/STATUS.md](docs/STATUS.md) (estado vivo, sobreescribe la tabla de arriba), [docs/DECISIONS.md](docs/DECISIONS.md) (reglas cerradas, no re-discutir) y [docs/FINDINGS.md](docs/FINDINGS.md) (hallazgos verificados). Las conclusiones van a esos docs de alta densidad, **no al chat**; marcá lo no verificado como *(probable)*/*(a confirmar)* y no escribas especulación como hecho. [docs/HANDOFF.md](docs/HANDOFF.md) queda como handoff histórico/cross-máquina.
 
 The user communicates in Spanish — **respond in Spanish**. Card/mechanic names are authored in Spanish with English (and zhs) localization.
 
