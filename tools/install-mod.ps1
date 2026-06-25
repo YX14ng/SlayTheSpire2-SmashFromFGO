@@ -16,7 +16,7 @@ param(
     [string]$Mod,
     [switch]$All,
     [switch]$Clean,
-    [string]$GameMods = "C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2\mods"
+    [string]$GameMods = "G:\SteamLibrary\steamapps\common\Slay the Spire 2\mods"
 )
 
 $ErrorActionPreference = 'Stop'

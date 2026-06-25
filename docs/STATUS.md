@@ -21,8 +21,8 @@ El usuario se comunica en **español**.
 - **Separación workspace/juego (staging)** implementada y verificada: build/publish → `dist/<ModId>/`; `tools/install-mod.ps1` instala al juego; FGOCore se referencia desde `dist/`. Ver DECISIONS §deploy.
 - **Revisión de diseño vs Togawa** ([DESIGN-REVIEW.md](DESIGN-REVIEW.md)) + **fixes implementados** (76 archivos, 7 mods) — pero **SIN COMPILAR** (juego desinstalado). Morgan→Maldición (deja de ser clon de Castoria); Castoria re-arma su ventana; Okita NP↔Aliento; Gil Enuma consume Armas; Mordred Crítico manifiesta token; Oberon NP↔Deuda; Siegfried sink «Erupción de Escamas». REDESIGN-MORGAN.md reconciliado.
 
-## Build-verify checklist (al reinstalar el juego)
-Los fixes de diseño están redactados+commiteados pero NO compilados. Al volver `sts2.dll`: `dotnet publish` de FGOCore + **los 7 personajes juntos** → `dist/`, y revisar estos puntos que los agentes flagearon:
+## Playtest watch-list (ya compila verde)
+Los fixes **compilan** a `dist/`. Falta **playtest** (balance) + **publish (.pck) + install** a G:. Puntos a vigilar EN JUEGO (los riesgos de compilación ya se resolvieron):
 - **Morgan**: `CreatureCmd.Damage` 6-arg en MainFile (verificado = calca CursePower ✓); `BeforeCardPlayed`/`cardPlay.Target` (degrada elegante si el target no está resuelto); cap de Maldición = 25 (no se tocó FGOCore).
 - **Gil**: escaneo de mano `PlayerCombatState` (verificado canónico ✓); `KingsArrogancePower` rompe por Bloqueo remanente al fin de turno; Bab-ilu no existe → Arrogancia colgada de `OathOfUruk`.
 - **Siegfried**: `DamageVar(0)` de `ScaleEruption` — chequear que no muestre "0 daño" en tooltip.
@@ -34,7 +34,7 @@ Los fixes de diseño están redactados+commiteados pero NO compilados. Al volver
 3. Telemetría RitsuLib (futuro).
 
 ## Bloqueado / a decidir
-- ⚠️ **El juego está desinstalado/ausente** (2026-06-25): la carpeta `Slay the Spire 2` quedó con solo `mods/` + `window_state.json` — falta `data_sts2_windows_x86_64`/`sts2.dll` y no hay `appmanifest`. **Bloquea compilar** (no hay `sts2.dll` que referenciar) **y jugar**. Reinstalar por Steam. El cambio de staging quedó verificado por resolución de propiedades + dry-run del script; falta el build→dist real cuando vuelva el juego.
+- ✅ **Resuelto (2026-06-25)**: el juego no estaba desinstalado — se **movió de biblioteca Steam a `G:\SteamLibrary\steamapps\common\Slay the Spire 2`** (el viejo C: quedó con restos). `Sts2Path`→G: en los Directory.Build.props. **Build verificado end-to-end**: FGOCore + los 7 personajes con fixes + Tiamat compilan VERDE → `dist/` (solo faltaba 1 `using` en Gil, arreglado). Falta: **playtest** (balance) + **publish/install**.
 - Cómo hacer Tiamat jugable para playtest: **local-rápido vs re-publish a Workshop** (pendiente decisión del user).
 - NP fixes que requieren decisión del user: Okita romaji vs EN oficial; Artoria "Hopewill"/"Round of Avalon". (Siegfried `失坐`→`失坠` es fix claro, aplicar.)
 

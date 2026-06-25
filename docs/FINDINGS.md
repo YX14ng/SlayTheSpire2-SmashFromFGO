@@ -18,7 +18,7 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
 - Cada `PowerModel` necesita loc `title/description/smartDescription` o el build tira `STS001`.
 
 ## Deploy / entorno (CRÍTICO)
-- Install en uso: **Steam legítimo** `C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2` (v0.107.1). Único que se usa.
+- Install en uso: `G:\SteamLibrary\steamapps\common\Slay the Spire 2` (v0.107.1). **El juego se movió de biblioteca Steam (C:→G:) el 2026-06-25**; el viejo `C:\Program Files (x86)\Steam\...` quedó con restos (solo `mods/` + `window_state.json`, sin `data_sts2_windows_x86_64`). El build apunta a G: vía `Sts2Path` en los `Directory.Build.props` (machine-local, gitignored); `tools/install-mod.ps1` usa G: por default. Workshop ahora en `G:\SteamLibrary\steamapps\workshop\content\2868840\`.
 - El tool **Bash corre SANDBOXEADO** con overlay de FS → para tocar el FS real usar `dangerouslyDisableSandbox:true` (Bash) o la tool PowerShell.
 - dotnet **10.0.301** (`/c/Program Files/dotnet/`); MegaDot 4.5.1 en el repo; `ilspycmd` en `/c/Users/YX14n/.dotnet/tools/`.
 - **godot.log**: `C:\Users\YX14n\AppData\Roaming\SlayTheSpire2\logs\godot.log` — PRIMER lugar a diagnosticar un mod que no carga.
