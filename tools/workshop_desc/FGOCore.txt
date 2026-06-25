@@ -13,3 +13,23 @@ This is a LIBRARY - it adds no playable character on its own, and is REQUIRED by
 Localization: English, Spanish, Simplified Chinese.
 
 Made with the help of Claude Code.
+
+————————————————————
+
+这是一个为「Fate/Grand Order」从者角色 Mod 提供底层机制的共享模组库，基于 BaseLib 框架打造。它给每位 FGO 从者打下统一的机制地基，让大家用起来像出自同一套班底。
+
+本库提供的核心机制：
+- 宝具 / 充能槽（Overcharge）：战斗中不断累积的能量槽（0-300），用来释放各从者的宝具与超充能效果。
+- 形态切换：战斗中切换姿态/阵位（例如狂战士切换到术士），每个形态都会改写从者的打法。
+- 壁垒（Bulwark）：跨回合保留、不会回合结束清零的格挡。
+- 羁绊（好感度）：随着你不断游玩同一从者，逐步提升其伤害、格挡与每回合回血的圣遗物。
+- 暴击星与诅咒：全体从者通用的 FGO 资源。
+- 一小批无色的「FGO 梗」卡牌。
+
+注意：这是一个「机制库」，本身不含任何可操作角色，是所有 FGO 从者 Mod（玛修·基列莱特、摩根、阿尔托莉雅·卡斯特等）的必装前置。另需 BaseLib。
+
+依赖：仅需 BaseLib。
+
+支持语言：英文、西班牙文、简体中文。
+
+在 Claude Code 的协助下制作。

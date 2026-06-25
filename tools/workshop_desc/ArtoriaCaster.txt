@@ -11,3 +11,19 @@ Requires: FGO Core (library) + BaseLib.
 Localization: English, Spanish, Simplified Chinese.
 
 Made with the help of Claude Code.
+
+————————————————————
+
+「Fate/Grand Order」的阿尔托莉雅·卡斯特——预言之子卡斯托莉雅，现已作为可操作、全动画的辅助角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+
+本 Mod 带来：
+- 一名完整的辅助角色，配有专属卡池与初始圣遗物。
+- 暴击辅助玩法：攒暴击星、充宝具，把格挡、增益和各种资源源源不断地分给全队。
+- 在阿瓦隆与预言两个阵位之间切换形态，并附带「反净化」保护，让你的增益不会被敌人剥除。
+- 宝具「Around Caliburn」——「那颗将你拥入怀中的希望之星」。
+- 协力核心：联机时她是顶级的团队驱动者，给队友喂暴击星、格挡与宝具充能，让全队输出更上一层楼。
+
+依赖：FGO Core（库）+ BaseLib。
+支持语言：英文、西班牙文、简体中文。
+
+在 Claude Code 的协助下制作。

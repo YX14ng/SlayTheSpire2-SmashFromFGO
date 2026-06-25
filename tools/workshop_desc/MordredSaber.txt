@@ -9,3 +9,17 @@ Requires: FGO Core (library) + BaseLib.
 Localization: English, Spanish, Simplified Chinese.
 
 Made with the help of Claude Code.
+
+————————————————————
+
+「Fate/Grand Order」的叛逆骑士莫德雷德（红 Saber），现已作为可操作角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+
+本 Mod 带来：
+- 一名自私自利的 AoE Buster 暴击 DPS，凭头盔实现可选构筑的形态切换：戴盔（防御姿态，保留格挡）对脱盔反叛（全力进攻，造成与承受的伤害双双提升），外加常驻的「绯红闪电」(Crimson Lightning) 阵位。
+- 三套相互交织的资源循环：耗血换暴击星，耗暴击换宝具充能，而她的暴击如今会催生「Clarent Spark」——脱盔状态下打得更狠。
+- 宝具「Clarent Blood Arthur」——施放瞬间她会一把扯下头盔，因此反叛加成会附加在每一段攻击上。
+
+依赖：FGO Core（库）+ BaseLib。
+支持语言：英文、西班牙文、简体中文。
+
+在 Claude Code 的协助下制作。

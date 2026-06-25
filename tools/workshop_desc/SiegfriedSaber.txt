@@ -9,3 +9,17 @@ Requires: FGO Core (library) + BaseLib.
 Localization: English, Spanish, Simplified Chinese.
 
 Made with the help of Claude Code.
+
+————————————————————
+
+「Fate/Grand Order」的屠龙英雄齐格弗里德（剑士），现已作为可操作角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+
+本 Mod 带来：
+- 一名身负龙血的坦克型猛将，他的护甲是「龙血鳞片」(Dragon Scales)：一种常驻的、按每次受击减伤的机制——不是会被消耗掉的格挡。把鳞片堆厚既能扛伤，也能磨利你的宝具。
+- 他原典中的致命弱点正是张力的来源：「菩提叶」会让每回合的第一次受击穿透鳞片。全新的「Scale Eruption」(鳞甲爆发) 则让你把全部护甲一口气释放成 AoE 伤害——是要继续扛，还是直接爆发？
+- 宝具「Balmung」——需要手动施放，其门槛与威力都由你堆出的护甲决定，绝非白嫖的一键秒杀。
+
+依赖：FGO Core（库）+ BaseLib。
+支持语言：英文、西班牙文、简体中文。
+
+在 Claude Code 的协助下制作。

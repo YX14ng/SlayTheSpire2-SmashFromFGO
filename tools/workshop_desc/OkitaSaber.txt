@@ -9,3 +9,17 @@ Requires: FGO Core (library) + BaseLib.
 Localization: English, Spanish, Simplified Chinese.
 
 Made with the help of Claude Code.
+
+————————————————————
+
+「Fate/Grand Order」的冲田总司（剑士），现已作为可操作角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+
+本 Mod 带来：
+- 一名 Quick 暴击、单体爆发的脆皮炮台，真正的瓶颈是这具病躯的「气息」(Breath)：强力爆发既要耗能量也要耗气息，气息耗尽就会塞给你一张「咳嗽」状态卡。
+- 攻击就是引擎：打出攻击攒暴击星，打出暴击充宝具并回复气息——然后再决定是当下把这口气全用掉，还是留着多撑一回合。
+- 宝具「Mumyou Sandanzuki」（无明·三段突）——三段同时突刺、穿透格挡；气息全满时更会化作五段。
+
+依赖：FGO Core（库）+ BaseLib。
+支持语言：英文、西班牙文、简体中文。
+
+在 Claude Code 的协助下制作。

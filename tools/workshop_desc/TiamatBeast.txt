@@ -9,3 +9,17 @@ Requires: FGO Core (library) + BaseLib.
 Localization: English, Spanish, Simplified Chinese.
 
 Made with the help of Claude Code.
+
+————————————————————
+
+「Fate/Grand Order」的回归之兽提亚马特（Beast II），现已作为可操作角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+
+本 Mod 带来：
+- 一名建立在「两套卡池」上的节奏控制者：开局你是提亚马特·拉尔瓦（Lily 形态），一个掌控潮汐的形态——格挡、播撒诅咒、孵育拉赫姆（Lahmu）的同时填充充能槽；随后宝具会开启一段持续 1-3 回合的「兽」之窗口，期间换上一整套专属牌组。
+- 诅咒既是 Lily 铸造的货币，也是「兽」挥霍的本钱：虫群优先撕咬诅咒层数最高的目标，而窗口的强度则取决于你前期攒了多少。标志性的取舍：充到 100 就开（频繁的单回合窗口）还是攒到 300 再开（一次长达 3 回合的肆虐）。
+- 宝具「Nammu Dur-an-ki」——开启「兽」之窗口；而「Beast's Plume」（兽之羽）则用来收束它。
+
+依赖：FGO Core（库）+ BaseLib。
+支持语言：英文、西班牙文、简体中文。
+
+在 Claude Code 的协助下制作。

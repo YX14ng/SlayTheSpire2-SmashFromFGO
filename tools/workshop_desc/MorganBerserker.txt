@@ -11,3 +11,19 @@ Requires: FGO Core (library) + BaseLib.
 Localization: English, Spanish, Simplified Chinese.
 
 Made with the help of Claude Code.
+
+————————————————————
+
+「Fate/Grand Order」的妖精女王摩根——那位用六十年复仇之心铸成不列颠的暴君，现已作为可操作、全动画的角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+
+本 Mod 带来：
+- 一名完整角色，配有专属卡池与初始圣遗物。
+- Buster 暴击 + 诅咒的玩法：堆叠暴击威力打出毁灭性的攻击，同时把敌人埋进层层「诅咒」之下，让它们每回合持续掉血。
+- 形态切换：战斗中在狂战士与术士（冬之女王）两个阵位之间来回切换，每个形态都会重塑她的牌组与权能。
+- 宝具「Roadless Camelot」——「那片再也无法抵达的理想之地」。
+- 女王专属圣遗物与诅咒结算卡，奖励耐心铺垫、滚雪球式越打越强的打法。
+
+依赖：FGO Core（库）+ BaseLib。
+支持语言：英文、西班牙文、简体中文。
+
+在 Claude Code 的协助下制作。

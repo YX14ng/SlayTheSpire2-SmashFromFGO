@@ -9,3 +9,17 @@ Requires: FGO Core (library) + BaseLib.
 Localization: English, Spanish, Simplified Chinese.
 
 Made with the help of Claude Code.
+
+————————————————————
+
+「Fate/Grand Order」的英雄王吉尔伽美什（弓兵），现已作为可操作角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+
+本 Mod 带来：
+- 唯一一名把本局攒下的「金币」当作战斗资源来花的角色，配合「王之财宝」(Gate of Babylon)：会在你手中显化八张各不相同、零费的王之财宝（Treasure Arm）衍生卡。
+- 四套可构筑的流派（武库 Arsenal、审判 Judgement、奢华 Extravagance、贪婪 Avarice），外加暴击星，以及贯穿构筑的「王的傲慢」(King's Arrogance) 风险机制——奖励那个不屑于防御的你。
+- 宝具「Enuma Elish」——基础伤害固定，但对「神性」的特攻加成会随累积的超充能（Overcharge）增长，并消耗你手牌中的王之财宝。
+
+依赖：FGO Core（库）+ BaseLib。
+支持语言：英文、西班牙文、简体中文。
+
+在 Claude Code 的协助下制作。

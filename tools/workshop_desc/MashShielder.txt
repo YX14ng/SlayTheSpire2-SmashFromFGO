@@ -11,3 +11,19 @@ Requires: FGO Core (library) + BaseLib - subscribe to both.
 Localization: English, Spanish, Simplified Chinese.
 
 Made with the help of Claude Code.
+
+————————————————————
+
+「Fate/Grand Order」的盾兵——迦勒底首位准从者玛修·基列莱特，现已作为可操作、全动画的角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+
+本 Mod 带来：
+- 一名完整角色：专属卡池、初始圣遗物，以及全套战斗动画立绘。
+- 围绕「壁垒」(Bulwark) 构筑的防御核心——能跨回合保留的格挡。先堆出一面墙，再用「Camelot Ram」之类的卡把它转化成伤害。
+- 宝具「Lord Camelot」：充满宝具槽即可开启一回合的强化窗口，强化整副牌组，把防御化作决定性的一击。
+- 多人协力：联机时玛修能把盾举到队友头上，替全队挡刀并提供格挡，而不只是护住自己。
+- 专属羁绊（好感度）圣遗物，随着你反复用她开局而愈发强力。
+
+依赖：FGO Core（库）+ BaseLib——两者都要订阅。
+支持语言：英文、西班牙文、简体中文。
+
+在 Claude Code 的协助下制作。

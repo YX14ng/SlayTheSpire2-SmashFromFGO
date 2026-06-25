@@ -9,3 +9,17 @@ Requires: FGO Core (library) + BaseLib.
 Localization: English, Spanish, Simplified Chinese.
 
 Made with the help of Claude Code.
+
+————————————————————
+
+「Fate/Grand Order」的奥伯龙（伪装者），现已作为可操作角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+
+本 Mod 带来：
+- 借梦之人：一种名为「债」(Debt) 的资源——你「当下」靠借债换取宝具充能与暴击星，回合结束时用宝具充能来还债；还不上，债就会反咬你掉血并滚出利息。
+- 三种形态各自改写借贷条款：童话之王让首笔借款更划算，冬之王子让账单延期，而 Vortigern 则把一切反转——梦境崩塌时，未偿还的「债」会化作 AoE 伤害砸向全场。
+- 宝具「Rye Rhyme Goodfellow」——如今会消耗你累积的「债」来追加伤害，你兜售出去的那个谎言，最终向整个世界讨债。
+
+依赖：FGO Core（库）+ BaseLib。
+支持语言：英文、西班牙文、简体中文。
+
+在 Claude Code 的协助下制作。
