@@ -1,0 +1,11 @@
+Okita Souji (Saber) of Fate/Grand Order, as a fully playable character. Built on the BaseLib framework and the FGO Core library.
+
+What it adds:
+- A Quick crit single-target glass cannon whose real limit is the Breath of a dying body: Bursts cost both energy and Breath, and running out gives you a Cough status card.
+- Attacking is the engine: play attacks to bank Critical Stars, land crits to charge NP and refund Breath - then decide whether to spend the air now or survive another turn.
+- Her Noble Phantasm, Mumyou Sandanzuki - three simultaneous thrusts that pierce Block, and become five with a full breath.
+
+Requires: FGO Core (library) + BaseLib.
+Localization: English, Spanish, Simplified Chinese.
+
+Made with the help of Claude Code.

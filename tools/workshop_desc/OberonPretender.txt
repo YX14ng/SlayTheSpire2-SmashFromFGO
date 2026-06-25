@@ -1,0 +1,11 @@
+Oberon (Pretender) of Fate/Grand Order, as a fully playable character. Built on the BaseLib framework and the FGO Core library.
+
+What it adds:
+- The dream-lender: a Debt resource you accrue for NP and Stars NOW, paid off by your NP charge at end of turn - or it bleeds you and grows interest.
+- Three forms that change the terms: the Storybook King sweetens the first loan, the Winter Prince defers the bill, and Vortigern inverts everything - unpaid Debt becomes AoE damage when the dream collapses.
+- His Noble Phantasm, Rye Rhyme Goodfellow - now consumes your built-up Debt for extra damage, so the lie you sold gets collected against the world.
+
+Requires: FGO Core (library) + BaseLib.
+Localization: English, Spanish, Simplified Chinese.
+
+Made with the help of Claude Code.

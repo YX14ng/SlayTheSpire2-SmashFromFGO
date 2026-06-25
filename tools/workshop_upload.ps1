@@ -33,6 +33,12 @@ $titles = [ordered]@{
     MashShielder    = "FGO — Mash Kyrielight 玛修·基列莱特 (Shielder)"
     MorganBerserker = "FGO — Morgan 摩根 (Berserker → Caster)"
     ArtoriaCaster   = "FGO — Artoria Caster 卡斯托莉雅 (Caster)"
+    MordredSaber    = "FGO - Mordred (Saber of Red)"
+    GilgameshArcher = "FGO - Gilgamesh (Archer)"
+    OkitaSaber      = "FGO - Okita Souji (Saber)"
+    OberonPretender = "FGO - Oberon (Pretender)"
+    SiegfriedSaber  = "FGO - Siegfried (Saber)"
+    TiamatBeast     = "FGO - Tiamat (Beast)"
 }
 
 $targets = if ($Only) { $Only } else { @($titles.Keys) }

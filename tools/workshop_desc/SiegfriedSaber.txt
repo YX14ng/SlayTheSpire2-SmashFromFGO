@@ -1,0 +1,11 @@
+Siegfried, the Dragon-Slaying Hero (Saber) of Fate/Grand Order, as a fully playable character. Built on the BaseLib framework and the FGO Core library.
+
+What it adds:
+- A dragon-blood tank-bruiser whose armor is Dragon Scales: a persistent per-hit damage reduction, not spendable Block - thicken it to tank and to sharpen your Noble Phantasm.
+- His canonical weak spot is the engine of tension: the Linden Leaf lets the first hit each turn pierce the scales. New "Scale Eruption" lets you discharge all your armor as AoE - tank or burst?
+- His Noble Phantasm, Balmung - a manual cast, gated and scaled by the armor you built, never a free auto-win.
+
+Requires: FGO Core (library) + BaseLib.
+Localization: English, Spanish, Simplified Chinese.
+
+Made with the help of Claude Code.

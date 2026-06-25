@@ -1,0 +1,11 @@
+Tiamat, the Beast of Regression (Beast II) of Fate/Grand Order, as a fully playable character. Built on the BaseLib framework and the FGO Core library.
+
+What it adds:
+- A tempo-controller built on TWO card pools: you start as Tiamat-Larva (Lily), a tide-controller that blocks, seeds Curse and breeds Lahmu while filling the gauge - then her NP opens a 1-3 turn window as the Beast with a whole special deck.
+- Curse is the currency Lily mints and the Beast spends: the swarm bites the most-cursed, and the window's magnitude is decided by how much you built. Signature choice: open at 100 (frequent 1-turn windows) vs bank to 300 (one 3-turn rampage).
+- Her Noble Phantasm, Nammu Dur-an-ki - opens the Beast window; "Beast's Plume" closes it.
+
+Requires: FGO Core (library) + BaseLib.
+Localization: English, Spanish, Simplified Chinese.
+
+Made with the help of Claude Code.

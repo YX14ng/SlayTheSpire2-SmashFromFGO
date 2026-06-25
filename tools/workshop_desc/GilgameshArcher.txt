@@ -1,0 +1,11 @@
+Gilgamesh, the King of Heroes (Archer) of Fate/Grand Order, as a fully playable character. Built on the BaseLib framework and the FGO Core library.
+
+What it adds:
+- The only character who spends the run's GOLD as a combat resource, alongside the Gate of Babylon: a tribe of eight unique 0-cost Treasure Arm tokens manifested to your hand.
+- Four draftable archetypes (Arsenal, Judgement, Extravagance, Avarice) plus Critical Stars and a structural "King's Arrogance" risk that rewards never deigning to defend.
+- His Noble Phantasm, Enuma Elish - the base damage is fixed, but the anti-divine bonus scales with banked Overcharge and consumes the Treasure Arms in your hand.
+
+Requires: FGO Core (library) + BaseLib.
+Localization: English, Spanish, Simplified Chinese.
+
+Made with the help of Claude Code.

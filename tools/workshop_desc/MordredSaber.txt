@@ -1,0 +1,11 @@
+Mordred, the Knight of Rebellion (Saber of Red) of Fate/Grand Order, as a fully playable character. Built on the BaseLib framework and the FGO Core library.
+
+What it adds:
+- A selfish AoE Buster crit-DPS with a draftable helmet form-switch: Masked (defensive, retains Block) vs Rebellion (all-out offense, +damage dealt and taken), plus the permanent Crimson Lightning aspect.
+- Three braided economies: spend HP for Critical Stars, spend Critical hits for NP charge, and her crit now manifests a "Clarent Spark" that hits harder unhelmeted.
+- Her Noble Phantasm, Clarent Blood Arthur - and she rips her helmet off as it fires, so the Rebellion bonus lands on every hit.
+
+Requires: FGO Core (library) + BaseLib.
+Localization: English, Spanish, Simplified Chinese.
+
+Made with the help of Claude Code.
