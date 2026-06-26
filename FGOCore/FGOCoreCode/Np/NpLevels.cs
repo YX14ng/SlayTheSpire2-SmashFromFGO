@@ -159,7 +159,7 @@ public static class NpLevels
         var options = new List<CardModel>
         {
             player.RunState.CreateCard<GoldenApple>(player),
-            player.RunState.CreateCard<MapoTofu>(player),
+            player.RunState.CreateCard<TenPullSummon>(player),
         };
         var chosen = await CardSelectCmd.FromChooseACardScreen(new BlockingPlayerChoiceContext(), options, player, false);
         if (chosen != null)
