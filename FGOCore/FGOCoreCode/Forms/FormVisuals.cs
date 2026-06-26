@@ -52,19 +52,39 @@ public static class FormVisuals
     [System.Obsolete("Preloading is now scoped per-character inside Apply; this is a no-op kept for binary compatibility.")]
     public static void PreloadAll() { }
 
+    /// <summary>
+    /// Returns the frames ONLY if the background thread has already finished loading them; never
+    /// blocks. A synchronous <c>ResourceLoader.Load</c> of these multi-hundred-MB <c>.tres</c> here
+    /// would FREEZE the simulation thread — fine as a single-player hitch, but in multiplayer it
+    /// stalls the network heartbeat → timeout/disconnect (the "Ortinax form crashes in MP" report,
+    /// because Ortinax is the form entered MID-combat that materializes a different resource).
+    /// </summary>
     private static SpriteFrames? GetFrames(string path)
     {
         if (Cache.TryGetValue(path, out var cached)) return cached;
 
-        SpriteFrames? frames = null;
-        if (Requested.Contains(path))
+        if (!Requested.Contains(path))
         {
-            // Blocks only for whatever the background thread hasn't finished yet.
-            frames = ResourceLoader.LoadThreadedGet(path) as SpriteFrames;
-            Requested.Remove(path);
+            // Defensive: Apply already kicks the load via PreloadGroup, but if we got here cold,
+            // request it in the background and report "not ready yet" without blocking.
+            if (ResourceLoader.LoadThreadedRequest(path, "SpriteFrames", useSubThreads: true) == Error.Ok)
+                Requested.Add(path);
+            return null;
         }
-        frames ??= ResourceLoader.Load<SpriteFrames>(path);
 
+        var status = ResourceLoader.LoadThreadedGetStatus(path);
+        if (status != ResourceLoader.ThreadLoadStatus.Loaded)
+        {
+            if (status is ResourceLoader.ThreadLoadStatus.Failed or ResourceLoader.ThreadLoadStatus.InvalidResource)
+            {
+                Requested.Remove(path);
+                MainFile.Logger.Error($"FormVisuals: background load failed for {path}");
+            }
+            return null; // still loading → caller retries next frame, never blocks the sim thread.
+        }
+
+        var frames = ResourceLoader.LoadThreadedGet(path) as SpriteFrames;
+        Requested.Remove(path);
         if (frames != null) Cache[path] = frames;
         return frames;
     }
@@ -73,21 +93,48 @@ public static class FormVisuals
     {
         if (form.FramesPath == null) return;
 
-        // Warm ONLY this character's forms in the background (not every installed mod's).
+        // Warm ONLY this character's forms in the background (not every installed mod's). Because
+        // this fires for the base form at combat start too, the whole group (incl. mid-combat forms
+        // like Ortinax) is usually fully loaded by the time the player actually switches.
         PreloadGroup(form.FramesPath);
 
         var node = NCombatRoom.Instance?.GetCreatureNode(creature);
         if (node?.FindChild("Sprite", recursive: true, owned: false) is not AnimatedSprite2D sprite) return;
 
-        var frames = GetFrames(form.FramesPath);
-        if (frames == null)
-        {
-            MainFile.Logger.Error($"FormVisuals: could not load frames at {form.FramesPath}");
-            return;
-        }
-        if (sprite.SpriteFrames == frames) return;
+        ApplyWhenReady(sprite, form.FramesPath);
+    }
 
-        sprite.SpriteFrames = frames;
-        sprite.Play("idle");
+    /// <summary>
+    /// Swaps the sprite as soon as the background load finishes, polling the scene's process_frame
+    /// signal instead of ever blocking. Usually resolves on the first poll (group preloaded at
+    /// combat start); the loop is the fallback for a switch on turn 1 before the load completes.
+    /// </summary>
+    private static async void ApplyWhenReady(AnimatedSprite2D sprite, string path)
+    {
+        try
+        {
+            var frames = GetFrames(path);
+            if (frames == null)
+            {
+                var tree = sprite.GetTree();
+                // Bound the wait (~20s @60fps) so a failed/never-finishing load can't spin forever.
+                for (var i = 0; i < 1200 && frames == null; i++)
+                {
+                    if (tree == null || !GodotObject.IsInstanceValid(sprite)) return;
+                    await tree.ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+                    frames = GetFrames(path);
+                }
+            }
+
+            if (frames == null || !GodotObject.IsInstanceValid(sprite)) return;
+            if (sprite.SpriteFrames == frames) return;
+
+            sprite.SpriteFrames = frames;
+            sprite.Play("idle");
+        }
+        catch (System.Exception e)
+        {
+            MainFile.Logger.Error($"FormVisuals: deferred apply failed for {path}: {e.Message}");
+        }
     }
 }

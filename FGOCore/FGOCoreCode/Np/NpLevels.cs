@@ -80,7 +80,12 @@ public static class NpLevels
         if (store == null || !CanLevelUp(player)) return false;
 
         var chance = BaseChancePercent + PityChancePercent * store.DupePity;
-        if (player.RunState.Rng.CombatCardGeneration.NextInt(100) < chance)
+        // MP: rodá con el RNG per-player de recompensas, NO con RunState.Rng.CombatCardGeneration.
+        // Ese último es un stream COMPARTIDO que se consume DENTRO del combate sincronizado; el roll
+        // del dupe ocurre en el flujo de card-reward LOCAL-ONLY (solo el cliente del dueño), así que
+        // avanzar el stream de combate acá desfasa su contador entre clientes -> divergent states.
+        // PlayerRng.Rewards es per-player y no participa de la simulación (patrón UltramanLightPatch).
+        if (player.PlayerRng.Rewards.NextInt(100) < chance)
         {
             store.NpLevel++;
             store.DupePity = 0;
@@ -102,7 +107,8 @@ public static class NpLevels
         if (store == null || !CanLevelUp(player)) return false;
 
         var chance = BaseChancePercent + PityChancePercent * store.DupePity;
-        if (player.RunState.Rng.CombatCardGeneration.NextInt(100) < chance)
+        // MP: ver TryRollDupe — RNG per-player, no el stream de combate compartido (evita desync).
+        if (player.PlayerRng.Rewards.NextInt(100) < chance)
         {
             store.NpLevel++;
             store.DupePity = 0;
