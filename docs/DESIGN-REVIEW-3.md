@@ -4,6 +4,21 @@ Roadmap de 6 features pedidas. Continúa [DESIGN-REVIEW.md](DESIGN-REVIEW.md) (N
 [DESIGN-REVIEW-2.md](DESIGN-REVIEW-2.md). **Regla**: cada NP/tipo se modela según el **juego original**
 (tipo de carta de la NP, efectos de los 礼装), investigando en fuentes JP + zhs (cf. CLAUDE.md).
 
+## ESTADO (2026-06-26): TODO IMPLEMENTADO + COMPILADO VERDE
+Las 6 features están hechas (FGOCore + 9 personajes compilan verde) en 2 etapas:
+- **Etapa 1** (commit `254208b`): **A** carta de ulti a 100 en los 9 (los 3 públicos revertidos antes en `6af3df9`) · **B** cap por dupes (`NpCharge.Max(creature)` dinámico) · **C** sistema de tipos `CommandType`+`ICommandTyped`+`CommandBonusPower` (Buster→Fuerza temp/perm, Quick→★, Arts ulti→NP) · **D** las 9 ultis tipadas (Mash/Castoria=Arts, Okita=Quick, resto=Buster).
+- **Etapa 2** (commit `f45f6c3`): **E** 8 CEs colorless en `FGOCore/Memes/` (Kaleidoscope, Black Grail, 2030, Prisma Cosmos, Imaginary Element, Heaven's Feel, Formal Craft, Zero Over) drafteables por todos · **F** consolación de dupe en `NpLevels.TryRollDupeWithConsolation` (pity bajo→oro, medio→upgrade/encantar, alto→elegir carta) en los 7 relics-store · ulti de Siegfried (`BalmungUnleashed`).
+- Investigación verificada (NP types JP+zhs, CEs, reward APIs, cap/dupe) en los workflows `fgo-roadmap-research`.
+
+**Decisiones tomadas:** Morgan queda `QueensSentenceUnleashed` (publicada) pero **tipo Buster** (su NP real es Roadless Camelot). Montos de bonus por tipo y de los CEs = primera pasada, tuneables.
+
+**FLAGS PARA PLAYTEST (no bloquean, compila verde):**
+1. Consolación pity-alto: abre una pantalla de **elección de carta anidada** dentro de la recompensa → riesgo de UX/sync en multi *(a confirmar jugando)*. Si glitchea, degradar a oro/upgrade.
+2. `MapoTofu` (opción de pity-alto) **hace daño** al jugarse — raro para consuelo; candidato a swap.
+3. Balance sin playtest: bonus por tipo, números de CEs, fórmula del cap.
+
+**PENDIENTE:** arte de las 8 CEs (con el arte del 礼装 real vía match-ce-art) + ultis + powers (caen al placeholder).
+
 ## A. Carta de ulti a 100 NP + escala con NP — ✅ HECHO (falta verificar consistencia)
 El usuario prefiere el diseño viejo: cruzar 100 **manifiesta la carta de Noble Phantasm** (no una
 ventana), y **más NP la potencia** (Sobrecarga). Estado: los 5 nuevos ya lo hacían; revertí los 3
