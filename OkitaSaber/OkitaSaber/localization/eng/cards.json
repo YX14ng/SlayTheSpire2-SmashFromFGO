@@ -143,7 +143,7 @@
   "OKITASABER-VEIL_OF_PETALS.description": "#Exhaust. Gain !B! Block. Gain !Stars! *Critical *Stars.",
   "OKITASABER-CHERRY_IN_FULL_BLOOM.title": "Cherry in Full Bloom",
   "OKITASABER-CHERRY_IN_FULL_BLOOM.description": "#Exhaust. Fill your *Breath to maximum. Gain a *Cough, shuffled into your draw pile.+ No longer gain a *Cough.+",
-  "OKITASABER-MUMYOU_UNLEASHED.title": "Mumyou Sandanzuki: Unleashed",
+  "OKITASABER-MUMYOU_UNLEASHED.title": "Mumyou Sandanzuki",
   "OKITASABER-MUMYOU_UNLEASHED.description": "#Retain. Exhaust. Consume ALL your *NP Charge, at least !ChargeCost!. Deal !D! damage 3 times to one enemy, IGNORING Block; +1 per hit for every 10 NP Charge above !ChargeCost!. If you have at least !BreathCost! *Breath, spend it for !BoostHits! more hits; otherwise gain a *Cough. Then apply !Vulnerable! Vulnerable.",
   "OKITASABER-TOS.title": "Cough",
   "OKITASABER-TOS.description": "#Ethereal. Unplayable. At the end of your turn, while in your hand: lose 1 *Breath."

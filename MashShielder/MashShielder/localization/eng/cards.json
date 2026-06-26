@@ -148,7 +148,7 @@
   "MASHSHIELDER-SENPAI_PROMISE.description": "#When an enemy hit fails to get through your Block: gain !SenpaiPromise! *NP *Charge. In co-op, each ally gains the same Promise (their own blocked hits charge their NP).",
   "MASHSHIELDER-PIONEER_OF_THE_STARS.title": "Pioneering Spirit of the Stars",
   "MASHSHIELDER-PIONEER_OF_THE_STARS.description": "#The first NP card you play each combat costs no *NP *Charge and resolves at minimum Overcharge. Whenever you play an NP card: gain !Stars! *Critical *Stars.",
-  "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.title": "LORD CAMELOT: Unleashed",
+  "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.title": "Lord Camelot",
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.description": "#NP (!ChargeCost! Charge): gain !B! *Bulwark Block, !Strength! *Strength and !Provoke! *Intercept this turn. +!PerTen! Block per 10 Charge beyond the minimum. In co-op, each ally gains !AllyBlock! *Bulwark Block and !AllyProvoke! *Intercept this turn.",
   "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.title": "LORD CHALDEAS: Unleashed",
   "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.description": "#NP (!ChargeCost! Charge): gain !B! *Bulwark Block, +!PerTen! per 10 Charge beyond the minimum.",

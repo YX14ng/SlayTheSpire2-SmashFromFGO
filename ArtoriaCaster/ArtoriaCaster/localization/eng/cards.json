@@ -113,7 +113,7 @@
   "ARTORIACASTER-HOPE_WILL_CAMELOT.description": "#NP: consumes ALL your Charge (min !ChargeCost!). Deal !D! damage, /+!PerTen! per 10 Charge beyond the minimum. Every player gains 1 *Anti/-Purge.",
   "ARTORIACASTER-AROUND_CALIBURN.title": "Around Caliburn",
   "ARTORIACASTER-AROUND_CALIBURN.description": "#NP: consumes ALL your Charge (min !ChargeCost!). Remove all your debuffs. Gain !AntiPurge! *Anti/-Purge, /+!PerTwenty! per 20 Charge beyond the minimum /(max 5). Gain !Strength! *Strength and !B! Block. In multiplayer: allies remove their debuffs and gain 1 *Strength.",
-  "ARTORIACASTER-AROUND_CALIBURN_UNLEASHED.title": "AROUND CALIBURN: Unleashed",
+  "ARTORIACASTER-AROUND_CALIBURN_UNLEASHED.title": "Around Caliburn",
   "ARTORIACASTER-AROUND_CALIBURN_UNLEASHED.description": "#Retain. Exhaust. NP: consumes ALL your Charge (min !ChargeCost!). This turn, your Attacks can *Critical in ANY form. Gain !AntiPurge! *Anti/-Purge and !Stars! *Caliburn *Stars, /+!PerTen! Star per 10 Charge beyond the minimum.",
   "ARTORIACASTER-CALIBURN_STAR.title": "Caliburn Star",
   "ARTORIACASTER-CALIBURN_STAR.description": "#NP: consumes ALL your Charge (min !ChargeCost!). Deal !D! damage, /+!PerTen! per 10 Charge beyond the minimum. Gain !Stars! *Caliburn *Stars.",

@@ -51,7 +51,7 @@
   "TIAMATBEAST-BROKEN_HORN_BEAST.description": "#吞噬你所有的拉夫姆。每吞噬一只，对所有敌人造成!PerHorn!点伤害，每点养育额外增加!PerNurture!点。每吞噬一只拉夫姆获得!NpPerLahmu!点宝具值。消耗。",
   "TIAMATBEAST-PLUMA_DE_LA_BESTIA.title": "兽之羽",
   "TIAMATBEAST-PLUMA_DE_LA_BESTIA.description": "#需要!ChargeCost!点宝具值可用。消耗全部宝具值并净化你的减益，然后对所有敌人造成等同于拉夫姆×养育×!PerNurture!，外加诅咒最高的敌人的诅咒×!PerCurse!的伤害（每超出!ChargeCost!的10点宝具值增加!PerTen!点）。关闭兽之窗口。消耗。",
-  "TIAMATBEAST-NAMMU_DURANKI.title": "Nammu Dur-an-ki",
+  "TIAMATBEAST-NAMMU_DURANKI.title": "吾坚毅之子啊，必抗创世之理",
   "TIAMATBEAST-NAMMU_DURANKI.description": "#需要!ChargeCost!点宝具值可用。消耗全部宝具值以开启巨兽窗口1-3回合（积攒越多越长）。净化你的减益，对所有敌人造成!BaseDamage!点伤害（每消耗10点宝具值+1）并施加!Seal!层技能封印。化身巨兽并显现兽之牌组。获得1点能量并抽2张牌。保留，消耗。",
   "TIAMATBEAST-BRACKISH_LASH.title": "咸潮鞭击",
   "TIAMATBEAST-BRACKISH_LASH.description": "#造成!D!点伤害。施加!Curse!层诅咒。",

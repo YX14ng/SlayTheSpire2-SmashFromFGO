@@ -79,6 +79,6 @@
   "SIEGFRIEDSABER-DRAGONBLOOD_SURGE.description": "#Deal !D! damage. Gain !Scales! *Dragon Scales and !Np! *NP Charge.",
   "SIEGFRIEDSABER-GLEAMING_SCALES.title": "Gleaming Scales",
   "SIEGFRIEDSABER-GLEAMING_SCALES.description": "#Gain !B! Block. Gain !Stars! *Critical *Stars.",
-  "SIEGFRIEDSABER-BALMUNG_UNLEASHED.title": "BALMUNG: Unleashed",
+  "SIEGFRIEDSABER-BALMUNG_UNLEASHED.title": "Balmung",
   "SIEGFRIEDSABER-BALMUNG_UNLEASHED.description": "#Retain. Exhaust. NP: consume ALL your *NP Charge (min !ChargeCost!). Deal !D! damage to ALL enemies, /+!PerTen! per 10 Charge beyond the minimum — or +!PerTenScaled! instead while your *Dragon Scales are 3 or higher."
 }

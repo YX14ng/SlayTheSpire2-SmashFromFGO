@@ -51,7 +51,7 @@
   "TIAMATBEAST-BROKEN_HORN_BEAST.description": "#Devorá TODOS tus Laḫmu. Por cada uno devorado, inflige !PerHorn! de daño a TODOS los enemigos, aumentado en !PerNurture! por Crianza. Obtén !NpPerLahmu! de Carga NP por Laḫmu. Consumir.",
   "TIAMATBEAST-PLUMA_DE_LA_BESTIA.title": "Pluma de la Bestia",
   "TIAMATBEAST-PLUMA_DE_LA_BESTIA.description": "#Jugable con !ChargeCost! de Carga NP. Consume TODA la Carga NP y limpia tus debuffs, luego inflige a TODOS los enemigos daño igual a Laḫmu × Crianza × !PerNurture! más la Maldición del enemigo más maldecido × !PerCurse! (+!PerTen! por cada 10 de NP sobre !ChargeCost!). Cierra la ventana Bestia. Consumir.",
-  "TIAMATBEAST-NAMMU_DURANKI.title": "Nammu Dur-an-ki",
+  "TIAMATBEAST-NAMMU_DURANKI.title": "Nammu Duranki",
   "TIAMATBEAST-NAMMU_DURANKI.description": "#Jugable con !ChargeCost! de Carga NP. Consume TODA la Carga NP para abrir la ventana Bestia 1-3 turnos (más larga cuanto más banqueaste). Limpia tus debuffs, inflige !BaseDamage! de daño (+1 por cada 10 de NP consumida) a TODOS los enemigos y aplica !Seal! de Sello de Habilidad. Te volvés la Bestia y manifestás el mazo Bestia. Obtén 1 de energía y robá 2. Conservar, Consumir.",
   "TIAMATBEAST-BRACKISH_LASH.title": "Latigazo Salobre",
   "TIAMATBEAST-BRACKISH_LASH.description": "#Inflige !D! de daño. Aplica !Curse! de Maldición.",

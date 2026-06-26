@@ -149,9 +149,9 @@
   "MORDREDSABER-DOUBLE_EDGE_OF_HATRED.description": "#In *Rebellion, your Attacks deal !AttackBonus! more.",
   "MORDREDSABER-MEMORY_OF_TRIFAS.title": "Memory of Trifas",
   "MORDREDSABER-MEMORY_OF_TRIFAS.description": "#At the start of your turn, heal !Heal! HP and gain !NpCharge! *NP Charge.",
-  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_UNLEASHED.title": "Clarent Blood Arthur: Unleashed",
+  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_UNLEASHED.title": "Clarent Blood Arthur",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_UNLEASHED.description": "#Retain. Exhaust. If *Masked, first tear off your helm. Consume ALL your *NP Charge, at least 100. Deal !D! damage !Hits! times to ALL enemies; against Elites and Bosses, !Authority! more per hit; plus 1 per hit for every 20 NP Charge above 100. Then gain !Refund! *NP Charge.",
-  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.title": "Clarent Blood Arthur: Interlude",
+  "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.title": "Clarent Blood Arthur",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.description": "#Retain. Exhaust. Consume ALL your *NP Charge, at least 100. Deal !D! damage !Hits! times to ALL enemies; against Elites and Bosses, !Authority! more per hit; plus 1 per hit for every 15 NP Charge above 100. Then gain !Refund! *NP Charge.",
   "MORDREDSABER-CHISPA_DE_CLARENT.title": "Spark of Clarent",
   "MORDREDSABER-CHISPA_DE_CLARENT.description": "#Exhaust. Deal !D! damage to ALL enemies. (Crimson lightning scattered by your Critical; it strikes harder out of the helm.)"

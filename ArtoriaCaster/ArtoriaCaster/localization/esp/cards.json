@@ -113,7 +113,7 @@
   "ARTORIACASTER-HOPE_WILL_CAMELOT.description": "#NP: consume TODA tu Carga (mín. !ChargeCost!). Inflige !D! de daño, /+!PerTen! por cada 10 de Carga sobre el mínimo. Todos los jugadores obtienen 1 de *Anti/-Purga.",
   "ARTORIACASTER-AROUND_CALIBURN.title": "AROUND CALIBURN",
   "ARTORIACASTER-AROUND_CALIBURN.description": "#NP: consume TODA tu Carga (mín. !ChargeCost!). Elimina tus debuffs. Obtén !AntiPurge! de *Anti/-Purga, /+!PerTwenty! por cada 20 de Carga sobre el mínimo /(máx. 5/). Obtén !Strength! de *Fuerza y !B! de Bloqueo. En multijugador: los aliados eliminan sus debuffs y obtienen 1 de *Fuerza.",
-  "ARTORIACASTER-AROUND_CALIBURN_UNLEASHED.title": "AROUND CALIBURN: Desatado",
+  "ARTORIACASTER-AROUND_CALIBURN_UNLEASHED.title": "Around Caliburn",
   "ARTORIACASTER-AROUND_CALIBURN_UNLEASHED.description": "#Retener. Agotar. NP: consume TODA tu Carga (mín. !ChargeCost!). Este turno, tus Ataques pueden hacer *Crítico en CUALQUIER forma. Obtén !AntiPurge! de *Anti/-Purga y !Stars! de *Estrellas *de *Caliburn, /+!PerTen! Estrella por cada 10 de Carga sobre el mínimo.",
   "ARTORIACASTER-CALIBURN_STAR.title": "Estrella de Caliburn",
   "ARTORIACASTER-CALIBURN_STAR.description": "#NP: consume TODA tu Carga (mín. !ChargeCost!). Inflige !D! de daño, /+!PerTen! por cada 10 de Carga sobre el mínimo. Obtén !Stars! de *Estrellas *de *Caliburn.",
