@@ -1,3 +1,5 @@
+using System.Linq;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -35,8 +37,18 @@ public sealed class BannerOfRebellionPower : MordredPower, IFormChangeListener
         await NpCharge.Gain(Owner, NpPerSwitch * (int)Amount, null);
         if (DrawsPerSwitch > 0)
         {
-            await MegaCrit.Sts2.Core.Commands.CardPileCmd.Draw(
-                choiceContext ?? new BlockingPlayerChoiceContext(), DrawsPerSwitch * (int)Amount, Owner.Player);
+            // BUGFIX (soft-lock): el cambio de forma lo dispara una carta a MITAD de su resolución.
+            // Si este robo RESHUFFLEA (mazo vacío), reshufflea el descarte -que en v0.107.1 contiene
+            // la carta en curso- y corrompe su estado ("must be added to a CombatState"), colgando el
+            // combate. Por eso robamos SOLO lo que hay en el mazo (sin gatillar reshuffle).
+            var inDeck = Owner.Player.PlayerCombatState.AllPiles
+                .FirstOrDefault(p => p.Type == PileType.Draw)?.Cards.Count ?? 0;
+            var toDraw = System.Math.Min(DrawsPerSwitch * (int)Amount, inDeck);
+            if (toDraw > 0)
+            {
+                await MegaCrit.Sts2.Core.Commands.CardPileCmd.Draw(
+                    choiceContext ?? new BlockingPlayerChoiceContext(), toDraw, Owner.Player);
+            }
         }
     }
 }

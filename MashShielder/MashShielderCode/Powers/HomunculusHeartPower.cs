@@ -1,5 +1,7 @@
+using System.Linq;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
@@ -31,7 +33,17 @@ public sealed class HomunculusHeartPower : MashShielderPower, IFormChangeListene
         Flash();
         if (choiceContext != null && Owner.Player != null)
         {
-            await CardPileCmd.Draw(choiceContext, 1 + Amount, Owner.Player);
+            // BUGFIX (soft-lock): el cambio de forma lo dispara una carta a MITAD de su resolución.
+            // Si este robo RESHUFFLEA (mazo vacío), reshufflea el descarte -que en v0.107.1 contiene
+            // la carta en curso- y corrompe su estado ("must be added to a CombatState"), colgando el
+            // combate. Por eso robamos SOLO lo que hay en el mazo (sin gatillar reshuffle).
+            var inDeck = Owner.Player.PlayerCombatState.AllPiles
+                .FirstOrDefault(p => p.Type == PileType.Draw)?.Cards.Count ?? 0;
+            var toDraw = System.Math.Min(1 + Amount, inDeck);
+            if (toDraw > 0)
+            {
+                await CardPileCmd.Draw(choiceContext, toDraw, Owner.Player);
+            }
         }
         await NpCharge.Gain(Owner, 10 * Amount, null);
     }
