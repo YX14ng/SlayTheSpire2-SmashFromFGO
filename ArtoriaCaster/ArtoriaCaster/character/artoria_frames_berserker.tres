@@ -99,10 +99,10 @@
 
 [resource]
 animations = [{
-"frames": [{"duration": 1.0, "texture": ExtResource("tex_6")}, {"duration": 1.0, "texture": ExtResource("tex_7")}, {"duration": 1.0, "texture": ExtResource("tex_8")}],
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_7")}],
 "loop": true,
 "name": &"idle",
-"speed": 6
+"speed": 1
 }, {
 "frames": [{"duration": 1.0, "texture": ExtResource("tex_11")}, {"duration": 1.0, "texture": ExtResource("tex_12")}, {"duration": 1.0, "texture": ExtResource("tex_13")}, {"duration": 1.0, "texture": ExtResource("tex_14")}, {"duration": 1.0, "texture": ExtResource("tex_15")}, {"duration": 1.0, "texture": ExtResource("tex_16")}, {"duration": 1.0, "texture": ExtResource("tex_17")}, {"duration": 1.0, "texture": ExtResource("tex_18")}, {"duration": 1.0, "texture": ExtResource("tex_19")}, {"duration": 1.0, "texture": ExtResource("tex_20")}, {"duration": 1.0, "texture": ExtResource("tex_21")}, {"duration": 1.0, "texture": ExtResource("tex_22")}, {"duration": 1.0, "texture": ExtResource("tex_23")}, {"duration": 1.0, "texture": ExtResource("tex_24")}, {"duration": 1.0, "texture": ExtResource("tex_25")}, {"duration": 1.0, "texture": ExtResource("tex_26")}, {"duration": 1.0, "texture": ExtResource("tex_27")}, {"duration": 1.0, "texture": ExtResource("tex_28")}, {"duration": 1.0, "texture": ExtResource("tex_29")}, {"duration": 1.0, "texture": ExtResource("tex_30")}, {"duration": 1.0, "texture": ExtResource("tex_31")}, {"duration": 1.0, "texture": ExtResource("tex_32")}, {"duration": 1.0, "texture": ExtResource("tex_33")}, {"duration": 1.0, "texture": ExtResource("tex_34")}, {"duration": 1.0, "texture": ExtResource("tex_35")}, {"duration": 1.0, "texture": ExtResource("tex_36")}, {"duration": 1.0, "texture": ExtResource("tex_37")}, {"duration": 1.0, "texture": ExtResource("tex_38")}, {"duration": 1.0, "texture": ExtResource("tex_39")}, {"duration": 1.0, "texture": ExtResource("tex_40")}, {"duration": 1.0, "texture": ExtResource("tex_41")}],
 "loop": false,
