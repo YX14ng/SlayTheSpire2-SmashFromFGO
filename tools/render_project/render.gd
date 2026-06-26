@@ -92,8 +92,10 @@ const FACE_POSE := {
 # el idle a ese tramo cabeza-arriba: la secuencia se guarda 000,001,... en ESTE orden. OJO: ese
 # tramo es solo la "subida" (NO un loop cerrado): al repetir 009->000 (=clip4->clip150, no
 # adyacentes) la cabeza/ojos SALTABAN. Por eso artoria_frames_berserker.tres se patchea a MANO a
-# PING-PONG en el idle (1->10->2) para loopear suave SIN re-renderizar. Un re-render DEBE re-aplicar
-# ese ping-pong en el .tres. El save usa contador secuencial (no el indice).
+# PING-PONG, pero NO alcanzo: el bob entero salta + el flequillo tapa/destapa el ojo. FIX FINAL:
+# el idle del .tres se RECORTA a los 3 frames del PICO cabeza-arriba (saved 005-007 = clip 0,1,2 =
+# tex_6/7/8), casi-estatico, sin bob -> el ojo no salta. Un re-render deberia rendear solo el pico
+# (override [0,1,2]) o re-recortar el .tres. El save usa contador secuencial (no el indice).
 const FRAMES_OVERRIDE := {
 	"704710": { "idle": [150, 151, 152, 153, 154, 0, 1, 2, 3, 4] },
 	"704720": { "idle": [150, 151, 152, 153, 154, 0, 1, 2, 3, 4] },
