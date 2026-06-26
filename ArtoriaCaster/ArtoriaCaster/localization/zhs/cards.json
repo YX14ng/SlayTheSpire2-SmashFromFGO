@@ -113,6 +113,8 @@
   "ARTORIACASTER-HOPE_WILL_CAMELOT.description": "#宝具：消耗你的全部宝具值（至少!ChargeCost!）。造成!D!点伤害，超出最低值的每10点宝具值额外/+!PerTen!。所有玩家获得1层*对肃正防御*。",
   "ARTORIACASTER-AROUND_CALIBURN.title": "环抱着你的希望之星",
   "ARTORIACASTER-AROUND_CALIBURN.description": "#宝具：消耗你的全部宝具值（至少!ChargeCost!）。移除你的所有减益效果。获得!AntiPurge!层*对肃正防御*、!Strength!点*力量*与!B!点格挡。超出最低值的每20点宝具值额外/+!PerTwenty!层*对肃正防御*（最多5层）。多人游戏中：队友也移除减益并获得1点*力量*。",
+  "ARTORIACASTER-AROUND_CALIBURN_UNLEASHED.title": "环抱着你的希望之星·全解放",
+  "ARTORIACASTER-AROUND_CALIBURN_UNLEASHED.description": "#保留。消耗。宝具：消耗你的全部宝具值（至少!ChargeCost!）。本回合，你的攻击可在任意形态下*暴击*。获得!AntiPurge!层*对肃正防御*与!Stars!颗*卡利伯恩之星*，超出最低值的每10点宝具值额外/+!PerTen!颗。",
   "ARTORIACASTER-CALIBURN_STAR.title": "卡利伯恩之星",
   "ARTORIACASTER-CALIBURN_STAR.description": "#宝具：消耗你的全部宝具值（至少!ChargeCost!）。造成!D!点伤害，超出最低值的每10点宝具值额外/+!PerTen!。获得!Stars!颗*卡利伯恩之星*。",
   "ARTORIACASTER-SUMMER_COMET.title": "夏日彗星",

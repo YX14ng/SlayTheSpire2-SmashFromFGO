@@ -1,9 +1,11 @@
 using FGOCore.FGOCoreCode.Combat;
 using Godot;
 using HarmonyLib;
+using MashShielder.MashShielderCode.Cards.Special;
 using MashShielder.MashShielderCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 
 namespace MashShielder.MashShielderCode;
@@ -27,24 +29,24 @@ public partial class MainFile : Node
             $"{ResPath}/character/mash_frames_ortinax.tres",
             $"{ResPath}/character/mash_frames_paladin.tres");
 
-        // Modelo de NP nuevo (2026-06-12): cruzar 100 NP NO genera una carta-ulti gratis
-        // (eclipsaba a las cartas NP drafteadas — feedback del usuario). Abre la VENTANA
-        // "Baluarte Absoluto" 1 turno (potencia el mazo + devuelve recursos); las cartas
-        // NP drafteadas (Lord Camelot, etc.) son el clímax que elegís jugar DENTRO de ella.
-        // Gastar por debajo de 100 re-arma la ventana para el próximo pico.
-        NpCharge.GaugeFilled += TryOpenNpWindow;
+        // Ulti auto-manifestada (consistencia con los otros Servants, 2026-06-26): al cruzar
+        // 100 NP, LORD CAMELOT: Desatado aparece GRATIS en la mano (Retain + Exhaust), igual
+        // que el «Mumyou Desatado» de Okita. Un marcador (CamelotManifestedPower) evita
+        // duplicarla en el mismo pico; gastar por debajo de 100 lo re-arma para el próximo.
+        // (Sin +1⚡/robar: los 8 personajes solo dan la carta, sin recursos extra.)
+        NpCharge.GaugeFilled += TryManifestUlt;
         NpCharge.GaugeDropped += DisarmUltMarker;
     }
 
-    private static async Task TryOpenNpWindow(Creature creature)
+    private static async Task TryManifestUlt(Creature creature)
     {
         if (creature.Player?.Character is not Character.MashShielder) return;
+        if (creature.CombatState == null) return;
         if (creature.HasPower<CamelotManifestedPower>()) return;
 
-        // FGOCore.NpWindow.OpenWindow: aplica el MARCADOR (la ventana ya se abrió este pico,
-        // se re-arma en GaugeDropped) ANTES del power-ventana, y cierra devolviendo recursos
-        // (+1⚡, robar 1) — arranca el turno grande, no lo reemplaza (modelo Phrolova).
-        await NpWindow.OpenWindow<AbsoluteBulwarkWindowPower, CamelotManifestedPower>(creature);
+        await PowerCmd.Apply<CamelotManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+
+        await ManifestCards.ManifestToHand<LordCamelotUnleashed>(creature);
     }
 
     private static async Task DisarmUltMarker(Creature creature)

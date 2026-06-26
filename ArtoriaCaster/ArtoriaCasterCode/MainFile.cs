@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
 using FGOCore.FGOCoreCode.Combat;
+using ArtoriaCaster.ArtoriaCasterCode.Cards.Special;
 using ArtoriaCaster.ArtoriaCasterCode.Powers;
 using ArtoriaCaster.ArtoriaCasterCode.Powers.Forms;
 
@@ -31,35 +32,24 @@ public partial class MainFile : Node
             $"{ResPath}/character/artoria_frames_berserker.tres",
             $"{ResPath}/character/artoria_frames_avalon.tres");
 
-        // Modelo de NP nuevo (2026-06-12): cruzar 100 NP NO genera una carta-ulti gratis
-        // (eclipsaba a las cartas NP drafteadas — feedback del usuario). Abre la VENTANA
-        // "Around Caliburn" 1 turno: este turno podés CRITICAR en cualquier forma (cobrás
-        // las estrellas acumuladas en Caster) + soporte (estrellas, Anti-Purga) + devuelve
-        // recursos. Las cartas NP drafteadas son el clímax que elegís jugar dentro.
-        // RE-ARME (fix 2026-06-15): la ventana se RE-ARMA al bajar < 100 (como Mash/Morgan),
-        // restaurando el loop cargar→ventana→soltar NP→recargar. Antes era 1/combate, lo que
-        // hacía a Castoria más lineal que sus pares. Al volverlo reincidente se RECORTÓ el
-        // paquete (Anti-Purga 1 + 3★, SIN +1⚡ — evita un loop de energía positiva al recargar).
-        NpCharge.GaugeFilled += TryOpenNpWindow;
+        // Ulti auto-manifestada (consistencia con los otros Servants, 2026-06-26): al cruzar 100 NP,
+        // AROUND CALIBURN: Desatado aparece GRATIS en la mano (Retain + Exhaust), igual que el «Mumyou
+        // Desatado» de Okita. La carta lleva la ventana de crítico-en-cualquier-forma + el soporte
+        // (Anti-Purga + estrellas), antes inline en este handler. Un marcador (NpManifestedPower) evita
+        // duplicarla en el mismo pico; gastar por debajo de 100 lo re-arma. (Sin +1⚡/robar.)
+        NpCharge.GaugeFilled += TryManifestUlt;
         NpCharge.GaugeDropped += DisarmManifest;
     }
 
-    private static async Task TryOpenNpWindow(Creature creature)
+    private static async Task TryManifestUlt(Creature creature)
     {
         if (creature.Player?.Character is not Character.ArtoriaCaster) return;
+        if (creature.CombatState == null) return;
         if (creature.HasPower<NpManifestedPower>()) return;
 
-        // Marker: la ventana ya se abrió este pico (se re-arma en GaugeDropped al bajar < 100).
         await PowerCmd.Apply<NpManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
-        await PowerCmd.Apply<AroundCaliburnWindowPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
 
-        // Around Caliburn (soporte de Castoria): estrellas para cobrar + protección.
-        // Paquete recortado por ser reincidente: 1 Anti-Purga + 3★ (antes 6★).
-        await PowerCmd.Apply<AntiPurgePower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
-        await Stars.Gain(creature, 3, null);
-
-        // Devuelve SOLO robar 1 (sin +1⚡): re-armar cada pico no debe ser energía-positivo.
-        await NpWindow.ReturnResources(creature, 0, 1);
+        await ManifestCards.ManifestToHand<AroundCaliburnUnleashed>(creature);
     }
 
     private static async Task DisarmManifest(Creature creature)
