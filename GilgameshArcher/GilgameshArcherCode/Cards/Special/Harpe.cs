@@ -1,4 +1,3 @@
-using GilgameshArcher.GilgameshArcherCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -33,6 +32,5 @@ public sealed class Harpe() : GilgameshCard(0, CardType.Attack, CardRarity.Event
         {
             await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
         }
-        await ArmsPlayedPower.Record(Owner.Creature);
     }
 }

@@ -100,5 +100,19 @@
   "GILGAMESHARCHER-VIMANA_ASSAULT.title": "Vimana Assault",
   "GILGAMESHARCHER-VIMANA_ASSAULT.description": "#Deal !D! damage. Draw !C! cards. Gain !Np! *NP Charge.",
   "GILGAMESHARCHER-GRAM_ORIGIN_OF_ALL_SWORDS.title": "Gram, Origin of All Swords",
-  "GILGAMESHARCHER-GRAM_ORIGIN_OF_ALL_SWORDS.description": "#Deal !D! damage. Gain !Stars! *Critical *Stars."
+  "GILGAMESHARCHER-GRAM_ORIGIN_OF_ALL_SWORDS.description": "#Deal !D! damage. Gain !Stars! *Critical *Stars.",
+  "GILGAMESHARCHER-GATE_OF_BABYLON.title": "Gate of Babylon",
+  "GILGAMESHARCHER-GATE_OF_BABYLON.description": "#Manifest !Arms! random Treasure Arms into your hand.",
+  "GILGAMESHARCHER-GOLDEN_RULE.title": "Golden Rule",
+  "GILGAMESHARCHER-GOLDEN_RULE.description": "#Whenever you gain *NP Charge, gain 50% more.",
+  "GILGAMESHARCHER-OPENING_OF_THE_TREASURY.title": "Opening of the Treasury",
+  "GILGAMESHARCHER-OPENING_OF_THE_TREASURY.description": "#Manifest !Arms! random Treasure Arms into your hand. Gain !Treasure! *Treasure.",
+  "GILGAMESHARCHER-KINGS_ARSENAL.title": "The King's Arsenal",
+  "GILGAMESHARCHER-KINGS_ARSENAL.description": "#Manifest !Arms! random Treasure Arms into your hand. Gain !Np! *NP Charge.",
+  "GILGAMESHARCHER-ROYAL_INVESTMENT.title": "Royal Investment",
+  "GILGAMESHARCHER-ROYAL_INVESTMENT.description": "#Playable only with at least !Treasure! *Treasure. Spend !Treasure! *Treasure: gain !Np! *NP Charge.",
+  "GILGAMESHARCHER-IMPOSSIBLE_BRIBE.title": "Impossible Bribe",
+  "GILGAMESHARCHER-IMPOSSIBLE_BRIBE.description": "#Deal !D! damage. If you have at least !Treasure! *Treasure, spend it and deal !Bonus! more.",
+  "GILGAMESHARCHER-RAIN_OF_TREASURES.title": "Rain of Treasures",
+  "GILGAMESHARCHER-RAIN_OF_TREASURES.description": "#Deal !D! damage to ALL enemies, plus !PerTreasure! for each *Treasure spent (up to 6 spent)."
 }

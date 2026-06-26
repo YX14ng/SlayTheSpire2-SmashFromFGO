@@ -18,9 +18,15 @@
   "TIAMATBEAST-TIDAL_STASIS_POWER.description": "#Hasta tu próximo turno, las Maldiciones sobre tus enemigos no decaen tras infligir daño.",
   "TIAMATBEAST-TIDAL_STASIS_POWER.smartDescription": "#Hasta tu próximo turno, las Maldiciones sobre tus enemigos no decaen tras infligir daño.",
   "TIAMATBEAST-SKILL_SEAL_POWER.title": "Sello de Habilidad",
-  "TIAMATBEAST-SKILL_SEAL_POWER.description": "#Sellado por la Madre. (Provisional: decae 1 al inicio del turno de este enemigo.)",
-  "TIAMATBEAST-SKILL_SEAL_POWER.smartDescription": "#Sellado por la Madre. (Provisional: decae 1 al inicio del turno de este enemigo.)",
+  "TIAMATBEAST-SKILL_SEAL_POWER.description": "#Sellado por la Madre. Mientras esté sellado, cuando este enemigo vaya a usar una habilidad (una acción que no sea ataque) se cancela. Los ataques no se ven afectados. Decae 1 al inicio del turno de este enemigo.",
+  "TIAMATBEAST-SKILL_SEAL_POWER.smartDescription": "#Sellado por la Madre. Mientras esté sellado, cuando este enemigo vaya a usar una habilidad (una acción que no sea ataque) se cancela. Los ataques no se ven afectados. Decae 1 al inicio del turno de este enemigo.",
   "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.title": "Ventana Bestia",
   "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.description": "#La ventana de la Bestia II dura esta cantidad de turnos. Al inicio de cada turno tuyo baja 1; al llegar a 0 revertís a Lily y el mazo especial Bestia se desvanece.",
-  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.smartDescription": "#La ventana de la Bestia II dura esta cantidad de turnos. Al inicio de cada turno tuyo baja 1; al llegar a 0 revertís a Lily y el mazo especial Bestia se desvanece."
+  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.smartDescription": "#La ventana de la Bestia II dura esta cantidad de turnos. Al inicio de cada turno tuyo baja 1; al llegar a 0 revertís a Lily y el mazo especial Bestia se desvanece.",
+  "TIAMATBEAST-TIDAL_SWARM_POWER.title": "Marea Voraz",
+  "TIAMATBEAST-TIDAL_SWARM_POWER.description": "#Al final de cada turno tuyo, tu enjambre de Laḫmu muerde al enemigo más maldecido esta cantidad de veces extra, por nº de enjambre × (1 + Crianza) cada una.",
+  "TIAMATBEAST-TIDAL_SWARM_POWER.smartDescription": "#Al final de cada turno tuyo, tu enjambre de Laḫmu muerde al enemigo más maldecido esta cantidad de veces extra, por nº de enjambre × (1 + Crianza) cada una.",
+  "TIAMATBEAST-BROOD_MOTHER_POWER.title": "Cría de la Madre",
+  "TIAMATBEAST-BROOD_MOTHER_POWER.description": "#Al inicio de tus turnos, parí 1 Laḫmu por acumulación.",
+  "TIAMATBEAST-BROOD_MOTHER_POWER.smartDescription": "#Al inicio de tus turnos, parí 1 Laḫmu por acumulación."
 }

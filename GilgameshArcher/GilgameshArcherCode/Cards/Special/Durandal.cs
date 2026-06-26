@@ -1,4 +1,3 @@
-using GilgameshArcher.GilgameshArcherCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -32,6 +31,5 @@ public sealed class Durandal() : GilgameshCard(0, CardType.Attack, CardRarity.Ev
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
         await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
-        await ArmsPlayedPower.Record(Owner.Creature);
     }
 }

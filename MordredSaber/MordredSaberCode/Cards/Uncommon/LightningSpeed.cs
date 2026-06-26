@@ -9,14 +9,20 @@ using MordredSaber.MordredSaberCode.Powers.Forms;
 namespace MordredSaber.MordredSaberCode.Cards.Uncommon;
 
 /// <summary>
-/// Velocidad del Relámpago (雷速) — DESIGN-MORDRED §5.2. 1⚡ At: 9 de daño; en Rebelión +10 Estrellas
-/// (up +3 daño), glow. Payoff de la forma ofensiva (sin casco, el relámpago fluye → ★). Leído con
-/// <see cref="Forms.InRebellion"/>. El ★ NO sube con el up. Patrón DefiantCut con gate de forma.
+/// Velocidad del Relámpago (雷速) — DESIGN-MORDRED §5.2. 1⚡ At: 9 de daño + <see cref="BaseStars"/> Estrellas;
+/// en Rebelión, +10 Estrellas en su lugar (up +3 daño), glow. Payoff de la forma ofensiva (sin casco, el
+/// relámpago fluye → ★). Leído con <see cref="Forms.InRebellion"/>.
+///
+/// BI-CONDICIONAL SUAVE (DESIGN-REVIEW-2): antes daba 0 ★ fuera de Rebelión. Ahora un PISO
+/// (<see cref="BaseStars"/>) garantizado en cualquier forma, y Rebelión lo sube al total <c>Stars</c>.
+/// El ★ NO sube con el up. Patrón DefiantCut con piso de forma.
 /// </summary>
 public sealed class LightningSpeed() : MordredCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
+    private const int BaseStars = 4; // piso de ★ en cualquier forma
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(9m, ValueProp.Move), new DynamicVar("Stars", 10)];
+        [new DamageVar(9m, ValueProp.Move), new DynamicVar("Stars", 10), new DynamicVar("BaseStars", BaseStars)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<RebellionFormPower>(), HoverTipFactory.FromPower<CritStarsPower>()];
@@ -29,10 +35,8 @@ public sealed class LightningSpeed() : MordredCard(1, CardType.Attack, CardRarit
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        if (Forms.InRebellion(Owner.Creature))
-        {
-            await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
-        }
+        var stars = Forms.InRebellion(Owner.Creature) ? DynamicVars["Stars"].IntValue : DynamicVars["BaseStars"].IntValue;
+        await CritStars.Gain(Owner.Creature, stars, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);

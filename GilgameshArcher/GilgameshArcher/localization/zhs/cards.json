@@ -100,5 +100,19 @@
   "GILGAMESHARCHER-VIMANA_ASSAULT.title": "维摩那强袭",
   "GILGAMESHARCHER-VIMANA_ASSAULT.description": "#造成 !D! 点伤害。抽 !C! 张牌。获得 !Np! 点*宝具充能。",
   "GILGAMESHARCHER-GRAM_ORIGIN_OF_ALL_SWORDS.title": "始源之剑·格拉墨",
-  "GILGAMESHARCHER-GRAM_ORIGIN_OF_ALL_SWORDS.description": "#造成 !D! 点伤害。获得 !Stars! 颗*暴击星。"
+  "GILGAMESHARCHER-GRAM_ORIGIN_OF_ALL_SWORDS.description": "#造成 !D! 点伤害。获得 !Stars! 颗*暴击星。",
+  "GILGAMESHARCHER-GATE_OF_BABYLON.title": "巴比伦之门",
+  "GILGAMESHARCHER-GATE_OF_BABYLON.description": "#将 !Arms! 件随机的王之财宝·武具显现至你的手牌。",
+  "GILGAMESHARCHER-GOLDEN_RULE.title": "黄金律",
+  "GILGAMESHARCHER-GOLDEN_RULE.description": "#每当你获得*宝具充能时，额外获得 50%。",
+  "GILGAMESHARCHER-OPENING_OF_THE_TREASURY.title": "宝库开门",
+  "GILGAMESHARCHER-OPENING_OF_THE_TREASURY.description": "#将 !Arms! 件随机的王之财宝·武具显现至你的手牌。获得 !Treasure! 点*财宝。",
+  "GILGAMESHARCHER-KINGS_ARSENAL.title": "王之宝库·齐开",
+  "GILGAMESHARCHER-KINGS_ARSENAL.description": "#将 !Arms! 件随机的王之财宝·武具显现至你的手牌。获得 !Np! 点*宝具充能。",
+  "GILGAMESHARCHER-ROYAL_INVESTMENT.title": "王之投资",
+  "GILGAMESHARCHER-ROYAL_INVESTMENT.description": "#仅当拥有至少 !Treasure! 点*财宝时可打出。消耗 !Treasure! 点*财宝：获得 !Np! 点*宝具充能。",
+  "GILGAMESHARCHER-IMPOSSIBLE_BRIBE.title": "不可能的贿赂",
+  "GILGAMESHARCHER-IMPOSSIBLE_BRIBE.description": "#造成 !D! 点伤害。若你拥有至少 !Treasure! 点*财宝，则消耗之并额外造成 !Bonus! 点伤害。",
+  "GILGAMESHARCHER-RAIN_OF_TREASURES.title": "财宝之雨",
+  "GILGAMESHARCHER-RAIN_OF_TREASURES.description": "#对所有敌人造成 !D! 点伤害，每消耗 1 点*财宝额外造成 !PerTreasure! 点（最多消耗 6 点）。"
 }

@@ -1,4 +1,3 @@
-using GilgameshArcher.GilgameshArcherCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -31,6 +30,5 @@ public sealed class Houtengeki() : GilgameshCard(0, CardType.Attack, CardRarity.
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
         await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
-        await ArmsPlayedPower.Record(Owner.Creature);
     }
 }

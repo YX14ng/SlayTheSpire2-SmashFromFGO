@@ -12,8 +12,8 @@
   "TIAMATBEAST-MOTHER_GUTS_POWER.description": "#The first time you would die this combat, revive at 1 HP and spawn 3 Laḫmu.",
   "TIAMATBEAST-MOTHER_GUTS_POWER.smartDescription": "#The first time you would die this combat, revive at 1 HP and spawn 3 Laḫmu.",
   "TIAMATBEAST-SKILL_SEAL_POWER.title": "Skill Seal",
-  "TIAMATBEAST-SKILL_SEAL_POWER.description": "#Sealed by the Mother. (Placeholder: decays by 1 at the start of this enemy's turn.)",
-  "TIAMATBEAST-SKILL_SEAL_POWER.smartDescription": "#Sealed by the Mother. (Placeholder: decays by 1 at the start of this enemy's turn.)",
+  "TIAMATBEAST-SKILL_SEAL_POWER.description": "#Sealed by the Mother. While sealed, when this enemy would use a skill (a non-attack action) it is cancelled. Attacks are unaffected. Decays by 1 at the start of this enemy's turn.",
+  "TIAMATBEAST-SKILL_SEAL_POWER.smartDescription": "#Sealed by the Mother. While sealed, when this enemy would use a skill (a non-attack action) it is cancelled. Attacks are unaffected. Decays by 1 at the start of this enemy's turn.",
   "TIAMATBEAST-TIDAL_CORE_POWER.title": "Core of the Goddess",
   "TIAMATBEAST-TIDAL_CORE_POWER.description": "#At the start of your turns, gain 5 NP Charge per stack.",
   "TIAMATBEAST-TIDAL_CORE_POWER.smartDescription": "#At the start of your turns, gain 5 NP Charge per stack.",
@@ -22,5 +22,11 @@
   "TIAMATBEAST-TIDAL_STASIS_POWER.smartDescription": "#Until your next turn, Curses on your enemies do not decay after dealing damage.",
   "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.title": "Beast Window",
   "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.description": "#The Beast II window lasts this many turns. At the start of each of your turns it drops by 1; at 0 you revert to Lily and the special Beast deck vanishes.",
-  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.smartDescription": "#The Beast II window lasts this many turns. At the start of each of your turns it drops by 1; at 0 you revert to Lily and the special Beast deck vanishes."
+  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.smartDescription": "#The Beast II window lasts this many turns. At the start of each of your turns it drops by 1; at 0 you revert to Lily and the special Beast deck vanishes.",
+  "TIAMATBEAST-TIDAL_SWARM_POWER.title": "Ravenous Tide",
+  "TIAMATBEAST-TIDAL_SWARM_POWER.description": "#At the end of each of your turns, your Laḫmu swarm bites the most-cursed enemy this many extra time(s), for swarm size × (1 + Nurture) each.",
+  "TIAMATBEAST-TIDAL_SWARM_POWER.smartDescription": "#At the end of each of your turns, your Laḫmu swarm bites the most-cursed enemy this many extra time(s), for swarm size × (1 + Nurture) each.",
+  "TIAMATBEAST-BROOD_MOTHER_POWER.title": "Brood Mother",
+  "TIAMATBEAST-BROOD_MOTHER_POWER.description": "#At the start of your turns, spawn 1 Laḫmu per stack.",
+  "TIAMATBEAST-BROOD_MOTHER_POWER.smartDescription": "#At the start of your turns, spawn 1 Laḫmu per stack."
 }

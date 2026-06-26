@@ -26,23 +26,27 @@ public class Gilgamesh : PlaceholderCharacterModel
     // kit es explosivo (economía de oro → picos de burst comprado), por eso baja del 75 que proponía B.
     public override int StartingHp => 72;
 
-    // Mazo inicial (fase ESPINA): 4 Golpe + 4 Defensa + 2 FIRMAS de comando que enseñan los dos hilos
-    // FGOCore vivos — Arts (Carga NP → Enuma Elish auto a 100) y Quick (Estrellas → Crítico Listo ×2).
-    // El "Golpe" vive DENTRO del mazo (compat del tag Strike, patrón Morgan/Siegfried). Las FIRMAS de
-    // oro/armas del diseño (Puerta de Babilonia, Regla de Oro) entran cuando aterricen los módulos
-    // Arsenal/Gold de FGOCore (checklist §10) — no bloquean el arranque del personaje.
+    // Mazo inicial QAABB (DESIGN-GILGAMESH §5.1): 4 Golpe + 4 Defensa + las FIRMAS de comando que enseñan
+    // los DOS hilos FGOCore (Arts: Carga NP → Enuma Elish auto a 100; Quick: Estrellas → Crítico Listo
+    // ×2) Y el motor de TRIBU/economía del Rey: Puerta de Babilonia ×2 (manifiesta Armas del Tesoro a la
+    // mano — sin ella los riders de Armas no disparan) + Regla de Oro ×1 (amplifica +50% cada ganancia de
+    // NP). El "Golpe" vive DENTRO del mazo (compat del tag Strike, patrón Morgan/Siegfried).
     public override IEnumerable<CardModel> StartingDeck =>
     [
         ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(),
         ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(),
         ModelDb.Card<Arts>(),
-        ModelDb.Card<Quick>()
+        ModelDb.Card<Quick>(),
+        ModelDb.Card<GateOfBabylon>(), ModelDb.Card<GateOfBabylon>(),
+        ModelDb.Card<GoldenRule>()
     ];
 
-    // Starter de fase ESPINA: el Juramento del Rey de Uruk (BondRelic ×1.25 heredado + Nv7 +20 NP inicial
-    // + capstone Nv10 = empezás con 1 Crítico Listo). La starter-MOTOR del diseño (Bab-ilu, la Llave del
-    // Tesoro) se suma cuando exista el módulo Arsenal de FGOCore — DESIGN-GILGAMESH §6/§7, checklist §10.
-    public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<OathOfUruk>()];
+    // Starters (DESIGN-GILGAMESH §6/§7): el Juramento del Rey de Uruk (BondRelic ×1.25 heredado + Nv7 +20
+    // NP inicial + capstone Nv10 = empezás con 1 Crítico Listo) Y Bab-ilu, la Llave del Tesoro (la
+    // starter-MOTOR: siembra el medidor de Tesoro + el contador de Armas y entreabre la Puerta con 1 Arma
+    // al iniciar combate).
+    public override IReadOnlyList<RelicModel> StartingRelics =>
+        [ModelDb.Relic<OathOfUruk>(), ModelDb.Relic<BabIlu>()];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<GilgameshCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<GilgameshRelicPool>();

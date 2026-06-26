@@ -1,4 +1,3 @@
-using GilgameshArcher.GilgameshArcherCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -23,6 +22,5 @@ public sealed class Vajra() : GilgameshCard(0, CardType.Attack, CardRarity.Event
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await ArmsPlayedPower.Record(Owner.Creature);
     }
 }

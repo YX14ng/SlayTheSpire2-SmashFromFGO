@@ -1,9 +1,9 @@
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using TiamatBeast.TiamatCode.Powers;
+using TiamatBeast.TiamatCode.Powers.Seal;
 
 namespace TiamatBeast.TiamatCode.Cards.Uncommon;
 
@@ -26,7 +26,7 @@ public sealed class TidalSeal() : TiamatCard(1, CardType.Skill, CardRarity.Uncom
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await PowerCmd.Apply<SkillSealPower>(choiceContext, cardPlay.Target, DynamicVars["Seal"].BaseValue, Owner.Creature, this);
+        await Sello.Apply(cardPlay.Target, DynamicVars["Seal"].IntValue, Owner.Creature, this);
         await Curses.Apply(cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
     }
 

@@ -42,7 +42,7 @@
   "OKITASABER-REPRIMAND.title": "Reprimand",
   "OKITASABER-REPRIMAND.description": "#Deal !D! damage to ALL enemies.",
   "OKITASABER-FEINT.title": "Feint",
-  "OKITASABER-FEINT.description": "#Deal !D! damage.+ Gain !Stars! *Critical *Stars.+",
+  "OKITASABER-FEINT.description": "#Deal !D! damage. Gain !Stars! *Critical *Stars.",
   "OKITASABER-THIRD_STANCE.title": "Third Stance",
   "OKITASABER-THIRD_STANCE.description": "#Gain !B! Block. Gain !NpCharge! *NP Charge.",
   "OKITASABER-I_DONT_SHOOT_BEAMS.title": "\"I Don't Shoot Beams!\"",

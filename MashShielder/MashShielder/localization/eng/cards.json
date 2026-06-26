@@ -101,7 +101,7 @@
   "MASHSHIELDER-WALL_DOCTRINE.title": "Wall Doctrine",
   "MASHSHIELDER-WALL_DOCTRINE.description": "#Your first Block card each turn grants !WallDoctrine! *NP *Charge.",
   "MASHSHIELDER-CONCEPTUAL_AMMO.title": "Conceptual Ammunition",
-  "MASHSHIELDER-CONCEPTUAL_AMMO.description": "#Up to !ConceptualAmmo! time(s) per turn, your Attacks remove one buff from the enemy hit before the damage resolves.",
+  "MASHSHIELDER-CONCEPTUAL_AMMO.description": "#Whenever you remove a buff from an enemy: gain !ConceptualAmmo! *Critical *Stars.",
   "MASHSHIELDER-TIRELESS_GUARDIAN.title": "Tireless Guardian",
   "MASHSHIELDER-TIRELESS_GUARDIAN.description": "#Gain !Intercept! *Intercept. In co-op, each ally gains !AllyIntercept! *Intercept.",
   "MASHSHIELDER-ORTINAX_SERVOS.title": "Ortinax Servomotors",
@@ -187,5 +187,7 @@
   "MASHSHIELDER-COMBAT_ANALYSIS.title": "Combat Analysis",
   "MASHSHIELDER-COMBAT_ANALYSIS.description": "#At the start of your turn: gain !CombatAnalysis! *Critical *Stars. Whenever you gain *Critical *Ready: draw 1 card.",
   "MASHSHIELDER-FORM_DRILL.title": "Form Drill",
-  "MASHSHIELDER-FORM_DRILL.description": "#Switch to your other form. In Paladin form: gain !NpCharge! *NP *Charge instead.+ Draw !C! card(s).+"
+  "MASHSHIELDER-FORM_DRILL.description": "#Switch to your other form. In Paladin form: gain !NpCharge! *NP *Charge instead.+ Draw !C! card(s).+",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE.title": "Lord Camelot Charge",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE.description": "#Deal damage equal to your current *Block. Does not scale with *Strength. Once per turn."
 }

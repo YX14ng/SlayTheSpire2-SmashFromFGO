@@ -17,21 +17,36 @@ public static class BlackBarrel
     {
         VfxCmd.PlayOnCreatureCenter(target, "vfx/vfx_dramatic_stab");
         await CreatureCmd.Damage(choiceContext, target, amount, ValueProp.Move | ValueProp.Unblockable, dealer, source);
-        await RemoveBuffs(target, 1);
+        await RemoveBuffs(target, 1, dealer, source);
     }
 
-    public static async Task RemoveBuffs(Creature target, int count)
+    /// <summary>
+    /// Quita hasta <paramref name="count"/> buffs del objetivo y devuelve cuántos quitó. Si pasás
+    /// el <paramref name="stripper"/> (el jugador atacante) y ése tiene <see cref="ConceptualAmmoPower"/>,
+    /// otorga sus Estrellas de Crítico por cada buff efectivamente removido (payoff del eje de strip).
+    /// </summary>
+    public static async Task<int> RemoveBuffs(Creature target, int count, Creature? stripper = null, CardModel? source = null)
     {
+        var removed = 0;
         for (var i = 0; i < count; i++)
         {
             var buff = target.GetPowerInstances<PowerModel>().FirstOrDefault(p => p.Type == PowerType.Buff);
-            if (buff == null) return;
+            if (buff == null) break;
             await PowerCmd.Remove(buff);
+            removed++;
         }
+
+        if (removed > 0 && stripper != null)
+        {
+            var ammo = stripper.GetPowerInstances<ConceptualAmmoPower>().FirstOrDefault();
+            if (ammo != null) await ammo.OnBuffsStripped(removed, source);
+        }
+
+        return removed;
     }
 
-    public static async Task RemoveAllBuffs(Creature target)
+    public static async Task<int> RemoveAllBuffs(Creature target, Creature? stripper = null, CardModel? source = null)
     {
-        await RemoveBuffs(target, int.MaxValue);
+        return await RemoveBuffs(target, int.MaxValue, stripper, source);
     }
 }

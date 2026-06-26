@@ -101,7 +101,7 @@
   "MASHSHIELDER-WALL_DOCTRINE.title": "壁垒教义",
   "MASHSHIELDER-WALL_DOCTRINE.description": "#你每回合的第一张格挡牌使你获得!WallDoctrine!点*宝具值*。",
   "MASHSHIELDER-CONCEPTUAL_AMMO.title": "概念弹药",
-  "MASHSHIELDER-CONCEPTUAL_AMMO.description": "#每回合至多!ConceptualAmmo!次，你的攻击在结算伤害前移除被击中敌人的一个增益。",
+  "MASHSHIELDER-CONCEPTUAL_AMMO.description": "#每当你移除敌人的一个增益：获得!ConceptualAmmo!颗*暴击星*。",
   "MASHSHIELDER-TIRELESS_GUARDIAN.title": "不倦的守护者",
   "MASHSHIELDER-TIRELESS_GUARDIAN.description": "#获得!Intercept!点*拦截*。协作模式下，每个队友获得!AllyIntercept!点*拦截*。",
   "MASHSHIELDER-ORTINAX_SERVOS.title": "奥特纳斯伺服机",
@@ -187,5 +187,7 @@
   "MASHSHIELDER-COMBAT_ANALYSIS.title": "战斗分析",
   "MASHSHIELDER-COMBAT_ANALYSIS.description": "#在你的回合开始时：获得!CombatAnalysis!颗*暴击星*。每当你获得*暴击*时：抽1张牌。",
   "MASHSHIELDER-FORM_DRILL.title": "换装演习",
-  "MASHSHIELDER-FORM_DRILL.description": "#变换至另一形态。处于*圣骑士*形态时：改为获得!NpCharge!点*宝具值*。+抽!C!张牌。+"
+  "MASHSHIELDER-FORM_DRILL.description": "#变换至另一形态。处于*圣骑士*形态时：改为获得!NpCharge!点*宝具值*。+抽!C!张牌。+",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE.title": "兰斯洛特之冲撞",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE.description": "#造成等同于你当前*格挡*的伤害。不受*力量*加成。每回合一次。"
 }

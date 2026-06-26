@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using TiamatBeast.TiamatCode.Cards;
 using TiamatBeast.TiamatCode.Powers;
 using TiamatBeast.TiamatCode.Powers.Forms;
+using TiamatBeast.TiamatCode.Powers.Seal;
 
 namespace TiamatBeast.TiamatCode.Cards.Special;
 
@@ -69,7 +70,7 @@ public sealed class NammuDuranki() : TiamatCard(0, CardType.Attack, CardRarity.E
                 .Execute(choiceContext);
             if (enemy.IsAlive)
             {
-                await PowerCmd.Apply<SkillSealPower>(choiceContext, enemy, DynamicVars["Seal"].IntValue, creature, this);
+                await Sello.Apply(enemy, DynamicVars["Seal"].IntValue, creature, this);
             }
         }
 

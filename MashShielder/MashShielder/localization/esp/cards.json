@@ -101,7 +101,7 @@
   "MASHSHIELDER-WALL_DOCTRINE.title": "Doctrina del Muro",
   "MASHSHIELDER-WALL_DOCTRINE.description": "#Tu primera carta de Bloqueo de cada turno otorga !WallDoctrine! de *Carga *NP.",
   "MASHSHIELDER-CONCEPTUAL_AMMO.title": "Munición Conceptual",
-  "MASHSHIELDER-CONCEPTUAL_AMMO.description": "#-Una vez-+Dos veces+ por turno, tus Ataques eliminan un buff del enemigo golpeado antes de resolver el daño.",
+  "MASHSHIELDER-CONCEPTUAL_AMMO.description": "#Cuando eliminás un buff de un enemigo: obtené !ConceptualAmmo! *Estrellas *de *Crítico.",
   "MASHSHIELDER-TIRELESS_GUARDIAN.title": "Guardiana Incansable",
   "MASHSHIELDER-TIRELESS_GUARDIAN.description": "#Obtén !Intercept! de *Intercepción. En co-op, cada aliado obtiene !AllyIntercept! de *Intercepción.",
   "MASHSHIELDER-ORTINAX_SERVOS.title": "Servomotores del Ortinax",
@@ -187,5 +187,7 @@
   "MASHSHIELDER-COMBAT_ANALYSIS.title": "Análisis de Combate",
   "MASHSHIELDER-COMBAT_ANALYSIS.description": "#Al inicio de tu turno: obtén !CombatAnalysis! *Estrellas *de *Crítico. Cada vez que obtienes *Crítico *Listo: roba 1 carta.",
   "MASHSHIELDER-FORM_DRILL.title": "Simulacro de Cambio",
-  "MASHSHIELDER-FORM_DRILL.description": "#Cambia a tu otra forma. En forma *Paladín: obtén !NpCharge! de *Carga *NP en su lugar.+ Roba !C! carta(s).+"
+  "MASHSHIELDER-FORM_DRILL.description": "#Cambia a tu otra forma. En forma *Paladín: obtén !NpCharge! de *Carga *NP en su lugar.+ Roba !C! carta(s).+",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE.title": "Embate de Lord Camelot",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE.description": "#Inflige daño igual a tu *Bloqueo actual. No escala con *Fuerza. Una vez por turno."
 }

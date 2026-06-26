@@ -7,18 +7,28 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace SiegfriedSaber.SiegfriedSaberCode.Cards.Common;
 
-/// <summary>Mandoble de Balmung — feeder ofensivo de NP PLANO (sin la condición SdD≥3 del Tajo
-/// básico). SKILL §2: 1⚡+rider = 6-8 daño; 6 + rider 10 NP (≈½⚡). El NP no sube con el up (P10).</summary>
+/// <summary>Mandoble de Balmung — feeder ofensivo de NP que LEE el recurso de firma. Antes era 6 daño/1⚡
+/// plano (DESIGN-REVIEW-2: débil vs el baseline común 9-10). Ahora 8 de daño + 4 más mientras la *Sangre
+/// de Dragón sea 3 o más, manteniendo el rider de 10 NP. El umbral SdD≥3 lo comparten los Buster
+/// Cazadragones (DragonbloodCut/DragonSlayerStrike) vía <see cref="SiegfriedCard.ScaleThresholdBonus"/>:
+/// premia el plan de motor sin auto-alimentarse (no genera SdD). El NP no sube con el up (P10).</summary>
 public sealed class BalmungSwing() : SiegfriedCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Move), new DynamicVar("Np", 10)];
+    private const int ScalesThreshold = 3;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DamageVar(8m, ValueProp.Move), new DynamicVar("Bonus", 4), new DynamicVar("Threshold", ScalesThreshold), new DynamicVar("Np", 10)];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromPower<DragonScalesPower>(), HoverTipFactory.FromPower<NpChargePower>()];
+
+    protected override bool ShouldGlowGoldInternal => GlowAtScales(ScalesThreshold);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        var bonus = ScaleThresholdBonus(ScalesThreshold, DynamicVars["Bonus"].IntValue);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
         await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);

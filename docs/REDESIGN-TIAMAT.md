@@ -33,23 +33,51 @@ Lily. **La Maldición es la divisa que Lily acuña y la Bestia gasta.** Decisió
 | **Engendrar** ×1 *(firma)* | 1 | Parí 1 Laḫmu + 10 NP (motor de arranque) |
 | **Ojo de la Estrella Azul** ×1 *(firma)* | 1 | +14 NP; Bloqueo de Curación al más maldito + −25% crit enemigo, 1 turno |
 
-## Pool Lily (drafteable, ~14)
-| Carta | Rareza | ⚡ | Efecto |
-|---|---|---|---|
-| Ojo de la Estrella Roja | Poco común | 1 | 4 Maldición + −2 Fuerza; si ya tenía ≥6, +3 (total 7). **El puente explícito** |
-| Lodo Negro | Común | 0 | 3 Maldición (sembradora de coste 0) |
-| Marea Creciente | Común | 1 | 4 Maldición a TODOS (siembra AoE) |
-| Amamantar | Común | 1 | +2 Crianza; si ≥3 Laḫmu, robá 1 |
-| Mar de la Estrella Azur | Poco común | 2 | Cura 8 HP + 12 NP (a aliados en co-op también). **Único soporte de mar del roster** |
-| Núcleo de la Diosa | Poco común | 1 | Resist. a Debuffs (anula los próximos 2) + 5 NP al inicio de tus turnos |
-| Diluvio Negro | Poco común | 2 | 4 Maldición a TODOS; +1 Crianza por enemigo ya maldito |
-| Sello de las Mareas | Poco común | 1 | Sello de Habilidad a 1 + 3 Maldición (eco del NP) |
-| Llamado del Mar de Vida | Poco común | 1 | +18 NP + robá 1 (acelerador de Sobrecarga) |
-| Marea Estancada | Poco común | 1 | 5 Maldición; tus Maldiciones NO decaen este turno (ICursePreserver) |
-| Sobremarea | Poco común | 1 | Consume 6 Maldición del más maldito → +18 NP + 1 Crianza (canje a Sobrecarga) |
-| Once Bel Laḫmu | Rara | 2 | Parí hasta 6 + 1 Crianza por cada faltante. Exhaust |
-| Sobrecarga de la Larva | Rara | 2 | +40 NP; si cruza 100, Bendición de Sobrecarga (+1 turno a la ventana) |
-| Cuerno Roto | Rara | 0 | Devorá TODA la cría: AoE = nº×(4+2×Crianza); +NP = nº×10. Exhaust |
+## Pool Lily (drafteable, ~27 — actualizado tras DESIGN-REVIEW-2 §2/§3, antes 15)
+> El pool original era de 15 drafteables (3 comunes / 9 PC / 3 raras), demasiado chico vs el
+> baseline vanilla ~82 (feast-or-famine por escasez de opciones). DESIGN-REVIEW-2 lo subió a **27**
+> agregando cartas SOBRE los motores existentes (Maldición / Crianza-Laḫmu): sembradores de Maldición
+> **con cuerpo** (que pegan), daño Lily decente (la fase Lily necesita PEGAR, no solo cargar), un 2º
+> canje Maldición→recurso, motores de población/enjambre y 2 raras nuevas. Sin mecánica nueva.
+
+### Comunes (6)
+| Carta | ⚡ | Efecto |
+|---|---|---|
+| Lodo Negro | 0 | 3 Maldición (sembradora de coste 0) |
+| Marea Creciente | 1 | 4 Maldición a TODOS (siembra AoE) |
+| Amamantar | 1 | +2 Crianza; si ≥3 Laḫmu, robá 1 |
+| **Latigazo Salobre** *(nueva)* | 1 | 8 daño + 2 Maldición (sembradora CON cuerpo) |
+| **Resaca** *(nueva)* | 1 | 7 daño, +4 si la presa está maldita (daño Lily que premia el campo) |
+| **Charco de Marea** *(nueva)* | 1 | 5 Baluarte + 2 Maldición (sembradora defensiva) |
+
+### Poco comunes (16)
+| Carta | ⚡ | Efecto |
+|---|---|---|
+| Ojo de la Estrella Roja | 1 | 4 Maldición + −2 Fuerza; si ya tenía ≥6, +3 (total 7). **El puente explícito** |
+| Mar de la Estrella Azur | 2 | Cura 8 HP + 12 NP (a aliados en co-op también). **Único soporte de mar del roster** |
+| Núcleo de la Diosa | 1 | Resist. a Debuffs (anula los próximos 2) + 5 NP al inicio de tus turnos |
+| Diluvio Negro | 2 | 4 Maldición a TODOS; +1 Crianza por enemigo ya maldito |
+| Sello de las Mareas | 1 | Sello de Habilidad a 1 + 3 Maldición (eco del NP) |
+| Llamado del Mar de Vida | 1 | +18 NP + robá 1 (acelerador de Sobrecarga) |
+| Marea Estancada | 1 | 5 Maldición; tus Maldiciones NO decaen este turno (ICursePreserver) |
+| Sobremarea | 1 | Consume 6 Maldición del más maldito → +18 NP + 1 Crianza (canje a Sobrecarga) |
+| Mitosis | 1 | Devorá 1 Laḫmu: 4 + 3×Crianza; parí 1 (×1.5 en Bestia) |
+| **Marea Voraz** *(nueva — loop ofensivo §3)* | 1 | Concede `TidalSwarmPower`: el enjambre muerde TAMBIÉN al final de cada turno tuyo |
+| **Garra Ahogadora** *(nueva)* | 1 | 6 daño + 2 Maldición + parí 1 Laḫmu (golpe que engendra) |
+| **Tributo Abisal** *(nueva — 2º canje)* | 1 | Consume ≤6 Maldición del más maldito → 5 daño + lo consumido a esa presa (Maldición→daño) |
+| **Poza de Desove** *(nueva)* | 1 | Parí 2 Laḫmu + 1 Crianza (motor de población intermedio) |
+| **Embate de Marea Negra** *(nueva)* | 2 | 6 daño + 2 Maldición a TODOS (daño AoE que siembra) |
+| **Nodriza Venenosa** *(nueva)* | 1 | 5 daño + 2 Crianza (golpe que alimenta) |
+| **Trampa de Resaca** *(nueva)* | 1 | 6 daño + Sello de Habilidad a 1 (control CON cuerpo) |
+
+### Raras (5)
+| Carta | ⚡ | Efecto |
+|---|---|---|
+| Once Bel Laḫmu | 2 | Parí hasta 6 + 1 Crianza por cada faltante. Exhaust |
+| Sobrecarga de la Larva | 2 | +40 NP; si cruza 100, Bendición de Sobrecarga (+1 turno a la ventana) |
+| Cuerno Roto | 0 | Devorá TODA la cría: AoE = nº×(4+2×Crianza); +NP = nº×10. Exhaust |
+| **Espira de Leviatán** *(nueva)* | 2 | 12 daño + 4 Maldición; si la presa tenía ≥8 Maldición, golpe DOBLE (pico de daño Lily) |
+| **Nido de Cría** *(nueva)* | 1 | Concede `BroodMotherPower`: parí 1 Laḫmu al inicio de cada turno tuyo. Exhaust |
 
 ## Mazo especial Bestia (7 fijas, manifestadas en la ventana, Exhaust al cerrar)
 | Carta | ⚡ | Efecto |
@@ -95,7 +123,10 @@ combustible de la ventana). Frente a los servants-NP (manifiestan UNA carta-ulti
 1. Ventanas encadenadas (Lily desaparece) → KNOB: cooldown 1 turno tras revertir, o capar recarga intra-ventana.
 2. Devorar > parir+alimentar (regla METHODOLOGY) → KNOB: **coef. Crianza** en Devorar/Cuerno 2×→1.5×.
 3. Pico de cierre > ~220 → KNOB primario: **coef. Pluma de la Bestia** (Crianza×3→×2, Maldición×4→×3) o cap duro.
-4. Fase Lily frágil en acto 1 → mitigado (Chaos Tide 5, Caparazón ×3, DoT); KNOB: BitePerLahmu 1→2.
+4. Fase Lily frágil en acto 1 / "sala de espera" (DESIGN-REVIEW-2 §3) → **RESUELTO sin tocar FGOCore**:
+   la carta PC «Marea Voraz» concede `TidalSwarmPower` (mordida del enjambre TAMBIÉN al final de tu
+   turno en Lily), más daño Lily nuevo en el pool. El knob global `BitePerLahmu 1→2` queda como palanca
+   de RESERVA (afecta a todo el roster del enjambre — FLAGEAR si se toca); preferida la vía Tiamat-local.
 5. Bloque del enjambre invade a Mash → KNOB: BlockPerLahmu 2→1.
 6. Sobrecarga demasiado fácil → KNOB: bajar carga base de generadores Lily (14/18→12/16).
 7. Carga cognitiva → HUD agregado (Laḫmu/Crianza/Maldición-campo/Ventana) + previsualizar agregados.
@@ -109,6 +140,18 @@ combustible de la ventana). Frente a los servants-NP (manifiestan UNA carta-ulti
 - **NUEVO (acotado):** `TiamatLilyPower`/`TiamatBeastPower` (`: FormPower`), `TiamatBeastWindowPower`
   (Counter=duración, manifiesta + limpia el mazo efímero por flag `BeastEphemeral`), `TiamatGutsPower`,
   la carta-NP de cierre `Pluma de la Bestia`, y el flag `BeastEphemeral` en las cartas Special.
+- **NUEVO post DESIGN-REVIEW-2 (todo Tiamat-local, FGOCore intacto):**
+  - **`SkillSealPower` REAL** (antes placeholder no-op). Espeja el `SleepPower` de Oberon: el helper
+    `Powers/Seal/Sello.cs` aplica el power y, si la intención YA roleada del enemigo es una HABILIDAD
+    (`!Monster.IntendsToAttack`), la **cancela con `CreatureCmd.Stun`** (reemplaza el move por STUNNED;
+    re-encola el original). El power, en `BeforeSideTurnStart` del enemigo sellado, re-chequea y cancela
+    la habilidad de los turnos siguientes mientras dure, y decae 1/turno. Los ataques NO se cancelan
+    (es Sello de HABILIDAD). `TidalSeal` y `NammuDuranki` ahora pasan por `Sello.Apply` → el control
+    ocurre de verdad. *(El motor rola la intención al inicio de TU turno — `PrepareForNextTurn`/`RollMove`
+    en `CombatManager` — así que al sellar la intención ya es visible, igual que el Sueño de Oberon.)*
+  - **`TidalSwarmPower`** (loop ofensivo Lily, §3): mordida del enjambre al final de tu turno.
+  - **`BroodMotherPower`** (rara «Nido de Cría»): parí 1 Laḫmu al inicio de tus turnos.
+  - Pool Lily subido de 15 → 27 (cartas nuevas sobre los motores existentes; ver arriba).
 
 ## Pendientes antes de implementar
 - Confirmar el NP `Nammu Dur-an-ki` (otra fuente dio "Nammu Marine Heart" — verificar Mooncell/JP).

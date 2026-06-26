@@ -36,8 +36,8 @@
   "MASHSHIELDER-WALL_DOCTRINE_POWER.description": "#Tu primera carta de Bloqueo de cada turno otorga esta cantidad de Carga NP.",
   "MASHSHIELDER-WALL_DOCTRINE_POWER.smartDescription": "#Tu primera carta de Bloqueo de cada turno otorga esta cantidad de Carga NP.",
   "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.title": "Munición Conceptual",
-  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.description": "#Esta cantidad de veces por turno, tus Ataques eliminan un buff del enemigo golpeado antes de resolver el daño.",
-  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.smartDescription": "#Esta cantidad de veces por turno, tus Ataques eliminan un buff del enemigo golpeado antes de resolver el daño.",
+  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.description": "#Cuando eliminás un buff de un enemigo, obtenés esta cantidad de Estrellas de Crítico.",
+  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.smartDescription": "#Cuando eliminás un buff de un enemigo, obtenés esta cantidad de Estrellas de Crítico.",
   "MASHSHIELDER-ORTINAX_SERVOS_POWER.title": "Servomotores del Ortinax",
   "MASHSHIELDER-ORTINAX_SERVOS_POWER.description": "#Al final de tu turno, si jugaste 2 o más Ataques: obtén esta cantidad de Bloqueo y 10 de Carga NP.",
   "MASHSHIELDER-ORTINAX_SERVOS_POWER.smartDescription": "#Al final de tu turno, si jugaste 2 o más Ataques: obtén esta cantidad de Bloqueo y 10 de Carga NP.",
@@ -79,5 +79,8 @@
   "MASHSHIELDER-COMBAT_ANALYSIS_POWER.smartDescription": "#Al inicio de tu turno: obtén *Estrellas *de *Crítico iguales a este poder. Cada vez que obtienes *Crítico *Listo: roba 1 carta.",
   "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.title": "Baluarte Absoluto",
   "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.description": "#Este turno, tus Ataques infligen daño adicional igual a tu Bloqueo actual. Se abre al alcanzar 100 de Carga NP.",
-  "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.smartDescription": "#Este turno, tus Ataques infligen daño adicional igual a tu Bloqueo actual. Se abre al alcanzar 100 de Carga NP."
+  "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.smartDescription": "#Este turno, tus Ataques infligen daño adicional igual a tu Bloqueo actual. Se abre al alcanzar 100 de Carga NP.",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE_POWER.title": "Embate de Lord Camelot",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE_POWER.description": "#Embate de Lord Camelot ya se jugó este turno.",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE_POWER.smartDescription": "#Embate de Lord Camelot ya se jugó este turno."
 }

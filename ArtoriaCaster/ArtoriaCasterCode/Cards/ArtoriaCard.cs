@@ -60,4 +60,30 @@ public abstract class ArtoriaCard(int cost, CardType type, CardRarity rarity, Ta
         }
         return damage;
     }
+
+    /// <summary>
+    /// Variante de crítico ESCALABLE (anti feast-or-famine binario, P2 2026-06-25): en vez de un
+    /// umbral todo-o-nada (X★ → valor fijo), el crítico arranca al costo base y sube por cada ★ EXTRA
+    /// gastada, hasta <paramref name="maxCost"/>★ (techo). Consume tantas ★ como pueda pagar dentro de
+    /// [<paramref name="baseCost"/>, <paramref name="maxCost"/>]. Lee Crit (valor al costo base) y
+    /// PerStar (daño por ★ extra) de los DynamicVars. Baja la varianza sin subir el techo: a maxCost★
+    /// iguala el crítico fijo anterior, pero ya rinde algo en el escalón mínimo en lugar de 0.
+    /// </summary>
+    protected async Task<decimal> ResolveCritDamageScaling(int baseCost, int maxCost)
+    {
+        var damage = DynamicVars.Damage.BaseValue;
+        if (!Stars.CanCrit(Owner.Creature, baseCost)) return damage;
+
+        // Cuántas ★ extra (por encima del costo descontado base) podemos pagar, capeado a maxCost.
+        var minSpend = Stars.DiscountedCost(Owner.Creature, baseCost);
+        var extraAffordable = Math.Min(maxCost - baseCost, Stars.Of(Owner.Creature) - minSpend);
+        if (extraAffordable < 0) extraAffordable = 0;
+        var spend = baseCost + extraAffordable;
+
+        await Stars.ConsumeForCrit(Owner.Creature, spend, this);
+        damage = DynamicVars["Crit"].BaseValue
+                 + extraAffordable * DynamicVars["PerStar"].BaseValue
+                 + Stars.CritBonus(Owner.Creature);
+        return damage;
+    }
 }

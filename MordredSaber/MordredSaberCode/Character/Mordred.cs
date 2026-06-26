@@ -27,15 +27,19 @@ public class Mordred : PlaceholderCharacterModel
     // armadura completa, pero su plan ofensivo (Rebelión recibe +2/golpe) la deja sin armadura.
     public override int StartingHp => 75;
 
-    // Mazo inicial de 10 (DESIGN-MORDRED §5.0/§7), QAABB sesgado a Buster. En esta ESPINA las cartas
-    // de comando Buster/Arts/Quick (fase Content) aún no existen, así que el starter usa las básicas
-    // genéricas + las DOS FIRMAS (los cambios de forma): 4 Golpe + 4 Defensa + Rebelión + Bajar la
-    // Visera. La danza del casco ya está en el mazo inicial (arrancás Enmascarada vía la starter).
-    // Cuando Content añada Buster/Arts/Quick, este deck se ajusta a 3B/2A/1Q/2D/2 firmas.
+    // Mazo inicial de 10 (DESIGN-MORDRED §5.0/§7), QAABB sesgado a Buster — con las cartas de COMANDO
+    // ya cableadas (DESIGN-REVIEW-2: el deck genérico sin generación de NP/★ dejaba el acto 1 roto por
+    // falta de motor). Modeladas sobre las de Okita: el Buster carga NP al pegar, el Arts es el feeder
+    // de NP de peso, el Quick produce las Estrellas del Crítico. Así el mazo GENERA desde el turno 1.
+    // Composición: 2 Buster + 1 Arts + 1 Quick (QAABB) + 1 Golpe + 3 Defensa + las DOS FIRMAS (Rebelión
+    // y Bajar la Visera, los cambios de forma que enseñan la danza del casco desde el combate 1).
     public override IEnumerable<CardModel> StartingDeck =>
     [
-        ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(),
-        ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(),
+        ModelDb.Card<BusterCommand>(), ModelDb.Card<BusterCommand>(),
+        ModelDb.Card<ArtsCommand>(),
+        ModelDb.Card<QuickCommand>(),
+        ModelDb.Card<Strike>(),
+        ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(),
         ModelDb.Card<Rebellion>(),
         ModelDb.Card<LowerTheVisor>()
     ];

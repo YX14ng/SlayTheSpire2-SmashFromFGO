@@ -18,9 +18,15 @@
   "TIAMATBEAST-TIDAL_STASIS_POWER.description": "#直到你的下个回合，你的敌人身上的诅咒在造成伤害后不会衰减。",
   "TIAMATBEAST-TIDAL_STASIS_POWER.smartDescription": "#直到你的下个回合，你的敌人身上的诅咒在造成伤害后不会衰减。",
   "TIAMATBEAST-SKILL_SEAL_POWER.title": "技能封印",
-  "TIAMATBEAST-SKILL_SEAL_POWER.description": "#被母亲封印。（占位：在该敌人回合开始时衰减1。）",
-  "TIAMATBEAST-SKILL_SEAL_POWER.smartDescription": "#被母亲封印。（占位：在该敌人回合开始时衰减1。）",
+  "TIAMATBEAST-SKILL_SEAL_POWER.description": "#被母亲封印。封印期间，当该敌人将要使用技能（非攻击行动）时，该行动被取消。攻击不受影响。在该敌人回合开始时衰减1。",
+  "TIAMATBEAST-SKILL_SEAL_POWER.smartDescription": "#被母亲封印。封印期间，当该敌人将要使用技能（非攻击行动）时，该行动被取消。攻击不受影响。在该敌人回合开始时衰减1。",
   "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.title": "巨兽窗口",
   "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.description": "#Beast II窗口持续这么多回合。在你每个回合开始时减少1；归零时你回到莉莉形态，巨兽专属牌组消散。",
-  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.smartDescription": "#Beast II窗口持续这么多回合。在你每个回合开始时减少1；归零时你回到莉莉形态，巨兽专属牌组消散。"
+  "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.smartDescription": "#Beast II窗口持续这么多回合。在你每个回合开始时减少1；归零时你回到莉莉形态，巨兽专属牌组消散。",
+  "TIAMATBEAST-TIDAL_SWARM_POWER.title": "贪婪之潮",
+  "TIAMATBEAST-TIDAL_SWARM_POWER.description": "#在你每个回合结束时，你的拉夫姆虫群额外噬咬诅咒最高的敌人这么多次，每次造成虫群数量×（1+养育）点伤害。",
+  "TIAMATBEAST-TIDAL_SWARM_POWER.smartDescription": "#在你每个回合结束时，你的拉夫姆虫群额外噬咬诅咒最高的敌人这么多次，每次造成虫群数量×（1+养育）点伤害。",
+  "TIAMATBEAST-BROOD_MOTHER_POWER.title": "母巢",
+  "TIAMATBEAST-BROOD_MOTHER_POWER.description": "#在你的回合开始时，每层孕育1只拉夫姆。",
+  "TIAMATBEAST-BROOD_MOTHER_POWER.smartDescription": "#在你的回合开始时，每层孕育1只拉夫姆。"
 }

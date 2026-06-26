@@ -1,4 +1,7 @@
 {
+  "GILGAMESHARCHER-BAB_ILU.title": "Bab-ilu, la Llave del Tesoro",
+  "GILGAMESHARCHER-BAB_ILU.description": "#Al iniciar cada combate, gana 6 de *Tesoro.",
+  "GILGAMESHARCHER-BAB_ILU.flavor": "La puerta de los dioses. El Rey no necesita alcanzar sus armas; las armas obedecen a su voluntad, y el mundo se abre ante su palabra.",
   "GILGAMESHARCHER-OATH_OF_URUK.title": "Juramento del Rey de Uruk",
   "GILGAMESHARCHER-OATH_OF_URUK.description": "#Vínculo: gana puntos en victorias, eventos, tiendas y hogueras. Cada nivel otorga regalos permanentes (Vida máx., Carga NP inicial, Bloqueo inicial). En Vínculo 7 empezás cada combate con 20 de Carga NP. En Vínculo 10 empezás cada combate con 1 Crítico Listo.",
   "GILGAMESHARCHER-OATH_OF_URUK.flavor": "El pacto entre el Rey y la ciudad que nació para gobernar. Mientras el vínculo se sostiene, el Rey de los Héroes blande sus tesoros con todo su peso.",

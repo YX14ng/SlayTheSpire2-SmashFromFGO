@@ -7,12 +7,17 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#2 Saeta Maldita (诅咒之矢) — 6 de daño + 2 de Maldición.</summary>
-public sealed class CursedBolt() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+/// <summary>
+/// #2 Saeta Maldita (诅咒之矢) — 4 de daño + 2 de Maldición a TODOS los enemigos. Re-perfilado
+/// 2026-06-25 (P2): era un clon mecánico del básico QuickMorgan (1⚡, 6 daño + 2 Maldición a UN
+/// enemigo); ahora es el sembrador de Maldición en ABANICO que diferencia el común del básico
+/// single-target — el motor que la Reina cosecha escala mejor con varios objetivos malditos.
+/// </summary>
+public sealed class CursedBolt() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(6m, ValueProp.Move),
+        new DamageVar(4m, ValueProp.Move),
         new DynamicVar("Curse", 2)
     ];
 
@@ -20,13 +25,16 @@ public sealed class CursedBolt() : MorganCard(1, CardType.Attack, CardRarity.Com
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
+            .TargetingAllOpponents(Owner.Creature.CombatState)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
-        if (!cardPlay.Target.IsDead)
+        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
         {
-            await Curses.Apply(cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+            if (!enemy.IsDead)
+            {
+                await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+            }
         }
     }
 

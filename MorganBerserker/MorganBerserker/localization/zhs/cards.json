@@ -10,7 +10,7 @@
   "MORGANBERSERKER-REPLICA_LANCE.title": "长枪复制品",
   "MORGANBERSERKER-REPLICA_LANCE.description": "#造成!D!点伤害。施加!Curse!层*诅咒*。",
   "MORGANBERSERKER-CURSED_BOLT.title": "诅咒之矢",
-  "MORGANBERSERKER-CURSED_BOLT.description": "#造成!D!点伤害。施加!Curse!层*诅咒*。",
+  "MORGANBERSERKER-CURSED_BOLT.description": "#对所有敌人造成!D!点伤害。对每个目标施加!Curse!层*诅咒*。",
   "MORGANBERSERKER-QUEENS_SCORN.title": "女王的轻蔑",
   "MORGANBERSERKER-QUEENS_SCORN.description": "#造成!D!点伤害。如果目标持有*诅咒*：额外+!Bonus!点伤害。",
   "MORGANBERSERKER-MAD_LUNGE.title": "狂化突进",
@@ -152,5 +152,9 @@
   "MORGANBERSERKER-ARTS_MORGAN.title": "Arts",
   "MORGANBERSERKER-ARTS_MORGAN.description": "#指令卡：造成!D!点伤害。获得!NpCharge!点*宝具值*。",
   "MORGANBERSERKER-QUICK_MORGAN.title": "Quick",
-  "MORGANBERSERKER-QUICK_MORGAN.description": "#指令卡：造成!D!点伤害。施加!Curse!层*诅咒*。"
+  "MORGANBERSERKER-QUICK_MORGAN.description": "#指令卡：造成!D!点伤害。施加!Curse!层*诅咒*。",
+  "MORGANBERSERKER-QUEENS_SACRIFICE.title": "王之牺牲",
+  "MORGANBERSERKER-QUEENS_SACRIFICE.description": "#造成!D!点伤害；如果你持有*毅力*：额外/+!Bonus!点伤害。失去!HpLoss!点生命。",
+  "MORGANBERSERKER-FAE_RESPITE.title": "妖精的喘息",
+  "MORGANBERSERKER-FAE_RESPITE.description": "#回复!H!点生命。*消耗*。"
 }

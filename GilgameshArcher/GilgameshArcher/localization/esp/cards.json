@@ -100,5 +100,19 @@
   "GILGAMESHARCHER-VIMANA_ASSAULT.title": "Vimana de Asalto",
   "GILGAMESHARCHER-VIMANA_ASSAULT.description": "#Inflige !D! de daño. Roba !C! cartas. Gana !Np! de *Carga NP.",
   "GILGAMESHARCHER-GRAM_ORIGIN_OF_ALL_SWORDS.title": "Gram, el Original de Todas las Espadas",
-  "GILGAMESHARCHER-GRAM_ORIGIN_OF_ALL_SWORDS.description": "#Inflige !D! de daño. Gana !Stars! *Estrellas de *Crítico."
+  "GILGAMESHARCHER-GRAM_ORIGIN_OF_ALL_SWORDS.description": "#Inflige !D! de daño. Gana !Stars! *Estrellas de *Crítico.",
+  "GILGAMESHARCHER-GATE_OF_BABYLON.title": "Puerta de Babilonia",
+  "GILGAMESHARCHER-GATE_OF_BABYLON.description": "#Manifiesta !Arms! Armas del Tesoro al azar en tu mano.",
+  "GILGAMESHARCHER-GOLDEN_RULE.title": "Regla de Oro",
+  "GILGAMESHARCHER-GOLDEN_RULE.description": "#Cada vez que ganás *Carga NP, gana 50% más.",
+  "GILGAMESHARCHER-OPENING_OF_THE_TREASURY.title": "Apertura del Tesoro",
+  "GILGAMESHARCHER-OPENING_OF_THE_TREASURY.description": "#Manifiesta !Arms! Armas del Tesoro al azar en tu mano. Gana !Treasure! de *Tesoro.",
+  "GILGAMESHARCHER-KINGS_ARSENAL.title": "El Arsenal del Rey",
+  "GILGAMESHARCHER-KINGS_ARSENAL.description": "#Manifiesta !Arms! Armas del Tesoro al azar en tu mano. Gana !Np! de *Carga NP.",
+  "GILGAMESHARCHER-ROYAL_INVESTMENT.title": "Inversión Real",
+  "GILGAMESHARCHER-ROYAL_INVESTMENT.description": "#Jugable solo con al menos !Treasure! de *Tesoro. Gasta !Treasure! de *Tesoro: gana !Np! de *Carga NP.",
+  "GILGAMESHARCHER-IMPOSSIBLE_BRIBE.title": "Soborno Imposible",
+  "GILGAMESHARCHER-IMPOSSIBLE_BRIBE.description": "#Inflige !D! de daño. Si tenés al menos !Treasure! de *Tesoro, lo gastás e infligís !Bonus! más.",
+  "GILGAMESHARCHER-RAIN_OF_TREASURES.title": "Lluvia de Tesoros",
+  "GILGAMESHARCHER-RAIN_OF_TREASURES.description": "#Inflige !D! de daño a TODOS los enemigos, más !PerTreasure! por cada *Tesoro gastado (hasta 6 gastados)."
 }

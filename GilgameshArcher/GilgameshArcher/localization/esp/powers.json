@@ -25,5 +25,8 @@
   "GILGAMESHARCHER-RECITAL_OF_CREATION_POWER.smartDescription": "#Cada vez que se manifiesta tu Enuma Elish, gana 1 *Crítico Listo y roba 1 carta.",
   "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.title": "Arrogancia del Rey",
   "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.description": "#Mientras no hayas defendido este combate, tus Ataques hacen 3 más. La primera vez que terminás un turno con Bloqueo, lo perdés por el resto del combate.",
-  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.smartDescription": "#Mientras no hayas defendido este combate, tus Ataques hacen 3 más. La primera vez que terminás un turno con Bloqueo, lo perdés por el resto del combate."
+  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.smartDescription": "#Mientras no hayas defendido este combate, tus Ataques hacen 3 más. La primera vez que terminás un turno con Bloqueo, lo perdés por el resto del combate.",
+  "GILGAMESHARCHER-TREASURE_POWER.title": "Tesoro",
+  "GILGAMESHARCHER-TREASURE_POWER.description": "#El tesoro del Rey para este combate. Algunas cartas gastan Tesoro para un efecto poderoso. Lo siembra Bab-ilu al iniciar el combate. No es el oro de tu run.",
+  "GILGAMESHARCHER-TREASURE_POWER.smartDescription": "#El tesoro del Rey para este combate. Algunas cartas gastan Tesoro para un efecto poderoso. Lo siembra Bab-ilu al iniciar el combate. No es el oro de tu run."
 }

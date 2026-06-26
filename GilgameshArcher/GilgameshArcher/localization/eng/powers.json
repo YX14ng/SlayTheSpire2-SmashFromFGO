@@ -25,5 +25,8 @@
   "GILGAMESHARCHER-RECITAL_OF_CREATION_POWER.smartDescription": "#Whenever your Enuma Elish manifests, gain 1 *Critical Hit ready and draw 1 card.",
   "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.title": "King's Arrogance",
   "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.description": "#While you have not defended this combat, your Attacks deal 3 more. The first time you end a turn with Block, this is lost for the rest of combat.",
-  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.smartDescription": "#While you have not defended this combat, your Attacks deal 3 more. The first time you end a turn with Block, this is lost for the rest of combat."
+  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.smartDescription": "#While you have not defended this combat, your Attacks deal 3 more. The first time you end a turn with Block, this is lost for the rest of combat.",
+  "GILGAMESHARCHER-TREASURE_POWER.title": "Treasure",
+  "GILGAMESHARCHER-TREASURE_POWER.description": "#The King's treasure for this combat. Some cards spend Treasure for a powerful effect. Seeded at the start of combat by Bab-ilu. This is not your run gold.",
+  "GILGAMESHARCHER-TREASURE_POWER.smartDescription": "#The King's treasure for this combat. Some cards spend Treasure for a powerful effect. Seeded at the start of combat by Bab-ilu. This is not your run gold."
 }

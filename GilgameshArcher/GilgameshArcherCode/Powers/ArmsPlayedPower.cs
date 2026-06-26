@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using GilgameshArcher.GilgameshArcherCode.Cards;
 
 namespace GilgameshArcher.GilgameshArcherCode.Powers;
 
@@ -19,9 +21,12 @@ namespace GilgameshArcher.GilgameshArcherCode.Powers;
 /// - <see cref="ThisTurn"/> se resetea al inicio de tu turno (BeforeSideTurnStart, patrón
 ///   NpResolvedThisTurnPower).
 /// - <see cref="ThisCombat"/> persiste todo el combate.
-/// La fuente que lo alimenta es el (futuro) evento <c>Arsenal.WeaponPlayed</c> de FGOCore; hasta
-/// que ese módulo exista, las cartas/reliquias que generan Armas llaman a <see cref="Record"/>
-/// directamente cuando un Arma del Tesoro se juega. El power se auto-instala vía <see cref="Of"/>.
+///
+/// CABLEO (FIX DESIGN-REVIEW-2): el contador sube SOLO desde el hook central <see cref="AfterCardPlayed"/>,
+/// que castea la carta jugada a <see cref="ITreasureArm"/> — una sola fuente de verdad, en lugar de que
+/// cada una de las 8 Armas llame a un Record manual (riesgo de doble-conteo / olvido). Es el equivalente
+/// local del (futuro) evento <c>Arsenal.WeaponPlayed</c> de FGOCore. Para que cuente desde la PRIMERA
+/// Arma del turno, el power se siembra al abrir combate (Bab-ilu, <see cref="EnsureInstalled"/>).
 /// </summary>
 public sealed class ArmsPlayedPower : GilgameshPower
 {
@@ -45,12 +50,18 @@ public sealed class ArmsPlayedPower : GilgameshPower
         return Task.CompletedTask;
     }
 
-    /// <summary>Llamado cada vez que el dueño juega un Arma del Tesoro. Sube ambas cuentas.</summary>
-    public void Bump()
+    // Una sola fuente de verdad: cada vez que el dueño juega un Arma del Tesoro, ambas cuentas suben.
+    // AfterCardPlayed corre DESPUÉS de resolver la carta, así que el OnPlay de la propia Arma NO se
+    // auto-cuenta (no hace falta: los riders leen el contador en SU OnPlay, después).
+    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        ThisTurn++;
-        ThisCombat++;
-        Flash();
+        if (cardPlay.Card.Owner?.Creature == Owner && cardPlay.Card is ITreasureArm)
+        {
+            ThisTurn++;
+            ThisCombat++;
+            Flash();
+        }
+        return Task.CompletedTask;
     }
 
     /// <summary>Cuenta de Armas jugadas este turno por la criatura (0 si nunca jugó ninguna).</summary>
@@ -61,14 +72,13 @@ public sealed class ArmsPlayedPower : GilgameshPower
     public static int PlayedThisCombat(Creature creature) =>
         creature.GetPower<ArmsPlayedPower>()?.ThisCombat ?? 0;
 
-    /// <summary>Registra una jugada de Arma del Tesoro, auto-instalando el contador si hace falta.</summary>
-    public static async Task Record(Creature creature)
+    /// <summary>Garantiza el contador instalado desde el arranque del combate (lo siembra Bab-ilu), para
+    /// que la PRIMERA Arma del turno ya quede registrada por el hook.</summary>
+    public static async Task EnsureInstalled(Creature creature)
     {
-        var power = creature.GetPower<ArmsPlayedPower>();
-        if (power == null)
+        if (creature.GetPower<ArmsPlayedPower>() == null)
         {
-            power = await PowerCmd.Apply<ArmsPlayedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+            await PowerCmd.Apply<ArmsPlayedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
         }
-        power?.Bump();
     }
 }

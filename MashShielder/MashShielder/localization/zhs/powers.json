@@ -36,8 +36,8 @@
   "MASHSHIELDER-WALL_DOCTRINE_POWER.description": "#你每回合的第一张格挡牌使你获得此数值的宝具值。",
   "MASHSHIELDER-WALL_DOCTRINE_POWER.smartDescription": "#你每回合的第一张格挡牌使你获得此数值的宝具值。",
   "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.title": "概念弹药",
-  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.description": "#每回合至多此数值次，你的攻击在结算伤害前移除被击中敌人的一个增益。",
-  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.smartDescription": "#每回合至多此数值次，你的攻击在结算伤害前移除被击中敌人的一个增益。",
+  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.description": "#每当你移除敌人的一个增益时，获得此数值的暴击星。",
+  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.smartDescription": "#每当你移除敌人的一个增益时，获得此数值的暴击星。",
   "MASHSHIELDER-ORTINAX_SERVOS_POWER.title": "奥特纳斯伺服机",
   "MASHSHIELDER-ORTINAX_SERVOS_POWER.description": "#在你的回合结束时，如果你本回合打出了不少于2张攻击牌：获得此数值的格挡和10点宝具值。",
   "MASHSHIELDER-ORTINAX_SERVOS_POWER.smartDescription": "#在你的回合结束时，如果你本回合打出了不少于2张攻击牌：获得此数值的格挡和10点宝具值。",
@@ -79,5 +79,8 @@
   "MASHSHIELDER-COMBAT_ANALYSIS_POWER.smartDescription": "#在你的回合开始时：获得等同于此能力层数的*暴击星*。每当你获得*暴击*时：抽1张牌。",
   "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.title": "绝对堡垒",
   "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.description": "#本回合，你的攻击牌造成等同于你当前格挡值的额外伤害。在宝具值达到100时开启。",
-  "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.smartDescription": "#本回合，你的攻击牌造成等同于你当前格挡值的额外伤害。在宝具值达到100时开启。"
+  "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.smartDescription": "#本回合，你的攻击牌造成等同于你当前格挡值的额外伤害。在宝具值达到100时开启。",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE_POWER.title": "兰斯洛特之冲撞",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE_POWER.description": "#本回合已使用过兰斯洛特之冲撞。",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE_POWER.smartDescription": "#本回合已使用过兰斯洛特之冲撞。"
 }

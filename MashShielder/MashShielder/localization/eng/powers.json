@@ -36,8 +36,8 @@
   "MASHSHIELDER-WALL_DOCTRINE_POWER.description": "#Your first Block card each turn grants this much NP Charge.",
   "MASHSHIELDER-WALL_DOCTRINE_POWER.smartDescription": "#Your first Block card each turn grants this much NP Charge.",
   "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.title": "Conceptual Ammunition",
-  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.description": "#Up to this many times per turn, your Attacks remove one buff from the enemy hit before the damage resolves.",
-  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.smartDescription": "#Up to this many times per turn, your Attacks remove one buff from the enemy hit before the damage resolves.",
+  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.description": "#Whenever you remove a buff from an enemy, gain this many Critical Stars.",
+  "MASHSHIELDER-CONCEPTUAL_AMMO_POWER.smartDescription": "#Whenever you remove a buff from an enemy, gain this many Critical Stars.",
   "MASHSHIELDER-ORTINAX_SERVOS_POWER.title": "Ortinax Servomotors",
   "MASHSHIELDER-ORTINAX_SERVOS_POWER.description": "#At the end of your turn, if you played 2 or more Attacks: gain this much Block and 10 NP Charge.",
   "MASHSHIELDER-ORTINAX_SERVOS_POWER.smartDescription": "#At the end of your turn, if you played 2 or more Attacks: gain this much Block and 10 NP Charge.",
@@ -79,5 +79,8 @@
   "MASHSHIELDER-COMBAT_ANALYSIS_POWER.smartDescription": "#At the start of your turn: gain *Critical *Stars equal to this power. Whenever you gain *Critical *Ready: draw 1 card.",
   "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.title": "Absolute Bulwark",
   "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.description": "#This turn, your Attacks deal additional damage equal to your current Block. Opened by reaching 100 NP Charge.",
-  "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.smartDescription": "#This turn, your Attacks deal additional damage equal to your current Block. Opened by reaching 100 NP Charge."
+  "MASHSHIELDER-ABSOLUTE_BULWARK_WINDOW_POWER.smartDescription": "#This turn, your Attacks deal additional damage equal to your current Block. Opened by reaching 100 NP Charge.",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE_POWER.title": "Lord Camelot Charge",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE_POWER.description": "#Lord Camelot Charge has already been played this turn.",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE_POWER.smartDescription": "#Lord Camelot Charge has already been played this turn."
 }

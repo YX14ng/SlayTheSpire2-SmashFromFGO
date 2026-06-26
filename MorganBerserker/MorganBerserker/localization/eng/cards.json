@@ -10,7 +10,7 @@
   "MORGANBERSERKER-REPLICA_LANCE.title": "Replica Lance",
   "MORGANBERSERKER-REPLICA_LANCE.description": "#Deal !D! damage. Apply !Curse! *Curse.",
   "MORGANBERSERKER-CURSED_BOLT.title": "Cursed Bolt",
-  "MORGANBERSERKER-CURSED_BOLT.description": "#Deal !D! damage. Apply !Curse! *Curse.",
+  "MORGANBERSERKER-CURSED_BOLT.description": "#Deal !D! damage to ALL enemies. Apply !Curse! *Curse to each.",
   "MORGANBERSERKER-QUEENS_SCORN.title": "Queen's Scorn",
   "MORGANBERSERKER-QUEENS_SCORN.description": "#Deal !D! damage. If the target has *Curse: +!Bonus! damage.",
   "MORGANBERSERKER-MAD_LUNGE.title": "Mad Lunge",
@@ -152,5 +152,9 @@
   "MORGANBERSERKER-ARTS_MORGAN.title": "Arts",
   "MORGANBERSERKER-ARTS_MORGAN.description": "#Command Card: deal !D! damage. Gain !NpCharge! *NP *Charge.",
   "MORGANBERSERKER-QUICK_MORGAN.title": "Quick",
-  "MORGANBERSERKER-QUICK_MORGAN.description": "#Command Card: deal !D! damage. Apply !Curse! *Curse."
+  "MORGANBERSERKER-QUICK_MORGAN.description": "#Command Card: deal !D! damage. Apply !Curse! *Curse.",
+  "MORGANBERSERKER-QUEENS_SACRIFICE.title": "Queen's Sacrifice",
+  "MORGANBERSERKER-QUEENS_SACRIFICE.description": "#Deal !D! damage, /+!Bonus! if you have *Guts. Lose !HpLoss! HP.",
+  "MORGANBERSERKER-FAE_RESPITE.title": "Fae Respite",
+  "MORGANBERSERKER-FAE_RESPITE.description": "#Heal !H! HP. *Exhaust."
 }

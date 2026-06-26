@@ -25,5 +25,8 @@
   "GILGAMESHARCHER-RECITAL_OF_CREATION_POWER.smartDescription": "#每当你的天地乖离开辟之星显现时，获得 1 层*暴击就绪并抽 1 张牌。",
   "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.title": "王之傲慢",
   "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.description": "#本场战斗中你尚未防御时，你的攻击额外造成 3 点伤害。你首次在持有格挡的情况下结束回合后，本场战斗剩余时间内此效果消失。",
-  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.smartDescription": "#本场战斗中你尚未防御时，你的攻击额外造成 3 点伤害。你首次在持有格挡的情况下结束回合后，本场战斗剩余时间内此效果消失。"
+  "GILGAMESHARCHER-KINGS_ARROGANCE_POWER.smartDescription": "#本场战斗中你尚未防御时，你的攻击额外造成 3 点伤害。你首次在持有格挡的情况下结束回合后，本场战斗剩余时间内此效果消失。",
+  "GILGAMESHARCHER-TREASURE_POWER.title": "财宝",
+  "GILGAMESHARCHER-TREASURE_POWER.description": "#本场战斗中王之财宝。部分卡牌可消耗财宝以发动强力效果。由巴比伦之门在战斗开始时给予。这并非你旅途中的金币。",
+  "GILGAMESHARCHER-TREASURE_POWER.smartDescription": "#本场战斗中王之财宝。部分卡牌可消耗财宝以发动强力效果。由巴比伦之门在战斗开始时给予。这并非你旅途中的金币。"
 }

@@ -10,7 +10,7 @@
   "MORGANBERSERKER-REPLICA_LANCE.title": "Réplica de Lanza",
   "MORGANBERSERKER-REPLICA_LANCE.description": "#Inflige !D! de daño. Aplica !Curse! de *Maldición.",
   "MORGANBERSERKER-CURSED_BOLT.title": "Saeta Maldita",
-  "MORGANBERSERKER-CURSED_BOLT.description": "#Inflige !D! de daño. Aplica !Curse! de *Maldición.",
+  "MORGANBERSERKER-CURSED_BOLT.description": "#Inflige !D! de daño a TODOS los enemigos. Aplica !Curse! de *Maldición a cada uno.",
   "MORGANBERSERKER-QUEENS_SCORN.title": "Desdén de la Reina",
   "MORGANBERSERKER-QUEENS_SCORN.description": "#Inflige !D! de daño. Si el objetivo tiene *Maldición: +!Bonus! de daño.",
   "MORGANBERSERKER-MAD_LUNGE.title": "Embestida Demente",
@@ -152,5 +152,9 @@
   "MORGANBERSERKER-ARTS_MORGAN.title": "Arts",
   "MORGANBERSERKER-ARTS_MORGAN.description": "#Carta de Comando: inflige !D! de daño. Obtén !NpCharge! de *Carga *NP.",
   "MORGANBERSERKER-QUICK_MORGAN.title": "Quick",
-  "MORGANBERSERKER-QUICK_MORGAN.description": "#Carta de Comando: inflige !D! de daño. Aplica !Curse! de *Maldición."
+  "MORGANBERSERKER-QUICK_MORGAN.description": "#Carta de Comando: inflige !D! de daño. Aplica !Curse! de *Maldición.",
+  "MORGANBERSERKER-QUEENS_SACRIFICE.title": "Sacrificio de la Reina",
+  "MORGANBERSERKER-QUEENS_SACRIFICE.description": "#Inflige !D! de daño. Pierde !HpLoss! de Vida. Si tienes *Alzarse: /+!Bonus! de daño.",
+  "MORGANBERSERKER-FAE_RESPITE.title": "Respiro Feérico",
+  "MORGANBERSERKER-FAE_RESPITE.description": "#Cura !H! de Vida. *Agotar."
 }

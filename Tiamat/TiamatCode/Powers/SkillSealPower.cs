@@ -3,20 +3,25 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using TiamatBeast.TiamatCode.Powers.Seal;
 
 namespace TiamatBeast.TiamatCode.Powers;
 
 /// <summary>
-/// Sello de Habilidad (スキル封印) — debuff que Tiamat aplica a los enemigos al abrir la ventana
-/// Génesis (NP <c>Nammu Dur-an-ki</c>) y vía algunas cartas Lily/Bestia (Sello de las Mareas).
+/// Sello de Habilidad (スキル封印) — debuff que Tiamat aplica al abrir la ventana Génesis (NP
+/// <c>Nammu Dur-an-ki</c>) y vía cartas Lily (Sello de las Mareas). CANCELA la HABILIDAD del enemigo
+/// sellado: las acciones NO-ataque (buffs, debuffs, defensa, invocar, curar…) se saltan; los ataques
+/// pasan (es Sello de HABILIDAD, no de ataque). Espeja el <c>SleepPower</c> de Oberon, que usa el
+/// mismo <see cref="CreatureCmd.Stun"/> para saltar la acción enemiga.
 ///
-/// PLACEHOLDER (ver REDESIGN-TIAMAT.md): v0.107.1 no expone un "no puede usar habilidades / no
-/// puede aplicar buffs/debuffs" nativo que se pueda colgar limpiamente desde un PowerModel del
-/// jugador, así que de momento es un <b>marcador-Counter</b> que decae 1 por turno del enemigo
-/// sellado. Otros powers/relics pueden consultarlo (<c>creature.HasPower&lt;SkillSealPower&gt;()</c>)
-/// para condicionar su lógica; el efecto "duro" (cancelar la intención de habilidad del enemigo)
-/// queda pendiente de una API de intenciones del juego — DOCUMENTADO como tal para que el lead lo
-/// cierre cuando se confirme el hook. Espeja el timing/decremento de <c>CursePower</c>.
+/// Arquitectura (los gotchas):
+/// - El cancel en el MOMENTO DE SELLAR lo hace el helper <see cref="Sello"/> (Stun si la intención
+///   ya roleada es una habilidad). Este power gobierna la DURACIÓN y los turnos SIGUIENTES.
+/// - En <see cref="BeforeSideTurnStart"/> del enemigo sellado (antes de que actúe, con el
+///   <c>NextMove</c> ya conocido): si intenta una HABILIDAD, la cancela (Stun). Después decrementa el
+///   contador 1 (el sello se gasta turno a turno, como la Maldición).
+/// - Es lectura/decisión pura sobre la intención: NO toca al jugador ni anula daño (preview-safe).
 /// </summary>
 public sealed class SkillSealPower : TiamatPower
 {
@@ -27,11 +32,21 @@ public sealed class SkillSealPower : TiamatPower
     /// <summary>Ofensa personal: no escala en multijugador (espeja CursePower).</summary>
     public override bool ShouldScaleInMultiplayer => false;
 
-    /// <summary>Decae 1 al inicio del turno del lado del enemigo sellado (mismo timing que la Maldición).</summary>
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    /// <summary>
+    /// Antes de que el enemigo sellado actúe (su <c>NextMove</c> ya está roleado): si intenta una
+    /// HABILIDAD, la cancelamos (Stun); el ataque pasa. Luego el sello decae 1 (mismo timing/decay
+    /// que la Maldición). Va en BeforeSideTurnStart para cancelar ANTES de que la acción se ejecute.
+    /// </summary>
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != Owner.Side || Owner.IsDead) return;
-        Flash();
+
+        if (Sello.IntendsToUseSkill(Owner))
+        {
+            Flash();
+            await CreatureCmd.Stun(Owner); // la marea ahoga la técnica: la habilidad NO ocurre
+        }
+
         await PowerCmd.Decrement(this);
     }
 }

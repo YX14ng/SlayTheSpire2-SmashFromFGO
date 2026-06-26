@@ -40,7 +40,7 @@ public sealed class BlackBarrelFullBurst() : MashShielderCard(2, CardType.Attack
         await BlackBarrel.Hit(choiceContext, cardPlay.Target, damage, Owner.Creature, this);
         if (tier >= NpChargePower.ManifestThreshold && !cardPlay.Target.IsDead)
         {
-            await BlackBarrel.RemoveAllBuffs(cardPlay.Target);
+            await BlackBarrel.RemoveAllBuffs(cardPlay.Target, Owner.Creature, this);
         }
     }
 

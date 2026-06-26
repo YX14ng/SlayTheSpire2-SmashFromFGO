@@ -44,7 +44,7 @@ public sealed class BlackBarrelUnleashed() : MashShielderCard(0, CardType.Attack
         await BlackBarrel.Hit(choiceContext, cardPlay.Target, damage, Owner.Creature, this);
         if (!cardPlay.Target.IsDead)
         {
-            await BlackBarrel.RemoveAllBuffs(cardPlay.Target);
+            await BlackBarrel.RemoveAllBuffs(cardPlay.Target, Owner.Creature, this);
         }
     }
 }

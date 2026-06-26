@@ -1,4 +1,3 @@
-using GilgameshArcher.GilgameshArcherCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -29,6 +28,5 @@ public sealed class Dainsleif() : GilgameshCard(0, CardType.Attack, CardRarity.E
         await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
         await CreatureCmd.Damage(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this);
-        await ArmsPlayedPower.Record(Owner.Creature);
     }
 }

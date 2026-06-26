@@ -1,4 +1,3 @@
-using GilgameshArcher.GilgameshArcherCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -24,6 +23,5 @@ public sealed class Caladbolg() : GilgameshCard(0, CardType.Attack, CardRarity.E
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue,
             ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this);
-        await ArmsPlayedPower.Record(Owner.Creature);
     }
 }
