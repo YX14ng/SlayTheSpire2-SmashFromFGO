@@ -78,5 +78,7 @@
   "SIEGFRIEDSABER-DRAGONBLOOD_SURGE.title": "Oleada de Sangre de Dragón",
   "SIEGFRIEDSABER-DRAGONBLOOD_SURGE.description": "#Inflige !D! de daño. Gana !Scales! de *Sangre de Dragón y !Np! de *Carga NP.",
   "SIEGFRIEDSABER-GLEAMING_SCALES.title": "Escamas Refulgentes",
-  "SIEGFRIEDSABER-GLEAMING_SCALES.description": "#Gana !B! de Bloqueo. Obtén !Stars! *Estrellas de *Crítico."
+  "SIEGFRIEDSABER-GLEAMING_SCALES.description": "#Gana !B! de Bloqueo. Obtén !Stars! *Estrellas de *Crítico.",
+  "SIEGFRIEDSABER-BALMUNG_UNLEASHED.title": "BALMUNG: Desatado",
+  "SIEGFRIEDSABER-BALMUNG_UNLEASHED.description": "#Retener. Agotar. NP: consume TODA tu *Carga NP (mín. !ChargeCost!). Inflige !D! de daño a TODOS los enemigos; /+!PerTen! por cada 10 de Carga sobre el mínimo — o +!PerTenScaled! en su lugar mientras tu *Sangre de Dragón sea 3 o más."
 }

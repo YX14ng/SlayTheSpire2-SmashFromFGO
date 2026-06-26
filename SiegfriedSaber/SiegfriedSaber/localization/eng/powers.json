@@ -19,5 +19,8 @@
   "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.smartDescription": "#The first attack that pierces your Dragon Scales each turn deals no damage and removes 1 Debuff from you.",
   "SIEGFRIEDSABER-TARNKAPPE_POWER.title": "Tarnkappe",
   "SIEGFRIEDSABER-TARNKAPPE_POWER.description": "#Your back is no longer exposed: the first attack that reaches you each turn is reduced by your Dragon Scales like every other. The Linden Leaf grants no NP Charge from reaching hits.",
-  "SIEGFRIEDSABER-TARNKAPPE_POWER.smartDescription": "#Your back is no longer exposed: the first attack that reaches you each turn is reduced by your Dragon Scales like every other. The Linden Leaf grants no NP Charge from reaching hits."
+  "SIEGFRIEDSABER-TARNKAPPE_POWER.smartDescription": "#Your back is no longer exposed: the first attack that reaches you each turn is reduced by your Dragon Scales like every other. The Linden Leaf grants no NP Charge from reaching hits.",
+  "SIEGFRIEDSABER-SIEGFRIED_NP_MANIFESTED_POWER.title": "Balmung Manifested",
+  "SIEGFRIEDSABER-SIEGFRIED_NP_MANIFESTED_POWER.description": "#Your Noble Phantasm has already manifested this peak. Spend NP Charge below 100 to re-arm it.",
+  "SIEGFRIEDSABER-SIEGFRIED_NP_MANIFESTED_POWER.smartDescription": "#Your Noble Phantasm has already manifested this peak. Spend NP Charge below 100 to re-arm it."
 }

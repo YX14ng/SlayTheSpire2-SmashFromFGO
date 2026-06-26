@@ -12,5 +12,21 @@
   "FGOCORE-EXP_EMBER.title": "EXP Ember",
   "FGOCORE-EXP_EMBER.description": "#Upgrade !C! random card(s) in your hand for this combat. Everything is fodder.",
   "FGOCORE-PALINGENESIS.title": "Palingenesis",
-  "FGOCORE-PALINGENESIS.description": "#Raise your Max HP by !H! and heal !H! HP. The Grail accepts your offering."
+  "FGOCORE-PALINGENESIS.description": "#Raise your Max HP by !H! and heal !H! HP. The Grail accepts your offering.",
+  "FGOCORE-KALEIDOSCOPE.title": "Kaleidoscope",
+  "FGOCORE-KALEIDOSCOPE.description": "#Gain !NpCharge! NP Charge. The Second Magic, in your hands. An explosive opening.",
+  "FGOCORE-BLACK_GRAIL.title": "The Black Grail",
+  "FGOCORE-BLACK_GRAIL.description": "#Power. Your Attacks deal +50% damage, but at the start of each of your turns you lose !HpLoss! HP. Power at a price.",
+  "FGOCORE-FRAGMENT2030.title": "A Fragment of 2030",
+  "FGOCORE-FRAGMENT2030.description": "#Power. At the start of each of your turns, gain !Stars! Critical Stars. A glimpse of a doomed future.",
+  "FGOCORE-PRISMA_COSMOS.title": "Prisma Cosmos",
+  "FGOCORE-PRISMA_COSMOS.description": "#Power. At the start of each of your turns, gain !NpCharge! NP Charge. The cosmos never stops turning.",
+  "FGOCORE-IMAGINARY_ELEMENT.title": "The Imaginary Element",
+  "FGOCORE-IMAGINARY_ELEMENT.description": "#Gain !NpCharge! NP Charge. This turn, the NP Charge you gain afterwards is increased by 30%. Imaginary numbers, made real.",
+  "FGOCORE-HEAVENS_FEEL.title": "Heaven's Feel",
+  "FGOCORE-HEAVENS_FEEL.description": "#Your next Attack deals +40% damage. No cost in blood. The Third Magic answers your wish.",
+  "FGOCORE-FORMAL_CRAFT.title": "Formal Craft",
+  "FGOCORE-FORMAL_CRAFT.description": "#This turn, your cards that grant NP Charge grant +30% more. The Mystic Code hums to life.",
+  "FGOCORE-ZERO_OVER.title": "Limited/Zero Over",
+  "FGOCORE-ZERO_OVER.description": "#This turn, your Attacks deal +30% damage. I am the bone of my sword."
 }

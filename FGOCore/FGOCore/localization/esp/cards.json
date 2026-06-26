@@ -12,5 +12,21 @@
   "FGOCORE-EXP_EMBER.title": "Llama de EXP",
   "FGOCORE-EXP_EMBER.description": "#Mejora !C! carta(s) al azar de tu mano durante este combate. Todo es alimento.",
   "FGOCORE-PALINGENESIS.title": "Palingénesis",
-  "FGOCORE-PALINGENESIS.description": "#Aumenta tu Vida máxima en !H! y cura !H! de Vida. El Grial acepta tu ofrenda."
+  "FGOCORE-PALINGENESIS.description": "#Aumenta tu Vida máxima en !H! y cura !H! de Vida. El Grial acepta tu ofrenda.",
+  "FGOCORE-KALEIDOSCOPE.title": "Caleidoscopio",
+  "FGOCORE-KALEIDOSCOPE.description": "#Obtén !NpCharge! de Carga NP. La Segunda Magia, en tus manos. Un arranque explosivo.",
+  "FGOCORE-BLACK_GRAIL.title": "El Santo Grial Negro",
+  "FGOCORE-BLACK_GRAIL.description": "#Poder. Tus Ataques infligen +50% de daño, pero al inicio de cada uno de tus turnos pierdes !HpLoss! de Vida. Poder con precio.",
+  "FGOCORE-FRAGMENT2030.title": "Un Fragmento de 2030",
+  "FGOCORE-FRAGMENT2030.description": "#Poder. Al inicio de cada uno de tus turnos, obtén !Stars! Estrellas de Crítico. Un vistazo a un futuro condenado.",
+  "FGOCORE-PRISMA_COSMOS.title": "Prisma Cosmos",
+  "FGOCORE-PRISMA_COSMOS.description": "#Poder. Al inicio de cada uno de tus turnos, obtén !NpCharge! de Carga NP. El cosmos nunca deja de girar.",
+  "FGOCORE-IMAGINARY_ELEMENT.title": "El Elemento Imaginario",
+  "FGOCORE-IMAGINARY_ELEMENT.description": "#Obtén !NpCharge! de Carga NP. Este turno, la Carga NP que obtengas después aumenta un 30%. Números imaginarios hechos realidad.",
+  "FGOCORE-HEAVENS_FEEL.title": "Heaven's Feel",
+  "FGOCORE-HEAVENS_FEEL.description": "#Tu próximo Ataque inflige +40% de daño. Sin coste de sangre. La Tercera Magia responde a tu deseo.",
+  "FGOCORE-FORMAL_CRAFT.title": "Maquinaria Mística",
+  "FGOCORE-FORMAL_CRAFT.description": "#Este turno, tus cartas que otorgan Carga NP otorgan un +30% más. El Código Místico cobra vida.",
+  "FGOCORE-ZERO_OVER.title": "Limited/Zero Over",
+  "FGOCORE-ZERO_OVER.description": "#Este turno, tus Ataques infligen +30% de daño. Soy el hueso de mi espada."
 }

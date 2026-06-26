@@ -19,5 +19,8 @@
   "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.smartDescription": "#El primer ataque que atraviesa tu Sangre de Dragón cada turno no inflige daño y te elimina 1 Debuff.",
   "SIEGFRIEDSABER-TARNKAPPE_POWER.title": "Manto de las Sombras",
   "SIEGFRIEDSABER-TARNKAPPE_POWER.description": "#Tu espalda ya no está expuesta: el primer golpe que te alcanza cada turno se reduce con tu Sangre de Dragón como cualquier otro. La Hoja de Tilo no te da Carga NP por golpes que alcanzan.",
-  "SIEGFRIEDSABER-TARNKAPPE_POWER.smartDescription": "#Tu espalda ya no está expuesta: el primer golpe que te alcanza cada turno se reduce con tu Sangre de Dragón como cualquier otro. La Hoja de Tilo no te da Carga NP por golpes que alcanzan."
+  "SIEGFRIEDSABER-TARNKAPPE_POWER.smartDescription": "#Tu espalda ya no está expuesta: el primer golpe que te alcanza cada turno se reduce con tu Sangre de Dragón como cualquier otro. La Hoja de Tilo no te da Carga NP por golpes que alcanzan.",
+  "SIEGFRIEDSABER-SIEGFRIED_NP_MANIFESTED_POWER.title": "Balmung Manifestado",
+  "SIEGFRIEDSABER-SIEGFRIED_NP_MANIFESTED_POWER.description": "#Tu Noble Phantasm ya se manifestó en este pico. Gasta Carga NP por debajo de 100 para re-armarlo.",
+  "SIEGFRIEDSABER-SIEGFRIED_NP_MANIFESTED_POWER.smartDescription": "#Tu Noble Phantasm ya se manifestó en este pico. Gasta Carga NP por debajo de 100 para re-armarlo."
 }

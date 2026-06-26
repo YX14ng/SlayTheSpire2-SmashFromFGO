@@ -78,5 +78,7 @@
   "SIEGFRIEDSABER-DRAGONBLOOD_SURGE.title": "龙血涌动",
   "SIEGFRIEDSABER-DRAGONBLOOD_SURGE.description": "#造成!D!点伤害。获得!Scales!点*龙血护甲与!Np!点*NP值。",
   "SIEGFRIEDSABER-GLEAMING_SCALES.title": "流光鳞甲",
-  "SIEGFRIEDSABER-GLEAMING_SCALES.description": "#获得!B!点格挡。获得!Stars!颗*暴击星*。"
+  "SIEGFRIEDSABER-GLEAMING_SCALES.description": "#获得!B!点格挡。获得!Stars!颗*暴击星*。",
+  "SIEGFRIEDSABER-BALMUNG_UNLEASHED.title": "幻想大剑·天魔失坠：解放",
+  "SIEGFRIEDSABER-BALMUNG_UNLEASHED.description": "#保留。消耗。宝具：消耗你全部的*NP值（至少!ChargeCost!）。对所有敌人造成!D!点伤害；每超过最低值10点NP追加!PerTen!点——当你的*龙血鳞片达到3或以上时，改为每10点追加!PerTenScaled!点。"
 }

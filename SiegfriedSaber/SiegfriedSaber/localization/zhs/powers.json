@@ -19,5 +19,8 @@
   "SIEGFRIEDSABER-PEERLESS_CROWN_POWER.smartDescription": "#每回合第一次穿透你龙血护甲的攻击不造成伤害，并移除你身上1个减益效果。",
   "SIEGFRIEDSABER-TARNKAPPE_POWER.title": "隐身斗篷",
   "SIEGFRIEDSABER-TARNKAPPE_POWER.description": "#你的背部不再暴露：每回合第一个命中你的攻击也会像其他攻击一样被龙血护甲减免。菩提叶不再为命中你的攻击提供NP值。",
-  "SIEGFRIEDSABER-TARNKAPPE_POWER.smartDescription": "#你的背部不再暴露：每回合第一个命中你的攻击也会像其他攻击一样被龙血护甲减免。菩提叶不再为命中你的攻击提供NP值。"
+  "SIEGFRIEDSABER-TARNKAPPE_POWER.smartDescription": "#你的背部不再暴露：每回合第一个命中你的攻击也会像其他攻击一样被龙血护甲减免。菩提叶不再为命中你的攻击提供NP值。",
+  "SIEGFRIEDSABER-SIEGFRIED_NP_MANIFESTED_POWER.title": "幻想大剑·已显现",
+  "SIEGFRIEDSABER-SIEGFRIED_NP_MANIFESTED_POWER.description": "#你的宝具已在本次充能巅峰显现。将NP值消耗至100以下以重新装填。",
+  "SIEGFRIEDSABER-SIEGFRIED_NP_MANIFESTED_POWER.smartDescription": "#你的宝具已在本次充能巅峰显现。将NP值消耗至100以下以重新装填。"
 }

@@ -66,12 +66,11 @@ public sealed class SummoningSealSaberOfRed : MordredRelic, INpLevelStore
         return true;
     }
 
-    private Task OnDupeRoll()
+    private async Task OnDupeRoll()
     {
-        if (NpLevels.TryRollDupe(Owner))
+        if (await NpLevels.TryRollDupeWithConsolation(Owner))
         {
             Flash();
         }
-        return Task.CompletedTask;
     }
 }
