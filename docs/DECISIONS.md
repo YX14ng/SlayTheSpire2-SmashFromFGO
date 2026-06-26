@@ -13,6 +13,7 @@ Patrón tomado de `iryuko/sts2-mod-dev`. Estado vivo → [STATUS.md](STATUS.md).
 - **FGOCore.dll no puede estar local Y en Workshop a la vez** (mismo id → duplicado → crash). El build local de FGOCore es **temporal** y se borra al terminar.
 - Cuando cambia la API pública de FGOCore, **los 10 mods se republican JUNTOS** (dll viejo contra FGOCore nuevo → `MissingMethodException`/`ReflectionTypeLoadException`, falla silenciosa). Nunca shippear FGOCore solo.
 - Descripciones **localizadas** de Workshop: solo por web UI o Steamworks API (SteamCMD/VDF setea una sola, la default).
+- **Webp patch ELIMINADO (2026-06-25)**: ya no se capean las texturas de animación con `size_limit` (`tools/patch_webp_imports.ps1` borrado; sin más `publish→patch→publish`). El VRAM se maneja por el mod de optimización (lazy character loading). Los `.import` ya horneados quedan capeados (con el scale del `.tscn` ya compensado); revertir a full-res es un cambio aparte (revertir 3891 `.import` + ajustar scales) que **sube** VRAM — no hacer hasta tener lazy-loading.
 - Manifest dependencies en formato nuevo: `[{"id":"BaseLib","min_version":"v3.3.0"}, {"id":"FGOCore","min_version":"v0.1.0"}]`.
 
 ## Diseño / balance
