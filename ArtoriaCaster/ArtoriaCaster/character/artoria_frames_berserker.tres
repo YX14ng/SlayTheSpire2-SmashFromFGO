@@ -99,7 +99,7 @@
 
 [resource]
 animations = [{
-"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}, {"duration": 1.0, "texture": ExtResource("tex_2")}, {"duration": 1.0, "texture": ExtResource("tex_3")}, {"duration": 1.0, "texture": ExtResource("tex_4")}, {"duration": 1.0, "texture": ExtResource("tex_5")}, {"duration": 1.0, "texture": ExtResource("tex_6")}, {"duration": 1.0, "texture": ExtResource("tex_7")}, {"duration": 1.0, "texture": ExtResource("tex_8")}, {"duration": 1.0, "texture": ExtResource("tex_9")}, {"duration": 1.0, "texture": ExtResource("tex_10")}],
+"frames": [{"duration": 1.0, "texture": ExtResource("tex_1")}, {"duration": 1.0, "texture": ExtResource("tex_2")}, {"duration": 1.0, "texture": ExtResource("tex_3")}, {"duration": 1.0, "texture": ExtResource("tex_4")}, {"duration": 1.0, "texture": ExtResource("tex_5")}, {"duration": 1.0, "texture": ExtResource("tex_6")}, {"duration": 1.0, "texture": ExtResource("tex_7")}, {"duration": 1.0, "texture": ExtResource("tex_8")}, {"duration": 1.0, "texture": ExtResource("tex_9")}, {"duration": 1.0, "texture": ExtResource("tex_10")}, {"duration": 1.0, "texture": ExtResource("tex_9")}, {"duration": 1.0, "texture": ExtResource("tex_8")}, {"duration": 1.0, "texture": ExtResource("tex_7")}, {"duration": 1.0, "texture": ExtResource("tex_6")}, {"duration": 1.0, "texture": ExtResource("tex_5")}, {"duration": 1.0, "texture": ExtResource("tex_4")}, {"duration": 1.0, "texture": ExtResource("tex_3")}, {"duration": 1.0, "texture": ExtResource("tex_2")}],
 "loop": true,
 "name": &"idle",
 "speed": 14
