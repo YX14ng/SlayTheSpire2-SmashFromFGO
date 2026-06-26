@@ -15,6 +15,10 @@ public sealed class NpChargePower : FGOCorePower, IResourcePower
 
     public const int ManifestThreshold = 100;
 
+    /// <summary>Charge ceiling unlocked per NP level (dupe). The gauge cap is gated by
+    /// the owner's NP level so un-duped Servants don't bank to the full base <see cref="Max"/>.</summary>
+    public const int ChargePerNpLevel = 100;
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;

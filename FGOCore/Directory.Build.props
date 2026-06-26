@@ -6,6 +6,6 @@
 
         <!-- El juego que se corre es la copia en F:\Games (NO el install de Steam) — se fija el path para
              que build/publish vayan SOLOS al folder de mods correcto. Machine-local (Directory.Build.props gitignorado). -->
-        <Sts2Path>C:/Program Files (x86)/Steam/steamapps/common/Slay the Spire 2</Sts2Path>
+        <Sts2Path>G:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path>
     </PropertyGroup>
 </Project>

@@ -40,5 +40,11 @@
   "FGOCORE-GOLDEN_RULE_POWER.smartDescription": "#La Carga NP que ganas este combate aumenta un 50% por stack.",
   "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.title": "NP Resuelto",
   "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.description": "#Una carta-NP resolvió este turno.",
-  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.smartDescription": "#Una carta-NP resolvió este turno."
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.smartDescription": "#Una carta-NP resolvió este turno.",
+  "FGOCORE-COMMAND_BONUS_POWER.title": "Bono de Comando",
+  "FGOCORE-COMMAND_BONUS_POWER.description": "#Al jugar una carta de comando Buster/Arts/Quick, ganas el bono de su tipo (Fuerza, Carga NP o Estrellas de Crítico).",
+  "FGOCORE-COMMAND_BONUS_POWER.smartDescription": "#Al jugar una carta de comando Buster/Arts/Quick, ganas el bono de su tipo (Fuerza, Carga NP o Estrellas de Crítico).",
+  "FGOCORE-COMMAND_BUSTER_STRENGTH_POWER.title": "Impulso Buster",
+  "FGOCORE-COMMAND_BUSTER_STRENGTH_POWER.description": "#Tus Ataques infligen esta cantidad de daño adicional este turno.",
+  "FGOCORE-COMMAND_BUSTER_STRENGTH_POWER.smartDescription": "#Tus Ataques infligen esta cantidad de daño adicional este turno."
 }

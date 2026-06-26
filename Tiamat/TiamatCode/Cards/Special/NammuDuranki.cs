@@ -1,3 +1,4 @@
+using FGOCore.FGOCoreCode.CardTypes;
 using FGOCore.FGOCoreCode.Cleanse;
 using FGOCore.FGOCoreCode.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -24,9 +25,13 @@ namespace TiamatBeast.TiamatCode.Cards.Special;
 /// ventana (Counter=duración) y devuelve recursos (+1⚡, robar 2). El AoE es fijo a propósito (no
 /// ConsumeAll) para NO apilarse con el cierre (Pluma de la Bestia).
 /// </summary>
-public sealed class NammuDuranki() : TiamatCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies)
+public sealed class NammuDuranki() : TiamatCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), ICommandTyped
 {
     public const int ChargeCost = 100;
+
+    // TAREA D: tipo de NP del juego original (Genesis = Buster, a confirmar) → bonus de ulti del sistema de tipos.
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];
 

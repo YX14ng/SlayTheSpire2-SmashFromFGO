@@ -1,4 +1,5 @@
 using BaseLib.Abstracts;
+using FGOCore.FGOCoreCode.CardTypes;
 using FGOCore.FGOCoreCode.Np;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -164,6 +165,11 @@ public abstract class BondRelic : CustomRelicModel
 
     public override async Task BeforeCombatStartLate()
     {
+        // Motor de TIPOS DE CARTA (Buster/Arts/Quick): todos los Servants reciben el power que reparte
+        // el bonus al jugar cartas que implementan ICommandTyped. Independiente del nivel de Bond — va
+        // SIEMPRE, antes del early-return de los regalos por nivel. ADITIVO (2026-06-26, Tarea C).
+        await CommandBonusPower.EnsureInstalled(Owner.Creature);
+
         var lv = Level;
         if (lv <= 0) return;
 

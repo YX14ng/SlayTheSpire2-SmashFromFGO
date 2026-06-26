@@ -18,8 +18,11 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Basic;
 /// principal — 3-4 Arts ≈ un pico de 100 → la primera Enuma del run sin tocar oro ni armas (Plan A
 /// interrumpible §3: el medidor nunca baja de la tasa base).
 /// </summary>
-public sealed class Arts() : GilgameshCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class Arts() : GilgameshCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Arts;
+    public bool IsNoblePhantasm => false;
+
     private const int NpGain = 30;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

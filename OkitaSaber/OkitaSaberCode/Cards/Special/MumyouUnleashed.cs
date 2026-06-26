@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using FGOCore.FGOCoreCode.CardTypes;
 using OkitaSaber.OkitaSaberCode.Powers;
 
 namespace OkitaSaber.OkitaSaberCode.Cards.Special;
@@ -26,9 +27,13 @@ namespace OkitaSaber.OkitaSaberCode.Cards.Special;
 ///
 /// MEJORADA (up): si tenés Crítico Listo lo consume y dobla el 1er golpe; Vulnerable sube a 3.
 /// </summary>
-public sealed class MumyouUnleashed() : OkitaCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
+public sealed class MumyouUnleashed() : OkitaCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), ICommandTyped
 {
     public const int ChargeCost = 100;
+
+    // TAREA D: tipo de NP del juego original (Mumyou Sandanzuki = Quick) → bonus de ulti del sistema de tipos.
+    CommandType ICommandTyped.CommandType => CommandType.Quick;
+    public bool IsNoblePhantasm => true;
     public const int BreathBoostCost = 4;   // Aliento gastado por la respiración plena
     public const int BoostHits = 2;         // golpes extra con respiración plena (3 -> 5)
     private const int BaseHits = 3;

@@ -24,13 +24,33 @@ public static class NpCharge
 
     public static int Current(Creature creature) => creature.GetPowerAmount<NpChargePower>();
 
-    public static bool IsFull(Creature creature) => Current(creature) >= NpChargePower.Max;
+    /// <summary>
+    /// Dynamic charge ceiling gated by the owner's NP level (dupes). Un-duped (level 1)
+    /// caps at <see cref="NpChargePower.ChargePerNpLevel"/> (=100, the manifest floor);
+    /// each dupe lifts it by another <see cref="NpChargePower.ChargePerNpLevel"/>. The
+    /// Holy Grail (<see cref="ILimitBreaker"/>, via <see cref="NpLevels.MaxLevel"/>)
+    /// extends the hard cap above the base <see cref="NpChargePower.Max"/> (=300).
+    /// Floored at <see cref="NpChargePower.ManifestThreshold"/> so ults can always manifest.
+    /// </summary>
+    public static int Max(Creature creature)
+    {
+        var player = creature.Player;
+        if (player == null) return NpChargePower.ManifestThreshold;
+
+        var level = NpLevels.Get(player);
+        var raw = NpChargePower.ChargePerNpLevel * level;
+        var hardCap = NpChargePower.Max
+            + System.Math.Max(0, NpLevels.MaxLevel(player) - NpLevels.BaseMaxLevel) * NpChargePower.ChargePerNpLevel;
+        return System.Math.Clamp(raw, NpChargePower.ManifestThreshold, hardCap);
+    }
+
+    public static bool IsFull(Creature creature) => Current(creature) >= Max(creature);
 
     /// <summary>Gain charge, capped at 300. Fires <see cref="GaugeFilled"/> when at or
     /// above the manifest threshold afterwards.</summary>
     public static async Task Gain(Creature creature, int amount, CardModel? source)
     {
-        var toAdd = Math.Min(amount, NpChargePower.Max - Current(creature));
+        var toAdd = Math.Min(amount, Max(creature) - Current(creature));
         if (toAdd > 0)
         {
             await PowerCmd.Apply<NpChargePower>(new BlockingPlayerChoiceContext(), creature, toAdd, creature, source);

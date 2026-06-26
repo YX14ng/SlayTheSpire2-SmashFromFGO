@@ -1,4 +1,5 @@
 using System.Linq;
+using FGOCore.FGOCoreCode.CardTypes;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -17,9 +18,13 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Special;
 /// frena el Bloqueo), idéntico al tick de Maldición. SOBRECARGA: +!PerTen! a cada detonación por
 /// cada 10 de Carga sobre el mínimo. Escala +15%/nivel (NpLevels).
 /// </summary>
-public sealed class QueensSentenceUnleashed() : MorganCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies)
+public sealed class QueensSentenceUnleashed() : MorganCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), ICommandTyped
 {
     public const int ChargeCost = 100;
+
+    // TAREA D: tipo de NP del juego original (Roadless Camelot = Buster) → bonus de ulti del sistema de tipos.
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];
 

@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using FGOCore.FGOCoreCode.CardTypes;
 using OberonPretender.OberonPretenderCode.Cards;
 using OberonPretender.OberonPretenderCode.Powers;
 
@@ -17,9 +18,13 @@ namespace OberonPretender.OberonPretenderCode.Cards.Special;
 ///   +<see cref="PerTen"/> por cada 10 sobre 100. Sin sueño — el dragón no arrulla, devora.
 /// +15%/nivel (NpLevels). El +3 de Ataque de Vortigern se suma vía ModifyDamageAdditive.
 /// </summary>
-public sealed class LieLikeVortigernUnleashed() : OberonCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IOberonNpCard
+public sealed class LieLikeVortigernUnleashed() : OberonCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IOberonNpCard, ICommandTyped
 {
     public const int ChargeCost = 100;
+
+    // TAREA D: tipo de NP del juego original (NP de Oberon = Buster) → bonus de ulti del sistema de tipos.
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
     private const int PerTen = 4;
     private const int DamagePerDebt = 3;
 

@@ -1,3 +1,4 @@
+using FGOCore.FGOCoreCode.CardTypes;
 using MashShielder.MashShielderCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -13,9 +14,13 @@ namespace MashShielder.MashShielderCode.Cards.Special;
 /// The ult: generated for free (into hand, cost 0) the first time the NP gauge
 /// reaches 100 in a combat. Playing it consumes the full gauge.
 /// </summary>
-public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IMashNpCard
+public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IMashNpCard, ICommandTyped
 {
     public const int ChargeCost = 100;
+
+    // TAREA D: tipo de NP del juego original (Lord Camelot = Arts) → bonus de ulti del sistema de tipos.
+    CommandType ICommandTyped.CommandType => CommandType.Arts;
+    public bool IsNoblePhantasm => true;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];
 

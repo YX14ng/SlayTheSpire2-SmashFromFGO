@@ -27,9 +27,13 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Special;
 /// - La <c>OverchargeBlessingPower</c> (El Que Vio el Abismo / Decreto del Rey) ya está horneada en
 ///   <c>ConsumeAllForNpCard</c>: sube el tier consumido antes de calcular el bonus anti-jefe.
 /// </summary>
-public sealed class EnumaElishUnleashed() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IGilgameshNpCard
+public sealed class EnumaElishUnleashed() : GilgameshCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IGilgameshNpCard, ICommandTyped
 {
     public const int ChargeCost = 100;
+
+    // TAREA D: tipo de NP del juego original (Enuma Elish = Buster) → bonus de ulti del sistema de tipos.
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
 
     private const int PerTwenty = 4;     // +4 al bonus anti-divino por cada 20 de carga sobre 100
     private const int PerArmInHand = 1;  // +1 al bonus anti-divino por cada Arma del Tesoro exhaustada (P2)

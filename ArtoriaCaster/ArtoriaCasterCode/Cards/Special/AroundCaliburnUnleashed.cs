@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ArtoriaCaster.ArtoriaCasterCode.Cards;
 using ArtoriaCaster.ArtoriaCasterCode.Powers;
+using FGOCore.FGOCoreCode.CardTypes;
 
 namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Special;
 
@@ -16,9 +17,13 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Special;
 /// CUALQUIER forma (cobrás las Estrellas que venías acumulando como Caster), ganás !AntiPurge!
 /// Anti-Purga y !Stars! *Estrellas de Crítico. SOBRECARGA: +1★ por cada 10 de Carga sobre el mínimo.
 /// </summary>
-public sealed class AroundCaliburnUnleashed() : ArtoriaCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IArtoriaNpCard
+public sealed class AroundCaliburnUnleashed() : ArtoriaCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IArtoriaNpCard, ICommandTyped
 {
     public const int ChargeCost = 100;
+
+    // TAREA D: tipo de NP del juego original (Around Caliburn = Arts) → bonus de ulti del sistema de tipos.
+    CommandType ICommandTyped.CommandType => CommandType.Arts;
+    public bool IsNoblePhantasm => true;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];
 

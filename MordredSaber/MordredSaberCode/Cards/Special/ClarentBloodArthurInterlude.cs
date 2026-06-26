@@ -18,9 +18,13 @@ namespace MordredSaber.MordredSaberCode.Cards.Special;
 ///   - después: +20 NP.
 /// Sin la regla del yelmo (ya está desenmascarada permanentemente). Escala con dupes (NpLevels.Scale).
 /// </summary>
-public sealed class ClarentBloodArthurInterlude() : MordredCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IMordredNpCard
+public sealed class ClarentBloodArthurInterlude() : MordredCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IMordredNpCard, ICommandTyped
 {
     public const int ChargeCost = 100;
+
+    // TAREA D: tipo de NP del juego original (Clarent Blood Arthur = Buster) → bonus de ulti del sistema de tipos.
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
     public const int Hits = 5;
     private const int OverchargePer = 15;      // +1/golpe por cada 15 sobre el mínimo (más generoso)
 

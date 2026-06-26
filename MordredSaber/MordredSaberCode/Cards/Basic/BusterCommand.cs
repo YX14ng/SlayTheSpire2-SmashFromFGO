@@ -14,8 +14,11 @@ namespace MordredSaber.MordredSaberCode.Cards.Basic;
 /// El Buster en FGO es el golpe fuerte que también empuja el medidor por sobrecarga; aquí enseña desde
 /// el turno 1 que ATACAR carga el NP. Basic (deck-only, no drafteable). Patrón Strike + NpCharge.Gain.
 /// </summary>
-public sealed class BusterCommand() : MordredCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class BusterCommand() : MordredCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(8m, ValueProp.Move), new DynamicVar("NpCharge", 5)];
 

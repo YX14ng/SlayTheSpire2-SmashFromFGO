@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using FGOCore.FGOCoreCode.CardTypes;
 using OberonPretender.OberonPretenderCode.Cards;
 using OberonPretender.OberonPretenderCode.Extensions;
 using OberonPretender.OberonPretenderCode.Powers;
@@ -26,9 +27,13 @@ namespace OberonPretender.OberonPretenderCode.Cards.Special;
 /// consumir Deuda → daño). El daño base ya NO es independiente de lo que el mazo construyó: cuanta más
 /// Deuda diferiste, más golpea la Desatada (y te la saca de encima antes del cobro de fin de turno).
 /// </summary>
-public sealed class RyeRhymeGoodfellowUnleashed() : OberonCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IOberonNpCard
+public sealed class RyeRhymeGoodfellowUnleashed() : OberonCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IOberonNpCard, ICommandTyped
 {
     public const int ChargeCost = 100;
+
+    // TAREA D: tipo de NP del juego original (Rye Rhyme Goodfellow = Buster) → bonus de ulti del sistema de tipos.
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
     private const int PerTen = 3;
     private const int MassSleepTier = 150;
     private const int DamagePerDebt = 2;     // +2 daño AoE por punto de Deuda consumido (P1)

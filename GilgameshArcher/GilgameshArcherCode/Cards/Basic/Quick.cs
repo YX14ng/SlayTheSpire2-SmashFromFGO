@@ -17,8 +17,11 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Basic;
 /// 6 de daño + 30 Estrellas de Crítico (up +3 daño / +20 Estrellas). Reusa <c>CritStarsPower</c> de
 /// FGOCore (auto-proc a 100 → Crítico Listo, igual que Mash). Números exactos §5.1.
 /// </summary>
-public sealed class Quick() : GilgameshCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class Quick() : GilgameshCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Quick;
+    public bool IsNoblePhantasm => false;
+
     private const int StarsGain = 30;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

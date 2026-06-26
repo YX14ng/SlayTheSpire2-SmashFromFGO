@@ -40,5 +40,11 @@
   "FGOCORE-GOLDEN_RULE_POWER.smartDescription": "#The NP Charge you gain this combat is increased by 50% per stack.",
   "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.title": "NP Resolved",
   "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.description": "#An NP card has resolved this turn.",
-  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.smartDescription": "#An NP card has resolved this turn."
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.smartDescription": "#An NP card has resolved this turn.",
+  "FGOCORE-COMMAND_BONUS_POWER.title": "Command Bonus",
+  "FGOCORE-COMMAND_BONUS_POWER.description": "#When you play a Buster/Arts/Quick command card, gain its type bonus (Strength, NP Charge or Critical Stars).",
+  "FGOCORE-COMMAND_BONUS_POWER.smartDescription": "#When you play a Buster/Arts/Quick command card, gain its type bonus (Strength, NP Charge or Critical Stars).",
+  "FGOCORE-COMMAND_BUSTER_STRENGTH_POWER.title": "Buster Boost",
+  "FGOCORE-COMMAND_BUSTER_STRENGTH_POWER.description": "#Your Attacks deal this much extra damage this turn.",
+  "FGOCORE-COMMAND_BUSTER_STRENGTH_POWER.smartDescription": "#Your Attacks deal this much extra damage this turn."
 }

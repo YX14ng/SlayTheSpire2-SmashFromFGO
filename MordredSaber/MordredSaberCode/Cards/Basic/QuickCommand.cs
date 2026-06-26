@@ -15,8 +15,11 @@ namespace MordredSaber.MordredSaberCode.Cards.Basic;
 /// es la munición del Crítico ×2 desde el turno 1. Marcada con <see cref="IQuickCard"/> para que la
 /// reliquia «Moto Roja de Trifas» (Riding B) le sume +10★. Basic (deck-only, no drafteable).
 /// </summary>
-public sealed class QuickCommand() : MordredCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), IQuickCard
+public sealed class QuickCommand() : MordredCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), IQuickCard, ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Quick;
+    public bool IsNoblePhantasm => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(5m, ValueProp.Move), new DynamicVar("Stars", 10)];
 

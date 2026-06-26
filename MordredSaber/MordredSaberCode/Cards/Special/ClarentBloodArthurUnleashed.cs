@@ -21,9 +21,13 @@ namespace MordredSaber.MordredSaberCode.Cards.Special;
 /// Escala +15%/nivel de NP (NpLevels.Scale, por golpe). El +2 de forma se aplica solo (la forma
 /// modifica todo Ataque potenciado). Patrón MemoryOfLondiniumUnleashed.
 /// </summary>
-public sealed class ClarentBloodArthurUnleashed() : MordredCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IMordredNpCard
+public sealed class ClarentBloodArthurUnleashed() : MordredCard(0, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IMordredNpCard, ICommandTyped
 {
     public const int ChargeCost = 100;
+
+    // TAREA D: tipo de NP del juego original (Clarent Blood Arthur = Buster) → bonus de ulti del sistema de tipos.
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
     public const int Hits = 5;
     private const int OverchargePer = 20;      // +1/golpe por cada 20 sobre el mínimo
 

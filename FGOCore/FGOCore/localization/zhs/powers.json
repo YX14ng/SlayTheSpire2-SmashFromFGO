@@ -40,5 +40,11 @@
   "FGOCORE-GOLDEN_RULE_POWER.smartDescription": "#本场战斗中你获得的NP值提升50%（每层）。",
   "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.title": "宝具已发动",
   "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.description": "#本回合已发动过一张宝具牌。",
-  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.smartDescription": "#本回合已发动过一张宝具牌。"
+  "FGOCORE-NP_RESOLVED_THIS_TURN_POWER.smartDescription": "#本回合已发动过一张宝具牌。",
+  "FGOCORE-COMMAND_BONUS_POWER.title": "指令加成",
+  "FGOCORE-COMMAND_BONUS_POWER.description": "#当你打出Buster/Arts/Quick指令牌时，获得其类型加成（力量、NP值或暴击星）。",
+  "FGOCORE-COMMAND_BONUS_POWER.smartDescription": "#当你打出Buster/Arts/Quick指令牌时，获得其类型加成（力量、NP值或暴击星）。",
+  "FGOCORE-COMMAND_BUSTER_STRENGTH_POWER.title": "Buster强化",
+  "FGOCORE-COMMAND_BUSTER_STRENGTH_POWER.description": "#本回合你的攻击造成等同于此值的额外伤害。",
+  "FGOCORE-COMMAND_BUSTER_STRENGTH_POWER.smartDescription": "#本回合你的攻击造成等同于此值的额外伤害。"
 }

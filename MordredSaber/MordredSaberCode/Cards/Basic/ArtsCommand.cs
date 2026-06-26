@@ -14,8 +14,11 @@ namespace MordredSaber.MordredSaberCode.Cards.Basic;
 /// medidor; aquí es el feeder de NP del deck base. Basic (deck-only, no drafteable). Patrón
 /// BalmungSwing/InsolentGuard (daño + NpCharge.Gain), con el NP de peso.
 /// </summary>
-public sealed class ArtsCommand() : MordredCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class ArtsCommand() : MordredCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Arts;
+    public bool IsNoblePhantasm => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(5m, ValueProp.Move), new DynamicVar("NpCharge", 10)];
 
