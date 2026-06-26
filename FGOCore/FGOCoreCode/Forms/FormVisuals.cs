@@ -8,38 +8,49 @@ namespace FGOCore.FGOCoreCode.Forms;
 /// Swaps a creature's combat sprite when it changes form. Each form declares its own
 /// SpriteFrames resource via <see cref="FormPower.FramesPath"/> (same animation names),
 /// so BaseLib's animation routing keeps working untouched.
-/// Frames resources are heavy (tens of MB of textures); loading them synchronously on
-/// first switch freezes the game for seconds. Character mods register every form's
-/// path once (<see cref="RegisterFrames"/>); all registered paths are requested on
-/// background threads at first use and pinned in a static cache, so the swap is instant.
+/// Frames resources are heavy (hundreds of MB of textures per character). Each character
+/// mod registers its OWN forms once (<see cref="RegisterFrames"/>, one call = one group);
+/// when a creature enters combat we background-load ONLY that character's group and pin it
+/// in a static cache, so the form swap is instant.
+/// <para>VRAM: do NOT preload every registered group. With N FGO character mods installed,
+/// preloading all groups would pin N×(hundreds of frames) into VRAM at once even if you
+/// only play one of them — that exhausted VRAM on normal GPUs (cards/intent failed to
+/// render → "just health bars", or a hard crash with 3 characters). We scope the preload
+/// to the group of the character actually fighting.</para>
 /// </summary>
 public static class FormVisuals
 {
-    private static readonly List<string> Registered = [];
+    // path -> the group (one character's full set of form paths) it belongs to.
+    private static readonly Dictionary<string, string[]> GroupOf = [];
     private static readonly Dictionary<string, SpriteFrames> Cache = [];
     private static readonly HashSet<string> Requested = [];
 
-    /// <summary>Register form frame resources for background preloading (call at mod init).</summary>
+    /// <summary>Register ONE character's form frame resources (call once at mod init).
+    /// Each call is treated as a group: only the group of the character entering combat
+    /// is preloaded, never every installed character's frames.</summary>
     public static void RegisterFrames(params string[] paths)
     {
-        foreach (var p in paths)
-        {
-            if (!Registered.Contains(p)) Registered.Add(p);
-        }
+        var group = paths.Where(p => !string.IsNullOrEmpty(p)).ToArray();
+        foreach (var p in group) GroupOf[p] = group;
     }
 
-    /// <summary>Kicks off background loading of every registered frames resource (idempotent).</summary>
-    public static void PreloadAll()
+    /// <summary>Background-load only the forms that belong to the same character as
+    /// <paramref name="path"/> (idempotent).</summary>
+    private static void PreloadGroup(string path)
     {
-        foreach (var path in Registered)
+        if (!GroupOf.TryGetValue(path, out var group)) group = [path];
+        foreach (var p in group)
         {
-            if (Cache.ContainsKey(path) || Requested.Contains(path)) continue;
-            if (ResourceLoader.LoadThreadedRequest(path, "SpriteFrames", useSubThreads: true) == Error.Ok)
+            if (Cache.ContainsKey(p) || Requested.Contains(p)) continue;
+            if (ResourceLoader.LoadThreadedRequest(p, "SpriteFrames", useSubThreads: true) == Error.Ok)
             {
-                Requested.Add(path);
+                Requested.Add(p);
             }
         }
     }
+
+    [System.Obsolete("Preloading is now scoped per-character inside Apply; this is a no-op kept for binary compatibility.")]
+    public static void PreloadAll() { }
 
     private static SpriteFrames? GetFrames(string path)
     {
@@ -60,10 +71,10 @@ public static class FormVisuals
 
     public static void Apply(Creature creature, FormPower form)
     {
-        // First call per session warms every registered form in the background.
-        PreloadAll();
-
         if (form.FramesPath == null) return;
+
+        // Warm ONLY this character's forms in the background (not every installed mod's).
+        PreloadGroup(form.FramesPath);
 
         var node = NCombatRoom.Instance?.GetCreatureNode(creature);
         if (node?.FindChild("Sprite", recursive: true, owned: false) is not AnimatedSprite2D sprite) return;
