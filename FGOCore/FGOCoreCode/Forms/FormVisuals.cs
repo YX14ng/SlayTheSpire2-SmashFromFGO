@@ -24,6 +24,13 @@ public static class FormVisuals
     private static readonly Dictionary<string, string[]> GroupOf = [];
     private static readonly Dictionary<string, SpriteFrames> Cache = [];
     private static readonly HashSet<string> Requested = [];
+    // Paths whose background load failed once: never re-requested (a broken FramesPath would
+    // otherwise re-request every frame → hundreds of "load failed" log lines per form switch).
+    private static readonly HashSet<string> Failed = [];
+
+    // Per-sprite generation stamp (Godot meta): a later Apply supersedes earlier ones so a slow
+    // load can't overwrite the sprite with a stale form. Meta lives/dies with the node (no leak).
+    private const string GenMeta = "fgo_form_gen";
 
     /// <summary>Register ONE character's form frame resources (call once at mod init).
     /// Each call is treated as a group: only the group of the character entering combat
@@ -41,7 +48,7 @@ public static class FormVisuals
         if (!GroupOf.TryGetValue(path, out var group)) group = [path];
         foreach (var p in group)
         {
-            if (Cache.ContainsKey(p) || Requested.Contains(p)) continue;
+            if (Cache.ContainsKey(p) || Requested.Contains(p) || Failed.Contains(p)) continue;
             if (ResourceLoader.LoadThreadedRequest(p, "SpriteFrames", useSubThreads: true) == Error.Ok)
             {
                 Requested.Add(p);
@@ -62,6 +69,7 @@ public static class FormVisuals
     private static SpriteFrames? GetFrames(string path)
     {
         if (Cache.TryGetValue(path, out var cached)) return cached;
+        if (Failed.Contains(path)) return null; // known-broken path: fail silently & cheaply, no re-request.
 
         if (!Requested.Contains(path))
         {
@@ -77,8 +85,10 @@ public static class FormVisuals
         {
             if (status is ResourceLoader.ThreadLoadStatus.Failed or ResourceLoader.ThreadLoadStatus.InvalidResource)
             {
+                // Cache the failure: log ONCE and stop re-requesting it forever after.
                 Requested.Remove(path);
-                MainFile.Logger.Error($"FormVisuals: background load failed for {path}");
+                Failed.Add(path);
+                MainFile.Logger.Error($"FormVisuals: background load failed for {path} (won't retry)");
             }
             return null; // still loading → caller retries next frame, never blocks the sim thread.
         }
@@ -101,7 +111,11 @@ public static class FormVisuals
         var node = NCombatRoom.Instance?.GetCreatureNode(creature);
         if (node?.FindChild("Sprite", recursive: true, owned: false) is not AnimatedSprite2D sprite) return;
 
-        ApplyWhenReady(sprite, form.FramesPath);
+        // Stamp a new generation: a later Apply on this sprite supersedes this one, so an earlier
+        // slow load can't resolve last and overwrite the sprite with the previous form (race).
+        var gen = (sprite.HasMeta(GenMeta) ? sprite.GetMeta(GenMeta).AsInt32() : 0) + 1;
+        sprite.SetMeta(GenMeta, gen);
+        ApplyWhenReady(sprite, form.FramesPath, gen);
     }
 
     /// <summary>
@@ -109,24 +123,28 @@ public static class FormVisuals
     /// signal instead of ever blocking. Usually resolves on the first poll (group preloaded at
     /// combat start); the loop is the fallback for a switch on turn 1 before the load completes.
     /// </summary>
-    private static async void ApplyWhenReady(AnimatedSprite2D sprite, string path)
+    private static async void ApplyWhenReady(AnimatedSprite2D sprite, string path, int gen)
     {
         try
         {
             var frames = GetFrames(path);
             if (frames == null)
             {
+                if (Failed.Contains(path)) return;
                 var tree = sprite.GetTree();
-                // Bound the wait (~20s @60fps) so a failed/never-finishing load can't spin forever.
+                // Bound the wait (~20s @60fps) so a never-finishing load can't spin forever.
                 for (var i = 0; i < 1200 && frames == null; i++)
                 {
                     if (tree == null || !GodotObject.IsInstanceValid(sprite)) return;
+                    if (Failed.Contains(path)) return; // load failed → stop waiting.
+                    if (sprite.GetMeta(GenMeta, 0).AsInt32() != gen) return; // superseded by a newer Apply.
                     await tree.ToSignal(tree, SceneTree.SignalName.ProcessFrame);
                     frames = GetFrames(path);
                 }
             }
 
             if (frames == null || !GodotObject.IsInstanceValid(sprite)) return;
+            if (sprite.GetMeta(GenMeta, 0).AsInt32() != gen) return; // a newer Apply won; don't stomp it.
             if (sprite.SpriteFrames == frames) return;
 
             sprite.SpriteFrames = frames;

@@ -8,8 +8,9 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MashShielder.MashShielderCode.Cards.Special;
 
 /// <summary>
-/// The ult manifested at 100 NP while in SHIELDER form — Mash's true Noble Phantasm
-/// from FGO: LORD CHALDEAS, the wall that protects everything. Pure Bulwark Block.
+/// The ult manifested at 100 NP while in PALADIN form (the fully-realized stance) —
+/// Mash's true Noble Phantasm from FGO: LORD CHALDEAS (罗德·迦勒底亚斯), the wall that
+/// protects everything. Pure Bulwark Block.
 /// </summary>
 public sealed class LordChaldeasUnleashed() : MashShielderCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IMashNpCard
 {

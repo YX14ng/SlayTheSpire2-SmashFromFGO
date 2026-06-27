@@ -46,6 +46,11 @@ public partial class MainFile : Node
     private static async Task TryManifestGenesis(Creature creature)
     {
         if (creature.Player?.Character is not Character.Tiamat) return;
+        // Guard anti-recursión: si la ventana Bestia ya está activa, una recarga que vuelva a cruzar
+        // 100 DENTRO de la ventana no debe re-manifestar Nammu (re-mete las cartas Bestia, re-cleansea,
+        // devuelve recursos → ventana casi infinita). GenesisSpentPower no alcanza: se remueve apenas
+        // Nammu consume el medidor (GaugeDropped → RearmGenesis), dejando la puerta abierta.
+        if (creature.HasPower<TiamatBeastWindowPower>()) return;
         if (creature.HasPower<GenesisSpentPower>()) return;
         if (creature.CombatState == null || creature.Player == null) return;
 

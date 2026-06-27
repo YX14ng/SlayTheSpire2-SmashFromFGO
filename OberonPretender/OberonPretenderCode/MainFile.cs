@@ -44,6 +44,7 @@ public partial class MainFile : Node
     {
         if (creature.Player?.Character is not Character.Oberon) return;
         if (creature.HasPower<UltManifestedPower>()) return;
+        if (creature.CombatState == null || creature.Player == null) return;
 
         // Marca el pico (se re-arma al bajar < 100). Idempotente por pico.
         await PowerCmd.Apply<UltManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);

@@ -46,16 +46,46 @@ public static class NpCharge
 
     public static bool IsFull(Creature creature) => Current(creature) >= Max(creature);
 
+    // --- Guard de re-entrancia COMPARTIDO entre amplificadores de NP (GoldenRule, FormalCraft, ...) ---
+    // Cada amplificador suma su extra con PowerCmd.ModifyAmount, que re-dispara AfterPowerAmountChanged en
+    // TODOS los powers del dueño. Un guard per-INSTANCIA solo evita la re-entrada de sí mismo; este guard
+    // per-CREATURE evita que un amplificador amplifique el bonus de OTRO (compounding cruzado). Estático
+    // por-cliente, keyeado por Creature (no bloquea entre criaturas distintas en MP).
+    private static readonly HashSet<Creature> AmplifyingCreatures = [];
+
+    /// <summary>True mientras algún amplificador de NP está aplicando su extra sobre esta criatura.
+    /// Los amplificadores deben checkearlo al entrar y saltar si es true.</summary>
+    public static bool IsAmplifying(Creature creature) => AmplifyingCreatures.Contains(creature);
+
+    /// <summary>Aplica un extra de Carga NP marcando el guard compartido, de modo que ningún otro
+    /// amplificador reaccione a este ModifyAmount. Usalo en vez de un guard <c>_amplifying</c> local.</summary>
+    public static async Task Amplify(PlayerChoiceContext choiceContext, NpChargePower np, int extra, Creature owner, CardModel? source)
+    {
+        AmplifyingCreatures.Add(owner);
+        try
+        {
+            await PowerCmd.ModifyAmount(choiceContext, np, extra, owner, source);
+        }
+        finally
+        {
+            AmplifyingCreatures.Remove(owner);
+        }
+    }
+
     /// <summary>Gain charge, capped at 300. Fires <see cref="GaugeFilled"/> when at or
     /// above the manifest threshold afterwards.</summary>
     public static async Task Gain(Creature creature, int amount, CardModel? source)
     {
+        var wasBelow = Current(creature) < NpChargePower.ManifestThreshold;
         var toAdd = Math.Min(amount, Max(creature) - Current(creature));
         if (toAdd > 0)
         {
             await PowerCmd.Apply<NpChargePower>(new BlockingPlayerChoiceContext(), creature, toAdd, creature, source);
         }
-        if (Current(creature) >= NpChargePower.ManifestThreshold && GaugeFilled != null)
+        // GaugeFilled SOLO en el CRUCE real del umbral (below -> >=100): no re-invocar los handlers de
+        // los 9 personajes en cada gain con el medidor ya lleno (son no-op por sus markers, pero es
+        // trabajo desperdiciado en camino caliente y un footgun para handlers futuros sin marker).
+        if (toAdd > 0 && wasBelow && Current(creature) >= NpChargePower.ManifestThreshold && GaugeFilled != null)
         {
             // Invoke() de un delegado multicast solo DEVUELVE la Task del último handler:
             // los demás corrían sin await (fire-and-forget). Esperamos todos en orden.
@@ -158,6 +188,7 @@ public static class NpCharge
     {
         var power = creature.GetPower<NpChargePower>();
         if (power == null || power.Amount < amount) return false;
+        var wasAtOrAbove = Current(creature) >= NpChargePower.ManifestThreshold;
 
         if (power.Amount == amount)
         {
@@ -168,7 +199,8 @@ public static class NpCharge
             await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -amount, creature, source);
         }
 
-        if (Current(creature) < NpChargePower.ManifestThreshold && GaugeDropped != null)
+        // GaugeDropped SOLO en el CRUCE real (>=100 → below): no re-disparar si ya estabas debajo.
+        if (wasAtOrAbove && Current(creature) < NpChargePower.ManifestThreshold && GaugeDropped != null)
         {
             foreach (var handler in GaugeDropped.GetInvocationList().Cast<Func<Creature, Task>>())
             {

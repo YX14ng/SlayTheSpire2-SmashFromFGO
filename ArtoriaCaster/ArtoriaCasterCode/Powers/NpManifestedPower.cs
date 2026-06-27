@@ -3,11 +3,14 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 namespace ArtoriaCaster.ArtoriaCasterCode.Powers;
 
 /// <summary>
-/// Marker: the NP gauge crossed 100 and the "Around Caliburn" window already opened
-/// THIS COMBAT. It is NOT removed when the gauge drops below 100 — the NP cards always
-/// drain the gauge, so re-charging the same combat must NOT re-grant the support package
-/// (estrellas + Anti-Purga + energía + robo). Combat-scoped (cleared between combats),
-/// so the window opens exactly once per combat.
+/// Marker for the CURRENT NP peak: the gauge is at/above 100 and "Around Caliburn:
+/// Desatado" has already been manifested for THIS peak. Applied by
+/// <c>MainFile.TryManifestUlt</c> (subscribed to <c>NpCharge.GaugeFilled</c>) so a single
+/// peak only manifests the ult ONCE — re-charging without dropping below 100 does not
+/// duplicate it. Removed by <c>MainFile.DisarmManifest</c> (subscribed to
+/// <c>NpCharge.GaugeDropped</c>) when the gauge falls below 100, which RE-ARMS the trigger:
+/// the next time the gauge crosses 100 it is a new peak and the ult manifests again.
+/// So the ult manifests once per PEAK, not once per combat.
 /// </summary>
 public sealed class NpManifestedPower : ArtoriaPower
 {

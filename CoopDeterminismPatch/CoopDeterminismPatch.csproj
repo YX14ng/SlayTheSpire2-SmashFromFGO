@@ -31,8 +31,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!-- Debe coincidir con la BaseLib instalada (Ultraml depende de ella). -->
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.2.1" PrivateAssets="All"/>
+        <!-- Debe coincidir EXACTO con la BaseLib instalada (3.3.0 / v0.107.1), igual que FGOCore y los
+             9 personajes. Con 3.2.1 el mod no carga y su Harmony Prefix (el fix de desync de co-op de
+             Ultraman) desaparece en silencio. -->
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.3.0" PrivateAssets="All"/>
         <!-- Para acceder a los miembros privados estaticos de Ultraman.Lineage. -->
         <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="All"/>
         <Publicize Include="Ultraman" />

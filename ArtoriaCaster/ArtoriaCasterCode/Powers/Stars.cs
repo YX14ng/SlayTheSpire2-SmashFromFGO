@@ -53,15 +53,24 @@ public static class Stars
         return Of(creature) >= DiscountedCost(creature, cost);
     }
 
-    /// <summary>Consume the stars for a critical. Call only after <see cref="CanCrit"/>.</summary>
-    public static async Task ConsumeForCrit(Creature creature, int cost, CardModel? source)
+    /// <summary>Consume the stars for a critical, applying the discount to <paramref name="cost"/>.
+    /// Call only after <see cref="CanCrit"/>. For a pre-discounted amount use
+    /// <see cref="ConsumeExactStars"/> (do NOT pass a discounted value here — it would discount twice).</summary>
+    public static Task ConsumeForCrit(Creature creature, int cost, CardModel? source)
+        => ConsumeExactStars(creature, DiscountedCost(creature, cost), source);
+
+    /// <summary>Consume EXACTLY <paramref name="exactStars"/> (no discount re-applied) and notify
+    /// <see cref="ICritListener"/>s with that same count. Use when the spend was already computed in
+    /// discounted terms (e.g. <see cref="ArtoriaCard.ResolveCritDamageScaling"/>) so the discount is
+    /// never applied twice.</summary>
+    public static async Task ConsumeExactStars(Creature creature, int exactStars, CardModel? source)
     {
-        var spent = DiscountedCost(creature, cost);
+        if (exactStars <= 0) return;
         var power = creature.GetPowerInstances<CriticalStarsPower>().FirstOrDefault();
         if (power == null) return;
-        await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -spent, creature, source, silent: true);
+        await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -exactStars, creature, source, silent: true);
         // Avisa a los listeners (powers primero, luego reliquias) en orden — Lupa, Magia Única.
-        await Listeners.ForEachListener<ICritListener>(creature, listener => listener.AfterCritConsumed(spent));
+        await Listeners.ForEachListener<ICritListener>(creature, listener => listener.AfterCritConsumed(exactStars));
     }
 }
 

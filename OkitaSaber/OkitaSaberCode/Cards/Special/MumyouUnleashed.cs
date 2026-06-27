@@ -58,7 +58,7 @@ public sealed class MumyouUnleashed() : OkitaCard(0, CardType.Attack, CardRarity
         HoverTipFactory.FromPower<AlientoPower>()
     ];
 
-    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost);
+    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost, this);
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 

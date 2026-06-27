@@ -32,6 +32,11 @@ public abstract class FormPower : FGOCorePower
     public static int GetBlockedHits(Creature creature) =>
         creature.GetPowerInstances<FormPower>().FirstOrDefault()?.BlockedHitsThisTurn ?? 0;
 
+    /// <summary>Carry the per-turn blocked-hit count onto a freshly-applied form so it survives a
+    /// mid-turn form switch (the count is per-turn, not per-form-instance). Called by
+    /// <see cref="FormSwitch.Enter"/> right after the new form is applied.</summary>
+    public void SeedBlockedHits(int hits) => BlockedHitsThisTurn = hits;
+
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player)

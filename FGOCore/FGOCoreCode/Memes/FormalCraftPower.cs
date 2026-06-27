@@ -11,8 +11,8 @@ namespace FGOCore.FGOCoreCode.Memes;
 /// <summary>
 /// Maquinaria Mística / Formal Craft (魔术礼装) — versión TURNO de la Regla de Oro: la Carga
 /// NP que ganás ESTE turno se incrementa en <see cref="Ratio"/> (+30%). Espejo EXACTO de
-/// <see cref="GoldenRulePower"/> (mismo guard <c>_amplifying</c>, mismo <c>ModifyAmount</c>
-/// directo que NO re-dispara GaugeFilled ni re-amplifica, mismo respeto del tope dinámico),
+/// <see cref="GoldenRulePower"/> (guard COMPARTIDO <see cref="NpCharge.IsAmplifying"/> vía
+/// <see cref="NpCharge.Amplify"/>, mismo respeto del tope dinámico — no se compoundean cruzado),
 /// salvo que se auto-remueve al final de tu turno (patrón <c>CommandBusterStrengthPower</c>).
 /// Single: no apila el ratio (es un buff de turno, no un contador de combate).
 /// Personal: no escala en multijugador.
@@ -27,12 +27,12 @@ public sealed class FormalCraftPower : FGOCorePower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private bool _amplifying;
-
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
-        if (_amplifying) return;
+        // Guard COMPARTIDO: si OTRO amplificador (GoldenRule) ya está amplificando sobre esta criatura,
+        // no amplificar su bonus (evita el compounding cruzado 礼装 ↔ Regla de Oro).
+        if (NpCharge.IsAmplifying(Owner)) return;
         if (power is not NpChargePower np || power.Owner != Owner) return;
         if (amount <= 0m) return;
 
@@ -40,10 +40,8 @@ public sealed class FormalCraftPower : FGOCorePower
         extra = System.Math.Min(extra, NpCharge.Max(Owner) - (int)np.Amount);
         if (extra <= 0) return;
 
-        _amplifying = true;
         Flash();
-        await PowerCmd.ModifyAmount(choiceContext, np, extra, Owner, cardSource);
-        _amplifying = false;
+        await NpCharge.Amplify(choiceContext, np, extra, Owner, cardSource);
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

@@ -43,7 +43,10 @@ public sealed class ThousandThrustsPower : OkitaPower
         _attacksThisTurn++;
         if (_attacksThisTurn != ThrustNumber) return;
         Flash();
-        await CritStars.Gain(Owner, StarsGain, null);
-        await NpCharge.Gain(Owner, NpGainValue, null);
+        for (var i = 0; i < Amount; i++)
+        {
+            await CritStars.Gain(Owner, StarsGain, null);
+            await NpCharge.Gain(Owner, NpGainValue, null);
+        }
     }
 }

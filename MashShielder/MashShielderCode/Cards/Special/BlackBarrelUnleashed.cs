@@ -8,9 +8,9 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MashShielder.MashShielderCode.Cards.Special;
 
 /// <summary>
-/// The ult manifested at 100 NP while in ORTINAX form — the Black Barrel, the
-/// conceptual cannon of the Atlas Institute that kills the immortal: a massive
-/// unblockable shot that strips ALL the target's buffs.
+/// The ult manifested at 100 NP while in ORTINAX form (the Ortenaus armor + cannon
+/// stance) — BLACK BARREL (黑桶), the conceptual cannon of the Atlas Institute that
+/// kills the immortal: a massive unblockable shot that strips ALL the target's buffs.
 /// </summary>
 public sealed class BlackBarrelUnleashed() : MashShielderCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), IMashNpCard
 {

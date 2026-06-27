@@ -9,9 +9,10 @@ namespace FGOCore.FGOCoreCode.Np;
 /// <summary>
 /// Regla de Oro / Avaricia Dorada (黄金律) — amplifies EVERY NP-charge gain this combat by
 /// <see cref="Ratio"/> per stack (+50%). Generic: reusable by any servant with an
-/// NP-gain-up. Mirrors <c>CritStarsPower</c>'s instance <c>_amplifying</c> guard (NOT a
-/// static field on the engine): it reacts to the owner's own <see cref="NpChargePower"/>
-/// rising and adds the extra via <c>PowerCmd.ModifyAmount</c> DIRECTLY — not through
+/// NP-gain-up. Uses the SHARED per-creature amplify guard (<see cref="NpCharge.IsAmplifying"/> /
+/// <see cref="NpCharge.Amplify"/>) so it does NOT compound with other NP amplifiers like
+/// <c>FormalCraftPower</c>: it reacts to the owner's own <see cref="NpChargePower"/> rising and
+/// adds the extra via <c>PowerCmd.ModifyAmount</c> DIRECTLY — not through
 /// <see cref="NpCharge.Gain"/> — so it neither re-fires GaugeFilled nor re-amplifies.
 ///
 /// The <c>amount</c> argument is the DELTA of the change (verified: PowerCmd passes the
@@ -29,12 +30,12 @@ public sealed class GoldenRulePower : FGOCorePower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private bool _amplifying;
-
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
-        if (_amplifying) return;
+        // Guard COMPARTIDO entre amplificadores de NP (ver NpCharge.IsAmplifying): un guard per-instancia
+        // no evitaría que FormalCraft amplifique ESTE extra (y viceversa) → compounding cruzado.
+        if (NpCharge.IsAmplifying(Owner)) return;
         if (power is not NpChargePower np || power.Owner != Owner) return;
         if (amount <= 0m) return;
 
@@ -43,9 +44,7 @@ public sealed class GoldenRulePower : FGOCorePower
         extra = System.Math.Min(extra, NpCharge.Max(Owner) - (int)np.Amount);
         if (extra <= 0) return;
 
-        _amplifying = true;
         Flash();
-        await PowerCmd.ModifyAmount(choiceContext, np, extra, Owner, cardSource);
-        _amplifying = false;
+        await NpCharge.Amplify(choiceContext, np, extra, Owner, cardSource);
     }
 }

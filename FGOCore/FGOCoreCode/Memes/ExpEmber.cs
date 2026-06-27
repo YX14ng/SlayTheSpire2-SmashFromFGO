@@ -14,15 +14,19 @@ public sealed class ExpEmber() : MemeCard(1, CardType.Skill, CardRarity.Uncommon
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        // IsUpgradable (no !IsUpgraded): excluye cartas con MaxUpgradeLevel==0 (no-mejorables) que
+        // pasarian el filtro de !IsUpgraded y se romperian al empujarlas por encima del tope.
         var candidates = CardPile.GetCards(Owner, PileType.Hand)
-            .Where(c => c != this && !c.IsUpgraded)
+            .Where(c => c != this && c.IsUpgradable)
             .ToList();
         var rng = Owner.RunState.Rng.CombatCardGeneration;
         for (var i = 0; i < DynamicVars.Cards.IntValue && candidates.Count > 0; i++)
         {
             var pick = candidates[rng.NextInt(candidates.Count)];
             candidates.Remove(pick);
-            pick.UpgradeInternal();
+            // CardCmd.Upgrade (no UpgradeInternal crudo): corre Internal+Finalize (limpia el highlight
+            // verde "recien mejorada") + dispara el preview visual, igual que vanilla Armaments.
+            CardCmd.Upgrade(pick);
         }
         return Task.CompletedTask;
     }

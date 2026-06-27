@@ -74,13 +74,16 @@ public abstract class ArtoriaCard(int cost, CardType type, CardRarity rarity, Ta
         var damage = DynamicVars.Damage.BaseValue;
         if (!Stars.CanCrit(Owner.Creature, baseCost)) return damage;
 
-        // Cuántas ★ extra (por encima del costo descontado base) podemos pagar, capeado a maxCost.
+        // Todo en términos YA descontados: el piso es DiscountedCost(baseCost) y el techo es
+        // DiscountedCost(maxCost). Las ★ extra que escalan el daño = lo que se pueda pagar por
+        // encima del piso, capeado al techo. Se gasta UNA sola vez (sin re-descontar) para que el
+        // descuento (Instinto de la Espada) no beneficie dos veces (bug del doble descuento).
         var minSpend = Stars.DiscountedCost(Owner.Creature, baseCost);
-        var extraAffordable = Math.Min(maxCost - baseCost, Stars.Of(Owner.Creature) - minSpend);
+        var maxSpend = Stars.DiscountedCost(Owner.Creature, maxCost);
+        var extraAffordable = Math.Min(maxSpend - minSpend, Stars.Of(Owner.Creature) - minSpend);
         if (extraAffordable < 0) extraAffordable = 0;
-        var spend = baseCost + extraAffordable;
 
-        await Stars.ConsumeForCrit(Owner.Creature, spend, this);
+        await Stars.ConsumeExactStars(Owner.Creature, minSpend + extraAffordable, this);
         damage = DynamicVars["Crit"].BaseValue
                  + extraAffordable * DynamicVars["PerStar"].BaseValue
                  + Stars.CritBonus(Owner.Creature);

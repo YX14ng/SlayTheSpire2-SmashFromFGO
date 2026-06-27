@@ -11,8 +11,10 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MashShielder.MashShielderCode.Cards.Special;
 
 /// <summary>
-/// The ult: generated for free (into hand, cost 0) the first time the NP gauge
-/// reaches 100 in a combat. Playing it consumes the full gauge.
+/// The ult manifested at 100 NP while in SHIELDER form (the default stance) — LORD
+/// CAMELOT (理想之城), the iconic Noble Phantasm of Mash's shield. Generated for free
+/// (into hand, cost 0) the first time the NP gauge reaches 100 in a combat. Playing
+/// it consumes the full gauge.
 /// </summary>
 public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IMashNpCard, ICommandTyped
 {

@@ -82,7 +82,7 @@ public sealed class VortigernPower : OberonFormPower, ISleepIgnorer
         {
             await CreatureCmd.Damage(choiceContext, Owner, bleed * DebtPower.HpPerUnpaid,
                 ValueProp.Unblockable | ValueProp.Unpowered, null, null);
-            await DebtPower.Add(Owner, bleed, Owner, null);
+            await DebtPower.Add(Owner, 1, Owner, null);
         }
     }
 }

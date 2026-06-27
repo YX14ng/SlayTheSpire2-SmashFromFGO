@@ -154,7 +154,7 @@ public sealed class DebtPower : OberonPower, IResourcePower
             }
 
             // 3) Interes: cada punto impago gana +1 al turno siguiente (la bola de nieve).
-            if (Owner.IsAlive) await Add(Owner, unpaid, Owner, null);
+            if (Owner.IsAlive) await Add(Owner, 1, Owner, null);
         }
     }
 

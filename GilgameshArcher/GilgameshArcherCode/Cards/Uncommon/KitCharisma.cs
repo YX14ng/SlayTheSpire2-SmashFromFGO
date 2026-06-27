@@ -27,7 +27,7 @@ public sealed class KitCharisma() : GilgameshCard(2, CardType.Skill, CardRarity.
         await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
         // Co-op (DESIGN-GILGAMESH §6 «buffer secundario»): Carisma le da 1 de Fuerza a CADA aliado.
         // En 1 jugador, PlayerCreatures es solo el Owner -> el foreach queda vacío (fiel a 1 jugador).
-        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
+        foreach (var ally in Owner.Creature.CombatState!.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
             await PowerCmd.Apply<StrengthPower>(choiceContext, ally, 1m, Owner.Creature, this);
     }
 

@@ -1,4 +1,6 @@
+using System.Linq;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -31,7 +33,14 @@ public sealed class ProdigySensePower : OkitaPower
         await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
         if (amount <= 0m || power is not CritReadyPower || power.Owner != Owner || Owner.Player == null) return;
         Flash();
-        await NpCharge.Gain(Owner, NpGain, null);
-        await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), Draw, Owner.Player);
+        for (var i = 0; i < Amount; i++)
+        {
+            await NpCharge.Gain(Owner, NpGain, null);
+            // Capeá el robo al mazo restante para no reshufflear mid-play (saltá si está vacío).
+            var inDeck = Owner.Player.PlayerCombatState.AllPiles.FirstOrDefault(p => p.Type == PileType.Draw)?.Cards.Count ?? 0;
+            var toDraw = Math.Min(Draw, inDeck);
+            if (toDraw > 0)
+                await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), toDraw, Owner.Player);
+        }
     }
 }
