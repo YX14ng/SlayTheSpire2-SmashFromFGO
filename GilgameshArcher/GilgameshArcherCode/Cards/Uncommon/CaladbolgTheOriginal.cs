@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace GilgameshArcher.GilgameshArcherCode.Cards.Uncommon;
 
-/// <summary>Caladbolg, el Original (始源·光剑) — AoE con feed de Estrellas. 2⚡ At: 11 de daño a TODOS
+/// <summary>Caladbolg, el Original (始源·卡拉德波尔格) — AoE con feed de Estrellas. 2⚡ At: 11 de daño a TODOS
 /// + 10 Estrellas (up 14). El up sube SOLO el daño (las Estrellas quedan en su denominación).</summary>
 public sealed class CaladbolgTheOriginal() : GilgameshCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
 {

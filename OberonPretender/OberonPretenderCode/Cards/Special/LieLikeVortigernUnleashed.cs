@@ -11,7 +11,7 @@ using OberonPretender.OberonPretenderCode.Powers;
 namespace OberonPretender.OberonPretenderCode.Cards.Special;
 
 /// <summary>
-/// «Lie Like Vortigern: Desatado» (谎言如沃提庚) — la Desatada que se auto-manifiesta a 100 NP en
+/// «Lie Like Vortigern: Desatado» (谎言如伏提庚) — la Desatada que se auto-manifiesta a 100 NP en
 /// VORTIGERN (handler GaugeFilled). Ataque NP 0⚡ Exhaust (DESIGN-OBERON §6.5):
 ///   35 de daño a TODOS; consume TODA tu Deuda: +<see cref="DamagePerDebt"/> de daño por punto
 ///   consumido (ignora Dormido sin despertar — VortigernPower es ISleepIgnorer). SOBRECARGA:

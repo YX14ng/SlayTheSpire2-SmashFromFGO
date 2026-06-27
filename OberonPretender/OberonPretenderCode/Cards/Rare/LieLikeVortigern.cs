@@ -11,7 +11,7 @@ using OberonPretender.OberonPretenderCode.Powers.Forms;
 namespace OberonPretender.OberonPretenderCode.Cards.Rare;
 
 /// <summary>
-/// Lie Like Vortigern (谎言如沃提庚 / Lie Like Vortigern) — DESIGN-OBERON §6.4, el NP verdadero solo-lore
+/// Lie Like Vortigern (谎言如伏提庚 / Lie Like Vortigern) — DESIGN-OBERON §6.4, el NP verdadero solo-lore
 /// como carta-clímax. 2⚡ Poder · Exhaust: consumí TODA tu Deuda — 3 de daño a TODOS por punto consumido;
 /// entrás en VORTIGERN (permanente). Patrón Coronación de Invierno (FormSwitch.Enter con source = la
 /// carta → dispara los listeners de cambio de forma; el AoE se reparte iterando los enemigos vivos). El

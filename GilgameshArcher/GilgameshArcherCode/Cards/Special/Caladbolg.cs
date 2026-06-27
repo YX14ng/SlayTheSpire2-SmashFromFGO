@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace GilgameshArcher.GilgameshArcherCode.Cards.Special;
 
 /// <summary>
-/// Caladbolg, la Espada Espiral / 螺旋剑·光剑 (DESIGN-GILGAMESH §5.5, Arma del Tesoro #2) — el original
+/// Caladbolg, la Espada Espiral / 螺旋剑·卡拉德波尔格 (DESIGN-GILGAMESH §5.5, Arma del Tesoro #2) — el original
 /// perforante. Token 0⚡ Exhaust generado (<c>CardRarity.Event</c>). 5 de daño que IGNORA el Bloqueo
 /// (Unblockable). El builder fluido no expone Unblockable, así que el golpe va por
 /// <c>CreatureCmd.Damage</c> con la ValueProp explícita (patrón ConceptualRound / MumyouUnleashed).

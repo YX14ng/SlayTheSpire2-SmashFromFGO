@@ -67,7 +67,7 @@
   "MASHSHIELDER-CYLINDER_DISCHARGE.title": "气缸放电",
   "MASHSHIELDER-CYLINDER_DISCHARGE.description": "#消耗你的全部*宝具值*。每消耗10点，造成!D!点伤害。",
   "MASHSHIELDER-SUPPRESSING_SHOT.title": "压制射击",
-  "MASHSHIELDER-SUPPRESSING_SHOT.description": "#造成!D!点*黑桶*伤害。施加!Weak!层*虚弱*。",
+  "MASHSHIELDER-SUPPRESSING_SHOT.description": "#造成!D!点*黑桶*伤害：无视格挡并移除目标的一个增益。施加!Weak!层*虚弱*。",
   "MASHSHIELDER-SWITCH_ORTINAX.title": "换装：奥特纳斯！",
   "MASHSHIELDER-SWITCH_ORTINAX.description": "#进入*奥特纳斯*形态。获得!B!点格挡。",
   "MASHSHIELDER-SWITCH_SHIELDER.title": "换装：盾兵！",
@@ -188,6 +188,6 @@
   "MASHSHIELDER-COMBAT_ANALYSIS.description": "#在你的回合开始时：获得!CombatAnalysis!颗*暴击星*。每当你获得*暴击*时：抽1张牌。",
   "MASHSHIELDER-FORM_DRILL.title": "换装演习",
   "MASHSHIELDER-FORM_DRILL.description": "#变换至另一形态。处于*圣骑士*形态时：改为获得!NpCharge!点*宝具值*。+抽!C!张牌。+",
-  "MASHSHIELDER-LORD_CAMELOT_CHARGE.title": "兰斯洛特之冲撞",
+  "MASHSHIELDER-LORD_CAMELOT_CHARGE.title": "罗德·卡美洛之冲撞",
   "MASHSHIELDER-LORD_CAMELOT_CHARGE.description": "#造成等同于你当前*格挡*的伤害。不受*力量*加成。每回合一次。"
 }

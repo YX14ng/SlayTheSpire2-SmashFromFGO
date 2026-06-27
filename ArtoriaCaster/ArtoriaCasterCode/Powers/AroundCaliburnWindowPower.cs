@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models;
 namespace ArtoriaCaster.ArtoriaCasterCode.Powers;
 
 /// <summary>
-/// Around Caliburn (誓约胜利之剑) — la VENTANA del NP de Artoria (modelo de NP nuevo,
+/// Around Caliburn (环抱着你的希望之星) — la VENTANA del NP de Artoria (modelo de NP nuevo,
 /// 2026-06-12). Se abre al cruzar 100 de Carga NP EN VEZ de generar una ulti gratis
 /// (que eclipsaba a las cartas NP drafteadas — feedback del usuario). Este turno tus
 /// Ataques pueden CRITICAR en CUALQUIER forma (incluso Caster): cobrás las Estrellas

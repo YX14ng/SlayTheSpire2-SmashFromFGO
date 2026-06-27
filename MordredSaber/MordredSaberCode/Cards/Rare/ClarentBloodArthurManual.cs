@@ -11,7 +11,7 @@ using MordredSaber.MordredSaberCode.Powers.Forms;
 namespace MordredSaber.MordredSaberCode.Cards.Rare;
 
 /// <summary>
-/// Clarent Blood Arthur (manual) (克拉伦特·血染亚瑟·手动) — DESIGN-MORDRED §5.3. 2⚡ At NP: el NP como
+/// Clarent Blood Arthur (manual) (克拉伦特·血染骑士道·手动) — DESIGN-MORDRED §5.3. 2⚡ At NP: el NP como
 /// carta drafteable. Mín 70, consume TODA la carga: 5 de daño ×5 a TODOS; vs Élites/Jefes +2 por golpe;
 /// SOBRECARGA +1/golpe por cada 20 sobre el mínimo; después +10 NP (up: 6×5). Glow al poder pagarse.
 /// Nicho: disparar la ulti ANTES de cruzar el auto-manifestado a 100 (a 70 ya pega). Como la token

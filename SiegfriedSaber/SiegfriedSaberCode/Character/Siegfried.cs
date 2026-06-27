@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils.NodeFactories;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
@@ -46,6 +47,15 @@ public class Siegfried : PlaceholderCharacterModel
     // Visuales: placeholder por ahora (el modelo de batalla 100800 espera el export GUI del bundle;
     // DESIGN-SIEGFRIED §11). El render directo (modelo único) vendrá tras el export.
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/siegfried_visuals.tscn";
+
+    // Robustez anti-conflicto: construye las visuals directo desde la factory de BaseLib, en vez
+    // del Instantiate<NCreatureVisuals>() del juego que depende del patch global de conversion.
+    // Inmune al clobber de otra BaseLib forkeada (p. ej. figure_Saya). Sin escena propia => null
+    // => comportamiento original. Ver docs/FINDINGS.md.
+    public override NCreatureVisuals? CreateCustomVisuals()
+        => string.IsNullOrEmpty(CustomVisualPath)
+            ? null
+            : NodeFactory<NCreatureVisuals>.CreateFromScene(CustomVisualPath);
 
     // Multiplayer/perf: precargar los frames pesados en el set residente de la run; si no, Godot
     // los carga sincrónicamente al entrar a combate (freeze -> timeout/desconexión en MP).

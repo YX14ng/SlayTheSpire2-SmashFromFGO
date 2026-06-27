@@ -9,8 +9,8 @@
   "TIAMATBEAST-GENESIS_SPENT_POWER.description": "#本周期你的宝具值已达到100，创世已触发。将宝具值消耗至100以下以重新蓄势。",
   "TIAMATBEAST-GENESIS_SPENT_POWER.smartDescription": "#本周期你的宝具值已达到100，创世已触发。将宝具值消耗至100以下以重新蓄势。",
   "TIAMATBEAST-MOTHER_GUTS_POWER.title": "母亲的坚韧",
-  "TIAMATBEAST-MOTHER_GUTS_POWER.description": "#本场战斗中你第一次将要死亡时，以1点生命复活并孕育3只拉夫姆。",
-  "TIAMATBEAST-MOTHER_GUTS_POWER.smartDescription": "#本场战斗中你第一次将要死亡时，以1点生命复活并孕育3只拉夫姆。",
+  "TIAMATBEAST-MOTHER_GUTS_POWER.description": "#本场战斗中你第一次将要死亡时，以1点生命复活并孕育3只拉赫穆。",
+  "TIAMATBEAST-MOTHER_GUTS_POWER.smartDescription": "#本场战斗中你第一次将要死亡时，以1点生命复活并孕育3只拉赫穆。",
   "TIAMATBEAST-TIDAL_CORE_POWER.title": "女神之核",
   "TIAMATBEAST-TIDAL_CORE_POWER.description": "#在你的回合开始时，每层获得5点宝具值。",
   "TIAMATBEAST-TIDAL_CORE_POWER.smartDescription": "#在你的回合开始时，每层获得5点宝具值。",
@@ -24,9 +24,9 @@
   "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.description": "#Beast II窗口持续这么多回合。在你每个回合开始时减少1；归零时你回到莉莉形态，巨兽专属牌组消散。",
   "TIAMATBEAST-TIAMAT_BEAST_WINDOW_POWER.smartDescription": "#Beast II窗口持续这么多回合。在你每个回合开始时减少1；归零时你回到莉莉形态，巨兽专属牌组消散。",
   "TIAMATBEAST-TIDAL_SWARM_POWER.title": "贪婪之潮",
-  "TIAMATBEAST-TIDAL_SWARM_POWER.description": "#在你每个回合结束时，你的拉夫姆虫群额外噬咬诅咒最高的敌人这么多次，每次造成虫群数量×（1+养育）点伤害。",
-  "TIAMATBEAST-TIDAL_SWARM_POWER.smartDescription": "#在你每个回合结束时，你的拉夫姆虫群额外噬咬诅咒最高的敌人这么多次，每次造成虫群数量×（1+养育）点伤害。",
+  "TIAMATBEAST-TIDAL_SWARM_POWER.description": "#在你每个回合结束时，你的拉赫穆虫群额外噬咬诅咒最高的敌人这么多次，每次造成虫群数量×（1+养育）点伤害。",
+  "TIAMATBEAST-TIDAL_SWARM_POWER.smartDescription": "#在你每个回合结束时，你的拉赫穆虫群额外噬咬诅咒最高的敌人这么多次，每次造成虫群数量×（1+养育）点伤害。",
   "TIAMATBEAST-BROOD_MOTHER_POWER.title": "母巢",
-  "TIAMATBEAST-BROOD_MOTHER_POWER.description": "#在你的回合开始时，每层孕育1只拉夫姆。",
-  "TIAMATBEAST-BROOD_MOTHER_POWER.smartDescription": "#在你的回合开始时，每层孕育1只拉夫姆。"
+  "TIAMATBEAST-BROOD_MOTHER_POWER.description": "#在你的回合开始时，每层孕育1只拉赫穆。",
+  "TIAMATBEAST-BROOD_MOTHER_POWER.smartDescription": "#在你的回合开始时，每层孕育1只拉赫穆。"
 }

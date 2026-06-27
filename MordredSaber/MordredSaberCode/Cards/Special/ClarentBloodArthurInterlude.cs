@@ -10,7 +10,7 @@ using MordredSaber.MordredSaberCode.Extensions;
 namespace MordredSaber.MordredSaberCode.Cards.Special;
 
 /// <summary>
-/// Clarent Blood Arthur: Interludio (克拉伦特·血染亚瑟：幕间) — la ulti auto-manifestada a 100 NP
+/// Clarent Blood Arthur: Interludio (克拉伦特·血染骑士道：幕间) — la ulti auto-manifestada a 100 NP
 /// MIENTRAS estás en forma Relámpago Carmesí (la manda el GaugeFilled de MainFile al ver esa
 /// forma permanente). Versión clímax (upgrade del NP, DESIGN-MORDRED §5.4):
 ///   - 8 de daño ×5 a TODOS; vs Élites/Jefes +2 por golpe;

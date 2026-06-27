@@ -9,7 +9,7 @@
   "OBERONPRETENDER-NIGHTFALL.description": "#获得 !B! 点格挡。在童话之王与冬之王子之间切换。",
   "OBERONPRETENDER-RYE_RHYME_GOODFELLOW_UNLEASHED.title": "于彼方点缀的梦之童话",
   "OBERONPRETENDER-RYE_RHYME_GOODFELLOW_UNLEASHED.description": "#消耗你全部宝具充能，至少100。对所有敌人造成 !D! 点伤害，每超过100的10点充能再加3点。消耗至多5点你的*借贷：每消耗1点再造成2点伤害。移除所有敌人的正面力量。过载达到150或以上时，所有敌人陷入*沉睡。",
-  "OBERONPRETENDER-LIE_LIKE_VORTIGERN_UNLEASHED.title": "谎言如沃提庚：解放",
+  "OBERONPRETENDER-LIE_LIKE_VORTIGERN_UNLEASHED.title": "谎言如伏提庚：解放",
   "OBERONPRETENDER-LIE_LIKE_VORTIGERN_UNLEASHED.description": "#消耗你全部宝具充能，至少100。对所有敌人造成 !D! 点伤害，每超过100的10点充能再加4点。消耗你全部*借贷：每消耗1点再造成3点伤害（击中沉睡者而不唤醒）。",
 
   "OBERONPRETENDER-SCALE_DUST.title": "鳞粉",
@@ -110,12 +110,12 @@
   "OBERONPRETENDER-ABSOLUTE_DISGUISE.title": "绝对伪装",
   "OBERONPRETENDER-ABSOLUTE_DISGUISE.description": "#获得 !Intangible! 层无形。+ 获得 !Charge! 点*宝具充能。+",
 
-  "OBERONPRETENDER-RYE_RHYME_GOODFELLOW.title": "向彼方高举的梦之话",
+  "OBERONPRETENDER-RYE_RHYME_GOODFELLOW.title": "于彼方点缀的梦之童话",
   "OBERONPRETENDER-RYE_RHYME_GOODFELLOW.description": "#消耗你全部*宝具充能，至少 !ChargeCost! 点。对所有敌人造成 !D! 点伤害，每超过最低值的10点充能再加 !PerTen! 点。移除所有敌人的正面力量。所有敌人陷入*沉睡。",
   "OBERONPRETENDER-ENDING_OF_DREAMS.title": "梦之终结EX",
   "OBERONPRETENDER-ENDING_OF_DREAMS.description": "#本回合你的攻击多造成50%伤害，且你的下一张宝具牌造成双倍伤害。你的回合结束时，失去所有正面能力，且下回合不抽牌。",
-  "OBERONPRETENDER-LIE_LIKE_VORTIGERN.title": "谎言如沃提庚",
-  "OBERONPRETENDER-LIE_LIKE_VORTIGERN.description": "#消耗你全部*借贷：每消耗1点对所有敌人造成 !PerDebt! 点伤害。进入沃提庚（永久）。",
+  "OBERONPRETENDER-LIE_LIKE_VORTIGERN.title": "谎言如伏提庚",
+  "OBERONPRETENDER-LIE_LIKE_VORTIGERN.description": "#消耗你全部*借贷：每消耗1点对所有敌人造成 !PerDebt! 点伤害。进入伏提庚（永久）。",
   "OBERONPRETENDER-LULLABY_OF_THE_END.title": "终焉的摇篮曲",
   "OBERONPRETENDER-LULLABY_OF_THE_END.description": "#一个敌人陷入*沉睡。",
   "OBERONPRETENDER-ABYSSAL_FAIRY_DUST.title": "深渊妖精尘",
@@ -131,7 +131,7 @@
   "OBERONPRETENDER-SOVEREIGN_DEBT.title": "主权债务",
   "OBERONPRETENDER-SOVEREIGN_DEBT.description": "#获得 !Stars! 点暴击星，然后造成 !D! 点伤害。承担 !Debt! 点*借贷。",
   "OBERONPRETENDER-THE_WORM_OF_THE_ABYSS.title": "深渊之虫",
-  "OBERONPRETENDER-THE_WORM_OF_THE_ABYSS.description": "#对所有敌人造成 !D! 点伤害。处于沃提庚时：多造成 !VortigernBonus! 点。",
+  "OBERONPRETENDER-THE_WORM_OF_THE_ABYSS.description": "#对所有敌人造成 !D! 点伤害。处于伏提庚时：多造成 !VortigernBonus! 点。",
   "OBERONPRETENDER-DRAGONS_BLENDER_MAW.title": "龙之绞肉口",
   "OBERONPRETENDER-DRAGONS_BLENDER_MAW.description": "#造成 !D! 点伤害。若你的*借贷为3或以上：多造成 !Bonus! 点。",
   "OBERONPRETENDER-HAPPY_ENDING_PLAN.title": "幸福结局计划",
@@ -147,7 +147,7 @@
   "OBERONPRETENDER-APOCALYPSE_IO_U.title": "末日借据",
   "OBERONPRETENDER-APOCALYPSE_IO_U.description": "#造成 !D! 点伤害，每有1点*借贷再加 !PerDebt! 点，最多多加20点。",
   "OBERONPRETENDER-VESPERS_OF_THE_END.title": "终焉的晚祷",
-  "OBERONPRETENDER-VESPERS_OF_THE_END.description": "#处于沃提庚时，你的攻击多造成 !Bonus! 点。",
-  "OBERONPRETENDER-A_DREAM_RAISED_TO_THE_BEYOND.title": "向彼方高举的梦之话",
+  "OBERONPRETENDER-VESPERS_OF_THE_END.description": "#处于伏提庚时，你的攻击多造成 !Bonus! 点。",
+  "OBERONPRETENDER-A_DREAM_RAISED_TO_THE_BEYOND.title": "于彼方点缀的梦之童话",
   "OBERONPRETENDER-A_DREAM_RAISED_TO_THE_BEYOND.description": "#获得 !Charge! 点*宝具充能。若有敌人*沉睡：再获得 !SleepBonus! 点并抽1张牌。"
 }

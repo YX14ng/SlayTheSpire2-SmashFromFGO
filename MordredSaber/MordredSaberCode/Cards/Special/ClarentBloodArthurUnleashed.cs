@@ -11,7 +11,7 @@ using MordredSaber.MordredSaberCode.Powers.Forms;
 namespace MordredSaber.MordredSaberCode.Cards.Special;
 
 /// <summary>
-/// Clarent Blood Arthur: Desatado (克拉伦特·血染亚瑟：解放) — la ulti auto-manifestada a 100 NP
+/// Clarent Blood Arthur: Desatado (克拉伦特·血染骑士道：解放) — la ulti auto-manifestada a 100 NP
 /// (Retain, Exhaust, gratis). Mín 100, consume TODA la carga. DESIGN-MORDRED §5.4:
 ///   - REGLA DE ORO LORE: si estás Enmascarada, PRIMERO te arrancás el yelmo (entrás en Rebelión)
 ///     — así el +2 de Rebelión cae sobre los 5 golpes;

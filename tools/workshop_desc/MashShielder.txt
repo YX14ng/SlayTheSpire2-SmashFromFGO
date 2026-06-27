@@ -10,6 +10,9 @@ What it adds:
 Requires: FGO Core (library) + BaseLib - subscribe to both.
 Localization: English, Spanish, Simplified Chinese.
 
+Found a bug or have feedback? Report it here:
+https://steamcommunity.com/sharedfiles/filedetails/?id=3747876731
+
 Made with the help of Claude Code.
 
 ————————————————————
@@ -25,5 +28,8 @@ Made with the help of Claude Code.
 
 依赖：FGO Core（库）+ BaseLib——两者都要订阅。
 支持语言：英文、西班牙文、简体中文。
+
+发现 Bug 或有建议？请在此反馈：
+https://steamcommunity.com/sharedfiles/filedetails/?id=3747876731
 
 在 Claude Code 的协助下制作。

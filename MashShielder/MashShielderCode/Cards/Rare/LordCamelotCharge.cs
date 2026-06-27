@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 namespace MashShielder.MashShielderCode.Cards.Rare;
 
 /// <summary>
-/// Embate de Lord Camelot (兰斯洛特之冲撞 / Lord Camelot Charge) — nueva rara P2 2026-06-25: el cierre
+/// Embate de Lord Camelot (罗德·卡美洛之冲撞 / Lord Camelot Charge) — nueva rara P2 2026-06-25: el cierre
 /// ofensivo que le faltaba a Mash en acto 3 FUERA de la ventana NP. 2⚡ Ataque: inflige daño igual a tu
 /// Baluarte (Bloqueo) actual ×1, *Unpowered (NO escala con Fuerza), 1 vez por turno. No consume el
 /// Bloqueo: la muralla embiste sin bajar la guardia. Modelado sobre AbsoluteBulwarkWindowPower (su daño

@@ -7,7 +7,7 @@ using FGOCore.FGOCoreCode.Np;
 namespace FGOCore.FGOCoreCode.Memes;
 
 /// <summary>
-/// Caleidoscopio (孔明的画卷) — el 礼装 de arranque explosivo: al jugarla, +80 de Carga NP.
+/// Caleidoscopio (万华镜) — el 礼装 de arranque explosivo: al jugarla, +80 de Carga NP.
 /// 80 NP ≈ casi una manifestación de ulti (umbral 100) de un solo golpe — Exhaust + Rara lo
 /// pagan (es un burst de setup, no un loop). Sin daño: 0⚡ con Exhaust es el slot de un
 /// generador de recurso premium (cf. Comet 0⚡+5★).
