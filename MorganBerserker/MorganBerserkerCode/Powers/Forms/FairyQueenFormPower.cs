@@ -16,11 +16,11 @@ namespace MorganBerserker.MorganBerserkerCode.Powers.Forms;
 /// Genera poca Maldición propia → te empuja a alternar con Caster para re-sembrar. La primera
 /// vez que dañás HP enemigo cada turno: +10 NP.
 ///
-/// Implementación calcada de la Bunker Bolt de Mash (MashFormPower): el bono se calcula y la
-/// Maldición se consume UNA sola vez por carta en BeforeCardPlayed (camino REAL de juego; las
-/// previews no lo invocan). _pendingSentence queda cacheado para que ModifyDamageAdditive lo
-/// devuelva en el PRIMER golpe y lo ponga a 0 (sin doble-dip en multi-hit). En preview
-/// _pendingSentence es 0 → early-return sin mutar.
+/// El bono se calcula y la Maldición se consume UNA sola vez por carta en BeforeCardPlayed (camino
+/// REAL de juego; las previews no lo invocan). _pendingSentence se devuelve en cada golpe del Ataque
+/// vía ModifyDamageAdditive (PURO, sin mutar — ese hook corre también en preview y NO recibe el
+/// previewMode) y se limpia en AfterDamageReceived tras la primera pegada REAL, así un multi-hit no
+/// lo repite (anti doble-dip) y ninguna preview se come el bono antes de la pegada.
 /// </summary>
 public sealed class FairyQueenFormPower : MorganFormPower
 {
@@ -59,14 +59,15 @@ public sealed class FairyQueenFormPower : MorganFormPower
         await Curses.Consume(target, curse);
     }
 
-    // Lectura del bono cacheado: lo devuelve en el PRIMER golpe del Ataque y lo consume (a 0) para
-    // que los golpes restantes no lo repitan. En preview _pendingSentence es 0 → no muta nada.
+    // Devuelve el bono cacheado en el golpe del Ataque. PURO (NO muta): el hook ModifyDamage corre
+    // también en PREVIEW y NO recibe el previewMode (Hook.ModifyDamage lo tiene pero no lo reenvía al
+    // hook por-power), así que mutar acá hacía que una preview consumiera el bono antes de la pegada
+    // REAL → la Maldición se consumía pero el daño extra no se aplicaba (bug reportado). El bono se
+    // limpia en AfterDamageReceived (que NO corre en preview) tras la primera pegada real.
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (Owner != dealer || !props.IsPoweredAttack() || _pendingSentence <= 0) return 0m;
-        var bonus = _pendingSentence;
-        _pendingSentence = 0;
-        return bonus;
+        return _pendingSentence;
     }
 
     public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
@@ -82,6 +83,14 @@ public sealed class FairyQueenFormPower : MorganFormPower
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
+
+        // La Sentencia ya se sumó a ESTA pegada (vía ModifyDamageAdditive): limpiala acá —en el camino
+        // real, nunca en preview— para que los golpes restantes de un multi-hit no la repitan. Se limpia
+        // aunque la pegada haya sido bloqueada (el bono igual se aplicó al cálculo de ese golpe).
+        if (dealer == Owner && !target.IsPlayer && props.IsPoweredAttack() && _pendingSentence > 0)
+        {
+            _pendingSentence = 0;
+        }
 
         if (_npThisTurn || dealer != Owner || target.IsPlayer) return;
         if (!props.IsPoweredAttack() || result.UnblockedDamage <= 0) return;

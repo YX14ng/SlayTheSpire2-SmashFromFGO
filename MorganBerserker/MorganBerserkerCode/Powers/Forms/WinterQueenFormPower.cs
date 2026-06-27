@@ -67,12 +67,12 @@ public sealed class WinterQueenFormPower : MorganFormPower, ICursePreserver, ICu
         await Curses.Consume(target, curse);
     }
 
+    // PURO (no muta): ver FairyQueenFormPower — el hook corre también en preview y NO recibe el
+    // previewMode, así que el bono se limpia en AfterDamageReceived (real) y no en una preview.
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (Owner != dealer || !props.IsPoweredAttack() || _pendingSentence <= 0) return 0m;
-        var bonus = _pendingSentence;
-        _pendingSentence = 0;
-        return bonus;
+        return _pendingSentence;
     }
 
     public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
@@ -87,6 +87,12 @@ public sealed class WinterQueenFormPower : MorganFormPower, ICursePreserver, ICu
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
+
+        // Limpiar la Sentencia tras la primera pegada REAL (anti doble-dip en multi-hit); ver FairyQueen.
+        if (dealer == Owner && !target.IsPlayer && props.IsPoweredAttack() && _pendingSentence > 0)
+        {
+            _pendingSentence = 0;
+        }
 
         if (_npThisTurn || dealer != Owner || target.IsPlayer) return;
         if (!props.IsPoweredAttack() || result.UnblockedDamage <= 0) return;

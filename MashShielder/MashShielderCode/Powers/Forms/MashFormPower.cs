@@ -38,10 +38,10 @@ public abstract class MashFormPower : FormPower
     private bool _blockCardBonusUsed;
 
     // Bunker Bolt: el bono se calcula y el Bloqueo se consume UNA sola vez por carta en
-    // BeforeCardPlayed (camino REAL de juego; las previews no lo invocan). _pendingBunkerBonus
-    // queda cacheado para que ModifyDamageAdditive lo devuelva en el PRIMER golpe y lo ponga a 0
-    // (sin doble-dip en multi-hit). En preview _pendingBunkerBonus es 0 → early-return sin mutar,
-    // así que zeroearlo en el hook de daño es seguro (anti-patrón de mutar-en-preview evitado).
+    // BeforeCardPlayed (camino REAL; las previews no lo invocan). _pendingBunkerBonus se devuelve en
+    // cada golpe vía ModifyDamageAdditive (PURO, sin mutar — ese hook corre también en preview y NO
+    // recibe el previewMode) y se limpia en AfterDamageReceived tras la primera pegada REAL, así un
+    // multi-hit no lo repite y ninguna preview se come la munición antes de la pegada.
     private int _pendingBunkerBonus;
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
@@ -106,14 +106,13 @@ public abstract class MashFormPower : FormPower
         await CreatureCmd.LoseBlock(Owner, consume);
     }
 
-    // Lectura del bono cacheado: lo devuelve en el PRIMER golpe del Ataque y lo consume (a 0) para
-    // que los golpes restantes no lo repitan. En preview _pendingBunkerBonus es 0 → no muta nada.
+    // Devuelve el bono cacheado en el golpe del Ataque. PURO (NO muta): el hook corre también en
+    // PREVIEW y NO recibe el previewMode, así que mutar acá hacía que una preview consumiera la
+    // munición antes de la pegada REAL. El bono se limpia en AfterDamageReceived (nunca en preview).
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (!OrtinaxPassive || Owner != dealer || !props.IsPoweredAttack() || _pendingBunkerBonus <= 0) return 0m;
-        var bonus = _pendingBunkerBonus;
-        _pendingBunkerBonus = 0;
-        return bonus;
+        return _pendingBunkerBonus;
     }
 
     public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
@@ -124,5 +123,17 @@ public abstract class MashFormPower : FormPower
             _pendingBunkerBonus = 0;
         }
         return Task.CompletedTask;
+    }
+
+    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
+
+        // La munición ya se sumó a ESTA pegada (vía ModifyDamageAdditive): limpiala acá —camino real,
+        // nunca preview— para que un multi-hit no la repita. Se limpia aunque la pegada fuera bloqueada.
+        if (OrtinaxPassive && dealer == Owner && !target.IsPlayer && props.IsPoweredAttack() && _pendingBunkerBonus > 0)
+        {
+            _pendingBunkerBonus = 0;
+        }
     }
 }
