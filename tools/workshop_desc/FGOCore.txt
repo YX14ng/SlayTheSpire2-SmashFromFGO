@@ -12,8 +12,9 @@ This is a LIBRARY - it adds no playable character on its own, and is REQUIRED by
 
 Localization: English, Spanish, Simplified Chinese.
 
-Found a bug or have feedback? Report it here:
+Found a bug or have feedback? Report it in the discussion thread:
 https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
+To help us fix it fast, please include: which Servant you played and what you did (a screenshot helps); your game log — Steam comments can't attach files, so upload %APPDATA%\SlayTheSpire2\logs\godot.log to a paste site (e.g. pastebin.com) or a file host and paste the LINK, or paste the last ~50 lines; and your full mod list (many bugs are conflicts with other mods).
 
 Made with the help of Claude Code.
 
@@ -35,7 +36,8 @@ Made with the help of Claude Code.
 
 支持语言：英文、西班牙文、简体中文。
 
-发现 Bug 或有建议？请在此反馈：
+发现 Bug 或有建议？请在讨论区反馈：
 https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
+为方便我们尽快修复，请附上：你使用的从者 + 具体操作（截图更佳）；游戏日志——Steam 评论无法上传文件，请把 %APPDATA%\SlayTheSpire2\logs\godot.log 传到网盘或贴站（如 pastebin.com）再贴出链接，或直接粘贴最后约 50 行；以及完整的 Mod 列表（很多 Bug 是与其他 Mod 的冲突）。
 
 在 Claude Code 的协助下制作。
