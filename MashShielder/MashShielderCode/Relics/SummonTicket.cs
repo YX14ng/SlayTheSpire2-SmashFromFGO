@@ -57,8 +57,11 @@ public sealed class SummonTicket : MashShielderRelic, INpLevelStore
     public override bool TryModifyCardRewardAlternatives(Player player, CardReward cardReward, List<CardRewardAlternative> alternatives)
     {
         if (Owner != player) return false;
-        // The screen supports at most 2 alternatives (Skip + one more).
-        if (alternatives.Count >= 2) return false;
+        // El gacha debe convivir con el reroll de Driftwood: antes cortábamos en >=2 (Skip + una),
+        // así que con Driftwood (Skip + Reroll) el gacha desaparecía y el único botón extra era el
+        // reroll -> "rerolls infinitos" reportado. La pantalla NO topa en 2 (crea un botón por cada
+        // alternativa; vanilla ya muestra Skip + Sacrifice + Reroll = 3), así que permitimos hasta 3.
+        if (alternatives.Count >= 3) return false;
         if (!NpLevels.CanLevelUp(Owner)) return false;
 
         alternatives.Add(new CardRewardAlternative(DupeOptionId, OnDupeRoll, PostAlternateCardRewardAction.EndSelectionAndCompleteReward));
