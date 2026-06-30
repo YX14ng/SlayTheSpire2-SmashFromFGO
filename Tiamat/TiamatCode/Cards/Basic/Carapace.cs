@@ -11,6 +11,11 @@ namespace TiamatBeast.TiamatCode.Cards.Basic;
 /// Laḫmu en campo (hasta +3). La cría no solo muerde: blinda a la madre mientras cría el enjambre.</summary>
 public sealed class Carapace() : TiamatCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
 {
+    // Tag Defend vanilla: es el Bloqueo básico de Tiamat. Sin un Basic+Defend, LargeCapsule (巨大扭蛋)
+    // hace CardPool.AllCards.First(Basic && Defend) y CRASHEA al obtenerse (InvalidOperationException).
+    // También habilita sinergias que cuentan "Defensas".
+    protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Defend };
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(6m, ValueProp.Move),
