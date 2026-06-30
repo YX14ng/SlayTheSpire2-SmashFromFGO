@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
@@ -32,31 +33,33 @@ public partial class MainFile : Node
             $"{ResPath}/character/artoria_frames_berserker.tres",
             $"{ResPath}/character/artoria_frames_avalon.tres");
 
-        // Ulti auto-manifestada (consistencia con los otros Servants, 2026-06-26): al cruzar 100 NP,
-        // AROUND CALIBURN: Desatado aparece GRATIS en la mano (Retain + Exhaust), igual que el «Mumyou
-        // Desatado» de Okita. La carta lleva la ventana de crítico-en-cualquier-forma + el soporte
-        // (Anti-Purga + estrellas), antes inline en este handler. Un marcador (NpManifestedPower) evita
-        // duplicarla en el mismo pico; gastar por debajo de 100 lo re-arma. (Sin +1⚡/robar.)
+        // Ulti auto-manifestada (consistencia con los otros Servants, 2026-06-26): AROUND CALIBURN:
+        // Desatado aparece GRATIS en la mano (Retain + Exhaust) MIENTRAS tengas >=100 de Carga NP y NO la
+        // tengas ya en mano. La carta lleva la ventana de crítico-en-cualquier-forma + el soporte
+        // (Anti-Purga + estrellas). El dedup es "la carta ya está en mano" (antes: marcador + obligarte a
+        // gastar por debajo de 100 para re-armar), así un overshoot del Kaleidoscope que te deja sentado
+        // en >=100, o perder la carta por exhaust, NO te dejan atascado sin ulti (reporte del jugador).
+        // Se re-chequea en el cruce de 100 (GaugeFilled, mid-turno) y a inicio de cada turno
+        // (ArtoriaFormPower.AfterSideTurnStart, cubre la carga inicial por Kaleidoscope que no cruza).
         NpCharge.GaugeFilled += TryManifestUlt;
-        NpCharge.GaugeDropped += DisarmManifest;
     }
 
-    private static async Task TryManifestUlt(Creature creature)
+    private static Task TryManifestUlt(Creature creature) => EnsureUltInHand(creature);
+
+    /// <summary>Manifiesta AROUND CALIBURN: Desatado en la mano si la criatura es Castoria, está en
+    /// combate, tiene >=100 de Carga NP y NO tiene ya la ulti en mano. Idempotente: seguro de llamar
+    /// en cada cruce de 100 y a inicio de turno.</summary>
+    public static async Task EnsureUltInHand(Creature creature)
     {
         if (creature.Player?.Character is not Character.ArtoriaCaster) return;
         if (creature.CombatState == null) return;
-        if (creature.HasPower<NpManifestedPower>()) return;
-
-        await PowerCmd.Apply<NpManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+        if (!NpCharge.IsOvercharged(creature)) return;       // < 100 de Carga NP
+        if (HasUltInHand(creature)) return;                  // ya la tenés en mano
 
         await ManifestCards.ManifestToHand<AroundCaliburnUnleashed>(creature);
     }
 
-    private static async Task DisarmManifest(Creature creature)
-    {
-        if (creature.HasPower<NpManifestedPower>())
-        {
-            await PowerCmd.Remove<NpManifestedPower>(creature);
-        }
-    }
+    private static bool HasUltInHand(Creature creature)
+        => creature.Player != null
+           && PileType.Hand.GetPile(creature.Player).Cards.Any(c => c is AroundCaliburnUnleashed);
 }
