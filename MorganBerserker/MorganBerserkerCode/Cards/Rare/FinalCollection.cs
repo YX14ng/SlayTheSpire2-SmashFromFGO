@@ -11,8 +11,11 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 /// <summary>
 /// Cobro Final (最后的清算) — the Tyranny detonator: consumes ALL the target's
 /// Curse and deals 2 damage per point (forfeiting the deferred damage).
+/// Implementa <see cref="IConsumesTargetCurse"/>: en forma Reina/Invierno la pasiva "Sentencia"
+/// consumía la Maldición del objetivo en BeforeCardPlayed (antes de este OnPlay), dejando esta carta
+/// en 0 → no hacía daño (reporte de player). El marcador hace que la Sentencia la saltee.
 /// </summary>
-public sealed class FinalCollection() : MorganCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+public sealed class FinalCollection() : MorganCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IConsumesTargetCurse
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

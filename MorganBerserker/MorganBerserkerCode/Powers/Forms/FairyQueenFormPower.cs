@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using MorganBerserker.MorganBerserkerCode.Cards;
 
 namespace MorganBerserker.MorganBerserkerCode.Powers.Forms;
 
@@ -49,6 +50,9 @@ public sealed class FairyQueenFormPower : MorganFormPower
     {
         _pendingSentence = 0;
         if (cardPlay.Card.Type != CardType.Attack || cardPlay.Card.Owner?.Creature != Owner) return;
+        // Cartas que consumen la Maldición del objetivo por sí mismas (FinalCollection): NO les robes
+        // la Maldición acá, o su consumo da 0 y no hacen daño (reporte de player). La carta la usa.
+        if (cardPlay.Card is IConsumesTargetCurse) return;
         if (cardPlay.Target is not { } target || target == Owner || target.IsDead) return;
 
         var curse = Curses.Of(target);
