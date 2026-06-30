@@ -10,6 +10,8 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Basic;
 /// Es la carta de comando Buster del mazo inicial QAABB: ICommandTyped(Buster) → bonus de Fuerza temporal.</summary>
 public sealed class Strike() : GilgameshCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
+    protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
+
     CommandType ICommandTyped.CommandType => CommandType.Buster;
     public bool IsNoblePhantasm => false;
 

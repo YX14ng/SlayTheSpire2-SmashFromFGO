@@ -9,6 +9,8 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Basic;
 /// <summary>Golpe — basic attack.</summary>
 public sealed class StrikeArtoria() : ArtoriaCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
 {
+    protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

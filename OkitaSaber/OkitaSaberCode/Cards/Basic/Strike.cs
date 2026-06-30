@@ -9,6 +9,8 @@ namespace OkitaSaber.OkitaSaberCode.Cards.Basic;
 /// <summary>Golpe — ataque básico Buster (un tajo de Balmung). Lleva el tag Strike (P6 Morgan).</summary>
 public sealed class Strike() : OkitaCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
 {
+    protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

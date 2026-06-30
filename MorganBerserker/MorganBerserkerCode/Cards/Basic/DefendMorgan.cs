@@ -9,6 +9,8 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Basic;
 /// <summary>Defender — basic skill.</summary>
 public sealed class DefendMorgan() : MorganCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
 {
+    protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Defend };
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(5m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
