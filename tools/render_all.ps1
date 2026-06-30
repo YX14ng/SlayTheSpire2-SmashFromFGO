@@ -13,7 +13,10 @@ $forms = @(
 )
 
 function Stage-Form($f) {
-    Get-ChildItem $rp -Filter "8*.png" | Remove-Item -Force
+    # Borrar TODOS los atlas transitorios, no solo "8*.png": un atlas de otro personaje (p.ej.
+    # 2800100.png) sobreviviente confunde la detección de model_id -> usa las ventanas equivocadas
+    # (bug real: rendereó las 3 formas con las ventanas de 2800100 = 77 frames). Ninguno está trackeado.
+    Get-ChildItem $rp -Filter "*.png" | Remove-Item -Force
     Copy-Item "$($f.src)\chr.fbx" "$rp\chr.fbx" -Force
     Copy-Item "$($f.src)\$($f.id).png" "$rp\$($f.id).png" -Force
     Remove-Item "$rp\.godot" -Recurse -Force -ErrorAction SilentlyContinue

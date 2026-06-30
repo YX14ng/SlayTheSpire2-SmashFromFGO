@@ -17,7 +17,11 @@ const CAM_SIZE := 43.8
 const SELECT := {
 	"800100": { "idle": [0, 155, 2], "attack": [27, 53, 1], "cast": [0, 59, 2], "hurt": [0, 16, 1] },
 	"800150": { "idle": [0, 154, 2], "attack": [0, 20, 1], "cast": [0, 79, 2], "hurt": [0, 16, 1] },
-	"800200": { "idle": [0, 156, 2], "attack": [20, 66, 1], "cast": [0, 64, 2], "hurt": [0, 16, 1] },
+	# Paladín: attack_b tiene root motion salvaje (estocada profunda) en los primeros ~15 frames
+	# (src20-35) → la figura se agacha abajo-izquierda y la cabeza se "descoloca" vs el idle (reporte
+	# del jugador). Ventana recortada a [38,66]: arranca en el empuje erguido del escudo y termina en
+	# la pose firme, sin la estocada-teleport. (Antes: [20, 66, 1].)
+	"800200": { "idle": [0, 156, 2], "attack": [38, 66, 1], "cast": [0, 64, 2], "hurt": [0, 16, 1] },
 	# Morgan: los spell invocan el espejo gigante (llena el canvas) — cast recortado
 	# al gesto previo a que aparezca el prop. Idle a 30fps (step 1): a 15fps el pelo
 	# y la capa se ven entrecortados (feedback de playtest).
