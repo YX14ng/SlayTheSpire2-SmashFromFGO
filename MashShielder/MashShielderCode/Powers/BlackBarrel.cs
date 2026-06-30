@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MashShielder.MashShielderCode.Powers;
@@ -30,7 +31,7 @@ public static class BlackBarrel
         var removed = 0;
         for (var i = 0; i < count; i++)
         {
-            var buff = target.GetPowerInstances<PowerModel>().FirstOrDefault(p => p.Type == PowerType.Buff);
+            var buff = target.GetPowerInstances<PowerModel>().FirstOrDefault(IsStrippableBuff);
             if (buff == null) break;
             await PowerCmd.Remove(buff);
             removed++;
@@ -49,4 +50,19 @@ public static class BlackBarrel
     {
         return await RemoveBuffs(target, int.MaxValue, stripper, source);
     }
+
+    /// <summary>
+    /// Black Barrel strips a real COMBAT buff (Fuerza, Plating, Buffer, regen, etc.), NOT the
+    /// structural/identity powers that drive enemy behaviour. Removing those mid-combat breaks the
+    /// game — reportado: quitar el *Personal Hive* del Entomancer cuelga su Pheromone Spit; quitar
+    /// *Illusion* de un invocado lo vuelve inmortal y cuelga; *Minion* (invocados). Por eso los
+    /// excluimos, además de cualquier buff sobre un enemigo secundario (invocado). Fail-safe: ante
+    /// la duda, no se quita. Si aparecen otros powers estructurales que rompan, se suman acá.
+    /// </summary>
+    private static bool IsStrippableBuff(PowerModel p)
+        => p.Type == PowerType.Buff
+           && p is not MinionPower
+           && p is not IllusionPower
+           && p is not PersonalHivePower
+           && !p.OwnerIsSecondaryEnemy;
 }
