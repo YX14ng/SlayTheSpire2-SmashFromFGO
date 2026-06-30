@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -17,69 +16,67 @@ namespace FGOCore.FGOCoreCode;
 /// depende del patch GLOBAL de conversión de escena de BaseLib — el MISMO mecanismo que en combate
 /// puede ser clobbeado por otra BaseLib forkeada (p. ej. figure_Saya) → <c>InvalidCastException</c>
 /// / pantalla negra al entrar a la hoguera o la tienda. A diferencia del combate
-/// (<c>CreateCustomVisuals</c>), aquí NO hay hook de override, así que parcheamos los call-sites: un
-/// transpiler cambia SOLO la llamada <c>Instantiate&lt;T&gt;</c> por
-/// <c>NodeFactory&lt;T&gt;.CreateFromScene</c> (que usa el <c>_instance</c> de NUESTRA BaseLib, inmune
-/// al clobber). Resultado idéntico en setups normales (mismo <c>CreateFromNode</c>). Con guarda: si
-/// no encuentra el patrón exacto, no toca nada (no-op). Ver docs/REPORT-figure_Saya-baselib-conflict.md.
+/// (<c>CreateCustomVisuals</c>), aquí NO hay hook de override, así que un transpiler reemplaza SOLO la
+/// llamada <c>PackedScene.Instantiate</c> por <c>NodeFactory&lt;T&gt;.CreateFromScene</c> (la factory de
+/// NUESTRA BaseLib, inmune al clobber). Resultado idéntico en setups normales (mismo
+/// <c>CreateFromNode</c>).
+///
+/// El match es DELIBERADAMENTE laxo: cualquier llamada a un método <c>Instantiate</c> declarado en
+/// <c>PackedScene</c> (genérico o no — el <c>Instantiate&lt;T&gt;</c> de Godot puede compilar a una
+/// llamada no-genérica + cast, por eso la versión anterior no matcheaba y quedaba no-op). El helper
+/// toma <c>(PackedScene, GenEditState)</c> igual que <c>Instantiate</c>, así la pila queda idéntica y
+/// no hace falta tocar el push del <c>GenEditState</c>. Loguea cuántas llamadas parcheó (0 = no-op,
+/// señal de que el IL cambió). Ver docs/REPORT-figure_Saya-baselib-conflict.md.
 /// </summary>
 internal static class SceneFactoryHardening
 {
-    /// Reemplaza `(PackedScene).Instantiate&lt;nodeType&gt;(GenEditState.Disabled)` por
-    /// `NodeFactory&lt;nodeType&gt;.CreateFromScene((PackedScene))` en el IL del método.
-    internal static IEnumerable<CodeInstruction> Swap(IEnumerable<CodeInstruction> instructions, Type nodeType)
+    private static IEnumerable<CodeInstruction> Swap(IEnumerable<CodeInstruction> instructions, MethodInfo helper, string label)
     {
-        var createFromScene = typeof(NodeFactory<>).MakeGenericType(nodeType)
-            .GetMethod("CreateFromScene", new[] { typeof(PackedScene) });
-
         var codes = new List<CodeInstruction>(instructions);
         var patched = 0;
-        if (createFromScene != null)
+        foreach (var c in codes)
         {
-            for (int i = 1; i < codes.Count; i++)
+            if ((c.opcode == OpCodes.Callvirt || c.opcode == OpCodes.Call)
+                && c.operand is MethodInfo mi
+                && mi.Name == "Instantiate"
+                && mi.DeclaringType == typeof(PackedScene))
             {
-                var c = codes[i];
-                if ((c.opcode == OpCodes.Callvirt || c.opcode == OpCodes.Call)
-                    && c.operand is MethodInfo mi
-                    && mi.Name == "Instantiate"
-                    && mi.DeclaringType == typeof(PackedScene)
-                    && mi.IsGenericMethod
-                    && mi.GetGenericArguments().Length == 1
-                    && mi.GetGenericArguments()[0] == nodeType
-                    && IsLdcI4Zero(codes[i - 1]))
-                {
-                    // quitar el push de GenEditState.Disabled (== 0, ahora innecesario para la
-                    // factory estática) y reemplazar la llamada por CreateFromScene(PackedScene).
-                    // Modificación in-place: preserva labels/branches de cada instrucción.
-                    codes[i - 1].opcode = OpCodes.Nop;
-                    codes[i - 1].operand = null;
-                    codes[i].opcode = OpCodes.Call;
-                    codes[i].operand = createFromScene;
-                    patched++;
-                }
+                c.opcode = OpCodes.Call;
+                c.operand = helper;
+                patched++;
             }
         }
-        if (patched == 0)
-            MainFile.Logger.Warn($"SceneFactoryHardening: no se encontró Instantiate<{nodeType.Name}> para parchear (no-op).");
+        if (patched == 0) MainFile.Logger.Warn($"SceneFactoryHardening({label}): no se encontró PackedScene.Instantiate (no-op).");
+        else MainFile.Logger.Info($"SceneFactoryHardening({label}): parcheadas {patched} llamada(s) Instantiate -> factory.");
         return codes;
     }
 
-    private static bool IsLdcI4Zero(CodeInstruction c)
-        => c.opcode == OpCodes.Ldc_I4_0
-        || (c.opcode == OpCodes.Ldc_I4 && c.operand is int v && v == 0)
-        || (c.opcode == OpCodes.Ldc_I4_S && c.operand is sbyte s && s == 0);
+    // Helpers con la MISMA firma que PackedScene.Instantiate(GenEditState): reciben el PackedScene
+    // (el 'this' de la llamada de instancia) + el GenEditState (ignorado) y devuelven el nodo construido
+    // por NUESTRA factory. Si el original era no-genérico + castclass, el cast posterior es no-op.
+    internal static NRestSiteCharacter BuildRestSite(PackedScene scene, PackedScene.GenEditState _)
+        => NodeFactory<NRestSiteCharacter>.CreateFromScene(scene);
+
+    internal static NMerchantCharacter BuildMerchant(PackedScene scene, PackedScene.GenEditState _)
+        => NodeFactory<NMerchantCharacter>.CreateFromScene(scene);
+
+    internal static IEnumerable<CodeInstruction> SwapRest(IEnumerable<CodeInstruction> instructions)
+        => Swap(instructions, AccessTools.Method(typeof(SceneFactoryHardening), nameof(BuildRestSite)), "rest");
+
+    internal static IEnumerable<CodeInstruction> SwapMerchant(IEnumerable<CodeInstruction> instructions)
+        => Swap(instructions, AccessTools.Method(typeof(SceneFactoryHardening), nameof(BuildMerchant)), "merchant");
 }
 
 [HarmonyPatch(typeof(NRestSiteCharacter), nameof(NRestSiteCharacter.Create))]
-internal static class RestSiteCharacterFactoryPatch
+internal static class RestSiteFactoryPatch
 {
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        => SceneFactoryHardening.Swap(instructions, typeof(NRestSiteCharacter));
+        => SceneFactoryHardening.SwapRest(instructions);
 }
 
 [HarmonyPatch(typeof(NMerchantRoom), "AfterRoomIsLoaded")]
 internal static class MerchantRoomFactoryPatch
 {
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        => SceneFactoryHardening.Swap(instructions, typeof(NMerchantCharacter));
+        => SceneFactoryHardening.SwapMerchant(instructions);
 }
