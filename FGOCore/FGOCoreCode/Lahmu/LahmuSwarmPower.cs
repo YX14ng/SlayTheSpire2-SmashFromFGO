@@ -36,7 +36,12 @@ public sealed class LahmuSwarmPower : FGOCorePower
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<LahmuNurturePower>(), HoverTipFactory.FromPower<CursePower>()];
 
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    // BeforeSideTurnStart (NO AfterSideTurnStart): necesitamos el choiceContext SINCRONIZADO que pasa el
+    // hook para el daño de la mordida. Con un ThrowingPlayerChoiceContext fresco, cuando la mordida MATA a
+    // un enemigo al inicio del turno enemigo, la muerte queda fuera del flujo de resolución -> el turno "no
+    // se resuelve" (无法结算, cuelga, sobre todo en MP; reporte de player). AfterSideTurnStart no trae
+    // choiceContext; BeforeSideTurnStart sí, y el timing (bloque antes de los ataques enemigos) es igual o mejor.
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         // Actúa al INICIO del turno enemigo (no el del jugador): el bloque protege durante
         // los ataques enemigos y la mordida castiga. (Patrón espejo de CursePower, invertido:
@@ -57,7 +62,7 @@ public sealed class LahmuSwarmPower : FGOCorePower
             var target = CursesHelper.MostCursed((CombatState)combatState, Owner)
                          ?? ((CombatState)combatState).GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
             if (target == null || target.IsDead) break;
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), target,
+            await CreatureCmd.Damage(choiceContext, target,
                 Amount * (BitePerLahmu + nurture), ValueProp.Unpowered, Owner, null);
         }
     }
