@@ -28,5 +28,11 @@
   "TIAMATBEAST-TIDAL_SWARM_POWER.smartDescription": "#At the end of each of your turns, your Laḫmu swarm bites the most-cursed enemy this many extra time(s), for swarm size × (1 + Nurture) each.",
   "TIAMATBEAST-BROOD_MOTHER_POWER.title": "Brood Mother",
   "TIAMATBEAST-BROOD_MOTHER_POWER.description": "#At the start of your turns, spawn 1 Laḫmu per stack.",
-  "TIAMATBEAST-BROOD_MOTHER_POWER.smartDescription": "#At the start of your turns, spawn 1 Laḫmu per stack."
+  "TIAMATBEAST-BROOD_MOTHER_POWER.smartDescription": "#At the start of your turns, spawn 1 Laḫmu per stack.",
+  "TIAMATBEAST-CORROSIVE_TIDE_POWER.title": "Corrosive Tide",
+  "TIAMATBEAST-CORROSIVE_TIDE_POWER.description": "#At the start of your turns, apply 1 Curse to all enemies per stack.",
+  "TIAMATBEAST-CORROSIVE_TIDE_POWER.smartDescription": "#At the start of your turns, apply 1 Curse to all enemies per stack.",
+  "TIAMATBEAST-BROOD_NURTURE_POWER.title": "Womb of the Beast",
+  "TIAMATBEAST-BROOD_NURTURE_POWER.description": "#At the start of your turns, gain 1 Nurture per stack.",
+  "TIAMATBEAST-BROOD_NURTURE_POWER.smartDescription": "#At the start of your turns, gain 1 Nurture per stack."
 }

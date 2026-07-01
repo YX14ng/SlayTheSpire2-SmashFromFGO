@@ -76,5 +76,9 @@
   "TIAMATBEAST-LEVIATHAN_COIL.title": "利维坦盘绕",
   "TIAMATBEAST-LEVIATHAN_COIL.description": "#造成!D!点伤害。若目标已有!Threshold!层或更多诅咒，再次造成。施加!Curse!层诅咒。",
   "TIAMATBEAST-BROOD_NEST.title": "育巢",
-  "TIAMATBEAST-BROOD_NEST.description": "#获得母巢：在你每个回合开始时，孕育!Stacks!只拉赫穆。消耗。"
+  "TIAMATBEAST-BROOD_NEST.description": "#获得母巢：在你每个回合开始时，孕育!Stacks!只拉赫穆。消耗。",
+  "TIAMATBEAST-CORROSIVE_TIDE.title": "腐蚀之潮",
+  "TIAMATBEAST-CORROSIVE_TIDE.description": "#每个你的回合开始时，对所有敌人施加 !Stacks! 层诅咒。",
+  "TIAMATBEAST-WOMB_OF_THE_BEAST.title": "巨兽之胎",
+  "TIAMATBEAST-WOMB_OF_THE_BEAST.description": "#每个你的回合开始时，获得 !Stacks! 层养育。"
 }

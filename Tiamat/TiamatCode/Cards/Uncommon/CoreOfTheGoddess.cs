@@ -14,7 +14,9 @@ namespace TiamatBeast.TiamatCode.Cards.Uncommon;
 /// !NpPerTurn! de Carga NP al inicio de tus turnos. La diosa-larva endurece su núcleo y deja
 /// que el medidor se llene sola.
 /// </summary>
-public sealed class CoreOfTheGoddess() : TiamatCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+// Carta de PODER (2026-07-01): concede powers persistentes (Núcleo + Artefacto) → es un Poder, no una
+// Habilidad. También le da a Tiamat cartas tipo Poder, que le faltaban (sin ellas la tienda crasheaba).
+public sealed class CoreOfTheGoddess() : TiamatCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

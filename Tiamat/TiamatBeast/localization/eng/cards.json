@@ -76,5 +76,9 @@
   "TIAMATBEAST-LEVIATHAN_COIL.title": "Leviathan Coil",
   "TIAMATBEAST-LEVIATHAN_COIL.description": "#Deal !D! damage. If the target already had !Threshold! or more Curse, deal it again. Apply !Curse! Curse.",
   "TIAMATBEAST-BROOD_NEST.title": "Brood Nest",
-  "TIAMATBEAST-BROOD_NEST.description": "#Gain Brood Mother: at the start of each of your turns, spawn !Stacks! Laḫmu. Exhaust."
+  "TIAMATBEAST-BROOD_NEST.description": "#Gain Brood Mother: at the start of each of your turns, spawn !Stacks! Laḫmu. Exhaust.",
+  "TIAMATBEAST-CORROSIVE_TIDE.title": "Corrosive Tide",
+  "TIAMATBEAST-CORROSIVE_TIDE.description": "#At the start of your turns, apply !Stacks! Curse to ALL enemies.",
+  "TIAMATBEAST-WOMB_OF_THE_BEAST.title": "Womb of the Beast",
+  "TIAMATBEAST-WOMB_OF_THE_BEAST.description": "#At the start of your turns, gain !Stacks! Nurture."
 }

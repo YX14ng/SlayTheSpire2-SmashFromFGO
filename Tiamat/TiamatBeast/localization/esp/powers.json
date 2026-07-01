@@ -28,5 +28,11 @@
   "TIAMATBEAST-TIDAL_SWARM_POWER.smartDescription": "#Al final de cada turno tuyo, tu enjambre de Laḫmu muerde al enemigo más maldecido esta cantidad de veces extra, por nº de enjambre × (1 + Crianza) cada una.",
   "TIAMATBEAST-BROOD_MOTHER_POWER.title": "Cría de la Madre",
   "TIAMATBEAST-BROOD_MOTHER_POWER.description": "#Al inicio de tus turnos, parí 1 Laḫmu por acumulación.",
-  "TIAMATBEAST-BROOD_MOTHER_POWER.smartDescription": "#Al inicio de tus turnos, parí 1 Laḫmu por acumulación."
+  "TIAMATBEAST-BROOD_MOTHER_POWER.smartDescription": "#Al inicio de tus turnos, parí 1 Laḫmu por acumulación.",
+  "TIAMATBEAST-CORROSIVE_TIDE_POWER.title": "Marea Corrosiva",
+  "TIAMATBEAST-CORROSIVE_TIDE_POWER.description": "#Al inicio de tus turnos, aplicá 1 de Maldición a todos los enemigos por acumulación.",
+  "TIAMATBEAST-CORROSIVE_TIDE_POWER.smartDescription": "#Al inicio de tus turnos, aplicá 1 de Maldición a todos los enemigos por acumulación.",
+  "TIAMATBEAST-BROOD_NURTURE_POWER.title": "Vientre de la Bestia",
+  "TIAMATBEAST-BROOD_NURTURE_POWER.description": "#Al inicio de tus turnos, ganás 1 de Crianza por acumulación.",
+  "TIAMATBEAST-BROOD_NURTURE_POWER.smartDescription": "#Al inicio de tus turnos, ganás 1 de Crianza por acumulación."
 }
