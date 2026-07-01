@@ -13,7 +13,10 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 /// dorado, porque la carta no puede saber a qué enemigo apuntarás (un glow por "hay algún
 /// maldito" mentiría al apuntar a un enemigo sin Maldición). Auditoría 2026-06-15.
 /// </summary>
-public sealed class BarghestsFang() : MorganCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+// IUsesTargetCurse: la Sentencia (forma Reina/Invierno) consumía la Maldición del objetivo en
+// BeforeCardPlayed antes de este OnPlay -> wasCursed=false -> no curaba (reporte de player). El marcador
+// exime la carta de la Sentencia y le deja la Maldición para leerla.
+public sealed class BarghestsFang() : MorganCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy), IUsesTargetCurse
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

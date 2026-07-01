@@ -11,7 +11,9 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 /// El bono depende del OBJETIVO elegido, no del estado global: sin glow dorado (la carta
 /// no puede saber a qué enemigo apuntarás, así que un glow por "hay algún maldito" mentiría
 /// cuando apuntás a un enemigo sin Maldición). Auditoría 2026-06-15.</summary>
-public sealed class QueensScorn() : MorganCard(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+// IUsesTargetCurse: exime de la Sentencia (que consumía la Maldición del objetivo antes del OnPlay),
+// para que el +daño condicional a "objetivo maldito" dispare en forma Reina/Invierno.
+public sealed class QueensScorn() : MorganCard(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IUsesTargetCurse
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

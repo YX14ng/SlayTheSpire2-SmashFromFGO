@@ -52,7 +52,7 @@ public sealed class FairyQueenFormPower : MorganFormPower
         if (cardPlay.Card.Type != CardType.Attack || cardPlay.Card.Owner?.Creature != Owner) return;
         // Cartas que consumen la Maldición del objetivo por sí mismas (FinalCollection): NO les robes
         // la Maldición acá, o su consumo da 0 y no hacen daño (reporte de player). La carta la usa.
-        if (cardPlay.Card is IConsumesTargetCurse) return;
+        if (cardPlay.Card is IUsesTargetCurse) return;
         if (cardPlay.Target is not { } target || target == Owner || target.IsDead) return;
 
         var curse = Curses.Of(target);

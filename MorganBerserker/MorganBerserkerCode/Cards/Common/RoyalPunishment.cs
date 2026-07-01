@@ -14,7 +14,9 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 /// no dos): 2⚡, 12 de daño + 1 Vulnerable; si el objetivo tiene Maldición: +10 NP
 /// (la Corona cobra el castigo). Glow con enemigo maldito. (up: +4 daño, Vulnerable 1→2)
 /// </summary>
-public sealed class RoyalPunishment() : MorganCard(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+// IUsesTargetCurse: exime de la Sentencia (que consumía la Maldición del objetivo antes del OnPlay),
+// para que el +NP condicional a "objetivo maldito" dispare en forma Reina/Invierno.
+public sealed class RoyalPunishment() : MorganCard(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IUsesTargetCurse
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
