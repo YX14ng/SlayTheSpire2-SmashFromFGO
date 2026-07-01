@@ -8,8 +8,8 @@
 unique_name_in_owner = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Visuals"]
-position = Vector2(0, -217)
-scale = Vector2(0.9879, 0.9879)
+position = Vector2(0.0, -111.3)
+scale = Vector2(0.8255, 0.8255)
 flip_h = true
 sprite_frames = ExtResource("frames")
 animation = &"idle"
