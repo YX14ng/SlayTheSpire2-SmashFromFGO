@@ -13,7 +13,7 @@ namespace FGOCore.FGOCoreCode.Memes;
 /// Burst de carga + ventana de generación aumentada para encadenar otros generadores el mismo
 /// turno. Exhaust + Poco común lo pagan.
 /// </summary>
-public sealed class ImaginaryElement() : MemeCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class ImaginaryElement() : MemeCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self), INpDependentColorless
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

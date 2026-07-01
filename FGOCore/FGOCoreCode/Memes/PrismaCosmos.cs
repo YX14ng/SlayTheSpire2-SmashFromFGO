@@ -12,7 +12,7 @@ namespace FGOCore.FGOCoreCode.Memes;
 /// carga sostenida clásico (motor de generación pasiva, ~½⚡ de valor por turno). Rara: en
 /// peleas largas (HextechRunes) construye un loop de ultis.
 /// </summary>
-public sealed class PrismaCosmos() : MemeCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+public sealed class PrismaCosmos() : MemeCard(1, CardType.Power, CardRarity.Rare, TargetType.Self), INpDependentColorless
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new PowerVar<PrismaCosmosPower>("NpCharge", 20m)];

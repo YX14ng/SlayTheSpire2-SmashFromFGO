@@ -12,7 +12,7 @@ namespace FGOCore.FGOCoreCode.Memes;
 /// (<see cref="FormalCraftPower"/>, se auto-remueve al fin de turno). Pieza de combo barata:
 /// jugala antes de un turno de generación para inflar toda la carga. Sin daño, 0⚡ + Exhaust.
 /// </summary>
-public sealed class FormalCraft() : MemeCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class FormalCraft() : MemeCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self), INpDependentColorless
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
