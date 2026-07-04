@@ -61,14 +61,17 @@ public static class NpCharge
     /// amplificador reaccione a este ModifyAmount. Usalo en vez de un guard <c>_amplifying</c> local.</summary>
     public static async Task Amplify(PlayerChoiceContext choiceContext, NpChargePower np, int extra, Creature owner, CardModel? source)
     {
-        AmplifyingCreatures.Add(owner);
+        // Solo el dueño REAL del guard lo limpia: si un amplificador anidado llamara Amplify sobre el
+        // mismo owner (Add devuelve false), su finally NO debe apagar el guard del caller externo —
+        // eso reabría la ventana de compounding cruzado que el guard existe para impedir.
+        var added = AmplifyingCreatures.Add(owner);
         try
         {
             await PowerCmd.ModifyAmount(choiceContext, np, extra, owner, source);
         }
         finally
         {
-            AmplifyingCreatures.Remove(owner);
+            if (added) AmplifyingCreatures.Remove(owner);
         }
     }
 
@@ -101,11 +104,20 @@ public static class NpCharge
     private static INpCostWaiver? GetWaiver(Creature creature, CardModel? source)
     {
         if (source != null && source.Rarity == MegaCrit.Sts2.Core.Entities.Cards.CardRarity.Event) return null;
-        return creature.GetPowerInstances<PowerModel>().OfType<INpCostWaiver>().FirstOrDefault(w => !w.Used);
+        // foreach manual (no LINQ): CanPay se re-evalúa constantemente desde IsPlayable/glow de la UI
+        // mientras el medidor está bajo el costo — OfType+FirstOrDefault alocaba en cada evaluación.
+        foreach (var p in creature.GetPowerInstances<PowerModel>())
+        {
+            if (p is INpCostWaiver { Used: false } w) return w;
+        }
+        return null;
     }
 
-    /// <summary>Can an NP card costing <paramref name="amount"/> be played right now?</summary>
-    public static bool CanPay(Creature creature, int amount, CardModel? source = null) =>
+    /// <summary>Can an NP card costing <paramref name="amount"/> be played right now?
+    /// <paramref name="source"/> es OBLIGATORIO a propósito (audit 2026-07-04): con un default null,
+    /// una ulti Event con un waiver activo reportaba jugable con el medidor vacío (la exclusión P3 de
+    /// GetWaiver solo ve la rareza si le pasás la carta). Las cartas pasan <c>this</c>.</summary>
+    public static bool CanPay(Creature creature, int amount, CardModel? source) =>
         Current(creature) >= amount || GetWaiver(creature, source) != null;
 
     /// <summary>

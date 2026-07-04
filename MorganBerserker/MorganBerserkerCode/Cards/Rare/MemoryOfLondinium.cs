@@ -31,7 +31,7 @@ public sealed class MemoryOfLondinium() : MorganCard(2, CardType.Attack, CardRar
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
-    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost);
+    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost, this);
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 

@@ -24,6 +24,11 @@ public sealed class PeerlessCrownPower : SiegfriedPower, IDragonScalePierceListe
 
     private bool _consumedThisTurn;
 
+    /// <summary>Cupo del turno aun libre (lo consulta LindenLeaf para detectar un golpe que la
+    /// Corona anulo: el motor lo marca WasFullyBlocked y sin esta senal el pierce jamas se
+    /// consumia — la Corona anulaba TODOS los golpes parcialmente bloqueados del turno).</summary>
+    public bool HasFreeCharge => !_consumedThisTurn;
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Single;

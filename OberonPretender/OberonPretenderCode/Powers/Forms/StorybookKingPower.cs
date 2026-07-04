@@ -19,7 +19,10 @@ public sealed class StorybookKingPower : OberonFormPower
     public const int ExtraCharge = 10;
     public const int ExtraDebt = 1;
 
-    public override string? FramesPath => $"{MainFile.ResPath}/character/oberon_frames_king.tres";
+    // FramesPath = null (audit 2026-07-04): el .tres "oberon_frames_king" no existe en el repo — el
+    // swap declaraba un recurso inexistente (no-op con log de error). null = mantener el sprite
+    // actual. TODO pase de arte: generar el .tres y restaurar el path.
+    public override string? FramesPath => null;
 
     private bool _sweetenedThisTurn;
 

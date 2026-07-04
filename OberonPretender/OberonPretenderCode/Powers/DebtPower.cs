@@ -153,7 +153,7 @@ public sealed class DebtPower : OberonPower, IResourcePower
                     ValueProp.Unblockable | ValueProp.Unpowered, null, null);
             }
 
-            // 3) Interes: cada punto impago gana +1 al turno siguiente (la bola de nieve).
+            // 3) Interes: la Deuda impaga gana +1 TOTAL (interés plano, no por punto — así lo dice también la loc) al turno siguiente (la bola de nieve).
             if (Owner.IsAlive) await Add(Owner, 1, Owner, null);
         }
     }

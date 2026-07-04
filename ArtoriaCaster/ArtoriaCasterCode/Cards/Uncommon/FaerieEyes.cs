@@ -29,7 +29,8 @@ public sealed class FaerieEyes() : ArtoriaCard(1, CardType.Power, CardRarity.Unc
         var power = Owner.Creature.GetPowerInstances<FaerieEyesPower>().FirstOrDefault();
         if (power != null)
         {
-            power.NpPerTrigger = DynamicVars["NpCharge"].IntValue;
+            // Math.Max (audit 2026-07-04): una copia base tras la mejorada degradaba la propiedad.
+            power.NpPerTrigger = Math.Max(power.NpPerTrigger, DynamicVars["NpCharge"].IntValue);
         }
     }
 

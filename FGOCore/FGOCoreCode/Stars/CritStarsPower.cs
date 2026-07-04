@@ -9,11 +9,12 @@ namespace FGOCore.FGOCoreCode.Stars;
 
 /// <summary>
 /// Estrellas de Crítico (Critical Stars / 暴击星) — recurso compartido FGO, patrón
-/// JeanneAlter: por defecto, al llegar a <see cref="Threshold"/> (100) se descuentan 100
-/// y otorgan 1 de <see cref="CritReadyPower"/> (próximo Ataque ×2) — auto-payoff (Mash).
-/// PERO si el owner tiene un power con <see cref="IBanksCritStars"/> (Morgan, vía sus
-/// formas), las Estrellas son un BANCO de gasto MANUAL (sin auto-proc): las cartas con
-/// "Crítico" las gastan (50★) para aplicar CritReady — la decisión es del jugador.
+/// JeanneAlter: al llegar a <see cref="Threshold"/> (100) se descuentan 100 y otorgan 1 de
+/// <see cref="CritReadyPower"/> (próximo Ataque ×2) — auto-payoff. El gasto MANUAL
+/// (keyword "Crítico", 50★) coexiste con el auto-proc: las cartas gastan vía
+/// <see cref="CritStars.Gain"/> con monto negativo. (El "banco" IBanksCritStars que
+/// desactivaba el auto-proc se eliminó en el audit 2026-07-04: Morgan lo abandonó con el
+/// swap Estrellas→Maldición y no quedaba ningún implementador.)
 /// NO confundir con el contador chico con candado de forma de ArtoriaCaster (mod-local).
 /// </summary>
 public sealed class CritStarsPower : FGOCorePower, IResourcePower
@@ -37,12 +38,6 @@ public sealed class CritStarsPower : FGOCorePower, IResourcePower
         await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
         if (power != this || _isProcessing) return;
 
-        // Banco manual (Morgan): sin auto-proc — el gasto va por la keyword "Crítico".
-        foreach (var p in Owner.GetPowerInstances<PowerModel>())
-        {
-            if (p is IBanksCritStars) return;
-        }
-
         // Auto-proc por defecto (Mash): una sola carta puede cruzar 200+ (ej. +100 de golpe).
         while (Amount >= Threshold)
         {
@@ -54,14 +49,6 @@ public sealed class CritStarsPower : FGOCorePower, IResourcePower
         }
     }
 }
-
-/// <summary>
-/// Marker en un power del owner: trata las Estrellas de Crítico como un BANCO de gasto
-/// manual (NO se auto-consumen a 100). Morgan lo usa vía su <c>MorganFormPower</c> base
-/// (siempre está en una forma) para que el banco sea su decisión de "Crítico". El resto
-/// (Mash) NO lo tiene y conserva el auto-payoff a 100.
-/// </summary>
-public interface IBanksCritStars;
 
 /// <summary>Helper de la economía de estrellas (espejo de NpCharge.Gain).</summary>
 public static class CritStars

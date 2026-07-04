@@ -38,7 +38,7 @@ public sealed class GudagudaPoster : OkitaRelic
         var breath = Aliento.Power(Owner.Creature);
         // Aliento.Spend remueve el power al tocar 0 (Amount 0), por eso comprobamos ambos: la marca
         // del turno (si el power sigue vivo) o que el contador esté efectivamente en 0.
-        var hitZero = breath?.HitZeroThisTurn == true || Aliento.Of(Owner.Creature) <= 0;
+        var hitZero = Aliento.HitZeroThisTurn(Owner.Creature) || Aliento.Of(Owner.Creature) <= 0;
         if (!hitZero) return;
         _firedThisCombat = true;
         Flash();

@@ -22,7 +22,10 @@ public sealed class BakumatsuFlowerPower : OkitaFormPower, IRafagaCostModifier
     public override bool IsPermanent => true;
 
     // Modelo haori asagi (102720). Si los frames aún no existen, FormVisuals loguea y mantiene el sprite actual.
-    public override string? FramesPath => $"{MainFile.ResPath}/character/okita_frames_haori.tres";
+    // FramesPath = null (audit 2026-07-04): el .tres "okita_frames_haori" no existe en el repo — el
+    // swap declaraba un recurso inexistente (no-op con log de error). null = mantener el sprite
+    // actual. TODO pase de arte: generar el .tres y restaurar el path.
+    public override string? FramesPath => null;
 
     public bool WaivesBreathCost => true;
 

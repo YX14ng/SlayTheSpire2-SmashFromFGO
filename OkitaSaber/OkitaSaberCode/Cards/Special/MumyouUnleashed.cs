@@ -74,7 +74,9 @@ public sealed class MumyouUnleashed() : OkitaCard(0, CardType.Attack, CardRarity
         var hits = BaseHits;
         if (Aliento.CanPay(Owner.Creature, BreathBoostCost))
         {
-            await Aliento.Spend(Owner.Creature, BreathBoostCost, this);
+            // grantTosOnEmpty:false (audit 2026-07-04): con exactamente 4 de Aliento se pagaba el boost Y
+            // ADEMAS caia la Tos del agotamiento — el texto es either/or (boost O Tos).
+            await Aliento.Spend(Owner.Creature, BreathBoostCost, this, grantTosOnEmpty: false);
             hits += BoostHits;
         }
         else

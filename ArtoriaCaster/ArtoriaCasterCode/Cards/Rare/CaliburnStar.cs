@@ -28,7 +28,7 @@ public sealed class CaliburnStar() : ArtoriaCard(1, CardType.Attack, CardRarity.
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<CriticalStarsPower>(), HoverTipFactory.FromPower<OverchargeBlessingPower>()];
 
-    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost);
+    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost, this);
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 

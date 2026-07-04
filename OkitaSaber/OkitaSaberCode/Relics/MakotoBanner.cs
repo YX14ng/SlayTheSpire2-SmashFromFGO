@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -32,6 +33,11 @@ public sealed class MakotoBanner : OkitaRelic
         if (amount <= 0m || power is not CritReadyPower || power.Owner != Owner.Creature || Owner.Creature.Player == null) return;
         Flash();
         await NpCharge.Gain(Owner.Creature, NpGain, null);
-        await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), Draw, Owner.Creature.Player);
+        // Guard de mazo vacio (audit 2026-07-04, espejo de ProdigySensePower): robar aca dispara un
+        // reshuffle a mitad de un play — se saltea si no hay cartas en el mazo de robo.
+        if (MegaCrit.Sts2.Core.Entities.Cards.PileType.Draw.GetPile(Owner.Creature.Player).Cards.Count > 0)
+        {
+            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), Draw, Owner.Creature.Player);
+        }
     }
 }

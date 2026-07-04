@@ -28,7 +28,8 @@ public sealed class FestivalSpirit() : ArtoriaCard(1, CardType.Power, CardRarity
         var power = Owner.Creature.GetPowerInstances<FestivalSpiritPower>().FirstOrDefault();
         if (power != null)
         {
-            power.BlockPerSwitch = DynamicVars["Block"].IntValue;
+            // Math.Max (audit 2026-07-04): una copia base tras la mejorada degradaba la propiedad.
+            power.BlockPerSwitch = Math.Max(power.BlockPerSwitch, DynamicVars["Block"].IntValue);
         }
     }
 

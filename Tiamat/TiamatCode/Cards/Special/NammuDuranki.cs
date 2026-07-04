@@ -51,7 +51,7 @@ public sealed class NammuDuranki() : TiamatCard(0, CardType.Attack, CardRarity.E
         HoverTipFactory.FromPower<TiamatBeastWindowPower>()
     ];
 
-    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost);
+    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost, this);
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

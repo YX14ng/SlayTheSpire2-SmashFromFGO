@@ -1,6 +1,7 @@
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Modding;
@@ -25,46 +26,52 @@ public partial class MainFile : Node
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 
-        // Precarga en background de los frames de las 3 formas (Rey / Invierno / Vortigern).
-        // Los .tres se generan en el pase de arte (modelos 2800100/2800110/2800120, WORKFLOW-FGO 3).
-        FormVisuals.RegisterFrames(
-            $"{ResPath}/character/oberon_frames_king.tres",
-            $"{ResPath}/character/oberon_frames_winter.tres",
-            $"{ResPath}/character/oberon_frames_vortigern.tres");
+        // (audit 2026-07-04) NO se registran frames de formas: los .tres por-forma todavia no
+        // existen (pase de arte pendiente, modelos 2800100/2800110/2800120 — WORKFLOW-FGO 3).
+        // Los FormPower devuelven FramesPath=null (mantienen el sprite base del visuals.tscn).
 
-        // Ulti AUTO-MANIFESTADA por forma (DESIGN-OBERON 5/6.5, modelo de carta-token en mano):
-        // a 100 NP se genera la Desatada de la forma activa -- Rey/Invierno -> Rye Rhyme Goodfellow,
-        // Vortigern -> Lie Like Vortigern. Queda en mano (Event 0, Retain+Exhaust) hasta jugarse;
-        // se re-arma al gastar el medidor por debajo de 100.
+// Ulti AUTO-MANIFESTADA por forma (patron ArtoriaCaster, audit 2026-07-04): la Desatada de la
+        // forma activa aparece en mano MIENTRAS tengas >=100 NP y NO haya ya una copia en tus pilas.
+        // El patron viejo (marker + GaugeDropped) acumulaba copias Retain duplicadas: el cobro de
+        // Deuda de fin de turno gasta NP -> GaugeDropped re-armaba el marker cada turno, y al volver
+        // a 100 se manifestaba una SEGUNDA copia con la primera todavia en mano.
         NpCharge.GaugeFilled += TryManifestUlt;
-        NpCharge.GaugeDropped += DisarmUlt;
     }
 
-    private static async Task TryManifestUlt(Creature creature)
+    private static Task TryManifestUlt(Creature creature) => EnsureUltInHand(creature);
+
+    /// <summary>Manifiesta la Desatada de la forma ACTIVA si Oberon esta en combate con >=100 de
+    /// Carga NP y no hay ya una copia en mano/robo/descarte. Idempotente: seguro de llamar en cada
+    /// cruce de 100 y a inicio de turno (OberonFormPower.AfterSideTurnStart).</summary>
+    public static async Task EnsureUltInHand(Creature creature)
     {
         if (creature.Player?.Character is not Character.Oberon) return;
-        if (creature.HasPower<UltManifestedPower>()) return;
         if (creature.CombatState == null || creature.Player == null) return;
+        if (!NpCharge.IsOvercharged(creature)) return;
 
-        // Marca el pico (se re-arma al bajar < 100). Idempotente por pico.
-        await PowerCmd.Apply<UltManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+        var vortigern = creature.HasPower<VortigernPower>();
+        if (HasUltInPiles(creature, vortigern)) return;
 
-        // La Desatada depende de la forma activa: Vortigern usa la suya; Rey/Invierno la del cuento.
-        // El helper de FGOCore (ManifestCards) factoriza el CreateCard ya hecho + AddGeneratedCardToCombat
-        // + PreviewCardPileAdd que estaba duplicado en los MainFile del ecosistema; la elección por forma
-        // (la única parte mod-local) queda en el caller, que pasa la carta ya creada.
-        CardModel card = creature.HasPower<VortigernPower>()
+        CardModel card = vortigern
             ? creature.CombatState.CreateCard<LieLikeVortigernUnleashed>(creature.Player)
             : creature.CombatState.CreateCard<RyeRhymeGoodfellowUnleashed>(creature.Player);
 
         await ManifestCards.ManifestToHand(creature, card);
     }
 
-    private static async Task DisarmUlt(Creature creature)
+    private static bool HasUltInPiles(Creature creature, bool vortigern)
     {
-        if (creature.HasPower<UltManifestedPower>())
+        var player = creature.Player;
+        if (player == null) return false;
+        // Mano + robo + descarte: con la mano llena el manifest se desvia al descarte (mismo caso
+        // dedup de Artoria) — mirar solo la mano generaria copias extra.
+        foreach (var pile in new[] { PileType.Hand, PileType.Draw, PileType.Discard })
         {
-            await PowerCmd.Remove<UltManifestedPower>(creature);
+            foreach (var c in pile.GetPile(player).Cards)
+            {
+                if (vortigern ? c is LieLikeVortigernUnleashed : c is RyeRhymeGoodfellowUnleashed) return true;
+            }
         }
+        return false;
     }
 }

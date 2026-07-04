@@ -128,15 +128,33 @@ public abstract class BondRelic : CustomRelicModel
         }
     }
 
+    // Último nivel ya premiado con regalos de subida. TRANSIENT a propósito (no SavedProperty): se
+    // inicializa perezosamente al Level actual (al cargar un save, los niveles previos ya cobraron su
+    // Max HP, que está guardado), así un update del mod no re-regala niveles viejos. El premio corre
+    // por GrantPendingLevelGifts, que también se invoca en BeforeCombatStartLate — eso cubre el salto
+    // de Level al obtener un ILimitBreaker (Santo Grial) con puntos ya bancados más allá del tope
+    // (audit 2026-07-04: esos regalos se perdían porque solo AddPoints premiaba, mirando el delta).
+    private int? _rewardedLevel;
+
     protected async Task AddPoints(int pts)
     {
-        var before = Level;
+        _rewardedLevel ??= Level; // antes de sumar: lo anterior ya fue premiado
         Points += pts;
-        var after = Level;
-        if (after <= before) return;
+        await GrantPendingLevelGifts();
+    }
+
+    /// <summary>Punto ÚNICO de premiación: concede los regalos de cada nivel alcanzado y aún no
+    /// premiado (Level &gt; nivel premiado). Idempotente; seguro de llamar en cada combate.</summary>
+    protected async Task GrantPendingLevelGifts()
+    {
+        _rewardedLevel ??= Level;
+        var lv = Level;
+        if (lv <= _rewardedLevel.Value) return;
 
         Flash();
-        await GrantLevelUpGifts(before, after);
+        var from = _rewardedLevel.Value;
+        _rewardedLevel = lv;
+        await GrantLevelUpGifts(from, lv);
     }
 
     /// <summary>
@@ -169,6 +187,10 @@ public abstract class BondRelic : CustomRelicModel
         // el bonus al jugar cartas que implementan ICommandTyped. Independiente del nivel de Bond — va
         // SIEMPRE, antes del early-return de los regalos por nivel. ADITIVO (2026-06-26, Tarea C).
         await CommandBonusPower.EnsureInstalled(Owner.Creature);
+
+        // Cobrar regalos pendientes de un salto de nivel fuera de AddPoints (Santo Grial obtenido
+        // con puntos ya acumulados más allá del tope) — ver _rewardedLevel.
+        await GrantPendingLevelGifts();
 
         var lv = Level;
         if (lv <= 0) return;

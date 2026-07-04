@@ -32,6 +32,9 @@ public sealed class CritReadyPower : FGOCorePower
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
+        // Filtro de dueño (audit 2026-07-04): sin él, en co-op el Ataque de un ALIADO consumía tu
+        // stack de Crítico Listo sin haber recibido el ×2 (el multiplicador sí filtra por dealer).
+        if (cardPlay.Card.Owner?.Creature != Owner) return;
         if (Amount <= 0 || cardPlay.Card.Type != CardType.Attack) return;
         Flash();
         await PowerCmd.Decrement(this);

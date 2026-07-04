@@ -68,7 +68,18 @@ public static class Rafaga
     }
 
     private static IRafagaCostModifier? Modifier(Creature creature)
-        => Listeners.PowersOf<IRafagaCostModifier>(creature).FirstOrDefault();
+    {
+        // El MAS favorable (audit 2026-07-04): con Flor del Bakumatsu (gratis) y Hasta el Final
+        // (paga HP) activos a la vez, FirstOrDefault decidia por orden de aplicacion y podia
+        // cobrar HP innecesariamente.
+        IRafagaCostModifier? best = null;
+        foreach (var m in Listeners.PowersOf<IRafagaCostModifier>(creature))
+        {
+            if (!m.WaivesBreathCost) continue;
+            if (best == null || m.HpPerBreathPoint < best.HpPerBreathPoint) best = m;
+        }
+        return best;
+    }
 
     // «Paso Constante»: la primera Ráfaga de cada turno reembolsa 1 Aliento (cap del descuento).
     private static async Task TryRefundFirst(Creature creature, CardModel? source)

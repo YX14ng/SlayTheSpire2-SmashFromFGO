@@ -47,9 +47,6 @@ public sealed class AlientoPower : OkitaPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    /// <summary>Marca de que el Aliento ya tocó 0 este turno (cap de 1 Tos/turno por agotamiento).</summary>
-    public bool HitZeroThisTurn { get; set; }
-
     /// <summary>Tope actual = 10 base + lo que sumen los boosters de tope (powers + reliquias).</summary>
     public int Cap
     {
@@ -73,16 +70,8 @@ public sealed class AlientoPower : OkitaPower
         }
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side != Owner.Side) return;
-        HitZeroThisTurn = false;
-        var room = Math.Max(0, Cap - Amount);
-        var gain = Math.Min(Regen, room);
-        if (gain > 0)
-        {
-            Flash();
-            await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), this, gain, Owner, null);
-        }
-    }
+    // El REGEN por turno ya no vive aca (audit 2026-07-04): este power se REMUEVE al llegar a 0 y el
+    // regen moria con el para el resto del combate. Ahora regenera el Haori Asagi (starter, siempre
+    // presente) via Aliento.Gain, que reinstala este power si falta. El flag HitZeroThisTurn tambien
+    // migro a Aliento (estatico per-creature) por el mismo motivo.
 }

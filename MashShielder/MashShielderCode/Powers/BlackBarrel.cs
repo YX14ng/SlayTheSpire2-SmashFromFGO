@@ -64,5 +64,8 @@ public static class BlackBarrel
            && p is not MinionPower
            && p is not IllusionPower
            && p is not PersonalHivePower
-           && !p.OwnerIsSecondaryEnemy;
+           // p.Owner.IsSecondaryEnemy (la CRIATURA dueña), no p.OwnerIsSecondaryEnemy (audit
+           // 2026-07-04): esa otra es un hook de clasificación per-POWER (virtual, false por
+           // defecto) — un StrengthPower sobre un invocado devolvía false y no filtraba nada.
+           && !p.Owner.IsSecondaryEnemy;
 }

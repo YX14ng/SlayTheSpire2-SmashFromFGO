@@ -44,7 +44,9 @@ public sealed class DragonScalesPower : FGOCorePower
 
         if (ShouldPierce(props, dealer)) return amount; // exposed back — first reaching hit bypassed
 
-        Flash();
+        // Sin Flash() acá (audit 2026-07-04): ModifyHpLost* es un hook que este proyecto exige PURO y
+        // que los previews evalúan sin que el golpe se resuelva — un efecto visual acá parpadeaba en
+        // cada preview. Los ModifyHpLost* vanilla tampoco flashean.
         return System.Math.Max(amount - base.Amount, 0m);
     }
 

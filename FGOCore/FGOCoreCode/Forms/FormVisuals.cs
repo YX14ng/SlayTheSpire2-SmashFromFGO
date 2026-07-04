@@ -76,7 +76,16 @@ public static class FormVisuals
             // Defensive: Apply already kicks the load via PreloadGroup, but if we got here cold,
             // request it in the background and report "not ready yet" without blocking.
             if (ResourceLoader.LoadThreadedRequest(path, "SpriteFrames", useSubThreads: true) == Error.Ok)
+            {
                 Requested.Add(path);
+            }
+            else
+            {
+                // Request rechazado (path inválido/recurso inexistente): marcar Failed — si no, cada
+                // poll del ApplyWhenReady re-intentaba el request completo frame a frame.
+                Failed.Add(path);
+                MainFile.Logger.Error($"FormVisuals: LoadThreadedRequest rejected for {path} (won't retry)");
+            }
             return null;
         }
 
@@ -95,8 +104,62 @@ public static class FormVisuals
 
         var frames = ResourceLoader.LoadThreadedGet(path) as SpriteFrames;
         Requested.Remove(path);
-        if (frames != null) Cache[path] = frames;
+        if (frames != null)
+        {
+            Cache[path] = frames;
+        }
+        else
+        {
+            // Cargó pero no es un SpriteFrames (recurso mal tipado): fallo DEFINITIVO — sin esto,
+            // el próximo GetFrames re-encolaba la carga completa del recurso pesado en cada frame.
+            Failed.Add(path);
+            MainFile.Logger.Error($"FormVisuals: {path} loaded but is not a SpriteFrames (won't retry)");
+        }
         return frames;
+    }
+
+    // --- Evicción de VRAM por combate (audit 2026-07-04) ---
+    // El Cache pineaba los frames DE POR VIDA: entre runs/personajes distintos se acumulaban cientos
+    // de MB de VRAM por grupo. Al detectar un combate NUEVO (otro NCombatRoom), los grupos activos del
+    // combate anterior pasan a "prev" y se evicta todo lo que no esté en activo∪prev — la ventana de
+    // dos combates evita evictar al compañero de co-op que aún no hizo su primer Apply del combate
+    // nuevo. El mismo personaje run adelante nunca se evicta (siempre está en el set activo).
+    private static ulong _activeCombatId;
+    private static HashSet<string> _activePaths = [];
+    private static HashSet<string> _prevPaths = [];
+
+    private static void TrackCombatAndEvict(string path)
+    {
+        var room = NCombatRoom.Instance;
+        if (room == null) return;
+        var id = room.GetInstanceId();
+        if (id != _activeCombatId)
+        {
+            _activeCombatId = id;
+            _prevPaths = _activePaths;
+            _activePaths = [];
+        }
+        if (GroupOf.TryGetValue(path, out var group))
+        {
+            foreach (var p in group) _activePaths.Add(p);
+        }
+        else
+        {
+            _activePaths.Add(path);
+        }
+
+        List<string>? evict = null;
+        foreach (var key in Cache.Keys)
+        {
+            if (!_activePaths.Contains(key) && !_prevPaths.Contains(key)) (evict ??= []).Add(key);
+        }
+        if (evict == null) return;
+        foreach (var key in evict)
+        {
+            Cache.Remove(key);
+            Requested.Remove(key);
+        }
+        MainFile.Logger.Info($"FormVisuals: evicted {evict.Count} cached frame set(s) from inactive character groups");
     }
 
     public static void Apply(Creature creature, FormPower form)
@@ -106,6 +169,7 @@ public static class FormVisuals
         // Warm ONLY this character's forms in the background (not every installed mod's). Because
         // this fires for the base form at combat start too, the whole group (incl. mid-combat forms
         // like Ortinax) is usually fully loaded by the time the player actually switches.
+        TrackCombatAndEvict(form.FramesPath);
         PreloadGroup(form.FramesPath);
 
         var node = NCombatRoom.Instance?.GetCreatureNode(creature);

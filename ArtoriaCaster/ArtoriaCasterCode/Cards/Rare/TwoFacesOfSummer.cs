@@ -31,7 +31,8 @@ public sealed class TwoFacesOfSummer() : ArtoriaCard(1, CardType.Power, CardRari
         var power = Owner.Creature.GetPowerInstances<TwoFacesOfSummerPower>().FirstOrDefault();
         if (power != null)
         {
-            power.Draws = DynamicVars.Cards.IntValue;
+            // Math.Max (audit 2026-07-04): una copia base tras la mejorada degradaba la propiedad.
+            power.Draws = Math.Max(power.Draws, DynamicVars.Cards.IntValue);
         }
     }
 

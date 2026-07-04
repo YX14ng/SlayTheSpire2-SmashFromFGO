@@ -64,7 +64,9 @@ public static class Lahmu
                     }
                 }
             }
-            foreach (var powerListener in creature.GetPowerInstances<PowerModel>().OfType<ILahmuDevourListener>())
+            // .ToList(): los listeners pueden aplicar/remover powers al reaccionar (mutan la colección
+            // que estamos iterando) → InvalidOperationException latente. Se materializa antes de notificar.
+            foreach (var powerListener in creature.GetPowerInstances<PowerModel>().OfType<ILahmuDevourListener>().ToList())
             {
                 await powerListener.OnLahmuDevoured(creature, eaten);
             }

@@ -43,9 +43,11 @@ public sealed class GuardiansCounterPower : ArtoriaPower, IHitAnnulledListener
         await Counter(choiceContext, dealer);
     }
 
-    public async Task AfterHitAnnulled(Creature attacker)
+    public async Task AfterHitAnnulled(PlayerChoiceContext choiceContext, Creature attacker)
     {
-        await Counter(new ThrowingPlayerChoiceContext(), attacker);
+        // Contexto sincronizado propagado desde AntiPurgePower (audit 2026-07-04): con uno fresco,
+        // un contraataque que MATA dejaba la muerte fuera del flujo de resolución.
+        await Counter(choiceContext, attacker);
     }
 
     private async Task Counter(PlayerChoiceContext choiceContext, Creature attacker)

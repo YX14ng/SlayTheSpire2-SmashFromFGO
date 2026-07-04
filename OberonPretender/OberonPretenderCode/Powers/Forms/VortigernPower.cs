@@ -29,7 +29,10 @@ public sealed class VortigernPower : OberonFormPower, ISleepIgnorer
 
     public override bool IsPermanent => true;
 
-    public override string? FramesPath => $"{MainFile.ResPath}/character/oberon_frames_vortigern.tres";
+    // FramesPath = null (audit 2026-07-04): el .tres "oberon_frames_vortigern" no existe en el repo — el
+    // swap declaraba un recurso inexistente (no-op con log de error). null = mantener el sprite
+    // actual. TODO pase de arte: generar el .tres y restaurar el path.
+    public override string? FramesPath => null;
 
     public bool IgnoresSleep(Creature target) => true; // el abismo devora en el sueno
 
@@ -47,13 +50,10 @@ public sealed class VortigernPower : OberonFormPower, ISleepIgnorer
 
         Flash();
 
-        // 1) Pagar con NP: 10 por punto, hasta lo que el medidor cubra.
-        var affordable = Math.Min(debt, NpCharge.Current(Owner) / DebtPower.NpPerDebt);
-        if (affordable > 0)
-        {
-            await NpCharge.Spend(Owner, affordable * DebtPower.NpPerDebt, null);
-            await DebtPower.Forgive(Owner, affordable);
-        }
+        // 1) Pagar con NP por el camino UNICO de DebtPower (audit 2026-07-04): el cobro inline no
+        //    disparaba NotifyDebtPaid — Dream Contract y el Libro del Fin de los Suenos dejaban de
+        //    dar Estrellas en Vortigern. PayActively paga (10 NP/punto) y notifica con el contexto.
+        await DebtPower.PayActively(choiceContext, Owner, debt);
 
         var unpaid = DebtPower.Of(Owner);
         if (unpaid <= 0) return;

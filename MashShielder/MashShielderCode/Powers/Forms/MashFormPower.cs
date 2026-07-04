@@ -93,11 +93,17 @@ public abstract class MashFormPower : FormPower
     /// Consume hasta 5 de Bloqueo UNA vez por carta (antes de resolver los golpes) y cachea el bono.
     /// Así un Ataque multi-hit no consume 5 por golpe ni suma +5 a cada golpe (era double-dip).
     /// </summary>
+    // True mientras un Ataque REAL del dueño se está resolviendo (BeforeCardPlayed→AfterCardPlayed,
+    // ambos caminos reales, nunca preview). Permite que ModifyDamageAdditive distinga preview de play
+    // sin mutar: en preview predice min(5, Block); resolviendo devuelve el bono ya cacheado.
+    private bool _resolvingAttack;
+
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
         if (!OrtinaxPassive) return;
         if (cardPlay.Card.Type != CardType.Attack || cardPlay.Card.Owner?.Creature != Owner) return;
 
+        _resolvingAttack = true;
         var consume = (int)Math.Min(BunkerBoltMax, Owner.Block);
         if (consume <= 0) return;
 
@@ -106,23 +112,32 @@ public abstract class MashFormPower : FormPower
         await CreatureCmd.LoseBlock(Owner, consume);
     }
 
-    // Devuelve el bono cacheado en el golpe del Ataque. PURO (NO muta): el hook corre también en
-    // PREVIEW y NO recibe el previewMode, así que mutar acá hacía que una preview consumiera la
-    // munición antes de la pegada REAL. El bono se limpia en AfterDamageReceived (nunca en preview).
+    // PURO (NO muta): el hook corre también en PREVIEW y NO recibe el previewMode. En preview
+    // (_resolvingAttack=false) devuelve la PREDICCIÓN min(5, Block) — antes devolvía 0 y el número
+    // mostrado en la carta subestimaba todos los Ataques hasta en 5 (audit 2026-07-04). Resolviendo
+    // de verdad, devuelve el bono cacheado (que AfterDamageReceived limpia tras el primer golpe).
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (!OrtinaxPassive || Owner != dealer || !props.IsPoweredAttack() || _pendingBunkerBonus <= 0) return 0m;
-        return _pendingBunkerBonus;
+        if (!OrtinaxPassive || Owner != dealer || !props.IsPoweredAttack()) return 0m;
+        if (!_resolvingAttack) return Math.Min(BunkerBoltMax, Owner.Block);
+        return _pendingBunkerBonus > 0 ? _pendingBunkerBonus : 0m;
     }
 
-    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        // Safety net: si el Ataque no resolvió ningún golpe (fizzle), limpiar el bono cacheado.
         if (OrtinaxPassive && cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner?.Creature == Owner)
         {
-            _pendingBunkerBonus = 0;
+            _resolvingAttack = false;
+            // Si NADIE cobró el bono (fizzle, o un Ataque Unpowered como el Embate de Lord Camelot,
+            // cuyo daño no pasa por ModifyDamageAdditive), REEMBOLSAR el Bloqueo consumido en
+            // BeforeCardPlayed — antes se perdía sin dar nada a cambio (audit 2026-07-04).
+            if (_pendingBunkerBonus > 0)
+            {
+                var refund = _pendingBunkerBonus;
+                _pendingBunkerBonus = 0;
+                await CreatureCmd.GainBlock(Owner, refund, ValueProp.Unpowered, null);
+            }
         }
-        return Task.CompletedTask;
     }
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)

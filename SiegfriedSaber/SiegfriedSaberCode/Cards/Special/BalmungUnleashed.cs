@@ -49,7 +49,7 @@ public sealed class BalmungUnleashed() : SiegfriedCard(0, CardType.Attack, CardR
         HoverTipFactory.FromPower<DragonScalesPower>()
     ];
 
-    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost);
+    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost, this);
     // Resplandor dorado cuando es jugable Y la armadura afila el filo (SdD >= 3).
     protected override bool ShouldGlowGoldInternal => IsPlayable && GlowAtScales(ScaledThreshold);
 

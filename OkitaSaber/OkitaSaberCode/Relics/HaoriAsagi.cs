@@ -51,22 +51,50 @@ public sealed class HaoriAsagi : OkitaRelic
         await base.BeforeCombatStartLate();
         _attackProcsThisTurn = 0;
         _breathRefundedThisTurn = false;
-        // Aliento inicial del combate (6) — el embudo arranca con margen para una Ráfaga.
+        Aliento.ResetHitZero(Owner.Creature);
+        // Contador de Ataques del turno instalado DESDE el arranque (audit 2026-07-04): instalado
+        // perezosamente por las cartas, los Ataques previos del turno no se contaban (mismo fix que
+        // OathOfUruk con CardsThisTurnPower).
+        await AttacksThisTurnPower.EnsureInstalled(Owner.Creature);
+        // Aliento inicial del combate (6) — el embudo arranca con margen para una Rafaga.
         await PowerCmd.Apply<AlientoPower>(new BlockingPlayerChoiceContext(), Owner.Creature, AlientoPower.StartingBreath, Owner.Creature, null);
     }
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side == CombatSide.Player)
+        if (side != CombatSide.Player) return;
+        _attackProcsThisTurn = 0;
+        _breathRefundedThisTurn = false;
+        Aliento.ResetHitZero(Owner.Creature);
+
+        // REGEN del Aliento (audit 2026-07-04): vivia en AlientoPower.AfterSideTurnStart, pero ese
+        // power se REMUEVE al llegar a 0 — y con el moria el regen para el resto del combate. La
+        // starter (siempre presente) regenera; Aliento.Gain reinstala el power si falta y respeta Cap.
+        var regen = AlientoPower.RegenPerTurn;
+        foreach (var b in FGOCore.FGOCoreCode.Listeners.PowersOf<IBreathRegenBooster>(Owner.Creature))
         {
-            _attackProcsThisTurn = 0;
-            _breathRefundedThisTurn = false;
+            regen += b.ExtraBreathRegen;
         }
-        return Task.CompletedTask;
+        await Aliento.Gain(Owner.Creature, regen, null);
+    }
+
+    /// <summary>La Flor de la Capital Imperial REEMPLAZA este motor (numeros al doble): mientras
+    /// este presente, los dos procs del Haori callan (audit 2026-07-04: antes se apilaban y el motor
+    /// se triplicaba). El regen/reset de Aliento del Haori NO se apaga — la Flor no lo cubre.</summary>
+    private bool ReplacedByFlower()
+    {
+        var relics = Owner.Creature.Player?.Relics;
+        if (relics == null) return false;
+        foreach (var r in relics)
+        {
+            if (r is FlowerOfImperialCapital) return true;
+        }
+        return false;
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
+        if (ReplacedByFlower()) return;
         if (cardPlay.Card.Type != CardType.Attack || cardPlay.Card.Owner?.Creature != Owner.Creature) return;
         if (_attackProcsThisTurn >= MaxProcsPerTurn) return;
         _attackProcsThisTurn++;
@@ -80,6 +108,7 @@ public sealed class HaoriAsagi : OkitaRelic
     // recurso de firma, no solo el ×2 genérico. El cap evita el loop ⚡-positivo (perilla #4 del doc).
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
+        if (ReplacedByFlower()) return;
         if (amount >= 0m || power is not CritReadyPower || power.Owner != Owner.Creature) return;
         Flash();
         await NpCharge.Gain(Owner.Creature, NpPerCrit, null);

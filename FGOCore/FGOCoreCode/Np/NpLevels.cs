@@ -103,18 +103,13 @@ public static class NpLevels
     /// </summary>
     public static async Task<bool> TryRollDupeWithConsolation(Player player)
     {
+        // Reimplementado SOBRE TryRollDupe (audit 2026-07-04): antes duplicaba el roll línea por
+        // línea y cualquier tuneo (chance/pity) podía driftear entre las dos copias. TryRollDupe ya
+        // incrementa la piedad en el fallo, así que el consuelo lee la piedad post-fallo, igual que antes.
         var store = Store(player);
         if (store == null || !CanLevelUp(player)) return false;
 
-        var chance = BaseChancePercent + PityChancePercent * store.DupePity;
-        // MP: ver TryRollDupe — RNG per-player, no el stream de combate compartido (evita desync).
-        if (player.PlayerRng.Rewards.NextInt(100) < chance)
-        {
-            store.NpLevel++;
-            store.DupePity = 0;
-            return true;
-        }
-        store.DupePity++;
+        if (TryRollDupe(player)) return true;
         await GrantConsolation(player, store.DupePity);
         return false;
     }

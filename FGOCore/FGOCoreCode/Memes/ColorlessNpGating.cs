@@ -22,9 +22,25 @@ public interface INpDependentColorless;
 
 internal static class ColorlessNpGating
 {
-    /// <summary>Un personaje FGO se detecta por tener su reliquia de Vínculo (BondRelic, FGOCore): todos
-    /// los Servants arrancan con una; los personajes no-FGO no. Señal MP-safe (por-jugador, sin RNG).</summary>
-    internal static bool IsFgo(Player player) => player.Relics.OfType<BondRelic>().Any();
+    private static readonly Dictionary<System.Type, bool> FgoByCharacterType = [];
+
+    /// <summary>Identidad ESTABLE (audit 2026-07-04): un personaje es FGO si su CharacterModel viene de
+    /// un assembly que referencia FGOCore (los 10 mods lo hacen; vanilla y otros mods no). Antes se
+    /// detectaba por tener una BondRelic — estado mutable: si un efecto remueve/reemplaza la reliquia
+    /// starter (p.ej. Touch of Orobas), el personaje "dejaba de ser FGO" a mitad de la run. Cacheado por
+    /// tipo (la reflexión corre una vez por personaje por sesión).</summary>
+    internal static bool IsFgo(Player player)
+    {
+        var t = player.Character.GetType();
+        if (!FgoByCharacterType.TryGetValue(t, out var fgo))
+        {
+            var self = typeof(ColorlessNpGating).Assembly;
+            fgo = t.Assembly == self
+                  || System.Linq.Enumerable.Any(t.Assembly.GetReferencedAssemblies(), a => a.Name == self.GetName().Name);
+            FgoByCharacterType[t] = fgo;
+        }
+        return fgo;
+    }
 }
 
 /// <summary>Tienda: el slot de carta incolora sale de <c>CreateForMerchant(player, colorlessPool, rarity)</c>.

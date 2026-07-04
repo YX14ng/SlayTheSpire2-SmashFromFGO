@@ -52,20 +52,21 @@ public sealed class AbsoluteWallPower : MashShielderPower
         Flash();
 
         // 1) Intercepción (permanente + de turno: ProvokePower deriva de InterceptPower).
-        var intercept = Owner.GetPowerInstances<PowerModel>().OfType<InterceptPower>().Sum(p => p.Amount);
+        //    GetPowerInstances<InterceptPower> directo (audit: el doble filtro OfType alocaba de más
+        //    en un hook que corre por cada golpe enemigo detenido).
+        var intercept = Owner.GetPowerInstances<InterceptPower>().Sum(p => p.Amount);
         if (intercept > 0 && !dealer.IsDead)
         {
             await CreatureCmd.Damage(choiceContext, dealer, intercept, ValueProp.Unpowered | ValueProp.SkipHurtAnim, Owner, null);
         }
 
-        // 2) Estrellas de Crítico de la reliquia inicial (golpe totalmente bloqueado →
-        //    +10; LordCamelotRestored: +20). Montos del parche P1 del rediseño.
-        var player = Owner.Player;
-        var stars = player?.GetRelic<LordCamelotRestored>() != null ? 20
-            : player?.GetRelic<RoundTableFragment>() != null ? 10 : 0;
-        if (stars > 0)
+        // 2) Estrellas de la reliquia inicial — por el MISMO camino y candado (3 procs/turno, P1)
+        //    que el golpe totalmente bloqueado normal (audit 2026-07-04: acá se pagaba a mano, sin
+        //    cupo y con montos duplicados del valor de la reliquia).
+        var engine = Owner.Player?.Relics.OfType<BulwarkEngineRelic>().FirstOrDefault();
+        if (engine != null)
         {
-            await FGOCore.FGOCoreCode.Stars.CritStars.Gain(Owner, stars, null);
+            await engine.TryProcFullBlockStars();
         }
 
         // 3) Promesa a Senpai: +NP por golpe detenido.

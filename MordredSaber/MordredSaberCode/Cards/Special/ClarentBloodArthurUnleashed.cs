@@ -48,7 +48,7 @@ public sealed class ClarentBloodArthurUnleashed() : MordredCard(0, CardType.Atta
         HoverTipFactory.FromPower<OverchargeBlessingPower>()
     ];
 
-    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost);
+    protected override bool IsPlayable => NpCharge.CanPay(Owner.Creature, ChargeCost, this);
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 

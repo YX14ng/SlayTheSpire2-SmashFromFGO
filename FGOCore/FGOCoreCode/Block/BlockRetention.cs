@@ -44,6 +44,24 @@ public static class BlockRetention
             }
         }
 
+        // Preventers VANILLA como fuentes (audit 2026-07-04): el juego elige UN solo preventer. Si el
+        // elegido es el nuestro (Bulwark/forma), Enforce recortaba bloqueo que Barricade/Blur/Burrowed
+        // (retienen todo) o la Sturdy Clamp (retiene 10) garantizaban — y viceversa. Incorporarlos acá
+        // hace el resultado idéntico gane quien gane la carrera de preventers (la promesa de esta clase).
+        if (creature.GetPower<MegaCrit.Sts2.Core.Models.Powers.BarricadePower>() != null
+            || creature.GetPower<MegaCrit.Sts2.Core.Models.Powers.BlurPower>() != null
+            || creature.GetPower<MegaCrit.Sts2.Core.Models.Powers.BurrowedPower>() != null)
+        {
+            return decimal.MaxValue;
+        }
+        if (creature.Player != null)
+        {
+            foreach (var relic in creature.Player.Relics)
+            {
+                if (relic is MegaCrit.Sts2.Core.Models.Relics.SturdyClamp && best < 10m) best = 10m;
+            }
+        }
+
         return creature.GetPowerAmount<BulwarkPower>() + best;
     }
 
@@ -60,23 +78,25 @@ public static class BlockRetention
         }
     }
 
-    /// <summary>Gain Block that persists between turns (Bulwark): block + matching Bulwark stacks.</summary>
-    public static async Task GainBulwarkBlock(CardModel card, Creature creature, BlockVar blockVar, CardPlay? cardPlay)
+    /// <summary>Gain Block that persists between turns (Bulwark): block + matching Bulwark stacks.
+    /// <paramref name="choiceContext"/>: si el caller corre en un hook de borde de turno, pasá el
+    /// contexto del hook (sincronizado); un contexto fresco solo para caminos fuera de hooks.</summary>
+    public static async Task GainBulwarkBlock(CardModel card, Creature creature, BlockVar blockVar, CardPlay? cardPlay, PlayerChoiceContext? choiceContext = null)
     {
         var gained = await CreatureCmd.GainBlock(creature, blockVar, cardPlay);
         if (gained > 0)
         {
-            await PowerCmd.Apply<BulwarkPower>(new BlockingPlayerChoiceContext(), creature, gained, creature, card);
+            await PowerCmd.Apply<BulwarkPower>(choiceContext ?? new BlockingPlayerChoiceContext(), creature, gained, creature, card);
         }
     }
 
-    /// <summary>Bulwark Block from a flat amount (powers, relics).</summary>
-    public static async Task GainBulwarkBlock(CardModel? source, Creature creature, decimal amount, ValueProp props = ValueProp.Move)
+    /// <summary>Bulwark Block from a flat amount (powers, relics). Ver nota de contexto arriba.</summary>
+    public static async Task GainBulwarkBlock(CardModel? source, Creature creature, decimal amount, ValueProp props = ValueProp.Move, PlayerChoiceContext? choiceContext = null)
     {
         var gained = await CreatureCmd.GainBlock(creature, amount, props, null);
         if (gained > 0)
         {
-            await PowerCmd.Apply<BulwarkPower>(new BlockingPlayerChoiceContext(), creature, gained, creature, source);
+            await PowerCmd.Apply<BulwarkPower>(choiceContext ?? new BlockingPlayerChoiceContext(), creature, gained, creature, source);
         }
     }
 }

@@ -66,7 +66,24 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer
     {
         if (target != Owner.Creature) return;
         if (!props.IsPoweredAttack()) return;
-        if (result.WasFullyBlocked) return; // no te alcanzó (espejo del amount>0 del power)
+        // Nada llego siquiera al Bloqueo (ataque reducido a 0 antes, p.ej. 1 de dano con Weak):
+        // NO es un golpe que alcanza — sin este gate, un ataque de 0 contra jugador sin Bloqueo
+        // consumia el pierce y disparaba los listeners (pierce fantasma, audit 2026-07-04).
+        if (result.UnblockedDamage + result.BlockedDamage <= 0) return;
+        // Golpe anulado por la CORONA (audit 2026-07-04): la Corona devuelve 0 en el hook de HP y el
+        // motor lo computa WasFullyBlocked (unblocked==0 con Bloqueo de por medio) — el early-return
+        // de abajo se lo tragaba, el pierce jamas se consumia y la Corona anulaba TODOS los golpes
+        // parcialmente bloqueados del turno. Si el cupo del pierce y el de la Corona siguen libres,
+        // tratamos este golpe como el que ALCANZO (consume ambos cupos via Broadcast).
+        var crownAnnulled = false;
+        if (result.WasFullyBlocked && !_piercedThisTurn && !IsPierceSuppressed())
+        {
+            foreach (var p in FGOCore.FGOCoreCode.Listeners.PowersOf<SiegfriedSaber.SiegfriedSaberCode.Powers.PeerlessCrownPower>(Owner.Creature))
+            {
+                if (p.HasFreeCharge) { crownAnnulled = true; break; }
+            }
+        }
+        if (result.WasFullyBlocked && !crownAnnulled) return; // no te alcanzó (espejo del amount>0 del power)
         // Tarnkappe (IDragonScalePierceSuppressor): la espalda cubierta corta el pierce Y toda vía de NP que
         // el golpe-que-alcanza alimentaría (el +5 NP de abajo y el broadcast del pierce a los listeners).
         if (IsPierceSuppressed()) return;
@@ -85,7 +102,12 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer
 
         // El golpe chocó contra las escamas. P2: solo refunda NP si AÚN infligió ≥1 tras la SdD
         // (un golpe anulado del todo = la armadura trabajó gratis, sin NP).
-        if (result.UnblockedDamage >= 1 && _npProcsThisTurn < NpProcCapPerTurn)
+        // Gates de la reduccion REAL (audit 2026-07-04): el +NP es el pago por "las escamas
+        // redujeron este golpe" — con SdD en 0 (Erupcion de Escamas) o suprimida (Espalda
+        // Expuesta/ISdDSuppressor) no redujeron nada y no corresponde pagar.
+        var scalesWorked = Owner.Creature.GetPowerAmount<DragonScalesPower>() > 0
+                           && !FGOCore.FGOCoreCode.Listeners.PowersOf<ISdDSuppressor>(Owner.Creature).Any(s => s.SuppressScales);
+        if (scalesWorked && result.UnblockedDamage >= 1 && _npProcsThisTurn < NpProcCapPerTurn)
         {
             _npProcsThisTurn++;
             Flash();

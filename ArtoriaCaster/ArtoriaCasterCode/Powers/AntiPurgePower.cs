@@ -46,8 +46,16 @@ public sealed class AntiPurgePower : ArtoriaPower
         if (power != this || _isClamping || Amount <= Max) return;
 
         _isClamping = true;
-        await PowerCmd.ModifyAmount(choiceContext, this, Max - Amount, Owner, null);
-        _isClamping = false;
+        try
+        {
+            await PowerCmd.ModifyAmount(choiceContext, this, Max - Amount, Owner, null);
+        }
+        finally
+        {
+            // try/finally (audit 2026-07-04): si el ModifyAmount lanza/cancela, el guard quedaba
+            // en true y el tope de 5 se desactivaba el resto del combate.
+            _isClamping = false;
+        }
     }
 
     /// <summary>Enemy hits fully stopped this turn: Block-stopped (FormPower) + AP-only annulments.</summary>
@@ -57,7 +65,10 @@ public sealed class AntiPurgePower : ArtoriaPower
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side == CombatSide.Player)
+        // Reset al arrancar el turno ENEMIGO (audit 2026-07-04, espejo de FormPower.BlockedHitsThisTurn):
+        // las anulaciones ocurren en la volea enemiga y las cartas (CounterBlade) las leen en el turno
+        // del jugador SIGUIENTE. Con el reset en el turno del jugador, leían siempre 0.
+        if (side == CombatSide.Enemy)
         {
             AnnulledThisTurn = 0;
         }
@@ -87,22 +98,25 @@ public sealed class AntiPurgePower : ArtoriaPower
         if (!result.WasFullyBlocked)
         {
             AnnulledThisTurn++;
-            await NotifyAnnulled(dealer);
+            await NotifyAnnulled(choiceContext, dealer);
         }
         await PowerCmd.Decrement(this);
     }
 
-    private async Task NotifyAnnulled(Creature attacker)
+    private async Task NotifyAnnulled(PlayerChoiceContext choiceContext, Creature attacker)
     {
-        foreach (var power in Owner.GetPowerInstances<MegaCrit.Sts2.Core.Models.PowerModel>())
+        // Se materializa con ToList (los listeners pueden mutar powers) y se propaga el choiceContext
+        // SINCRONIZADO del hook (audit 2026-07-04): el contraataque de la Guardiana dañaba con un
+        // ThrowingPlayerChoiceContext fresco — la misma clase de bug que colgaba el turno del enjambre.
+        foreach (var power in Owner.GetPowerInstances<MegaCrit.Sts2.Core.Models.PowerModel>().OfType<IHitAnnulledListener>().ToList())
         {
-            if (power is IHitAnnulledListener listener) await listener.AfterHitAnnulled(attacker);
+            await power.AfterHitAnnulled(choiceContext, attacker);
         }
         var relics = Owner.Player?.Relics;
         if (relics == null) return;
         foreach (var relic in relics)
         {
-            if (relic is IHitAnnulledListener listener) await listener.AfterHitAnnulled(attacker);
+            if (relic is IHitAnnulledListener listener) await listener.AfterHitAnnulled(choiceContext, attacker);
         }
     }
 }
@@ -111,8 +125,10 @@ public sealed class AntiPurgePower : ArtoriaPower
 /// Reacts to an Anti-Purge annulment that vanilla did not count as a fully blocked
 /// hit. Implementors wanting EVERY fully-stopped hit must also check
 /// result.WasFullyBlocked in their own AfterDamageReceived (Ojos Feéricos pattern).
+/// El <paramref name="choiceContext"/> es el del hook de daño aguas arriba (sincronizado):
+/// cualquier daño/efecto del listener DEBE usarlo, nunca un contexto fresco.
 /// </summary>
 public interface IHitAnnulledListener
 {
-    Task AfterHitAnnulled(Creature attacker);
+    Task AfterHitAnnulled(PlayerChoiceContext choiceContext, Creature attacker);
 }

@@ -32,7 +32,7 @@ public sealed class FaerieEyesPower : ArtoriaPower, IHitAnnulledListener
         await Trigger();
     }
 
-    public Task AfterHitAnnulled(Creature attacker) => Trigger();
+    public Task AfterHitAnnulled(PlayerChoiceContext choiceContext, Creature attacker) => Trigger();
 
     private async Task Trigger()
     {

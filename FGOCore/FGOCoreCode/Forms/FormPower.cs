@@ -39,11 +39,37 @@ public abstract class FormPower : FGOCorePower
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side == CombatSide.Player)
+        // Reset al arrancar el turno ENEMIGO, no el del jugador (audit 2026-07-04): los golpes se
+        // bloquean durante la volea enemiga N y las cartas de contraataque (Reprisal, CounterBlade)
+        // los leen en el turno del jugador N+1. Con el reset en el turno del jugador, esas cartas
+        // leían siempre 0. Ahora el conteo persiste todo el turno del jugador y se limpia recién
+        // cuando empieza la siguiente volea enemiga.
+        if (side == CombatSide.Enemy)
         {
             BlockedHitsThisTurn = 0;
         }
         return Task.CompletedTask;
+    }
+
+    // Retención de Bloqueo (audit 2026-07-04): implementar IBlockRetentionSource en una forma NO
+    // prevenía el clear por sí solo — el juego solo pregunta ShouldClearBlock, y sin un BulwarkPower
+    // presente nadie respondía false, así que la retención de la forma estaba muerta. La base FormPower
+    // responde por cualquier subclase que implemente la interfaz con cap > 0; Enforce unifica el
+    // resultado con el resto de las fuentes (el juego elige UN solo preventer).
+    public override bool ShouldClearBlock(Creature creature)
+    {
+        if (creature == Owner && this is Block.IBlockRetentionSource src && src.RetentionCap(creature) > 0m)
+        {
+            return false;
+        }
+        return base.ShouldClearBlock(creature);
+    }
+
+    public override async Task AfterPreventingBlockClear(AbstractModel preventer, Creature creature)
+    {
+        if (this != preventer || creature != Owner) return;
+        await Block.BlockRetention.Enforce(creature);
+        Flash();
     }
 
     public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)

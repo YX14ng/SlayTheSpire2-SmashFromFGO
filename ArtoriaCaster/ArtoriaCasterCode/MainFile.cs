@@ -60,6 +60,19 @@ public partial class MainFile : Node
     }
 
     private static bool HasUltInHand(Creature creature)
-        => creature.Player != null
-           && PileType.Hand.GetPile(creature.Player).Cards.Any(c => c is AroundCaliburnUnleashed);
+    {
+        var player = creature.Player;
+        if (player == null) return false;
+        // Mano + robo + descarte (audit 2026-07-04): con la MANO LLENA el manifest se desvía al
+        // descarte (CardPileCmd redirige el add) — dedupear solo contra la mano generaba una copia
+        // extra de la ulti en cada re-chequeo (cruce de 100 / inicio de turno).
+        foreach (var pile in new[] { PileType.Hand, PileType.Draw, PileType.Discard })
+        {
+            foreach (var c in pile.GetPile(player).Cards)
+            {
+                if (c is AroundCaliburnUnleashed) return true;
+            }
+        }
+        return false;
+    }
 }

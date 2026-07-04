@@ -16,5 +16,8 @@ public sealed class MaskedKnightFormPower : MordredFormPower
 
     protected override int NpPerTurnStart => NpPerTurn;
 
-    public override string FramesPath => $"{MainFile.ResPath}/character/mordred_frames_masked.tres";
+    // FramesPath = null (audit 2026-07-04): el .tres "mordred_frames_masked" no existe en el repo — el
+    // swap declaraba un recurso inexistente (no-op con log de error). null = mantener el sprite
+    // actual. TODO pase de arte: generar el .tres y restaurar el path.
+    public override string? FramesPath => null;
 }

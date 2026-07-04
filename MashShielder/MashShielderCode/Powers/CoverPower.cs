@@ -24,7 +24,14 @@ public sealed class CoverPower : MashShielderPower
 
     private decimal _pendingTransfer;
 
+    // Guard de re-entrancia (audit 2026-07-04): dos Mash en co-op con Cobertura MUTUA (A cubre a B y
+    // B cubre a A) recursionaban hasta colgar el juego — el traspaso de A es un Damage que el Cover de
+    // B vuelve a anular y traspasar, y así al infinito. Mientras un traspaso está en vuelo, NINGÚN
+    // CoverPower cubre (estático per-cliente: el traspaso corre inline en el flujo sincronizado).
+    private static bool _transferring;
+
     private bool Covers(Creature target, Creature? dealer) =>
+        !_transferring &&
         target != Owner && target.IsPlayer && !target.IsDead &&
         dealer != null && dealer.IsMonster && !Owner.IsDead;
 
@@ -43,7 +50,15 @@ public sealed class CoverPower : MashShielderPower
         var dmg = _pendingTransfer;
         _pendingTransfer = 0;
         Flash();
-        await CreatureCmd.Damage(choiceContext, Owner, dmg, ValueProp.Move, dealer, null);
+        _transferring = true;
+        try
+        {
+            await CreatureCmd.Damage(choiceContext, Owner, dmg, ValueProp.Move, dealer, null);
+        }
+        finally
+        {
+            _transferring = false;
+        }
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

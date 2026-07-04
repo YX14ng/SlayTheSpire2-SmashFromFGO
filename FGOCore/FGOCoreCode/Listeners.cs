@@ -57,7 +57,9 @@ public static class Listeners
     /// </summary>
     public static async Task ForEachListener<T>(Creature creature, Func<T, Task> action) where T : class
     {
-        foreach (var listener in Of<T>(creature))
+        // .ToList(): un listener puede aplicar/remover powers al reaccionar (muta la colección en
+        // iteración) → InvalidOperationException latente. Se materializa antes de notificar.
+        foreach (var listener in Of<T>(creature).ToList())
         {
             await action(listener);
         }

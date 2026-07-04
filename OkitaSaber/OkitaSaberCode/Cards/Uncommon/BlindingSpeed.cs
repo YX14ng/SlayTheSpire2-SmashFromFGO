@@ -15,11 +15,11 @@ namespace OkitaSaber.OkitaSaberCode.Cards.Uncommon;
 /// </summary>
 public sealed class BlindingSpeed() : OkitaCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self), IRafagaCard
 {
-    private int _rafagaCost = 2;
+    // DynamicVar (audit 2026-07-04): con el coste en un campo privado, la mejora (Rafaga 2 -> 1)
+    // era INVISIBLE — la loc hardcodeaba "2". Como var, !RafagaCost! se renderiza y el up se ve.
+    public int RafagaCost => DynamicVars["RafagaCost"].IntValue;
 
-    public int RafagaCost => _rafagaCost;
-
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1), new DynamicVar("RafagaCost", 2)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<AlientoPower>()];
 
@@ -34,5 +34,5 @@ public sealed class BlindingSpeed() : OkitaCard(0, CardType.Skill, CardRarity.Un
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
     }
 
-    protected override void OnUpgrade() => _rafagaCost = 1; // RÁFAGA 2 -> RÁFAGA 1
+    protected override void OnUpgrade() => DynamicVars["RafagaCost"].UpgradeValueBy(-1m); // RAFAGA 2 -> 1
 }

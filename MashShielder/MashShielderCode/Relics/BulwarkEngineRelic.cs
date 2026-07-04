@@ -74,15 +74,24 @@ public abstract class BulwarkEngineRelic : MashShielderRelic, IBlockRetentionSou
         return Task.CompletedTask;
     }
 
+    /// <summary>Camino ÚNICO del pago de estrellas por golpe totalmente bloqueado, con el candado
+    /// P1 (máx 3 procs/turno). Lo usan el listener normal (abajo) y la Pared Absoluta (P8b) — antes
+    /// la Pared duplicaba el pago a mano SIN el candado (audit 2026-07-04). Devuelve true si pagó.</summary>
+    public async Task<bool> TryProcFullBlockStars()
+    {
+        if (!IsActive || _starProcsThisTurn >= MaxProcsPerTurn) return false;
+        _starProcsThisTurn++;
+        Flash();
+        await CritStars.Gain(Owner.Creature, StarsPerFullBlock, null);
+        return true;
+    }
+
     /// <summary>Golpe enemigo totalmente bloqueado → estrellas (máx 3/turno, parche P1).</summary>
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (!IsActive || target != Owner.Creature || dealer == null) return;
         if (!props.IsPoweredAttack() || !result.WasFullyBlocked) return;
-        if (_starProcsThisTurn >= MaxProcsPerTurn) return;
-        _starProcsThisTurn++;
-        Flash();
-        await CritStars.Gain(Owner.Creature, StarsPerFullBlock, null);
+        await TryProcFullBlockStars();
     }
 
     /// <summary>Perder Vida → Carga NP (máx 3/turno, parche P1).</summary>
