@@ -147,7 +147,7 @@
   "MASHSHIELDER-SENPAI_PROMISE.title": "Promesa a Senpai",
   "MASHSHIELDER-SENPAI_PROMISE.description": "#Cuando un golpe enemigo no atraviese tu Bloqueo: obtén !SenpaiPromise! de *Carga *NP. En co-op, cada aliado obtiene la misma Promesa (los golpes que ellos bloqueen cargan su propio NP).",
   "MASHSHIELDER-PIONEER_OF_THE_STARS.title": "Espíritu Pionero de las Estrellas",
-  "MASHSHIELDER-PIONEER_OF_THE_STARS.description": "#La primera carta NP que juegues cada combate no consume *Carga *NP y se resuelve con Sobrecarga mínima. Cada carta NP que juegas: obtén !Stars! *Estrellas *de *Crítico.",
+  "MASHSHIELDER-PIONEER_OF_THE_STARS.description": "#La primera carta NP DE TU MAZO que jugás cada combate no cuesta *Carga *NP y resuelve a Sobrecarga mínima (la ulti que se auto-manifiesta a 100 no cuenta). Cuando jugás una carta NP: ganás !Stars! *Estrellas *de *Crítico.",
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.title": "Lord Camelot",
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.description": "#NP (!ChargeCost! de Carga): obtén !B! de Bloqueo con *Baluarte, !Strength! de *Fuerza y !Provoke! de *Intercepción este turno. +!PerTen! de Bloqueo por cada 10 de Carga sobre el mínimo. En co-op, cada aliado obtiene !AllyBlock! de Bloqueo con *Baluarte y !AllyProvoke! de *Intercepción este turno.",
   "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.title": "LORD CHALDEAS: Desatado",

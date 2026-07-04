@@ -38,8 +38,14 @@ public sealed class TidalSwarmPower : TiamatPower
         [HoverTipFactory.FromPower<LahmuSwarmPower>(), HoverTipFactory.FromPower<CursePower>()];
 
     /// <summary>Al FINAL de TU turno, el enjambre muerde de nuevo (Amount mordidas extra) al más
-    /// maldito. Se re-resuelve el objetivo en cada mordida (puede morir entre golpes).</summary>
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    /// maldito. Se re-resuelve el objetivo en cada mordida (puede morir entre golpes).
+    /// HOOK = BeforeSideTurnEnd, NO AfterSideTurnEnd (2026-07-04, reportes post-fix del contexto:
+    /// "matar la primera tortuga/anguila → no se puede operar; matar ambas a la vez → pasa"): en
+    /// AfterSideTurnEnd el turno ya está en transición y una MUERTE ahí deja colgados a los enemigos
+    /// restantes. NINGÚN power vanilla daña enemigos en AfterSideTurnEnd (MagicBomb/Constrict solo se
+    /// auto-dañan); los que dañan enemigos al fin del turno (Hailstorm/TheBomb) usan BeforeSideTurnEnd
+    /// con el choiceContext del hook — este es ese patrón exacto.</summary>
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != Owner.Side || Owner.IsDead) return;
         var swarm = Lahmu.Count(Owner);

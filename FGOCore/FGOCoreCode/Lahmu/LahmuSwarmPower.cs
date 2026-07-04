@@ -36,31 +36,37 @@ public sealed class LahmuSwarmPower : FGOCorePower
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<LahmuNurturePower>(), HoverTipFactory.FromPower<CursePower>()];
 
-    // BeforeSideTurnStart (NO AfterSideTurnStart): necesitamos el choiceContext SINCRONIZADO que pasa el
-    // hook para el daño de la mordida. Con un ThrowingPlayerChoiceContext fresco, cuando la mordida MATA a
-    // un enemigo al inicio del turno enemigo, la muerte queda fuera del flujo de resolución -> el turno "no
-    // se resuelve" (无法结算, cuelga, sobre todo en MP; reporte de player). AfterSideTurnStart no trae
-    // choiceContext; BeforeSideTurnStart sí, y el timing (bloque antes de los ataques enemigos) es igual o mejor.
+    // BLOQUE al inicio del turno enemigo (BeforeSideTurnStart: los cuerpos cubren a la dueña antes de
+    // los ataques). Acá NO se daña a nadie — el daño en este borde colgaba el turno al matar.
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        // Actúa al INICIO del turno enemigo (no el del jugador): el bloque protege durante
-        // los ataques enemigos y la mordida castiga. (Patrón espejo de CursePower, invertido:
-        // CursePower está en el enemigo y actúa en su propio turno; el enjambre está en la
-        // jugadora y actúa en el turno del OTRO lado.)
         if (side == Owner.Side || Owner.IsDead || Amount <= 0) return;
 
         var nurture = Lahmu.NurtureOf(Owner);
         Flash();
-
         await CreatureCmd.GainBlock(Owner, Amount * (BlockPerLahmu + nurture), ValueProp.Unpowered, null);
+    }
+
+    // MORDIDA al final de TU turno (BeforeSideTurnEnd) — 2026-07-04: antes mordía al inicio del turno
+    // enemigo, pero una MUERTE en un borde de turno sin precedente vanilla deja colgados a los enemigos
+    // restantes (reportes: "matar uno → no se puede operar; matar todos a la vez → pasa"). El ÚNICO
+    // patrón vanilla de daño-a-enemigos en borde de turno es BeforeSideTurnEnd del lado propio con el
+    // choiceContext del hook (Hailstorm/TheBomb) — este es ese patrón. La ventana efectiva es la misma
+    // (entre tu último input y los ataques enemigos): mismo objetivo (más maldito), mismo daño.
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if (side != Owner.Side || Owner.IsDead || Amount <= 0) return;
+
+        var nurture = Lahmu.NurtureOf(Owner);
+        Flash();
 
         // La forma Bestia muerde DOS veces (ISwarmBiteAmplifier.ExtraBites=1). Se re-resuelve el
         // objetivo en cada mordida porque el más maldito puede morir entre golpes.
         var bites = 1 + Owner.GetPowerInstances<PowerModel>().OfType<ISwarmBiteAmplifier>().Sum(a => a.ExtraBites);
         for (var i = 0; i < bites; i++)
         {
-            var target = CursesHelper.MostCursed((CombatState)combatState, Owner)
-                         ?? ((CombatState)combatState).GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
+            var target = CursesHelper.MostCursed((CombatState)Owner.CombatState, Owner)
+                         ?? ((CombatState)Owner.CombatState).GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
             if (target == null || target.IsDead) break;
             await CreatureCmd.Damage(choiceContext, target,
                 Amount * (BitePerLahmu + nurture), ValueProp.Unpowered, Owner, null);

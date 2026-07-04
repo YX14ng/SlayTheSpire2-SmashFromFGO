@@ -27,21 +27,25 @@ public sealed class BlackGrailPower : FGOCorePower
 
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Single;
+    // Counter (2026-07-04, reporte de player: "jugar el segundo Grial no hace nada"): cada copia suma
+    // una acumulación = +50% de daño y +4 HP/turno MÁS. Misma tasa por stack que la carta promete;
+    // antes era Single y la segunda copia se perdía en silencio.
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public override bool ShouldScaleInMultiplayer => false;
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (Owner != dealer || !props.IsPoweredAttack()) return 1m;
-        return DamageMultiplier;
+        // +50% por acumulación, aditivo (1 stack ×1.5, 2 stacks ×2.0, ...).
+        return 1m + (DamageMultiplier - 1m) * Math.Max(1m, Amount);
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != Owner.Side || Owner.IsDead) return;
         Flash();
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), Owner, HpLossPerTurn,
+        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), Owner, HpLossPerTurn * (int)Math.Max(1m, Amount),
             ValueProp.Unblockable | ValueProp.Unpowered, null, null);
     }
 }
