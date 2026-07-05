@@ -1,4 +1,5 @@
 using MashShielder.MashShielderCode.Powers;
+using FGOCore.FGOCoreCode.CardTypes;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -12,8 +13,13 @@ namespace MashShielder.MashShielderCode.Cards.Rare;
 /// FGO Overcharge: +damage per 10 extra charge; at a full 100 it strips ALL the target's buffs.
 /// Rediseño v2 (AUDITORÍA, economía rápida): PerTen 4 → 3 (up +1 = 4); 35 daño (up +10).
 /// </summary>
-public sealed class BlackBarrelFullBurst() : MashShielderCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IMashNpCard
+public sealed class BlackBarrelFullBurst() : MashShielderCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IMashNpCard, ICommandTyped
 {
+    // Tipo de comando FGO de la ulti (audit 2026-07-05): el bono reforzado de CommandBonusPower
+    // solo existia en LordCamelotUnleashed; el resto de las 7 cartas NP no lo recibia.
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 50;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

@@ -80,7 +80,7 @@
   "MORDREDSABER-LIGHTNING_VISIT.title": "Lightning Visit",
   "MORDREDSABER-LIGHTNING_VISIT.description": "#Switch form. At the end of your turn, return to the previous form.+ When you return, gain !Stars! *Critical *Stars.+",
   "MORDREDSABER-RUDE_KICK.title": "Rude Kick",
-  "MORDREDSABER-RUDE_KICK.description": "#Deal !D! damage. Apply !Vulnerable! *Vulnerable. If you have a Critical ready: apply 2 *Vulnerable instead.",
+  "MORDREDSABER-RUDE_KICK.description": "#Deal !D! damage. Apply !Vulnerable! *Vulnerable (+1 if you have a *Critical *Ready).",
   "MORDREDSABER-PLUNDER_OF_THE_ROYAL_HOARD.title": "Plunder of the Royal Hoard",
   "MORDREDSABER-PLUNDER_OF_THE_ROYAL_HOARD.description": "#Exhaust. Gain !NpCharge! *NP Charge and !Stars! *Critical *Stars.",
   "MORDREDSABER-CHAINED_LIGHTNING.title": "Chained Lightning",

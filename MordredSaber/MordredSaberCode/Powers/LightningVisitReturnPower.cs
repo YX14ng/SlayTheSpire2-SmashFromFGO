@@ -34,6 +34,15 @@ public sealed class LightningVisitReturnPower : MordredPower
     {
         if (side != Owner.Side || Owner.IsDead) return;
         Flash();
+        // Regreso REAL (audit 2026-07-05): si la forma destino ya esta activa o la forma actual es
+        // permanente (Climax), el Enter es un no-op y el +10 del up no corresponde.
+        var alreadyThere = ReturnToMasked ? Owner.HasPower<MaskedKnightFormPower>() : Owner.HasPower<RebellionFormPower>();
+        var permanentForm = false;
+        foreach (var f in Owner.GetPowerInstances<FGOCore.FGOCoreCode.Forms.FormPower>())
+        {
+            if (f.IsPermanent) { permanentForm = true; break; }
+        }
+        var willSwitch = !alreadyThere && !permanentForm;
         // source == null: el regreso AUTOMÁTICO no cuenta como «cambio de forma» (no dispara
         // FormShiftedPower ni a los IFormChangeListener como el Estandarte) — sólo el switch de IDA
         // de la carta lo hace. La ida ya marcó la danza; el regreso es gratis de eventos.
@@ -45,7 +54,7 @@ public sealed class LightningVisitReturnPower : MordredPower
         {
             await MordredForms.Enter<RebellionFormPower>(choiceContext, Owner, null);
         }
-        if (StarsOnReturn > 0)
+        if (StarsOnReturn > 0 && willSwitch)
         {
             await CritStars.Gain(Owner, StarsOnReturn, null);
         }

@@ -140,6 +140,18 @@ public abstract class MashFormPower : FormPower
         }
     }
 
+    // En KILLS AfterDamageReceived puede saltearse y el bono quedaba vivo: un multi-hit re-aplicaba
+    // el +5 al siguiente golpe y encima AfterCardPlayed lo "reembolsaba" (audit 2026-07-05).
+    // AfterDamageGiven corre SIEMPRE (tambien cuando el golpe mata).
+    public override Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
+    {
+        if (OrtinaxPassive && dealer == Owner && !target.IsPlayer && props.IsPoweredAttack() && _pendingBunkerBonus > 0)
+        {
+            _pendingBunkerBonus = 0;
+        }
+        return Task.CompletedTask;
+    }
+
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);

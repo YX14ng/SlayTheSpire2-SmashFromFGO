@@ -49,7 +49,7 @@ public sealed class KairisCigarettes : MordredRelic
         var toDraw = System.Math.Min(DrawOnFirstCrit, inDeck);
         if (toDraw > 0)
         {
-            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), toDraw, Owner);
+            await CardPileCmd.Draw(choiceContext ?? new BlockingPlayerChoiceContext(), toDraw, Owner);
         }
     }
 }

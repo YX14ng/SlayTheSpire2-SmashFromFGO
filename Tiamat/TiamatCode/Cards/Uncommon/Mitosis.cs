@@ -20,15 +20,23 @@ public sealed class Mitosis() : TiamatCard(1, CardType.Attack, CardRarity.Uncomm
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<LahmuSwarmPower>(), HoverTipFactory.FromPower<LahmuNurturePower>()];
 
+    // Glow solo con cria para devorar (el dano exige el Devorar — audit 2026-07-05).
+    protected override bool ShouldGlowGoldInternal => Lahmu.Count(Owner.Creature) > 0;
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await Lahmu.Devour(Owner.Creature, 1);
-        var dmg = DynamicVars.Damage.BaseValue + DynamicVars["PerNurture"].IntValue * Lahmu.NurtureOf(Owner.Creature);
-        dmg = dmg * Lahmu.DevourBonusMultiplierPct(Owner.Creature) / 100m; // forma Bestia: Devorar +50%
-        await DamageCmd.Attack(dmg).FromCard(this).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_bloody_impact")
-            .Execute(choiceContext);
+        // El dano EXIGE haber devorado (audit 2026-07-05): con 0 Lahmu pegaba el dano completo
+        // igual y encima quedaba +1 Lahmu neto gratis. Sin cria: solo pare (sin dano).
+        var eaten = await Lahmu.Devour(Owner.Creature, 1);
+        if (eaten > 0)
+        {
+            var dmg = DynamicVars.Damage.BaseValue + DynamicVars["PerNurture"].IntValue * Lahmu.NurtureOf(Owner.Creature);
+            dmg = dmg * Lahmu.DevourBonusMultiplierPct(Owner.Creature) / 100m; // forma Bestia: Devorar +50%
+            await DamageCmd.Attack(dmg).FromCard(this).Targeting(cardPlay.Target)
+                .WithHitFx("vfx/vfx_bloody_impact")
+                .Execute(choiceContext);
+        }
         await Lahmu.Spawn(Owner.Creature, 1, this);
     }
 

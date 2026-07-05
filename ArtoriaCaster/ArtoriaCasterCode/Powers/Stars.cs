@@ -27,10 +27,11 @@ public static class Stars
     /// <summary>Critical discount from POWERS implementing <see cref="ICritDiscount"/> (min cost 1).</summary>
     public static int DiscountedCost(Creature creature, int cost)
     {
-        // Sólo powers (Instinto de la Espada): el descuento no vive en reliquias hoy.
-        foreach (var discount in Listeners.PowersOf<ICritDiscount>(creature))
+        // Solo powers (Instinto de la Espada); foreach directo sin iteradores LINQ (audit 2026-07-05:
+        // se evalua en cada IsPlayable/glow de las cartas de Critico).
+        foreach (var p in creature.GetPowerInstances<MegaCrit.Sts2.Core.Models.PowerModel>())
         {
-            cost -= discount.CritCostReduction;
+            if (p is ICritDiscount discount) cost -= discount.CritCostReduction;
         }
         return Math.Max(1, cost);
     }

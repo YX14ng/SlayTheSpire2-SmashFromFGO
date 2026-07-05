@@ -22,7 +22,11 @@ public static class Curses
     {
         if (target.IsDead || amount <= 0) return 0;
 
-        if (applier != null)
+        // Regla UNICA (audit 2026-07-05): ICurseAmplifier amplifica SOLO aplicaciones con carta
+        // (cardSource != null) — es lo que su texto promete ("tus cartas que aplican Maldicion").
+        // Los ticks automaticos (lluvias de forma, Marea Corrosiva, Ojos Feericos, etc.) aplican el
+        // valor plano; antes dependia de que applier pasara cada caller y quedaba inconsistente.
+        if (applier != null && cardSource != null)
         {
             foreach (var power in applier.GetPowerInstances<PowerModel>())
             {

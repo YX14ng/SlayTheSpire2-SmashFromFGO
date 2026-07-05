@@ -45,7 +45,7 @@ public sealed class CigaretteLionPower : MordredPower
         var toDraw = System.Math.Min((int)Amount, inDeck);
         if (toDraw > 0)
         {
-            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), toDraw, Owner.Player);
+            await CardPileCmd.Draw(choiceContext ?? new BlockingPlayerChoiceContext(), toDraw, Owner.Player);
         }
     }
 }

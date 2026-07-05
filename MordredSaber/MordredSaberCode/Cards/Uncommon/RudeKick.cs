@@ -16,8 +16,6 @@ namespace MordredSaber.MordredSaberCode.Cards.Uncommon;
 /// </summary>
 public sealed class RudeKick() : MordredCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    private const int CritVulnerable = 2; // Vulnerable total si hay Crítico Listo (no escala con el up)
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(8m, ValueProp.Move), new PowerVar<VulnerablePower>("Vulnerable", 1m)];
 
@@ -34,9 +32,9 @@ public sealed class RudeKick() : MordredCard(1, CardType.Attack, CardRarity.Unco
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
-        var vulnerable = HasCritReady
-            ? System.Math.Max(CritVulnerable, DynamicVars["Vulnerable"].IntValue)
-            : DynamicVars["Vulnerable"].IntValue;
+        // Rider RELATIVO (+1) en vez de "2 fijo" (audit 2026-07-05): con la carta mejorada
+        // (Vulnerable base 2) el max(2, 2) dejaba el rider muerto pero la carta seguia brillando.
+        var vulnerable = DynamicVars["Vulnerable"].IntValue + (HasCritReady ? 1 : 0);
         await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, vulnerable, Owner.Creature, this);
     }
 

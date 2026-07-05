@@ -18,7 +18,7 @@
   "MORGANBERSERKER-BOTTLED_MORS.description": "#当敌人在持有*诅咒*时死亡：其*诅咒*转移给一名随机敌人。",
   "MORGANBERSERKER-BOTTLED_MORS.flavor": "死亡不是赦免。债务由活着的人继承。",
   "MORGANBERSERKER-HABETROT_THREAD.title": "哈贝特洛特的纺线",
-  "MORGANBERSERKER-HABETROT_THREAD.description": "#每场战斗中*毅力*第一次触发时：以10点生命存活，而不是1点。",
+  "MORGANBERSERKER-HABETROT_THREAD.description": "#每当*不屈发动时：以10点生命值存活，而非1点。",
   "MORGANBERSERKER-HABETROT_THREAD.flavor": "小小的纺线妖精总会多留一根线，让你抓住。",
   "MORGANBERSERKER-LADY_OF_THE_LAKE_CHALICE.title": "水妃的圣杯",
   "MORGANBERSERKER-LADY_OF_THE_LAKE_CHALICE.description": "#生命上限提高!MaxHp!点。持有时突破上限：羁绊最高可达12级，宝具等级最高可达6级。",

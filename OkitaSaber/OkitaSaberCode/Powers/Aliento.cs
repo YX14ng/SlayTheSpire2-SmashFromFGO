@@ -15,9 +15,11 @@ public static class Aliento
     // "Toco 0 este turno" vive FUERA del power (audit 2026-07-04): el power se REMUEVE al llegar a 0
     // y el flag moria con el — el cap de 1 Tos/turno se rompia y GudagudaPoster perdia la senal.
     // Per-creature, per-cliente (flujo sincronizado); lo resetea el Haori al inicio de turno/combate.
-    private static readonly HashSet<Creature> HitZero = [];
+    // ConditionalWeakTable (audit 2026-07-05): el HashSet estatico retenia cada Creature (y su grafo
+    // de run) PARA SIEMPRE entre combates/runs. Las claves debiles se liberan con la criatura.
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Creature, object> HitZero = new();
 
-    public static bool HitZeroThisTurn(Creature creature) => HitZero.Contains(creature);
+    public static bool HitZeroThisTurn(Creature creature) => HitZero.TryGetValue(creature, out _);
 
     internal static void ResetHitZero(Creature creature) => HitZero.Remove(creature);
 
@@ -59,8 +61,8 @@ public static class Aliento
         if (spent <= 0) return;
 
         var emptied = spent >= power.Amount;
-        var alreadyHitZero = HitZero.Contains(creature);
-        if (emptied) HitZero.Add(creature);
+        var alreadyHitZero = HitZero.TryGetValue(creature, out _);
+        if (emptied) HitZero.AddOrUpdate(creature, new object());
 
         if (emptied) await PowerCmd.Remove(power);
         else await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -spent, creature, source);

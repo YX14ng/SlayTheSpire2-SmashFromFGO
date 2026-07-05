@@ -51,6 +51,9 @@ public sealed class ClarentOverloadedWithHatred : MordredRelic, ICritConsumedLis
         // Hace por su cuenta la precarga de forma + el watcher (la starter cede si coexisten).
         await Forms.Enter<MaskedKnightFormPower>(null, Owner.Creature, null);
         await PowerCmd.Apply<RedLightningChannelPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null, silent: true);
+        // La starter ahora CEDE del todo cuando coexisten (audit 2026-07-05): el token Chispa de
+        // Clarent que ella sembraba pasa a sembrarse aca para no perderlo.
+        await PowerCmd.Apply<RedLightningSparkPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null, silent: true);
     }
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)

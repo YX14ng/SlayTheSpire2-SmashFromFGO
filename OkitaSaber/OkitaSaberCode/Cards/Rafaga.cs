@@ -73,9 +73,11 @@ public static class Rafaga
         // (paga HP) activos a la vez, FirstOrDefault decidia por orden de aplicacion y podia
         // cobrar HP innecesariamente.
         IRafagaCostModifier? best = null;
-        foreach (var m in Listeners.PowersOf<IRafagaCostModifier>(creature))
+        // foreach directo (audit 2026-07-05): PowersOf/OfType alocaba iteradores en cada evaluacion
+        // de IsPlayable/glow de la UI.
+        foreach (var p in creature.GetPowerInstances<MegaCrit.Sts2.Core.Models.PowerModel>())
         {
-            if (!m.WaivesBreathCost) continue;
+            if (p is not IRafagaCostModifier m || !m.WaivesBreathCost) continue;
             if (best == null || m.HpPerBreathPoint < best.HpPerBreathPoint) best = m;
         }
         return best;

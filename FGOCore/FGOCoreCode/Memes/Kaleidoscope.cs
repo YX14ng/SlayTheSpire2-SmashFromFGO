@@ -12,7 +12,9 @@ namespace FGOCore.FGOCoreCode.Memes;
 /// pagan (es un burst de setup, no un loop). Sin daño: 0⚡ con Exhaust es el slot de un
 /// generador de recurso premium (cf. Comet 0⚡+5★).
 /// </summary>
-public sealed class Kaleidoscope() : MemeCard(0, CardType.Skill, CardRarity.Rare, TargetType.Self), INpDependentColorless
+// 1E (audit 2026-07-05): +80 NP equivale a ~4E de recurso segun el baseline propio (10 NP ~ 1/2 E);
+// a 0E el premium de Exhaust no pagaba ese exceso. Mantiene 80/100: ES la bateria identitaria.
+public sealed class Kaleidoscope() : MemeCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self), INpDependentColorless
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

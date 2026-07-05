@@ -1,4 +1,9 @@
 using System.Collections.Generic;
+using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.Rewards;
+using MegaCrit.Sts2.Core.Entities.Rewards;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.CardRewardAlternatives;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -22,8 +27,63 @@ namespace TiamatBeast.TiamatCode.Relics;
 /// sobre un enemigo nunca antes contado este combate (patrón MakotoBanner/KairisCigarettes).
 /// (source=null en el FormSwitch inicial: fija la forma sin contar como "cambio de forma".)
 /// </summary>
-public sealed class SeaOfLifeWomb : TiamatRelic
+public sealed class SeaOfLifeWomb : TiamatRelic, INpLevelStore
 {
+    // ---- Gacha de dupes / INpLevelStore (audit 2026-07-05, HIGH) ----
+    // Sin un INpLevelStore el medidor de NP capeaba en 100 PARA SIEMPRE (NpCharge.Max lee el nivel
+    // del store del jugador): la decision central "abrir a 100 vs banquear a 300" era inalcanzable
+    // y el escalado NpLevels.Scale de las cartas NP quedaba clavado en x1. Patron calcado de
+    // SummonTicket (Mash) / MorganSummonSeal, incluido el gate >=3 que convive con Driftwood.
+    public const string DupeOptionId = "TIAMAT_DUPE";
+
+    private int _npLevel = 1;
+    private int _dupePity;
+
+    public override bool ShowCounter => true;
+
+    public override int DisplayAmount => NpLevel;
+
+    [SavedProperty]
+    public int NpLevel
+    {
+        get => _npLevel;
+        set
+        {
+            AssertMutable();
+            _npLevel = value;
+            InvokeDisplayAmountChanged();
+        }
+    }
+
+    [SavedProperty]
+    public int DupePity
+    {
+        get => _dupePity;
+        set
+        {
+            AssertMutable();
+            _dupePity = value;
+        }
+    }
+
+    public override bool TryModifyCardRewardAlternatives(Player player, CardReward cardReward, List<CardRewardAlternative> alternatives)
+    {
+        if (Owner != player) return false;
+        if (alternatives.Count >= 3) return false;
+        if (!NpLevels.CanLevelUp(Owner)) return false;
+
+        alternatives.Add(new CardRewardAlternative(DupeOptionId, OnDupeRoll, PostAlternateCardRewardAction.EndSelectionAndCompleteReward));
+        return true;
+    }
+
+    private async Task OnDupeRoll()
+    {
+        if (await NpLevels.TryRollDupeWithConsolation(Owner))
+        {
+            Flash();
+        }
+    }
+
     public const int StartingNp = 10;
     public const int LahmuOnCombatStart = 1;
     public const int LahmuPerFirstCurse = 1;

@@ -58,7 +58,9 @@ public sealed class ForgetMeNotOfAutumnWood : OberonRelic, INpLevelStore
     public override bool TryModifyCardRewardAlternatives(Player player, CardReward cardReward, List<CardRewardAlternative> alternatives)
     {
         if (Owner != player) return false;
-        if (alternatives.Count >= 2) return false;
+        // >= 3 (fix gacha x Driftwood, mismo que SummonTicket de Mash): la pantalla no topa en 2 —
+        // con Driftwood (Skip+Reroll) el gate viejo suprimia el gacha.
+        if (alternatives.Count >= 3) return false;
         if (!NpLevels.CanLevelUp(Owner)) return false;
 
         alternatives.Add(new CardRewardAlternative(DupeOptionId, OnDupeRoll, PostAlternateCardRewardAction.EndSelectionAndCompleteReward));

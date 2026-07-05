@@ -33,23 +33,32 @@ public sealed class TiamatBeastWindowPower : TiamatPower
         await PowerCmd.Decrement(this);
         if (Amount <= 0)
         {
-            await CloseWindow();
+            await CloseWindow(choiceContext);
         }
     }
 
     /// <summary>Cierra la ventana: revierte a Lily, purga el mazo efímero y se remueve. Idempotente
     /// (re-entrante seguro). Llamable también desde una carta de cierre o el fin de combate.</summary>
-    public async Task CloseWindow()
+    public async Task CloseWindow(PlayerChoiceContext? choiceContext = null)
     {
         if (_closed) return;
         _closed = true;
 
         if (Owner.HasPower<TiamatBeastPower>())
         {
-            await FormSwitch.Enter<TiamatFemmeFatalePower>(null, Owner, null);
+            // Propagar el contexto sincronizado del caller (audit 2026-07-05, regla 4 del proyecto);
+            // el fallback fresco queda solo para call-sites sin contexto (fin de combate).
+            await FormSwitch.Enter<TiamatFemmeFatalePower>(choiceContext, Owner, null);
         }
         await PurgeEphemeral(Owner.Player);
-        await PowerCmd.Remove(this);
+        // Decrement a 0 ya auto-remueve el power: remover de nuevo disparaba AfterRemoved dos veces.
+        if (Owner.GetPower<TiamatBeastWindowPower>() == this)
+        {
+            await PowerCmd.Remove(this);
+        }
+        // Re-chequear el Genesis (audit 2026-07-05, HIGH): si la ventana expiro con el medidor >=100,
+        // GaugeFilled no vuelve a disparar (no hay cruce) y sin esto el medidor quedaba brickeado.
+        await MainFile.EnsureGenesisInHand(Owner);
     }
 
     /// <summary>Quita de combate TODA carta <see cref="IBeastEphemeral"/> en mano/robo/descarte:

@@ -69,7 +69,9 @@ public sealed class EnumaElishUnleashed() : GilgameshCard(0, CardType.Attack, Ca
         //   Sobrecarga extra de la PROPIA tribu de Gil (+1 al bonus anti-divino c/u) — el gasto del NP
         //   depende de su arsenal, no solo de la carga genérica del medidor. Fiel al OC: SÓLO escala el
         //   bonus anti-divino, nunca el daño base contra «lo meramente humano».
-        if (Owner.PlayerCombatState != null)
+        // Solo en salas con rango divino (audit 2026-07-05): el bonus por Arma aplica unicamente a
+        // Elites/Jefes — exhaustar el arsenal en una sala comun era puro costo sin efecto.
+        if (Owner.PlayerCombatState != null && RoyalTrait.IsInDivineRoom(Owner.Creature))
         {
             var arms = Owner.PlayerCombatState.Hand.Cards.OfType<ITreasureArm>().Cast<CardModel>().ToList();
             overcharge += arms.Count * PerArmInHand;

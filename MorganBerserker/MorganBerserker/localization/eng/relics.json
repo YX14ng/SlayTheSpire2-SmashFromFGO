@@ -18,7 +18,7 @@
   "MORGANBERSERKER-BOTTLED_MORS.description": "#When an enemy dies with Curse: its Curse jumps to a random enemy.",
   "MORGANBERSERKER-BOTTLED_MORS.flavor": "A curse given form, scratching at the glass. Do not uncork it. It uncorks itself.",
   "MORGANBERSERKER-HABETROT_THREAD.title": "Habetrot's Thread",
-  "MORGANBERSERKER-HABETROT_THREAD.description": "#The first time Guts triggers each combat: survive at 10 HP instead of 1.",
+  "MORGANBERSERKER-HABETROT_THREAD.description": "#When Guts fires: you survive at 10 HP instead of 1.",
   "MORGANBERSERKER-HABETROT_THREAD.flavor": "The smallest of fairies spins the longest of threads. Even a tyrant's life may be mended once.",
   "MORGANBERSERKER-LADY_OF_THE_LAKE_CHALICE.title": "Chalice of the Lady of the Lake",
   "MORGANBERSERKER-LADY_OF_THE_LAKE_CHALICE.description": "#Palingenesis: gain !MaxHp! Max HP. While held, limits break: Bond can reach level 12 and NP level can reach 6.",

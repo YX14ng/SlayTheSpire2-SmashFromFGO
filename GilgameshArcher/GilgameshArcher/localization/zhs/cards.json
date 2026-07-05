@@ -83,7 +83,7 @@
   "GILGAMESHARCHER-THRONE_OF_THE_ONLOOKER.description": "#在你的回合结束时，若你没有格挡，则获得 !Stars! 颗*暴击星与 !Np! 点*宝具充能。",
   "GILGAMESHARCHER-GOLDEN_ARROGANCE.title": "黄金傲慢",
   "GILGAMESHARCHER-GOLDEN_ARROGANCE.description": "#你每回合首次失去生命时，获得 !Stars! 颗*暴击星。",
-  "GILGAMESHARCHER-NP_ENUMA_ELISH.title": "天地乖离开辟之星",
+  "GILGAMESHARCHER-NP_ENUMA_ELISH.title": "宝具·天地乖离开辟之星",
   "GILGAMESHARCHER-NP_ENUMA_ELISH.description": "#消耗。消耗你全部的*宝具充能，至少 !ChargeCost! 点。对所有敌人造成 !D! 点伤害，且每消耗超过 !ChargeCost! 的 10 点宝具充能再增加 2 点。对精英与首领额外造成 !Divine! 点。",
   "GILGAMESHARCHER-CHAINS_OF_HEAVEN_ENKIDU.title": "天之锁·恩奇都",
   "GILGAMESHARCHER-CHAINS_OF_HEAVEN_ENKIDU.description": "#消耗。施加 !Vulnerable! 层*易伤。对精英与首领：改为施加 !DivineVulnerable! 层*易伤，且该敌人失去 !StrengthLoss! 点*力量。",

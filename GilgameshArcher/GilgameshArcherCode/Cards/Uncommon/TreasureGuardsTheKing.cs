@@ -24,7 +24,7 @@ public sealed class TreasureGuardsTheKing() : GilgameshCard(1, CardType.Skill, C
         var block = arms * DynamicVars["PerArm"].IntValue;
         if (block > 0)
         {
-            await CreatureCmd.GainBlock(Owner.Creature, block, ValueProp.Move, null);
+            await CreatureCmd.GainBlock(Owner.Creature, block, ValueProp.Move, cardPlay);
         }
     }
 

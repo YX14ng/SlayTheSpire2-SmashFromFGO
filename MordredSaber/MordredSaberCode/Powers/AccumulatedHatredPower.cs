@@ -44,6 +44,8 @@ public sealed class AccumulatedHatredPower : MordredPower
         if (_procsThisTurn >= MaxProcsPerTurn) return;
         _procsThisTurn++;
         Flash();
-        await NpCharge.Gain(Owner, NpPerLoss, null);
+        // x Amount (audit 2026-07-05): apilar copias no hacia NADA — ahora cada stack suma su NP
+        // por proc (el cap de procs por turno se mantiene).
+        await NpCharge.Gain(Owner, NpPerLoss * (int)Math.Max(1m, Amount), null);
     }
 }

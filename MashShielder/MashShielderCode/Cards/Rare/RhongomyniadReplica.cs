@@ -1,4 +1,5 @@
 using MashShielder.MashShielderCode.Powers;
+using FGOCore.FGOCoreCode.CardTypes;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -17,8 +18,13 @@ namespace MashShielder.MashShielderCode.Cards.Rare;
 /// Black Barrel/Unblockable (decisión, no accidente: CritReadyPower no distingue).
 /// A banco 300 con up: (49 + 20×6) × 2 = 338, el all-in legítimo del hilo de estrellas.
 /// </summary>
-public sealed class RhongomyniadReplica() : MashShielderCard(3, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IMashNpCard
+public sealed class RhongomyniadReplica() : MashShielderCard(3, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IMashNpCard, ICommandTyped
 {
+    // Tipo de comando FGO de la ulti (audit 2026-07-05): el bono reforzado de CommandBonusPower
+    // solo existia en LordCamelotUnleashed; el resto de las 7 cartas NP no lo recibia.
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 100;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];

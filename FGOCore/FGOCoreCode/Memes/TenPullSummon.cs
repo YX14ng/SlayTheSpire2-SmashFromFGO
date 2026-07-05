@@ -21,7 +21,9 @@ public sealed class TenPullSummon() : MemeCard(1, CardType.Skill, CardRarity.Unc
             DynamicVars.Cards.IntValue, Owner.RunState.Rng.CombatCardGeneration);
         foreach (var card in pulls)
         {
-            card.EnergyCost.SetThisCombat(0);
+            // SetThisTurnOrUntilPlayed (audit 2026-07-05): el texto promete "cuestan 0 ESTE TURNO";
+                // SetThisCombat las dejaba gratis todo el combate.
+                card.EnergyCost.SetThisTurnOrUntilPlayed(0);
             CardCmd.PreviewCardPileAdd(
                 await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner), 1.0f);
         }

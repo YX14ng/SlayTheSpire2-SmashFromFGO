@@ -19,7 +19,7 @@ public sealed class Suckle() : TiamatCard(1, CardType.Skill, CardRarity.Common, 
         await Lahmu.Feed(Owner.Creature, DynamicVars["Nurture"].IntValue, this);
         if (Lahmu.Count(Owner.Creature) >= 3 && Owner.Creature.Player != null)
         {
-            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 1, Owner.Creature.Player);
+            await CardPileCmd.Draw(choiceContext, 1, Owner.Creature.Player);
         }
     }
 

@@ -30,10 +30,20 @@ public sealed class MagicResistanceBCharm : MordredRelic
         if (_usedThisCombat) return false;
         if (target != Owner.Creature || applier == null || applier.Side == target.Side) return false;
         if (canonicalPower.GetTypeForAmount(amount) != PowerType.Debuff) return false;
+        // Solo debuffs VISIBLES (audit 2026-07-05, espejo de ArtifactPower vanilla): sin este gate
+        // anulaba tambien debuffs de infraestructura invisibles y quemaba el 1/combate en silencio.
+        if (!canonicalPower.IsVisible) return false;
 
-        _usedThisCombat = true;
-        Flash();
         modifiedAmount = 0m;
         return true;
+    }
+
+    // El COMMIT va aca (audit 2026-07-05, contrato vanilla): el hook Try debe ser puro — el motor
+    // puede evaluarlo especulativamente; AfterModifyingPowerAmountReceived corre solo si aplico.
+    public override Task AfterModifyingPowerAmountReceived(PowerModel power)
+    {
+        _usedThisCombat = true;
+        Flash();
+        return Task.CompletedTask;
     }
 }

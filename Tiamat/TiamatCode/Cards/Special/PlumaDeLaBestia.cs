@@ -74,7 +74,7 @@ public sealed class PlumaDeLaBestia() : TiamatCard(1, CardType.Attack, CardRarit
         //    mazo efímero (idempotente; el Counter→0 haría lo mismo, esto adelanta el cierre).
         if (Owner.Creature.GetPower<TiamatBeastWindowPower>() is { } window)
         {
-            await window.CloseWindow();
+            await window.CloseWindow(choiceContext);
         }
     }
 

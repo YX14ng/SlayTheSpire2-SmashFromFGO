@@ -59,7 +59,9 @@ public sealed class CatalogOfTheRoyalTreasury : GilgameshRelic, INpLevelStore
     {
         if (Owner != player) return false;
         // La pantalla soporta como máximo 2 alternativas (Saltar + una más).
-        if (alternatives.Count >= 2) return false;
+        // >= 3 (fix gacha x Driftwood, mismo que SummonTicket de Mash): la pantalla no topa en 2 —
+        // con Driftwood (Skip+Reroll) el gate viejo suprimia el gacha.
+        if (alternatives.Count >= 3) return false;
         if (!NpLevels.CanLevelUp(Owner)) return false;
 
         alternatives.Add(new CardRewardAlternative(DupeOptionId, OnDupeRoll, PostAlternateCardRewardAction.EndSelectionAndCompleteReward));

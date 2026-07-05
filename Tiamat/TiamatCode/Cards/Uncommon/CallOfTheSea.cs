@@ -27,7 +27,7 @@ public sealed class CallOfTheSea() : TiamatCard(1, CardType.Skill, CardRarity.Un
         await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         if (Owner.Creature.Player != null)
         {
-            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), DynamicVars["Draw"].IntValue, Owner.Creature.Player);
+            await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].IntValue, Owner.Creature.Player);
         }
     }
 

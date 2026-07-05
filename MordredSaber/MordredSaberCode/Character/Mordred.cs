@@ -47,7 +47,15 @@ public class Mordred : PlaceholderCharacterModel
 
     // Starter: Clarent, la Espada Robada (entra en Enmascarado + motor ★/NP). Las otras starters
     // (Juramento = BondRelic; Sello de Invocación = INpLevelStore) las añade la fase Content.
-    public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<ClarentTheStolenSword>()];
+    // + Oath (Bond) y SummoningSeal (dupes) — audit 2026-07-05 HIGH: sin ellas, el Vinculo, el gacha
+    // de dupes (cap NP >100, escalado NP) y el motor Buster/Arts/Quick (CommandBonusPower, que
+    // siembra la BondRelic) estaban MUERTOS en Mordred. Espejo de Mash/Morgan.
+    public override IReadOnlyList<RelicModel> StartingRelics =>
+    [
+        ModelDb.Relic<ClarentTheStolenSword>(),
+        ModelDb.Relic<OathOfTheKnightOfTreachery>(),
+        ModelDb.Relic<SummoningSealSaberOfRed>()
+    ];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<MordredCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<MordredRelicPool>();

@@ -11,7 +11,7 @@ namespace MordredSaber.MordredSaberCode.Cards.Rare;
 /// Reclamo de Caliburn (夺取石中剑) — DESIGN-MORDRED §5.3. 2⚡ Hab, Exhaust: agregá a tu mano 1 carta
 /// RARA aleatoria de tu pool; cuesta 0 este turno (up: 1⚡). Su deseo: sacar la espada de la selección
 /// — el pool se cita a sí mismo (slot Magia de Proyección). Patrón TenPullSummon de FGOCore filtrado a
-/// rareza Rara: CardFactory.GetDistinctForCombat sobre el pool desbloqueado + SetThisCombat(0).
+/// rareza Rara: CardFactory.GetDistinctForCombat sobre el pool desbloqueado + costo 0 este turno.
 /// </summary>
 public sealed class ClaimCaliburn() : MordredCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
@@ -34,7 +34,8 @@ public sealed class ClaimCaliburn() : MordredCard(2, CardType.Skill, CardRarity.
             DynamicVars.Cards.IntValue, runState.Rng.CombatCardGeneration);
         foreach (var card in picks)
         {
-            card.EnergyCost.SetThisCombat(0);
+            // SetThisTurnOrUntilPlayed (audit 2026-07-05): el texto dice "cuesta 0 ESTE TURNO".
+            card.EnergyCost.SetThisTurnOrUntilPlayed(0);
             await ManifestCards.ManifestToHand(Owner.Creature, card);
         }
     }

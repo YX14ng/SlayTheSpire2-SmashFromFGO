@@ -21,6 +21,6 @@ public sealed class IronWillPower : MashShielderPower
     {
         if (side != CombatSide.Player || Owner.Side != side) return;
         Flash();
-        await BlockRetention.GainBulwarkBlock(null, Owner, Amount);
+        await BlockRetention.GainBulwarkBlock(null, Owner, Amount, choiceContext: choiceContext);
     }
 }

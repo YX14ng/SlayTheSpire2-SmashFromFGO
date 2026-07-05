@@ -26,7 +26,7 @@ public sealed class TheMostRadiantSword() : MordredCard(2, CardType.Power, CardR
         var power = await PowerCmd.Apply<TheMostRadiantSwordPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
-            power.CritBonus = DynamicVars["CritBonus"].IntValue;
+            power.CritBonus = Math.Max(power.CritBonus, DynamicVars["CritBonus"].IntValue); // no degradar (audit 2026-07-05)
             power.NpOnConsume = DynamicVars["NpCharge"].IntValue;
         }
     }

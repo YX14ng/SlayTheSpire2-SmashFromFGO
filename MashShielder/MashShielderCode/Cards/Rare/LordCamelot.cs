@@ -1,4 +1,5 @@
 using MashShielder.MashShielderCode.Powers;
+using FGOCore.FGOCoreCode.CardTypes;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -14,8 +15,13 @@ namespace MashShielder.MashShielderCode.Cards.Rare;
 /// FGO Overcharge: +Block per 10 extra charge. Strength and Intercept always included.
 /// Rediseño v2 (AUDITORÍA + fidelidad FGO: NP al 100%): mínimo 70 → 100.
 /// </summary>
-public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRarity.Rare, TargetType.Self), IMashNpCard
+public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRarity.Rare, TargetType.Self), IMashNpCard, ICommandTyped
 {
+    // Tipo de comando FGO de la ulti (audit 2026-07-05): el bono reforzado de CommandBonusPower
+    // solo existia en LordCamelotUnleashed; el resto de las 7 cartas NP no lo recibia.
+    CommandType ICommandTyped.CommandType => CommandType.Arts;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 100;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

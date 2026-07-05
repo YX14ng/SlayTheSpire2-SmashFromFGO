@@ -1,4 +1,9 @@
 using System.Collections.Generic;
+using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.Rewards;
+using MegaCrit.Sts2.Core.Entities.Rewards;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.CardRewardAlternatives;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -23,8 +28,63 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Relics;
 /// <see cref="ShouldPierceScales"/> como LECTURA PURA (a prueba de previews de daño); el
 /// consumo del cupo 1/turno ocurre aquí, en el camino real del daño.
 /// </summary>
-public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer
+public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelStore
 {
+    // ---- Gacha de dupes / INpLevelStore (audit 2026-07-05, HIGH) ----
+    // Sin un INpLevelStore el medidor de NP capeaba en 100 PARA SIEMPRE (NpCharge.Max lee el nivel
+    // del store del jugador): la decision central "abrir a 100 vs banquear a 300" era inalcanzable
+    // y el escalado NpLevels.Scale de las cartas NP quedaba clavado en x1. Patron calcado de
+    // SummonTicket (Mash) / MorganSummonSeal, incluido el gate >=3 que convive con Driftwood.
+    public const string DupeOptionId = "SIEGFRIED_DUPE";
+
+    private int _npLevel = 1;
+    private int _dupePity;
+
+    public override bool ShowCounter => true;
+
+    public override int DisplayAmount => NpLevel;
+
+    [SavedProperty]
+    public int NpLevel
+    {
+        get => _npLevel;
+        set
+        {
+            AssertMutable();
+            _npLevel = value;
+            InvokeDisplayAmountChanged();
+        }
+    }
+
+    [SavedProperty]
+    public int DupePity
+    {
+        get => _dupePity;
+        set
+        {
+            AssertMutable();
+            _dupePity = value;
+        }
+    }
+
+    public override bool TryModifyCardRewardAlternatives(Player player, CardReward cardReward, List<CardRewardAlternative> alternatives)
+    {
+        if (Owner != player) return false;
+        if (alternatives.Count >= 3) return false;
+        if (!NpLevels.CanLevelUp(Owner)) return false;
+
+        alternatives.Add(new CardRewardAlternative(DupeOptionId, OnDupeRoll, PostAlternateCardRewardAction.EndSelectionAndCompleteReward));
+        return true;
+    }
+
+    private async Task OnDupeRoll()
+    {
+        if (await NpLevels.TryRollDupeWithConsolation(Owner))
+        {
+            Flash();
+        }
+    }
+
     public override RelicRarity Rarity => RelicRarity.Starter;
 
     private const int StartingScales = 2;   // SdD inicial (§3)

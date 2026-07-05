@@ -32,9 +32,17 @@ public sealed class MagicResistanceAmulet : GilgameshRelic
         if (target != Owner.Creature || applier == null || applier.Side == target.Side) return false;
         if (canonicalPower is not WeakPower) return false;
 
-        _usedThisCombat = true;
-        Flash();
         modifiedAmount = 0m;
         return true;
+    }
+
+    // El COMMIT va aca (audit 2026-07-05, contrato vanilla RuinedHelmet): el hook Try debe ser puro —
+    // el motor puede evaluarlo especulativamente; este After corre solo si de verdad aplico.
+    public override Task AfterModifyingPowerAmountReceived(PowerModel power)
+    {
+        if (_usedThisCombat || power is not WeakPower) return Task.CompletedTask;
+        _usedThisCombat = true;
+        Flash();
+        return Task.CompletedTask;
     }
 }

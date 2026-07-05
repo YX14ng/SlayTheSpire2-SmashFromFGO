@@ -30,6 +30,9 @@ public sealed class AbyssalToll() : TiamatCard(1, CardType.Attack, CardRarity.Un
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var prey = Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature);
+        // Fallback (audit 2026-07-05): el texto promete !D! de dano BASE — sin campo de Maldicion la
+        // carta se jugaba y no hacia NADA. Sin presa maldita: pega el base al primer enemigo vivo.
+        prey ??= ((CombatState)Owner.Creature.CombatState).GetOpponentsOf(Owner.Creature).FirstOrDefault(e => !e.IsDead);
         if (prey == null) return;
         var consumed = await Curses.Consume(prey, DynamicVars["Curse"].IntValue);
         var dmg = DynamicVars.Damage.BaseValue + consumed;

@@ -1,4 +1,5 @@
 using MashShielder.MashShielderCode.Powers;
+using FGOCore.FGOCoreCode.CardTypes;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -12,8 +13,13 @@ namespace MashShielder.MashShielderCode.Cards.Special;
 /// Mash's true Noble Phantasm from FGO: LORD CHALDEAS (罗德·迦勒底亚斯), the wall that
 /// protects everything. Pure Bulwark Block.
 /// </summary>
-public sealed class LordChaldeasUnleashed() : MashShielderCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IMashNpCard
+public sealed class LordChaldeasUnleashed() : MashShielderCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IMashNpCard, ICommandTyped
 {
+    // Tipo de comando FGO de la ulti (audit 2026-07-05): el bono reforzado de CommandBonusPower
+    // solo existia en LordCamelotUnleashed; el resto de las 7 cartas NP no lo recibia.
+    CommandType ICommandTyped.CommandType => CommandType.Arts;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 100;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];

@@ -25,6 +25,18 @@ namespace MordredSaber.MordredSaberCode.Relics;
 /// </summary>
 public sealed class ClarentTheStolenSword : MordredRelic, ICritConsumedListener
 {
+    /// <summary>Clarent Sobrecargada de Odio (boss relic) REEMPLAZA este motor con numeros al doble
+    /// (audit 2026-07-05 HIGH: coexistiendo se APILABAN las conversiones — hasta 90 estrellas/turno).
+    /// Mientras este presente, la starter calla (sus handlers y su setup de combate).</summary>
+    private bool ReplacedByOverloaded()
+    {
+        foreach (var r in Owner.Relics)
+        {
+            if (r is ClarentOverloadedWithHatred) return true;
+        }
+        return false;
+    }
+
     public const int StarsPerHpLoss = 10;
     public const int NpPerCritConsumed = 10;
     public const int MaxProcsPerTurn = 3;
@@ -50,6 +62,7 @@ public sealed class ClarentTheStolenSword : MordredRelic, ICritConsumedListener
     public override async Task BeforeCombatStartLate()
     {
         await base.BeforeCombatStartLate();
+        if (ReplacedByOverloaded()) return; // la Sobrecargada hace su propio setup (forma + watcher + Chispa)
         _starProcsThisTurn = 0;
         _npProcsThisTurn = 0;
         // Forma inicial: Enmascarado (source == null → no cuenta como "cambio de forma").
@@ -74,6 +87,7 @@ public sealed class ClarentTheStolenSword : MordredRelic, ICritConsumedListener
     /// <summary>Perder Vida → Estrellas (cualquier fuente; máx 3/turno).</summary>
     public override async Task AfterCurrentHpChanged(Creature creature, decimal delta)
     {
+        if (ReplacedByOverloaded()) return;
         if (creature != Owner.Creature || delta >= 0) return;
         if (!CombatManager.Instance.IsInProgress) return;
         if (_starProcsThisTurn >= MaxProcsPerTurn) return;
@@ -85,6 +99,7 @@ public sealed class ClarentTheStolenSword : MordredRelic, ICritConsumedListener
     /// <summary>Crítico Listo consumido → Carga NP (máx 3/turno).</summary>
     public async Task OnCritConsumed(PlayerChoiceContext? choiceContext)
     {
+        if (ReplacedByOverloaded()) return;
         if (!CombatManager.Instance.IsInProgress) return;
         if (_npProcsThisTurn >= MaxProcsPerTurn) return;
         _npProcsThisTurn++;

@@ -18,16 +18,18 @@ public sealed class AnticipatedShot() : GilgameshCard(1, CardType.Attack, CardRa
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritStarsPower>()];
 
-    private bool IsFirstCard => CardsThisTurnPower.PlayedBefore(Owner.Creature) == 0;
+    // Fail-CLOSED (audit 2026-07-05): sin el contador instalado NO sabemos cuantas cartas jugaste —
+    // PlayedBefore==0 por ausencia contaba SIEMPRE como primera. Exige el power presente.
+    private bool IsFirstCard => Owner.Creature.GetPower<CardsThisTurnPower>() is { Played: 0 };
 
     protected override bool ShouldGlowGoldInternal => IsFirstCard;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await CardsThisTurnPower.EnsureInstalled(Owner.Creature);
-        // Capturado ANTES de pegar: la cuenta puede subir mientras la carta resuelve.
+        // Capturado ANTES de instalar/pegar: instalar recien aca no puede otorgar el bonus (fail-closed).
         var first = IsFirstCard;
+        await CardsThisTurnPower.EnsureInstalled(Owner.Creature);
 
         await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
 

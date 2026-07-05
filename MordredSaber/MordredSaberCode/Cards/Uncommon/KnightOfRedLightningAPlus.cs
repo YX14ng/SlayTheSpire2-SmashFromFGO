@@ -25,7 +25,7 @@ public sealed class KnightOfRedLightningAPlus() : MordredCard(2, CardType.Power,
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<KnightOfRedLightningPower>(choiceContext, Owner.Creature, DynamicVars["Attack"].BaseValue, Owner.Creature, this);
-        if (power != null) power.CritBonus = DynamicVars["CritBonus"].IntValue;
+        if (power != null) power.CritBonus = Math.Max(power.CritBonus, DynamicVars["CritBonus"].IntValue); // no degradar (audit 2026-07-05)
     }
 
     protected override void OnUpgrade()

@@ -63,5 +63,15 @@ public sealed class PeerlessCrownPower : SiegfriedPower, IDragonScalePierceListe
 
     // Espejo PURO de DragonScalesPower.ShouldPierce (consulta los IDragonScalePiercer del dueño), sin mutar.
     private bool PierceWouldHappen(ValueProp props, Creature? dealer)
-        => Listeners.RelicsOf<IDragonScalePiercer>(Owner).Any(piercer => piercer.ShouldPierceScales(props, dealer));
+    {
+        // foreach directo (audit 2026-07-05): este hook corre por CADA golpe y CADA preview — el
+        // .Any con closure alocaba en el camino mas caliente del combate.
+        var relics = Owner.Player?.Relics;
+        if (relics == null) return false;
+        foreach (var r in relics)
+        {
+            if (r is IDragonScalePiercer piercer && piercer.ShouldPierceScales(props, dealer)) return true;
+        }
+        return false;
+    }
 }

@@ -80,7 +80,7 @@
   "MORDREDSABER-LIGHTNING_VISIT.title": "Visita Relámpago",
   "MORDREDSABER-LIGHTNING_VISIT.description": "#Cambiá de forma. Al final del turno, volvés a la forma anterior.+ Cuando volvés, obtén !Stars! *Estrellas de *Crítico.+",
   "MORDREDSABER-RUDE_KICK.title": "Patada Descortés",
-  "MORDREDSABER-RUDE_KICK.description": "#Inflige !D! de daño. Aplica !Vulnerable! de Vulnerable. Si tenés un Crítico listo: aplica 2 de Vulnerable en su lugar.",
+  "MORDREDSABER-RUDE_KICK.description": "#Inflige !D! de daño. Aplica !Vulnerable! de *Vulnerable (+1 si tenés un *Crítico *Listo).",
   "MORDREDSABER-PLUNDER_OF_THE_ROYAL_HOARD.title": "Saqueo del Tesoro Real",
   "MORDREDSABER-PLUNDER_OF_THE_ROYAL_HOARD.description": "#Agotar. Gana !NpCharge! de *Carga NP y !Stars! *Estrellas de *Crítico.",
   "MORDREDSABER-CHAINED_LIGHTNING.title": "Relámpago Encadenado",

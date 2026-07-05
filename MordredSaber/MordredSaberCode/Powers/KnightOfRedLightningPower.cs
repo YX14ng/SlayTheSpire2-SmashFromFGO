@@ -18,7 +18,8 @@ namespace MordredSaber.MordredSaberCode.Powers;
 /// </summary>
 public sealed class KnightOfRedLightningPower : MordredPower
 {
-    public int CritBonus = 6; // up 8 (la carta lo setea desde su DynamicVar)
+    public int CritBonus = 6; // up 8 (la carta lo setea con Math.Max). NOTA: a diferencia del +Ataque
+    // (Amount, que suma por copia), el +Critico NO apila con copias — es un valor unico compartido.
 
     public override PowerType Type => PowerType.Buff;
 

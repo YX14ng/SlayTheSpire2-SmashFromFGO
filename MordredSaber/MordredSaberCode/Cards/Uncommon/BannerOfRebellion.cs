@@ -26,9 +26,11 @@ public sealed class BannerOfRebellion() : MordredCard(2, CardType.Power, CardRar
         var power = await PowerCmd.Apply<BannerOfRebellionPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
-            power.StarsPerSwitch = DynamicVars["Stars"].IntValue;
-            power.NpPerSwitch = DynamicVars["NpCharge"].IntValue;
-            power.DrawsPerSwitch = IsUpgraded ? DynamicVars.Cards.IntValue : 0;
+            // Math.Max (audit 2026-07-05): una copia base tras la mejorada degradaba los campos
+            // de la instancia compartida (desactivaba el upgrade ya pagado).
+            power.StarsPerSwitch = Math.Max(power.StarsPerSwitch, DynamicVars["Stars"].IntValue);
+            power.NpPerSwitch = Math.Max(power.NpPerSwitch, DynamicVars["NpCharge"].IntValue);
+            power.DrawsPerSwitch = Math.Max(power.DrawsPerSwitch, IsUpgraded ? DynamicVars.Cards.IntValue : 0);
         }
     }
 }

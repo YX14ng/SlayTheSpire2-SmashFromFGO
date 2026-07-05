@@ -38,7 +38,9 @@ public sealed class RecitalOfCreationPower : GilgameshPower
         if (amount <= 0m || power is not EnumaManifestedPower || power.Owner != Owner || Owner.Player == null) return;
 
         Flash();
+        // Por acumulacion (audit 2026-07-05): el CritReady ya escalaba con Amount pero el robo no
+        // (y el texto prometia 1 fijo) — ahora TODO escala por stack y la loc lo dice.
         await PowerCmd.Apply<CritReadyPower>(choiceContext, Owner, Amount, Owner, null);
-        await CardPileCmd.Draw(choiceContext, DrawPerManifest, Owner.Player);
+        await CardPileCmd.Draw(choiceContext, DrawPerManifest * (int)Amount, Owner.Player);
     }
 }

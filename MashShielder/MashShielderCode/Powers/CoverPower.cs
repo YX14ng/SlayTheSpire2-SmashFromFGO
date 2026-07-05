@@ -39,7 +39,9 @@ public sealed class CoverPower : MashShielderPower
     public override decimal ModifyHpLostBeforeOsty(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (!Covers(target, dealer) || amount <= 0) return amount;
-        _pendingTransfer += amount;
+        // Asignar, no acumular (audit 2026-07-05): AfterDamageReceivedLate corre por evento de dano;
+        // si algun evento no la consumio, un += arrastraba monto viciado al proximo traspaso.
+        _pendingTransfer = amount;
         return 0m;
     }
 
@@ -65,6 +67,7 @@ public sealed class CoverPower : MashShielderPower
     {
         if (Owner.Side != side)
         {
+            _pendingTransfer = 0; // red de seguridad: nada viciado sobrevive a la expiracion
             await PowerCmd.Remove(this);
         }
     }

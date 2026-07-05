@@ -26,7 +26,10 @@ public sealed class CorrosiveTidePower : TiamatPower
         Flash();
         foreach (var enemy in Owner.CombatState.GetOpponentsOf(Owner).Where(e => !e.IsDead).ToList())
         {
-            await Curses.Apply(enemy, CursePerStack * Amount, Owner, null);
+            // applier null (audit 2026-07-05): el spread automatico NO pasa por ICurseAmplifier — con Owner,
+            // la forma Bestia le sumaba +1 por enemigo por turno, contradiciendo el texto del power
+            // (espejo del spread de TiamatBeastPower, que tambien pasa null).
+            await Curses.Apply(enemy, CursePerStack * Amount, null, null);
         }
     }
 }

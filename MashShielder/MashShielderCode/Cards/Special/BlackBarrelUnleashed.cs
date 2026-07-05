@@ -1,4 +1,5 @@
 using MashShielder.MashShielderCode.Powers;
+using FGOCore.FGOCoreCode.CardTypes;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -12,8 +13,13 @@ namespace MashShielder.MashShielderCode.Cards.Special;
 /// stance) — BLACK BARREL (黑桶), the conceptual cannon of the Atlas Institute that
 /// kills the immortal: a massive unblockable shot that strips ALL the target's buffs.
 /// </summary>
-public sealed class BlackBarrelUnleashed() : MashShielderCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), IMashNpCard
+public sealed class BlackBarrelUnleashed() : MashShielderCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), IMashNpCard, ICommandTyped
 {
+    // Tipo de comando FGO de la ulti (audit 2026-07-05): el bono reforzado de CommandBonusPower
+    // solo existia en LordCamelotUnleashed; el resto de las 7 cartas NP no lo recibia.
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 100;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];

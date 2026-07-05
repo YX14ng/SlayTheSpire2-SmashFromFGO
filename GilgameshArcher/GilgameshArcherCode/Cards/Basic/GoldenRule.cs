@@ -30,4 +30,7 @@ public sealed class GoldenRule() : GilgameshCard(1, CardType.Power, CardRarity.B
     {
         await PowerCmd.Apply<GoldenRulePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
+
+    // El upgrade no hacia NADA (audit 2026-07-05): ahora baja el costo a 0E (patron GoldenRule vanilla).
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

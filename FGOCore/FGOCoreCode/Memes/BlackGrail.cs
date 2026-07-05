@@ -10,7 +10,9 @@ namespace FGOCore.FGOCoreCode.Memes;
 /// El Santo Grial Negro (黑圣杯) — Poder glass-cannon: tus Ataques con poder hacen +50%
 /// pero perdés 4 HP al inicio de cada turno mientras dure. Power permanente (todo el combate).
 /// </summary>
-public sealed class BlackGrail() : MemeCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+// 2E base, 1E mejorado (audit 2026-07-05): x1.5 permanente a todos los Ataques por 1E (0E up)
+// estaba ordenes de magnitud sobre el baseline de powers raros (DemonForm/EchoForm = 3E).
+public sealed class BlackGrail() : MemeCard(2, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

@@ -18,6 +18,6 @@ public sealed class DemiServantPower : MashShielderPower
     {
         if (player != Owner.Player) return;
         Flash();
-        await BlockRetention.GainBulwarkBlock(null, Owner, Amount);
+        await BlockRetention.GainBulwarkBlock(null, Owner, Amount, choiceContext: choiceContext);
     }
 }

@@ -80,7 +80,7 @@
   "MORDREDSABER-LIGHTNING_VISIT.title": "闪电造访",
   "MORDREDSABER-LIGHTNING_VISIT.description": "#切换形态。在你的回合结束时，切回原形态。+切回时，获得!Stars!颗*暴击星*。+",
   "MORDREDSABER-RUDE_KICK.title": "无礼飞踢",
-  "MORDREDSABER-RUDE_KICK.description": "#造成!D!点伤害。施加!Vulnerable!层易伤。若你已就绪一个暴击：改为施加2层易伤。",
+  "MORDREDSABER-RUDE_KICK.description": "#造成!D!点伤害。施加!Vulnerable!层*易伤（若你有*暴击预备，则额外+1层）。",
   "MORDREDSABER-PLUNDER_OF_THE_ROYAL_HOARD.title": "王室宝库劫掠",
   "MORDREDSABER-PLUNDER_OF_THE_ROYAL_HOARD.description": "#消耗。获得!NpCharge!点*NP值与!Stars!颗*暴击星*。",
   "MORDREDSABER-CHAINED_LIGHTNING.title": "连锁闪电",
