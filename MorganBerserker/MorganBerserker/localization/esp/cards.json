@@ -158,5 +158,7 @@
   "MORGANBERSERKER-QUEENS_SACRIFICE.title": "Sacrificio de la Reina",
   "MORGANBERSERKER-QUEENS_SACRIFICE.description": "#Inflige !D! de daño. Pierde !HpLoss! de Vida. Si tienes *Alzarse: /+!Bonus! de daño.",
   "MORGANBERSERKER-FAE_RESPITE.title": "Respiro Feérico",
-  "MORGANBERSERKER-FAE_RESPITE.description": "#Cura !H! de Vida. *Agotar."
+  "MORGANBERSERKER-FAE_RESPITE.description": "#Cura !H! de Vida. *Agotar.",
+  "MORGANBERSERKER-QUEENS_METAMORPHOSIS.title": "Metamorfosis de la Reina",
+  "MORGANBERSERKER-QUEENS_METAMORPHOSIS.description": "#Cambiá a tu forma opuesta (Reina ↔ Bruja de la Lluvia)."
 }

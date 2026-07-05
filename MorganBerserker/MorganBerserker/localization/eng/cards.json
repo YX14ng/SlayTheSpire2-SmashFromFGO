@@ -158,5 +158,7 @@
   "MORGANBERSERKER-QUEENS_SACRIFICE.title": "Queen's Sacrifice",
   "MORGANBERSERKER-QUEENS_SACRIFICE.description": "#Deal !D! damage, /+!Bonus! if you have *Guts. Lose !HpLoss! HP.",
   "MORGANBERSERKER-FAE_RESPITE.title": "Fae Respite",
-  "MORGANBERSERKER-FAE_RESPITE.description": "#Heal !H! HP. *Exhaust."
+  "MORGANBERSERKER-FAE_RESPITE.description": "#Heal !H! HP. *Exhaust.",
+  "MORGANBERSERKER-QUEENS_METAMORPHOSIS.title": "The Queen's Metamorphosis",
+  "MORGANBERSERKER-QUEENS_METAMORPHOSIS.description": "#Switch to your opposite form (Queen ↔ Rain Witch)."
 }

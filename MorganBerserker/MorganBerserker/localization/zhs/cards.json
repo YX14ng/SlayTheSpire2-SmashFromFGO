@@ -158,5 +158,7 @@
   "MORGANBERSERKER-QUEENS_SACRIFICE.title": "王之牺牲",
   "MORGANBERSERKER-QUEENS_SACRIFICE.description": "#造成!D!点伤害；如果你持有*毅力*：额外/+!Bonus!点伤害。失去!HpLoss!点生命。",
   "MORGANBERSERKER-FAE_RESPITE.title": "妖精的喘息",
-  "MORGANBERSERKER-FAE_RESPITE.description": "#回复!H!点生命。*消耗*。"
+  "MORGANBERSERKER-FAE_RESPITE.description": "#回复!H!点生命。*消耗*。",
+  "MORGANBERSERKER-QUEENS_METAMORPHOSIS.title": "女王的变身",
+  "MORGANBERSERKER-QUEENS_METAMORPHOSIS.description": "#切换至你的另一形态（妖精女王 ↔ 雨之魔女）。"
 }

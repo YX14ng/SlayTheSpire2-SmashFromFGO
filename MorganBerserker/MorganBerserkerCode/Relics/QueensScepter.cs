@@ -37,14 +37,27 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<CursePower>()];
 
     private bool _usedThisCombat;
+    private bool _switchTokenGranted;
     private readonly Powers.PerTurnTriggerCounter _curseTriggers = new();
 
     public override async Task BeforeCombatStartLate()
     {
         _usedThisCombat = false;
+        _switchTokenGranted = false;
         _curseTriggers.OnSideTurnStart(CombatSide.Player); // reset al arrancar el combate.
         // Forma inicial: Reina. source == null -> no cuenta como "cambio de forma".
         await FormSwitch.Enter<Powers.Forms.FairyQueenFormPower>(null, Owner.Creature, null);
+    }
+
+    /// <summary>(4) 2026-07-04, feedback de jugadores ("¿puedo entrar a Caster desde el inicio?"):
+    /// al empezar tu PRIMER turno de cada combate, manifiesta una Metamorfosis de la Reina gratis
+    /// (0⚡, Etérea + Exhaust — alterna Reina ↔ Bruja). Garantiza el acceso a la forma sembradora
+    /// desde el turno 1 sin diluir el mazo; usarla dispara el bono (2) de primer cambio.</summary>
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Players.Player player)
+    {
+        if (player != Owner || _switchTokenGranted) return;
+        _switchTokenGranted = true;
+        await FGOCore.FGOCoreCode.Combat.ManifestCards.ManifestToHand<Cards.Special.QueensMetamorphosis>(Owner.Creature, 1.0f);
     }
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
