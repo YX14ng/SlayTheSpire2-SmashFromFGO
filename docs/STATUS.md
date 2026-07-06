@@ -6,7 +6,7 @@
 - **Arte Tiamat completo**: 20 retratos (14 de DESIGN-REVIEW-2 que estaban SIN arte + 6 nuevos) vía match-ce-art → `assets/reference/ce/tiamat_missing_mapping.csv` → make_card_art.
 - **Pies→y=0 en los 9 personajes** (reporte "血条在胯部"): la barra de vida es Y-fija en el origen del creature; los sprites quedaron hundidos tras la normalización (Okita +608px). posY corregido por bbox alfa + Bounds/Intent/CenterPos al alto real. Detalle en FINDINGS.
 - **v0.108.0 existe SOLO en el branch beta de Steam** (main sigue v0.107.1): "beta版没法出攻击牌" = incompatibilidad esperada (los mods apuntan a MAIN). Migrar cuando 0.108 llegue a main.
-- Los 10 publicados a `dist/` (dll+pck verificados con los cambios adentro). **Pendiente: subir a Workshop** (bloqueado por permisos de la sesión — confirmar con el user).
+- Los 10 publicados a `dist/` (dll+pck verificados con los cambios adentro) y **subidos a Workshop 10/10 Success** (públicos: FGOCore/Mash/Morgan/Artoria/Tiamat; privados: Mordred/Gil/Okita/Oberon/Siegfried). Falta que el user re-sincronice Steam y pegue las respuestas en chino.
 
 Fecha anterior: **2026-06-25**. Este archivo es la **fuente de verdad del estado**; reemplaza la
 sección de estado de [HANDOFF.md](HANDOFF.md) (quedó vieja: hablaba de v0.103.x / BaseLib 3.2.1).
