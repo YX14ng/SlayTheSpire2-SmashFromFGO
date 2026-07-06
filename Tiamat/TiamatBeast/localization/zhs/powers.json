@@ -34,5 +34,14 @@
   "TIAMATBEAST-CORROSIVE_TIDE_POWER.smartDescription": "#每个你的回合开始时，每层对所有敌人施加 1 层诅咒。",
   "TIAMATBEAST-BROOD_NURTURE_POWER.title": "巨兽之胎",
   "TIAMATBEAST-BROOD_NURTURE_POWER.description": "#每个你的回合开始时，每层获得 1 层养育。",
-  "TIAMATBEAST-BROOD_NURTURE_POWER.smartDescription": "#每个你的回合开始时，每层获得 1 层养育。"
+  "TIAMATBEAST-BROOD_NURTURE_POWER.smartDescription": "#每个你的回合开始时，每层获得 1 层养育。",
+  "TIAMATBEAST-MOTHERS_VIGIL_POWER.title": "母亲的守望",
+  "TIAMATBEAST-MOTHERS_VIGIL_POWER.description": "#在你的回合开始时，若拥有3只或更多拉赫穆，每层抓1张牌。",
+  "TIAMATBEAST-MOTHERS_VIGIL_POWER.smartDescription": "#在你的回合开始时，若拥有3只或更多拉赫穆，每层抓1张牌。",
+  "TIAMATBEAST-PROTECTIVE_SILT_POWER.title": "护体淤泥",
+  "TIAMATBEAST-PROTECTIVE_SILT_POWER.description": "#在你的回合开始时，获得等同于层数的壁垒。",
+  "TIAMATBEAST-PROTECTIVE_SILT_POWER.smartDescription": "#在你的回合开始时，获得等同于层数的壁垒。",
+  "TIAMATBEAST-PREDATORY_INSTINCT_POWER.title": "捕食本能",
+  "TIAMATBEAST-PREDATORY_INSTINCT_POWER.description": "#你的拉赫穆兽群每回合每层额外撕咬1次。",
+  "TIAMATBEAST-PREDATORY_INSTINCT_POWER.smartDescription": "#你的拉赫穆兽群每回合每层额外撕咬1次。"
 }

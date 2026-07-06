@@ -1,6 +1,14 @@
 # STATUS — estado actual (alta densidad)
 
-Fecha: **2026-06-25**. Este archivo es la **fuente de verdad del estado**; reemplaza la
+## 2026-07-06 — evento de pociones + pies/barra de vida + pool Tiamat
+- **CardRewardHardening (FGOCore)**: `CreateForReward` tiraba con pools chicos filtrados por rareza×tipo (evento 药水的未来 y el 天命芝士 de otro mod → "无法选牌" en Tiamat). Finalizer Harmony: reintenta permitiendo duplicados. Detalle en FINDINGS.
+- **Tiamat +6 cartas** (todo combo del evento ahora ≥3): Fauces de la Larva (C/A, 9 puro), Vigilia de la Madre (U/P, robo si ≥3 Laḫmu), Limo Protector (U/P, Metallicize en Baluarte), Diluvio del Génesis (R/A, AoE +1 por 2 Maldición), Crisálida Abisal (R/S, 18 Baluarte+2 Crianza, Exhaust), Instinto Depredador (R/P, `ISwarmBiteAmplifier` +1 mordida). Pool: C 8 (A3/S4/P1) · U 18 (A6/S9/P3) · R 9 (A3/S3/P3). Loc eng/esp/zhs.
+- **Arte Tiamat completo**: 20 retratos (14 de DESIGN-REVIEW-2 que estaban SIN arte + 6 nuevos) vía match-ce-art → `assets/reference/ce/tiamat_missing_mapping.csv` → make_card_art.
+- **Pies→y=0 en los 9 personajes** (reporte "血条在胯部"): la barra de vida es Y-fija en el origen del creature; los sprites quedaron hundidos tras la normalización (Okita +608px). posY corregido por bbox alfa + Bounds/Intent/CenterPos al alto real. Detalle en FINDINGS.
+- **v0.108.0 existe SOLO en el branch beta de Steam** (main sigue v0.107.1): "beta版没法出攻击牌" = incompatibilidad esperada (los mods apuntan a MAIN). Migrar cuando 0.108 llegue a main.
+- Los 10 publicados a `dist/` (dll+pck verificados con los cambios adentro). **Pendiente: subir a Workshop** (bloqueado por permisos de la sesión — confirmar con el user).
+
+Fecha anterior: **2026-06-25**. Este archivo es la **fuente de verdad del estado**; reemplaza la
 sección de estado de [HANDOFF.md](HANDOFF.md) (quedó vieja: hablaba de v0.103.x / BaseLib 3.2.1).
 Reglas de decisión cerradas → [DECISIONS.md](DECISIONS.md). Hallazgos técnicos → [FINDINGS.md](FINDINGS.md).
 El usuario se comunica en **español**.

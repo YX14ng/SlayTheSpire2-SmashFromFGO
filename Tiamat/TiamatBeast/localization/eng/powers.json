@@ -34,5 +34,14 @@
   "TIAMATBEAST-CORROSIVE_TIDE_POWER.smartDescription": "#At the start of your turns, apply 1 Curse to all enemies per stack.",
   "TIAMATBEAST-BROOD_NURTURE_POWER.title": "Womb of the Beast",
   "TIAMATBEAST-BROOD_NURTURE_POWER.description": "#At the start of your turns, gain 1 Nurture per stack.",
-  "TIAMATBEAST-BROOD_NURTURE_POWER.smartDescription": "#At the start of your turns, gain 1 Nurture per stack."
+  "TIAMATBEAST-BROOD_NURTURE_POWER.smartDescription": "#At the start of your turns, gain 1 Nurture per stack.",
+  "TIAMATBEAST-MOTHERS_VIGIL_POWER.title": "Mother's Vigil",
+  "TIAMATBEAST-MOTHERS_VIGIL_POWER.description": "#At the start of your turns, if you have 3 or more Laḫmu, draw 1 card per stack.",
+  "TIAMATBEAST-MOTHERS_VIGIL_POWER.smartDescription": "#At the start of your turns, if you have 3 or more Laḫmu, draw 1 card per stack.",
+  "TIAMATBEAST-PROTECTIVE_SILT_POWER.title": "Protective Silt",
+  "TIAMATBEAST-PROTECTIVE_SILT_POWER.description": "#At the start of your turns, gain Bulwark equal to the stacks.",
+  "TIAMATBEAST-PROTECTIVE_SILT_POWER.smartDescription": "#At the start of your turns, gain Bulwark equal to the stacks.",
+  "TIAMATBEAST-PREDATORY_INSTINCT_POWER.title": "Predatory Instinct",
+  "TIAMATBEAST-PREDATORY_INSTINCT_POWER.description": "#Your Laḫmu swarm bites 1 extra time per stack each turn.",
+  "TIAMATBEAST-PREDATORY_INSTINCT_POWER.smartDescription": "#Your Laḫmu swarm bites 1 extra time per stack each turn."
 }

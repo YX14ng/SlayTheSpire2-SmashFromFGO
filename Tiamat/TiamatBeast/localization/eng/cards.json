@@ -80,5 +80,17 @@
   "TIAMATBEAST-CORROSIVE_TIDE.title": "Corrosive Tide",
   "TIAMATBEAST-CORROSIVE_TIDE.description": "#At the start of your turns, apply !Stacks! Curse to ALL enemies.",
   "TIAMATBEAST-WOMB_OF_THE_BEAST.title": "Womb of the Beast",
-  "TIAMATBEAST-WOMB_OF_THE_BEAST.description": "#At the start of your turns, gain !Stacks! Nurture."
+  "TIAMATBEAST-WOMB_OF_THE_BEAST.description": "#At the start of your turns, gain !Stacks! Nurture.",
+  "TIAMATBEAST-LARVAL_MAW.title": "Larval Maw",
+  "TIAMATBEAST-LARVAL_MAW.description": "#Deal !D! damage.",
+  "TIAMATBEAST-MOTHERS_VIGIL.title": "Mother's Vigil",
+  "TIAMATBEAST-MOTHERS_VIGIL.description": "#Gain Mother's Vigil: at the start of each of your turns, if you have 3 or more Laḫmu, draw !Stacks! card(s).",
+  "TIAMATBEAST-PROTECTIVE_SILT.title": "Protective Silt",
+  "TIAMATBEAST-PROTECTIVE_SILT.description": "#Gain Protective Silt: at the start of each of your turns, gain !Block! Bulwark.",
+  "TIAMATBEAST-GENESIS_DELUGE.title": "Genesis Deluge",
+  "TIAMATBEAST-GENESIS_DELUGE.description": "#Deal !D! damage to ALL enemies, plus 1 for every !CursePerBonus! Curse on each target.",
+  "TIAMATBEAST-ABYSSAL_CHRYSALIS.title": "Abyssal Chrysalis",
+  "TIAMATBEAST-ABYSSAL_CHRYSALIS.description": "#Gain !B! Bulwark. Gain !Nurture! Nurture.",
+  "TIAMATBEAST-PREDATORY_INSTINCT.title": "Predatory Instinct",
+  "TIAMATBEAST-PREDATORY_INSTINCT.description": "#Gain Predatory Instinct: your Laḫmu swarm bites !Stacks! extra time(s) each turn."
 }

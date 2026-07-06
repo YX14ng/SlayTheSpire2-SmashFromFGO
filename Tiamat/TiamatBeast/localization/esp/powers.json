@@ -34,5 +34,14 @@
   "TIAMATBEAST-CORROSIVE_TIDE_POWER.smartDescription": "#Al inicio de tus turnos, aplicá 1 de Maldición a todos los enemigos por acumulación.",
   "TIAMATBEAST-BROOD_NURTURE_POWER.title": "Vientre de la Bestia",
   "TIAMATBEAST-BROOD_NURTURE_POWER.description": "#Al inicio de tus turnos, ganás 1 de Crianza por acumulación.",
-  "TIAMATBEAST-BROOD_NURTURE_POWER.smartDescription": "#Al inicio de tus turnos, ganás 1 de Crianza por acumulación."
+  "TIAMATBEAST-BROOD_NURTURE_POWER.smartDescription": "#Al inicio de tus turnos, ganás 1 de Crianza por acumulación.",
+  "TIAMATBEAST-MOTHERS_VIGIL_POWER.title": "Vigilia de la Madre",
+  "TIAMATBEAST-MOTHERS_VIGIL_POWER.description": "#Al inicio de tus turnos, si tenés 3 o más Laḫmu, robás 1 carta por acumulación.",
+  "TIAMATBEAST-MOTHERS_VIGIL_POWER.smartDescription": "#Al inicio de tus turnos, si tenés 3 o más Laḫmu, robás 1 carta por acumulación.",
+  "TIAMATBEAST-PROTECTIVE_SILT_POWER.title": "Limo Protector",
+  "TIAMATBEAST-PROTECTIVE_SILT_POWER.description": "#Al inicio de tus turnos, ganás Baluarte igual a las acumulaciones.",
+  "TIAMATBEAST-PROTECTIVE_SILT_POWER.smartDescription": "#Al inicio de tus turnos, ganás Baluarte igual a las acumulaciones.",
+  "TIAMATBEAST-PREDATORY_INSTINCT_POWER.title": "Instinto Depredador",
+  "TIAMATBEAST-PREDATORY_INSTINCT_POWER.description": "#Tu enjambre de Laḫmu muerde 1 vez más por acumulación cada turno.",
+  "TIAMATBEAST-PREDATORY_INSTINCT_POWER.smartDescription": "#Tu enjambre de Laḫmu muerde 1 vez más por acumulación cada turno."
 }

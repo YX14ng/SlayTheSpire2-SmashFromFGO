@@ -8,8 +8,10 @@ export const meta = {
   ],
 }
 
-const TSV = (args && args.tsvPath) || 'f:/Programs/SlayTheSpire2-SmashFromFGO/assets/reference/ce/ce_names.tsv'
-const BATCHES = (args && args.batches) || []
+// tolerar args serializados como string JSON (según cómo el host serialice el tool call)
+const ARGS = typeof args === 'string' ? JSON.parse(args) : args
+const TSV = (ARGS && ARGS.tsvPath) || 'f:/Programs/SlayTheSpire2-SmashFromFGO/assets/reference/ce/ce_names.tsv'
+const BATCHES = (ARGS && ARGS.batches) || []
 if (BATCHES.length === 0) {
   return { error: 'args.batches vacío: pasar [{label, cards: [[fileName, themeDescriptionEnglish], ...]}]' }
 }
