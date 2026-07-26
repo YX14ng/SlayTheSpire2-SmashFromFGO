@@ -1,0 +1,16 @@
+{
+  "TIAMATBEAST-TIAMAT.title": "Тиамат",
+  "TIAMATBEAST-TIAMAT.titleObject": "Богиня-Мать",
+  "TIAMATBEAST-TIAMAT.description": "Зверь II, Море Жизни, из которого впервые излилась вся жизнь. Она не сражается — она порождает: разливает по врагам Прилив Хаоса и рождает Лахму, которые сами защищают её и кусают противников. Порождайте, взращивайте или поглощайте своё потомство, чтобы переполниться силой и принять гигантскую Драконью форму. Архетип чистого призывателя, движимого сокрушительной и гибельной материнской любовью.",
+  "TIAMATBEAST-TIAMAT.pronounObject": "её",
+  "TIAMATBEAST-TIAMAT.possessiveAdjective": "её",
+  "TIAMATBEAST-TIAMAT.pronounPossessive": "её",
+  "TIAMATBEAST-TIAMAT.pronounSubject": "она",
+  "TIAMATBEAST-TIAMAT.goldMonologue": "Такие твёрдые и холодные вещи... пусть погрузятся в материнское море, и я вновь рожу их тёплыми.",
+  "TIAMATBEAST-TIAMAT.eventDeathPrevention": "Конец? Нет... мне неведома «смерть»: всякая жизнь в конце возвращается к матери.",
+  "TIAMATBEAST-TIAMAT.aromaPrinciple": "Я — море, которое лишь рождает, растит и обожает, объятие столь глубокое, что в нём утонет весь мир.",
+  "TIAMATBEAST-TIAMAT.cardsModifierTitle": "Потомство моря",
+  "TIAMATBEAST-TIAMAT.cardsModifierDescription": "Играйте с пулом карт Тиамат.",
+  "TIAMATBEAST-TIAMAT.banter.alive.endTurnPing": "Идите ко мне, мои дорогие... отдыхайте здесь, в объятиях вашей матери.",
+  "TIAMATBEAST-TIAMAT.banter.dead.endTurnPing": "Море иссякает... и всё же мои руки пока вас не отпустят."
+}

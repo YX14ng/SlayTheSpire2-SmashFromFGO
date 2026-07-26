@@ -1,0 +1,16 @@
+{
+  "MASHSHIELDER-MASH_SHIELDER.title": "Машу Кириелайт",
+  "MASHSHIELDER-MASH_SHIELDER.titleObject": "Шилдер",
+  "MASHSHIELDER-MASH_SHIELDER.description": "Деми-Слуга, слившаяся с Героическим духом Галахадом. Она поднимает великий щит Лорд Камелот, накапливает несокрушимый Блок и обрушивает его мощь в сокрушительных Благородных фантазмах.",
+  "MASHSHIELDER-MASH_SHIELDER.pronounObject": "её",
+  "MASHSHIELDER-MASH_SHIELDER.possessiveAdjective": "её",
+  "MASHSHIELDER-MASH_SHIELDER.pronounPossessive": "её",
+  "MASHSHIELDER-MASH_SHIELDER.pronounSubject": "она",
+  "MASHSHIELDER-MASH_SHIELDER.goldMonologue": "Это... припасы, чтобы защитить всех, правда? Я буду беречь их и ничего не потрачу зря.",
+  "MASHSHIELDER-MASH_SHIELDER.eventDeathPrevention": "Я не могу... позволить себе пасть. Поклявшись защищать, я поднимусь снова, сколько бы раз ни пришлось, сэмпай.",
+  "MASHSHIELDER-MASH_SHIELDER.aromaPrinciple": "Я — щит, который выходит вперёд, чтобы прикрыть чью-то спину. Вот кем я являюсь.",
+  "MASHSHIELDER-MASH_SHIELDER.cardsModifierTitle": "Арсенал Шилдера",
+  "MASHSHIELDER-MASH_SHIELDER.cardsModifierDescription": "Играйте с набором карт Машу Кириелайт.",
+  "MASHSHIELDER-MASH_SHIELDER.banter.alive.endTurnPing": "Сэмпай, оставьте это мне. Щит ещё не дрогнул... так что прошу, идите вперёд без страха.",
+  "MASHSHIELDER-MASH_SHIELDER.banter.dead.endTurnPing": "Мне... не хватает воздуха... простите, сэмпай. Но даже так... хотя бы этот щит я не опущу."
+}

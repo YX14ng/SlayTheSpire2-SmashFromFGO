@@ -1,0 +1,16 @@
+{
+  "SIEGFRIEDSABER-SIEGFRIED.title": "Зигфрид",
+  "SIEGFRIEDSABER-SIEGFRIED.titleObject": "рыцарь драконьей крови",
+  "SIEGFRIEDSABER-SIEGFRIED.description": "Драконоборец из «Песни о Нибелунгах», чья кожа закалилась после купания в крови Фафнира. Драконья чешуя отражает почти любой удар — кроме того, что достигает его спины. Он терпит, заряжает Бальмунг, и чем дольше держится чешуя, тем острее разит его Благородный Фантазм. Самоотверженный силач, который постоянно извиняется и совершенно лишён Сопротивления магии. Суманаи.",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounObject": "его",
+  "SIEGFRIEDSABER-SIEGFRIED.possessiveAdjective": "его",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounPossessive": "его",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounSubject": "он",
+  "SIEGFRIEDSABER-SIEGFRIED.goldMonologue": "Золото? Отдайте его тем, кому ещё остались мечты на продажу. Мне нужны лишь клинок и причина его поднять.",
+  "SIEGFRIEDSABER-SIEGFRIED.eventDeathPrevention": "Ещё нет — остались те, кого я не закончил защищать. Простите. Я не могу пасть здесь.",
+  "SIEGFRIEDSABER-SIEGFRIED.aromaPrinciple": "За дракона, которым я был, и героя, которым не сумел стать, я искуплю вину этим клинком — ради вас, не ради себя.",
+  "SIEGFRIEDSABER-SIEGFRIED.cardsModifierTitle": "Клинок Нибелунга",
+  "SIEGFRIEDSABER-SIEGFRIED.cardsModifierDescription": "Играйте с пулом карт Зигфрида.",
+  "SIEGFRIEDSABER-SIEGFRIED.banter.alive.endTurnPing": "Стойте за мной. Моя чешуя отразит всё впереди — оставьте передовую рыцарю.",
+  "SIEGFRIEDSABER-SIEGFRIED.banter.dead.endTurnPing": "Моя чешуя истончается... тогда следующий удар я встречу плотью, как и следовало с самого начала."
+}

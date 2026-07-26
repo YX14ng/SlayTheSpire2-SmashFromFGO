@@ -1,0 +1,16 @@
+{
+  "MORGANBERSERKER-MORGAN_BERSERKER.title": "모르간",
+  "MORGANBERSERKER-MORGAN_BERSERKER.titleObject": "요정국 브리튼의 여왕",
+  "MORGANBERSERKER-MORGAN_BERSERKER.description": "요정국 브리튼을 이천 년 동안 지배하고, 왕국을 지키기 위해 수없이 죽었던 폭군 여왕입니다. 롱고미니아드의 복제품으로 저주를 심고 두 삶에 걸쳐 보구를 충전하며, 죽음에서 전보다 강하게 일어납니다.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounObject": "그녀",
+  "MORGANBERSERKER-MORGAN_BERSERKER.possessiveAdjective": "그녀의",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounPossessive": "그녀의 것",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounSubject": "그녀",
+  "MORGANBERSERKER-MORGAN_BERSERKER.goldMonologue": "황금은 하찮은 장신구에 불과합니다. 내가 원하는 것은 다스릴 옥좌뿐.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.eventDeathPrevention": "몇 번이고 죽을지라도, 여왕은 세계의 끝 그 자체에서 다시 일어납니다.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.aromaPrinciple": "나는 얼어붙은 비. 누구에게도 기대지 않고 홀로 나라를 떠받치는 여왕입니다.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.cardsModifierTitle": "폭군의 무기고",
+  "MORGANBERSERKER-MORGAN_BERSERKER.cardsModifierDescription": "모르간의 카드 풀로 플레이합니다.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.banter.alive.endTurnPing": "똑똑히 보십시오. 누구도 여왕의 명을 거스를 수 없습니다.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.banter.dead.endTurnPing": "이 정도 상처에 고개를 숙이다니... 여왕에게는 허락되지 않습니다."
+}

@@ -1,0 +1,14 @@
+{
+  "TIAMATBEAST-SEA_OF_LIFE_WOMB.title": "생명의 바다의 자궁",
+  "TIAMATBEAST-SEA_OF_LIFE_WOMB.description": "#각 전투 시작 시 팜 파탈 형태가 되고 NP 충전을 10 얻으며 라흐무를 1마리 낳습니다. 각 적이 처음으로 저주받을 때 라흐무를 1마리 낳습니다.",
+  "TIAMATBEAST-SEA_OF_LIFE_WOMB.flavor": "버려진 창세의 자궁에서 생명은 여전히 흘러나옵니다. 끝없이, 부탁하지 않았음에도, 그녀의 것으로.",
+  "TIAMATBEAST-MOTHERS_TEARS.title": "어머니의 눈물",
+  "TIAMATBEAST-MOTHERS_TEARS.description": "#라흐무를 삼킬 때마다 삼킨 라흐무 하나당 체력을 2 회복합니다.",
+  "TIAMATBEAST-MOTHERS_TEARS.flavor": "그녀는 삼킨 모든 아이를 위해 웁니다. 그 슬픔이 그녀를 계속 서 있게 합니다.",
+  "TIAMATBEAST-KING_HASSANS_HORN.title": "산의 노인의 뿔",
+  "TIAMATBEAST-KING_HASSANS_HORN.description": "#전투 시작 시 거츠를 얻습니다. 처음 사망할 때 체력 1로 부활하고 라흐무를 3마리 낳습니다.",
+  "TIAMATBEAST-KING_HASSANS_HORN.flavor": "죽음을 부여해야만 그녀를 쓰러뜨릴 수 있습니다. 그러므로 그녀는 더 많은 아이로 죽음에 답합니다.",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.title": "생명의 바다의 성배",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.description": "#성배전림: 최대 체력을 !MaxHp! 얻습니다. 보유 중 한계가 해제되어 인연은 12레벨, NP는 6레벨까지 도달할 수 있습니다.",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.flavor": "생명의 어머니가 무한한 생명을 약속하는 그릇을 품에 안습니다."
+}

@@ -1,0 +1,16 @@
+{
+  "MORDREDSABER-MORDRED.title": "Мордред",
+  "MORDREDSABER-MORDRED.titleObject": "Рыцарь Предательства",
+  "MORDREDSABER-MORDRED.description": "Рыцарь Предательства. Сдерживайте ярость за Шлемом, а затем сорвите его и обратите накопленную силу в Криты багровой молнии и Кларент Кровь Артура — клинок, который сильнее всего разит тех, кто восседает выше вас.",
+  "MORDREDSABER-MORDRED.pronounObject": "её",
+  "MORDREDSABER-MORDRED.possessiveAdjective": "её",
+  "MORDREDSABER-MORDRED.pronounPossessive": "её",
+  "MORDREDSABER-MORDRED.pronounSubject": "она",
+  "MORDREDSABER-MORDRED.goldMonologue": "Золото? Оставь себе. Единственный трон, которого я хотела, нельзя было купить.",
+  "MORDREDSABER-MORDRED.eventDeathPrevention": "Не здесь. Не прежде, чем я сорву эту корону с его головы.",
+  "MORDREDSABER-MORDRED.aromaPrinciple": "Я ничья не дочь и ничья не пешка. Я Мордред — и меня признают.",
+  "MORDREDSABER-MORDRED.cardsModifierTitle": "Кларент Кровь Артура",
+  "MORDREDSABER-MORDRED.cardsModifierDescription": "Играйте с пулом карт Мордред.",
+  "MORDREDSABER-MORDRED.banter.alive.endTurnPing": "Ну же. Я сниму шлем, когда сама решу, — и ты пожалеешь, что я это сделала.",
+  "MORDREDSABER-MORDRED.banter.dead.endTurnPing": "Шлем... пока останется на месте. Тц. Ладно. Я всё ещё могу пустить тебе кровь из-под него."
+}

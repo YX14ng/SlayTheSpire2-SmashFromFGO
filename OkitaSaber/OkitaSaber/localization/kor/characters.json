@@ -1,0 +1,16 @@
+{
+  "OKITASABER-OKITA.title": "오키타 소지",
+  "OKITASABER-OKITA.titleObject": "신선조 1번대 대장",
+  "OKITASABER-OKITA.description": "신선조 1번대 대장이자 막부 말기의 최강 검사. 십 대에 면허개전을 받은 천연이심류의 천재입니다. 막지 않고 공격합니다. 검격마다 흩어진 벚꽃잎은 크리티컬 스타가 되어 돌아오며, 속도가 절정에 이르면 눈으로 좇을 수 없을 만큼 빠르게 검을 뽑아 무명 삼단 찌르기의 동시 세 격으로 모든 방어를 꿰뚫습니다. 연약하지만 치명적이며, 진정한 한계는 폐결핵으로 서서히 죽어 가는 육신의 호흡뿐입니다. 한 턴의 영광, 한 번의 기침, 그리고 다시 숨을 쉽니다.",
+  "OKITASABER-OKITA.pronounObject": "그녀",
+  "OKITASABER-OKITA.possessiveAdjective": "그녀의",
+  "OKITASABER-OKITA.pronounPossessive": "그녀의 것",
+  "OKITASABER-OKITA.pronounSubject": "그녀",
+  "OKITASABER-OKITA.goldMonologue": "황금이요? 차라리 당고와 벚꽃 아래의 조용한 오후에 쓰고 싶네요. 그래도 검날을 세우는 데 돈이 드니 받겠습니다.",
+  "OKITASABER-OKITA.eventDeathPrevention": "아직입니다. 이번에는 끝까지 싸우겠다고 맹세했으니까요. 기침을 하든 말든, 아직 서 있습니다.",
+  "OKITASABER-OKITA.aromaPrinciple": "속도를 늦추라고요? 저는 막부 말기 최속의 검입니다. 눈을 깜빡이면 꽃잎은 이미 떨어졌을 겁니다.",
+  "OKITASABER-OKITA.cardsModifierTitle": "천연이심류",
+  "OKITASABER-OKITA.cardsModifierDescription": "오키타의 카드 풀로 플레이합니다.",
+  "OKITASABER-OKITA.banter.alive.endTurnPing": "제 곁에 있으면 상처 하나 입지 않을 거예요. 다가오는 건 전부 먼저 베어 버리겠습니다.",
+  "OKITASABER-OKITA.banter.dead.endTurnPing": "아... 여기서 끝나는군요. 그래도... 마지막 숨까지 싸웠습니다..."
+}

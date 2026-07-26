@@ -1,0 +1,16 @@
+{
+  "MORDREDSABER-MORDRED.title": "모드레드",
+  "MORDREDSABER-MORDRED.titleObject": "반역의 기사",
+  "MORDREDSABER-MORDRED.description": "반역의 기사. 투구 뒤에 분노를 축적한 뒤 벗어 던져 진홍빛 번개의 크리티컬과 클라렌트 블러드 아서로 바꾸십시오. 자신보다 높은 자리에 앉은 자를 가장 강하게 치는 검입니다.",
+  "MORDREDSABER-MORDRED.pronounObject": "그녀",
+  "MORDREDSABER-MORDRED.possessiveAdjective": "그녀의",
+  "MORDREDSABER-MORDRED.pronounPossessive": "그녀의 것",
+  "MORDREDSABER-MORDRED.pronounSubject": "그녀",
+  "MORDREDSABER-MORDRED.goldMonologue": "황금? 네가 가져. 내가 원했던 유일한 왕좌는 돈으로 살 수 없었으니까.",
+  "MORDREDSABER-MORDRED.eventDeathPrevention": "여기서는 아니야. 그자의 머리에서 왕관을 뜯어 내기 전에는.",
+  "MORDREDSABER-MORDRED.aromaPrinciple": "난 누구의 딸도, 장기말도 아니야. 난 모드레드다. 반드시 인정받겠어.",
+  "MORDREDSABER-MORDRED.cardsModifierTitle": "클라렌트 블러드 아서",
+  "MORDREDSABER-MORDRED.cardsModifierDescription": "모드레드의 카드 풀로 플레이합니다.",
+  "MORDREDSABER-MORDRED.banter.alive.endTurnPing": "덤벼. 내가 원할 때 투구를 벗을 거다. 그때는 벗지 말았어야 했다고 빌겠지.",
+  "MORDREDSABER-MORDRED.banter.dead.endTurnPing": "투구는... 조금 더 쓰고 있지. 쳇, 좋아. 이 안에서도 네놈 피는 낼 수 있어."
+}

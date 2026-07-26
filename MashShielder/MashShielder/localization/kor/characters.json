@@ -1,0 +1,16 @@
+{
+  "MASHSHIELDER-MASH_SHIELDER.title": "마슈 키리에라이트",
+  "MASHSHIELDER-MASH_SHIELDER.titleObject": "실더",
+  "MASHSHIELDER-MASH_SHIELDER.description": "영령 갤러해드와 융합한 데미 서번트. 위대한 방패 로드 카멜롯을 들어 결코 무너지지 않는 방어도를 축적하고, 파괴적인 보구로 그 힘을 해방합니다.",
+  "MASHSHIELDER-MASH_SHIELDER.pronounObject": "그녀",
+  "MASHSHIELDER-MASH_SHIELDER.possessiveAdjective": "그녀의",
+  "MASHSHIELDER-MASH_SHIELDER.pronounPossessive": "그녀의 것",
+  "MASHSHIELDER-MASH_SHIELDER.pronounSubject": "그녀",
+  "MASHSHIELDER-MASH_SHIELDER.goldMonologue": "이건... 모두를 지키기 위한 물자죠? 소중히 여기고 하나도 낭비하지 않겠습니다.",
+  "MASHSHIELDER-MASH_SHIELDER.eventDeathPrevention": "쓰러지는 것을... 허락할 수 없습니다. 지키겠다고 맹세한 이상, 몇 번이든 다시 일어나겠습니다, 선배.",
+  "MASHSHIELDER-MASH_SHIELDER.aromaPrinciple": "저는 누군가의 등을 지키기 위해 앞으로 나서는 방패. 그것이 바로 저라는 사람의 형태입니다.",
+  "MASHSHIELDER-MASH_SHIELDER.cardsModifierTitle": "실더의 무기고",
+  "MASHSHIELDER-MASH_SHIELDER.cardsModifierDescription": "마슈 키리에라이트의 카드 풀로 플레이합니다.",
+  "MASHSHIELDER-MASH_SHIELDER.banter.alive.endTurnPing": "선배, 여기는 맡겨 주세요. 방패는 아직 흔들리지 않았으니 두려워하지 말고 나아가세요.",
+  "MASHSHIELDER-MASH_SHIELDER.banter.dead.endTurnPing": "숨이... 이어지지 않아요... 죄송합니다, 선배. 그래도... 적어도 이 방패만은 내리지 않겠습니다."
+}

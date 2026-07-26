@@ -1,0 +1,16 @@
+{
+  "ARTORIACASTER-ARTORIA_CASTER.title": "Артурия Кастер",
+  "ARTORIACASTER-ARTORIA_CASTER.titleObject": "Звезда надежды",
+  "ARTORIACASTER-ARTORIA_CASTER.description": "Дитя Пророчества из Британии фей, посланное через Внутреннее море спасти обречённую землю, — и всё ещё пытающееся, по одному путешествию за раз. В форме Кастера она выковывает Звёзды Калибурна и ману, а затем открывает безрассудное летнее окно Берсеркера, чтобы обратить их в сокрушительные Криты. «Вокруг Калибурна» отменяет неостановимое; Хоупвилл Камелот вершит казнь.",
+  "ARTORIACASTER-ARTORIA_CASTER.pronounObject": "её",
+  "ARTORIACASTER-ARTORIA_CASTER.possessiveAdjective": "её",
+  "ARTORIACASTER-ARTORIA_CASTER.pronounPossessive": "её",
+  "ARTORIACASTER-ARTORIA_CASTER.pronounSubject": "она",
+  "ARTORIACASTER-ARTORIA_CASTER.goldMonologue": "Я не стану копить этот блеск для себя. Если смогу превратить его в чью-то надежду, мне этого достаточно.",
+  "ARTORIACASTER-ARTORIA_CASTER.eventDeathPrevention": "Это ещё не конец. Пока я храню доверенную мне надежду, я буду вставать столько раз, сколько понадобится.",
+  "ARTORIACASTER-ARTORIA_CASTER.aromaPrinciple": "Даже самая маленькая звезда может стать надеждой, если кто-то поднимет к ней глаза. Я именно такой свет.",
+  "ARTORIACASTER-ARTORIA_CASTER.cardsModifierTitle": "Арсенал надежды",
+  "ARTORIACASTER-ARTORIA_CASTER.cardsModifierDescription": "Играйте с пулом карт Артурии.",
+  "ARTORIACASTER-ARTORIA_CASTER.banter.alive.endTurnPing": "Настоящий бой начинается здесь. Выше голову — пойдём вперёд вместе!",
+  "ARTORIACASTER-ARTORIA_CASTER.banter.dead.endTurnPing": "Прости... что я такая слабая. Но я ещё могу стоять. Ещё немного — я продолжу идти."
+}

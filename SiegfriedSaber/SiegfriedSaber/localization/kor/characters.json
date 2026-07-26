@@ -1,0 +1,16 @@
+{
+  "SIEGFRIEDSABER-SIEGFRIED.title": "지크프리트",
+  "SIEGFRIEDSABER-SIEGFRIED.titleObject": "용혈의 기사",
+  "SIEGFRIEDSABER-SIEGFRIED.description": "니벨룽겐의 노래에 등장하는 용살자. 파프니르의 피로 목욕해 피부가 단단해졌습니다. 용의 비늘은 거의 모든 공격을 빗겨 내지만, 그의 등을 노리는 단 한 번의 공격만은 예외입니다. 버티며 발뭉을 충전하고, 비늘이 오래 버틸수록 보구는 더욱 날카롭게 벱니다. 마력 내성은 없지만 사심 없이 사과하는 투사입니다. 스마나이.",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounObject": "그",
+  "SIEGFRIEDSABER-SIEGFRIED.possessiveAdjective": "그의",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounPossessive": "그의 것",
+  "SIEGFRIEDSABER-SIEGFRIED.pronounSubject": "그",
+  "SIEGFRIEDSABER-SIEGFRIED.goldMonologue": "황금인가? 아직 살 꿈이 남은 이들에게 주게. 내게 필요한 것은 검과 그것을 들 이유뿐이다.",
+  "SIEGFRIEDSABER-SIEGFRIED.eventDeathPrevention": "아직이다. 내가 미처 지키지 못한 이들이 남아 있다. 미안하다. 여기서 쓰러질 수는 없다.",
+  "SIEGFRIEDSABER-SIEGFRIED.aromaPrinciple": "내가 한때 용이었던 것과 끝내 되지 못한 영웅을 위해, 이 검으로 속죄하겠다. 나 자신이 아닌, 그대를 위해.",
+  "SIEGFRIEDSABER-SIEGFRIED.cardsModifierTitle": "니벨룽의 검",
+  "SIEGFRIEDSABER-SIEGFRIED.cardsModifierDescription": "지크프리트의 카드 풀로 플레이합니다.",
+  "SIEGFRIEDSABER-SIEGFRIED.banter.alive.endTurnPing": "내 뒤에 있게. 앞에서 오는 모든 것은 내 비늘이 막을 테니, 정면은 기사에게 맡겨라.",
+  "SIEGFRIEDSABER-SIEGFRIED.banter.dead.endTurnPing": "비늘이 얇아지는군... 그렇다면 다음 공격은 살로 받겠다. 진작 그래야 했듯이."
+}

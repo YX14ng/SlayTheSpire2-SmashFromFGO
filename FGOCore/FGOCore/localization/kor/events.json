@@ -1,0 +1,12 @@
+{
+  "FGOCORE-HOLY_GRAIL_RITUAL.title": "한계를 뛰어넘는 그릇",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.description": "서번트의 한계를 뛰어넘게 할 힘으로 가득 찬 황금빛 잔이 앞에 놓여 있습니다. 피도 소원도 요구하지 않습니다. 오직 합당한 공물만을 원합니다.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL.title": "[골드 !Gold! 바치기] 성배전림을 행한다.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL_LOCKED.title": "[잠김] 골드 !Gold! 필요.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL_LOCKED.description": "그릇은 침묵을 지킵니다. 공물이 부족합니다.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.DECLINE.title": "[떠나기] 성배를 거부한다.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.DECLINE.description": "어떤 한계에는 존재할 이유가 있습니다.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.APPLIED.description": "공물이 황금빛 속으로 사라집니다. 성배가 응답하여 영기 그래프를 이전의 한계 너머로 재구성합니다.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.DECLINED.description": "등을 돌립니다. 황금빛은 아무런 항의 없이 사라집니다.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.UNAVAILABLE.description": "이제 의식을 완료할 수 없습니다. 성배의 빛이 물러갑니다."
+}

@@ -1,0 +1,16 @@
+{
+  "MORGANBERSERKER-MORGAN_BERSERKER.title": "Моргана",
+  "MORGANBERSERKER-MORGAN_BERSERKER.titleObject": "Королева Британии фей",
+  "MORGANBERSERKER-MORGAN_BERSERKER.description": "Королева-тиран, две тысячи лет правившая Британией фей и бессчётное число раз умиравшая, чтобы та продолжала стоять. Она сеет Проклятия репликами Ронгоминиада, заряжает Благородный Фантазм сквозь две свои жизни и восстаёт из смерти сильнее прежнего.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounObject": "её",
+  "MORGANBERSERKER-MORGAN_BERSERKER.possessiveAdjective": "её",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounPossessive": "её",
+  "MORGANBERSERKER-MORGAN_BERSERKER.pronounSubject": "она",
+  "MORGANBERSERKER-MORGAN_BERSERKER.goldMonologue": "Золото — лишь безделушка. Я желаю только трона, с которого буду править.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.eventDeathPrevention": "Пусть я умираю снова и снова — королева восстаёт из самого конца.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.aromaPrinciple": "Я — замёрзший дождь, королева, которая ни за кого не держится и в одиночку несёт своё королевство.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.cardsModifierTitle": "Арсенал тирана",
+  "MORGANBERSERKER-MORGAN_BERSERKER.cardsModifierDescription": "Играйте с пулом карт Морганы.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.banter.alive.endTurnPing": "Смотри внимательно. Никому не позволено ослушаться приказа королевы.",
+  "MORGANBERSERKER-MORGAN_BERSERKER.banter.dead.endTurnPing": "Склонить голову из-за столь пустяковой раны... королеве это не дозволено."
+}

@@ -1,0 +1,16 @@
+{
+  "GILGAMESHARCHER-GILGAMESH.title": "Гильгамеш",
+  "GILGAMESHARCHER-GILGAMESH.titleObject": "Царь Героев",
+  "GILGAMESHARCHER-GILGAMESH.description": "Царь Героев Урука, совершенный сверхчеловек, собравший все сокровища земли. Он не сражается своими руками: Врата Вавилона извергают прототипы всех когда-либо выкованных орудий, золото забега служит ему боеприпасом, а когда шавки ему наскучивают, он обнажает Эа и читает гимн ветру творения, расколовшему небо и землю. Труден в освоении, несравненен в могуществе.",
+  "GILGAMESHARCHER-GILGAMESH.pronounObject": "его",
+  "GILGAMESHARCHER-GILGAMESH.possessiveAdjective": "его",
+  "GILGAMESHARCHER-GILGAMESH.pronounPossessive": "его",
+  "GILGAMESHARCHER-GILGAMESH.pronounSubject": "он",
+  "GILGAMESHARCHER-GILGAMESH.goldMonologue": "Золото? Шавка, каждая монета этого мира уже принадлежит мне. Я лишь позволяю тебе носить некоторые из них.",
+  "GILGAMESHARCHER-GILGAMESH.eventDeathPrevention": "Хмф. Царю не пасть от подобного. Откройтесь, Врата Вавилона.",
+  "GILGAMESHARCHER-GILGAMESH.aromaPrinciple": "Все сокровища мира принадлежат мне. Преклони колени, и, возможно, я позволю тебе узреть Эа.",
+  "GILGAMESHARCHER-GILGAMESH.cardsModifierTitle": "Врата Вавилона",
+  "GILGAMESHARCHER-GILGAMESH.cardsModifierDescription": "Играйте с пулом карт Гильгамеша.",
+  "GILGAMESHARCHER-GILGAMESH.banter.alive.endTurnPing": "Будь благодарна, шавка: я решил, что ты достойна одного выстрела из моих Врат.",
+  "GILGAMESHARCHER-GILGAMESH.banter.dead.endTurnPing": "Невозможно... Царь... не может... пасть здесь..."
+}

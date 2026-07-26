@@ -1,0 +1,16 @@
+{
+  "OBERONPRETENDER-OBERON.title": "Оберон",
+  "OBERONPRETENDER-OBERON.titleObject": "Король фей и сновидений",
+  "OBERONPRETENDER-OBERON.description": "Король фей, который одалживает величайший сон в вашей жизни, а на рассвете приходит за платой. Каждая батарея и усиление — заём, срок которого истекает в конце хода; первым пересеките порог ультимейта, а завтра заплатите кровью. Гасите долги, чеканя Критические звёзды, или объявите дефолт — станьте Вортигерном, червём конца, и заставьте мир оплатить счёт.",
+  "OBERONPRETENDER-OBERON.pronounObject": "его",
+  "OBERONPRETENDER-OBERON.possessiveAdjective": "его",
+  "OBERONPRETENDER-OBERON.pronounPossessive": "его",
+  "OBERONPRETENDER-OBERON.pronounSubject": "он",
+  "OBERONPRETENDER-OBERON.goldMonologue": "Золото? Очаровательный маленький сон само по себе. Бери сколько хочешь — на рассвете я всегда прихожу за платой.",
+  "OBERONPRETENDER-OBERON.eventDeathPrevention": "Ещё нет. История не окончена, а счёт не оплачен. Помечтай ещё немного.",
+  "OBERONPRETENDER-OBERON.aromaPrinciple": "Каждая сладкая ночь — это заём. Я лишь тот, кто приходит взыскать долг.",
+  "OBERONPRETENDER-OBERON.cardsModifierTitle": "Срок займов наступает",
+  "OBERONPRETENDER-OBERON.cardsModifierDescription": "Играйте с пулом карт Оберона.",
+  "OBERONPRETENDER-OBERON.banter.alive.endTurnPing": "Спи, милое создание. Пока ты грезишь, я займусь счетами.",
+  "OBERONPRETENDER-OBERON.banter.dead.endTurnPing": "Значит, сон окончен... и даже я не могу отсрочить этот долг."
+}

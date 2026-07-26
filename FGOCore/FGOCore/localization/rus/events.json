@@ -1,0 +1,12 @@
+{
+  "FGOCORE-HOLY_GRAIL_RITUAL.title": "Сосуд, превзошедший пределы",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.description": "Перед вами покоится золотая чаша, наполненная силой, способной превзойти пределы Слуги. Она не требует ни крови, ни желания — лишь достойного подношения.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL.title": "[Поднести !Gold! золота] Провести палингенезию.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL_LOCKED.title": "[Закрыто] Требуется !Gold! золота.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL_LOCKED.description": "Сосуд безмолвствует. Вашего подношения недостаточно.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.DECLINE.title": "[Уйти] Отказаться от Грааля.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.DECLINE.description": "Некоторые пределы существуют не просто так.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.APPLIED.description": "Подношение исчезает в золотом свете. Грааль отвечает и преобразует вашу Святую Графу, выводя её за прежние пределы.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.DECLINED.description": "Вы отворачиваетесь. Золотой свет безмолвно угасает.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.UNAVAILABLE.description": "Ритуал больше нельзя завершить. Свет Грааля отступает."
+}

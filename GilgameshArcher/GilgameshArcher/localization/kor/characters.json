@@ -1,0 +1,16 @@
+{
+  "GILGAMESHARCHER-GILGAMESH.title": "길가메시",
+  "GILGAMESHARCHER-GILGAMESH.titleObject": "영웅왕",
+  "GILGAMESHARCHER-GILGAMESH.description": "세상의 모든 보물을 모은 완전한 초월자이자 우루크의 영웅왕. 직접 손을 쓰지 않고 게이트 오브 바빌론에서 세상 모든 무장의 원형을 쏘아 냅니다. 이번 등반의 황금은 그의 탄약이며, 잡종에게 싫증이 나면 에아를 꺼내 천지를 가른 창세의 바람을 읊습니다. 다루기는 어렵고, 견줄 자는 없습니다.",
+  "GILGAMESHARCHER-GILGAMESH.pronounObject": "그",
+  "GILGAMESHARCHER-GILGAMESH.possessiveAdjective": "그의",
+  "GILGAMESHARCHER-GILGAMESH.pronounPossessive": "그의 것",
+  "GILGAMESHARCHER-GILGAMESH.pronounSubject": "그",
+  "GILGAMESHARCHER-GILGAMESH.goldMonologue": "황금이라고? 잡종, 이 세상의 모든 동전은 이미 짐의 것이다. 네가 조금 들고 다니는 것을 허락했을 뿐이다.",
+  "GILGAMESHARCHER-GILGAMESH.eventDeathPrevention": "흥. 왕이 이따위 것에 쓰러질 리 없다. 열려라, 게이트 오브 바빌론.",
+  "GILGAMESHARCHER-GILGAMESH.aromaPrinciple": "세상의 모든 보물은 짐의 것이다. 무릎을 꿇어라. 그러면 에아를 볼 영광 정도는 허락할지도 모르지.",
+  "GILGAMESHARCHER-GILGAMESH.cardsModifierTitle": "게이트 오브 바빌론",
+  "GILGAMESHARCHER-GILGAMESH.cardsModifierDescription": "길가메시의 카드 풀로 플레이합니다.",
+  "GILGAMESHARCHER-GILGAMESH.banter.alive.endTurnPing": "감사히 여겨라, 잡종. 네놈에게 게이트의 일격 하나를 쓸 가치가 있다고 판단했다.",
+  "GILGAMESHARCHER-GILGAMESH.banter.dead.endTurnPing": "불가능하다... 왕이... 이곳에 쓰러질 자일 리가..."
+}
