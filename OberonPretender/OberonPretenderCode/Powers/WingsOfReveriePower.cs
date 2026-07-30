@@ -23,7 +23,7 @@ public sealed class WingsOfReveriePower : OberonPower
     {
         if (cardPlay.Card is not IOberonNpCard || cardPlay.Card.Owner?.Creature != Owner || Owner.Player == null) return;
         Flash();
-        await CritStars.Gain(Owner, Stars, null);
-        await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 1, Owner.Player);
+        await CritStars.Gain(context, Owner, Stars, null);
+        await CardPileCmd.Draw(context, 1, Owner.Player);
     }
 }

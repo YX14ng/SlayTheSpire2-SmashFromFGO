@@ -30,7 +30,7 @@ public sealed class PiercingGlare() : SiegfriedCard(1, CardType.Attack, CardRari
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = CritStars.Of(Owner.Creature) >= StarThreshold ? DynamicVars["Bonus"].IntValue : 0;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

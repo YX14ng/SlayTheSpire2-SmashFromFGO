@@ -25,17 +25,17 @@ public sealed class TyrantsSweep() : MorganCard(1, CardType.Attack, CardRarity.C
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
 
     protected override bool ShouldGlowGoldInternal =>
-        Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature) != null;
+        Curses.MostCursed(Owner.Creature) != null;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).ToList())
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).ToList())
         {
             if (enemy.IsDead) continue;
             var bonus = Math.Min(
                 Curses.Of(enemy) / DynamicVars["CursePer"].IntValue,
                 DynamicVars["MaxBonus"].IntValue);
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(enemy)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
         }

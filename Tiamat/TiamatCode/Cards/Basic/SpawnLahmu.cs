@@ -20,8 +20,8 @@ public sealed class SpawnLahmu() : TiamatCard(1, CardType.Skill, CardRarity.Basi
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await Lahmu.Spawn(Owner.Creature, DynamicVars["Lahmu"].IntValue, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await Lahmu.Spawn(choiceContext, Owner.Creature, DynamicVars["Lahmu"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(6m);

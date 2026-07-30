@@ -5,7 +5,7 @@ namespace FGOCore.FGOCoreCode.DragonScales;
 /// <summary>
 /// A power/relic on the owner that wants to REACT when a hit actually pierces the
 /// <see cref="DragonScalesPower"/> (the exposed back — the first reaching hit each turn
-/// that ignores the scales). This is the broadcast counterpart of
+/// that bypasses one scale). This is the broadcast counterpart of
 /// <see cref="IDragonScalePiercer"/>: the piercer DECIDES a pierce should happen
 /// (a pure read, preview-safe), and the owner that grants the pierce (Siegfried's Linden
 /// Leaf relic) fires this listener exactly ONCE, on the real damage path, the moment it

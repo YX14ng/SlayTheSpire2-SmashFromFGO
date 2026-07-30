@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://KagetoraLancer/character/kagetora_frames.tres" id="frames"]
+
+[node name="KagetoraMerchant" type="Node2D"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-70.7, -316.1)
+flip_h = true
+sprite_frames = ExtResource("frames")
+animation = &"idle"
+autoplay = "idle"

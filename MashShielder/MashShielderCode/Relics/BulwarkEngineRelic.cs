@@ -37,9 +37,6 @@ public abstract class BulwarkEngineRelic : MashShielderRelic, IBlockRetentionSou
     /// </summary>
     protected virtual bool IsActive => true;
 
-    private int _starProcsThisTurn;
-    private int _npProcsThisTurn;
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(MaxRetainedBlock, ValueProp.Unpowered),
@@ -59,30 +56,22 @@ public abstract class BulwarkEngineRelic : MashShielderRelic, IBlockRetentionSou
 
     public override async Task BeforeCombatStartLate()
     {
-        _starProcsThisTurn = 0;
-        _npProcsThisTurn = 0;
         await Powers.Forms.Forms.Enter<Powers.Forms.ShielderFormPower>(null, Owner.Creature, null);
-    }
-
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player)
-        {
-            _starProcsThisTurn = 0;
-            _npProcsThisTurn = 0;
-        }
-        return Task.CompletedTask;
     }
 
     /// <summary>Camino ÚNICO del pago de estrellas por golpe totalmente bloqueado, con el candado
     /// P1 (máx 3 procs/turno). Lo usan el listener normal (abajo) y la Pared Absoluta (P8b) — antes
     /// la Pared duplicaba el pago a mano SIN el candado (audit 2026-07-04). Devuelve true si pagó.</summary>
-    public async Task<bool> TryProcFullBlockStars()
+    public Task<bool> TryProcFullBlockStars() =>
+        TryProcFullBlockStars(new BlockingPlayerChoiceContext());
+
+    public async Task<bool> TryProcFullBlockStars(PlayerChoiceContext choiceContext)
     {
-        if (!IsActive || _starProcsThisTurn >= MaxProcsPerTurn) return false;
-        _starProcsThisTurn++;
+        if (!IsActive || FgoCombatState.GetTurn(Owner.Creature, 6, 2) >= MaxProcsPerTurn) return false;
+        await FgoCombatState.IncrementTurn(
+            choiceContext, Owner.Creature, 6, MaxProcsPerTurn, null, width: 2);
         Flash();
-        await CritStars.Gain(Owner.Creature, StarsPerFullBlock, null);
+        await CritStars.Gain(choiceContext, Owner.Creature, StarsPerFullBlock, null);
         return true;
     }
 
@@ -91,7 +80,7 @@ public abstract class BulwarkEngineRelic : MashShielderRelic, IBlockRetentionSou
     {
         if (!IsActive || target != Owner.Creature || dealer == null) return;
         if (!props.IsPoweredAttack() || !result.WasFullyBlocked) return;
-        await TryProcFullBlockStars();
+        await TryProcFullBlockStars(choiceContext);
     }
 
     /// <summary>Perder Vida → Carga NP (máx 3/turno, parche P1).</summary>
@@ -99,10 +88,12 @@ public abstract class BulwarkEngineRelic : MashShielderRelic, IBlockRetentionSou
     {
         if (!IsActive || creature != Owner.Creature || delta >= 0) return;
         if (!CombatManager.Instance.IsInProgress) return;
-        if (_npProcsThisTurn >= MaxProcsPerTurn) return;
-        _npProcsThisTurn++;
+        if (FgoCombatState.GetTurn(Owner.Creature, 8, 2) >= MaxProcsPerTurn) return;
+        var context = new BlockingPlayerChoiceContext();
+        await FgoCombatState.IncrementTurn(
+            context, Owner.Creature, 8, MaxProcsPerTurn, null, width: 2);
         Flash();
-        await NpCharge.Gain(Owner.Creature, NpPerHpLoss, null);
+        await NpCharge.Gain(context, Owner.Creature, NpPerHpLoss, null);
     }
 
     public override bool ShouldClearBlock(Creature creature) => creature != Owner.Creature;

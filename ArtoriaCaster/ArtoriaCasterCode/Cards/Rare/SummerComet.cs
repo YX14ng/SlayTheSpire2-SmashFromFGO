@@ -15,7 +15,7 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Rare;
 /// </summary>
 public sealed class SummerComet() : ArtoriaCard(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
-    public const int CritCost = 5;
+    public const int CritCost = CritStarsPower.CritCost;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -25,7 +25,7 @@ public sealed class SummerComet() : ArtoriaCard(0, CardType.Attack, CardRarity.R
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
 
-    protected override bool IsPlayable => Stars.CanCrit(Owner.Creature, CritCost);
+    protected override bool IsPlayable => Criticals.WillCrit(Owner.Creature, this);
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 
@@ -33,10 +33,7 @@ public sealed class SummerComet() : ArtoriaCard(0, CardType.Attack, CardRarity.R
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        await Stars.ConsumeForCrit(Owner.Creature, CritCost, this);
-        var damage = DynamicVars.Damage.BaseValue + Stars.CritBonus(Owner.Creature);
-
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
     }

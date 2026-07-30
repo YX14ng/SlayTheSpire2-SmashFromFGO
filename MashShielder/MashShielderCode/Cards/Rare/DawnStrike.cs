@@ -25,13 +25,13 @@ public sealed class DawnStrike() : MashShielderCard(1, CardType.Attack, CardRari
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
         if (cardPlay.Target.IsDead)
         {
-            await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
             await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue);
         }
     }

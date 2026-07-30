@@ -19,14 +19,14 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Cards.Common;
 public sealed class GleamingScales() : SiegfriedCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(5m, ValueProp.Move), new DynamicVar("Stars", 15)];
+        [new BlockVar(5m, ValueProp.Move), new DynamicVar("Stars", 20)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritStarsPower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Stars"].UpgradeValueBy(10m);

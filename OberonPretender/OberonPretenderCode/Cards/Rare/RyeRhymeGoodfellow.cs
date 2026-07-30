@@ -15,8 +15,11 @@ namespace OberonPretender.OberonPretenderCode.Cards.Rare;
 /// Fuerza positiva de todos; todos se DUERMEN. SOBRECARGA: +<see cref="PerTen"/> por cada 10 sobre el
 /// mínimo. +15%/nivel (NpLevels). Glow al gate. up +6 daño.
 /// </summary>
-public sealed class RyeRhymeGoodfellow() : OberonCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), IOberonNpCard
+public sealed class RyeRhymeGoodfellow() : OberonCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), IOberonNpCard, ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 70;
     private const int PerTen = 3;
 
@@ -36,16 +39,16 @@ public sealed class RyeRhymeGoodfellow() : OberonCard(2, CardType.Attack, CardRa
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge);
 
-        await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
 
-        await OberonExtensions.StripPositiveStrengthFromAll(Owner.Creature.CombatState, Owner.Creature);
-        await OberonExtensions.SleepAll(Owner.Creature.CombatState, Owner.Creature, Powers.Sleep.Sleep.DefaultDuration, this);
+        await OberonExtensions.StripPositiveStrengthFromAll(choiceContext, Owner.Creature.CombatState!, Owner.Creature);
+        await OberonExtensions.SleepAll(choiceContext, Owner.Creature.CombatState!, Owner.Creature, Powers.Sleep.Sleep.DefaultDuration, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(6m);

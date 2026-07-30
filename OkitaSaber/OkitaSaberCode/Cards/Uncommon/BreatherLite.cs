@@ -22,7 +22,7 @@ public sealed class BreatherLite() : OkitaCard(0, CardType.Skill, CardRarity.Unc
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await Aliento.Gain(Owner.Creature, DynamicVars["Breath"].IntValue, this);
+        await Aliento.Gain(choiceContext, Owner.Creature, DynamicVars["Breath"].IntValue, this);
     }
 
     protected override void OnUpgrade()

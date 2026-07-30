@@ -24,7 +24,7 @@ public sealed class TheWormOfTheAbyss() : OberonCard(2, CardType.Attack, CardRar
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var bonus = Owner.Creature.HasPower<VortigernPower>() ? DynamicVars["Bonus"].IntValue : 0;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

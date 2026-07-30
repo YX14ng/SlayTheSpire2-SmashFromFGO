@@ -23,6 +23,6 @@ public sealed class SprigganVigilPower : MorganPower
         if (player != Owner.Player || Owner.Player == null) return;
         Flash();
         await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
-        await NpCharge.Gain(Owner, NpPerTurn, null);
+        await NpCharge.Gain(choiceContext, Owner, NpPerTurn, null);
     }
 }

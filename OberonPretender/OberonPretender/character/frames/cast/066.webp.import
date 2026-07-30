@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgwbaed438cqv"
+uid="uid://bke4oeifl6yav"
 path="res://.godot/imported/066.webp-33dfed1f95d468e7e1fe84d23f7dffe6.ctex"
 metadata={
 "vram_texture": false
@@ -36,5 +36,5 @@ process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
-process/size_limit=1024
+process/size_limit=768
 detect_3d/compress_to=1

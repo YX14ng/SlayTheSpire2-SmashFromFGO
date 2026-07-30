@@ -55,13 +55,13 @@ public sealed class BalmungUnleashed() : SiegfriedCard(0, CardType.Attack, CardR
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var scaled = Scales >= ScaledThreshold;
         var perTen = scaled ? OverchargePerTenScaled : OverchargePerTen;
         var overcharge = (tier - ChargeCost) / 10 * perTen;
 
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge);
-        await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState!)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
     }

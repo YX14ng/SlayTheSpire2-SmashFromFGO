@@ -1,0 +1,16 @@
+{
+  "SHUTENDOUJI-SHUTEN.title": "Shuten Douji",
+  "SHUTENDOUJI-SHUTEN.titleObject": "la Oni del Banquete",
+  "SHUTENDOUJI-SHUTEN.description": "Destila Veneno en Sake, cruza los estilos Assassin y Caster y elige uno de dos Noble Phantasm.",
+  "SHUTENDOUJI-SHUTEN.pronounObject": "ella",
+  "SHUTENDOUJI-SHUTEN.possessiveAdjective": "su",
+  "SHUTENDOUJI-SHUTEN.pronounPossessive": "suya",
+  "SHUTENDOUJI-SHUTEN.pronounSubject": "ella",
+  "SHUTENDOUJI-SHUTEN.goldMonologue": "Antigüedades, veneno y una copa preciosa. El oro consigue las tres.",
+  "SHUTENDOUJI-SHUTEN.eventDeathPrevention": "El banquete no termina mientras la oni siga sonriendo.",
+  "SHUTENDOUJI-SHUTEN.aromaPrinciple": "Todo aroma dulce esconde un final más afilado.",
+  "SHUTENDOUJI-SHUTEN.cardsModifierTitle": "Banquete de Monte Ooe",
+  "SHUTENDOUJI-SHUTEN.cardsModifierDescription": "Juega con el conjunto de cartas de Shuten Douji.",
+  "SHUTENDOUJI-SHUTEN.banter.alive.endTurnPing": "Bebe despacio. La última copa es la peligrosa.",
+  "SHUTENDOUJI-SHUTEN.banter.dead.endTurnPing": "No dejes el banquete sin terminar."
+}

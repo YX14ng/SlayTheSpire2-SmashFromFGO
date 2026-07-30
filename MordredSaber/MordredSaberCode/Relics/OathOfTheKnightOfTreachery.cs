@@ -36,8 +36,6 @@ public sealed class OathOfTheKnightOfTreachery : BondRelic, IFormChangeListener
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<CritStarsPower>()];
 
-    private bool _capstoneUsedThisCombat;
-
     // Mordred no es tanque puro: los regalos de Bloqueo default se reemplazan por Estrellas.
     protected override int StartingBlock(int lv) => 0;
 
@@ -45,7 +43,6 @@ public sealed class OathOfTheKnightOfTreachery : BondRelic, IFormChangeListener
 
     public override async Task BeforeCombatStartLate()
     {
-        _capstoneUsedThisCombat = false;
         await base.BeforeCombatStartLate();
 
         var stars = StartingStars(Level);
@@ -61,9 +58,10 @@ public sealed class OathOfTheKnightOfTreachery : BondRelic, IFormChangeListener
     /// </summary>
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
-        if (_capstoneUsedThisCombat || Level < CapstoneLevel) return;
+        if (FgoCombatState.GetCombat(Owner.Creature, 8) != 0 || Level < CapstoneLevel) return;
         if (!Forms.InRebellion(Owner.Creature)) return;
-        _capstoneUsedThisCombat = true;
+        await FgoCombatState.SetCombat(
+            choiceContext ?? new BlockingPlayerChoiceContext(), Owner.Creature, 8, 1);
         Flash();
         await PlayerCmd.GainEnergy(1, Owner);
     }

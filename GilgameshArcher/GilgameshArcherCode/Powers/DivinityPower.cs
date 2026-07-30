@@ -23,7 +23,7 @@ public sealed class DivinityPower : GilgameshPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || !props.IsPoweredAttack()) return 0m;
         return base.Amount;

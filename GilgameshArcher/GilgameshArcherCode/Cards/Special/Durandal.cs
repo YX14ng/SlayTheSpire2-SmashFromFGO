@@ -29,7 +29,7 @@ public sealed class Durandal() : GilgameshCard(0, CardType.Attack, CardRarity.Ev
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await AttackTarget(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 }

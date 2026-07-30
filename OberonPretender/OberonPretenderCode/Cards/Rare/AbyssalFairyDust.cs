@@ -22,8 +22,8 @@ public sealed class AbyssalFairyDust() : OberonCard(1, CardType.Skill, CardRarit
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

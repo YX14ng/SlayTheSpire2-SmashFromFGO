@@ -21,7 +21,7 @@ public sealed class Mongrel() : GilgameshCard(0, CardType.Skill, CardRarity.Comm
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     protected override void OnUpgrade()

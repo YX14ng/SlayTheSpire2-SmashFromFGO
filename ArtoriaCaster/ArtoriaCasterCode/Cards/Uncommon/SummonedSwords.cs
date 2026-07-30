@@ -19,18 +19,18 @@ public sealed class SummonedSwords() : ArtoriaCard(2, CardType.Attack, CardRarit
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(4m, ValueProp.Move),
-        new DynamicVar("Stars", 1)
+        new DynamicVar("Stars", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCard(this)
-            .TargetingRandomOpponents(Owner.Creature.CombatState)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCardFgoCompatibility(this, cardPlay)
+            .TargetingRandomOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

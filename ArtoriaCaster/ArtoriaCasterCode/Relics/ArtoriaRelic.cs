@@ -1,15 +1,65 @@
 using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using BaseLib.Utils;
+using FGOCore.FGOCoreCode.Compatibility;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 using ArtoriaCaster.ArtoriaCasterCode.Character;
 using ArtoriaCaster.ArtoriaCasterCode.Extensions;
 
 namespace ArtoriaCaster.ArtoriaCasterCode.Relics;
 
 [Pool(typeof(ArtoriaRelicPool))]
-public abstract class ArtoriaRelic : CustomRelicModel
+public abstract class ArtoriaRelic : CustomRelicModel, IFgoDamageHooks, ILegacyDamageHooks
 {
     public override string PackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".RelicImagePath();
     protected override string PackedIconOutlinePath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}_outline.png".RelicImagePath();
     protected override string BigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigRelicImagePath();
+
+#if STS2_BETA
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay) =>
+        ModifyDamageAdditiveFgo(target, amount, props, dealer, cardSource, cardPlay);
+
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay) =>
+        ModifyDamageMultiplicativeFgo(target, amount, props, dealer, cardSource, cardPlay);
+
+    public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer,
+        CardModel? cardSource, CardPlay? cardPlay) =>
+        ModifyDamageCapFgo(target, props, dealer, cardSource, cardPlay);
+
+    public virtual decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource) =>
+        ModifyDamageAdditiveFgo(target, amount, props, dealer, cardSource, null);
+
+    public virtual decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource) =>
+        ModifyDamageMultiplicativeFgo(target, amount, props, dealer, cardSource, null);
+
+    public virtual decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer,
+        CardModel? cardSource) => ModifyDamageCapFgo(target, props, dealer, cardSource, null);
+#else
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource) =>
+        ModifyDamageAdditiveFgo(target, amount, props, dealer, cardSource, null);
+
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource) =>
+        ModifyDamageMultiplicativeFgo(target, amount, props, dealer, cardSource, null);
+
+    public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer,
+        CardModel? cardSource) => ModifyDamageCapFgo(target, props, dealer, cardSource, null);
+#endif
+
+    public virtual decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay) => 0m;
+
+    public virtual decimal ModifyDamageMultiplicativeFgo(Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay) => 1m;
+
+    public virtual decimal ModifyDamageCapFgo(Creature? target, ValueProp props, Creature? dealer,
+        CardModel? cardSource, CardPlay? cardPlay) => decimal.MaxValue;
 }

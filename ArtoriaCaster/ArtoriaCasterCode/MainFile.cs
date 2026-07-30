@@ -27,11 +27,11 @@ public partial class MainFile : Node
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 
-        // FGOCore preloads every registered form's frames in background threads.
-        FormVisuals.RegisterFrames(
-            $"{ResPath}/character/artoria_frames_caster.tres",
-            $"{ResPath}/character/artoria_frames_berserker.tres",
-            $"{ResPath}/character/artoria_frames_avalon.tres");
+        // FGOCore preloads sibling forms in single-player; co-op loads them on demand to cap VRAM.
+        FormVisuals.RegisterFramesWithSpriteTransform(
+            ($"{ResPath}/character/artoria_frames_caster.tres", 48.2f, -213.1f, 0.961333f),
+            ($"{ResPath}/character/artoria_frames_berserker.tres", 28.4f, -192.0f, 0.861333f),
+            ($"{ResPath}/character/artoria_frames_avalon.tres", 84.4f, -247.1f, 1.289333f));
 
         // Ulti auto-manifestada (consistencia con los otros Servants, 2026-06-26): AROUND CALIBURN:
         // Desatado aparece GRATIS en la mano (Retain + Exhaust) MIENTRAS tengas >=100 de Carga NP y NO la
@@ -41,10 +41,10 @@ public partial class MainFile : Node
         // en >=100, o perder la carta por exhaust, NO te dejan atascado sin ulti (reporte del jugador).
         // Se re-chequea en el cruce de 100 (GaugeFilled, mid-turno) y a inicio de cada turno
         // (ArtoriaFormPower.AfterSideTurnStart, cubre la carga inicial por Kaleidoscope que no cruza).
-        NpCharge.GaugeFilled += TryManifestUlt;
+        NpCharge.GaugeFilledWithContext += TryManifestUlt;
     }
 
-    private static Task TryManifestUlt(Creature creature) => EnsureUltInHand(creature);
+    private static Task TryManifestUlt(PlayerChoiceContext _, Creature creature) => EnsureUltInHand(creature);
 
     /// <summary>Manifiesta AROUND CALIBURN: Desatado en la mano si la criatura es Castoria, está en
     /// combate, tiene >=100 de Carga NP y NO tiene ya la ulti en mano. Idempotente: seguro de llamar

@@ -22,7 +22,7 @@ public sealed class ProtectionOfTheLake() : MorganCard(1, CardType.Skill, CardRa
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         if (Owner.Creature.HasPower<RainWitchFormPower>() || Owner.Creature.HasPower<WinterQueenFormPower>())
         {
             await CardPileCmd.Draw(choiceContext, 1, Owner);

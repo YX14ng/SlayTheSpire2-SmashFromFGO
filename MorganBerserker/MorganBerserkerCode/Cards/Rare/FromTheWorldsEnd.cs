@@ -24,7 +24,7 @@ public sealed class FromTheWorldsEnd() : MorganCard(2, CardType.Skill, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<WorldsEndGutsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead)
             {

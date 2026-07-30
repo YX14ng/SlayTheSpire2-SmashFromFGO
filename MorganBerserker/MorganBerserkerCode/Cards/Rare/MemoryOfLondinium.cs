@@ -14,8 +14,11 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 /// Parche del juez P1 (rediseño v2): el Intangible se mueve al overcharge (tier
 /// >= 100) — sin gate, ciclaba cada ~1.5 turnos como WraithForm gratis.
 /// </summary>
-public sealed class MemoryOfLondinium() : MorganCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
+public sealed class MemoryOfLondinium() : MorganCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 70;
 
     /// <summary>Tier de sobrecarga: con esta carga consumida o más, también da Intangible y +1 Arma.</summary>
@@ -37,11 +40,11 @@ public sealed class MemoryOfLondinium() : MorganCard(2, CardType.Attack, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + bonus);
 
-        await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
 

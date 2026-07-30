@@ -1,15 +1,17 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="SpriteFrames" path="res://OberonPretender/character/oberon_frames.tres" id="frames"]
+[ext_resource type="Script" path="res://OberonPretender/character/vortigern_motion.gd" id="motion"]
 
 [node name="OberonVisuals" type="Control"]
+script = ExtResource("motion")
 
 [node name="Visuals" type="Node2D" parent="."]
 unique_name_in_owner = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Visuals"]
-position = Vector2(0.0, -537.4)
-scale = Vector2(0.8255, 0.8255)
+position = Vector2(-71.2, -268.9)
+scale = Vector2(0.906667, 0.906667)
 flip_h = true
 sprite_frames = ExtResource("frames")
 animation = &"idle"
@@ -18,14 +20,14 @@ autoplay = "idle"
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
 offset_left = -130.0
-offset_top = -710
+offset_top = -370.0
 offset_right = 130.0
 offset_bottom = 0.0
 
 [node name="IntentPosition" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -740)
+position = Vector2(0, -400.0)
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -350)
+position = Vector2(0, -180.0)

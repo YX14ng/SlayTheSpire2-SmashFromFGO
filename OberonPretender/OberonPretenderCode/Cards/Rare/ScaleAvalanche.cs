@@ -22,12 +22,12 @@ public sealed class ScaleAvalanche() : OberonCard(2, CardType.Attack, CardRarity
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritReadyPower>()];
 
-    protected override bool ShouldGlowGoldInternal => Owner.Creature.GetPowerAmount<CritReadyPower>() > 0;
+    protected override bool ShouldGlowGoldInternal => Criticals.WillCrit(Owner.Creature, this);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

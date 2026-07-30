@@ -6,7 +6,7 @@
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(-34.5, -271.4)
-scale = Vector2(0.9326, 0.9326)
+scale = Vector2(1.243467, 1.243467)
 flip_h = true
 sprite_frames = ExtResource("frames_queen")
 animation = &"idle"

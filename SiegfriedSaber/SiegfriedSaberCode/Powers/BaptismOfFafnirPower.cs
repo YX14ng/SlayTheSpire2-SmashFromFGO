@@ -19,6 +19,6 @@ public sealed class BaptismOfFafnirPower : SiegfriedPower, IDragonScalePierceLis
     public async Task OnScalesPierced(PlayerChoiceContext choiceContext)
     {
         Flash();
-        await NpCharge.Gain(Owner, Amount, null);
+        await NpCharge.Gain(choiceContext, Owner, Amount, null);
     }
 }

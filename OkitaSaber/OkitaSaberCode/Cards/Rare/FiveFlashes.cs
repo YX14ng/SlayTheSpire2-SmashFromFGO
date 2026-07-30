@@ -37,7 +37,7 @@ public sealed class FiveFlashes() : OkitaCard(2, CardType.Attack, CardRarity.Rar
         for (var i = 0; i < Hits; i++)
         {
             if (cardPlay.Target.IsDead) break;
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
         }

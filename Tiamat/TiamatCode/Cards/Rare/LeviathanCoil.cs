@@ -30,18 +30,18 @@ public sealed class LeviathanCoil() : TiamatCard(2, CardType.Attack, CardRarity.
         // El segundo golpe se decide ANTES de aplicar la Maldición de esta carta (lee el campo previo).
         var doubleStrike = Curses.Of(cardPlay.Target) >= DynamicVars["Threshold"].IntValue;
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);
         if (doubleStrike && cardPlay.Target.IsAlive)
         {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_bloody_impact")
                 .Execute(choiceContext);
         }
         if (cardPlay.Target.IsAlive)
         {
-            await Curses.Apply(cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+            await Curses.Apply(choiceContext, cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
         }
     }
 

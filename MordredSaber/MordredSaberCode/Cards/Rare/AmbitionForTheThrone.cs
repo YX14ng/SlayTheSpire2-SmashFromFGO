@@ -21,7 +21,7 @@ public sealed class AmbitionForTheThrone() : MordredCard(2, CardType.Power, Card
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<AmbitionForThronePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        if (power != null) power.NpPerTurn = DynamicVars["NpCharge"].IntValue;
+        if (power != null) power.NpPerTurn = Math.Max(power.NpPerTurn, DynamicVars["NpCharge"].IntValue);
     }
 
     protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(5m);

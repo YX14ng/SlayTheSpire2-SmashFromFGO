@@ -30,13 +30,13 @@ public sealed class CrossCut() : OkitaCard(1, CardType.Attack, CardRarity.Uncomm
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var already = AlreadyAttacked;
         await AttacksThisTurnPower.EnsureInstalled(Owner.Creature);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         if (already)
         {
-            await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
-            await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+            await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         }
     }
 

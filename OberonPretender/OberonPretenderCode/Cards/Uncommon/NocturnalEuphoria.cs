@@ -25,8 +25,8 @@ public sealed class NocturnalEuphoria() : OberonCard(1, CardType.Power, CardRari
         var power = await PowerCmd.Apply<NocturnalEuphoriaPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
-            power.Charge = DynamicVars["Charge"].IntValue;
-            power.Stars = DynamicVars["Stars"].IntValue;
+            power.Charge = Math.Max(power.Charge, DynamicVars["Charge"].IntValue);
+            power.Stars = Math.Max(power.Stars, DynamicVars["Stars"].IntValue);
         }
     }
 

@@ -24,14 +24,14 @@ public sealed class BlackButterflies() : OberonCard(1, CardType.Attack, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCard(this)
-            .TargetingRandomOpponents(Owner.Creature.CombatState)
+        var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCardFgoCompatibility(this, cardPlay)
+            .TargetingRandomOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         var hpHits = attack.Results.SelectMany(r => r).Count(r => r.UnblockedDamage > 0);
         if (hpHits > 0)
         {
-            await NpCharge.Gain(Owner.Creature, hpHits * DynamicVars["ChargePerHit"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, hpHits * DynamicVars["ChargePerHit"].IntValue, this);
         }
     }
 

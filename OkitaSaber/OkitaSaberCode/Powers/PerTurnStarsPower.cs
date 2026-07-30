@@ -26,6 +26,6 @@ public abstract class PerTurnStarsPower : OkitaPower
     {
         if (player != Owner.Player) return;
         Flash();
-        await CritStars.Gain(Owner, Amount, null);
+        await CritStars.Gain(choiceContext, Owner, Amount, null);
     }
 }

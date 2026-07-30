@@ -22,7 +22,7 @@ public sealed class KnightsJudgment() : MashShielderCard(1, CardType.Attack, Car
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         await PowerCmd.Apply<ProvokePower>(choiceContext, Owner.Creature, DynamicVars["Provoke"].BaseValue, Owner.Creature, this);

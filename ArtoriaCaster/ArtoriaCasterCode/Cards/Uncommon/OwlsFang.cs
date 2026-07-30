@@ -17,7 +17,7 @@ public sealed class OwlsFang() : ArtoriaCard(1, CardType.Attack, CardRarity.Unco
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

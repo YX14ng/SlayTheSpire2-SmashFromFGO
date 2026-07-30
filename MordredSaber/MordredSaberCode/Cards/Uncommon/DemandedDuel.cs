@@ -1,4 +1,4 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -33,7 +33,7 @@ public sealed class DemandedDuel() : MordredCard(1, CardType.Skill, CardRarity.U
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
         await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()

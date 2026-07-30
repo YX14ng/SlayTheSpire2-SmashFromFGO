@@ -18,7 +18,7 @@ public sealed class CombatBreathing() : MashShielderCard(0, CardType.Skill, Card
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()

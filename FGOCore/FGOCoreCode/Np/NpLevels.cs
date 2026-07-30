@@ -84,7 +84,7 @@ public static class NpLevels
         // Ese último es un stream COMPARTIDO que se consume DENTRO del combate sincronizado; el roll
         // del dupe ocurre en el flujo de card-reward LOCAL-ONLY (solo el cliente del dueño), así que
         // avanzar el stream de combate acá desfasa su contador entre clientes -> divergent states.
-        // PlayerRng.Rewards es per-player y no participa de la simulación (patrón UltramanLightPatch).
+        // PlayerRng.Rewards es per-player y no participa de la simulación sincronizada.
         if (player.PlayerRng.Rewards.NextInt(100) < chance)
         {
             store.NpLevel++;

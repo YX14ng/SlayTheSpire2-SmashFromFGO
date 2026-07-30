@@ -27,10 +27,10 @@ public sealed class EyesOnTheTip() : OkitaCard(1, CardType.Attack, CardRarity.Co
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var hadStars = CritStars.Of(Owner.Creature) >= StarThreshold;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        if (hadStars) await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        if (hadStars) await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m); // 8 -> 11

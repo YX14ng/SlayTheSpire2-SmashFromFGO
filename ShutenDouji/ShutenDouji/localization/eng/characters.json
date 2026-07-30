@@ -1,0 +1,16 @@
+{
+  "SHUTENDOUJI-SHUTEN.title": "Shuten Douji",
+  "SHUTENDOUJI-SHUTEN.titleObject": "the Banquet Oni",
+  "SHUTENDOUJI-SHUTEN.description": "Distill Poison into Sake, cross Assassin and Caster styles, and choose one of two Noble Phantasms.",
+  "SHUTENDOUJI-SHUTEN.pronounObject": "her",
+  "SHUTENDOUJI-SHUTEN.possessiveAdjective": "her",
+  "SHUTENDOUJI-SHUTEN.pronounPossessive": "hers",
+  "SHUTENDOUJI-SHUTEN.pronounSubject": "she",
+  "SHUTENDOUJI-SHUTEN.goldMonologue": "Antiques, poison, and a lovely cup. Gold can arrange all three.",
+  "SHUTENDOUJI-SHUTEN.eventDeathPrevention": "The banquet is not over while the oni still smiles.",
+  "SHUTENDOUJI-SHUTEN.aromaPrinciple": "Every sweet aroma hides a sharper finish.",
+  "SHUTENDOUJI-SHUTEN.cardsModifierTitle": "Banquet of Mount Ooe",
+  "SHUTENDOUJI-SHUTEN.cardsModifierDescription": "Play with Shuten Douji's card pool.",
+  "SHUTENDOUJI-SHUTEN.banter.alive.endTurnPing": "Drink slowly. The last cup is the dangerous one.",
+  "SHUTENDOUJI-SHUTEN.banter.dead.endTurnPing": "Do not leave the banquet unfinished."
+}

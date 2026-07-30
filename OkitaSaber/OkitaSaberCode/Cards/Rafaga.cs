@@ -51,14 +51,14 @@ public static class Rafaga
             if (mod.HpPerBreathPoint > 0)
             {
                 var hp = rafagaCost * mod.HpPerBreathPoint;
-                await CreatureCmd.Damage(choiceContext, creature, hp,
-                    ValueProp.Unblockable | ValueProp.Unpowered, null, null);
+                await CreatureCmdCompatibility.Damage(choiceContext, creature, hp,
+                    ValueProp.Unblockable | ValueProp.Unpowered, null, source, null);
             }
             return;
         }
 
-        await Aliento.Spend(creature, rafagaCost, source);
-        await TryRefundFirst(creature, source);
+        await Aliento.Spend(choiceContext, creature, rafagaCost, source);
+        await TryRefundFirst(choiceContext, creature, source);
     }
 
     private static bool Waived(Creature creature)
@@ -84,14 +84,16 @@ public static class Rafaga
     }
 
     // «Paso Constante»: la primera Ráfaga de cada turno reembolsa 1 Aliento (cap del descuento).
-    private static async Task TryRefundFirst(Creature creature, CardModel? source)
+    private static async Task TryRefundFirst(
+        PlayerChoiceContext choiceContext, Creature creature, CardModel? source)
     {
         foreach (var refund in Listeners.PowersOf<IFirstRafagaRefund>(creature))
         {
-            if (refund.TryConsumeRefund())
+            if (await refund.TryConsumeRefund(choiceContext, source))
             {
-                await Aliento.Gain(creature, refund.RefundAmount, source);
-                if (refund.RefundStars > 0) await CritStars.Gain(creature, refund.RefundStars, source);
+                await Aliento.Gain(choiceContext, creature, refund.RefundAmount, source);
+                if (refund.RefundStars > 0)
+                    await CritStars.Gain(choiceContext, creature, refund.RefundStars, source);
                 return;
             }
         }
@@ -105,5 +107,5 @@ public interface IFirstRafagaRefund
     int RefundStars { get; }
 
     /// <summary>Devuelve true UNA vez por turno (consume el cupo del reembolso).</summary>
-    bool TryConsumeRefund();
+    Task<bool> TryConsumeRefund(PlayerChoiceContext context, CardModel? source);
 }

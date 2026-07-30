@@ -21,7 +21,7 @@ namespace OkitaSaber.OkitaSaberCode.Powers;
 /// porque PowerCmd.Apply retorna temprano con amount 0 y un Counter en 0 se auto-remueve. Patrón
 /// de ToTheEndPower/SteadyStepPower (Single + campo settable). Personal: no escala en multijugador.
 /// </summary>
-public sealed class MakotoPower : OkitaPower
+public sealed class MakotoPower : OkitaPower, ICriticalConsumedListener
 {
     public const int PerActivation = 2;
     public const int MaxBonus = 10;
@@ -42,18 +42,17 @@ public sealed class MakotoPower : OkitaPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritStarsPower>(), HoverTipFactory.FromPower<CritReadyPower>()];
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || !props.IsPoweredAttack() || cardSource == null) return 0m;
         return Bonus;
     }
 
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public Task AfterCriticalConsumed(PlayerChoiceContext choiceContext, CriticalHit critical)
     {
-        await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
-        if (amount <= 0m || power is not CritReadyPower || power.Owner != Owner) return;
-        if (Bonus >= Cap) return;
+        if (critical.Owner != Owner || Bonus >= Cap) return Task.CompletedTask;
         Flash();
         Bonus = Math.Min(Cap, Bonus + PerActivation);
+        return Task.CompletedTask;
     }
 }

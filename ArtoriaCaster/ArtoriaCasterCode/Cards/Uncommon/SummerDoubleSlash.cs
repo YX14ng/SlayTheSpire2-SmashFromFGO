@@ -20,7 +20,7 @@ public sealed class SummerDoubleSlash() : ArtoriaCard(1, CardType.Attack, CardRa
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(5m, ValueProp.Move),
-        new DynamicVar("Stars", 1)
+        new DynamicVar("Stars", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -30,7 +30,7 @@ public sealed class SummerDoubleSlash() : ArtoriaCard(1, CardType.Attack, CardRa
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCard(this)
+        var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCardFgoCompatibility(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
@@ -40,7 +40,7 @@ public sealed class SummerDoubleSlash() : ArtoriaCard(1, CardType.Attack, CardRa
             var hpHits = attack.Results.SelectMany(r => r).Count(r => r.UnblockedDamage > 0);
             if (hpHits > 0)
             {
-                await Stars.Gain(Owner.Creature, hpHits * DynamicVars["Stars"].IntValue, this);
+                await Stars.Gain(choiceContext, Owner.Creature, hpHits * DynamicVars["Stars"].IntValue, this);
             }
         }
     }

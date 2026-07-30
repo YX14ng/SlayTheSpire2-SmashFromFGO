@@ -48,7 +48,7 @@ public sealed class BloodBaptism() : SiegfriedCard(1, CardType.Skill, CardRarity
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
         await PowerCmd.Apply<DragonScalesPower>(choiceContext, Owner.Creature, DynamicVars["Scales"].IntValue, Owner.Creature, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     // Up (Rank-Up-as-upgrade, §6 estilo): +2 bloqueo y +4 NP (no toca el SdD: el +1 permanente

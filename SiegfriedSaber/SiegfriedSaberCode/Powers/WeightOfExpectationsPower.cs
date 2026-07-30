@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 
 namespace SiegfriedSaber.SiegfriedSaberCode.Powers;
 
@@ -22,40 +23,34 @@ public sealed class WeightOfExpectationsPower : SiegfriedPower
     public const int MaxTriggersPerTurn = 2;
     public const int ScalesPerTrigger = 1;
 
-    public int NpPerTrigger = 20;
-
-    private bool _playedAttackThisTurn;
+    public int NpPerTrigger => Math.Max(20, FgoCombatState.GetCombat(Owner, 0, 6));
 
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    public Task Configure(PlayerChoiceContext context, int npPerTrigger, CardModel source) =>
+        FgoCombatState.SetCombat(
+            context, Owner, 0, Math.Max(NpPerTrigger, npPerTrigger), source, width: 6);
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner.Creature == Owner)
         {
-            _playedAttackThisTurn = true;
+            await FgoCombatState.SetTurn(context, Owner, 0, 1, cardPlay.Card);
         }
-        return Task.CompletedTask;
-    }
-
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player) _playedAttackThisTurn = false;
-        return Task.CompletedTask;
     }
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == Owner.Side && !_playedAttackThisTurn)
+        if (participants.Contains(Owner) && FgoCombatState.GetTurn(Owner, 0) == 0)
         {
             for (var i = 0; i < System.Math.Min(Amount, MaxTriggersPerTurn); i++)
             {
-                await NpCharge.Gain(Owner, NpPerTrigger, null);
+                await NpCharge.Gain(choiceContext, Owner, NpPerTrigger, null);
                 await PowerCmd.Apply<DragonScalesPower>(choiceContext, Owner, ScalesPerTrigger, Owner, null);
             }
             Flash();
         }
-        _playedAttackThisTurn = false;
     }
 }

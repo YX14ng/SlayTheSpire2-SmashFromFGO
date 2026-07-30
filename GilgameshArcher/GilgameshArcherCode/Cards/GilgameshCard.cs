@@ -22,15 +22,15 @@ public abstract class GilgameshCard(int cost, CardType type, CardRarity rarity, 
     public override string PortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
 
     /// <summary>
-    /// Ataque mono-objetivo estándar: <c>DamageCmd.Attack(amount).FromCard(this).Targeting(target)
+    /// Ataque mono-objetivo estándar: <c>DamageCmd.Attack(amount).FromCardFgoCompatibility(this, cardPlay).Targeting(target)
     /// .WithHitFx(hitFx).Execute(ctx)</c>. Factoriza el bloque repetido palabra-por-palabra en ~18
     /// cartas de Gilgamesh (DESIGN-GILGAMESH §5). Comportamiento idéntico; cada carta sigue dueña de
     /// su null-check del objetivo, su cálculo de daño (base + bonus) y sus efectos posteriores
     /// (Carga NP, Estrellas, registro de Arma, etc.).
     /// </summary>
     protected Task<AttackCommand> AttackTarget(
-        PlayerChoiceContext choiceContext, Creature target, decimal amount, string hitFx = DefaultHitFx) =>
-        DamageCmd.Attack(amount).FromCard(this).Targeting(target)
+        PlayerChoiceContext choiceContext, CardPlay cardPlay, Creature target, decimal amount, string hitFx = DefaultHitFx) =>
+        DamageCmd.Attack(amount).FromCardFgoCompatibility(this, cardPlay).Targeting(target)
             .WithHitFx(hitFx)
             .Execute(choiceContext);
 }

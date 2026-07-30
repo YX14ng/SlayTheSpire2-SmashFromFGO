@@ -12,7 +12,9 @@ namespace OkitaSaber.OkitaSaberCode.Relics;
 /// </summary>
 public sealed class HolyGrailImperialCapital : OkitaRelic, ILimitBreaker
 {
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Event;
+
+    public override bool IsAllowed(MegaCrit.Sts2.Core.Runs.IRunState runState) => false;
 
     public override bool HasUponPickupEffect => true;
 

@@ -22,7 +22,7 @@ public sealed class FeastAfterBattle() : MordredCard(1, CardType.Skill, CardRari
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()

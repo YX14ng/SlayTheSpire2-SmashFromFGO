@@ -25,7 +25,7 @@ public sealed class Undertow() : TiamatCard(1, CardType.Attack, CardRarity.Commo
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var dmg = DynamicVars.Damage.BaseValue;
         if (Curses.Of(cardPlay.Target) > 0) dmg += DynamicVars["Bonus"].IntValue;
-        await DamageCmd.Attack(dmg).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(dmg).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
     }

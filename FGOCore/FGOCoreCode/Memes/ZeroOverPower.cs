@@ -24,7 +24,7 @@ public sealed class ZeroOverPower : FGOCorePower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicativeFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (Owner != dealer || !props.IsPoweredAttack()) return 1m;
         return DamageMultiplier;
@@ -32,6 +32,6 @@ public sealed class ZeroOverPower : FGOCorePower
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == Owner.Side) await PowerCmd.Remove(this);
+        if (participants.Contains(Owner)) await PowerCmd.Remove(this);
     }
 }

@@ -25,7 +25,7 @@ public sealed class Rebellion() : MordredCard(1, CardType.Attack, CardRarity.Bas
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         // Daño PRIMERO (sin el +2 de Rebelión), después el yelmo cae.
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         await Forms.Enter<RebellionFormPower>(choiceContext, Owner.Creature, this);

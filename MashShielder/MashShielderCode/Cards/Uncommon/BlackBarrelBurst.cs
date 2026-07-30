@@ -26,8 +26,8 @@ public sealed class BlackBarrelBurst() : MashShielderCard(1, CardType.Attack, Ca
 
     // Glow del rediseño v2 (auditoría: su hermana ConceptualRound ya lo tenía).
     protected override bool ShouldGlowGoldInternal =>
-        Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature)
-            .Any(e => !e.IsDead && e.GetPowerInstances<PowerModel>().Any(p => p.Type == PowerType.Buff));
+        Owner.Creature.CombatState?.GetOpponentsOf(Owner.Creature)
+            .Any(e => !e.IsDead && e.GetPowerInstances<PowerModel>().Any(p => p.Type == PowerType.Buff)) == true;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -38,10 +38,10 @@ public sealed class BlackBarrelBurst() : MashShielderCard(1, CardType.Attack, Ca
             // BlackBarrel.Hit elimina exactamente 1 buff si lo hay: si el objetivo tenía
             // buffs antes del impacto, este golpe eliminó uno → +10 estrellas.
             var hadBuff = cardPlay.Target.GetPowerInstances<PowerModel>().Any(p => p.Type == PowerType.Buff);
-            await BlackBarrel.Hit(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, Owner.Creature, this);
+            await BlackBarrel.Hit(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue, Owner.Creature, this);
             if (hadBuff)
             {
-                await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+                await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
             }
         }
     }

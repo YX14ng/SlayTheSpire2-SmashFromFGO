@@ -6,3 +6,6 @@ global using FGOCore.FGOCoreCode.Stars;
 global using FGOCore.FGOCoreCode.CardTypes;
 global using FGOCore.FGOCoreCode.Forms;
 global using FGOCore.FGOCoreCode.Block;
+global using BaseLib.Utils;
+global using FGOCore.FGOCoreCode.Compatibility;
+global using MegaCrit.Sts2.Core.Entities.Cards;

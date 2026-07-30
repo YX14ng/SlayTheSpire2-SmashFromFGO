@@ -1,0 +1,4 @@
+interface:
+  display_name: "StS2 Deckbuilder Design"
+  short_description: "Design and balance FGO character card pools"
+  default_prompt: "Use $sts2-deckbuilder-design to design or review this FGO character card pool."

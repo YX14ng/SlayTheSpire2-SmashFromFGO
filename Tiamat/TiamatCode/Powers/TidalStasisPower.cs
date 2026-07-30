@@ -24,6 +24,6 @@ public sealed class TidalStasisPower : TiamatPower, ICursePreserver
     {
         // El decaimiento de la Maldición ocurre en AfterSideTurnStart del lado enemigo; congelarlo
         // dura "este turno" del jugador, así que removemos al empezar el SIGUIENTE turno del dueño.
-        if (side == Owner.Side) await PowerCmd.Remove(this);
+        if (participants.Contains(Owner)) await PowerCmd.Remove(this);
     }
 }

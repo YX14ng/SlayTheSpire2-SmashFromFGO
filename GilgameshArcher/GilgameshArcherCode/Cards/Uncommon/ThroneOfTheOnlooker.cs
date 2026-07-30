@@ -24,8 +24,8 @@ public sealed class ThroneOfTheOnlooker() : GilgameshCard(1, CardType.Power, Car
         var power = await PowerCmd.Apply<ThroneOfTheOnlookerPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
-            power.Stars = DynamicVars["Stars"].IntValue;
-            power.Np = DynamicVars["Np"].IntValue;
+            power.Stars = Math.Max(power.Stars, DynamicVars["Stars"].IntValue);
+            power.Np = Math.Max(power.Np, DynamicVars["Np"].IntValue);
         }
     }
 

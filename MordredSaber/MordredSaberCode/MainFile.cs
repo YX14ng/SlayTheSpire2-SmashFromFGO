@@ -26,26 +26,24 @@ public partial class MainFile : Node
 
         // Mordred SÍ tiene formas (3 looks de las ascensiones del modelo único 100900, vía
         // attach/detach del casco) y SÍ tiene ulti auto-manifestada (Clarent Blood Arthur a 100 NP).
-        // FGOCore precarga en background los frames de cada forma registrada.
-        FormVisuals.RegisterFrames(
-            $"{ResPath}/character/mordred_frames_masked.tres",
-            $"{ResPath}/character/mordred_frames_unmasked.tres",
-            $"{ResPath}/character/mordred_frames_crimson.tres");
+        // FGOCore precarga las formas hermanas en solitario; en co-op las carga bajo demanda.
+        FormVisuals.RegisterFramesWithSpriteX(
+            ($"{ResPath}/character/mordred_frames.tres", 78.0f));
 
         // A 100 NP se MANIFIESTA gratis (Retain, Exhaust) la carta-ulti — «Interludio» si estás en
         // clímax Relámpago Carmesí, si no «Desatado» (que, al jugarse Enmascarada, primero arranca el
         // yelmo). El marcador evita re-manifestarla mientras sigas sobre 100; bajar < 100 la re-arma.
-        NpCharge.GaugeFilled += TryManifestUlt;
-        NpCharge.GaugeDropped += RearmUlt;
+        NpCharge.GaugeFilledWithContext += TryManifestUlt;
+        NpCharge.GaugeDroppedWithContext += RearmUlt;
     }
 
-    private static async Task TryManifestUlt(Creature creature)
+    private static async Task TryManifestUlt(PlayerChoiceContext choiceContext, Creature creature)
     {
         if (creature.Player?.Character is not Character.Mordred) return;
         if (creature.HasPower<ClarentManifestedPower>()) return;
         if (creature.CombatState == null || creature.Player == null) return;
 
-        await PowerCmd.Apply<ClarentManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+        await PowerCmd.Apply<ClarentManifestedPower>(choiceContext, creature, 1m, creature, null);
 
         if (creature.HasPower<CrimsonLightningFormPower>())
         {
@@ -57,7 +55,7 @@ public partial class MainFile : Node
         }
     }
 
-    private static async Task RearmUlt(Creature creature)
+    private static async Task RearmUlt(PlayerChoiceContext _, Creature creature)
     {
         if (creature.HasPower<ClarentManifestedPower>())
         {

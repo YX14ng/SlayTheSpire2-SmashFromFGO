@@ -20,8 +20,8 @@ public sealed class AutumnWoodHarvest() : OberonCard(1, CardType.Skill, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

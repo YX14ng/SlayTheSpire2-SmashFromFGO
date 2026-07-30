@@ -23,9 +23,9 @@ public sealed class TerritoryCreationPower : MorganPower
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != CombatSide.Player) return;
+        if (!participants.Contains(Owner)) return;
         Flash();
         await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
-        await NpCharge.Gain(Owner, NpPerTurn, null);
+        await NpCharge.Gain(choiceContext, Owner, NpPerTurn, null);
     }
 }

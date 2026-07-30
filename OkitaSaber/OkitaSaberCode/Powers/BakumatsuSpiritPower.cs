@@ -35,9 +35,9 @@ public sealed class BakumatsuSpiritPower : OkitaPower
         Flash();
         for (var i = 0; i < Amount; i++)
         {
-            await Aliento.Gain(Owner, BreathGain, null);
-            await CritStars.Gain(Owner, StarsGain, null);
-            await NpCharge.Gain(Owner, NpGainValue, null);
+            await Aliento.Gain(choiceContext, Owner, BreathGain, null);
+            await CritStars.Gain(choiceContext, Owner, StarsGain, null);
+            await NpCharge.Gain(choiceContext, Owner, NpGainValue, null);
         }
     }
 }

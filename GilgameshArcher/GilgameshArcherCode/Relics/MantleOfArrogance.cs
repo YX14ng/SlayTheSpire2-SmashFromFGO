@@ -22,25 +22,20 @@ public sealed class MantleOfArrogance : GilgameshRelic
 
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    private int _goldThisCombat;
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [new GoldVar(GoldPerKill)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritReadyPower>()];
 
-    public override Task BeforeCombatStartLate()
-    {
-        _goldThisCombat = 0;
-        return Task.CompletedTask;
-    }
-
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (dealer != Owner.Creature || !props.IsPoweredAttack() || !result.WasTargetKilled) return;
-        if (!Owner.Creature.HasPower<CritReadyPower>()) return;
-        if (_goldThisCombat >= MaxGoldPerCombat) return;
+        if (cardSource == null || !Criticals.IsCritical(Owner.Creature, cardSource)) return;
+        var goldThisCombat = FgoCombatState.GetCombat(Owner.Creature, 2, 4);
+        if (goldThisCombat >= MaxGoldPerCombat) return;
 
-        _goldThisCombat += GoldPerKill;
+        await FgoCombatState.SetCombat(
+            choiceContext, Owner.Creature, 2,
+            Math.Min(MaxGoldPerCombat, goldThisCombat + GoldPerKill), cardSource, width: 4);
         Flash();
         await PlayerCmd.GainGold(DynamicVars.Gold.BaseValue, Owner);
     }

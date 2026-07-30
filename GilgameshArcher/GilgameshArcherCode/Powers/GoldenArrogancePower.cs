@@ -22,9 +22,7 @@ namespace GilgameshArcher.GilgameshArcherCode.Powers;
 /// </summary>
 public sealed class GoldenArrogancePower : GilgameshPower
 {
-    public int Stars = 20;
-
-    private bool _triggeredThisTurn;
+    public int Stars => Math.Max(20, FgoCombatState.GetCombat(Owner, 7, 6));
 
     public override PowerType Type => PowerType.Buff;
 
@@ -32,17 +30,16 @@ public sealed class GoldenArrogancePower : GilgameshPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public Task Configure(PlayerChoiceContext context, int stars, CardModel source)
     {
-        if (side == Owner.Side) _triggeredThisTurn = false;
-        return Task.CompletedTask;
+        return FgoCombatState.SetCombat(context, Owner, 7, Math.Max(Stars, stars), source, width: 6);
     }
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (target != Owner || result.UnblockedDamage <= 0 || _triggeredThisTurn) return;
-        _triggeredThisTurn = true;
+        if (target != Owner || result.UnblockedDamage <= 0 || FgoCombatState.GetTurn(Owner, 0) != 0) return;
+        await FgoCombatState.SetTurn(choiceContext, Owner, 0, 1, cardSource);
         Flash();
-        await CritStars.Gain(Owner, Stars, null);
+        await CritStars.Gain(choiceContext, Owner, Stars, null);
     }
 }

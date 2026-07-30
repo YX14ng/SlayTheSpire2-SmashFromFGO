@@ -154,7 +154,7 @@
   "MORGANBERSERKER-ARTS_MORGAN.title": "Arts",
   "MORGANBERSERKER-ARTS_MORGAN.description": "#Command Card: deal !D! damage. Gain !NpCharge! *NP *Charge.",
   "MORGANBERSERKER-QUICK_MORGAN.title": "Quick",
-  "MORGANBERSERKER-QUICK_MORGAN.description": "#Command Card: deal !D! damage. Apply !Curse! *Curse.",
+  "MORGANBERSERKER-QUICK_MORGAN.description": "#Command Card: deal !D! damage. Apply !Curse! *Curse. Gain !Stars! *Critical *Stars.",
   "MORGANBERSERKER-QUEENS_SACRIFICE.title": "Queen's Sacrifice",
   "MORGANBERSERKER-QUEENS_SACRIFICE.description": "#Deal !D! damage, /+!Bonus! if you have *Guts. Lose !HpLoss! HP.",
   "MORGANBERSERKER-FAE_RESPITE.title": "Fae Respite",

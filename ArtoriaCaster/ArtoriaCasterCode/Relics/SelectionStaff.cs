@@ -15,28 +15,26 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Relics;
 /// </summary>
 public sealed class SelectionStaff : ArtoriaRelic, IFormChangeListener
 {
-    public const int Stars = 2;
+    public const int Stars = 20;
     public const int Block = 4;
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
 
-    private bool _usedThisCombat;
-
     public override async Task BeforeCombatStartLate()
     {
-        _usedThisCombat = false;
         // Initial form: Caster. source == null -> doesn't count as "changing form".
         await FormSwitch.Enter<ProphecyCasterFormPower>(null, Owner.Creature, null);
     }
 
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
-        if (_usedThisCombat) return;
-        _usedThisCombat = true;
+        if (FgoCombatState.GetCombat(Owner.Creature, 0) != 0) return;
+        var context = choiceContext ?? new BlockingPlayerChoiceContext();
+        await FgoCombatState.SetCombat(context, Owner.Creature, 0, 1);
         Flash();
-        await Powers.Stars.Gain(Owner.Creature, Stars, null);
+        await Powers.Stars.Gain(context, Owner.Creature, Stars, null);
         await CreatureCmd.GainBlock(Owner.Creature, Block, ValueProp.Unpowered, null);
     }
 }

@@ -20,7 +20,7 @@ public sealed class KairisCommandSeal() : MordredCard(0, CardType.Skill, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(50m);

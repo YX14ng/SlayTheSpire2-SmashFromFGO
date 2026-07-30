@@ -14,18 +14,11 @@ public sealed class WorldsEndCoronation : MorganRelic, IFormChangeListener
 {
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
-    private bool _usedThisTurn;
-
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player) _usedThisTurn = false;
-        return Task.CompletedTask;
-    }
-
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
-        if (_usedThisTurn) return;
-        _usedThisTurn = true;
+        if (FgoCombatState.GetTurn(Owner.Creature, 4) != 0) return;
+        await FgoCombatState.SetTurn(
+            choiceContext ?? new BlockingPlayerChoiceContext(), Owner.Creature, 4, 1);
         Flash();
         await PlayerCmd.GainEnergy(1, Owner);
     }

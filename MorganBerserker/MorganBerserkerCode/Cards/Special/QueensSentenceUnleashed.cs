@@ -43,20 +43,20 @@ public sealed class QueensSentenceUnleashed() : MorganCard(0, CardType.Attack, C
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
 
         // Detonación AoE: cada enemigo maldito recibe daño = su Maldición (+ Sobrecarga), SIN
         // consumirla. Unblockable|Unpowered (no escala con Fuerza ni lo frena el Bloqueo), como
         // el tick de Maldición. Daño directo con ValueProp explícita (patrón del antiguo handler).
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).Where(e => !e.IsDead).ToList())
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).Where(e => !e.IsDead).ToList())
         {
             var curse = Curses.Of(enemy);
             if (curse <= 0) continue;
             var damage = NpLevels.Scale(Owner, curse + bonus);
             VfxCmd.PlayOnCreatureCenter(enemy, "vfx/vfx_starry_impact");
-            await CreatureCmd.Damage(choiceContext, enemy, damage,
-                ValueProp.Unblockable | ValueProp.Unpowered, Owner.Creature, this);
+            await CreatureCmdCompatibility.Damage(choiceContext, enemy, damage,
+                ValueProp.Unblockable | ValueProp.Unpowered, Owner.Creature, this, cardPlay);
         }
     }
 

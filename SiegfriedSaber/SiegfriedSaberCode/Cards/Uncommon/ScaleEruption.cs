@@ -65,7 +65,7 @@ public sealed class ScaleEruption() : SiegfriedCard(1, CardType.Attack, CardRari
         var damage = counted * DynamicVars["PerPoint"].IntValue;
         if (damage <= 0) return; // sin armadura, sin erupción (carta muerta — es el riesgo de jugarla en seco)
 
-        await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState!)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

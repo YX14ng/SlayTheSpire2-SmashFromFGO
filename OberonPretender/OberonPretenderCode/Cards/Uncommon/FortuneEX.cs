@@ -19,7 +19,7 @@ public sealed class FortuneEX() : OberonCard(1, CardType.Skill, CardRarity.Uncom
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].IntValue, Owner);
     }
 

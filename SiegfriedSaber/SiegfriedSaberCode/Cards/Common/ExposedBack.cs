@@ -42,7 +42,7 @@ public sealed class ExposedBack() : SiegfriedCard(1, CardType.Attack, CardRarity
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         // Baja la guardia ESTE turno (las escamas reducen 0); el flag se va solo al fin del turno.
         await PowerCmd.Apply<ExposedBackPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
     }

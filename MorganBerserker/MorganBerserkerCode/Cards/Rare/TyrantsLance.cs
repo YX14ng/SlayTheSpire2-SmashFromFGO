@@ -37,11 +37,11 @@ public sealed class TyrantsLance() : MorganCard(2, CardType.Attack, CardRarity.R
             damage += DynamicVars["Bonus"].BaseValue;
         }
 
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
-        await CreatureCmd.Damage(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue,
-            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this);
+        await CreatureCmdCompatibility.DamageFromCard(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue,
+            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this, cardPlay);
     }
 
     protected override void OnUpgrade()

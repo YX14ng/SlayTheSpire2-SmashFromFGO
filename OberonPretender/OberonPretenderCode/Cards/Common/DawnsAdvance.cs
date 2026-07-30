@@ -31,8 +31,8 @@ public sealed class DawnsAdvance() : OberonCard(0, CardType.Skill, CardRarity.Co
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
-        await DebtPower.Add(Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        await DebtPower.Add(choiceContext, Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Charge"].UpgradeValueBy(10m);

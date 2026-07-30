@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace ArtoriaCaster.ArtoriaCasterCode.Powers;
@@ -18,21 +19,10 @@ public sealed class SpellReloadingPower : ArtoriaPower
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    private bool _usedThisTurn;
-
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player)
-        {
-            _usedThisTurn = false;
-        }
-        return Task.CompletedTask;
-    }
-
     public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
         modifiedCost = originalCost;
-        if (_usedThisTurn) return false;
+        if (FgoCombatState.GetTurn(Owner, 3) != 0) return false;
         if (card.Owner.Creature != Owner) return false;
         if (card.Type != CardType.Skill) return false;
         if (card.Pile?.Type is not (PileType.Hand or PileType.Play)) return false;
@@ -41,14 +31,14 @@ public sealed class SpellReloadingPower : ArtoriaPower
         return true;
     }
 
-    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (_usedThisTurn) return Task.CompletedTask;
-        if (cardPlay.Card.Owner.Creature != Owner || cardPlay.Card.Type != CardType.Skill) return Task.CompletedTask;
-        if (cardPlay.Card.Pile?.Type is not (PileType.Hand or PileType.Play)) return Task.CompletedTask;
+        if (FgoCombatState.GetTurn(Owner, 3) != 0) return;
+        if (cardPlay.Card.Owner.Creature != Owner || cardPlay.Card.Type != CardType.Skill) return;
+        if (cardPlay.Card.Pile?.Type is not (PileType.Hand or PileType.Play)) return;
 
-        _usedThisTurn = true;
+        await FgoCombatState.SetTurn(
+            new BlockingPlayerChoiceContext(), Owner, 3, 1, cardPlay.Card);
         Flash();
-        return Task.CompletedTask;
     }
 }

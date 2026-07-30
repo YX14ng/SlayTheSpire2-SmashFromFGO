@@ -36,10 +36,10 @@ public sealed class SecretOfPedigreeEX() : MordredCard(1, CardType.Skill, CardRa
     {
         await Owner.Creature.RemoveAllDebuffs();
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         if (Forms.InMaskedForm(Owner.Creature))
         {
-            await NpCharge.Gain(Owner.Creature, DynamicVars["MaskedNp"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["MaskedNp"].IntValue, this);
         }
     }
 

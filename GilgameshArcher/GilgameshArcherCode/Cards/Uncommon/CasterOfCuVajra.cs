@@ -18,11 +18,11 @@ public sealed class CasterOfCuVajra() : GilgameshCard(2, CardType.Attack, CardRa
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay)
             .TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);

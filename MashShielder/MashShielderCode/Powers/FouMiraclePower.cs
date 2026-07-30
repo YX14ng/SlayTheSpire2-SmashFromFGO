@@ -39,6 +39,6 @@ public sealed class FouMiraclePower : GutsPower
     protected override async Task OnTriggered(PlayerChoiceContext choiceContext)
     {
         await CreatureCmd.GainBlock(Owner, RescueBlock, ValueProp.Unpowered, null);
-        await NpCharge.Gain(Owner, RescueNpCharge, null);
+        await NpCharge.Gain(choiceContext, Owner, RescueNpCharge, null);
     }
 }

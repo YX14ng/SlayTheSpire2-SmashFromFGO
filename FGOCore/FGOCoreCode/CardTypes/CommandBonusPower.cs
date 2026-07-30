@@ -34,8 +34,8 @@ public sealed class CommandBonusPower : FGOCorePower
     // --- Montos por defecto (tuneables) ---
     public const int BusterStrengthTemp = 1;  // Buster normal → +1 Fuerza temporal (este turno)
     public const int BusterStrengthUlt = 2;   // Buster ulti   → +2 Fuerza permanente
-    public const int QuickStars = 2;          // Quick  normal → +2 Estrellas
-    public const int QuickStarsUlt = 5;       // Quick  ulti   → +5 Estrellas
+    public const int QuickStars = 10;         // Quick  normal → +10 Estrellas, tras resolver
+    public const int QuickStarsUlt = 20;      // Quick  ulti   → +20 Estrellas, tras resolver
     public const int ArtsNpUlt = 20;          // Arts   ulti   → +20 Carga NP
 
     public override PowerType Type => PowerType.Buff;
@@ -78,11 +78,11 @@ public sealed class CommandBonusPower : FGOCorePower
                 break;
 
             case CommandType.Quick:
-                await CritStars.Gain(creature, ulti ? QuickStarsUlt : QuickStars, source);
+                await CritStars.Gain(context, creature, ulti ? QuickStarsUlt : QuickStars, source);
                 break;
 
             case CommandType.Arts when ulti:
-                await NpCharge.Gain(creature, ArtsNpUlt, source);
+                await NpCharge.Gain(context, creature, ArtsNpUlt, source);
                 break;
             case CommandType.Arts:
                 // Las Arts de comando ya cargan NP por su propio efecto: no se duplica.
@@ -94,6 +94,7 @@ public sealed class CommandBonusPower : FGOCorePower
     /// para que el hook capture la PRIMERA carta tipada del combate. Idempotente.</summary>
     public static async Task EnsureInstalled(Creature creature)
     {
+        await Criticals.EnsureInstalled(creature);
         if (creature.GetPower<CommandBonusPower>() == null)
         {
             await PowerCmd.Apply<CommandBonusPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);

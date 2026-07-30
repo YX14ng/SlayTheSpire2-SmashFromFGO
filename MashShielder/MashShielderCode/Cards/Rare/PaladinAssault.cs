@@ -25,7 +25,7 @@ public sealed class PaladinAssault() : MashShielderCard(2, CardType.Attack, Card
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         for (var i = 0; i < 2; i++)
         {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash", null, "heavy_attack.mp3")
                 .Execute(choiceContext);
         }

@@ -29,7 +29,7 @@ public sealed class KingsFavor() : OberonCard(1, CardType.Attack, CardRarity.Com
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = DebtPower.Of(Owner.Creature) > 0 ? DynamicVars["Bonus"].IntValue : 0;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

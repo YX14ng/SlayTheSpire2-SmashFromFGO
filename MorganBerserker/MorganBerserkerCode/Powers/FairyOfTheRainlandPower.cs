@@ -20,9 +20,10 @@ public sealed class FairyOfTheRainlandPower : MorganPower
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Players.Player player)
     {
         if (player != Owner.Player || Owner.Player == null) return;
+        if (Owner.CombatState is not { } combatState) return;
         Flash();
-        await NpCharge.Gain(Owner, Amount, null);
-        foreach (var ally in Owner.CombatState.PlayerCreatures.Where(c => c != Owner && !c.IsDead))
-            await NpCharge.Gain(ally, AllyCharge, null);
+        await NpCharge.Gain(choiceContext, Owner, Amount, null);
+        foreach (var ally in combatState.PlayerCreatures.Where(c => c != Owner && !c.IsDead))
+            await NpCharge.Gain(choiceContext, ally, AllyCharge, null);
     }
 }

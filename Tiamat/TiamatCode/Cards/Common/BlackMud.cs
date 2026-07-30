@@ -16,7 +16,7 @@ public sealed class BlackMud() : TiamatCard(0, CardType.Skill, CardRarity.Common
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await Curses.Apply(cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+        await Curses.Apply(choiceContext, cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Curse"].UpgradeValueBy(2m);

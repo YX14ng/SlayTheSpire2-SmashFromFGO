@@ -12,7 +12,7 @@
   "GILGAMESHARCHER-KINGS_WINE_CUP.description": "#At the end of each combat, gain !Gold! Gold.",
   "GILGAMESHARCHER-KINGS_WINE_CUP.flavor": "The King drinks, and the treasury fills. Wealth flows to him the way rivers flow to the sea.",
   "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.title": "Mantle of Arrogance",
-  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.description": "#Whenever one of your attacks kills an enemy while you have *Critical *Ready, gain !Gold! Gold (up to 15 per combat).",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.description": "#Whenever one of your *Critical Attacks kills an enemy, gain !Gold! Gold /(up to 15 per combat).",
   "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.flavor": "He does not loot the dead. The dead simply surrender their gold to the one who was always its rightful owner.",
   "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.title": "Vimana, the Golden Throne",
   "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.description": "#The first time you play 2 or more Treasure Arms in a single turn each combat, draw !Cards!.",

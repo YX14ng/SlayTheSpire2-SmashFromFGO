@@ -13,8 +13,11 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 /// denominación — evita el spam con carga trivial en la economía rápida nueva).
 /// Auditoría (P9, números corregidos): Rhongo+ a cap 300 = (300−50)/10×4 + 24 = 124.
 /// </summary>
-public sealed class RhongomyniadRain() : MorganCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+public sealed class RhongomyniadRain() : MorganCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 50;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -34,11 +37,11 @@ public sealed class RhongomyniadRain() : MorganCard(1, CardType.Attack, CardRari
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + bonus);
 
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
     }

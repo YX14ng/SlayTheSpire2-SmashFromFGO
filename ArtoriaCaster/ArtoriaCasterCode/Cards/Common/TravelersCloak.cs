@@ -14,7 +14,7 @@ public sealed class TravelersCloak() : ArtoriaCard(2, CardType.Skill, CardRarity
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(10m, ValueProp.Move),
-        new DynamicVar("Stars", 1),
+        new DynamicVar("Stars", 10),
         new DynamicVar("NpCharge", 5)
     ];
 
@@ -24,8 +24,8 @@ public sealed class TravelersCloak() : ArtoriaCard(2, CardType.Skill, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()

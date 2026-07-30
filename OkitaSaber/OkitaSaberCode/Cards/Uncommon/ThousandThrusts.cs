@@ -25,8 +25,9 @@ public sealed class ThousandThrusts() : OkitaCard(1, CardType.Power, CardRarity.
         var power = await PowerCmd.Apply<ThousandThrustsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
-            power.StarsGain = DynamicVars["Stars"].IntValue;
-            power.NpGainValue = DynamicVars["NpCharge"].IntValue;
+            await power.Configure(
+                choiceContext, DynamicVars["Stars"].IntValue,
+                DynamicVars["NpCharge"].IntValue, this);
         }
     }
 

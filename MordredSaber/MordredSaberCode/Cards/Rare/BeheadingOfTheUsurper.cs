@@ -23,7 +23,7 @@ public sealed class BeheadingOfTheUsurper() : MordredCard(3, CardType.Attack, Ca
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = Owner.Creature.VersusAuthority() ? DynamicVars["Authority"].IntValue : 0;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

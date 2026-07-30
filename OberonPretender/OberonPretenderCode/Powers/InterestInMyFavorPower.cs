@@ -23,7 +23,7 @@ public sealed class InterestInMyFavorPower : OberonPower
     {
         if (cardPlay.Card is not ILoanCard || cardPlay.Card.Owner?.Creature != Owner) return;
         Flash();
-        await NpCharge.Gain(Owner, Charge, null);
-        if (Stars > 0) await CritStars.Gain(Owner, Stars, null);
+        await NpCharge.Gain(context, Owner, Charge, null);
+        if (Stars > 0) await CritStars.Gain(context, Owner, Stars, null);
     }
 }

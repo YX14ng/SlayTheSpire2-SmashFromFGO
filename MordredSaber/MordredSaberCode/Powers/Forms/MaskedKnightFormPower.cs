@@ -1,12 +1,8 @@
 namespace MordredSaber.MordredSaberCode.Powers.Forms;
 
 /// <summary>
-/// CABALLERO ENMASCARADO (不贞隐藏之兜, asc 1-2) — forma inicial: identidad y parámetros sellados
-/// tras el casco (DESIGN-MORDRED §3.bis, forma 1). Tanquear y bancar:
-///   - tus Ataques hacen −2 (atacar enmascarada es desperdicio);
-///   - al final del turno conservás hasta 10 de Bloqueo (Baluarte, IBlockRetentionSource);
-///   - al inicio de tu turno: +5 NP.
-/// Las cartas «si Enmascarado: +X» (Chispas del Yelmo, Yelmo Abollado, etc.) leen esta forma.
+/// Forma inicial defensiva: reduce el dano de los ataques, retiene Bloqueo y genera NP.
+/// Comparte el set animado oficial de Mordred con las otras formas para evitar duplicarlo.
 /// </summary>
 public sealed class MaskedKnightFormPower : MordredFormPower
 {
@@ -16,8 +12,5 @@ public sealed class MaskedKnightFormPower : MordredFormPower
 
     protected override int NpPerTurnStart => NpPerTurn;
 
-    // FramesPath = null (audit 2026-07-04): el .tres "mordred_frames_masked" no existe en el repo — el
-    // swap declaraba un recurso inexistente (no-op con log de error). null = mantener el sprite
-    // actual. TODO pase de arte: generar el .tres y restaurar el path.
-    public override string? FramesPath => null;
+    public override string FramesPath => $"{MainFile.ResPath}/character/mordred_frames.tres";
 }

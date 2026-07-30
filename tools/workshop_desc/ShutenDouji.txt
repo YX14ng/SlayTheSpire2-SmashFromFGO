@@ -1,0 +1,115 @@
+[h1]Shuten-Douji — Distill Poison into Sake[/h1]
+Weave Assassin and Caster cards through one deck, turn Poison into a 0–100 Sake economy and choose which of two Noble Phantasms will end the banquet.
+
+[b]PLAYTEST BUILD — v0.1.1[/b]
+The character and presentation are complete for testing; balance, save/load and co-op validation are still in progress.
+
+[h2]Core gameplay[/h2]
+[list]
+[*][b]Sake:[/b] a personal resource that remains between turns. Assassin produces it through Poison and control; Caster spends it to improve damage and defense.
+[*][b]Cross:[/b] play an Assassin and a Caster card in the same turn to unlock hybrid effects. These are card styles inside one deck, not forms that force a transformation.
+[*][b]Command Cards:[/b] Buster supplies impact, Arts charges NP and Quick generates Critical Stars through FGO Core's shared systems.
+[*][b]Two Noble Phantasms:[/b] reaching 100 NP manifests both choices. Select an area Assassin attack with Poison and Skill Seal, or a six-hit Caster burst empowered by Sake.
+[/list]
+
+[h2]Content[/h2]
+[list]
+[*]68-card reward pool and a 10-card starting deck
+[*]2 mutually exclusive manifested Noble Phantasms
+[*]37 character powers and 12 relics, including 3 starting relics
+[*]Animated official Assassin battle model: idle, Quick attack, cast, hurt and death
+[*]Official artwork selected individually for cards, powers, relics and character UI
+[*]Spanish, English and Simplified Chinese text; Korean and Russian files use a safe English fallback
+[/list]
+
+[h2]Requirements and compatibility[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Built for MAIN 0.107.1 and public BETA 0.109.0
+[/list]
+
+[h2]Playtest status[/h2]
+Build, localization parity, artwork, animation and package audits pass. In-game balance, save/load and multiplayer testing are still required before public release. Dedicated custom audio remains future presentation work.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Source code and bug reports[/url]
+
+Unofficial fan-made mod. Fate/Grand Order characters and official visual assets belong to their respective rights holders. Not affiliated with TYPE-MOON, Lasengle or Mega Crit.
+
+[hr][/hr]
+[h1]ESPAÑOL[/h1]
+Combiná cartas Assassin y Caster en un mismo mazo, convertí Veneno en una economía de Sake de 0 a 100 y elegí con cuál de dos Noble Phantasms terminar el banquete.
+
+[b]VERSIÓN DE PLAYTEST — v0.1.1[/b]
+El personaje y su presentación están completos para pruebas; el balance, guardado/carga y cooperativo todavía están en validación.
+
+[h2]Mecánicas principales[/h2]
+[list]
+[*][b]Sake:[/b] un recurso propio que permanece entre turnos. Assassin lo produce mediante Veneno y control; Caster lo gasta para mejorar daño y defensa.
+[*][b]Cruce:[/b] jugá una carta Assassin y una Caster en el mismo turno para activar efectos híbridos. Son estilos dentro de un único mazo, no formas que obligan a transformarse.
+[*][b]Command Cards:[/b] Buster aporta impacto, Arts carga NP y Quick genera Estrellas mediante los sistemas compartidos de FGO Core.
+[*][b]Dos Noble Phantasms:[/b] alcanzar 100 NP manifiesta ambas opciones. Elegí un ataque Assassin de área con Veneno y Sello de Habilidad, o una ráfaga Caster de seis impactos potenciada por Sake.
+[/list]
+
+[h2]Contenido[/h2]
+[list]
+[*]68 cartas de recompensa y mazo inicial de 10 cartas
+[*]2 Noble Phantasms manifestados y mutuamente excluyentes
+[*]37 poderes y 12 reliquias propias, incluidas 3 iniciales
+[*]Modelo Assassin oficial animado: reposo, ataque Quick, casteo, daño y muerte
+[*]Arte oficial seleccionado individualmente para cartas, poderes, reliquias e interfaz
+[*]Texto editado en español, inglés y chino simplificado; coreano y ruso usan fallback inglés seguro
+[/list]
+
+[h2]Requisitos y compatibilidad[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Compatible con MAIN 0.107.1 y BETA pública 0.109.0
+[/list]
+
+[h2]Estado del playtest[/h2]
+Las auditorías de compilación, paridad de idiomas, arte, animaciones y paquete están aprobadas. Todavía faltan pruebas dentro del juego de balance, guardado/carga y multijugador antes de publicarlo. El audio exclusivo queda como trabajo futuro de presentación.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Código fuente y reporte de errores[/url]
+
+Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
+
+[hr][/hr]
+[h1]简体中文[/h1]
+在同一套牌组中交织 Assassin 与 Caster 卡牌，把毒素酿成 0–100 的酒资源，并从两种宝具中选择宴席的终幕。
+
+[b]测试版本 — v0.1.1[/b]
+角色与视觉内容已可完整测试；平衡、存档及联机验证仍在进行。
+
+[h2]核心机制[/h2]
+[list]
+[*][b]酒：[/b]可在回合间保留的专属资源。Assassin 通过毒与控制生成酒；Caster 消耗酒来强化伤害与防御。
+[*][b]交错：[/b]同一回合打出 Assassin 与 Caster 卡牌即可启动混合效果。二者是同一牌组中的卡牌风格，并非强制变身的形态。
+[*][b]指令卡：[/b]Buster 提供爆发，Arts 充能 NP，Quick 则通过 FGO Core 共用系统生成暴击星。
+[*][b]双宝具：[/b]达到 100 NP 时会同时显现两个选择。可选附带毒与技能封印的 Assassin 群体攻击，或由酒强化的 Caster 六连击。
+[/list]
+
+[h2]内容[/h2]
+[list]
+[*]68 张奖励卡牌与 10 张初始牌组
+[*]2 张互斥的显现型宝具牌
+[*]37 个角色能力与 12 件专属遗物，其中 3 件为初始遗物
+[*]Assassin 官方战斗模型动画：待机、Quick 攻击、施法、受伤与死亡
+[*]卡牌、能力、遗物与角色界面均逐项选用官方美术
+[*]西班牙语、英语与简体中文已完整编辑；韩语与俄语使用安全的英语回退
+[/list]
+
+[h2]依赖与兼容性[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]兼容正式版 0.107.1 与公开测试版 0.109.0
+[/list]
+
+[h2]测试状态[/h2]
+构建、语言一致性、美术、动画及安装包检查均已通过。公开发布前仍需完成游戏内平衡、存档与联机测试；专属音效属于后续表现层工作。
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]源代码与问题反馈[/url]
+
+本项目为非官方同人 Mod，与 TYPE-MOON、Lasengle 及 Mega Crit 无隶属关系。

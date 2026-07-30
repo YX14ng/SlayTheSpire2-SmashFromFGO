@@ -29,20 +29,20 @@ public sealed class QueensMandate() : MorganCard(1, CardType.Skill, CardRarity.B
 
     // Glow del rediseño v2 (auditoría de completitud: era la única condicional sin brillo).
     protected override bool ShouldGlowGoldInternal =>
-        Curses.CursedEnemies((CombatState)Owner.Creature.CombatState, Owner.Creature) > 0;
+        Curses.CursedEnemies(Owner.Creature) > 0;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        if (Curses.CursedEnemies((CombatState)Owner.Creature.CombatState, Owner.Creature) > 0)
+        if (Curses.CursedEnemies(Owner.Creature) > 0)
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars["Bonus"].BaseValue, ValueProp.Move, null);
         }
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         // Co-op (mandato real que carga al ejército): cada aliado vivo gana un poco de Carga NP.
         // En 1 jugador, PlayerCreatures es solo el Owner -> el foreach queda vacío (fiel a 1 jugador).
-        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
-            await NpCharge.Gain(ally, DynamicVars["AllyCharge"].IntValue, this);
+        foreach (var ally in Owner.Creature.CombatState!.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
+            await NpCharge.Gain(choiceContext, ally, DynamicVars["AllyCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()

@@ -27,11 +27,11 @@ public partial class MainFile : Node
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 
-        // Precarga de frames de las 2 formas (humano / Bestia). Los .tres se generan en el
+        // Registra las 2 formas (humano / Bestia). FGOCore las precarga juntas solo en solitario.
         // pase de arte (ver DESIGN-TIAMAT.md / WORKFLOW-FGO §3).
-        FormVisuals.RegisterFrames(
-            $"{ResPath}/character/tiamat_frames_human.tres",
-            $"{ResPath}/character/tiamat_frames_beast.tres");
+        FormVisuals.RegisterFramesWithSpriteTransform(
+            ($"{ResPath}/character/tiamat_frames_human.tres", -3.1f, -176.6f, 0.758667f),
+            ($"{ResPath}/character/tiamat_frames_beast.tres", 14.6f, -204.3f, 0.696133f));
 
 // Modelo dos-pozas (rediseno, ver docs/REDESIGN-TIAMAT.md): a 100 NO se abre nada solo —
         // se MANIFIESTA en mano la carta-NP de apertura «Nammu Dur-an-ki» MIENTRAS tengas >=100 y no
@@ -39,10 +39,10 @@ public partial class MainFile : Node
         // viejo marker+GaugeDropped BRICKEABA el medidor — si la ventana expiraba sin jugar Pluma, el
         // medidor quedaba >=100 sin volver a cruzar el umbral y Nammu no se re-manifestaba nunca mas.)
         // Se re-chequea en el cruce de 100 y a inicio de cada turno (TiamatFormPower).
-        NpCharge.GaugeFilled += TryManifestGenesis;
+        NpCharge.GaugeFilledWithContext += TryManifestGenesis;
     }
 
-    private static Task TryManifestGenesis(Creature creature) => EnsureGenesisInHand(creature);
+    private static Task TryManifestGenesis(PlayerChoiceContext _, Creature creature) => EnsureGenesisInHand(creature);
 
     /// <summary>Manifiesta Nammu Dur-an-ki si Tiamat esta en combate con >=100 de Carga NP, sin
     /// ventana Bestia activa y sin una copia ya en mano/robo/descarte. Idempotente.</summary>

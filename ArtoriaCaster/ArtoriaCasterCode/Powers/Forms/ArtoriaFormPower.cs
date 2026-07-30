@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Models;
 using ArtoriaCaster.ArtoriaCasterCode.Extensions;
 
 namespace ArtoriaCaster.ArtoriaCasterCode.Powers.Forms;
@@ -10,10 +11,14 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Powers.Forms;
 /// Base for Castoria's forms on top of FGOCore's generic FormPower.
 /// Icons live in ArtoriaCaster's resources, not FGOCore's.
 /// </summary>
-public abstract class ArtoriaFormPower : FormPower
+public abstract class ArtoriaFormPower : FormPower, ICriticalAccessRule
 {
     public override string CustomPackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
     public override string CustomBigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigPowerImagePath();
+
+    public bool CanSpendCritical(CardModel card) =>
+        this is SummerBerserkerFormPower or AvalonFormPower ||
+        Owner.HasPower<AroundCaliburnWindowPower>();
 
     // A inicio de cada turno re-chequea la ulti auto-manifestada (siempre hay UNA forma activa, así que
     // este hook corre siempre). Cubre el caso del Kaleidoscope/carga inicial que te deja en >=100 sin
@@ -22,7 +27,7 @@ public abstract class ArtoriaFormPower : FormPower
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         await base.AfterSideTurnStart(side, participants, combatState);
-        if (side == Owner.Side)
+        if (participants.Contains(Owner))
         {
             await MainFile.EnsureUltInHand(Owner);
         }

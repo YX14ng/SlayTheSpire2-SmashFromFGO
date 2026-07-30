@@ -33,8 +33,8 @@ public sealed class FaeTribute() : OberonCard(0, CardType.Skill, CardRarity.Comm
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (!CanConvert) return;
-        await CritStars.Gain(Owner.Creature, -DynamicVars["Cost"].IntValue, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, -DynamicVars["Cost"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
     }
 
     // Up: la conversión se abarata (50 → 40 ★); el premio en NP no cambia.

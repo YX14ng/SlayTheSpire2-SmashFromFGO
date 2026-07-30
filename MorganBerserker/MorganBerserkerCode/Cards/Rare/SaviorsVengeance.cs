@@ -25,7 +25,7 @@ public sealed class SaviorsVengeance() : MorganCard(1, CardType.Attack, CardRari
         var missing = (decimal)(Owner.Creature.MaxHp - Owner.Creature.CurrentHp);
         var bonus = Math.Floor(missing / DynamicVars["Divisor"].IntValue);
         var damage = Math.Min(DynamicVars.Damage.BaseValue + bonus, DynamicVars["Max"].BaseValue);
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);
     }

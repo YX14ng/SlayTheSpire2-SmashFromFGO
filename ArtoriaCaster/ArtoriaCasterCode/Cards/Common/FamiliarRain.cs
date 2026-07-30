@@ -15,8 +15,8 @@ public sealed class FamiliarRain() : ArtoriaCard(1, CardType.Attack, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCard(this)
-            .TargetingRandomOpponents(Owner.Creature.CombatState)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCardFgoCompatibility(this, cardPlay)
+            .TargetingRandomOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
     }

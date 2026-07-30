@@ -27,7 +27,7 @@ namespace OkitaSaber.OkitaSaberCode.Relics;
 /// = un crítico consumado. (El Haori es la única clienta hoy; si FGOCore agrega CritReady.Consumed,
 /// este hook se reemplaza por el callback — ver doccomment §4 del diseño.)
 /// </summary>
-public sealed class HaoriAsagi : OkitaRelic
+public sealed class HaoriAsagi : OkitaRelic, ICriticalConsumedListener
 {
     public const int StarsPerAttack = 10;
     public const int MaxProcsPerTurn = 3;
@@ -35,9 +35,6 @@ public sealed class HaoriAsagi : OkitaRelic
     public const int BreathPerCrit = 1; // reembolso de Aliento al criticar (cap 1/turno, P1)
 
     public override RelicRarity Rarity => RelicRarity.Starter;
-
-    private int _attackProcsThisTurn;
-    private bool _breathRefundedThisTurn;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
@@ -49,8 +46,6 @@ public sealed class HaoriAsagi : OkitaRelic
     public override async Task BeforeCombatStartLate()
     {
         await base.BeforeCombatStartLate();
-        _attackProcsThisTurn = 0;
-        _breathRefundedThisTurn = false;
         Aliento.ResetHitZero(Owner.Creature);
         // Contador de Ataques del turno instalado DESDE el arranque (audit 2026-07-04): instalado
         // perezosamente por las cartas, los Ataques previos del turno no se contaban (mismo fix que
@@ -62,9 +57,7 @@ public sealed class HaoriAsagi : OkitaRelic
 
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side != CombatSide.Player) return;
-        _attackProcsThisTurn = 0;
-        _breathRefundedThisTurn = false;
+        if (!participants.Contains(Owner.Creature)) return;
         Aliento.ResetHitZero(Owner.Creature);
 
         // REGEN del Aliento (audit 2026-07-04): vivia en AlientoPower.AfterSideTurnStart, pero ese
@@ -75,7 +68,7 @@ public sealed class HaoriAsagi : OkitaRelic
         {
             regen += b.ExtraBreathRegen;
         }
-        await Aliento.Gain(Owner.Creature, regen, null);
+        await Aliento.Gain(choiceContext, Owner.Creature, regen, null);
     }
 
     /// <summary>La Flor de la Capital Imperial REEMPLAZA este motor (numeros al doble): mientras
@@ -96,26 +89,28 @@ public sealed class HaoriAsagi : OkitaRelic
     {
         if (ReplacedByFlower()) return;
         if (cardPlay.Card.Type != CardType.Attack || cardPlay.Card.Owner?.Creature != Owner.Creature) return;
-        if (_attackProcsThisTurn >= MaxProcsPerTurn) return;
-        _attackProcsThisTurn++;
+        if (FgoCombatState.GetTurn(Owner.Creature, 5, 2) >= MaxProcsPerTurn) return;
+        await FgoCombatState.IncrementTurn(
+            context, Owner.Creature, 5, MaxProcsPerTurn, cardPlay.Card, width: 2);
         Flash();
-        await CritStars.Gain(Owner.Creature, StarsPerAttack, null);
+        await CritStars.Gain(context, Owner.Creature, StarsPerAttack, null);
     }
 
     // amount < 0 sobre CritReadyPower = un Crítico Listo CONSUMIDO (un crítico consumado) → +NP.
     // FIX HOMOGENEIZACIÓN (P1 Okita): además REEMBOLSA 1 *Aliento (cap 1/turno) — la velocidad se
     // retroalimenta (el iai perfecto no te deja sin aire). Hace que el Crítico de Okita exprese su
     // recurso de firma, no solo el ×2 genérico. El cap evita el loop ⚡-positivo (perilla #4 del doc).
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public async Task AfterCriticalConsumed(PlayerChoiceContext choiceContext, CriticalHit critical)
     {
         if (ReplacedByFlower()) return;
-        if (amount >= 0m || power is not CritReadyPower || power.Owner != Owner.Creature) return;
+        if (critical.Owner != Owner.Creature) return;
         Flash();
-        await NpCharge.Gain(Owner.Creature, NpPerCrit, null);
-        if (!_breathRefundedThisTurn)
+        await NpCharge.Gain(choiceContext, Owner.Creature, NpPerCrit, null);
+        if (FgoCombatState.GetTurn(Owner.Creature, 7) == 0)
         {
-            _breathRefundedThisTurn = true;
-            await Aliento.Gain(Owner.Creature, BreathPerCrit, null);
+            await FgoCombatState.SetTurn(
+                choiceContext, Owner.Creature, 7, 1, critical.Card);
+            await Aliento.Gain(choiceContext, Owner.Creature, BreathPerCrit, null);
         }
     }
 }

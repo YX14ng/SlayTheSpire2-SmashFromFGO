@@ -26,7 +26,7 @@ public sealed class SweetWords() : OberonCard(0, CardType.Skill, CardRarity.Comm
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DebtPower.Forgive(Owner.Creature, DynamicVars["Debt"].IntValue);
+        await DebtPower.Forgive(choiceContext, Owner.Creature, DynamicVars["Debt"].IntValue);
     }
 
     protected override void OnUpgrade() => DynamicVars["Debt"].UpgradeValueBy(1m);

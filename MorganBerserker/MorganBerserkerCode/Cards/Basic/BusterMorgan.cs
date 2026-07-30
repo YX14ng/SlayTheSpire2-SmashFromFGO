@@ -13,8 +13,11 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Basic;
 /// consume (rediseño 2026-06-15: swap Estrellas→Maldición, ya no hay "Crítico"/×2). Hereda el
 /// tag Strike para eventos/sinergias vanilla que cuentan "Golpes".
 /// </summary>
-public sealed class BusterMorgan() : MorganCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class BusterMorgan() : MorganCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => false;
+
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10m, ValueProp.Move)];
@@ -24,7 +27,7 @@ public sealed class BusterMorgan() : MorganCard(1, CardType.Attack, CardRarity.B
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);
     }

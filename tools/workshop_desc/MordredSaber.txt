@@ -1,33 +1,109 @@
-Mordred, the Knight of Rebellion (Saber of Red) of Fate/Grand Order, as a fully playable character. Built on the BaseLib framework and the FGO Core library.
+[h1]Mordred — Knight of Rebellion[/h1]
+Break defenses, gather Critical Stars and decide how much safety to abandon before unleashing Clarent Blood Arthur.
 
-What it adds:
-- A selfish AoE Buster crit-DPS with a draftable helmet form-switch: Masked (defensive, retains Block) vs Rebellion (all-out offense, +damage dealt and taken), plus the permanent Crimson Lightning aspect.
-- Three braided economies: spend HP for Critical Stars, spend Critical hits for NP charge, and her crit now manifests a "Clarent Spark" that hits harder unhelmeted.
-- Her Noble Phantasm, Clarent Blood Arthur - and she rips her helmet off as it fires, so the Rebellion bonus lands on every hit.
+[b]RELEASE BUILD — v0.1.10[/b]
 
-Requires: FGO Core (library) + BaseLib.
-Localization: English, Spanish, Simplified Chinese.
+[h2]Core gameplay[/h2]
+[list]
+[*][b]Masked form:[/b] the helmet keeps Mordred stable and defensive, retaining Block while she prepares the next offensive turn.
+[*][b]Rebellion form:[/b] removing the helmet increases both damage dealt and damage received. Enter for explosive turns, then manage the risk you created.
+[*][b]Crimson economy:[/b] trade HP for Critical Stars and turn critical hits into NP Charge. Quick attacks also feed the shared FGO Core Star system.
+[*][b]Clarent Blood Arthur:[/b] the Noble Phantasm removes the helmet before dealing its hits, ensuring the entire attack receives Rebellion's offensive bonus.
+[/list]
 
-Found a bug or have feedback? Report it in the discussion thread:
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-To help us fix it fast, please include: which Servant you played and what you did (a screenshot helps); your game log — Steam comments can't attach files, so upload %APPDATA%\SlayTheSpire2\logs\godot.log to a paste site (e.g. pastebin.com) or a file host and paste the LINK, or paste the last ~50 lines; and your full mod list (many bugs are conflicts with other mods).
+[h2]Content[/h2]
+[list]
+[*]68-card reward pool and a 10-card starting deck
+[*]Manifested Noble Phantasm and 12 character relics
+[*]Animated Masked and Rebellion forms with official FGO visuals
+[*]Curated official artwork for cards, powers, relics and character UI
+[*]Spanish, English, Simplified Chinese, Korean and Russian localization
+[/list]
 
-Made with the help of Claude Code.
+[h2]Requirements and compatibility[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Built for MAIN 0.107.1 and public BETA 0.109.0
+[/list]
 
-————————————————————
+[h2]Validation status[/h2]
+Build, localization, asset coverage, animation references and package audits pass. Balance, save/load and co-op behavior continue to receive in-game testing.
 
-「Fate/Grand Order」的叛逆骑士莫德雷德（红 Saber），现已作为可操作角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Source code and bug reports[/url]
 
-本 Mod 带来：
-- 一名自私自利的 AoE Buster 暴击 DPS，凭头盔实现可选构筑的形态切换：戴盔（防御姿态，保留格挡）对脱盔反叛（全力进攻，造成与承受的伤害双双提升），外加常驻的「绯红闪电」(Crimson Lightning) 阵位。
-- 三套相互交织的资源循环：耗血换暴击星，耗暴击换宝具充能，而她的暴击如今会催生「Clarent Spark」——脱盔状态下打得更狠。
-- 宝具「Clarent Blood Arthur」——施放瞬间她会一把扯下头盔，因此反叛加成会附加在每一段攻击上。
+Unofficial fan-made mod. Fate/Grand Order characters and official visual assets belong to their respective rights holders. Not affiliated with TYPE-MOON, Lasengle or Mega Crit.
 
-依赖：FGO Core（库）+ BaseLib。
-支持语言：英文、西班牙文、简体中文。
+[hr][/hr]
+[h1]ESPAÑOL[/h1]
+Rompé defensas, reuní Estrellas de Crítico y decidí cuánta seguridad abandonar antes de liberar Clarent Blood Arthur.
 
-发现 Bug 或有建议？请在讨论区反馈：
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-为方便我们尽快修复，请附上：你使用的从者 + 具体操作（截图更佳）；游戏日志——Steam 评论无法上传文件，请把 %APPDATA%\SlayTheSpire2\logs\godot.log 传到网盘或贴站（如 pastebin.com）再贴出链接，或直接粘贴最后约 50 行；以及完整的 Mod 列表（很多 Bug 是与其他 Mod 的冲突）。
+[b]VERSIÓN PÚBLICA — v0.1.10[/b]
 
-在 Claude Code 的协助下制作。
+[h2]Mecánicas principales[/h2]
+[list]
+[*][b]Forma Enmascarada:[/b] el casco mantiene a Mordred estable y defensiva, conservando Bloqueo mientras prepara el próximo turno ofensivo.
+[*][b]Forma Rebelión:[/b] quitarse el casco aumenta tanto el daño causado como el recibido. Entrá para explotar y administrá después el riesgo que generaste.
+[*][b]Economía carmesí:[/b] intercambiá Vida por Estrellas y convertí los críticos en Carga NP. Los Ataques Quick también alimentan el sistema global de FGO Core.
+[*][b]Clarent Blood Arthur:[/b] el Noble Phantasm retira el casco antes de resolver sus impactos, por lo que todo el ataque recibe la bonificación ofensiva de Rebelión.
+[/list]
+
+[h2]Contenido[/h2]
+[list]
+[*]68 cartas de recompensa y mazo inicial de 10 cartas
+[*]Noble Phantasm manifestado y 12 reliquias propias
+[*]Formas Enmascarada y Rebelión animadas con visuales oficiales de FGO
+[*]Arte oficial curado para cartas, poderes, reliquias e interfaz
+[*]Localización en español, inglés, chino simplificado, coreano y ruso
+[/list]
+
+[h2]Requisitos y compatibilidad[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Compatible con MAIN 0.107.1 y BETA pública 0.109.0
+[/list]
+
+[h2]Estado de validación[/h2]
+Las auditorías de compilación, idiomas, recursos, animaciones y paquete están aprobadas. El balance, guardado/carga y cooperativo continúan en pruebas dentro del juego.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Código fuente y reporte de errores[/url]
+
+Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
+
+[hr][/hr]
+[h1]简体中文[/h1]
+击碎防御、积累暴击星，并在释放 Clarent Blood Arthur 前决定愿意放弃多少安全性。
+
+[b]公开版本 — v0.1.10[/b]
+
+[h2]核心机制[/h2]
+[list]
+[*][b]戴盔形态：[/b]头盔让莫德雷德保持稳定防守，并保留格挡以准备下一次进攻回合。
+[*][b]反叛形态：[/b]摘下头盔会同时提高造成与受到的伤害。抓住爆发窗口，也要承担之后的风险。
+[*][b]绯红经济：[/b]用生命换取暴击星，再把暴击转化为 NP 充能；Quick 攻击同样会为 FGO Core 的共用暴击系统供能。
+[*][b]Clarent Blood Arthur：[/b]宝具会在造成各段伤害前摘下头盔，使整次攻击都获得反叛形态的进攻加成。
+[/list]
+
+[h2]内容[/h2]
+[list]
+[*]68 张奖励卡牌与 10 张初始牌组
+[*]显现型宝具与 12 件角色专属遗物
+[*]使用 FGO 官方视觉素材的戴盔与反叛动画形态
+[*]卡牌、能力、遗物与角色界面均采用精心筛选的官方美术
+[*]支持西班牙语、英语、简体中文、韩语与俄语
+[/list]
+
+[h2]依赖与兼容性[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]兼容正式版 0.107.1 与公开测试版 0.109.0
+[/list]
+
+[h2]验证状态[/h2]
+构建、本地化、资源覆盖、动画引用及安装包检查均已通过；平衡、存档与联机表现仍在游戏内持续测试。
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]源代码与问题反馈[/url]
+
+本项目为非官方同人 Mod，与 TYPE-MOON、Lasengle 及 Mega Crit 无隶属关系。

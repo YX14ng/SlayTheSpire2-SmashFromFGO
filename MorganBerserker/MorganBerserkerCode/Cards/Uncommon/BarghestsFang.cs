@@ -30,7 +30,7 @@ public sealed class BarghestsFang() : MorganCard(2, CardType.Attack, CardRarity.
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var wasCursed = Curses.Of(cardPlay.Target) > 0;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);
         if (wasCursed)

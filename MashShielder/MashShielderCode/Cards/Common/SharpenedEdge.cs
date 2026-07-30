@@ -20,7 +20,7 @@ public sealed class SharpenedEdge() : MashShielderCard(1, CardType.Attack, CardR
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = Owner.Creature.BlockCappedAt(DynamicVars["MaxBonus"].IntValue);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

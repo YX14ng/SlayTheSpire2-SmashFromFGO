@@ -28,7 +28,7 @@ public sealed class DoubleEdgeOfHatredPower : MordredPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<RebellionFormPower>()];
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || !props.IsPoweredAttack()) return 0m;
         return FormsHelper.InOffensiveForm(Owner) ? AttackBonus * (int)Amount : 0m;

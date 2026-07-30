@@ -24,10 +24,10 @@ public sealed class DefensiveSweep() : MashShielderCard(1, CardType.Attack, Card
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(CombatState)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

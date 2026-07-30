@@ -14,7 +14,7 @@ namespace FGOCore.FGOCoreCode.Memes;
 public sealed class Fragment2030() : MemeCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new PowerVar<Fragment2030Power>("Stars", 3m)];
+        [new PowerVar<Fragment2030Power>("Stars", 10m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritStarsPower>()];
 
@@ -25,6 +25,6 @@ public sealed class Fragment2030() : MemeCard(1, CardType.Power, CardRarity.Unco
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Stars"].UpgradeValueBy(1m);
+        DynamicVars["Stars"].UpgradeValueBy(10m);
     }
 }

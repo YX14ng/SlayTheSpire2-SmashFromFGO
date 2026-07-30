@@ -20,6 +20,8 @@ public sealed class DreamContract : DebtPaidStarsRelic
 
     protected override int MaxProcsPerTurn => 3;
 
+    protected override bool IsActive => Owner.Relics.All(relic => relic is not BookOfDreamsEnd);
+
     public override async Task BeforeCombatStartLate()
     {
         await base.BeforeCombatStartLate();

@@ -26,6 +26,6 @@ public sealed class Merodach() : GilgameshCard(0, CardType.Attack, CardRarity.Ev
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
+        await AttackTarget(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue);
     }
 }

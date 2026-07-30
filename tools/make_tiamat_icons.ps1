@@ -10,7 +10,7 @@ $sz = 256
 $powers = @{
   "tiamat_femme_fatale_power" = "suckle"      # Great Mother — la criadora
   "tiamat_beast_power"        = "chaos_tide"   # Beast of Billows — la Bestia
-  "genesis_spent_power"       = "enuma_elis"   # Enuma Dingir — la genesis ya gastada
+  "genesis_spent_power"       = "genesis_deluge" # Genesis Deluge — la genesis ya gastada
   "mother_guts_power"         = "carapace"     # Scale of the Stars — coraza/tenacidad
 }
 # relic_icon_name -> CE-art source

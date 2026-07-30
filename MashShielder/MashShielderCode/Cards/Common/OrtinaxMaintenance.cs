@@ -22,8 +22,8 @@ public sealed class OrtinaxMaintenance() : MashShielderCard(1, CardType.Skill, C
     {
         if (Owner.Creature.Block <= 0) return;
 
-        var block = await Owner.Creature.ConsumeAllBlock();
-        await NpCharge.Gain(Owner.Creature, Math.Min(block, DynamicVars["MaxCharge"].IntValue), this);
+        var block = await Owner.Creature.ConsumeAllBlock(choiceContext, Owner.Creature);
+        await NpCharge.Gain(choiceContext, Owner.Creature, Math.Min(block, DynamicVars["MaxCharge"].IntValue), this);
     }
 
     protected override void OnUpgrade()

@@ -21,7 +21,7 @@ public sealed class InsectsVigilPower : OberonPower
     {
         if (player != Owner.Player || Owner.Player == null || Owner.IsDead) return;
         Flash();
-        await NpCharge.Gain(Owner, Charge, null);
-        if (Stars > 0) await CritStars.Gain(Owner, Stars, null);
+        await NpCharge.Gain(choiceContext, Owner, Charge, null);
+        if (Stars > 0) await CritStars.Gain(choiceContext, Owner, Stars, null);
     }
 }

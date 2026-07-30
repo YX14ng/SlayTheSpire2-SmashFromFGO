@@ -20,14 +20,15 @@ public sealed class PeerlessCrownPower : SiegfriedPower, IDragonScalePierceListe
 {
     private const int NpOnTrigger = 5;
 
-    public bool Upgraded; // lo fija la carta desde IsUpgraded
-
-    private bool _consumedThisTurn;
+    public bool Upgraded => FgoCombatState.GetCombat(Owner, 6) != 0;
 
     /// <summary>Cupo del turno aun libre (lo consulta LindenLeaf para detectar un golpe que la
     /// Corona anulo: el motor lo marca WasFullyBlocked y sin esta senal el pierce jamas se
     /// consumia — la Corona anulaba TODOS los golpes parcialmente bloqueados del turno).</summary>
-    public bool HasFreeCharge => !_consumedThisTurn;
+    public bool HasFreeCharge => FgoCombatState.GetTurn(Owner, 1) == 0;
+
+    public Task Configure(PlayerChoiceContext context, bool upgraded, CardModel source) =>
+        upgraded ? FgoCombatState.SetCombat(context, Owner, 6, 1, source) : Task.CompletedTask;
 
     public override PowerType Type => PowerType.Buff;
 
@@ -37,10 +38,9 @@ public sealed class PeerlessCrownPower : SiegfriedPower, IDragonScalePierceListe
 
     public override decimal ModifyHpLostBeforeOsty(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (target != Owner || amount <= 0m || !props.IsPoweredAttack() || _consumedThisTurn) return amount;
+        if (target != Owner || amount <= 0m || !props.IsPoweredAttack() || !HasFreeCharge) return amount;
         if (PierceWouldHappen(props, dealer))
         {
-            Flash();
             return 0m; // la corona desvía el golpe fatal de la espalda expuesta
         }
         return amount;
@@ -48,17 +48,11 @@ public sealed class PeerlessCrownPower : SiegfriedPower, IDragonScalePierceListe
 
     public async Task OnScalesPierced(PlayerChoiceContext choiceContext)
     {
-        if (_consumedThisTurn) return;
-        _consumedThisTurn = true;
+        if (!HasFreeCharge) return;
+        await FgoCombatState.SetTurn(choiceContext, Owner, 1, 1);
         Flash();
         await Cleanse.RemoveDebuffs(Owner, 1);
-        if (Upgraded) await NpCharge.Gain(Owner, NpOnTrigger, null);
-    }
-
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player) _consumedThisTurn = false;
-        return Task.CompletedTask;
+        if (Upgraded) await NpCharge.Gain(choiceContext, Owner, NpOnTrigger, null);
     }
 
     // Espejo PURO de DragonScalesPower.ShouldPierce (consulta los IDragonScalePiercer del dueño), sin mutar.

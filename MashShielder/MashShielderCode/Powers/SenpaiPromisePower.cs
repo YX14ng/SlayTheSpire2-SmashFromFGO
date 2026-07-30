@@ -17,6 +17,6 @@ public sealed class SenpaiPromisePower : MashShielderPower
     {
         if (target != Owner || dealer == null || !props.IsPoweredAttack() || !result.WasFullyBlocked) return;
         Flash();
-        await NpCharge.Gain(Owner, Amount, null);
+        await NpCharge.Gain(choiceContext, Owner, Amount, null);
     }
 }

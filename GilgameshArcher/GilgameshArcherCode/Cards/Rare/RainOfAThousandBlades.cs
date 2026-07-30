@@ -26,8 +26,8 @@ public sealed class RainOfAThousandBlades() : GilgameshCard(0, CardType.Attack, 
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         if (!CritStars.CanPay(Owner.Creature, DynamicVars["StarCost"].IntValue)) return;
-        await CritStars.Gain(Owner.Creature, -DynamicVars["StarCost"].IntValue, this);
-        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
+        await CritStars.Gain(choiceContext, Owner.Creature, -DynamicVars["StarCost"].IntValue, this);
+        await AttackTarget(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(7m);

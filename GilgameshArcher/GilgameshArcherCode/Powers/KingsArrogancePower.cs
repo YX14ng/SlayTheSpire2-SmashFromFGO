@@ -33,22 +33,19 @@ public sealed class KingsArrogancePower : GilgameshPower
     public override bool ShouldScaleInMultiplayer => false;
 
     /// <summary>¿Sigue arrogante? (no defendió aún este combate). Se apaga para siempre al defender.</summary>
-    private bool _broken;
-
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
-        if (_broken || dealer != Owner || !props.IsPoweredAttack()) return 0m;
+        if (FgoCombatState.GetCombat(Owner, 0) != 0 || dealer != Owner || !props.IsPoweredAttack()) return 0m;
         return Bonus;
     }
 
     // Si terminás un turno con Bloqueo, te rebajaste a defender → la arrogancia se rompe para siempre.
-    public override Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == Owner.Side && !_broken && Owner.Block > 0)
+        if (participants.Contains(Owner) && FgoCombatState.GetCombat(Owner, 0) == 0 && Owner.Block > 0)
         {
-            _broken = true;
+            await FgoCombatState.SetCombat(choiceContext, Owner, 0, 1);
             Flash();
         }
-        return Task.CompletedTask;
     }
 }

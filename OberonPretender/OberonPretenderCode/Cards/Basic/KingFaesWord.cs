@@ -39,9 +39,9 @@ public sealed class KingFaesWord() : OberonCard(1, CardType.Skill, CardRarity.Ba
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
         await CardPileCmd.Draw(choiceContext, 1, Owner);
-        await DebtPower.Add(Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
+        await DebtPower.Add(choiceContext, Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
     }
 
     // Up: +10 NP (la dosis sube; la Deuda 1 se mantiene -- el endulzante del Rey ya la calibra).

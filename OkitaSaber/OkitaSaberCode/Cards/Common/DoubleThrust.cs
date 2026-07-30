@@ -32,7 +32,7 @@ public sealed class DoubleThrust() : OkitaCard(1, CardType.Attack, CardRarity.Co
         await Rafaga.Pay(choiceContext, Owner.Creature, RafagaCost, this);
         for (var i = 0; i < Hits; i++)
         {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
         }

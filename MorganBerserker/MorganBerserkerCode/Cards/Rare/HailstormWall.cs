@@ -21,11 +21,11 @@ public sealed class HailstormWall() : MorganCard(2, CardType.Skill, CardRarity.R
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead)
             {
-                await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+                await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
             }
         }
     }

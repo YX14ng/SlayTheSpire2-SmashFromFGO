@@ -1,0 +1,16 @@
+{
+  "SHUTENDOUJI-SHUTEN.title": "슈텐도지",
+  "SHUTENDOUJI-SHUTEN.titleObject": "연회의 오니",
+  "SHUTENDOUJI-SHUTEN.description": "독을 술기운으로 빚고 Assassin과 Caster 스타일을 교차하며 두 보구 중 하나를 선택합니다.",
+  "SHUTENDOUJI-SHUTEN.pronounObject": "그녀",
+  "SHUTENDOUJI-SHUTEN.possessiveAdjective": "그녀의",
+  "SHUTENDOUJI-SHUTEN.pronounPossessive": "그녀의 것",
+  "SHUTENDOUJI-SHUTEN.pronounSubject": "그녀",
+  "SHUTENDOUJI-SHUTEN.goldMonologue": "골동품, 독주, 아름다운 잔. 황금이면 셋 다 준비할 수 있지.",
+  "SHUTENDOUJI-SHUTEN.eventDeathPrevention": "오니가 웃는 동안 연회는 끝나지 않아.",
+  "SHUTENDOUJI-SHUTEN.aromaPrinciple": "달콤한 향마다 더 날카로운 끝맛이 숨어 있지.",
+  "SHUTENDOUJI-SHUTEN.cardsModifierTitle": "오에산의 연회",
+  "SHUTENDOUJI-SHUTEN.cardsModifierDescription": "슈텐도지의 카드 풀로 플레이합니다.",
+  "SHUTENDOUJI-SHUTEN.banter.alive.endTurnPing": "천천히 마셔. 마지막 잔이 가장 위험하니까.",
+  "SHUTENDOUJI-SHUTEN.banter.dead.endTurnPing": "연회를 끝내지 않은 채 두지 마."
+}

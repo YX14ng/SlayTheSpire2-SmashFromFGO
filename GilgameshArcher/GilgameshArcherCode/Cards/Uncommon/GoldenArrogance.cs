@@ -22,7 +22,7 @@ public sealed class GoldenArrogance() : GilgameshCard(1, CardType.Power, CardRar
         var power = await PowerCmd.Apply<GoldenArrogancePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
-            power.Stars = DynamicVars["Stars"].IntValue;
+            await power.Configure(choiceContext, DynamicVars["Stars"].IntValue, this);
         }
     }
 

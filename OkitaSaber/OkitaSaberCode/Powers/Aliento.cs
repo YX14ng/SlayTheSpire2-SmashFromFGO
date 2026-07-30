@@ -31,18 +31,22 @@ public static class Aliento
     public static bool CanPay(Creature creature, int cost) => Of(creature) >= cost;
 
     /// <summary>Gana Aliento, capeado al tope actual del power (Cap).</summary>
-    public static async Task Gain(Creature creature, int amount, CardModel? source)
+    public static Task Gain(Creature creature, int amount, CardModel? source) =>
+        Gain(new BlockingPlayerChoiceContext(), creature, amount, source);
+
+    public static async Task Gain(
+        PlayerChoiceContext choiceContext, Creature creature, int amount, CardModel? source)
     {
         if (amount <= 0) return;
         var power = Power(creature);
         if (power == null)
         {
-            await PowerCmd.Apply<AlientoPower>(new BlockingPlayerChoiceContext(), creature, Math.Min(amount, AlientoPower.Max), creature, source);
+            await PowerCmd.Apply<AlientoPower>(choiceContext, creature, Math.Min(amount, AlientoPower.Max), creature, source);
             return;
         }
         var room = Math.Max(0, power.Cap - power.Amount);
         var toAdd = Math.Min(amount, room);
-        if (toAdd > 0) await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, toAdd, creature, source);
+        if (toAdd > 0) await PowerCmd.ModifyAmount(choiceContext, power, toAdd, creature, source);
     }
 
     /// <summary>
@@ -51,7 +55,11 @@ public static class Aliento
     /// </summary>
     /// <param name="grantTosOnEmpty">false para gastos que YA pagan su propio costo (p.ej. el boost
     /// del NP, que en la rama sin aire da su propia Tos — evita el doble castigo either/or).</param>
-    public static async Task Spend(Creature creature, int amount, CardModel? source, bool grantTosOnEmpty = true)
+    public static Task Spend(Creature creature, int amount, CardModel? source, bool grantTosOnEmpty = true) =>
+        Spend(new BlockingPlayerChoiceContext(), creature, amount, source, grantTosOnEmpty);
+
+    public static async Task Spend(PlayerChoiceContext choiceContext, Creature creature, int amount,
+        CardModel? source, bool grantTosOnEmpty = true)
     {
         if (amount <= 0) return;
         var power = Power(creature);
@@ -65,15 +73,19 @@ public static class Aliento
         if (emptied) HitZero.AddOrUpdate(creature, new object());
 
         if (emptied) await PowerCmd.Remove(power);
-        else await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -spent, creature, source);
+        else await PowerCmd.ModifyAmount(choiceContext, power, -spent, creature, source);
 
         // Llegar a 0 cuesta una Tos (cap 1/turno por agotamiento).
         if (grantTosOnEmpty && emptied && !alreadyHitZero)
-            await Tos.ShuffleIntoDraw(creature, source);
+            await Tos.ShuffleIntoDraw(choiceContext, creature, source);
     }
 
     /// <summary>Llena el Aliento al tope actual (Cerezo en Plena Floración).</summary>
-    public static async Task FillToCap(Creature creature, CardModel? source)
+    public static Task FillToCap(Creature creature, CardModel? source) =>
+        FillToCap(new BlockingPlayerChoiceContext(), creature, source);
+
+    public static async Task FillToCap(
+        PlayerChoiceContext choiceContext, Creature creature, CardModel? source)
     {
         var power = Power(creature);
         if (power == null)
@@ -81,11 +93,11 @@ public static class Aliento
             // Con Aliento en 0 el power NO existe: aplicarlo y SEGUIR llenando hasta el Cap real
             // (audit 2026-07-04: antes se quedaba en 6 justo en el caso de uso principal de
             // Cerezo en Plena Floracion — recuperarse del agotamiento).
-            await PowerCmd.Apply<AlientoPower>(new BlockingPlayerChoiceContext(), creature, AlientoPower.StartingBreath, creature, source);
+            await PowerCmd.Apply<AlientoPower>(choiceContext, creature, AlientoPower.StartingBreath, creature, source);
             power = Power(creature);
             if (power == null) return;
         }
         var room = Math.Max(0, power.Cap - power.Amount);
-        if (room > 0) await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, room, creature, source);
+        if (room > 0) await PowerCmd.ModifyAmount(choiceContext, power, room, creature, source);
     }
 }

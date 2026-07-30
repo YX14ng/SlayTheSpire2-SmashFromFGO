@@ -40,13 +40,13 @@ public sealed class TricolorDew() : OberonCard(1, CardType.Skill, CardRarity.Unc
         await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue + extra, Owner.Creature, this);
         await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue + extra, Owner.Creature, this);
 
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
 
         // Construcción de Ítems A+ mejorado: +5 NP por cada uno de los dos debuffs aplicados.
         var construction = Owner.Creature.GetPower<ItemConstructionPower>();
         if (construction is { RefundsCharge: true })
         {
-            await NpCharge.Gain(Owner.Creature, 2 * ItemConstructionPower.ChargePerApply, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, 2 * ItemConstructionPower.ChargePerApply, this);
         }
     }
 

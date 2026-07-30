@@ -25,29 +25,31 @@ public sealed class AbsoluteWallPower : MashShielderPower
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    /// <summary>HP loss from an enemy attack hit prevented by the wall (per-hit flag).</summary>
-    private decimal _preventedHit;
+    /// <summary>Committed HP loss prevented by the wall in the current damage event.</summary>
+    private bool _preventedHit;
 
     // OJO: los hooks ModifyHpLost* devuelven el monto ABSOLUTO resultante (no un delta).
     public override decimal ModifyHpLostAfterOstyLate(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (target != Owner) return amount;
-        if (amount > 0 && dealer != null && dealer != Owner && props.IsPoweredAttack())
-        {
-            _preventedHit = amount;
-        }
         return 0m;
+    }
+
+    public override Task AfterModifyingHpLostAfterOsty()
+    {
+        _preventedHit = true;
+        return Task.CompletedTask;
     }
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (target != Owner || _preventedHit <= 0) return;
-        _preventedHit = 0;
+        if (target != Owner || !_preventedHit) return;
+        _preventedHit = false;
 
         // Guard P8b: con Bloqueo parcial de por medio el motor ya computa
         // WasFullyBlocked=true (el resto lo anulamos en el hook de HP) y los listeners
         // normales (InterceptPower, SenpaiPromisePower, reliquia) disparan solos.
-        if (result.WasFullyBlocked || dealer == null || !props.IsPoweredAttack()) return;
+        if (result.WasFullyBlocked || dealer == null || dealer == Owner || !props.IsPoweredAttack()) return;
 
         Flash();
 
@@ -57,7 +59,7 @@ public sealed class AbsoluteWallPower : MashShielderPower
         var intercept = Owner.GetPowerInstances<InterceptPower>().Sum(p => p.Amount);
         if (intercept > 0 && !dealer.IsDead)
         {
-            await CreatureCmd.Damage(choiceContext, dealer, intercept, ValueProp.Unpowered | ValueProp.SkipHurtAnim, Owner, null);
+            await CreatureCmd.Damage(choiceContext, dealer, intercept, ValueProp.Unpowered | ValueProp.SkipHurtAnim, Owner);
         }
 
         // 2) Estrellas de la reliquia inicial — por el MISMO camino y candado (3 procs/turno, P1)
@@ -66,20 +68,20 @@ public sealed class AbsoluteWallPower : MashShielderPower
         var engine = Owner.Player?.Relics.OfType<BulwarkEngineRelic>().FirstOrDefault();
         if (engine != null)
         {
-            await engine.TryProcFullBlockStars();
+            await engine.TryProcFullBlockStars(choiceContext);
         }
 
         // 3) Promesa a Senpai: +NP por golpe detenido.
         var promise = Owner.GetPowerAmount<SenpaiPromisePower>();
         if (promise > 0)
         {
-            await NpCharge.Gain(Owner, promise, null);
+            await NpCharge.Gain(choiceContext, Owner, promise, null);
         }
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (Owner.Side != side)
+        if (!participants.Contains(Owner))
         {
             await PowerCmd.Remove(this);
         }

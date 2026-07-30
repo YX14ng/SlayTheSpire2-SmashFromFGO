@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://TiamatBeast/character/tiamat_frames_human.tres" id="frames"]
+
+[node name="TiamatMerchant" type="Node2D"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(3.1, -176.6)
+scale = Vector2(0.758667, 0.758667)
+flip_h = true
+sprite_frames = ExtResource("frames")
+animation = &"idle"
+autoplay = "idle"

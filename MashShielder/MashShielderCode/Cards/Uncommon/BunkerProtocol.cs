@@ -32,7 +32,7 @@ public sealed class BunkerProtocol() : MashShielderCard(1, CardType.Skill, CardR
         }
         else
         {
-            await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         }
     }
 

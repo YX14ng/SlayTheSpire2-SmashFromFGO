@@ -1,8 +1,8 @@
 file,assetId
-strike_artoria,CHARA:504500a@2
+strike_artoria,9307040
 defend_artoria,9402840
-summer_outburst,CHARA:704700a@1
-song_of_prophecy,CHARA:504500a@1
+summer_outburst,9408750
+song_of_prophecy,9300450
 caliburn_projection,9401620
 sacred_sword_slash,9300940
 staff_strike,9307040
@@ -24,8 +24,8 @@ travelers_cloak,9310590
 summer_hydromancy,9405820
 festival_rehearsal,9303950
 lets_try_it,9808770
-around_caliburn_unleashed,CHARA:504500b@2
-hope_will_camelot_unleashed,CHARA:704700b@1
+around_caliburn_unleashed,9403270
+hope_will_camelot_unleashed,9301550
 selection_sword_cut,9304570
 summoned_swords,9806000
 owls_fang,9405300
@@ -39,7 +39,7 @@ summer_double_slash,9408880
 charisma_of_hope,9300450
 lakes_protection,9406540
 sword_of_selection,9408540
-springs_pulse,CHARA:704700a@2
+springs_pulse,9300930
 summer_faerie,9808870
 faerie_aegis,9305580
 white_hare_trick,9300530
@@ -47,7 +47,7 @@ summer_escapade,9305700
 star_tide,9306240
 staffs_voice,9300150
 forced_vacation,9407260
-detective_pose,CHARA:704700a@1
+detective_pose,9402950
 clear_the_storm,9408720
 sacred_sword_control,9302530
 territory_creation,9307920
@@ -56,9 +56,9 @@ midsummer_madness,9401550
 faerie_eyes,9308490
 festival_spirit,9402530
 summer_rivalry,9402600
-hope_will_camelot,CHARA:704700b@1
+hope_will_camelot,9300450
 around_caliburn,9403270
-caliburn_star,CHARA:504500a@1
+caliburn_star,9404830
 summer_comet,9407410
 inherited_longing_strike,9401600
 guardians_execution,9309010
@@ -71,9 +71,9 @@ tears_behind_the_smile,9306510
 faerie_chorus,9401180
 festival_secret_plan,9408220
 promise_under_the_storm,9405120
-avalon_consecration,CHARA:704700b@2
+avalon_consecration,9808560
 avalon_benediction,9808560
-two_faces_of_summer,CHARA:704700a@1
+two_faces_of_summer,9808870
 sword_instinct,9308780
 guardians_counter,9402110
 spell_reloading,9401200

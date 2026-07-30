@@ -22,13 +22,13 @@ public sealed class StaffStrike() : ArtoriaCard(0, CardType.Attack, CardRarity.C
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
         // Avalon tiene ambas pasivas: cuenta como Caster (precedente RainChant/WinterQueen).
         if (Owner.Creature.HasPower<ProphecyCasterFormPower>() || Owner.Creature.HasPower<AvalonFormPower>())
         {
-            await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         }
     }
 

@@ -17,7 +17,7 @@ public sealed class FairyQueenForm() : MorganCard(1, CardType.Skill, CardRarity.
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await FormSwitch.Enter<FairyQueenFormPower>(choiceContext, Owner.Creature, this);
-        await Curses.Apply(cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+        await Curses.Apply(choiceContext, cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

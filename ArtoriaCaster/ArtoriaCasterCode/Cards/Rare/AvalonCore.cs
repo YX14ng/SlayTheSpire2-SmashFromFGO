@@ -23,11 +23,11 @@ public sealed class AvalonCore() : ArtoriaCard(1, CardType.Skill, CardRarity.Rar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
 
         // Co-op: el núcleo de Avalon carga a todo el party.
         await ForEachAlly(async ally =>
-            await NpCharge.Gain(ally, DynamicVars["AllyNpCharge"].IntValue, this));
+            await NpCharge.Gain(choiceContext, ally, DynamicVars["AllyNpCharge"].IntValue, this));
     }
 
     protected override void OnUpgrade()

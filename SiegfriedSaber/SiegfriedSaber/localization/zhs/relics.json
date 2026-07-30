@@ -1,12 +1,12 @@
 {
   "SIEGFRIEDSABER-LINDEN_LEAF.title": "菩提叶",
-  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#每场战斗开始时，获得2点龙血护甲。每回合第一次击中你的攻击无视龙血护甲。当被削减的攻击仍造成至少1点伤害时，获得5点NP值（每回合至多3次）。",
+  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#每场战斗开始时，获得2点龙血护甲。每回合第一次击中你的攻击仅无视1点龙血护甲，之后的攻击享受完整减伤。之后的攻击被减伤后仍造成伤害时，获得5点宝具值（每回合至多3次）。计数器显示宝具等级：每级使宝具值上限提高100、宝具伤害提高15%。",
   "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "他浴于龙血之时，一片菩提叶贴在了背上。一掌之地的皮肤未被龙血浸染——也是英雄唯一的死穴。",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.title": "莱茵的黄金",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.description": "#每回合你打出的第一张宝具牌：获得20颗暴击星，并抽1张牌。",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.flavor": "巨龙盘踞守护的宝藏。他取走黄金的方式与取走其他一切并无二致——径直走入烈焰之中。",
   "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.title": "法夫纳的心头血",
-  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.description": "#每回合当一次攻击穿透你的龙血护甲（暴露的后背使你失去生命）时，伤口受洗：获得20点NP值。",
+  "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.description": "#每回合当一次攻击穿透你的龙血护甲（暴露的后背使你失去生命）时，伤口受洗：获得20点宝具值。",
   "SIEGFRIEDSABER-FAFNIR_HEARTBLOOD.flavor": "他浴于所斩巨龙的心头血中，直至皮肤化为鳞甲。血所及处，龙便回应——连他自身的创伤也磨砺着剑锋。",
   "SIEGFRIEDSABER-DRAGON_HEART_SCALE.title": "龙心之鳞",
   "SIEGFRIEDSABER-DRAGON_HEART_SCALE.description": "#每场战斗开始时，获得1点*龙血护甲。",
@@ -19,5 +19,8 @@
   "SIEGFRIEDSABER-RHINEGOLD_SHARD.flavor": "从恶龙巢穴中夺来的尼伯龙根宝藏的一片。",
   "SIEGFRIEDSABER-FAFNIRS_BANE.title": "法夫纳之灾",
   "SIEGFRIEDSABER-FAFNIRS_BANE.description": "#当你的*龙血护甲不低于3时，你的屠龙牌额外造成5点伤害。",
-  "SIEGFRIEDSABER-FAFNIRS_BANE.flavor": "屠龙者亦身流龙血——其锋刃噬同类最深。"
+  "SIEGFRIEDSABER-FAFNIRS_BANE.flavor": "屠龙者亦身流龙血——其锋刃噬同类最深。",
+  "SIEGFRIEDSABER-HOLY_GRAIL_OF_THE_DRAGON_SLAYER.title": "屠龙者的圣杯",
+  "SIEGFRIEDSABER-HOLY_GRAIL_OF_THE_DRAGON_SLAYER.description": "#圣杯转临：获得!MaxHp!点最大生命。持有期间突破界限：羁绊最高可达12级，宝具等级最高可达6级。",
+  "SIEGFRIEDSABER-HOLY_GRAIL_OF_THE_DRAGON_SLAYER.flavor": "一只由英雄之愿淬炼而成的金色容器——而他从未为自己许下愿望。"
 }

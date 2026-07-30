@@ -1,3 +1,4 @@
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using SiegfriedSaber.SiegfriedSaberCode.Cards.Uncommon;
@@ -11,7 +12,7 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Powers;
 /// OriginModel = la carta (patrón vanilla AnticipatePower/CoordinatePower: la base usa OriginModel sólo
 /// para el Título/HoverTip, que toma del CardModel — devolver el power tiraría InvalidOperationException).
 /// </summary>
-public sealed class SiegfriedTemporaryStrengthPower : TemporaryStrengthPower
+public sealed class SiegfriedTemporaryStrengthPower : TemporaryStrengthPower, ICustomModel
 {
     public override AbstractModel OriginModel => ModelDb.Card<DragonHunterStrike>();
 }

@@ -23,7 +23,7 @@ public sealed class NextAttackBoostPower : ArtoriaPower
     public override PowerStackType StackType => PowerStackType.Counter;
 
     // ModifyDamageAdditive es DELTA (default 0).
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (Owner != dealer || !props.IsPoweredAttack()) return 0m;
         return Amount;
@@ -39,7 +39,7 @@ public sealed class NextAttackBoostPower : ArtoriaPower
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == Owner.Side)
+        if (participants.Contains(Owner))
         {
             await PowerCmd.Remove(this);
         }

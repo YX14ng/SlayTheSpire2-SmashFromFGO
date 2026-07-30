@@ -28,11 +28,11 @@ public sealed class SeaOfTheAzureStar() : TiamatCard(2, CardType.Skill, CardRari
         var heal = DynamicVars.Heal.BaseValue;
         var np = DynamicVars["NpCharge"].IntValue;
         // El mar baña a toda la party: en 1 jugador es solo Tiamat; en co-op incluye a los aliados.
-        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.ToList())
+        foreach (var ally in Owner.Creature.CombatState!.PlayerCreatures.ToList())
         {
             if (ally.IsDead) continue;
             await CreatureCmd.Heal(ally, heal);
-            await NpCharge.Gain(ally, np, this);
+            await NpCharge.Gain(choiceContext, ally, np, this);
         }
     }
 

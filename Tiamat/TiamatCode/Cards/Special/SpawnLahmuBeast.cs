@@ -26,10 +26,10 @@ public sealed class SpawnLahmuBeast() : TiamatCard(0, CardType.Skill, CardRarity
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var spawned = await Lahmu.Spawn(Owner.Creature, DynamicVars["Lahmu"].IntValue, this);
+        var spawned = await Lahmu.Spawn(choiceContext, Owner.Creature, DynamicVars["Lahmu"].IntValue, this);
         if (spawned < DynamicVars["Lahmu"].IntValue)
         {
-            await Lahmu.Feed(Owner.Creature, DynamicVars["Nurture"].IntValue, this);
+            await Lahmu.Feed(choiceContext, Owner.Creature, DynamicVars["Nurture"].IntValue, this);
         }
     }
 

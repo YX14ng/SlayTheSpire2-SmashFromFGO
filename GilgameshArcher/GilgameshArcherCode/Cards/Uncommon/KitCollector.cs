@@ -20,7 +20,7 @@ public sealed class KitCollector() : GilgameshCard(1, CardType.Skill, CardRarity
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         if (IsUpgraded)
         {
             await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);

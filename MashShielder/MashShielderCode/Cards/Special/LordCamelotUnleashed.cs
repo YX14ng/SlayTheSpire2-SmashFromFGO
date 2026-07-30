@@ -48,7 +48,7 @@ public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
         // NP level (dupes): +15% per level over the full amount, added as flat extra.
         var total = DynamicVars.Block.BaseValue + bonus;
@@ -65,7 +65,7 @@ public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill,
         // Co-op: misma fantasía/NP que LORD CAMELOT -> espejo exacto de su reparto a aliados.
         // Cada aliado vivo recibe Baluarte e Intercepción-por-provocación. En 1 jugador el foreach
         // queda vacío (fiel a 1 jugador).
-        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
+        foreach (var ally in Owner.Creature.CombatState!.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
         {
             await BlockRetention.GainBulwarkBlock(this, ally, DynamicVars["AllyBlock"].BaseValue);
             await PowerCmd.Apply<ProvokePower>(choiceContext, ally, DynamicVars["AllyProvoke"].BaseValue, Owner.Creature, this);

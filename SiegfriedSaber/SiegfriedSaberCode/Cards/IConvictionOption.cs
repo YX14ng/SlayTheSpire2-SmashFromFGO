@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+
 namespace SiegfriedSaber.SiegfriedSaberCode.Cards;
 
 /// <summary>
@@ -6,5 +8,5 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Cards;
 /// </summary>
 public interface IConvictionOption
 {
-    Task ApplyConviction();
+    Task ApplyConviction(PlayerChoiceContext choiceContext);
 }

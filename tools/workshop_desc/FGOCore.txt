@@ -1,43 +1,117 @@
-The shared mechanics library that powers the Fate/Grand Order Servant character mods. Built on the BaseLib framework, it gives every FGO Servant a common foundation so they feel like they belong to the same roster.
+[h1]FGO Core — Shared Servant Systems[/h1]
+The common foundation behind all 12 Fate/Grand Order character mods in this collection: one consistent system for Noble Phantasms, Command Cards, Critical Stars, forms and persistent progression.
 
-What it provides:
-- NP / Overcharge gauge: a charge meter (0-300) that builds as you fight and unleashes each Servant's Noble Phantasm and overcharge effects.
-- Form switching: stance/aspect changes mid-combat (e.g. Berserker to Caster), each form rewriting how the Servant plays.
-- Bulwark: block that is retained between turns instead of vanishing.
-- Bond (affinity): relics that lift a Servant's damage, block and regen the more you play them.
-- Critical Stars and Curses: shared FGO resources used across the cast.
-- A handful of colorless "FGO meme" cards.
+[b]LIBRARY MOD — v0.1.12[/b]
+FGO Core does not add a playable character by itself. Install it together with any supported FGO character.
 
-This is a LIBRARY - it adds no playable character on its own, and is REQUIRED by every FGO Servant mod (Mash Kyrielight, Morgan, Artoria Caster, and more). Also requires BaseLib.
+[h2]Shared systems[/h2]
+[list]
+[*][b]NP and Overcharge:[/b] gain NP Charge, manifest Noble Phantasm cards and carry excess charge into effects designed for Overcharge.
+[*][b]Command Cards and Criticals v2:[/b] Buster, Arts and Quick keep a common identity across the roster. Quick attacks generate Stars; 50 Stars prepare an eligible Attack for ×1.5 damage across all of its hits.
+[*][b]FGO attributes:[/b] Man, Earth, Sky, Star and Beast affinities provide a shared matchup layer with encounter defaults and character-specific overrides.
+[*][b]Forms and combat state:[/b] asynchronous form changes, animation groups and synchronized saved counters support transformations without reactivating once-per-turn or once-per-combat effects after loading.
+[*][b]Reusable mechanics:[/b] Bond, Holy Grail limit breaks, Evasion, Skill Seal, Sure Hit, Bulwark, Curse, Lahmu and other shared helpers behave consistently between characters.
+[*][b]Repeated upgrades:[/b] optional infinite-upgrade mods can keep improving FGO Skills and Powers while resource costs, self-damage and divisors remain within safe limits.
+[/list]
 
-Localization: English, Spanish, Simplified Chinese.
+[h2]Coverage[/h2]
+[list]
+[*]Required by 12 playable FGO characters
+[*]Spanish, English, Simplified Chinese, Korean and Russian localization
+[*]Designed for solo play and multiplayer synchronization
+[*]One artifact set for MAIN 0.107.1 and public BETA 0.109.0
+[*]Shared safeguards for card rewards, events, custom scenes, save/load and mixed-mod environments
+[/list]
 
-Found a bug or have feedback? Report it in the discussion thread:
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-To help us fix it fast, please include: which Servant you played and what you did (a screenshot helps); your game log — Steam comments can't attach files, so upload %APPDATA%\SlayTheSpire2\logs\godot.log to a paste site (e.g. pastebin.com) or a file host and paste the LINK, or paste the last ~50 lines; and your full mod list (many bugs are conflicts with other mods).
+[h2]Requirement[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[/list]
 
-Made with the help of Claude Code.
+[h2]Validation status[/h2]
+All 12 character projects and FGO Core build cleanly against both supported game branches. Localization parity, assets, animation references and runtime compatibility probes pass automated validation. In-game save/load and co-op playtesting remains ongoing.
 
-————————————————————
+[h2]Source and feedback[/h2]
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Source code and issue tracker[/url]
+[url=https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/]Steam bug-report thread[/url]
 
-这是一个为「Fate/Grand Order」从者角色 Mod 提供底层机制的共享模组库，基于 BaseLib 框架打造。它给每位 FGO 从者打下统一的机制地基，让大家用起来像出自同一套班底。
+Unofficial fan-made library. Fate/Grand Order characters and official visual assets belong to their respective rights holders. This project is not affiliated with TYPE-MOON, Lasengle or Mega Crit.
 
-本库提供的核心机制：
-- 宝具 / 充能槽（Overcharge）：战斗中不断累积的能量槽（0-300），用来释放各从者的宝具与超充能效果。
-- 形态切换：战斗中切换姿态/阵位（例如狂战士切换到术士），每个形态都会改写从者的打法。
-- 壁垒（Bulwark）：跨回合保留、不会回合结束清零的格挡。
-- 羁绊（好感度）：随着你不断游玩同一从者，逐步提升其伤害、格挡与每回合回血的圣遗物。
-- 暴击星与诅咒：全体从者通用的 FGO 资源。
-- 一小批无色的「FGO 梗」卡牌。
+[hr][/hr]
+[h1]ESPAÑOL[/h1]
+La base común de los 12 personajes de Fate/Grand Order de esta colección: un único sistema coherente para Noble Phantasms, Command Cards, Estrellas de Crítico, formas y progresión persistente.
 
-注意：这是一个「机制库」，本身不含任何可操作角色，是所有 FGO 从者 Mod（玛修·基列莱特、摩根、阿尔托莉雅·卡斯特等）的必装前置。另需 BaseLib。
+[b]MOD BIBLIOTECA — v0.1.12[/b]
+FGO Core no añade un personaje jugable por sí solo. Instalalo junto con cualquier personaje FGO compatible.
 
-依赖：仅需 BaseLib。
+[h2]Sistemas compartidos[/h2]
+[list]
+[*][b]NP y Sobrecarga:[/b] obtené Carga NP, manifestá cartas de Noble Phantasm y convertí la carga sobrante en efectos de Sobrecarga.
+[*][b]Command Cards y Críticos v2:[/b] Buster, Arts y Quick conservan una identidad común. Los Ataques Quick generan Estrellas; 50 Estrellas preparan un Ataque elegible para causar ×1,5 en todos sus impactos.
+[*][b]Atributos FGO:[/b] Hombre, Tierra, Cielo, Estrella y Bestia forman una capa compartida de afinidades, con valores predeterminados por encuentro y ajustes propios de cada personaje.
+[*][b]Formas y estado de combate:[/b] cambios asíncronos, grupos de animación y contadores guardables sincronizados permiten transformarse sin reactivar beneficios al cargar la partida.
+[*][b]Mecánicas reutilizables:[/b] Vínculo, ruptura de límite con Santo Grial, Evasión, Sello de Habilidad, Certero, Baluarte, Maldición, Laḫmu y otros ayudantes se comportan igual entre personajes.
+[*][b]Mejoras repetidas:[/b] los mods opcionales de mejoras infinitas pueden seguir mejorando Habilidades y Poderes FGO sin que los costes de recursos, el autodaño o los divisores atraviesen límites seguros.
+[/list]
 
-支持语言：英文、西班牙文、简体中文。
+[h2]Cobertura[/h2]
+[list]
+[*]Obligatorio para 12 personajes FGO jugables
+[*]Localización en español, inglés, chino simplificado, coreano y ruso
+[*]Diseñado para juego individual y sincronización multijugador
+[*]Un solo conjunto de archivos para MAIN 0.107.1 y BETA pública 0.109.0
+[*]Protecciones compartidas para recompensas, eventos, escenas, guardado/carga y entornos con muchos mods
+[/list]
 
-发现 Bug 或有建议？请在讨论区反馈：
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-为方便我们尽快修复，请附上：你使用的从者 + 具体操作（截图更佳）；游戏日志——Steam 评论无法上传文件，请把 %APPDATA%\SlayTheSpire2\logs\godot.log 传到网盘或贴站（如 pastebin.com）再贴出链接，或直接粘贴最后约 50 行；以及完整的 Mod 列表（很多 Bug 是与其他 Mod 的冲突）。
+[h2]Requisito[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[/list]
 
-在 Claude Code 的协助下制作。
+[h2]Estado de validación[/h2]
+Los 12 personajes y FGO Core compilan correctamente contra las dos ramas compatibles. La paridad de idiomas, los recursos, las referencias de animación y las sondas de compatibilidad pasan las auditorías automáticas. Las pruebas dentro del juego de guardado/carga y cooperativo siguen en curso.
+
+[h2]Código y reportes[/h2]
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Código fuente y seguimiento de problemas[/url]
+[url=https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/]Hilo de errores en Steam[/url]
+
+Biblioteca fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
+
+[hr][/hr]
+[h1]简体中文[/h1]
+本合集 12 名《Fate/Grand Order》角色共用的基础机制库：统一处理宝具、指令卡、暴击星、形态切换与跨局成长。
+
+[b]机制库 MOD — v0.1.12[/b]
+FGO Core 本身不提供可玩角色，请与任一受支持的 FGO 角色一同安装。
+
+[h2]共用系统[/h2]
+[list]
+[*][b]宝具与过充能：[/b]积累 NP、显现宝具牌，并让多余充能转化为过充能效果。
+[*][b]指令卡与暴击 v2：[/b]Buster、Arts、Quick 在所有角色间保持统一定位。Quick 攻击生成暴击星；消耗 50 星可使符合条件的攻击全部段数获得 ×1.5 伤害。
+[*][b]FGO 属性：[/b]人、地、天、星、兽组成共用的相性系统，并支持敌方默认值与角色专属调整。
+[*][b]形态与战斗状态：[/b]异步形态切换、动画组及可同步保存的计数器，避免读档后重复触发每回合或每场战斗一次的效果。
+[*][b]复用机制：[/b]羁绊、圣杯突破、闪避、技能封印、必中、壁垒、诅咒、拉赫穆等系统在不同角色间保持一致。
+[*][b]重复升级：[/b]可选的无限升级 Mod 可继续强化 FGO 技能牌与能力牌，同时确保资源消耗、自损与除数不会越过安全下限。
+[/list]
+
+[h2]覆盖范围[/h2]
+[list]
+[*]12 名 FGO 可玩角色的必需依赖
+[*]支持西班牙语、英语、简体中文、韩语与俄语
+[*]兼顾单人游戏与多人同步
+[*]同一套文件兼容正式版 0.107.1 与公开测试版 0.109.0
+[*]为卡牌奖励、事件、自定义场景、存档及多 Mod 环境提供共用防护
+[/list]
+
+[h2]依赖[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[/list]
+
+[h2]验证状态[/h2]
+FGO Core 与全部 12 个角色项目均可在两个受支持版本中无警告构建。本地化一致性、资源、动画引用及运行时兼容探针已通过自动检查；游戏内存档与联机测试仍在继续。
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]源代码与问题反馈[/url]
+[url=https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/]Steam 错误反馈帖[/url]
+
+本项目为非官方同人机制库，与 TYPE-MOON、Lasengle 及 Mega Crit 无隶属关系。

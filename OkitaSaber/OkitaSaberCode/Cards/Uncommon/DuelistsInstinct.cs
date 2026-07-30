@@ -26,7 +26,7 @@ public sealed class DuelistsInstinct() : OkitaCard(1, CardType.Skill, CardRarity
     {
         var hadStars = CritStars.Of(Owner.Creature) >= StarThreshold;
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
-        if (hadStars) await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        if (hadStars) await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m); // robá 2 -> 3

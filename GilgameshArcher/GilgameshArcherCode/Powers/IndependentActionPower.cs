@@ -25,10 +25,10 @@ public sealed class IndependentActionPower : GilgameshPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || !props.IsPoweredAttack()) return 0m;
-        if (!Owner.HasPower<CritReadyPower>()) return 0m;
+        if (cardSource == null || !Criticals.WillCrit(Owner, cardSource)) return 0m;
         return base.Amount;
     }
 }

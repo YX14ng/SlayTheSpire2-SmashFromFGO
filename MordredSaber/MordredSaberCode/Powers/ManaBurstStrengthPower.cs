@@ -1,3 +1,4 @@
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MordredSaber.MordredSaberCode.Cards.Uncommon;
@@ -12,7 +13,7 @@ namespace MordredSaber.MordredSaberCode.Powers;
 /// SiegfriedTemporaryStrengthPower (DragonHunterStrike). OriginModel = la carta (la base usa
 /// OriginModel sólo para el Título/HoverTip que toma del CardModel; devolver el power tiraría).
 /// </summary>
-public sealed class ManaBurstStrengthPower : TemporaryStrengthPower
+public sealed class ManaBurstStrengthPower : TemporaryStrengthPower, ICustomModel
 {
     public override AbstractModel OriginModel => ModelDb.Card<ManaBurstA>();
 }

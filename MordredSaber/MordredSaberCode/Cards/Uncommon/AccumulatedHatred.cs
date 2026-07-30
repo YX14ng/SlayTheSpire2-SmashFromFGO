@@ -22,7 +22,7 @@ public sealed class AccumulatedHatred() : MordredCard(1, CardType.Power, CardRar
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<AccumulatedHatredPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        if (power != null) power.MaxProcsPerTurn = DynamicVars["MaxProcs"].IntValue;
+        if (power != null) power.MaxProcsPerTurn = Math.Max(power.MaxProcsPerTurn, DynamicVars["MaxProcs"].IntValue);
     }
 
     protected override void OnUpgrade() => DynamicVars["MaxProcs"].UpgradeValueBy(1m);

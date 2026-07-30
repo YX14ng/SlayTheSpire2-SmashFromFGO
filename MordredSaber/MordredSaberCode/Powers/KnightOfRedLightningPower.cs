@@ -29,11 +29,11 @@ public sealed class KnightOfRedLightningPower : MordredPower
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritReadyPower>()];
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || !props.IsPoweredAttack() || cardSource == null) return 0m;
         // +Ataque plano siempre; +Crítico extra solo cuando hay un Crítico Listo en cola.
-        var critExtra = Owner.GetPowerAmount<CritReadyPower>() > 0 ? CritBonus : 0;
+        var critExtra = Criticals.WillCrit(Owner, cardSource) ? CritBonus : 0;
         return Amount + critExtra;
     }
 }

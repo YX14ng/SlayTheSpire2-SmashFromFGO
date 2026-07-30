@@ -19,7 +19,7 @@ public sealed class CherryInFullBloom() : OkitaCard(1, CardType.Skill, CardRarit
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await Aliento.FillToCap(Owner.Creature, this);
-        if (!IsUpgraded) await Tos.ShuffleIntoDraw(Owner.Creature, this);
+        await Aliento.FillToCap(choiceContext, Owner.Creature, this);
+        if (!IsUpgraded) await Tos.ShuffleIntoDraw(choiceContext, Owner.Creature, this);
     }
 }

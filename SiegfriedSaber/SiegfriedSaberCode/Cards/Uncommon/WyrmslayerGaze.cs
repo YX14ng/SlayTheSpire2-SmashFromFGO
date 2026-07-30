@@ -37,10 +37,10 @@ public sealed class WyrmslayerGaze() : SiegfriedCard(1, CardType.Attack, CardRar
 
         // Consumí hasta Spend ★ (lo que haya); el daño extra escala con lo gastado, con tope MaxBonus.
         var spent = System.Math.Min(CritStars.Of(Owner.Creature), DynamicVars["Spend"].IntValue);
-        if (spent > 0) await CritStars.Gain(Owner.Creature, -spent, this);
+        if (spent > 0) await CritStars.Gain(choiceContext, Owner.Creature, -spent, this);
         var bonus = System.Math.Min(spent / StarsPerDamage, DynamicVars["MaxBonus"].IntValue);
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

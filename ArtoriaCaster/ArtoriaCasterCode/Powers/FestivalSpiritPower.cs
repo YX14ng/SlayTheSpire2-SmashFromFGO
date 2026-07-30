@@ -12,7 +12,7 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Powers;
 /// </summary>
 public sealed class FestivalSpiritPower : ArtoriaPower, IFormChangeListener
 {
-    public const int StarsPerSwitch = 1;
+    public const int StarsPerSwitch = 10;
 
     public override PowerType Type => PowerType.Buff;
 
@@ -24,7 +24,7 @@ public sealed class FestivalSpiritPower : ArtoriaPower, IFormChangeListener
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
         Flash();
-        await Stars.Gain(Owner, StarsPerSwitch, null);
+        await Stars.Gain(choiceContext ?? new BlockingPlayerChoiceContext(), Owner, StarsPerSwitch, null);
         await CreatureCmd.GainBlock(Owner, BlockPerSwitch, ValueProp.Unpowered, null);
     }
 }

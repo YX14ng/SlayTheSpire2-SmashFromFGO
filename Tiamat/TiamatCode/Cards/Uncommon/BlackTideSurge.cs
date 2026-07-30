@@ -22,15 +22,15 @@ public sealed class BlackTideSurge() : TiamatCard(2, CardType.Attack, CardRarity
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).ToList())
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).ToList())
         {
             if (enemy.IsDead) continue;
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(enemy)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
                 .WithHitFx("vfx/vfx_attack_blunt")
                 .Execute(choiceContext);
             if (enemy.IsAlive)
             {
-                await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+                await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
             }
         }
     }

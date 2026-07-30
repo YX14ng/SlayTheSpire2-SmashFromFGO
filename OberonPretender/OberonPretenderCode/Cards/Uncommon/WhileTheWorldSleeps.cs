@@ -20,13 +20,13 @@ public sealed class WhileTheWorldSleeps() : OberonCard(1, CardType.Skill, CardRa
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
     protected override bool ShouldGlowGoldInternal =>
-        Sleep.SleepingEnemies(Owner.Creature.CombatState, Owner.Creature) > 0;
+        Sleep.SleepingEnemies(Owner.Creature) > 0;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var asleep = Sleep.SleepingEnemies(Owner.Creature.CombatState, Owner.Creature);
+        var asleep = Sleep.SleepingEnemies(Owner.Creature);
         var charge = DynamicVars["Charge"].IntValue + asleep * DynamicVars["PerAsleep"].IntValue;
-        await NpCharge.Gain(Owner.Creature, charge, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, charge, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Charge"].UpgradeValueBy(10m);

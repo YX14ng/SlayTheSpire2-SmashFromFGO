@@ -22,10 +22,10 @@ public sealed class CollectorsAbsorption() : GilgameshCard(0, CardType.Skill, Ca
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         if (IsUpgraded)
         {
-            await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
         }
     }
 }

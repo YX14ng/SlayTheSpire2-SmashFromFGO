@@ -20,12 +20,13 @@ public abstract class StartOfTurnCurseAllPower : MorganPower
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Players.Player player)
     {
         if (player != Owner.Player || Owner.Player == null) return;
+        if (Owner.CombatState is not { } combatState) return;
         Flash();
-        foreach (var enemy in Owner.CombatState.GetOpponentsOf(Owner))
+        foreach (var enemy in combatState.GetOpponentsOf(Owner))
         {
             if (!enemy.IsDead)
             {
-                await Curses.Apply(enemy, Amount, Owner, null);
+                await Curses.Apply(choiceContext, enemy, Amount, Owner, null);
             }
         }
     }

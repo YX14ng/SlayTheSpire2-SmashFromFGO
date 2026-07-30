@@ -20,7 +20,7 @@ namespace MorganBerserker.MorganBerserkerCode.Powers.Forms;
 /// El bono se calcula y la Maldición se consume UNA sola vez por carta en BeforeCardPlayed (camino
 /// REAL de juego; las previews no lo invocan). _pendingSentence se devuelve en cada golpe del Ataque
 /// vía ModifyDamageAdditive (PURO, sin mutar — ese hook corre también en preview y NO recibe el
-/// previewMode) y se limpia en AfterDamageReceived tras la primera pegada REAL, así un multi-hit no
+/// previewMode) y se limpia en AfterDamageGiven tras la primera pegada REAL, así un multi-hit no
 /// lo repite (anti doble-dip) y ninguna preview se come el bono antes de la pegada.
 /// </summary>
 public sealed class FairyQueenFormPower : MorganFormPower
@@ -29,17 +29,7 @@ public sealed class FairyQueenFormPower : MorganFormPower
 
     public override string FramesPath => $"{MainFile.ResPath}/character/morgan_frames_queen.tres";
 
-    private bool _npThisTurn;
     private int _pendingSentence;
-
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        await base.AfterSideTurnStart(side, participants, combatState);
-        if (side == CombatSide.Player)
-        {
-            _npThisTurn = false;
-        }
-    }
 
     /// <summary>
     /// Sentencia: al jugar un Ataque dirigido, lee la Maldición del objetivo, la cachea como bono
@@ -67,8 +57,8 @@ public sealed class FairyQueenFormPower : MorganFormPower
     // también en PREVIEW y NO recibe el previewMode (Hook.ModifyDamage lo tiene pero no lo reenvía al
     // hook por-power), así que mutar acá hacía que una preview consumiera el bono antes de la pegada
     // REAL → la Maldición se consumía pero el daño extra no se aplicaba (bug reportado). El bono se
-    // limpia en AfterDamageReceived (que NO corre en preview) tras la primera pegada real.
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    // limpia en AfterDamageGiven (que NO corre en preview) tras la primera pegada real.
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (Owner != dealer || !props.IsPoweredAttack() || _pendingSentence <= 0) return 0m;
         return _pendingSentence;
@@ -84,23 +74,27 @@ public sealed class FairyQueenFormPower : MorganFormPower
         return Task.CompletedTask;
     }
 
-    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer,
+        DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
     {
-        await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
-
-        // La Sentencia ya se sumó a ESTA pegada (vía ModifyDamageAdditive): limpiala acá —en el camino
-        // real, nunca en preview— para que los golpes restantes de un multi-hit no la repitan. Se limpia
-        // aunque la pegada haya sido bloqueada (el bono igual se aplicó al cálculo de ese golpe).
+        // Este callback también corre para golpes letales, a diferencia de AfterDamageReceived.
         if (dealer == Owner && !target.IsPlayer && props.IsPoweredAttack() && _pendingSentence > 0)
         {
             _pendingSentence = 0;
         }
 
-        if (_npThisTurn || dealer != Owner || target.IsPlayer) return;
+        return Task.CompletedTask;
+    }
+
+    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
+
+        if (FgoCombatState.GetTurn(Owner, 3) != 0 || dealer != Owner || target.IsPlayer) return;
         if (!props.IsPoweredAttack() || result.UnblockedDamage <= 0) return;
 
-        _npThisTurn = true;
+        await FgoCombatState.SetTurn(choiceContext, Owner, 3, 1, cardSource);
         Flash();
-        await NpCharge.Gain(Owner, NpOnDamage, null);
+        await NpCharge.Gain(choiceContext, Owner, NpOnDamage, null);
     }
 }

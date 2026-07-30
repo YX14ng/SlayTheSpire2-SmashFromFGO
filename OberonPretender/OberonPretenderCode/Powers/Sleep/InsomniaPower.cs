@@ -25,7 +25,7 @@ public sealed class InsomniaPower : OberonPower
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side != Owner.Side || Owner.IsDead) return;
+        if (!participants.Contains(Owner) || Owner.IsDead) return;
         await PowerCmd.Decrement(this);
     }
 }

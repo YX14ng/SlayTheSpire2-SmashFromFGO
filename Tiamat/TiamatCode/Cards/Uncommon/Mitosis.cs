@@ -28,16 +28,16 @@ public sealed class Mitosis() : TiamatCard(1, CardType.Attack, CardRarity.Uncomm
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         // El dano EXIGE haber devorado (audit 2026-07-05): con 0 Lahmu pegaba el dano completo
         // igual y encima quedaba +1 Lahmu neto gratis. Sin cria: solo pare (sin dano).
-        var eaten = await Lahmu.Devour(Owner.Creature, 1);
+        var eaten = await Lahmu.Devour(choiceContext, Owner.Creature, 1);
         if (eaten > 0)
         {
             var dmg = DynamicVars.Damage.BaseValue + DynamicVars["PerNurture"].IntValue * Lahmu.NurtureOf(Owner.Creature);
             dmg = dmg * Lahmu.DevourBonusMultiplierPct(Owner.Creature) / 100m; // forma Bestia: Devorar +50%
-            await DamageCmd.Attack(dmg).FromCard(this).Targeting(cardPlay.Target)
+            await DamageCmd.Attack(dmg).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_bloody_impact")
                 .Execute(choiceContext);
         }
-        await Lahmu.Spawn(Owner.Creature, 1, this);
+        await Lahmu.Spawn(choiceContext, Owner.Creature, 1, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["PerNurture"].UpgradeValueBy(1m);

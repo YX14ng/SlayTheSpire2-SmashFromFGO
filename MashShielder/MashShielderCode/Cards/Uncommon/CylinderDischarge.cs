@@ -36,8 +36,8 @@ public sealed class CylinderDischarge() : MashShielderCard(0, CardType.Attack, C
         var hits = NpCharge.Current(Owner.Creature) / ChargePerHit;
         if (hits <= 0) return;
 
-        await NpCharge.Spend(Owner.Creature, hits * ChargePerHit, this);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(hits).FromCard(this)
+        await NpCharge.Spend(choiceContext, Owner.Creature, hits * ChargePerHit, this);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(hits).FromCardFgoCompatibility(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);

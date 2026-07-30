@@ -154,7 +154,7 @@
   "MORGANBERSERKER-ARTS_MORGAN.title": "Arts",
   "MORGANBERSERKER-ARTS_MORGAN.description": "#Командная карта: нанесите !D! урона. Получите !NpCharge! *заряда *NP.",
   "MORGANBERSERKER-QUICK_MORGAN.title": "Quick",
-  "MORGANBERSERKER-QUICK_MORGAN.description": "#Командная карта: нанесите !D! урона. Наложите !Curse! *Проклятия.",
+  "MORGANBERSERKER-QUICK_MORGAN.description": "#Командная карта: нанесите !D! урона. Наложите !Curse! *Проклятия. Получите !Stars! *Критических *звёзд.",
   "MORGANBERSERKER-QUEENS_SACRIFICE.title": "Жертва королевы",
   "MORGANBERSERKER-QUEENS_SACRIFICE.description": "#Нанесите !D! урона и ещё /+!Bonus!, если у вас есть *Стойкость. Потеряйте !HpLoss! ОЗ.",
   "MORGANBERSERKER-FAE_RESPITE.title": "Передышка фей",

@@ -23,7 +23,8 @@ namespace FGOCore.FGOCoreCode;
 /// Fix general: finalizer que, ante esa excepción, reintenta el MISMO método con blacklist vacía — la
 /// recompensa puede ofrecer duplicados (igual que <c>GetForCombat</c>, que los admite por diseño) en vez
 /// de reventar. Reutiliza el 100% de la lógica original (odds de rareza, hooks, filtro multiplayer);
-/// el guard <c>_retrying</c> corta la recursión (el Invoke re-entra por el detour de Harmony). Si hasta
+/// el guard por hilo <c>_retrying</c> corta la recursión (el delegado re-entra por el detour de
+/// Harmony). Si hasta
 /// el reintento falla (pool genuinamente vacío), se propaga la excepción original como en vanilla.
 /// Determinista en MP: la condición de fallo y el reintento consumen el mismo stream de RNG en todos
 /// los clientes.
@@ -32,10 +33,15 @@ namespace FGOCore.FGOCoreCode;
     new[] { typeof(Player), typeof(IEnumerable<CardModel>), typeof(CardCreationOptions) })]
 internal static class CardRewardHardening
 {
-    private static readonly System.Reflection.MethodInfo _original = AccessTools.Method(
-        typeof(CardFactory), "CreateForReward",
-        new[] { typeof(Player), typeof(IEnumerable<CardModel>), typeof(CardCreationOptions) });
+    private delegate CardModel CreateForRewardDelegate(
+        Player player, IEnumerable<CardModel> blacklist, CardCreationOptions options);
 
+    private static readonly CreateForRewardDelegate Original = AccessTools.Method(
+            typeof(CardFactory), "CreateForReward",
+            [typeof(Player), typeof(IEnumerable<CardModel>), typeof(CardCreationOptions)])
+        .CreateDelegate<CreateForRewardDelegate>();
+
+    [ThreadStatic]
     private static bool _retrying;
 
     private static Exception? Finalizer(Exception? __exception, ref CardModel? __result,
@@ -46,8 +52,7 @@ internal static class CardRewardHardening
         _retrying = true;
         try
         {
-            __result = (CardModel?)_original.Invoke(null,
-                new object[] { player, Array.Empty<CardModel>(), options });
+            __result = Original(player, Array.Empty<CardModel>(), options);
             return __result != null ? null : __exception;
         }
         catch

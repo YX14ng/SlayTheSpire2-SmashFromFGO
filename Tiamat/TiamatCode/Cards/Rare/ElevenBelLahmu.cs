@@ -24,10 +24,10 @@ public sealed class ElevenBelLahmu() : TiamatCard(2, CardType.Skill, CardRarity.
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // Parí hasta el tope; el helper devuelve cuántos cupieron de verdad (= huecos rellenados).
-        var spawned = await Lahmu.Spawn(Owner.Creature, DynamicVars["Lahmu"].IntValue, this);
+        var spawned = await Lahmu.Spawn(choiceContext, Owner.Creature, DynamicVars["Lahmu"].IntValue, this);
         if (spawned > 0)
         {
-            await Lahmu.Feed(Owner.Creature, spawned * DynamicVars["NurturePerSpawn"].IntValue, this);
+            await Lahmu.Feed(choiceContext, Owner.Creature, spawned * DynamicVars["NurturePerSpawn"].IntValue, this);
         }
     }
 

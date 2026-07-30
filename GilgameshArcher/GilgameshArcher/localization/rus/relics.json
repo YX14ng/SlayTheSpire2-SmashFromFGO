@@ -12,7 +12,7 @@
   "GILGAMESHARCHER-KINGS_WINE_CUP.description": "#В конце каждого боя получите !Gold! золота.",
   "GILGAMESHARCHER-KINGS_WINE_CUP.flavor": "Царь пьёт, и сокровищница наполняется. Богатство стекается к нему, как реки — к морю.",
   "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.title": "Мантия высокомерия",
-  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.description": "#Когда ваша атака убивает врага, пока у вас *Готов *крит, получите !Gold! золота /(не более 15 за бой/).",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.description": "#Когда ваша *критическая Атака убивает врага, получите !Gold! золота /(не более 15 за бой/).",
   "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.flavor": "Он не грабит мёртвых. Мёртвые просто отдают своё золото тому, кому оно всегда принадлежало по праву.",
   "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.title": "Вимана, Золотой трон",
   "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.description": "#Когда вы впервые за бой разыгрываете не менее 2 Сокровищных орудий за один ход, возьмите !Cards! карт.",

@@ -32,22 +32,22 @@ public partial class MainFile : Node
         // (SiegfriedNpManifestedPower) evita duplicarla en el mismo pico; gastar por debajo de 100
         // lo re-arma. La carta-NP rara «Balmung» (2⚡, comprada, con refund EX) sigue existiendo en
         // el pool aparte; ésta es la manifestación gratis del medidor.
-        NpCharge.GaugeFilled += TryManifestUlt;
-        NpCharge.GaugeDropped += DisarmUlt;
+        NpCharge.GaugeFilledWithContext += TryManifestUlt;
+        NpCharge.GaugeDroppedWithContext += DisarmUlt;
     }
 
-    private static async Task TryManifestUlt(Creature creature)
+    private static async Task TryManifestUlt(PlayerChoiceContext choiceContext, Creature creature)
     {
         if (creature.Player?.Character is not Character.Siegfried) return;
         if (creature.CombatState == null) return;
         if (creature.HasPower<SiegfriedNpManifestedPower>()) return;
 
-        await PowerCmd.Apply<SiegfriedNpManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+        await PowerCmd.Apply<SiegfriedNpManifestedPower>(choiceContext, creature, 1m, creature, null);
 
         await ManifestCards.ManifestToHand<BalmungUnleashed>(creature);
     }
 
-    private static async Task DisarmUlt(Creature creature)
+    private static async Task DisarmUlt(PlayerChoiceContext _, Creature creature)
     {
         if (creature.HasPower<SiegfriedNpManifestedPower>())
         {

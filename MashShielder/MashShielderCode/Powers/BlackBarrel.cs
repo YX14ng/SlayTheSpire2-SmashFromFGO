@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -14,10 +15,11 @@ namespace MashShielder.MashShielderCode.Powers;
 /// </summary>
 public static class BlackBarrel
 {
-    public static async Task Hit(PlayerChoiceContext choiceContext, Creature target, decimal amount, Creature dealer, CardModel source)
+    public static async Task Hit(PlayerChoiceContext choiceContext, CardPlay? cardPlay, Creature target, decimal amount, Creature dealer, CardModel source)
     {
         VfxCmd.PlayOnCreatureCenter(target, "vfx/vfx_dramatic_stab");
-        await CreatureCmd.Damage(choiceContext, target, amount, ValueProp.Move | ValueProp.Unblockable, dealer, source);
+        await CreatureCmdCompatibility.Damage(choiceContext, target, amount,
+            ValueProp.Move | ValueProp.Unblockable, dealer, source, cardPlay);
         await RemoveBuffs(target, 1, dealer, source);
     }
 

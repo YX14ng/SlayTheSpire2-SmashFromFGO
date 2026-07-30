@@ -1,33 +1,109 @@
-Tiamat, the Beast of Regression (Beast II) of Fate/Grand Order, as a fully playable character. Built on the BaseLib framework and the FGO Core library.
+[h1]Tiamat — Raise the Swarm, Awaken the Beast[/h1]
+Seed Curse as Tiamat-Larva, nurture the Lahmu and unleash a second combat deck when the Beast of Regression awakens.
 
-What it adds:
-- A tempo-controller built on TWO card pools: you start as Tiamat-Larva (Lily), a tide-controller that blocks, seeds Curse and breeds Lahmu while filling the gauge - then her NP opens a 1-3 turn window as the Beast with a whole special deck.
-- Curse is the currency Lily mints and the Beast spends: the swarm bites the most-cursed, and the window's magnitude is decided by how much you built. Signature choice: open at 100 (frequent 1-turn windows) vs bank to 300 (one 3-turn rampage).
-- Her Noble Phantasm, Nammu Dur-an-ki - opens the Beast window; "Beast's Plume" closes it.
+[b]RELEASE BUILD — v0.1.10[/b]
 
-Requires: FGO Core (library) + BaseLib.
-Localization: English, Spanish, Simplified Chinese.
+[h2]Core gameplay[/h2]
+[list]
+[*][b]Two decks:[/b] Lily controls the pace, spreads Curse and prepares the swarm. Beast form temporarily replaces that plan with its own destructive cards.
+[*][b]Lahmu swarm:[/b] raise synchronized minions that bite at the end of your turn and return protection at the start of the enemy turn.
+[*][b]Curse economy:[/b] the marks Lily plants feed Lahmu damage and become a resource consumed by the Beast's strongest effects.
+[*][b]Nammu Dur-an-ki:[/b] activate at 100 NP for frequent one-turn Beast windows, or bank up to 300 for three consecutive turns of devastation.
+[/list]
 
-Found a bug or have feedback? Report it in the discussion thread:
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-To help us fix it fast, please include: which Servant you played and what you did (a screenshot helps); your game log — Steam comments can't attach files, so upload %APPDATA%\SlayTheSpire2\logs\godot.log to a paste site (e.g. pastebin.com) or a file host and paste the LINK, or paste the last ~50 lines; and your full mod list (many bugs are conflicts with other mods).
+[h2]Content[/h2]
+[list]
+[*]35-card reward pool plus a separate Beast-form deck and manifested Noble Phantasm
+[*]47 card models, 15 character powers and 4 relics in total
+[*]Animated Tiamat-Larva and Beast identities with official FGO visuals
+[*]Curated official artwork for cards, powers, relics and character UI
+[*]Spanish, English, Simplified Chinese, Korean and Russian localization
+[/list]
 
-Made with the help of Claude Code.
+[h2]Requirements and compatibility[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Built for MAIN 0.107.1 and public BETA 0.109.0
+[/list]
 
-————————————————————
+[h2]Validation status[/h2]
+Build, localization, asset coverage, animation references and package audits pass. Balance, save/load and co-op behavior continue to receive in-game testing.
 
-「Fate/Grand Order」的回归之兽提亚马特（Beast II），现已作为可操作角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Source code and bug reports[/url]
 
-本 Mod 带来：
-- 一名建立在「两套卡池」上的节奏控制者：开局你是提亚马特·拉尔瓦（Lily 形态），一个掌控潮汐的形态——格挡、播撒诅咒、孵育拉赫姆（Lahmu）的同时填充充能槽；随后宝具会开启一段持续 1-3 回合的「兽」之窗口，期间换上一整套专属牌组。
-- 诅咒既是 Lily 铸造的货币，也是「兽」挥霍的本钱：虫群优先撕咬诅咒层数最高的目标，而窗口的强度则取决于你前期攒了多少。标志性的取舍：充到 100 就开（频繁的单回合窗口）还是攒到 300 再开（一次长达 3 回合的肆虐）。
-- 宝具「Nammu Dur-an-ki」——开启「兽」之窗口；而「Beast's Plume」（兽之羽）则用来收束它。
+Unofficial fan-made mod. Fate/Grand Order characters and official visual assets belong to their respective rights holders. Not affiliated with TYPE-MOON, Lasengle or Mega Crit.
 
-依赖：FGO Core（库）+ BaseLib。
-支持语言：英文、西班牙文、简体中文。
+[hr][/hr]
+[h1]ESPAÑOL[/h1]
+Sembrá Maldición como Tiamat-Larva, criá a los Laḫmu y liberá una segunda baraja de combate cuando despierte la Bestia de la Regresión.
 
-发现 Bug 或有建议？请在讨论区反馈：
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-为方便我们尽快修复，请附上：你使用的从者 + 具体操作（截图更佳）；游戏日志——Steam 评论无法上传文件，请把 %APPDATA%\SlayTheSpire2\logs\godot.log 传到网盘或贴站（如 pastebin.com）再贴出链接，或直接粘贴最后约 50 行；以及完整的 Mod 列表（很多 Bug 是与其他 Mod 的冲突）。
+[b]VERSIÓN PÚBLICA — v0.1.10[/b]
 
-在 Claude Code 的协助下制作。
+[h2]Mecánicas principales[/h2]
+[list]
+[*][b]Dos barajas:[/b] Lily controla el ritmo, distribuye Maldición y prepara el enjambre. La forma Bestia reemplaza temporalmente ese plan con sus propias cartas destructivas.
+[*][b]Enjambre Laḫmu:[/b] criá esbirros sincronizados que muerden al final de tu turno y devuelven protección al comenzar el turno enemigo.
+[*][b]Economía de Maldición:[/b] las marcas que planta Lily alimentan el daño de los Laḫmu y se vuelven un recurso para los efectos más fuertes de la Bestia.
+[*][b]Nammu Dur-an-ki:[/b] activalo con 100 NP para ventanas frecuentes de un turno, o acumulá hasta 300 para tres turnos consecutivos de devastación.
+[/list]
+
+[h2]Contenido[/h2]
+[list]
+[*]35 cartas de recompensa más una baraja propia de Bestia y Noble Phantasm manifestado
+[*]47 modelos de carta, 15 poderes y 4 reliquias en total
+[*]Identidades Tiamat-Larva y Bestia animadas con visuales oficiales de FGO
+[*]Arte oficial curado para cartas, poderes, reliquias e interfaz
+[*]Localización en español, inglés, chino simplificado, coreano y ruso
+[/list]
+
+[h2]Requisitos y compatibilidad[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Compatible con MAIN 0.107.1 y BETA pública 0.109.0
+[/list]
+
+[h2]Estado de validación[/h2]
+Las auditorías de compilación, idiomas, recursos, animaciones y paquete están aprobadas. El balance, guardado/carga y cooperativo continúan en pruebas dentro del juego.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Código fuente y reporte de errores[/url]
+
+Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
+
+[hr][/hr]
+[h1]简体中文[/h1]
+以提亚马特·拉尔瓦播撒诅咒、培育拉赫穆，并在回归之兽苏醒时释放第二套战斗牌组。
+
+[b]公开版本 — v0.1.10[/b]
+
+[h2]核心机制[/h2]
+[list]
+[*][b]双牌组：[/b]Lily 负责控制节奏、施加诅咒并准备虫群；兽形态会暂时用自己的破坏性卡牌替换这一计划。
+[*][b]拉赫穆虫群：[/b]培育可同步的从属单位，它们在你的回合结束时啃咬，并在敌方回合开始时提供防护。
+[*][b]诅咒经济：[/b]Lily 种下的标记会强化拉赫穆伤害，也会成为兽形态强力效果所消耗的资源。
+[*][b]Nammu Dur-an-ki：[/b]在 100 NP 时发动可获得频繁的一回合兽形态；积累到 300 则可连续破坏三个回合。
+[/list]
+
+[h2]内容[/h2]
+[list]
+[*]35 张奖励卡牌，另有独立兽形态牌组与显现型宝具
+[*]共 47 个卡牌模型、15 个角色能力与 4 件遗物
+[*]使用 FGO 官方视觉素材的 Tiamat-Larva 与兽形态动画
+[*]卡牌、能力、遗物与角色界面均采用精心筛选的官方美术
+[*]支持西班牙语、英语、简体中文、韩语与俄语
+[/list]
+
+[h2]依赖与兼容性[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]兼容正式版 0.107.1 与公开测试版 0.109.0
+[/list]
+
+[h2]验证状态[/h2]
+构建、本地化、资源覆盖、动画引用及安装包检查均已通过；平衡、存档与联机表现仍在游戏内持续测试。
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]源代码与问题反馈[/url]
+
+本项目为非官方同人 Mod，与 TYPE-MOON、Lasengle 及 Mega Crit 无隶属关系。

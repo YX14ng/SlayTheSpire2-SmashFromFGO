@@ -19,26 +19,15 @@ public sealed class StorybookKingPower : OberonFormPower
     public const int ExtraCharge = 10;
     public const int ExtraDebt = 1;
 
-    // FramesPath = null (audit 2026-07-04): el .tres "oberon_frames_king" no existe en el repo — el
-    // swap declaraba un recurso inexistente (no-op con log de error). null = mantener el sprite
-    // actual. TODO pase de arte: generar el .tres y restaurar el path.
-    public override string? FramesPath => null;
-
-    private bool _sweetenedThisTurn;
-
-    public override async Task AfterSideTurnStart(MegaCrit.Sts2.Core.Combat.CombatSide side, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Entities.Creatures.Creature> participants, MegaCrit.Sts2.Core.Combat.ICombatState combatState)
-    {
-        await base.AfterSideTurnStart(side, participants, combatState);
-        if (side == MegaCrit.Sts2.Core.Combat.CombatSide.Player) _sweetenedThisTurn = false;
-    }
+    public override string FramesPath => $"{MainFile.ResPath}/character/oberon_frames.tres";
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (_sweetenedThisTurn) return;
+        if (FgoCombatState.GetTurn(Owner, 0) != 0) return;
         if (cardPlay.Card is not ILoanCard || cardPlay.Card.Owner?.Creature != Owner) return;
-        _sweetenedThisTurn = true;
+        await FgoCombatState.SetTurn(context, Owner, 0, 1, cardPlay.Card);
         Flash();
-        await NpCharge.Gain(Owner, ExtraCharge, null);
-        await DebtPower.Add(Owner, ExtraDebt, Owner, null);
+        await NpCharge.Gain(context, Owner, ExtraCharge, null);
+        await DebtPower.Add(context, Owner, ExtraDebt, Owner, null);
     }
 }

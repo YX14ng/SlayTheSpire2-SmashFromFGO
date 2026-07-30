@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace ArtoriaCaster.ArtoriaCasterCode.Relics;
@@ -14,24 +15,23 @@ public sealed class MagicResistanceAmulet : ArtoriaRelic
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    private bool _usedThisCombat;
-
-    public override Task BeforeCombatStartLate()
-    {
-        _usedThisCombat = false;
-        return Task.CompletedTask;
-    }
-
     public override bool TryModifyPowerAmountReceived(PowerModel canonicalPower, Creature target, decimal amount, Creature? applier, out decimal modifiedAmount)
     {
         modifiedAmount = amount;
-        if (_usedThisCombat) return false;
+        if (FgoCombatState.GetCombat(Owner.Creature, 2) != 0) return false;
         if (target != Owner.Creature || applier == null || applier.Side == target.Side) return false;
         if (canonicalPower.GetTypeForAmount(amount) != PowerType.Debuff) return false;
+        if (!canonicalPower.IsVisible) return false;
 
-        _usedThisCombat = true;
-        Flash();
         modifiedAmount = 0m;
         return true;
+    }
+
+    public override async Task AfterModifyingPowerAmountReceived(PowerModel power)
+    {
+        if (FgoCombatState.GetCombat(Owner.Creature, 2) != 0) return;
+        await FgoCombatState.SetCombat(
+            new BlockingPlayerChoiceContext(), Owner.Creature, 2, 1);
+        Flash();
     }
 }

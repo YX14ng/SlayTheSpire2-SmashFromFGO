@@ -32,7 +32,7 @@ public sealed class LightningVisitReturnPower : MordredPower
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side || Owner.IsDead) return;
+        if (!participants.Contains(Owner) || Owner.IsDead) return;
         Flash();
         // Regreso REAL (audit 2026-07-05): si la forma destino ya esta activa o la forma actual es
         // permanente (Climax), el Enter es un no-op y el +10 del up no corresponde.
@@ -56,7 +56,7 @@ public sealed class LightningVisitReturnPower : MordredPower
         }
         if (StarsOnReturn > 0 && willSwitch)
         {
-            await CritStars.Gain(Owner, StarsOnReturn, null);
+            await CritStars.Gain(choiceContext, Owner, StarsOnReturn, null);
         }
         await PowerCmd.Remove(this);
     }

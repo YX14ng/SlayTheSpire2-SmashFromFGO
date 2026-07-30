@@ -12,7 +12,7 @@
   "GILGAMESHARCHER-KINGS_WINE_CUP.description": "#Al final de cada combate, gana !Gold! de Oro.",
   "GILGAMESHARCHER-KINGS_WINE_CUP.flavor": "El Rey bebe, y el tesoro se llena. La riqueza fluye hacia él como los ríos fluyen hacia el mar.",
   "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.title": "Manto de la Arrogancia",
-  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.description": "#Cuando un ataque tuyo con un *Crítico *Listo mata a un enemigo, gana !Gold! de Oro (máx. 15 por combate).",
+  "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.description": "#Cuando uno de tus Ataques *Críticos mata a un enemigo, gana !Gold! de Oro /(máx. 15 por combate).",
   "GILGAMESHARCHER-MANTLE_OF_ARROGANCE.flavor": "No saquea a los muertos. Los muertos simplemente le rinden su oro al que siempre fue su legítimo dueño.",
   "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.title": "Vimana, el Trono Dorado",
   "GILGAMESHARCHER-VIMANA_GOLDEN_THRONE.description": "#La primera vez que juegas 2 o más Armas del Tesoro en un mismo turno cada combate, roba !Cards!.",

@@ -24,11 +24,11 @@ public sealed class GenesisDeluge() : TiamatCard(2, CardType.Attack, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).ToList())
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).ToList())
         {
             if (enemy.IsDead) continue;
             var dmg = DynamicVars.Damage.BaseValue + Curses.Of(enemy) / DynamicVars["CursePerBonus"].IntValue;
-            await DamageCmd.Attack(dmg).FromCard(this).Targeting(enemy)
+            await DamageCmd.Attack(dmg).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
                 .WithHitFx("vfx/vfx_attack_blunt")
                 .Execute(choiceContext);
         }

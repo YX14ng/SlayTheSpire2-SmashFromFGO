@@ -14,7 +14,7 @@ public sealed class LightShield() : ArtoriaCard(1, CardType.Skill, CardRarity.Co
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(5m, ValueProp.Move),
-        new DynamicVar("Stars", 1)
+        new DynamicVar("Stars", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -22,7 +22,7 @@ public sealed class LightShield() : ArtoriaCard(1, CardType.Skill, CardRarity.Co
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

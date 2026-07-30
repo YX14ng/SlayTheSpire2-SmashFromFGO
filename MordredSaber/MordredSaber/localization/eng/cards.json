@@ -60,7 +60,7 @@
   "MORDREDSABER-INSTINCT_B.title": "Instinct B",
   "MORDREDSABER-INSTINCT_B.description": "#Exhaust. Gain !Stars! *Critical *Stars and draw !C! card.",
   "MORDREDSABER-CIGARETTE_LION_B_PLUS.title": "Cigarette Lion B+",
-  "MORDREDSABER-CIGARETTE_LION_B_PLUS.description": "#When played, gain !Stars! *Critical *Stars. Whenever you gain a Critical, draw 1 card.",
+  "MORDREDSABER-CIGARETTE_LION_B_PLUS.description": "#When played, gain !Stars! *Critical *Stars. Whenever you perform a *Critical, draw 1 card.",
   "MORDREDSABER-SECRET_OF_PEDIGREE_E_X.title": "Secret of Pedigree EX",
   "MORDREDSABER-SECRET_OF_PEDIGREE_E_X.description": "#Exhaust. Remove all Debuffs from yourself. Gain !B! Block and !NpCharge! *NP Charge. If you are in *Masked Knight form: gain !MaskedNp! more *NP Charge.",
   "MORDREDSABER-LIGHTNING_OF_CLARENT.title": "Lightning of Clarent",
@@ -80,7 +80,7 @@
   "MORDREDSABER-LIGHTNING_VISIT.title": "Lightning Visit",
   "MORDREDSABER-LIGHTNING_VISIT.description": "#Switch form. At the end of your turn, return to the previous form.+ When you return, gain !Stars! *Critical *Stars.+",
   "MORDREDSABER-RUDE_KICK.title": "Rude Kick",
-  "MORDREDSABER-RUDE_KICK.description": "#Deal !D! damage. Apply !Vulnerable! *Vulnerable (+1 if you have a *Critical *Ready).",
+  "MORDREDSABER-RUDE_KICK.description": "#Deal !D! damage. Apply !Vulnerable! *Vulnerable /(+1 if this Attack is *Critical).",
   "MORDREDSABER-PLUNDER_OF_THE_ROYAL_HOARD.title": "Plunder of the Royal Hoard",
   "MORDREDSABER-PLUNDER_OF_THE_ROYAL_HOARD.description": "#Exhaust. Gain !NpCharge! *NP Charge and !Stars! *Critical *Stars.",
   "MORDREDSABER-CHAINED_LIGHTNING.title": "Chained Lightning",
@@ -94,7 +94,7 @@
   "MORDREDSABER-DEMANDED_DUEL.title": "Demanded Duel",
   "MORDREDSABER-DEMANDED_DUEL.description": "#Apply !Weak! *Weak and !Vulnerable! *Vulnerable to an enemy. Gain !NpCharge! *NP Charge.",
   "MORDREDSABER-FATHERS_SWORD.title": "Father's Sword",
-  "MORDREDSABER-FATHERS_SWORD.description": "#Deal !D! damage. If you have at least !Threshold! *NP Charge (without spending it): deal !Bonus! more.",
+  "MORDREDSABER-FATHERS_SWORD.description": "#Deal !D! damage. If you have at least !Threshold! *NP Charge /(without spending it): deal !Bonus! more.",
   "MORDREDSABER-ROYAL_TANTRUM.title": "Royal Tantrum",
   "MORDREDSABER-ROYAL_TANTRUM.description": "#Deal !D! damage. Lose !HpLoss! HP.",
   "MORDREDSABER-TOURNAMENT_GUARD.title": "Tournament Guard",
@@ -154,5 +154,5 @@
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.title": "Clarent Blood Arthur",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.description": "#Retain. Exhaust. Consume ALL your *NP Charge, at least 100. Deal !D! damage !Hits! times to ALL enemies; against Elites and Bosses, !Authority! more per hit; plus 1 per hit for every 15 NP Charge above 100. Then gain !Refund! *NP Charge.",
   "MORDREDSABER-CHISPA_DE_CLARENT.title": "Spark of Clarent",
-  "MORDREDSABER-CHISPA_DE_CLARENT.description": "#Exhaust. Deal !D! damage to ALL enemies. (Crimson lightning scattered by your Critical; it strikes harder out of the helm.)"
+  "MORDREDSABER-CHISPA_DE_CLARENT.description": "#Exhaust. Deal !D! damage to ALL enemies. /(Crimson lightning scattered by your Critical; it strikes harder out of the helm.)"
 }

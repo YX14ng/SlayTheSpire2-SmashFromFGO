@@ -26,12 +26,10 @@ public sealed class MadnessEnhancementPower : MorganPower
     public override PowerStackType StackType => PowerStackType.Counter;
 
     private bool _isPlayerTurn;
-    private readonly PerTurnTriggerCounter _triggers = new();
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        _isPlayerTurn = side == CombatSide.Player;
-        _triggers.OnSideTurnStart(side);
+        _isPlayerTurn = participants.Contains(Owner);
         return Task.CompletedTask;
     }
 
@@ -39,9 +37,12 @@ public sealed class MadnessEnhancementPower : MorganPower
     {
         if (target != Owner || !_isPlayerTurn || result.UnblockedDamage <= 0) return;
         if (FaeBloodPactPower.TickInProgress) return; // P4: el tick del Pacto no cuenta.
-        if (!_triggers.TryConsume(Amount)) return;    // tope: Amount activaciones por turno.
+        var maximum = Math.Min(7, Math.Max(0, (int)Amount));
+        if (FgoCombatState.GetTurn(Owner, 0, 3) >= maximum) return;
+        await FgoCombatState.IncrementTurn(
+            choiceContext, Owner, 0, maximum, cardSource, width: 3);
 
         Flash();
-        await NpCharge.Gain(Owner, NpPerTrigger, null);
+        await NpCharge.Gain(choiceContext, Owner, NpPerTrigger, null);
     }
 }

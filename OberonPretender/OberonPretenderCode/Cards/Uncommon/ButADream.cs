@@ -25,7 +25,7 @@ public sealed class ButADream() : OberonCard(1, CardType.Skill, CardRarity.Uncom
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await OberonExtensions.RemoveAllDebuffs(Owner.Creature);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
         if (IsUpgraded)
         {
             await PowerCmd.Apply<ArtifactPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);

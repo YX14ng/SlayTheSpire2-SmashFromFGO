@@ -20,9 +20,9 @@ public sealed class BunkerBolt() : MashShielderCard(2, CardType.Attack, CardRari
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var block = await Owner.Creature.ConsumeAllBlock();
+        var block = await Owner.Creature.ConsumeAllBlock(choiceContext, Owner.Creature);
         var bonus = block / Math.Max(1, DynamicVars["Divisor"].IntValue);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);
     }

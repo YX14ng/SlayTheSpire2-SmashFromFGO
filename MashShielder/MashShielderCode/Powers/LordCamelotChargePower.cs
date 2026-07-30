@@ -1,6 +1,8 @@
 namespace MashShielder.MashShielderCode.Powers;
 
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 
 /// <summary>
 /// Control de "Embate de Lord Camelot" — limita la carta a 1 disparo por turno (P2 2026-06-25).
@@ -15,15 +17,11 @@ public sealed class LordCamelotChargePower : MashShielderPower
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    private bool _firedThisTurn;
+    public bool CanFire => FgoCombatState.GetTurn(Owner, 3) == 0;
 
-    public bool CanFire => !_firedThisTurn;
-
-    public void MarkFired()
+    public async Task MarkFired(PlayerChoiceContext context, CardModel source)
     {
-        _firedThisTurn = true;
+        await FgoCombatState.SetTurn(context, Owner, 3, 1, source);
         Flash();
     }
-
-    protected override void OnPlayerTurnStartReset() => _firedThisTurn = false;
 }

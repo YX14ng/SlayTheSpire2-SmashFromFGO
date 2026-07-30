@@ -17,9 +17,10 @@ public sealed class BottledMors : MorganRelic
 
         var curse = Curses.Of(creature);
         if (curse <= 0) return;
+        if (Owner.Creature.CombatState is not { } combatState) return;
 
         var living = new List<Creature>();
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        foreach (var enemy in combatState.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead && enemy != creature) living.Add(enemy);
         }

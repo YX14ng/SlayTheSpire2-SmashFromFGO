@@ -25,8 +25,8 @@ public sealed class DragonsBlood() : MordredCard(1, CardType.Power, CardRarity.U
         var power = await PowerCmd.Apply<DragonsBloodPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
-            power.NpPerTurn = DynamicVars["NpCharge"].IntValue;
-            power.BlockPerTurn = DynamicVars["Block"].IntValue;
+            power.NpPerTurn = Math.Max(power.NpPerTurn, DynamicVars["NpCharge"].IntValue);
+            power.BlockPerTurn = Math.Max(power.BlockPerTurn, DynamicVars["Block"].IntValue);
         }
     }
 

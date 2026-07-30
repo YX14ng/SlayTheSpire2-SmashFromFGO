@@ -29,8 +29,8 @@ public sealed class HundredShatteredSwords() : MordredCard(0, CardType.Attack, C
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         if (!CritStars.CanPay(Owner.Creature, StarCost)) return;
-        await CritStars.Gain(Owner.Creature, -StarCost, this);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await CritStars.Gain(choiceContext, Owner.Creature, -StarCost, this);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

@@ -31,7 +31,7 @@ public sealed class QueensScorn() : MorganCard(0, CardType.Attack, CardRarity.Co
         {
             damage += DynamicVars["Bonus"].BaseValue;
         }
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

@@ -13,7 +13,8 @@ public sealed class SpareGlasses : MashShielderRelic
 
     public override decimal ModifyHandDraw(Player player, decimal count)
     {
-        if (player != Owner || player.Creature.CombatState.RoundNumber > 1) return count;
+        var combatState = player.Creature.CombatState;
+        if (player != Owner || combatState == null || combatState.RoundNumber > 1) return count;
         return count + DynamicVars.Cards.BaseValue;
     }
 }

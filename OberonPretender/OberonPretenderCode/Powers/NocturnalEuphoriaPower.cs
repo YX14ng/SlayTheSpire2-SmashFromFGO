@@ -22,10 +22,10 @@ public sealed class NocturnalEuphoriaPower : OberonPower
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side || Owner.IsDead) return;
+        if (!participants.Contains(Owner) || Owner.IsDead) return;
         if (DebtPower.Of(Owner) > 0) return; // solo si estas al dia
         Flash();
-        await NpCharge.Gain(Owner, Charge, null);
-        await CritStars.Gain(Owner, Stars, null);
+        await NpCharge.Gain(choiceContext, Owner, Charge, null);
+        await CritStars.Gain(choiceContext, Owner, Stars, null);
     }
 }

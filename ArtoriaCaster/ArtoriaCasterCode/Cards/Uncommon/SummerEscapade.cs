@@ -46,6 +46,6 @@ public sealed class SummerEscapade() : ArtoriaCard(0, CardType.Skill, CardRarity
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Stars"].UpgradeValueBy(1m);
+        DynamicVars["Stars"].UpgradeValueBy(10m);
     }
 }

@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://ShutenDouji/character/shuten_frames.tres" id="frames"]
+
+[node name="ShutenRestSite" type="Node2D"]
+
+[node name="ControlRoot" type="Control" parent="."]
+
+[node name="Hitbox" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+offset_left = -130.0
+offset_top = -370.0
+offset_right = 130.0
+offset_bottom = 0.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(15.8, -261.3)
+flip_h = true
+sprite_frames = ExtResource("frames")
+animation = &"idle"
+autoplay = "idle"

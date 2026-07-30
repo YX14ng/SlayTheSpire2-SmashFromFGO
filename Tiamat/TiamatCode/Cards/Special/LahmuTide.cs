@@ -27,10 +27,10 @@ public sealed class LahmuTide() : TiamatCard(2, CardType.Skill, CardRarity.Event
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var inPlay = Lahmu.Count(Owner.Creature);
-        await Lahmu.Spawn(Owner.Creature, DynamicVars["Lahmu"].IntValue, this);
+        await Lahmu.Spawn(choiceContext, Owner.Creature, DynamicVars["Lahmu"].IntValue, this);
         if (inPlay > 0)
         {
-            await Lahmu.Feed(Owner.Creature, DynamicVars["NurturePerLahmu"].IntValue * inPlay, this);
+            await Lahmu.Feed(choiceContext, Owner.Creature, DynamicVars["NurturePerLahmu"].IntValue * inPlay, this);
         }
     }
 

@@ -30,7 +30,7 @@ public sealed class ScaleStorm() : SiegfriedCard(1, CardType.Attack, CardRarity.
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var bonus = ScaleThresholdBonus(ScalesThreshold, DynamicVars["Bonus"].IntValue);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState!)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

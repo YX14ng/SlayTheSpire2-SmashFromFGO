@@ -19,8 +19,18 @@ public static class NpCharge
     /// idempotent per peak.</summary>
     public static event Func<Creature, Task>? GaugeFilled;
 
+    /// <summary>
+    /// Context-preserving counterpart to <see cref="GaugeFilled"/>. In-tree integrations use this
+    /// event so nested effects remain in the card or hook resolution that changed the gauge.
+    /// The legacy event remains available for already compiled consumers.
+    /// </summary>
+    public static event Func<PlayerChoiceContext, Creature, Task>? GaugeFilledWithContext;
+
     /// <summary>Fired after a spend leaves the gauge below 100 (re-arm point for ults).</summary>
     public static event Func<Creature, Task>? GaugeDropped;
+
+    /// <summary>Context-preserving counterpart to <see cref="GaugeDropped"/>.</summary>
+    public static event Func<PlayerChoiceContext, Creature, Task>? GaugeDroppedWithContext;
 
     public static int Current(Creature creature) => creature.GetPowerAmount<NpChargePower>();
 
@@ -61,41 +71,42 @@ public static class NpCharge
     /// amplificador reaccione a este ModifyAmount. Usalo en vez de un guard <c>_amplifying</c> local.</summary>
     public static async Task Amplify(PlayerChoiceContext choiceContext, NpChargePower np, int extra, Creature owner, CardModel? source)
     {
-        // Solo el dueño REAL del guard lo limpia: si un amplificador anidado llamara Amplify sobre el
-        // mismo owner (Add devuelve false), su finally NO debe apagar el guard del caller externo —
-        // eso reabría la ventana de compounding cruzado que el guard existe para impedir.
-        var added = AmplifyingCreatures.Add(owner);
+        // El propio núcleo rechaza reentradas para que consumidores externos no puedan
+        // reabrir por accidente la ventana de amplificación cruzada.
+        if (!AmplifyingCreatures.Add(owner)) return;
         try
         {
             await PowerCmd.ModifyAmount(choiceContext, np, extra, owner, source);
         }
         finally
         {
-            if (added) AmplifyingCreatures.Remove(owner);
+            AmplifyingCreatures.Remove(owner);
         }
     }
 
     /// <summary>Gain charge, capped at 300. Fires <see cref="GaugeFilled"/> when at or
     /// above the manifest threshold afterwards.</summary>
-    public static async Task Gain(Creature creature, int amount, CardModel? source)
+    public static Task Gain(Creature creature, int amount, CardModel? source) =>
+        Gain(new BlockingPlayerChoiceContext(), creature, amount, source);
+
+    /// <summary>Context-preserving charge gain for card and hook resolution paths.</summary>
+    public static async Task Gain(
+        PlayerChoiceContext choiceContext, Creature creature, int amount, CardModel? source)
     {
         var wasBelow = Current(creature) < NpChargePower.ManifestThreshold;
         var toAdd = Math.Min(amount, Max(creature) - Current(creature));
         if (toAdd > 0)
         {
-            await PowerCmd.Apply<NpChargePower>(new BlockingPlayerChoiceContext(), creature, toAdd, creature, source);
+            await PowerCmd.Apply<NpChargePower>(choiceContext, creature, toAdd, creature, source);
         }
         // GaugeFilled SOLO en el CRUCE real del umbral (below -> >=100): no re-invocar los handlers de
         // los 9 personajes en cada gain con el medidor ya lleno (son no-op por sus markers, pero es
         // trabajo desperdiciado en camino caliente y un footgun para handlers futuros sin marker).
-        if (toAdd > 0 && wasBelow && Current(creature) >= NpChargePower.ManifestThreshold && GaugeFilled != null)
+        if (toAdd > 0 && wasBelow && Current(creature) >= NpChargePower.ManifestThreshold)
         {
             // Invoke() de un delegado multicast solo DEVUELVE la Task del último handler:
             // los demás corrían sin await (fire-and-forget). Esperamos todos en orden.
-            foreach (var handler in GaugeFilled.GetInvocationList().Cast<Func<Creature, Task>>())
-            {
-                await handler(creature);
-            }
+            await NotifyGaugeFilled(choiceContext, creature);
         }
     }
 
@@ -127,7 +138,11 @@ public static class NpCharge
     public static bool IsOvercharged(Creature creature) => Current(creature) >= NpChargePower.ManifestThreshold;
 
     /// <summary>Pay an NP card's charge cost. A waiver power covers it for free.</summary>
-    public static async Task PayForNpCard(Creature creature, int amount, CardModel source)
+    public static Task PayForNpCard(Creature creature, int amount, CardModel source) =>
+        PayForNpCard(new BlockingPlayerChoiceContext(), creature, amount, source);
+
+    public static async Task PayForNpCard(
+        PlayerChoiceContext choiceContext, Creature creature, int amount, CardModel source)
     {
         var waiver = GetWaiver(creature, source);
         if (waiver != null)
@@ -135,7 +150,7 @@ public static class NpCharge
             waiver.Used = true;
             return;
         }
-        await Spend(creature, amount, source);
+        await Spend(choiceContext, creature, amount, source);
     }
 
     /// <summary>
@@ -144,7 +159,11 @@ public static class NpCharge
     /// (>= minCost). Parche P3: con waiver el NP sale gratis pero resuelve a tier
     /// MÍNIMO (sin doble-dip de banco lleno + medidor intacto).
     /// </summary>
-    public static async Task<int> ConsumeAllForNpCard(Creature creature, int minCost, CardModel source)
+    public static Task<int> ConsumeAllForNpCard(Creature creature, int minCost, CardModel source) =>
+        ConsumeAllForNpCard(new BlockingPlayerChoiceContext(), creature, minCost, source);
+
+    public static async Task<int> ConsumeAllForNpCard(
+        PlayerChoiceContext choiceContext, Creature creature, int minCost, CardModel source)
     {
         var current = Current(creature);
         var waiver = GetWaiver(creature, source);
@@ -158,19 +177,26 @@ public static class NpCharge
             await PowerCmd.Remove(blessing);
         }
 
+        // Preparaciones de OC de otros mods/personajes: snapshot porque cada listener se consume.
+        foreach (var preparation in Listeners.PowersOf<INpOverchargePreparation>(creature).ToList())
+        {
+            tier += preparation.ExtraTier;
+            await preparation.ConsumeOverchargePreparation(choiceContext);
+        }
+
         if (waiver != null)
         {
             waiver.Used = true;
         }
         else if (current > 0)
         {
-            await Spend(creature, current, source);
+            await Spend(choiceContext, creature, current, source);
         }
 
         // P5: marca que UNA carta-NP resolvió este turno (último paso, tras consumir
         // OverchargeBlessing y el medidor). Único punto por el que pasan TODAS las cartas-NP,
         // así que el flag cubre cualquier ult del ecosistema sin duplicar el set por carta.
-        await MarkNpResolvedThisTurn(creature);
+        await MarkNpResolvedThisTurn(choiceContext, creature);
         return tier;
     }
 
@@ -179,24 +205,38 @@ public static class NpCharge
     public static bool WasNpResolvedThisTurn(Creature creature) => creature.HasPower<NpResolvedThisTurnPower>();
 
     /// <summary>Set the once-per-turn "an NP card resolved" marker (auto-removed next turn).</summary>
-    public static async Task MarkNpResolvedThisTurn(Creature creature)
+    public static Task MarkNpResolvedThisTurn(Creature creature) =>
+        MarkNpResolvedThisTurn(new BlockingPlayerChoiceContext(), creature);
+
+    public static async Task MarkNpResolvedThisTurn(PlayerChoiceContext choiceContext, Creature creature)
     {
         if (!creature.HasPower<NpResolvedThisTurnPower>())
         {
-            await PowerCmd.Apply<NpResolvedThisTurnPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+            await PowerCmd.Apply<NpResolvedThisTurnPower>(choiceContext, creature, 1m, creature, null);
         }
     }
 
     /// <summary>Refund NP after an NP card: <paramref name="full"/> if this was the first NP
     /// card of the turn, else <paramref name="reduced"/> (P5 anti-double-refund). Pass the
     /// value of <see cref="WasNpResolvedThisTurn"/> captured BEFORE the consume.</summary>
-    public static async Task RefundAfterNpCard(Creature creature, int full, int reduced, bool wasAlreadyResolvedBeforeThisCard, CardModel? source)
+    public static Task RefundAfterNpCard(Creature creature, int full, int reduced,
+        bool wasAlreadyResolvedBeforeThisCard, CardModel? source) =>
+        RefundAfterNpCard(new BlockingPlayerChoiceContext(), creature, full, reduced,
+            wasAlreadyResolvedBeforeThisCard, source);
+
+    public static async Task RefundAfterNpCard(PlayerChoiceContext choiceContext, Creature creature, int full,
+        int reduced, bool wasAlreadyResolvedBeforeThisCard, CardModel? source)
     {
-        await Gain(creature, wasAlreadyResolvedBeforeThisCard ? reduced : full, source);
+        await Gain(choiceContext, creature, wasAlreadyResolvedBeforeThisCard ? reduced : full, source);
     }
 
     /// <summary>Spend charge. Returns false (and spends nothing) if there isn't enough.</summary>
-    public static async Task<bool> Spend(Creature creature, int amount, CardModel? source)
+    public static Task<bool> Spend(Creature creature, int amount, CardModel? source) =>
+        Spend(new BlockingPlayerChoiceContext(), creature, amount, source);
+
+    /// <summary>Context-preserving charge spend for card and hook resolution paths.</summary>
+    public static async Task<bool> Spend(
+        PlayerChoiceContext choiceContext, Creature creature, int amount, CardModel? source)
     {
         var power = creature.GetPower<NpChargePower>();
         if (power == null || power.Amount < amount) return false;
@@ -208,17 +248,58 @@ public static class NpCharge
         }
         else
         {
-            await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -amount, creature, source);
+            await PowerCmd.ModifyAmount(choiceContext, power, -amount, creature, source);
         }
 
         // GaugeDropped SOLO en el CRUCE real (>=100 → below): no re-disparar si ya estabas debajo.
-        if (wasAtOrAbove && Current(creature) < NpChargePower.ManifestThreshold && GaugeDropped != null)
+        if (wasAtOrAbove && Current(creature) < NpChargePower.ManifestThreshold)
         {
-            foreach (var handler in GaugeDropped.GetInvocationList().Cast<Func<Creature, Task>>())
+            await NotifyGaugeDropped(choiceContext, creature);
+        }
+        return true;
+    }
+
+    private static async Task NotifyGaugeFilled(PlayerChoiceContext choiceContext, Creature creature)
+    {
+        var contextualHandlers = GaugeFilledWithContext;
+        if (contextualHandlers != null)
+        {
+            foreach (var handler in contextualHandlers.GetInvocationList()
+                         .Cast<Func<PlayerChoiceContext, Creature, Task>>())
+            {
+                await handler(choiceContext, creature);
+            }
+        }
+
+        var legacyHandlers = GaugeFilled;
+        if (legacyHandlers != null)
+        {
+            foreach (var handler in legacyHandlers.GetInvocationList().Cast<Func<Creature, Task>>())
             {
                 await handler(creature);
             }
         }
-        return true;
+    }
+
+    private static async Task NotifyGaugeDropped(PlayerChoiceContext choiceContext, Creature creature)
+    {
+        var contextualHandlers = GaugeDroppedWithContext;
+        if (contextualHandlers != null)
+        {
+            foreach (var handler in contextualHandlers.GetInvocationList()
+                         .Cast<Func<PlayerChoiceContext, Creature, Task>>())
+            {
+                await handler(choiceContext, creature);
+            }
+        }
+
+        var legacyHandlers = GaugeDropped;
+        if (legacyHandlers != null)
+        {
+            foreach (var handler in legacyHandlers.GetInvocationList().Cast<Func<Creature, Task>>())
+            {
+                await handler(creature);
+            }
+        }
     }
 }

@@ -23,6 +23,6 @@ public sealed class Camlann() : MordredCard(1, CardType.Skill, CardRarity.Rare, 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<CamlannGutsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        if (power != null) power.Upgraded = IsUpgraded;
+        if (power != null) power.Upgraded |= IsUpgraded;
     }
 }

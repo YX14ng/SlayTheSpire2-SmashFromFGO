@@ -23,7 +23,7 @@ public sealed class VeilOfPetals() : OkitaCard(2, CardType.Skill, CardRarity.Rar
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(6m); // 20 -> 26

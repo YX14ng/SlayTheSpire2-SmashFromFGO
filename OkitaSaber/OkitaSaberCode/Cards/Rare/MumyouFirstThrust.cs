@@ -13,8 +13,11 @@ namespace OkitaSaber.OkitaSaberCode.Cards.Rare;
 /// 50. Escala +15%/nivel (NpLevels). El piso spameable de la economía. Daño directo Unblockable
 /// (patrón <see cref="Special.MumyouUnleashed"/>). up: 18. Glow cuando es pagable.
 /// </summary>
-public sealed class MumyouFirstThrust() : OkitaCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+public sealed class MumyouFirstThrust() : OkitaCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Quick;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 50;
     private const int OverchargePerTen = 2;
 
@@ -35,13 +38,13 @@ public sealed class MumyouFirstThrust() : OkitaCard(1, CardType.Attack, CardRari
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / 10 * OverchargePerTen;
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge);
 
         VfxCmd.PlayOnCreatureCenter(cardPlay.Target, "vfx/vfx_dramatic_stab");
-        await CreatureCmd.Damage(choiceContext, cardPlay.Target, damage,
-            ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this);
+        await CreatureCmdCompatibility.Damage(choiceContext, cardPlay.Target, damage,
+            ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this, cardPlay);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m); // 14 -> 18

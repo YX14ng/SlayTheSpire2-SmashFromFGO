@@ -22,29 +22,28 @@ public sealed class HomunculusHeartPower : MashShielderPower, IFormChangeListene
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    private int _procsThisTurn;
-
-    protected override void OnPlayerTurnStartReset() => _procsThisTurn = 0;
-
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
-        if (_procsThisTurn >= MaxProcsPerTurn) return;
-        _procsThisTurn++;
+        if (FgoCombatState.GetTurn(Owner, 4, 2) >= MaxProcsPerTurn) return;
+        var context = choiceContext ?? new BlockingPlayerChoiceContext();
+        await FgoCombatState.IncrementTurn(
+            context, Owner, 4, MaxProcsPerTurn, null, width: 2);
         Flash();
-        if (choiceContext != null && Owner.Player != null)
+        var player = Owner.Player;
+        if (choiceContext != null && player?.PlayerCombatState is { } playerCombatState)
         {
             // BUGFIX (soft-lock): el cambio de forma lo dispara una carta a MITAD de su resolución.
             // Si este robo RESHUFFLEA (mazo vacío), reshufflea el descarte -que en v0.107.1 contiene
             // la carta en curso- y corrompe su estado ("must be added to a CombatState"), colgando el
             // combate. Por eso robamos SOLO lo que hay en el mazo (sin gatillar reshuffle).
-            var inDeck = Owner.Player.PlayerCombatState.AllPiles
+            var inDeck = playerCombatState.AllPiles
                 .FirstOrDefault(p => p.Type == PileType.Draw)?.Cards.Count ?? 0;
             var toDraw = System.Math.Min(1 + Amount, inDeck);
             if (toDraw > 0)
             {
-                await CardPileCmd.Draw(choiceContext, toDraw, Owner.Player);
+                await CardPileCmd.Draw(context, toDraw, player);
             }
         }
-        await NpCharge.Gain(Owner, 10 * Amount, null);
+        await NpCharge.Gain(context, Owner, 10 * Amount, null);
     }
 }

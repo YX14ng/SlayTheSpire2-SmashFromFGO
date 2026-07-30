@@ -27,7 +27,7 @@ public sealed class AbsoluteDisguise() : OberonCard(1, CardType.Skill, CardRarit
     {
         await PowerCmd.Apply<IntangiblePower>(choiceContext, Owner.Creature, DynamicVars["Intangible"].BaseValue, Owner.Creature, this);
         var charge = DynamicVars["Charge"].IntValue;
-        if (charge > 0) await NpCharge.Gain(Owner.Creature, charge, this);
+        if (charge > 0) await NpCharge.Gain(choiceContext, Owner.Creature, charge, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Charge"].UpgradeValueBy(20m);

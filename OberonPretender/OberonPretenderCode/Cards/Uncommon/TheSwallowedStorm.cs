@@ -24,7 +24,7 @@ public sealed class TheSwallowedStorm() : OberonCard(2, CardType.Skill, CardRari
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
     }
 
     protected override void OnUpgrade()

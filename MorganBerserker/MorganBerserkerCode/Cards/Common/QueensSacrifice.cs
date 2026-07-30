@@ -36,11 +36,11 @@ public sealed class QueensSacrifice() : MorganCard(1, CardType.Attack, CardRarit
             damage += DynamicVars["Bonus"].BaseValue;
         }
 
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);
-        await CreatureCmd.Damage(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue,
-            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this);
+        await CreatureCmdCompatibility.DamageFromCard(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue,
+            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this, cardPlay);
     }
 
     protected override void OnUpgrade()

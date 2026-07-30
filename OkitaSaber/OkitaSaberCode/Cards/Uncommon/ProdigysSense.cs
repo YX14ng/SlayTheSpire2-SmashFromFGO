@@ -22,7 +22,7 @@ public sealed class ProdigysSense() : OkitaCard(1, CardType.Power, CardRarity.Un
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<ProdigySensePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        if (power != null) power.NpGain = DynamicVars["NpCharge"].IntValue;
+        if (power != null) power.NpGain = Math.Max(power.NpGain, DynamicVars["NpCharge"].IntValue);
     }
 
     protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(10m); // +10 -> +20

@@ -4,7 +4,7 @@
   "SIEGFRIEDSABER-DEFEND.title": "Defensa",
   "SIEGFRIEDSABER-DEFEND.description": "#Gana !B! de Bloqueo.",
   "SIEGFRIEDSABER-BALMUNG.title": "Balmung: Desatado",
-  "SIEGFRIEDSABER-BALMUNG.description": "#Consume TODA tu Carga NP, mínimo 100. Inflige !D! de daño a TODOS los enemigos, más 1 por cada 10 de Carga NP por encima de 100 — o 2 en su lugar mientras tu Sangre de Dragón sea 3 o más.+Al resolverse, recuperá 20 de Carga NP (10 si ya resolvió una carta NP este turno).+",
+  "SIEGFRIEDSABER-BALMUNG.description": "#Consume TODA tu Carga NP, mínimo 100. Inflige !D! de daño a TODOS los enemigos, más 1 por cada 10 de Carga NP por encima de 100 — o 2 en su lugar mientras tu Sangre de Dragón sea 3 o más.+Al resolverse, recuperá 20 de Carga NP /(10 si ya resolvió una carta NP este turno).+",
   "SIEGFRIEDSABER-EXPOSED_BACK.title": "Espalda Expuesta",
   "SIEGFRIEDSABER-EXPOSED_BACK.description": "#Inflige !D! de daño. Este turno, tu Sangre de Dragón NO reduce ningún golpe entrante.",
   "SIEGFRIEDSABER-LINDEN_SCAR.title": "Cicatriz del Tilo",

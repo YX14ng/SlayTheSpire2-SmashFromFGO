@@ -27,15 +27,15 @@ public sealed class Vassalage() : MorganCard(0, CardType.Skill, CardRarity.Commo
     ];
 
     protected override bool ShouldGlowGoldInternal =>
-        Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature) != null;
+        Curses.MostCursed(Owner.Creature) != null;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var prey = Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature);
+        var prey = Curses.MostCursed(Owner.Creature);
         if (prey == null) return;
-        var consumed = await Curses.Consume(prey, DynamicVars["Curse"].IntValue);
+        var consumed = await Curses.Consume(choiceContext, prey, DynamicVars["Curse"].IntValue);
         if (consumed <= 0) return;
-        await NpCharge.Gain(Owner.Creature, consumed * DynamicVars["NpPerPoint"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, consumed * DynamicVars["NpPerPoint"].IntValue, this);
     }
 
     protected override void OnUpgrade()

@@ -1,37 +1,109 @@
-Morgan, the Fairy Queen of Fate/Grand Order - the tyrant who built Britain on sixty years of vengeance - as a fully playable, fully animated character. Built on the BaseLib framework and the FGO Core library.
+[h1]Morgan — Queen, Witch and Winter Sovereign[/h1]
+Play Fate/Grand Order's Fairy Queen as a fully animated character who curses the battlefield, dances between two lives and chooses which Noble Phantasm will answer when the gauge fills.
 
-What it adds:
-- A complete character with her own card pool and starting relic.
-- A Buster-crit and Curse playstyle: stack critical power to land devastating attacks, while burying your enemies under stacks of Curse that bleed them every turn.
-- Form switching: shift mid-combat between her Berserker and Caster (Winter Queen) aspects, each one reshaping her deck and her authority.
-- Her Noble Phantasm, Roadless Camelot - "the ideal land that can no longer be reached."
-- Royal relics and curse-payoff cards that reward a patient, escalating game.
+[b]RELEASE BUILD — v0.1.10[/b]
 
-Requires: FGO Core (library) + BaseLib.
-Localization: English, Spanish, Simplified Chinese.
+[h2]Core gameplay[/h2]
+[list]
+[*][b]Curse and judgement:[/b] seed enemies with persistent Curse, then turn those marks into stronger attacks, executions and battlefield control.
+[*][b]Queen and Rain Witch:[/b] Morgan's Berserker form attacks and plants Curse; Aesc charges NP and survives through defense. Crossing 100 NP manifests the Noble Phantasm of the active form.
+[*][b]Winter coronation:[/b] a rare permanent transformation combines both identities and ends the form dance with the strongest version of the Queen.
+[*][b]Buster and Criticals:[/b] aggressive Command Cards build pressure while Quick attacks feed the shared Critical Star system for ×1.5 finishing turns.
+[/list]
 
-Found a bug or have feedback? Report it in the discussion thread:
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-To help us fix it fast, please include: which Servant you played and what you did (a screenshot helps); your game log — Steam comments can't attach files, so upload %APPDATA%\SlayTheSpire2\logs\godot.log to a paste site (e.g. pastebin.com) or a file host and paste the LINK, or paste the last ~50 lines; and your full mod list (many bugs are conflicts with other mods).
+[h2]Content[/h2]
+[list]
+[*]81 card models across the starting deck, rewards, two Noble Phantasms and generated cards
+[*]19 character powers and 10 relics
+[*]Animated Fairy Queen, Rain Witch and Winter Queen forms
+[*]Curated official artwork for cards, powers, relics and character UI
+[*]Spanish, English, Simplified Chinese, Korean and Russian localization
+[/list]
 
-Made with the help of Claude Code.
+[h2]Requirements and compatibility[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Built for MAIN 0.107.1 and public BETA 0.109.0
+[/list]
 
-————————————————————
+[h2]Validation status[/h2]
+Build, localization, asset coverage, animation references and package audits pass. Balance, save/load and co-op behavior continue to receive in-game testing.
 
-「Fate/Grand Order」的妖精女王摩根——那位用六十年复仇之心铸成不列颠的暴君，现已作为可操作、全动画的角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Source code and bug reports[/url]
 
-本 Mod 带来：
-- 一名完整角色，配有专属卡池与初始圣遗物。
-- Buster 暴击 + 诅咒的玩法：堆叠暴击威力打出毁灭性的攻击，同时把敌人埋进层层「诅咒」之下，让它们每回合持续掉血。
-- 形态切换：战斗中在狂战士与术士（冬之女王）两个阵位之间来回切换，每个形态都会重塑她的牌组与权能。
-- 宝具「Roadless Camelot」——「那片再也无法抵达的理想之地」。
-- 女王专属圣遗物与诅咒结算卡，奖励耐心铺垫、滚雪球式越打越强的打法。
+Unofficial fan-made mod. Fate/Grand Order characters and official visual assets belong to their respective rights holders. Not affiliated with TYPE-MOON, Lasengle or Mega Crit.
 
-依赖：FGO Core（库）+ BaseLib。
-支持语言：英文、西班牙文、简体中文。
+[hr][/hr]
+[h1]ESPAÑOL[/h1]
+Jugá con la Reina de las Hadas de Fate/Grand Order como un personaje completamente animado: maldecí el campo, danzá entre sus dos vidas y decidí qué Noble Phantasm responderá cuando se llene el medidor.
 
-发现 Bug 或有建议？请在讨论区反馈：
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-为方便我们尽快修复，请附上：你使用的从者 + 具体操作（截图更佳）；游戏日志——Steam 评论无法上传文件，请把 %APPDATA%\SlayTheSpire2\logs\godot.log 传到网盘或贴站（如 pastebin.com）再贴出链接，或直接粘贴最后约 50 行；以及完整的 Mod 列表（很多 Bug 是与其他 Mod 的冲突）。
+[b]VERSIÓN PÚBLICA — v0.1.10[/b]
 
-在 Claude Code 的协助下制作。
+[h2]Mecánicas principales[/h2]
+[list]
+[*][b]Maldición y sentencia:[/b] sembrá Maldición persistente y convertí esas marcas en ataques más fuertes, ejecuciones y control del campo.
+[*][b]Reina y Bruja de la Lluvia:[/b] Morgan Berserker ataca y maldice; Aesc carga NP y resiste con defensa. Cruzar 100 NP manifiesta el Noble Phantasm de la forma activa.
+[*][b]Coronación del Invierno:[/b] una transformación rara y permanente combina ambas identidades y cierra la danza con la versión definitiva de la Reina.
+[*][b]Buster y Críticos:[/b] las Command Cards agresivas sostienen la presión, mientras Quick alimenta el sistema global de Estrellas para turnos finales de ×1,5.
+[/list]
+
+[h2]Contenido[/h2]
+[list]
+[*]81 modelos de carta entre mazo inicial, recompensas, dos Noble Phantasms y cartas generadas
+[*]19 poderes y 10 reliquias propias
+[*]Formas Reina de las Hadas, Bruja de la Lluvia y Reina del Invierno animadas
+[*]Arte oficial curado para cartas, poderes, reliquias e interfaz
+[*]Localización en español, inglés, chino simplificado, coreano y ruso
+[/list]
+
+[h2]Requisitos y compatibilidad[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Compatible con MAIN 0.107.1 y BETA pública 0.109.0
+[/list]
+
+[h2]Estado de validación[/h2]
+Las auditorías de compilación, idiomas, recursos, animaciones y paquete están aprobadas. El balance, guardado/carga y cooperativo continúan en pruebas dentro del juego.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Código fuente y reporte de errores[/url]
+
+Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
+
+[hr][/hr]
+[h1]简体中文[/h1]
+扮演《Fate/Grand Order》的妖精女王：诅咒战场、在两段人生间切换，并决定 NP 充满时由哪一种宝具回应。
+
+[b]公开版本 — v0.1.10[/b]
+
+[h2]核心机制[/h2]
+[list]
+[*][b]诅咒与判决：[/b]为敌人施加持续诅咒，再把标记转化为更强攻击、处决与战场控制。
+[*][b]女王与雨之魔女：[/b]狂战士摩根负责攻击与施咒；梣负责充能 NP 与防守。突破 100 NP 时会显现当前形态的宝具。
+[*][b]冬之加冕：[/b]稀有的永久变身会结合两种身份，以女王的最终姿态结束形态循环。
+[*][b]Buster 与暴击：[/b]进攻型指令卡持续施压，Quick 攻击则为共用暴击星系统供能，创造 ×1.5 的终结回合。
+[/list]
+
+[h2]内容[/h2]
+[list]
+[*]81 个卡牌模型，涵盖初始牌组、奖励、两种宝具及衍生卡
+[*]19 个角色能力与 10 件专属遗物
+[*]妖精女王、雨之魔女与冬之女王动画形态
+[*]卡牌、能力、遗物与角色界面均采用精心筛选的官方美术
+[*]支持西班牙语、英语、简体中文、韩语与俄语
+[/list]
+
+[h2]依赖与兼容性[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]兼容正式版 0.107.1 与公开测试版 0.109.0
+[/list]
+
+[h2]验证状态[/h2]
+构建、本地化、资源覆盖、动画引用及安装包检查均已通过；平衡、存档与联机表现仍在游戏内持续测试。
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]源代码与问题反馈[/url]
+
+本项目为非官方同人 Mod，与 TYPE-MOON、Lasengle 及 Mega Crit 无隶属关系。

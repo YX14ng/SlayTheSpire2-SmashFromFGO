@@ -24,7 +24,7 @@ public sealed class TerritoryCreationEMinus() : OberonCard(0, CardType.Skill, Ca
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
         if (DynamicVars["Np"].IntValue > 0)
         {
-            await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
         }
     }
 

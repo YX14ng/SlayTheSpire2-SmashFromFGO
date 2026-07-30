@@ -29,13 +29,13 @@ public sealed class CharismaOfHope() : ArtoriaCard(2, CardType.Skill, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
 
         // Co-op: el carisma alcanza a todo el party.
         await ForEachAlly(async ally =>
         {
             await PowerCmd.Apply<StrengthPower>(choiceContext, ally, DynamicVars["AllyStrength"].BaseValue, Owner.Creature, this);
-            await NpCharge.Gain(ally, DynamicVars["AllyNpCharge"].IntValue, this);
+            await NpCharge.Gain(choiceContext, ally, DynamicVars["AllyNpCharge"].IntValue, this);
         });
     }
 

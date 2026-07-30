@@ -16,7 +16,7 @@ public sealed class FestivalRehearsal() : ArtoriaCard(1, CardType.Skill, CardRar
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(2),
-        new DynamicVar("Stars", 1)
+        new DynamicVar("Stars", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -26,7 +26,7 @@ public sealed class FestivalRehearsal() : ArtoriaCard(1, CardType.Skill, CardRar
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
         if (Owner.Creature.HasPower<FormShiftedPower>())
         {
-            await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+            await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         }
     }
 

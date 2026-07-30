@@ -43,9 +43,6 @@ public sealed class ClarentTheStolenSword : MordredRelic, ICritConsumedListener
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
-    private int _starProcsThisTurn;
-    private int _npProcsThisTurn;
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Stars", StarsPerHpLoss),
@@ -63,8 +60,6 @@ public sealed class ClarentTheStolenSword : MordredRelic, ICritConsumedListener
     {
         await base.BeforeCombatStartLate();
         if (ReplacedByOverloaded()) return; // la Sobrecargada hace su propio setup (forma + watcher + Chispa)
-        _starProcsThisTurn = 0;
-        _npProcsThisTurn = 0;
         // Forma inicial: Enmascarado (source == null → no cuenta como "cambio de forma").
         await Forms.Enter<MaskedKnightFormPower>(null, Owner.Creature, null);
         // Watcher del motor ★→×2→NP (la pieza que detecta el consumo de Crítico Listo).
@@ -74,26 +69,18 @@ public sealed class ClarentTheStolenSword : MordredRelic, ICritConsumedListener
         await PowerCmd.Apply<RedLightningSparkPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null, silent: true);
     }
 
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player)
-        {
-            _starProcsThisTurn = 0;
-            _npProcsThisTurn = 0;
-        }
-        return Task.CompletedTask;
-    }
-
     /// <summary>Perder Vida → Estrellas (cualquier fuente; máx 3/turno).</summary>
     public override async Task AfterCurrentHpChanged(Creature creature, decimal delta)
     {
         if (ReplacedByOverloaded()) return;
         if (creature != Owner.Creature || delta >= 0) return;
         if (!CombatManager.Instance.IsInProgress) return;
-        if (_starProcsThisTurn >= MaxProcsPerTurn) return;
-        _starProcsThisTurn++;
+        if (FgoCombatState.GetTurn(Owner.Creature, 6, 2) >= MaxProcsPerTurn) return;
+        var context = new BlockingPlayerChoiceContext();
+        await FgoCombatState.IncrementTurn(
+            context, Owner.Creature, 6, MaxProcsPerTurn, null, width: 2);
         Flash();
-        await CritStars.Gain(Owner.Creature, StarsPerHpLoss, null);
+        await CritStars.Gain(context, Owner.Creature, StarsPerHpLoss, null);
     }
 
     /// <summary>Crítico Listo consumido → Carga NP (máx 3/turno).</summary>
@@ -101,9 +88,11 @@ public sealed class ClarentTheStolenSword : MordredRelic, ICritConsumedListener
     {
         if (ReplacedByOverloaded()) return;
         if (!CombatManager.Instance.IsInProgress) return;
-        if (_npProcsThisTurn >= MaxProcsPerTurn) return;
-        _npProcsThisTurn++;
+        if (FgoCombatState.GetTurn(Owner.Creature, 8, 2) >= MaxProcsPerTurn) return;
+        var context = choiceContext ?? new BlockingPlayerChoiceContext();
+        await FgoCombatState.IncrementTurn(
+            context, Owner.Creature, 8, MaxProcsPerTurn, null, width: 2);
         Flash();
-        await NpCharge.Gain(Owner.Creature, NpPerCritConsumed, null);
+        await NpCharge.Gain(context, Owner.Creature, NpPerCritConsumed, null);
     }
 }

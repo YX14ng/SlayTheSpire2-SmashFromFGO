@@ -16,7 +16,7 @@ public sealed class SelectionStaffGuide() : ArtoriaCard(2, CardType.Skill, CardR
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(3),
-        new DynamicVar("Stars", 2)
+        new DynamicVar("Stars", 20)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -24,7 +24,7 @@ public sealed class SelectionStaffGuide() : ArtoriaCard(2, CardType.Skill, CardR
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

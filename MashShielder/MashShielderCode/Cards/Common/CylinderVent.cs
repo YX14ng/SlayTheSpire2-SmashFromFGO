@@ -29,8 +29,8 @@ public sealed class CylinderVent() : MashShielderCard(0, CardType.Skill, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (!await NpCharge.Spend(Owner.Creature, DynamicVars["NpCost"].IntValue, this)) return;
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        if (!await NpCharge.Spend(choiceContext, Owner.Creature, DynamicVars["NpCost"].IntValue, this)) return;
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

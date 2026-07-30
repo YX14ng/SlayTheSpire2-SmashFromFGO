@@ -22,10 +22,16 @@ namespace FGOCore.FGOCoreCode;
 /// una carta poderosa"), y si tampoco hay, a cualquier carta del pool. Así DustyTome siempre entrega una
 /// carta válida de SU PROPIO pool en vez de crashear. Usa PlayerRng.Rewards (local, MP-safe) igual que el
 /// original. Si el personaje SÍ tiene cartas Ancient (Siegfried), deja correr el original sin tocar nada.
+///
+/// Compatibilidad: Acheron instala otro prefix que repite el acceso inseguro a la lista vacía. Este
+/// prefix debe ejecutarse primero; al devolver false para los personajes afectados, Harmony omite los
+/// prefixes mutadores posteriores y evita que Acheron reabra el mismo crash.
 /// </summary>
 [HarmonyPatch(typeof(DustyTome), nameof(DustyTome.SetupForPlayer))]
 internal static class DustyTomeHardening
 {
+    [HarmonyPriority(Priority.First)]
+    [HarmonyBefore("Acheron")]
     private static bool Prefix(DustyTome __instance, Player player)
     {
         var pool = player.Character.CardPool

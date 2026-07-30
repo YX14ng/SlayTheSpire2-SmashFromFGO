@@ -32,7 +32,7 @@ public sealed class LowerTheVisor() : MordredCard(1, CardType.Skill, CardRarity.
         // El yelmo PRIMERO: el bloqueo entra ya bajo el Baluarte de Enmascarado.
         await Forms.Enter<MaskedKnightFormPower>(choiceContext, Owner.Creature, this);
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()

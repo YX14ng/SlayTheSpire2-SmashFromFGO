@@ -30,7 +30,7 @@ public sealed class CharismaOfAdversityPower : MorganPower
     }
 
     // ModifyDamageAdditive es DELTA (default 0).
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (Owner != dealer || !props.IsPoweredAttack()) return 0m;
         return ThresholdsCrossed * Amount;

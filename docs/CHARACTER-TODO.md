@@ -6,16 +6,30 @@ mod permanente.
 
 ## Pendientes
 
-- [ ] **Nagao Kagetora / Uesugi Kenshin**
-  - Alcance por definir: decidir si ambas identidades funcionan como progresión, formas o un único
-    kit integrado.
-  - Pendiente: investigación canónica, identidad mecánica, diseño del pool y plan de assets.
+- Ningún personaje sin diseño asignado.
 
-- [ ] **Shuten Dōji — Assassin/Caster híbrida**
-  - Será **un solo personaje y un solo mod**, no dos versiones separadas.
-  - El pool debe permitir builds centradas en Assassin, centradas en Caster y combinaciones híbridas.
-  - Pendiente: definir el puente mecánico entre ambos roles, sus recursos, el clímax y el plan de
-    assets antes de diseñar las cartas.
+## En validación
+
+- [x] **Astolfo — Rider**
+  - Mod `AstolfoRider` implementado: Caprichos Q/A/B, Críticos v2, Evasión compartida, Hippogriff,
+    68 recompensas (20/28/20), mazo inicial de 10, 1 NP, 35 powers y 12 reliquias.
+  - Producción visual oficial `400400`, 180 cuadros animados, 80 retratos de modelo, iconos propios,
+    selector, mapa, mercader y descanso. MAIN/BETA, SimpleLoc y PCK optimizado validados.
+  - Pendiente: playtest dentro del juego, guardado/carga, cooperativo y decisión de Workshop.
+  - Fuente de verdad: [`DESIGN-ASTOLFO.md`](DESIGN-ASTOLFO.md).
+
+- [x] **Shuten Dōji — Assassin/Caster híbrida**
+  - Mod `ShutenDouji` implementado: Sake, Cross, 68 recompensas, 5 iniciales propias, 2 NP, 12
+    reliquias, español/inglés completos y paridad estructural en cinco idiomas.
+  - Producción visual oficial `602100`: animaciones, 80 retratos de carta, iconos, selector, mapa,
+    mercader y descanso. MAIN/BETA y el PCK optimizado pasan las auditorías automáticas.
+  - Pendiente: playtest dentro del juego, guardado/carga, cooperativo y decisión de Workshop.
+
+- [x] **Nagao Kagetora / Uesugi Kenshin**
+  - Diseño, mod `KagetoraLancer`, Doctrina, ascensión, 68 cartas de recompensa, dos NP, 12
+    reliquias y cinco idiomas implementados.
+  - Las dos formas ya tienen animaciones oficiales. Pendiente: arte de cartas/reliquias,
+    UI/feedback de Doctrina, VFX/audio y playtest dentro del juego (guardado/carga y cooperativo).
 
 ## Implementados
 

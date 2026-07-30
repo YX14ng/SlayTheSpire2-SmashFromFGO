@@ -25,7 +25,7 @@ public sealed class EveningShroudPower : OberonPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicativeFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || Amount <= 0 || cardSource is not IOberonNpCard) return 1m;
         return 1m + BonusPct / 100m;
@@ -33,7 +33,7 @@ public sealed class EveningShroudPower : OberonPower
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side || Owner.IsDead) return;
+        if (!participants.Contains(Owner) || Owner.IsDead) return;
         await PowerCmd.Decrement(this);
     }
 }

@@ -13,13 +13,28 @@ $sz = 256
 # pool de fuentes = portadas big (excluye card.png)
 $pool = @(Get-ChildItem "$img\card_portraits\big\*.png" -ErrorAction SilentlyContinue | Where-Object { $_.Name -ne 'card.png' })
 if ($pool.Count -eq 0) { Write-Output "${ProjId}: sin portadas de origen"; exit }
+$sourceMap = @{}
+$mappingPath = "$Root\assets\reference\icons\mapping_$($ProjId.ToLowerInvariant()).csv"
+if (Test-Path $mappingPath) {
+  foreach ($row in (Import-Csv $mappingPath)) { $sourceMap["$($row.kind):$($row.name)"] = $row.source }
+}
 
 function Entries($file) {
   if (-not (Test-Path $file)) { return @() }
   $t = [System.IO.File]::ReadAllText($file, [System.Text.Encoding]::UTF8)
   [regex]::Matches($t, [regex]::Escape($prefix)+'([A-Z0-9_]+)\.title') | ForEach-Object { $_.Groups[1].Value.ToLowerInvariant() } | Select-Object -Unique
 }
-function PickSrc($name) { $h=0; foreach($c in $name.ToCharArray()){ $h=($h*31 + [int]$c) % 2147483647 }; $pool[$h % $pool.Count].FullName }
+function PickSrc($kind,$name) {
+  $mapped = $sourceMap["${kind}:$name"]
+  if ($mapped) {
+    $mappedPath = "$img\card_portraits\big\$mapped.png"
+    if (Test-Path $mappedPath) { return $mappedPath }
+  }
+  $candidate = $name -replace '_power$',''
+  $candidatePath = "$img\card_portraits\big\$candidate.png"
+  if (Test-Path $candidatePath) { return $candidatePath }
+  $h=0; foreach($c in $name.ToCharArray()){ $h=($h*31 + [int]$c) % 2147483647 }; $pool[$h % $pool.Count].FullName
+}
 
 function CircleIcon($srcPng, $out, $size) {
   $im = New-Object System.Drawing.Bitmap($srcPng)
@@ -39,12 +54,12 @@ New-Item -ItemType Directory -Force "$img\powers\big","$img\relics\big" | Out-Nu
 $np=0
 foreach ($name in (Entries "$loc\powers.json")) {
   if (Test-Path "$img\powers\$name.png") { } # sobrescribe igual
-  CircleIcon (PickSrc $name) "$img\powers\$name.png" $sz
+  CircleIcon (PickSrc 'power' $name) "$img\powers\$name.png" $sz
   Copy-Item "$img\powers\$name.png" "$img\powers\big\$name.png" -Force; $np++
 }
 $nr=0
 foreach ($name in (Entries "$loc\relics.json")) {
-  CircleIcon (PickSrc $name) "$img\relics\$name.png" $sz
+  CircleIcon (PickSrc 'relic' $name) "$img\relics\$name.png" $sz
   Copy-Item "$img\relics\$name.png" "$img\relics\big\$name.png" -Force
   Outline "$img\relics\$name.png" "$img\relics\${name}_outline.png"; $nr++
 }

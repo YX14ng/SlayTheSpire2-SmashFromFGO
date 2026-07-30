@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 
 namespace OkitaSaber.OkitaSaberCode.Powers;
 
@@ -19,5 +20,6 @@ public sealed class SwordGeniusPower : AttackDamageAdditivePower
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritReadyPower>()];
 
     // Solo el golpe que va a criticar (hay un Crítico Listo en cola) recibe el bono.
-    protected override bool BonusApplies() => Owner.GetPowerAmount<CritReadyPower>() > 0;
+    protected override bool BonusApplies(CardModel? cardSource, CardPlay? cardPlay) =>
+        cardSource != null && Criticals.WillCrit(Owner, cardSource);
 }

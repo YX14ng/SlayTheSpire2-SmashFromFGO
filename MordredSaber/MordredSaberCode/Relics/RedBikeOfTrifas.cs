@@ -25,6 +25,6 @@ public sealed class RedBikeOfTrifas : MordredRelic
     {
         if (cardPlay.Card.Owner != Owner || cardPlay.Card is not IQuickCard) return;
         Flash();
-        await CritStars.Gain(Owner.Creature, ExtraStars, null);
+        await CritStars.Gain(context, Owner.Creature, ExtraStars, null);
     }
 }

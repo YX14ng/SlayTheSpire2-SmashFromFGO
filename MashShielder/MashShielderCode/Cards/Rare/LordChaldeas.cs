@@ -38,7 +38,7 @@ public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
         // NP level (dupes): +15% per level over the full amount, added as flat extra.
         var total = DynamicVars.Block.BaseValue + bonus;
@@ -54,7 +54,7 @@ public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRar
         // Co-op (NP propio de Mash, la muralla de Chaldeas que ampara a TODOS): cada aliado vivo
         // recibe una porción fija de Baluarte. En 1 jugador PlayerCreatures es solo el Owner -> el
         // foreach queda vacío (idéntico a hoy).
-        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
+        foreach (var ally in Owner.Creature.CombatState!.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
         {
             await BlockRetention.GainBulwarkBlock(this, ally, DynamicVars["AllyBlock"].BaseValue);
         }

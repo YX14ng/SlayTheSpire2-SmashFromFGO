@@ -1,6 +1,6 @@
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using FGOCore.FGOCoreCode.Seal;
 
 namespace TiamatBeast.TiamatCode.Powers.Seal;
 
@@ -27,28 +27,24 @@ public static class Sello
 
     /// <summary>¿La intención ACTUAL del enemigo es una habilidad sellable (no un ataque)?
     /// Lectura pura sobre el <c>NextMove</c> ya roleado. Un STUNNED (ya cancelado) no es sellable.</summary>
-    public static bool IntendsToUseSkill(Creature creature)
-    {
-        if (creature.Monster == null || creature.IsDead) return false;
-        if (creature.IsStunned) return false; // ya cancelado este turno
-        return !creature.Monster.IntendsToAttack;
-    }
+    public static bool IntendsToUseSkill(Creature creature) => SkillSeal.IntendsToUseSkill(creature);
 
     /// <summary>
     /// Sella al objetivo: aplica el <see cref="SkillSealPower"/> (duración en Counter) y, si su
     /// intención ACTUAL es una habilidad, la CANCELA ya mismo (Stun). Devuelve true si selló.
     /// </summary>
-    public static async Task<bool> Apply(Creature target, int duration, Creature? applier, MegaCrit.Sts2.Core.Models.CardModel? source)
-    {
-        if (target.IsDead || duration <= 0) return false;
+    public static Task<bool> Apply(
+        Creature target,
+        int duration,
+        Creature? applier,
+        MegaCrit.Sts2.Core.Models.CardModel? source) =>
+        Apply(new BlockingPlayerChoiceContext(), target, duration, applier, source);
 
-        await PowerCmd.Apply<SkillSealPower>(new BlockingPlayerChoiceContext(), target, duration, applier, source);
-
-        // Cancelá la habilidad ya intencionada (si la hay): la marea le ahoga la técnica ESTE turno.
-        if (IntendsToUseSkill(target))
-        {
-            await CreatureCmd.Stun(target);
-        }
-        return true;
-    }
+    public static Task<bool> Apply(
+        PlayerChoiceContext choiceContext,
+        Creature target,
+        int duration,
+        Creature? applier,
+        MegaCrit.Sts2.Core.Models.CardModel? source)
+        => SkillSeal.Apply<SkillSealPower>(choiceContext, target, duration, applier, source);
 }

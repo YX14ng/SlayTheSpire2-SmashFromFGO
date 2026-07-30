@@ -19,7 +19,7 @@ public sealed class WallsOfUruk() : GilgameshCard(2, CardType.Skill, CardRarity.
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     protected override void OnUpgrade()

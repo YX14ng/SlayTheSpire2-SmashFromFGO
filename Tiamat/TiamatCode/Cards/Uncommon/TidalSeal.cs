@@ -26,8 +26,8 @@ public sealed class TidalSeal() : TiamatCard(1, CardType.Skill, CardRarity.Uncom
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await Sello.Apply(cardPlay.Target, DynamicVars["Seal"].IntValue, Owner.Creature, this);
-        await Curses.Apply(cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+        await Sello.Apply(choiceContext, cardPlay.Target, DynamicVars["Seal"].IntValue, Owner.Creature, this);
+        await Curses.Apply(choiceContext, cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Curse"].UpgradeValueBy(2m);

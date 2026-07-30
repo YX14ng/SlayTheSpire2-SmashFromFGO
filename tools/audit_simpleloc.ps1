@@ -1,17 +1,30 @@
-# Audita los .json de localizacion contra los regex de BaseLib SimpleLoc.Simplify:
-# reporta strings donde el UpgradeSwapRegex (-...- / +...+) o el PluralizeRegex
-# alterarian el texto (en nuestros mods esos matches son SIEMPRE bugs: hay que
-# escapar /+ /- o reformular). Las transformaciones de *oro*, $azul$, !var! son
-# intencionales y no se reportan.
-param([string[]]$Roots = @(
-        "f:\Programs\SlayTheSpire2-SmashFromFGO\MashShielder\MashShielder\localization",
-        "f:\Programs\SlayTheSpire2-SmashFromFGO\MorganBerserker\MorganBerserker\localization",
-        "f:\Programs\SlayTheSpire2-SmashFromFGO\ArtoriaCaster\ArtoriaCaster\localization",
-        "f:\Programs\SlayTheSpire2-SmashFromFGO\FGOCore\FGOCore\localization"))
+# Audita ambiguedades de SimpleLoc sin reportar su sintaxis intencional.
+# Solo las cadenas que empiezan con # pasan por SimpleLoc.TrySimplify.
+param([string[]]$Roots)
+
+$repoRoot = Split-Path $PSScriptRoot -Parent
+if (!$Roots) {
+    $Roots = @(
+        (Join-Path $repoRoot "MashShielder\MashShielder\localization"),
+        (Join-Path $repoRoot "MorganBerserker\MorganBerserker\localization"),
+        (Join-Path $repoRoot "ArtoriaCaster\ArtoriaCaster\localization"),
+        (Join-Path $repoRoot "MordredSaber\MordredSaber\localization"),
+        (Join-Path $repoRoot "GilgameshArcher\GilgameshArcher\localization"),
+        (Join-Path $repoRoot "OkitaSaber\OkitaSaber\localization"),
+        (Join-Path $repoRoot "OberonPretender\OberonPretender\localization"),
+        (Join-Path $repoRoot "SiegfriedSaber\SiegfriedSaber\localization"),
+        (Join-Path $repoRoot "Tiamat\TiamatBeast\localization"),
+        (Join-Path $repoRoot "KagetoraLancer\KagetoraLancer\localization"),
+        (Join-Path $repoRoot "ShutenDouji\ShutenDouji\localization"),
+        (Join-Path $repoRoot "AstolfoRider\AstolfoRider\localization"),
+        (Join-Path $repoRoot "FGOCore\FGOCore\localization")
+    )
+}
 
 # Copias exactas de los patrones de SimpleLoc.cs (decompilado BaseLib 3.2.1)
 $upgradeSwap = [regex]'(?<=^|[^/])(?:(?:-(.+?)-)|(?:\+(.*?[^/])\+))(?:\+(.*?[^/])\+)?'
 $goldHighlight = [regex]'(?<=^|[^/])\*({.+?}|.+?(?=$|[\s*.,|}]))\*?'
+$blueHighlight = [regex]'(?<=^|[^/])\$({.+?}|.+?(?=$|[\s$.,|}]))\$?'
 $diffVariable = [regex]'!(.*?)!'
 $pluralize = [regex]'(.*?{)([^{]+?)((?::[^{]*)?}(?:(?:[^{]*?[^{/])|(?:)))\(([^()]+?)\)'
 
@@ -21,20 +34,56 @@ foreach ($root in $Roots) {
         $j = Get-Content $f.FullName -Raw -Encoding UTF8 | ConvertFrom-Json
         foreach ($p in $j.PSObject.Properties) {
             $t = [string]$p.Value
-            if ($t.StartsWith('#')) { $t = $t.Substring(1) }
+            if (!$t.StartsWith('#')) { continue }
+            $t = $t.Substring(1)
             # mismo orden que Simplify: oro y variables primero (afectan a pluralize)
             $sim = $goldHighlight.Replace($t, '[gold]$1[/gold]')
+            $sim = $blueHighlight.Replace($sim, '[blue]$1[/blue]')
             $sim = $diffVariable.Replace($sim, '{$1:diff()}')
-            $plMatch = $pluralize.Match($sim)
-            $upMatch = $upgradeSwap.Match($sim)
-            if ($upMatch.Success -or $plMatch.Success) {
+
+            # Una palabra destacada sin delimitador claro puede atravesar un bloque +mejora+.
+            # Al ocultar ese bloque queda una etiqueta RichText abierta y el juego imprime
+            # literalmente su cierre automatico [/center]. Reproducir el upgrade swap permite
+            # detectar el resultado real que recibe la carta.
+            $rendered = $upgradeSwap.Replace($sim, {
+                param($m)
+                $base = $m.Groups[1].Value
+                $upgraded = $m.Groups[2].Value + $m.Groups[3].Value
+                return "{IfUpgraded:show:$upgraded|$base}"
+            })
+            $badTags = @()
+            foreach ($tag in @('gold', 'blue')) {
+                $opens = ([regex]::Matches($rendered, "\[$tag\]")).Count
+                $closes = ([regex]::Matches($rendered, "\[/$tag\]")).Count
+                if ($opens -ne $closes) {
+                    $badTags += "$tag ($opens/$closes)"
+                }
+            }
+
+            # Un sufijo plural legitimo es corto y no contiene espacios. Una aclaracion
+            # como !D!(hasta 2) debe escribirse !D!/(hasta 2).
+            $badPlural = $pluralize.Matches($sim) |
+                Where-Object { $_.Groups[4].Value -notmatch '^[^\s()]{1,8}$' } |
+                Select-Object -First 1
+
+            # Los bloques +texto+ y -base-+mejora+ son sintaxis valida. El caso
+            # sospechoso es un + literal pegado a un numero/variable: /+!Var!.
+            $badUpgrade = $upgradeSwap.Matches($sim) |
+                Where-Object {
+                    $_.Value -notmatch '^-[^-]+-\+.*\+$' -and
+                    $_.Value -match '^\+[0-9{]'
+                } |
+                Select-Object -First 1
+
+            if ($badUpgrade -or $badPlural -or $badTags.Count -gt 0) {
                 $hits++
-                $rel = $f.FullName.Replace("f:\Programs\SlayTheSpire2-SmashFromFGO\", "")
+                $rel = $f.FullName.Replace("$repoRoot\", "")
                 Write-Output "== $rel :: $($p.Name)"
-                if ($upMatch.Success) { Write-Output "   UPGRADE-SWAP mangle: <<$($upMatch.Value)>>" }
-                if ($plMatch.Success) { Write-Output "   PLURALIZE mangle: <<$($plMatch.Groups[2].Value)}($($plMatch.Groups[4].Value))>>" }
+                if ($badUpgrade) { Write-Output "   LITERAL +/- sin escape: <<$($badUpgrade.Value)>>" }
+                if ($badPlural) { Write-Output "   PARENTESIS sin escape: <<$($badPlural.Groups[2].Value)}($($badPlural.Groups[4].Value))>>" }
+                if ($badTags.Count -gt 0) { Write-Output "   ETIQUETAS DESBALANCEADAS: $($badTags -join ', ')" }
             }
         }
     }
 }
-Write-Output "TOTAL strings afectadas: $hits"
+Write-Output "TOTAL ambiguedades: $hits"

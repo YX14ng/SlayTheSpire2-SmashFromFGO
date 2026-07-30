@@ -1,0 +1,12 @@
+{
+  "FGOCORE-HOLY_GRAIL_RITUAL.title": "Un recipiente más allá de los límites",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.description": "Un cáliz dorado descansa ante ti, rebosante de poder suficiente para superar los límites de un Servant. No exige sangre ni un deseo: sólo una ofrenda digna.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL.title": "[Ofrecer !Gold! de oro] Realizar la Palingénesis.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL_LOCKED.title": "[Bloqueado] Necesitas !Gold! de oro.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL_LOCKED.description": "El recipiente permanece en silencio. Tu ofrenda no es suficiente.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.DECLINE.title": "[Marcharse] Rechazar el Grial.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.DECLINE.description": "Algunos límites existen por una razón.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.APPLIED.description": "La ofrenda desaparece en una luz dorada. El Grial responde y rehace tu Saint Graph más allá de sus antiguos límites.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.DECLINED.description": "Te alejas. La luz dorada se desvanece sin protestar.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.UNAVAILABLE.description": "El ritual ya no puede completarse. La luz del Grial se retira."
+}

@@ -21,27 +21,20 @@ public sealed class GudagudaPoster : OkitaRelic
 
     private const int Stars = 50;
 
-    private bool _firedThisCombat;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<AlientoPower>(), HoverTipFactory.FromPower<CritStarsPower>()];
 
-    public override Task BeforeCombatStartLate()
-    {
-        _firedThisCombat = false;
-        return base.BeforeCombatStartLate();
-    }
-
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != CombatSide.Player || _firedThisCombat) return;
+        if (!participants.Contains(Owner.Creature) ||
+            FgoCombatState.GetCombat(Owner.Creature, 9) != 0) return;
         var breath = Aliento.Power(Owner.Creature);
         // Aliento.Spend remueve el power al tocar 0 (Amount 0), por eso comprobamos ambos: la marca
         // del turno (si el power sigue vivo) o que el contador esté efectivamente en 0.
         var hitZero = Aliento.HitZeroThisTurn(Owner.Creature) || Aliento.Of(Owner.Creature) <= 0;
         if (!hitZero) return;
-        _firedThisCombat = true;
+        await FgoCombatState.SetCombat(choiceContext, Owner.Creature, 9, 1);
         Flash();
-        await CritStars.Gain(Owner.Creature, Stars, null);
+        await CritStars.Gain(choiceContext, Owner.Creature, Stars, null);
     }
 }

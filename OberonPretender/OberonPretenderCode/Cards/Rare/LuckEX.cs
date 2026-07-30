@@ -21,7 +21,7 @@ public sealed class LuckEX() : OberonCard(1, CardType.Power, CardRarity.Rare, Ta
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<LuckExPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        if (power != null) power.Stars = DynamicVars["Stars"].IntValue;
+        if (power != null) power.Stars = Math.Max(power.Stars, DynamicVars["Stars"].IntValue);
     }
 
     protected override void OnUpgrade() => DynamicVars["Stars"].UpgradeValueBy(10m);

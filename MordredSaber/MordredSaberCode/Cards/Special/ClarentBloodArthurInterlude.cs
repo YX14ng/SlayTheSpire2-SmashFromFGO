@@ -51,18 +51,18 @@ public sealed class ClarentBloodArthurInterlude() : MordredCard(0, CardType.Atta
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / OverchargePer;
         var authority = Owner.Creature.VersusAuthority() ? DynamicVars["Authority"].BaseValue : 0;
 
         var perHit = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge + authority);
         for (var i = 0; i < DynamicVars["Hits"].IntValue; i++)
         {
-            await DamageCmd.Attack(perHit).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState!)
+            await DamageCmd.Attack(perHit).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
                 .WithHitFx("vfx/vfx_starry_impact")
                 .Execute(choiceContext);
         }
 
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Refund"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Refund"].IntValue, this);
     }
 }

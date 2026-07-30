@@ -22,6 +22,6 @@ public sealed class TidalCorePower : TiamatPower
     {
         if (player != Owner.Player || Owner.Player == null) return;
         Flash();
-        await NpCharge.Gain(Owner, NpPerStack * Amount, null);
+        await NpCharge.Gain(choiceContext, Owner, NpPerStack * Amount, null);
     }
 }

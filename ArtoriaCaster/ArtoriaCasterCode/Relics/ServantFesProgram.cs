@@ -14,7 +14,7 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Relics;
 /// </summary>
 public sealed class ServantFesProgram : ArtoriaRelic
 {
-    public const int StarsPerNp = 3;
+    public const int StarsPerNp = 30;
 
     public override RelicRarity Rarity => RelicRarity.Rare;
 
@@ -25,6 +25,6 @@ public sealed class ServantFesProgram : ArtoriaRelic
     {
         if (cardPlay.Card.Owner != Owner || cardPlay.Card is not IArtoriaNpCard) return;
         Flash();
-        await Stars.Gain(Owner.Creature, StarsPerNp, null);
+        await Stars.Gain(context, Owner.Creature, StarsPerNp, null);
     }
 }

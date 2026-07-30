@@ -24,13 +24,13 @@ public sealed class EndOfTheTale() : OberonCard(2, CardType.Attack, CardRarity.R
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var wasAlive = !cardPlay.Target.IsDead;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         if (wasAlive && cardPlay.Target.IsDead)
         {
-            await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
-            await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
+            await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         }
     }
 

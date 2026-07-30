@@ -23,6 +23,6 @@ public sealed class CrownOfLightningPower : MordredPower
     {
         if (player != Owner.Player || Owner.Player == null || Owner.IsDead) return;
         Flash();
-        await CritStars.Gain(Owner, StarsPerTurn * (int)Amount, null);
+        await CritStars.Gain(choiceContext, Owner, StarsPerTurn * (int)Amount, null);
     }
 }

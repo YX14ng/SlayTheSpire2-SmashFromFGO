@@ -21,8 +21,8 @@ public sealed class DiscardedPrototype() : GilgameshCard(0, CardType.Attack, Car
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await AttackTarget(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     protected override void OnUpgrade()

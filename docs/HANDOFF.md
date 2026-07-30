@@ -1,5 +1,20 @@
 # HANDOFF — avance y tareas pendientes (para Claude Code en otra PC)
 
+> **Delta 2026-07-26 — coreano y ruso publicados.** FGOCore y los nueve personajes están en cinco
+> idiomas (`eng`, `esp`, `zhs`, `kor`, `rus`). Versiones: FGOCore `v0.1.7`, personajes `v0.1.9` y
+> Siegfried `v0.1.10`; dependencias mínimas sincronizadas. La auditoría comprobó 110 archivos y
+> 2.271 valores por idioma, 0 errores de claves/marcadores y 0 ambigüedades SimpleLoc. SteamCMD
+> confirmó las diez actualizaciones; staging y `dist` coinciden en sus 30 artefactos por SHA-256.
+
+> **Obsoleto como fuente de estado.** Desde 2026-06-25, leer primero `STATUS.md`, `DECISIONS.md`
+> y `FINDINGS.md`. Último delta (2026-07-16): auditoría integral de FGOCore + nueve personajes
+> completada; los 10 proyectos compilan Release con 0 errores y 0 warnings, y los nueve paquetes de
+> personaje quedaron regenerados en `dist/`. Se corrigieron contextos de elección, tipos de comando,
+> reliquias/mazos iniciales, IDs de modelos, previews null-safe y sintaxis SimpleLoc. El lote completo
+> de FGOCore + nueve personajes se subió a sus diez items existentes: SteamCMD confirmó Success y el
+> staging coincide por SHA-256 con `dist/`. No se instaló localmente; pendiente playtest en MAIN.
+> El fix visual global anterior sí había sido exportado y subido a los nueve personajes.
+
 Escrito 2026-06-11 al pasar el desarrollo a otra máquina (Linux). Leer PRIMERO
 [WORKFLOW-FGO.md](WORKFLOW-FGO.md) (el playbook con la tabla de gotchas) y CLAUDE.md.
 El usuario se comunica en español.

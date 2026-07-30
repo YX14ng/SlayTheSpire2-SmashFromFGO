@@ -18,24 +18,11 @@ public sealed class HawkMoth : OberonRelic
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    private bool _firedThisTurn;
-
-    public override Task BeforeCombatStartLate()
-    {
-        _firedThisTurn = false;
-        return base.BeforeCombatStartLate();
-    }
-
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player) _firedThisTurn = false;
-        return Task.CompletedTask;
-    }
-
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (_firedThisTurn || cardPlay.Card.Owner != Owner || cardPlay.Card is not IQuickCard) return;
-        _firedThisTurn = true;
+        if (FgoCombatState.GetTurn(Owner.Creature, 1) != 0 ||
+            cardPlay.Card.Owner != Owner || cardPlay.Card is not IQuickCard) return;
+        await FgoCombatState.SetTurn(context, Owner.Creature, 1, 1, cardPlay.Card);
         Flash();
         await CardPileCmd.Draw(context, 1, Owner);
     }

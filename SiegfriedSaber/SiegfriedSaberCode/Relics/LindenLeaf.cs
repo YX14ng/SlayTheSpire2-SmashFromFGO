@@ -19,7 +19,8 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Relics;
 /// La Hoja de Tilo (菩提叶之弱点) — reliquia starter de Siegfried y motor de su identidad.
 /// Al iniciar cada combate otorga <see cref="DragonScalesPower"/> (Sangre de Dragón) inicial.
 /// Su gancho <see cref="IDragonScalePiercer"/> hace que el PRIMER golpe que te ALCANZA cada
-/// turno IGNORE las escamas (la espalda expuesta — la debilidad canónica hecha regla).
+/// turno ignore 1 escama (la espalda expuesta — la debilidad canónica hecha regla); las
+/// acumulaciones restantes todavía reducen ese golpe.
 /// Cuando un golpe SÍ reducido por las escamas aún inflige ≥1 (P2: la armadura no trabajó
 /// gratis), refunda +5 NP, con tope de 3 procs/turno (P1/P3).
 ///
@@ -91,35 +92,21 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelSt
     private const int NpPerReducedHit = 5;   // +NP por golpe reducido con residual ≥1 (§8.1)
     private const int NpProcCapPerTurn = 3;  // tope agregado del trigger defensivo (P1/P3)
 
-    private bool _piercedThisTurn;
-    private int _npProcsThisTurn;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DragonScalesPower>()];
 
-    // LECTURA PURA: no muta estado (el consumo va en AfterDamageReceived). Pasa el primer
-    // golpe que alcanza cada turno; los siguientes chocan contra las escamas.
+    // LECTURA PURA: no muta estado (el consumo va en AfterDamageReceived). El primer golpe
+    // que alcanza cada turno atraviesa 1 escama; los siguientes chocan contra todas.
     public bool ShouldPierceScales(ValueProp props, Creature? dealer)
     {
         if (IsPierceSuppressed()) return false; // Tarnkappe: la espalda ya no está expuesta
-        return !_piercedThisTurn;
+        return FgoCombatState.GetTurn(Owner.Creature, 2) == 0;
     }
 
     public override async Task BeforeCombatStartLate()
     {
         await base.BeforeCombatStartLate();
-        _piercedThisTurn = false;
-        _npProcsThisTurn = 0;
+        await CommandBonusPower.EnsureInstalled(Owner.Creature);
         await PowerCmd.Apply<DragonScalesPower>(new BlockingPlayerChoiceContext(), Owner.Creature, StartingScales, Owner.Creature, null);
-    }
-
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player)
-        {
-            _piercedThisTurn = false;
-            _npProcsThisTurn = 0;
-        }
-        return Task.CompletedTask;
     }
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
@@ -136,7 +123,7 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelSt
         // parcialmente bloqueados del turno. Si el cupo del pierce y el de la Corona siguen libres,
         // tratamos este golpe como el que ALCANZO (consume ambos cupos via Broadcast).
         var crownAnnulled = false;
-        if (result.WasFullyBlocked && !_piercedThisTurn && !IsPierceSuppressed())
+        if (result.WasFullyBlocked && FgoCombatState.GetTurn(Owner.Creature, 2) == 0 && !IsPierceSuppressed())
         {
             foreach (var p in FGOCore.FGOCoreCode.Listeners.PowersOf<SiegfriedSaber.SiegfriedSaberCode.Powers.PeerlessCrownPower>(Owner.Creature))
             {
@@ -149,13 +136,14 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelSt
         if (IsPierceSuppressed()) return;
 
         // Espeja la decisión del power para ESTE golpe que alcanza: si el cupo seguía libre,
-        // el power dejó pasar el golpe (espalda expuesta) → consumilo. Acá, en el camino REAL
+        // el power dejó que el golpe atravesara 1 escama (espalda expuesta) → consumilo. Acá, en el camino REAL
         // del daño (no en la lectura pura ShouldPierceScales, que un preview podría disparar),
         // avisamos a los listeners del pierce (p.ej. la carta Cicatriz del Tilo). La reliquia
         // no añade efecto propio al pierce; los riders viven en los listeners.
-        if (!_piercedThisTurn)
+        if (FgoCombatState.GetTurn(Owner.Creature, 2) == 0)
         {
-            _piercedThisTurn = true;
+            await FgoCombatState.SetTurn(
+                choiceContext, Owner.Creature, 2, 1, cardSource);
             await DragonScalesPierce.Broadcast(Owner.Creature, choiceContext);
             return;
         }
@@ -167,11 +155,13 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelSt
         // Expuesta/ISdDSuppressor) no redujeron nada y no corresponde pagar.
         var scalesWorked = Owner.Creature.GetPowerAmount<DragonScalesPower>() > 0
                            && !FGOCore.FGOCoreCode.Listeners.PowersOf<ISdDSuppressor>(Owner.Creature).Any(s => s.SuppressScales);
-        if (scalesWorked && result.UnblockedDamage >= 1 && _npProcsThisTurn < NpProcCapPerTurn)
+        if (scalesWorked && result.UnblockedDamage >= 1 &&
+            FgoCombatState.GetTurn(Owner.Creature, 3, 2) < NpProcCapPerTurn)
         {
-            _npProcsThisTurn++;
+            await FgoCombatState.IncrementTurn(
+                choiceContext, Owner.Creature, 3, NpProcCapPerTurn, cardSource, width: 2);
             Flash();
-            await NpCharge.Gain(Owner.Creature, NpPerReducedHit, null);
+            await NpCharge.Gain(choiceContext, Owner.Creature, NpPerReducedHit, null);
         }
     }
 

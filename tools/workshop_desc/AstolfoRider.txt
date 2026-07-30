@@ -1,0 +1,118 @@
+[h1]Astolfo — Follow the Next Caprice[/h1]
+Match a different Command each turn, turn Quick attacks into Critical Stars and summon Hippogriff to escape the hits that truly matter.
+
+[b]PLAYTEST BUILD — v0.1.1[/b]
+The character and presentation are complete for testing; balance, save/load and co-op validation are still in progress.
+
+[h2]Core gameplay[/h2]
+[list]
+[*][b]Caprice bag:[/b] a visible no-repeat bag draws Quick, Arts or Buster. Match the Command to gain Stars, NP Charge or bonus damage—or manipulate the bag when the hand has better plans.
+[*][b]Critical Stars:[/b] Quick attacks generate Stars through FGO Core. Save 50 to prepare a ×1.5 Critical, or spend Stars on Energy, NP and Evasion.
+[*][b]Evasion:[/b] up to 3 charges avoid enemy Attack hits after Block and Buffer. Cards can preserve, spend or convert those charges into defense.
+[*][b]Hippogriff:[/b] a Sure Hit, unblockable area Quick Noble Phantasm that consumes all NP, fills Evasion and generates Overcharge Stars.
+[*][b]Four treasures:[/b] Argalia's lance, Casseur de Logistille, La Black Luna and Hippogriff provide control, cleansing and boss answers without becoming a random generated arsenal.
+[/list]
+
+[h2]Content[/h2]
+[list]
+[*]68-card reward pool and a 10-card starting deck
+[*]1 manifested Noble Phantasm
+[*]35 character powers and 12 relics
+[*]Animated official Rider battle model: idle, Quick attack, cast, hurt and death
+[*]Official artwork selected for cards, powers, relics and character UI
+[*]Spanish, English and Simplified Chinese text; Korean and Russian files use a safe English fallback
+[/list]
+
+[h2]Requirements and compatibility[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Built for MAIN 0.107.1 and public BETA 0.109.0
+[/list]
+
+[h2]Playtest status[/h2]
+Build, localization parity, artwork, animation and package audits pass. In-game balance, save/load and multiplayer testing are still required before public release. Dedicated custom audio remains future presentation work.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Source code and bug reports[/url]
+
+Unofficial fan-made mod. Fate/Grand Order characters and official visual assets belong to their respective rights holders. Not affiliated with TYPE-MOON, Lasengle or Mega Crit.
+
+[hr][/hr]
+[h1]ESPAÑOL[/h1]
+Cumplí una Orden distinta cada turno, convertí Ataques Quick en Estrellas de Crítico e invocá a Hipogrifo para escapar de los golpes que realmente importan.
+
+[b]VERSIÓN DE PLAYTEST — v0.1.1[/b]
+El personaje y su presentación están completos para pruebas; el balance, guardado/carga y cooperativo todavía están en validación.
+
+[h2]Mecánicas principales[/h2]
+[list]
+[*][b]Bolsa de Caprichos:[/b] una bolsa visible sin repeticiones elige Quick, Arts o Buster. Cumplí la Orden para ganar Estrellas, Carga NP o daño adicional, o manipulá la bolsa cuando la mano tenga otros planes.
+[*][b]Estrellas de Crítico:[/b] los Ataques Quick generan Estrellas mediante FGO Core. Guardá 50 para preparar un Crítico de ×1,5, o gastalas en Energía, NP y Evasión.
+[*][b]Evasión:[/b] hasta 3 cargas evitan impactos de Ataques enemigos después de Bloqueo y Buffer. Las cartas pueden conservarlas, gastarlas o convertirlas en defensa.
+[*][b]Hippogriff:[/b] un Noble Phantasm Quick de área, Certero e imbloqueable que consume todo el NP, completa Evasión y genera Estrellas por Sobrecarga.
+[*][b]Cuatro tesoros:[/b] la lanza de Argalia, Casseur de Logistille, La Black Luna e Hipogrifo aportan control, limpieza y respuestas contra jefes sin volverse un arsenal aleatorio generado.
+[/list]
+
+[h2]Contenido[/h2]
+[list]
+[*]68 cartas de recompensa y mazo inicial de 10 cartas
+[*]1 Noble Phantasm manifestado
+[*]35 poderes y 12 reliquias propias
+[*]Modelo Rider oficial animado: reposo, ataque Quick, casteo, daño y muerte
+[*]Arte oficial seleccionado para cartas, poderes, reliquias e interfaz
+[*]Texto editado en español, inglés y chino simplificado; coreano y ruso usan fallback inglés seguro
+[/list]
+
+[h2]Requisitos y compatibilidad[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Compatible con MAIN 0.107.1 y BETA pública 0.109.0
+[/list]
+
+[h2]Estado del playtest[/h2]
+Las auditorías de compilación, paridad de idiomas, arte, animaciones y paquete están aprobadas. Todavía faltan pruebas dentro del juego de balance, guardado/carga y multijugador antes de publicarlo. El audio exclusivo queda como trabajo futuro de presentación.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Código fuente y reporte de errores[/url]
+
+Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
+
+[hr][/hr]
+[h1]简体中文[/h1]
+每回合遵循不同指令、把 Quick 攻击转化为暴击星，并召唤骏鹰避开真正致命的攻击。
+
+[b]测试版本 — v0.1.1[/b]
+角色与视觉内容已可完整测试；平衡、存档及联机验证仍在进行。
+
+[h2]核心机制[/h2]
+[list]
+[*][b]任性袋：[/b]可见且不重复的袋子会抽取 Quick、Arts 或 Buster。匹配指令可获得暴击星、NP 充能或额外伤害；手牌另有计划时也能操纵袋子。
+[*][b]暴击星：[/b]Quick 攻击通过 FGO Core 生成暴击星。保留 50 星可准备 ×1.5 暴击，也可将星用于能量、NP 与闪避。
+[*][b]闪避：[/b]最多 3 层，在格挡与缓冲之后避开敌方攻击段数。卡牌可以保留、消耗闪避，或将其转化为防御。
+[*][b]骏鹰：[/b]具有必中且无法被格挡的 Quick 群体宝具。它会消耗全部 NP、补满闪避，并通过过充能生成暴击星。
+[*][b]四件宝具：[/b]阿尔加利亚之枪、破却宣言、恐慌呼唤与骏鹰提供控制、净化及对 Boss 手段，而非随机生成的武器库。
+[/list]
+
+[h2]内容[/h2]
+[list]
+[*]68 张奖励卡牌与 10 张初始牌组
+[*]1 张显现型宝具牌
+[*]35 个角色能力与 12 件专属遗物
+[*]Rider 官方战斗模型动画：待机、Quick 攻击、施法、受伤与死亡
+[*]卡牌、能力、遗物与角色界面均使用主题明确的官方美术
+[*]西班牙语、英语与简体中文已完整编辑；韩语与俄语使用安全的英语回退
+[/list]
+
+[h2]依赖与兼容性[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]兼容正式版 0.107.1 与公开测试版 0.109.0
+[/list]
+
+[h2]测试状态[/h2]
+构建、语言一致性、美术、动画及安装包检查均已通过。公开发布前仍需完成游戏内平衡、存档与联机测试；专属音效属于后续表现层工作。
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]源代码与问题反馈[/url]
+
+本项目为非官方同人 Mod，与 TYPE-MOON、Lasengle 及 Mega Crit 无隶属关系。

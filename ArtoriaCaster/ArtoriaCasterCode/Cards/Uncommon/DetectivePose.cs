@@ -16,20 +16,20 @@ public sealed class DetectivePose() : ArtoriaCard(0, CardType.Skill, CardRarity.
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(3m, ValueProp.Move),
-        new DynamicVar("Stars", 1)
+        new DynamicVar("Stars", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Stars"].UpgradeValueBy(1m);
+        DynamicVars["Stars"].UpgradeValueBy(10m);
         DynamicVars.Block.UpgradeValueBy(1m);
     }
 }

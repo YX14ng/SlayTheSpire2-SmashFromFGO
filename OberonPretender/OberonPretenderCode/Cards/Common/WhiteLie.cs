@@ -31,10 +31,10 @@ public sealed class WhiteLie() : OberonCard(1, CardType.Attack, CardRarity.Commo
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await DebtPower.Add(Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
+        await DebtPower.Add(choiceContext, Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);

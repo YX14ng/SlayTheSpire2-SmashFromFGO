@@ -18,7 +18,7 @@ public sealed class AbsoluteWall() : MashShielderCard(2, CardType.Skill, CardRar
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<AbsoluteWallPower>(1m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<AbsoluteWallPower>("AbsoluteWall", 1m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<AbsoluteWallPower>(), HoverTipFactory.FromPower<InterceptPower>()];

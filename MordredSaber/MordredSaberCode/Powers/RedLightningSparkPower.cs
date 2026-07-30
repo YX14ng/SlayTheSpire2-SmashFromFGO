@@ -29,20 +29,13 @@ public sealed class RedLightningSparkPower : MordredPower, ICritConsumedListener
 
     protected override bool IsVisibleInternal => false;
 
-    private bool _firedThisTurn;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritReadyPower>()];
-
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == Owner.Side) _firedThisTurn = false;
-        return Task.CompletedTask;
-    }
 
     public async Task OnCritConsumed(PlayerChoiceContext? choiceContext)
     {
-        if (_firedThisTurn || Owner.IsDead || !CombatManager.Instance.IsInProgress) return;
-        _firedThisTurn = true;
+        if (FgoCombatState.GetTurn(Owner, 1) != 0 || Owner.IsDead || !CombatManager.Instance.IsInProgress) return;
+        await FgoCombatState.SetTurn(
+            choiceContext ?? new BlockingPlayerChoiceContext(), Owner, 1, 1);
         Flash();
         await ManifestCards.ManifestToHand<ChispaDeClarent>(Owner);
     }

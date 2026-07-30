@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://AstolfoRider/character/astolfo_frames.tres" id="frames"]
+
+[node name="AstolfoRestSite" type="Node2D"]
+
+[node name="ControlRoot" type="Control" parent="."]
+
+[node name="Hitbox" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+offset_left = -150.0
+offset_top = -420.0
+offset_right = 150.0
+offset_bottom = 0.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-102, -229)
+flip_h = true
+sprite_frames = ExtResource("frames")
+animation = &"idle"
+autoplay = "idle"

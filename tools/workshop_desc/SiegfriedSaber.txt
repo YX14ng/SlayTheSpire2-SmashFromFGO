@@ -1,33 +1,109 @@
-Siegfried, the Dragon-Slaying Hero (Saber) of Fate/Grand Order, as a fully playable character. Built on the BaseLib framework and the FGO Core library.
+[h1]Siegfried — Armor Forged from Dragon Blood[/h1]
+Reduce every incoming hit with persistent Dragon Scales, survive what should be lethal and choose when to sacrifice the armor for a decisive eruption.
 
-What it adds:
-- A dragon-blood tank-bruiser whose armor is Dragon Scales: a persistent per-hit damage reduction, not spendable Block - thicken it to tank and to sharpen your Noble Phantasm.
-- His canonical weak spot is the engine of tension: the Linden Leaf lets the first hit each turn pierce the scales. New "Scale Eruption" lets you discharge all your armor as AoE - tank or burst?
-- His Noble Phantasm, Balmung - a manual cast, gated and scaled by the armor you built, never a free auto-win.
+[b]RELEASE BUILD — v0.1.12[/b]
 
-Requires: FGO Core (library) + BaseLib.
-Localization: English, Spanish, Simplified Chinese.
+[h2]Core gameplay[/h2]
+[list]
+[*][b]Dragon Scales:[/b] persistent reduction applies after Block. It is not Block, is not consumed and remains between turns.
+[*][b]The Linden Leaf:[/b] the first attack that reaches you each turn ignores only 1 Scale; remaining stacks still reduce it, and later hits use the full value.
+[*][b]Scale Eruption:[/b] sacrifice the entire defensive engine to damage every enemy. The safest position can become the strongest offensive turn.
+[*][b]Balmung:[/b] charge the Noble Phantasm and let its payoff scale with the dragon-blood defense built during the fight.
+[/list]
 
-Found a bug or have feedback? Report it in the discussion thread:
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-To help us fix it fast, please include: which Servant you played and what you did (a screenshot helps); your game log — Steam comments can't attach files, so upload %APPDATA%\SlayTheSpire2\logs\godot.log to a paste site (e.g. pastebin.com) or a file host and paste the LINK, or paste the last ~50 lines; and your full mod list (many bugs are conflicts with other mods).
+[h2]Content[/h2]
+[list]
+[*]41 card models across the starting deck, rewards, Noble Phantasm and generated cards
+[*]8 character powers and 8 relics
+[*]Animated official FGO battle model with a grounded attack sequence
+[*]Curated official artwork for cards, powers, relics and character UI
+[*]Spanish, English, Simplified Chinese, Korean and Russian localization
+[/list]
 
-Made with the help of Claude Code.
+[h2]Requirements and compatibility[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.12+[/url]
+[*]Built for MAIN 0.107.1 and public BETA 0.109.0
+[/list]
 
-————————————————————
+[h2]Validation status[/h2]
+Build, localization, asset coverage, animation references and package audits pass. Balance, save/load and co-op behavior continue to receive in-game testing.
 
-「Fate/Grand Order」的屠龙英雄齐格弗里德（剑士），现已作为可操作角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Source code and bug reports[/url]
 
-本 Mod 带来：
-- 一名身负龙血的坦克型猛将，他的护甲是「龙血鳞片」(Dragon Scales)：一种常驻的、按每次受击减伤的机制——不是会被消耗掉的格挡。把鳞片堆厚既能扛伤，也能磨利你的宝具。
-- 他原典中的致命弱点正是张力的来源：「菩提叶」会让每回合的第一次受击穿透鳞片。全新的「Scale Eruption」(鳞甲爆发) 则让你把全部护甲一口气释放成 AoE 伤害——是要继续扛，还是直接爆发？
-- 宝具「Balmung」——需要手动施放，其门槛与威力都由你堆出的护甲决定，绝非白嫖的一键秒杀。
+Unofficial fan-made mod. Fate/Grand Order characters and official visual assets belong to their respective rights holders. Not affiliated with TYPE-MOON, Lasengle or Mega Crit.
 
-依赖：FGO Core（库）+ BaseLib。
-支持语言：英文、西班牙文、简体中文。
+[hr][/hr]
+[h1]ESPAÑOL[/h1]
+Reducí cada impacto con Escamas de Dragón persistentes, sobreviví a lo que debería ser letal y elegí cuándo sacrificar la armadura para liberar una erupción decisiva.
 
-发现 Bug 或有建议？请在讨论区反馈：
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-为方便我们尽快修复，请附上：你使用的从者 + 具体操作（截图更佳）；游戏日志——Steam 评论无法上传文件，请把 %APPDATA%\SlayTheSpire2\logs\godot.log 传到网盘或贴站（如 pastebin.com）再贴出链接，或直接粘贴最后约 50 行；以及完整的 Mod 列表（很多 Bug 是与其他 Mod 的冲突）。
+[b]VERSIÓN PÚBLICA — v0.1.12[/b]
 
-在 Claude Code 的协助下制作。
+[h2]Mecánicas principales[/h2]
+[list]
+[*][b]Escamas de Dragón:[/b] una reducción persistente se aplica después del Bloqueo. No es Bloqueo, no se consume y permanece entre turnos.
+[*][b]Hoja de Tilo:[/b] el primer ataque que te alcanza cada turno ignora sólo 1 Escama; las restantes todavía lo reducen y los golpes siguientes usan el valor completo.
+[*][b]Erupción de Escamas:[/b] sacrificá todo el motor defensivo para dañar a cada enemigo. La posición más segura puede transformarse en el turno más ofensivo.
+[*][b]Balmung:[/b] cargá el Noble Phantasm y hacé que su resultado escale con la defensa de sangre de dragón construida durante el combate.
+[/list]
+
+[h2]Contenido[/h2]
+[list]
+[*]41 modelos de carta entre mazo inicial, recompensas, Noble Phantasm y cartas generadas
+[*]8 poderes y 8 reliquias propias
+[*]Modelo de combate oficial de FGO animado con ataque corto a nivel del suelo
+[*]Arte oficial curado para cartas, poderes, reliquias e interfaz
+[*]Localización en español, inglés, chino simplificado, coreano y ruso
+[/list]
+
+[h2]Requisitos y compatibilidad[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.12+[/url]
+[*]Compatible con MAIN 0.107.1 y BETA pública 0.109.0
+[/list]
+
+[h2]Estado de validación[/h2]
+Las auditorías de compilación, idiomas, recursos, animaciones y paquete están aprobadas. El balance, guardado/carga y cooperativo continúan en pruebas dentro del juego.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Código fuente y reporte de errores[/url]
+
+Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
+
+[hr][/hr]
+[h1]简体中文[/h1]
+用持续生效的龙血鳞片削减每一段伤害、挺过本应致命的攻击，并选择何时牺牲铠甲发动决定性的爆发。
+
+[b]公开版本 — v0.1.12[/b]
+
+[h2]核心机制[/h2]
+[list]
+[*][b]龙血鳞片：[/b]持续减伤会在格挡后生效。它不是格挡，不会被消耗，并在回合间保留。
+[*][b]菩提叶：[/b]每回合第一次击中你的攻击仅无视1点鳞片；其余层数仍会减伤，之后的攻击则使用完整数值。
+[*][b]鳞甲爆发：[/b]牺牲全部防御体系，对所有敌人造成伤害。最安全的局面也能转化为最强的进攻回合。
+[*][b]Balmung：[/b]充能宝具，让高潮效果随战斗中建立的龙血防御一同成长。
+[/list]
+
+[h2]内容[/h2]
+[list]
+[*]41 个卡牌模型，涵盖初始牌组、奖励、宝具及衍生卡
+[*]8 个角色能力与 8 件专属遗物
+[*]FGO 官方战斗模型动画，采用贴近地面的短攻击序列
+[*]卡牌、能力、遗物与角色界面均采用精心筛选的官方美术
+[*]支持西班牙语、英语、简体中文、韩语与俄语
+[/list]
+
+[h2]依赖与兼容性[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.12+[/url]
+[*]兼容正式版 0.107.1 与公开测试版 0.109.0
+[/list]
+
+[h2]验证状态[/h2]
+构建、本地化、资源覆盖、动画引用及安装包检查均已通过；平衡、存档与联机表现仍在游戏内持续测试。
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]源代码与问题反馈[/url]
+
+本项目为非官方同人 Mod，与 TYPE-MOON、Lasengle 及 Mega Crit 无隶属关系。

@@ -21,29 +21,16 @@ public sealed class DasRheingold : SiegfriedRelic
 
     private const int StarsPerNp = 20;
 
-    private bool _firedThisTurn;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritStarsPower>(), HoverTipFactory.FromPower<NpChargePower>()];
 
-    public override Task BeforeCombatStartLate()
-    {
-        _firedThisTurn = false;
-        return base.BeforeCombatStartLate();
-    }
-
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player) _firedThisTurn = false;
-        return Task.CompletedTask;
-    }
-
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (_firedThisTurn || cardPlay.Card.Owner != Owner || cardPlay.Card is not ISiegfriedNpCard) return;
-        _firedThisTurn = true;
+        if (FgoCombatState.GetTurn(Owner.Creature, 5) != 0 ||
+            cardPlay.Card.Owner != Owner || cardPlay.Card is not ISiegfriedNpCard) return;
+        await FgoCombatState.SetTurn(context, Owner.Creature, 5, 1, cardPlay.Card);
         Flash();
-        await CritStars.Gain(Owner.Creature, StarsPerNp, null);
+        await CritStars.Gain(context, Owner.Creature, StarsPerNp, null);
         await CardPileCmd.Draw(context, 1, Owner);
     }
 }

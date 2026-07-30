@@ -1,0 +1,119 @@
+[h1]Nagao Kagetora → Uesugi Kenshin[/h1]
+Play a fully animated Fate/Grand Order character built around military formations, Critical Stars, Noble Phantasms and an irreversible mid-combat ascension.
+
+[b]PRIVATE PLAYTEST — v0.1.1[/b]
+This build is feature-complete enough for testing, but its balance and presentation are not final.
+
+[h2]Core gameplay[/h2]
+[list]
+[*][b]Three Precepts:[/b] advance Heaven, Chest and Feet to gain NP Charge, Block and Critical Stars. Kagetora must follow their military order; Kenshin can command them in any distinct order.
+[*][b]Command Cards:[/b] combine Buster damage, Arts NP generation and Quick Critical Stars. Spend 50 Stars to empower an eligible Attack with a ×1.5 critical multiplier.
+[*][b]Noble Phantasm:[/b] fill the NP gauge to manifest Biten Hassou. Kagetora's first NP completes her formation and permanently ascends her into Uesugi Kenshin.
+[*][b]Two identities:[/b] both forms have their own official FGO combat model and animations. Kenshin gains a more flexible Doctrine, her own NP and anti-Man tools.
+[/list]
+
+[h2]Content[/h2]
+[list]
+[*]68-card reward pool and a 10-card starting deck
+[*]2 manifested Noble Phantasm cards
+[*]25 character powers and 12 relics, including 3 starting relics
+[*]Animated Kagetora and Kenshin forms: idle, Quick attack, cast, hurt and death
+[*]Curated official artwork for every card, power, relic and character UI element
+[*]Spanish, English, Simplified Chinese, Korean and Russian localization
+[*]Designed with multiplayer synchronization and shared FGO mechanics in mind
+[/list]
+
+[h2]Requirements and compatibility[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Built for MAIN 0.107.1 and public BETA 0.109.0
+[/list]
+
+[h2]Playtest status[/h2]
+Code, five-language localization, official artwork, dedicated UI, animations and Workshop package validation are complete. In-game balance, save/load and co-op testing are still pending. Dedicated custom VFX and audio remain future presentation work and do not block gameplay testing.
+
+[h2]Source and feedback[/h2]
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Source code and issue tracker[/url]
+
+Unofficial fan-made mod. Fate/Grand Order characters and official visual assets belong to their respective rights holders. This project is not affiliated with TYPE-MOON, Lasengle or Mega Crit.
+
+[hr][/hr]
+[h1]ESPAÑOL[/h1]
+Jugá con Nagao Kagetora y su ascensión irreversible a Uesugi Kenshin en un personaje completamente animado, centrado en formaciones militares, Estrellas de Crítico y Noble Phantasms.
+
+[b]PLAYTEST PRIVADO — v0.1.1[/b]
+La implementación ya está completa para pruebas, pero el balance y la presentación todavía no son definitivos.
+
+[h2]Mecánicas principales[/h2]
+[list]
+[*][b]Tres Preceptos:[/b] avanzá Cielo, Pecho y Pies para obtener Carga NP, Bloqueo y Estrellas. Kagetora debe respetar el orden militar; Kenshin puede elegir cualquier orden sin repetir.
+[*][b]Command Cards:[/b] combiná daño Buster, carga Arts y Estrellas Quick. Gastá 50 Estrellas para dar ×1,5 a un Ataque elegible.
+[*][b]Noble Phantasm:[/b] llená el medidor para manifestar Biten Hassou. El primer NP de Kagetora completa su formación y la transforma permanentemente en Kenshin.
+[*][b]Dos identidades:[/b] ambas formas usan su modelo y animaciones oficiales de FGO. Kenshin obtiene una Doctrina flexible, NP propio y herramientas anti-Hombre.
+[/list]
+
+[h2]Contenido[/h2]
+[list]
+[*]68 cartas de recompensa y mazo inicial de 10 cartas
+[*]2 Noble Phantasms manifestados
+[*]25 poderes y 12 reliquias propias, incluidas 3 iniciales
+[*]Kagetora y Kenshin animadas: reposo, ataque Quick, casteo, daño y muerte
+[*]Arte oficial curado para cada carta, poder, reliquia y elemento de interfaz
+[*]Localización en español, inglés, chino simplificado, coreano y ruso
+[*]Implementación preparada para sincronización multijugador
+[/list]
+
+[h2]Requisitos y compatibilidad[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Compatible con MAIN 0.107.1 y BETA pública 0.109.0
+[/list]
+
+[h2]Estado de pruebas[/h2]
+El código, los cinco idiomas, el arte oficial, la interfaz, las animaciones y el paquete de Workshop están validados. Todavía faltan pruebas en partida de balance, guardado/carga y cooperativo. Los VFX y el audio exclusivos quedan como trabajo futuro de presentación y no bloquean las pruebas jugables.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Código fuente y reporte de errores[/url]
+
+Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
+
+[hr][/hr]
+[h1]简体中文[/h1]
+以可完整游玩的动画角色体验长尾景虎，并在战斗中不可逆地升华为上杉谦信。角色玩法围绕军阵、暴击星与宝具展开。
+
+[b]私人测试版 — v0.1.1[/b]
+当前版本已具备完整测试内容，但平衡与视觉表现仍非最终版本。
+
+[h2]核心机制[/h2]
+[list]
+[*][b]三令制法：[/b]推进天、胸、足，分别获得 NP 充能、格挡与暴击星。景虎必须依军令顺序推进；谦信则可自由排列三个不同阶段。
+[*][b]指令卡：[/b]结合 Buster 伤害、Arts NP 充能与 Quick 暴击星。消耗 50 星，使符合条件的攻击获得 ×1.5 暴击倍率。
+[*][b]宝具：[/b]充满 NP 后显现「毘天八相」。景虎首次发动宝具会完成军阵，并永久升华为上杉谦信。
+[*][b]双形态：[/b]两个形态均使用 FGO 官方战斗模型与动画。谦信拥有更灵活的制法、独立宝具与对「人」特攻手段。
+[/list]
+
+[h2]内容[/h2]
+[list]
+[*]68 张奖励卡牌与 10 张初始牌组
+[*]2 张显现型宝具牌
+[*]25 个角色能力与 12 件专属遗物，其中 3 件为初始遗物
+[*]景虎与谦信完整动画：待机、Quick 攻击、施法、受伤与死亡
+[*]每张卡牌、能力、遗物与角色界面元素均采用精选官方美术
+[*]支持西班牙语、英语、简体中文、韩语与俄语
+[*]按多人同步与 FGO 共用机制设计
+[/list]
+
+[h2]依赖与兼容性[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]兼容正式版 0.107.1 与公开测试版 0.109.0
+[/list]
+
+[h2]测试状态[/h2]
+代码、五种语言、官方美术、专用 UI、本体动画与 Workshop 包已通过检查。游戏内平衡、存档/读档及联机测试仍待完成。专属 VFX 与音效属于后续表现层工作，不影响当前玩法测试。
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]源代码与问题反馈[/url]
+
+本项目为非官方同人 Mod，与 TYPE-MOON、Lasengle 及 Mega Crit 无隶属关系。

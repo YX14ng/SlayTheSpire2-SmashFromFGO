@@ -23,20 +23,21 @@ public sealed class SovereignOfTwoFacesPower : MorganPower, IFormChangeListener
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
         Flash();
-        if (choiceContext != null && Owner.Player != null)
+        var player = Owner.Player;
+        if (choiceContext != null && player?.PlayerCombatState is { } playerCombatState)
         {
             // BUGFIX (soft-lock): el cambio de forma lo dispara una carta a MITAD de su resolución.
             // Si este robo RESHUFFLEA (mazo vacío), reshufflea el descarte -que en v0.107.1 contiene
             // la carta en curso- y corrompe su estado ("must be added to a CombatState"), colgando el
             // combate. Por eso robamos SOLO lo que hay en el mazo (sin gatillar reshuffle).
-            var inDeck = Owner.Player.PlayerCombatState.AllPiles
+            var inDeck = playerCombatState.AllPiles
                 .FirstOrDefault(p => p.Type == PileType.Draw)?.Cards.Count ?? 0;
             var toDraw = System.Math.Min(Draws, inDeck);
             if (toDraw > 0)
             {
-                await CardPileCmd.Draw(choiceContext, toDraw, Owner.Player);
+                await CardPileCmd.Draw(choiceContext, toDraw, player);
             }
         }
-        await NpCharge.Gain(Owner, NpGain, null);
+        await NpCharge.Gain(choiceContext ?? new BlockingPlayerChoiceContext(), Owner, NpGain, null);
     }
 }

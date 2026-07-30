@@ -7,8 +7,8 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Powers;
 
 /// <summary>
 /// Cicatriz del Tilo (菩提叶之伤痕 / Linden Scar) — la DEBILIDAD hecha MOTOR.
-/// Cada vez que la Hoja de Tilo deja pasar un golpe (el primer golpe que te ALCANZA cada
-/// turno IGNORA la Sangre de Dragón — la espalda expuesta), las escamas se ESPESAN donde
+/// Cada vez que la Hoja de Tilo deja atravesar 1 escama (en el primer golpe que te ALCANZA
+/// cada turno — la espalda expuesta), las escamas se ESPESAN donde
 /// la herida sangró: +1 Sangre de Dragón y +<see cref="Amount"/> Carga NP.
 ///
 /// Anti-batería (P2/P3): el pierce es estructuralmente ≤1/turno (la reliquia lo capa con su
@@ -39,6 +39,6 @@ public sealed class LindenScarPower : SiegfriedPower, IDragonScalePierceListener
     {
         Flash();
         await PowerCmd.Apply<DragonScalesPower>(choiceContext, Owner, ScalesPerPierce, Owner, null);
-        await NpCharge.Gain(Owner, Amount, null);
+        await NpCharge.Gain(choiceContext, Owner, Amount, null);
     }
 }

@@ -8,7 +8,7 @@ namespace OkitaSaber.OkitaSaberCode.Cards.Rare;
 
 /// <summary>
 /// PODER CLÍMAX «Flor del Bakumatsu» (幕末之华) — DESIGN-OKITA §5.4/§3.4. 2⚡ Poder, Exhaust: entra a la
-/// forma final PERMANENTE (<see cref="BakumatsuFlowerPower"/>, modelo 102720 haori asagi): tus
+/// forma final PERMANENTE (<see cref="BakumatsuFlowerPower"/>): tus
 /// RÁFAGAS dejan de costar *Aliento, pero al final de cada turno ganás 1 *Tos (up: coste 1⚡). El
 /// único FormPower (§3.4): la enfermedad ya ganó, pelea igual. Entra vía <see cref="FormSwitch.Enter"/>.
 /// </summary>

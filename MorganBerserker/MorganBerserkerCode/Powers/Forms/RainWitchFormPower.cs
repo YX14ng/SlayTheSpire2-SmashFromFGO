@@ -30,17 +30,18 @@ public sealed class RainWitchFormPower : MorganFormPower, ICursePreserver, ICurs
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Players.Player player)
     {
         if (player != Owner.Player || Owner.Player == null) return;
+        if (Owner.CombatState is not { } combatState) return;
         Flash();
         // Spread propio de la pasiva: applier=null para NO auto-amplificarse (este power es
         // ICurseAmplifier y en Owner, así que pasar Owner doblaría el +1). Patrón TiamatBeastPower.
-        foreach (var enemy in Owner.CombatState.GetOpponentsOf(Owner).Where(e => !e.IsDead).ToList())
+        foreach (var enemy in combatState.GetOpponentsOf(Owner).Where(e => !e.IsDead).ToList())
         {
-            await Curses.Apply(enemy, SpreadPerTurn, null, null);
+            await Curses.Apply(choiceContext, enemy, SpreadPerTurn, null, null);
         }
     }
 
     // ModifyDamageAdditive es DELTA (default 0): devolver -2 para la penalidad.
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (Owner != dealer || !props.IsPoweredAttack()) return 0m;
         return -AttackPenalty;

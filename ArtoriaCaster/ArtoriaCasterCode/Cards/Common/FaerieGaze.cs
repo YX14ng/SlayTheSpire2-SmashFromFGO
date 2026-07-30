@@ -29,12 +29,12 @@ public sealed class FaerieGaze() : ArtoriaCard(0, CardType.Skill, CardRarity.Com
         await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
         if (DynamicVars["Stars"].IntValue > 0)
         {
-            await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+            await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Stars"].UpgradeValueBy(1m);
+        DynamicVars["Stars"].UpgradeValueBy(10m);
     }
 }

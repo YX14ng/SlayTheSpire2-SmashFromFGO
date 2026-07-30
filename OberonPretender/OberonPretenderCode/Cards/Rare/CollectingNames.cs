@@ -21,7 +21,7 @@ public sealed class CollectingNames() : OberonCard(2, CardType.Skill, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].IntValue, Owner);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Draw"].UpgradeValueBy(1m);

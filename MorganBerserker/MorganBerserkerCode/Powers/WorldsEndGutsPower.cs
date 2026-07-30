@@ -22,6 +22,6 @@ public sealed class WorldsEndGutsPower : GutsPower
     protected override async Task OnTriggered(PlayerChoiceContext choiceContext)
     {
         await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, StrengthOnRise, Owner, null);
-        await NpCharge.Gain(Owner, NpOnRise, null);
+        await NpCharge.Gain(choiceContext, Owner, NpOnRise, null);
     }
 }

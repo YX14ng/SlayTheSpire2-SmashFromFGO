@@ -25,9 +25,9 @@ public sealed class FirstUnitCharge() : OkitaCard(2, CardType.Attack, CardRarity
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         // PRIMERO las ★: el auto-payoff de CritStarsPower a 100 arma el Crítico Listo...
-        await CritStars.Gain(Owner.Creature, Stars, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, Stars, this);
         // ...que el golpe siguiente consume (×2).
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
     }

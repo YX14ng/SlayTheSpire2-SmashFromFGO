@@ -23,14 +23,14 @@ public sealed class ReplicaBarrage() : MorganCard(2, CardType.Attack, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCard(this)
+        var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits).FromCardFgoCompatibility(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
         var hpHits = attack.Results.SelectMany(r => r).Count(r => r.UnblockedDamage > 0);
         if (hpHits > 0)
         {
-            await NpCharge.Gain(Owner.Creature, hpHits * DynamicVars["NpCharge"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, hpHits * DynamicVars["NpCharge"].IntValue, this);
         }
     }
 

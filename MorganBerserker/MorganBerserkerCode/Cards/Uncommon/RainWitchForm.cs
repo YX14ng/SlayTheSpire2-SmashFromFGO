@@ -16,7 +16,7 @@ public sealed class RainWitchForm() : MorganCard(0, CardType.Skill, CardRarity.U
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await FormSwitch.Enter<RainWitchFormPower>(choiceContext, Owner.Creature, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()

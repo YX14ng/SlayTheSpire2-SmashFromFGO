@@ -34,9 +34,9 @@ public sealed class LordCamelotCharge() : MashShielderCard(2, CardType.Attack, C
 
         // Asegura el control 1/turno y lo marca como disparado (idempotente: Single).
         var gate = await PowerCmd.Apply<LordCamelotChargePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        gate?.MarkFired();
+        if (gate != null) await gate.MarkFired(choiceContext, this);
 
-        await DamageCmd.Attack(Owner.Creature.Block).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(Owner.Creature.Block).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .Unpowered()
             .WithHitFx("vfx/vfx_attack_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);

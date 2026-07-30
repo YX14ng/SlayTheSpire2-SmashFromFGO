@@ -13,14 +13,17 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Rare;
 /// 16 de daño; ganás 2★. SOBRECARGA: +3 de daño por cada 10 sobre el mínimo.
 /// Mejora: 22.
 /// </summary>
-public sealed class CaliburnStar() : ArtoriaCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IArtoriaNpCard
+public sealed class CaliburnStar() : ArtoriaCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IArtoriaNpCard, ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Arts;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 40;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(16m, ValueProp.Move),
-        new DynamicVar("Stars", 2),
+        new DynamicVar("Stars", 20),
         new DynamicVar("ChargeCost", ChargeCost),
         new DynamicVar("PerTen", 3)
     ];
@@ -36,15 +39,15 @@ public sealed class CaliburnStar() : ArtoriaCard(1, CardType.Attack, CardRarity.
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge);
 
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
 
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

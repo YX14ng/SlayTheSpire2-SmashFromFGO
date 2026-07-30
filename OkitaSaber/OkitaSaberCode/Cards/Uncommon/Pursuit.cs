@@ -28,7 +28,7 @@ public sealed class Pursuit() : OkitaCard(1, CardType.Attack, CardRarity.Uncommo
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await Rafaga.Pay(choiceContext, Owner.Creature, RafagaCost, this);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

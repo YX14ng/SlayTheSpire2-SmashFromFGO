@@ -1,0 +1,16 @@
+{
+  "KAGETORALANCER-KAGETORA.title": "Nagao Kagetora",
+  "KAGETORALANCER-KAGETORA.titleObject": "la Diosa de la Guerra",
+  "KAGETORALANCER-KAGETORA.description": "Avanza Cielo, Pecho y Pies para comandar el campo, manifestar un Noble Phantasm Arts y ascender de forma irreversible a Uesugi Kenshin.",
+  "KAGETORALANCER-KAGETORA.pronounObject": "ella",
+  "KAGETORALANCER-KAGETORA.possessiveAdjective": "su",
+  "KAGETORALANCER-KAGETORA.pronounPossessive": "suya",
+  "KAGETORALANCER-KAGETORA.pronounSubject": "ella",
+  "KAGETORALANCER-KAGETORA.goldMonologue": "La fortuna está en el cielo, la armadura en el pecho y el mérito en los pies. El oro aún pertenece al tesoro.",
+  "KAGETORALANCER-KAGETORA.eventDeathPrevention": "Una formación no se rompe mientras su comandante siga en pie.",
+  "KAGETORALANCER-KAGETORA.aromaPrinciple": "La justicia avanza un paso deliberado a la vez.",
+  "KAGETORALANCER-KAGETORA.cardsModifierTitle": "Doctrina de Echigo",
+  "KAGETORALANCER-KAGETORA.cardsModifierDescription": "Juega con el conjunto de cartas de Kagetora.",
+  "KAGETORALANCER-KAGETORA.banter.alive.endTurnPing": "El próximo precepto ya está claro. Avanza.",
+  "KAGETORALANCER-KAGETORA.banter.dead.endTurnPing": "No dejes que la formación muera con su comandante."
+}

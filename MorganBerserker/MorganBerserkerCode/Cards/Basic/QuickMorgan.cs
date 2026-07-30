@@ -12,24 +12,29 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Basic;
 /// + aplica 2 de Maldición (los golpes feéricos hexan). Enseña el hilo de Maldición — la divisa
 /// que la Bruja siembra y la Reina cosecha — desde el turno 1. Mazo inicial P6: 1× Quick (QAABB).
 /// </summary>
-public sealed class QuickMorgan() : MorganCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class QuickMorgan() : MorganCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Quick;
+    public bool IsNoblePhantasm => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(6m, ValueProp.Move),
-        new DynamicVar("Curse", 2)
+        new DynamicVar("Curse", 2),
+        new DynamicVar("Stars", 20)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<CursePower>()];
+        [HoverTipFactory.FromPower<CursePower>(), HoverTipFactory.FromPower<CritStarsPower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
-        await Curses.Apply(cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+        await Curses.Apply(choiceContext, cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

@@ -15,8 +15,11 @@ namespace OkitaSaber.OkitaSaberCode.Cards.Rare;
 /// auto-ulti (regla Morgan). Daño directo Unblockable (patrón <see cref="Special.MumyouUnleashed"/>).
 /// up: 12×3 y Vulnerable 4. Glow cuando es pagable.
 /// </summary>
-public sealed class MumyouManual() : OkitaCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+public sealed class MumyouManual() : OkitaCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Quick;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 70;
     private const int Hits = 3;
     private const int OverchargePerTen = 1;
@@ -43,7 +46,7 @@ public sealed class MumyouManual() : OkitaCard(2, CardType.Attack, CardRarity.Ra
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var perHit = (tier - ChargeCost) / 10 * OverchargePerTen;
         var perHitDamage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + perHit);
 
@@ -51,8 +54,8 @@ public sealed class MumyouManual() : OkitaCard(2, CardType.Attack, CardRarity.Ra
         {
             if (cardPlay.Target.IsDead) break;
             VfxCmd.PlayOnCreatureCenter(cardPlay.Target, "vfx/vfx_dramatic_stab");
-            await CreatureCmd.Damage(choiceContext, cardPlay.Target, perHitDamage,
-                ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this);
+            await CreatureCmdCompatibility.Damage(choiceContext, cardPlay.Target, perHitDamage,
+                ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this, cardPlay);
         }
 
         if (!cardPlay.Target.IsDead)

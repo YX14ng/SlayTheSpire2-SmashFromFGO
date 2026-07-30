@@ -32,7 +32,7 @@ public sealed class AvalancheOfHatred() : MordredCard(2, CardType.Attack, CardRa
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = CritConsumed ? DynamicVars["CritBonus"].IntValue : 0;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).WithHitCount(Hits).FromCard(this)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).WithHitCount(Hits).FromCardFgoCompatibility(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

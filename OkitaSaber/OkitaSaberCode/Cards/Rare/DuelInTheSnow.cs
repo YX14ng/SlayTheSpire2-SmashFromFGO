@@ -26,7 +26,7 @@ public sealed class DuelInTheSnow() : OkitaCard(2, CardType.Attack, CardRarity.R
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var damage = DynamicVars.Damage.BaseValue + (VsEliteOrBoss ? DynamicVars["Bonus"].BaseValue : 0m);
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
     }

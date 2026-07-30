@@ -16,6 +16,6 @@ public sealed class SwiftStancePower : AttackDamageAdditivePower
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (Owner.Side == side) await PowerCmd.Remove(this);
+        if (participants.Contains(Owner)) await PowerCmd.Remove(this);
     }
 }

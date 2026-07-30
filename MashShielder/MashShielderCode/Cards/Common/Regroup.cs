@@ -30,7 +30,7 @@ public sealed class Regroup() : MashShielderCard(1, CardType.Skill, CardRarity.C
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         if (hadNoBlock)
         {
-            await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         }
     }
 

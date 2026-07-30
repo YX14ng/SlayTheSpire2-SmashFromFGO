@@ -1,7 +1,7 @@
 # Descarga bundles de modelo de batalla (y textura opcional) de Atlas Academy a
 # assets/reference/bundles/<id>.bundle, verificando que sean UnityFS validos.
 # Los bundles de AA son UnityFS SIN cifrar (Unity 2022.3). El paso de extraccion del
-# FBX animado sigue siendo MANUAL en la GUI de AssetStudioMod (ver docs/ANIMATIONS.md §1).
+# FBX animado se exporta con el helper reproducible de AssetStudio (ver docs/ANIMATIONS.md §1).
 #
 # Uso:
 #   tools/fetch_fgo_bundle.ps1 -Ids 9935400,9935410          # uno o varios IDs
@@ -74,7 +74,7 @@ foreach ($id in $Ids) {
         }
     }
 }
-Write-Output "LISTO. Siguiente paso (MANUAL, GUI): docs/ANIMATIONS.md §1 — AssetStudioMod GUI -> Load <id>.bundle -> Animator chr + AnimationClips -> 'Export Animator + selected AnimationClips' -> assets/reference/extracted/<id>_anim/"
+Write-Output "LISTO. Siguiente paso: docs/ANIMATIONS.md §1 — tools/AssetStudioAnimatorExport exporta Animator chr + todos los AnimationClip a assets/reference/extracted/<id>_anim/."
 # Salir limpio: los 404 esperados de candidatos de textura inexistentes dejan
 # $LASTEXITCODE=22 (curl -f); no es un fallo del script.
 exit 0

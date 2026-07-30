@@ -30,7 +30,7 @@ public sealed class AdversitysFury() : MorganCard(1, CardType.Attack, CardRarity
         if (ratio <= 0.75) bonus += DynamicVars["Bonus"].IntValue;
         if (ratio <= 0.50) bonus += DynamicVars["Bonus"].IntValue;
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);
     }

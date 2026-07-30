@@ -25,8 +25,8 @@ public sealed class CollectorsGreed() : GilgameshCard(0, CardType.Skill, CardRar
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (!CritStars.CanPay(Owner.Creature, DynamicVars["StarCost"].IntValue)) return;
-        await CritStars.Gain(Owner.Creature, -DynamicVars["StarCost"].IntValue, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, -DynamicVars["StarCost"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["StarCost"].UpgradeValueBy(-20m);

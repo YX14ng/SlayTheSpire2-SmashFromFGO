@@ -23,6 +23,6 @@ public sealed class BroodNurturePower : TiamatPower
     {
         if (player != Owner.Player || Owner.Player == null) return;
         Flash();
-        await Lahmu.Feed(Owner, NurturePerStack * Amount, null);
+        await Lahmu.Feed(choiceContext, Owner, NurturePerStack * Amount, null);
     }
 }

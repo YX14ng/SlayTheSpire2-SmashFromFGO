@@ -32,11 +32,11 @@ public sealed class LakesProtection() : ArtoriaCard(1, CardType.Skill, CardRarit
         {
             charge += DynamicVars["CasterBonus"].IntValue;
         }
-        await NpCharge.Gain(Owner.Creature, charge, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, charge, this);
 
         // Co-op: la protección del lago carga a todo el party.
         await ForEachAlly(async ally =>
-            await NpCharge.Gain(ally, DynamicVars["AllyNpCharge"].IntValue, this));
+            await NpCharge.Gain(choiceContext, ally, DynamicVars["AllyNpCharge"].IntValue, this));
     }
 
     protected override void OnUpgrade()

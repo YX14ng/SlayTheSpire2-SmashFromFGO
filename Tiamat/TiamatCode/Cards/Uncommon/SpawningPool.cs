@@ -21,8 +21,8 @@ public sealed class SpawningPool() : TiamatCard(1, CardType.Skill, CardRarity.Un
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await Lahmu.Spawn(Owner.Creature, DynamicVars["Lahmu"].IntValue, this);
-        await Lahmu.Feed(Owner.Creature, DynamicVars["Nurture"].IntValue, this);
+        await Lahmu.Spawn(choiceContext, Owner.Creature, DynamicVars["Lahmu"].IntValue, this);
+        await Lahmu.Feed(choiceContext, Owner.Creature, DynamicVars["Nurture"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Lahmu"].UpgradeValueBy(1m);

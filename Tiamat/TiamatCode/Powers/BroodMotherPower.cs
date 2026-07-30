@@ -28,6 +28,6 @@ public sealed class BroodMotherPower : TiamatPower
     {
         if (player != Owner.Player || Owner.Player == null) return;
         Flash();
-        await Lahmu.Spawn(Owner, LahmuPerStack * Amount, null);
+        await Lahmu.Spawn(choiceContext, Owner, LahmuPerStack * Amount, null);
     }
 }

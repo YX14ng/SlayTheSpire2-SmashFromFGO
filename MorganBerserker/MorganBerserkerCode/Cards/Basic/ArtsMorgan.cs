@@ -12,8 +12,11 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Basic;
 /// el turno 1 (denominación de básica = 30, números Jeanne adoptados tal cual).
 /// Rediseño v2, mazo inicial P6: 2× Arts.
 /// </summary>
-public sealed class ArtsMorgan() : MorganCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class ArtsMorgan() : MorganCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Arts;
+    public bool IsNoblePhantasm => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(6m, ValueProp.Move),
@@ -25,10 +28,10 @@ public sealed class ArtsMorgan() : MorganCard(1, CardType.Attack, CardRarity.Bas
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()

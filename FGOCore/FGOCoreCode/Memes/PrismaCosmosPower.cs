@@ -23,7 +23,7 @@ public sealed class PrismaCosmosPower : FGOCorePower
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side != Owner.Side || Owner.IsDead) return;
+        if (!participants.Contains(Owner) || Owner.IsDead) return;
         Flash();
         await NpCharge.Gain(Owner, (int)Amount, null);
     }

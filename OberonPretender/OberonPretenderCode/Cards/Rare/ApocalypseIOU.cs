@@ -29,7 +29,7 @@ public sealed class ApocalypseIOU() : OberonCard(1, CardType.Attack, CardRarity.
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = Math.Min(DebtPower.Of(Owner.Creature) * DynamicVars["PerDebt"].IntValue, MaxBonus);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

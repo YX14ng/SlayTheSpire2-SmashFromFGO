@@ -7,5 +7,8 @@
   "TIAMATBEAST-MOTHERS_TEARS.flavor": "She weeps for every child she consumes — and that grief is what keeps her standing.",
   "TIAMATBEAST-KING_HASSANS_HORN.title": "King Hassan's Horn",
   "TIAMATBEAST-KING_HASSANS_HORN.description": "#At the start of combat, gain Guts: the first time you would die, revive at 1 HP and spawn 3 Laḫmu.",
-  "TIAMATBEAST-KING_HASSANS_HORN.flavor": "Only by granting her death can she be felled — so she answers death with more children."
+  "TIAMATBEAST-KING_HASSANS_HORN.flavor": "Only by granting her death can she be felled — so she answers death with more children.",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.title": "Holy Grail of the Sea of Life",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.description": "#Palingenesis: gain !MaxHp! Max HP. While held, limits break: Bond can reach level 12 and NP level can reach 6.",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.flavor": "The mother of life cradles the vessel that promises life without limit."
 }

@@ -31,10 +31,10 @@ public sealed class FaerieChorus() : ArtoriaCard(1, CardType.Skill, CardRarity.R
             e.HappenedThisTurn(Owner.Creature.CombatState) &&
             e.CardPlay != cardPlay);
 
-        var stars = Math.Min(played, DynamicVars["Max"].IntValue);
+        var stars = Math.Min(played, DynamicVars["Max"].IntValue) * 10;
         if (stars > 0)
         {
-            await Stars.Gain(Owner.Creature, stars, this);
+            await Stars.Gain(choiceContext, Owner.Creature, stars, this);
         }
         if (DynamicVars.Cards.IntValue > 0)
         {

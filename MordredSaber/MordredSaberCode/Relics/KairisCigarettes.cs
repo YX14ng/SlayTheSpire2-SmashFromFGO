@@ -17,39 +17,33 @@ namespace MordredSaber.MordredSaberCode.Relics;
 /// fuente) aplica <c>CritReadyPower</c>; lo leemos en <see cref="AfterPowerAmountChanged"/> con amount > 0
 /// (un Crítico Listo GANADO), patrón MakotoPower/HaoriAsagi. Tope 1/combate (flag de código).
 /// </summary>
-public sealed class KairisCigarettes : MordredRelic
+public sealed class KairisCigarettes : MordredRelic, ICriticalConsumedListener
 {
     private const int DrawOnFirstCrit = 2;
 
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    private bool _usedThisCombat;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritReadyPower>(), HoverTipFactory.FromPower<CritStarsPower>()];
 
-    public override Task BeforeCombatStartLate()
-    {
-        _usedThisCombat = false;
-        return Task.CompletedTask;
-    }
-
     // amount > 0 sobre CritReadyPower = un Crítico Listo GANADO → robá 2 (1ª vez por combate).
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public async Task AfterCriticalConsumed(PlayerChoiceContext choiceContext, CriticalHit critical)
     {
-        if (_usedThisCombat || amount <= 0m || power is not CritReadyPower || power.Owner != Owner.Creature) return;
-        _usedThisCombat = true;
+        if (FgoCombatState.GetCombat(Owner.Creature, 10) != 0 || critical.Owner != Owner.Creature) return;
+        var player = Owner.Creature.Player;
+        if (player?.PlayerCombatState is not { } playerCombatState) return;
+        await FgoCombatState.SetCombat(choiceContext, Owner.Creature, 10, 1, critical.Card);
         Flash();
         // BUGFIX (soft-lock): este robo proca a MITAD de la resolución de la carta que disparó el
         // Crítico Listo. Si RESHUFFLEA (mazo vacío), reshufflea el descarte -que en v0.107.1 contiene
         // la carta en curso- y corrompe su estado ("must be added to a CombatState"), colgando el
         // combate. Por eso robamos SOLO lo que hay en el mazo (sin gatillar reshuffle).
-        var inDeck = Owner.Creature.Player?.PlayerCombatState.AllPiles
+        var inDeck = playerCombatState.AllPiles
             .FirstOrDefault(p => p.Type == PileType.Draw)?.Cards.Count ?? 0;
         var toDraw = System.Math.Min(DrawOnFirstCrit, inDeck);
         if (toDraw > 0)
         {
-            await CardPileCmd.Draw(choiceContext ?? new BlockingPlayerChoiceContext(), toDraw, Owner);
+            await CardPileCmd.Draw(choiceContext, toDraw, Owner);
         }
     }
 }

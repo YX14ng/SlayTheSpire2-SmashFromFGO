@@ -30,9 +30,9 @@ public sealed class AroundCaliburnUnleashed() : ArtoriaCard(0, CardType.Skill, C
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("AntiPurge", 1),
-        new DynamicVar("Stars", 3),
+        new DynamicVar("Stars", 30),
         new DynamicVar("ChargeCost", ChargeCost),
-        new DynamicVar("PerTen", 1)
+        new DynamicVar("PerTen", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -44,19 +44,19 @@ public sealed class AroundCaliburnUnleashed() : ArtoriaCard(0, CardType.Skill, C
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var extraStars = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
 
         // Ventana «Around Caliburn»: este turno podés CRITICAR en cualquier forma (Stars.CanCrit
         // la reconoce). Expira al fin de tu turno.
         await PowerCmd.Apply<AroundCaliburnWindowPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         await PowerCmd.Apply<AntiPurgePower>(choiceContext, Owner.Creature, DynamicVars["AntiPurge"].BaseValue, Owner.Creature, this);
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue + extraStars, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue + extraStars, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["AntiPurge"].UpgradeValueBy(1m);
-        DynamicVars["Stars"].UpgradeValueBy(2m);
+        DynamicVars["Stars"].UpgradeValueBy(20m);
     }
 }

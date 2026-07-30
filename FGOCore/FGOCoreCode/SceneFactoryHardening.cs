@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using BaseLib.Utils.NodeFactories;
+using FGOCore.FGOCoreCode.Animation;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.RestSite;
@@ -55,10 +56,10 @@ internal static class SceneFactoryHardening
     // (el 'this' de la llamada de instancia) + el GenEditState (ignorado) y devuelven el nodo construido
     // por NUESTRA factory. Si el original era no-genérico + castclass, el cast posterior es no-op.
     internal static NRestSiteCharacter BuildRestSite(PackedScene scene, PackedScene.GenEditState _)
-        => NodeFactory<NRestSiteCharacter>.CreateFromScene(scene);
+        => FgoAnimationSmoothing.Prepare(NodeFactory<NRestSiteCharacter>.CreateFromScene(scene));
 
     internal static NMerchantCharacter BuildMerchant(PackedScene scene, PackedScene.GenEditState _)
-        => NodeFactory<NMerchantCharacter>.CreateFromScene(scene);
+        => FgoAnimationSmoothing.Prepare(NodeFactory<NMerchantCharacter>.CreateFromScene(scene));
 
     internal static IEnumerable<CodeInstruction> SwapRest(IEnumerable<CodeInstruction> instructions)
         => Swap(instructions, AccessTools.Method(typeof(SceneFactoryHardening), nameof(BuildRestSite)), "rest");

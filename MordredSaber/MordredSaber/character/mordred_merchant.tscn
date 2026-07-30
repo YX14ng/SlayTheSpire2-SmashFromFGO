@@ -1,11 +1,13 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Texture2D" path="res://MordredSaber/character/form_mordred.png" id="sieg"]
+[ext_resource type="SpriteFrames" path="res://MordredSaber/character/mordred_frames.tres" id="frames"]
 
 [node name="MordredMerchant" type="Node2D"]
 
-[node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(0, -217)
-scale = Vector2(0.6, 0.6)
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-76.3, -277.8)
+scale = Vector2(0.745333, 0.745333)
 flip_h = true
-texture = ExtResource("sieg")
+sprite_frames = ExtResource("frames")
+animation = &"idle"
+autoplay = "idle"

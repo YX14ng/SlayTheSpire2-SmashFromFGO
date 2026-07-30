@@ -27,25 +27,19 @@ public sealed class AccumulatedHatredPower : MordredPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private int _procsThisTurn;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
-
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == Owner.Side) _procsThisTurn = 0;
-        return Task.CompletedTask;
-    }
 
     public override async Task AfterCurrentHpChanged(Creature creature, decimal delta)
     {
         if (creature != Owner || delta >= 0) return;
         if (!CombatManager.Instance.IsInProgress) return;
-        if (_procsThisTurn >= MaxProcsPerTurn) return;
-        _procsThisTurn++;
+        if (FgoCombatState.GetTurn(Owner, 3, 2) >= MaxProcsPerTurn) return;
+        var context = new BlockingPlayerChoiceContext();
+        await FgoCombatState.IncrementTurn(
+            context, Owner, 3, MaxProcsPerTurn, null, width: 2);
         Flash();
         // x Amount (audit 2026-07-05): apilar copias no hacia NADA — ahora cada stack suma su NP
         // por proc (el cap de procs por turno se mantiene).
-        await NpCharge.Gain(Owner, NpPerLoss * (int)Math.Max(1m, Amount), null);
+        await NpCharge.Gain(context, Owner, NpPerLoss * (int)Math.Max(1m, Amount), null);
     }
 }

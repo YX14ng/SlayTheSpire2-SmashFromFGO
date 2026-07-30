@@ -1,0 +1,14 @@
+{
+  "id": "ShutenDouji",
+  "name": "Shuten Douji — Assassin / Caster",
+  "author": "Chaldea",
+  "description": "Adds Shuten Douji from Fate/Grand Order. Distill Poison into Sake, cross Assassin and Caster styles, and choose between two Noble Phantasms.",
+  "version": "v0.1.1",
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": [
+    { "id": "BaseLib", "min_version": "v3.3.6" },
+    { "id": "FGOCore", "min_version": "v0.1.10" }
+  ],
+  "affects_gameplay": true
+}

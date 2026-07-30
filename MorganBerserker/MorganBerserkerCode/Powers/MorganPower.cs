@@ -6,7 +6,7 @@ using MorganBerserker.MorganBerserkerCode.Extensions;
 namespace MorganBerserker.MorganBerserkerCode.Powers;
 
 /// <summary>Base for Morgan's powers; icons load from this mod's resources.</summary>
-public abstract class MorganPower : CustomPowerModel
+public abstract class MorganPower : FGOCore.FGOCoreCode.FGOCorePower
 {
     public override string CustomPackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
     public override string CustomBigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigPowerImagePath();

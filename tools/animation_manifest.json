@@ -1,0 +1,218 @@
+{
+  "schema": 1,
+  "forms": [
+    {
+      "id": "800100",
+      "character": "Mash",
+      "form": "Base",
+      "frames": "MashShielder/MashShielder/character/frames",
+      "overrides": {
+        "cast": { "source": "cast", "first": 0, "last": 29, "step": 1, "speed": 20 }
+      },
+      "resource": "MashShielder/MashShielder/character/mash_frames_base.tres"
+    },
+    {
+      "id": "800150",
+      "character": "Mash",
+      "form": "Ortinax",
+      "frames": "MashShielder/MashShielder/character/frames_ortinax",
+      "overrides": {
+        "cast": { "source": "cast", "first": 0, "last": 22, "step": 1, "speed": 15 }
+      },
+      "resource": "MashShielder/MashShielder/character/mash_frames_ortinax.tres"
+    },
+    {
+      "id": "800200",
+      "character": "Mash",
+      "form": "Paladín",
+      "frames": "MashShielder/MashShielder/character/frames_paladin",
+      "overrides": {
+        "cast": { "source": "cast", "first": 0, "last": 32, "step": 1, "speed": 24 }
+      },
+      "resource": "MashShielder/MashShielder/character/mash_frames_paladin.tres"
+    },
+    {
+      "id": "704020",
+      "character": "Morgan",
+      "form": "Reina",
+      "frames": "MorganBerserker/MorganBerserker/character/frames_queen",
+      "resource": "MorganBerserker/MorganBerserker/character/morgan_frames_queen.tres"
+    },
+    {
+      "id": "505320",
+      "character": "Morgan",
+      "form": "Aesc",
+      "frames": "MorganBerserker/MorganBerserker/character/frames_aesc",
+      "resource": "MorganBerserker/MorganBerserker/character/morgan_frames_aesc.tres"
+    },
+    {
+      "id": "704030",
+      "character": "Morgan",
+      "form": "Invierno",
+      "frames": "MorganBerserker/MorganBerserker/character/frames_winter",
+      "resource": "MorganBerserker/MorganBerserker/character/morgan_frames_winter.tres"
+    },
+    {
+      "id": "504520",
+      "character": "Artoria Caster",
+      "form": "Caster",
+      "frames": "ArtoriaCaster/ArtoriaCaster/character/frames_caster",
+      "overrides": {
+        "attack": { "source": "attack", "first": 0, "last": 36, "step": 1, "speed": 30 },
+        "cast": { "source": "cast", "first": 0, "last": 36, "step": 1, "speed": 25 }
+      },
+      "resource": "ArtoriaCaster/ArtoriaCaster/character/artoria_frames_caster.tres"
+    },
+    {
+      "id": "704710",
+      "character": "Artoria Caster",
+      "form": "Berserker",
+      "frames": "ArtoriaCaster/ArtoriaCaster/character/frames_berserker",
+      "overrides": {
+        "cast": { "source": "cast", "first": 0, "last": 37, "step": 1, "speed": 26 }
+      },
+      "resource": "ArtoriaCaster/ArtoriaCaster/character/artoria_frames_berserker.tres"
+    },
+    {
+      "id": "704720",
+      "character": "Artoria Caster",
+      "form": "Avalon",
+      "frames": "ArtoriaCaster/ArtoriaCaster/character/frames_avalon",
+      "overrides": {
+        "attack": { "source": "attack", "first": 0, "last": 35, "step": 1, "speed": 30 },
+        "cast": { "source": "cast", "first": 0, "last": 11, "step": 1, "speed": 15 }
+      },
+      "resource": "ArtoriaCaster/ArtoriaCaster/character/artoria_frames_avalon.tres"
+    },
+    {
+      "id": "100900",
+      "character": "Mordred",
+      "form": "Base",
+      "frames": "MordredSaber/MordredSaber/character/frames",
+      "overrides": {
+        "attack": { "source": "attack", "first": 0, "last": 31, "step": 1, "speed": 30 },
+        "cast": { "source": "cast", "first": 0, "last": 44, "step": 1, "speed": 30 }
+      },
+      "resource": "MordredSaber/MordredSaber/character/mordred_frames.tres"
+    },
+    {
+      "id": "200200",
+      "character": "Gilgamesh",
+      "form": "Base",
+      "frames": "GilgameshArcher/GilgameshArcher/character/frames",
+      "overrides": {
+        "attack": { "source": "cast", "first": 0, "last": 30, "step": 1, "speed": 30 },
+        "cast": { "source": "cast", "first": 0, "last": 44, "step": 1, "speed": 30 }
+      },
+      "resource": "GilgameshArcher/GilgameshArcher/character/gilgamesh_frames.tres"
+    },
+    {
+      "id": "102700",
+      "character": "Okita",
+      "form": "Base",
+      "frames": "OkitaSaber/OkitaSaber/character/frames",
+      "overrides": {
+        "attack": { "source": "cast", "first": 0, "last": 22, "step": 1, "speed": 30 },
+        "cast": { "source": "cast", "first": 0, "last": 22, "step": 1, "speed": 15 },
+        "hurt": { "source": "hurt", "first": 0, "last": 1, "step": 1, "speed": 8 },
+        "die": { "source": "hurt", "first": 1, "last": 1, "step": 1, "speed": 1 }
+      },
+      "resource": "OkitaSaber/OkitaSaber/character/okita_frames.tres"
+    },
+    {
+      "id": "2800100",
+      "character": "Oberon",
+      "form": "Base",
+      "frames": "OberonPretender/OberonPretender/character/frames",
+      "overrides": {
+        "attack": { "source": "attack", "first": 0, "last": 28, "step": 1, "speed": 30 },
+        "cast": { "source": "cast", "first": 0, "last": 28, "step": 1, "speed": 20 }
+      },
+      "resource": "OberonPretender/OberonPretender/character/oberon_frames.tres"
+    },
+    {
+      "id": "2800110",
+      "character": "Oberon",
+      "form": "Invierno",
+      "frames": "OberonPretender/OberonPretender/character/frames_winter",
+      "overrides": {
+        "attack": { "source": "attack", "first": 0, "last": 28, "step": 1, "speed": 30 },
+        "cast": { "source": "cast", "first": 0, "last": 28, "step": 1, "speed": 20 }
+      },
+      "resource": "OberonPretender/OberonPretender/character/oberon_frames_winter.tres"
+    },
+    {
+      "id": "2800120",
+      "character": "Oberon",
+      "form": "Vortigern",
+      "frames": null,
+      "procedural": "OberonPretender/OberonPretender/character/vortigern_motion.gd",
+      "resource": "OberonPretender/OberonPretender/character/oberon_frames_vortigern.tres"
+    },
+    {
+      "id": "100800",
+      "character": "Siegfried",
+      "form": "Base",
+      "frames": "SiegfriedSaber/SiegfriedSaber/character/frames",
+      "overrides": {
+        "cast": { "source": "cast", "first": 0, "last": 44, "step": 1, "speed": 30 }
+      },
+      "resource": "SiegfriedSaber/SiegfriedSaber/character/siegfried_frames.tres"
+    },
+    {
+      "id": "303800",
+      "character": "Kagetora",
+      "form": "Nagao Kagetora",
+      "frames": "KagetoraLancer/KagetoraLancer/character/frames_kagetora",
+      "resource": "KagetoraLancer/KagetoraLancer/character/kagetora_frames.tres"
+    },
+    {
+      "id": "901820",
+      "character": "Kagetora",
+      "form": "Uesugi Kenshin",
+      "frames": "KagetoraLancer/KagetoraLancer/character/frames_kenshin",
+      "resource": "KagetoraLancer/KagetoraLancer/character/kenshin_frames.tres"
+    },
+    {
+      "id": "9935400",
+      "character": "Tiamat",
+      "form": "Femme Fatale",
+      "frames": "Tiamat/TiamatBeast/character/frames_femme",
+      "overrides": {
+        "cast": { "source": "cast", "first": 0, "last": 21, "step": 1, "speed": 15 }
+      },
+      "resource": "Tiamat/TiamatBeast/character/tiamat_frames_human.tres"
+    },
+    {
+      "id": "9935410",
+      "character": "Tiamat",
+      "form": "Bestia",
+      "frames": "Tiamat/TiamatBeast/character/frames_beast",
+      "overrides": {
+        "attack": { "source": "attack", "first": 0, "last": 35, "step": 1, "speed": 30 },
+        "cast": { "source": "cast", "first": 0, "last": 21, "step": 1, "speed": 15 }
+      },
+      "resource": "Tiamat/TiamatBeast/character/tiamat_frames_beast.tres"
+    },
+    {
+      "id": "602100",
+      "character": "Shuten-Douji",
+      "form": "Assassin",
+      "frames": "ShutenDouji/ShutenDouji/character/frames",
+      "resource": "ShutenDouji/ShutenDouji/character/shuten_frames.tres"
+    },
+    {
+      "id": "400400",
+      "character": "Astolfo",
+      "form": "Rider",
+      "frames": "AstolfoRider/AstolfoRider/character/frames",
+      "overrides": {
+        "idle": { "source": "idle", "first": 0, "last": 77, "step": 1, "speed": 30 },
+        "attack": { "source": "attack", "first": 0, "last": 54, "step": 1, "speed": 48 },
+        "cast": { "source": "cast", "first": 0, "last": 29, "step": 1, "speed": 20 },
+        "hurt": { "source": "hurt", "first": 0, "last": 16, "step": 1, "speed": 30 }
+      },
+      "resource": "AstolfoRider/AstolfoRider/character/astolfo_frames.tres"
+    }
+  ]
+}

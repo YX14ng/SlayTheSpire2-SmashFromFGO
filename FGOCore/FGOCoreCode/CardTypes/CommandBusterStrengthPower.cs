@@ -33,7 +33,7 @@ public sealed class CommandBusterStrengthPower : FGOCorePower
 
     // ModifyDamageAdditive es DELTA (default 0): mismo gate que StrengthPower (solo Ataques con poder
     // del propio dueño). No toca el StrengthPower vanilla, así que no contamina contadores de Fuerza.
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (Owner != dealer || !props.IsPoweredAttack()) return 0m;
         return Amount;
@@ -41,6 +41,6 @@ public sealed class CommandBusterStrengthPower : FGOCorePower
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == Owner.Side) await PowerCmd.Remove(this);
+        if (participants.Contains(Owner)) await PowerCmd.Remove(this);
     }
 }

@@ -30,14 +30,14 @@ public sealed class LieLikeVortigern() : OberonCard(2, CardType.Power, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var debt = DebtPower.Of(Owner.Creature);
-        var consumed = await DebtPower.Forgive(Owner.Creature, debt);
+        var consumed = await DebtPower.Forgive(choiceContext, Owner.Creature, debt);
         if (consumed > 0)
         {
             var aoe = consumed * DynamicVars["PerDebt"].IntValue;
-            foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).ToList())
+            foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).ToList())
             {
                 if (enemy.IsDead) continue;
-                await DamageCmd.Attack(aoe).FromCard(this).Targeting(enemy)
+                await DamageCmd.Attack(aoe).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
                     .WithHitFx("vfx/vfx_starry_impact")
                     .Execute(choiceContext);
             }

@@ -16,7 +16,13 @@ namespace MordredSaber.MordredSaberCode.Powers;
 /// Content «Insolente», «La Espada Más Resplandeciente», «Aceleración de Homúnculo», los
 /// riders «si consumiste un CRÍTICO este turno», etc.
 /// </summary>
-public interface ICritConsumedListener
+public interface ICritConsumedListener : ICriticalConsumedListener
 {
     Task OnCritConsumed(PlayerChoiceContext? choiceContext);
+
+    async Task ICriticalConsumedListener.AfterCriticalConsumed(
+        PlayerChoiceContext context, CriticalHit critical)
+    {
+        await OnCritConsumed(context);
+    }
 }

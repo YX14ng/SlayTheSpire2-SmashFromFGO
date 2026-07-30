@@ -24,7 +24,7 @@ public sealed class CallOfTheSea() : TiamatCard(1, CardType.Skill, CardRarity.Un
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         if (Owner.Creature.Player != null)
         {
             await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].IntValue, Owner.Creature.Player);

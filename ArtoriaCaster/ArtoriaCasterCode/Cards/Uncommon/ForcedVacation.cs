@@ -15,7 +15,7 @@ public sealed class ForcedVacation() : ArtoriaCard(1, CardType.Skill, CardRarity
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new HealVar(5m),
-        new DynamicVar("Stars", 1)
+        new DynamicVar("Stars", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -23,7 +23,7 @@ public sealed class ForcedVacation() : ArtoriaCard(1, CardType.Skill, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue);
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Commands;
+using FGOCore.FGOCoreCode.Compatibility;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -74,7 +75,7 @@ public static class BlockRetention
         var cap = Cap(creature);
         if (block > cap)
         {
-            await CreatureCmd.LoseBlock(creature, block - cap);
+            await CreatureCmdCompatibility.LoseBlock(creature, block - cap);
         }
     }
 

@@ -20,8 +20,11 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Rare;
 /// <c>ConsumeAllForNpCard</c> (sube el tier consumido antes de calcular la sobrecarga). up: 30 base /
 /// +15 anti-divino. Glow cuando es pagable.
 /// </summary>
-public sealed class NpEnumaElish() : GilgameshCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), IGilgameshNpCard
+public sealed class NpEnumaElish() : GilgameshCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), IGilgameshNpCard, ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 70;
 
     private const int PerTen = 2; // +2 a TODOS por cada 10 de carga consumida sobre 70
@@ -48,7 +51,7 @@ public sealed class NpEnumaElish() : GilgameshCard(2, CardType.Attack, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // 1) Consume TODA la carga; tier = lo realmente consumido (>= 70, + OverchargeBlessing).
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / 10 * PerTen; // sobrecarga a TODOS
 
         // 2) base + sobrecarga es plano para todos; sólo Élites/Jefes reciben +Divine.
@@ -57,7 +60,7 @@ public sealed class NpEnumaElish() : GilgameshCard(2, CardType.Attack, CardRarit
             if (enemy.IsDead) continue;
             var divineBonus = RoyalTrait.IsDivine(enemy) ? DynamicVars["Divine"].IntValue : 0;
             var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge + divineBonus);
-            await DamageCmd.Attack(damage).FromCard(this).Targeting(enemy)
+            await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
                 .WithHitFx("vfx/vfx_starry_impact")
                 .Execute(choiceContext);
         }

@@ -24,10 +24,10 @@ public sealed class VenomousNurse() : TiamatCard(1, CardType.Attack, CardRarity.
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);
-        await Lahmu.Feed(Owner.Creature, DynamicVars["Nurture"].IntValue, this);
+        await Lahmu.Feed(choiceContext, Owner.Creature, DynamicVars["Nurture"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Nurture"].UpgradeValueBy(1m);

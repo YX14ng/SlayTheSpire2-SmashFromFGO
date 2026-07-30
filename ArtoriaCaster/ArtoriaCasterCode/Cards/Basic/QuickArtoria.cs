@@ -12,12 +12,15 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Basic;
 /// Carta de Comando: Quick — daño bajo + Estrellas de Caliburn (2: sus estrellas
 /// valen ~10× las compartidas de FGOCore; son el contador chico con candado de forma).
 /// </summary>
-public sealed class QuickArtoria() : ArtoriaCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class QuickArtoria() : ArtoriaCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Quick;
+    public bool IsNoblePhantasm => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(6m, ValueProp.Move),
-        new DynamicVar("Stars", 2)
+        new DynamicVar("Stars", 20)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -25,15 +28,14 @@ public sealed class QuickArtoria() : ArtoriaCard(1, CardType.Attack, CardRarity.
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["Stars"].UpgradeValueBy(1m);
     }
 }

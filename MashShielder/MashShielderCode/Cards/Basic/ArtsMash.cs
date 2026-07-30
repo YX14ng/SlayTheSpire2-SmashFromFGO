@@ -10,8 +10,11 @@ namespace MashShielder.MashShielderCode.Cards.Basic;
 /// Carta de Comando: Arts (rediseño v2) — 1E Ataque: 6 daño + 30 Carga NP (up +3/+20).
 /// El motor del ciclo de ults desde el turno 1 (denominación fija 30/50).
 /// </summary>
-public sealed class ArtsMash() : MashShielderCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class ArtsMash() : MashShielderCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Arts;
+    public bool IsNoblePhantasm => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(6m, ValueProp.Move),
@@ -21,10 +24,10 @@ public sealed class ArtsMash() : MashShielderCard(1, CardType.Attack, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()

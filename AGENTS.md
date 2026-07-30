@@ -12,21 +12,28 @@ Guidance for Codex (and other agents) working in this repository.
 ## Project
 
 A **multi-mod monorepo** of Fate/Grand Order character mods for **Slay the Spire 2** (Early Access,
-Godot 4 / C#): one shared mechanics library **`FGOCore/`** + **9 character mods** (Mash, Morgan,
-Artoria Caster, Mordred, Gilgamesh, Okita, Oberon, Siegfried, Tiamat) + `CoopDeterminismPatch/`.
+Godot 4 / C#): one shared mechanics library **`FGOCore/`** + **12 character mods** (Mash, Morgan,
+Artoria Caster, Mordred, Gilgamesh, Okita, Oberon, Siegfried, Tiamat, Kagetora/Kenshin, Shuten and
+Astolfo).
 ("Smash" in the repo name is a pun on Mash, the first character — no FGO Servant is named Smash.)
 Each top-level folder with a `*.csproj` is an independent mod depending on FGOCore + BaseLib.
 
-- Targets the **MAIN public branch v0.107.1**, **BaseLib pinned 3.3.0** (the pin must match the
-  BaseLib in the game or the mod won't load). All 10 mods compile green and are on Steam Workshop.
+- Targets **MAIN v0.107.1 and BETA v0.109.0** with one artifact set, compiled against **BaseLib
+  3.3.6** and runtime-verified with 3.3.7. All 13 projects compile green; Kagetora, Shuten and Astolfo
+  remain in validation/playtest state (see `docs/STATUS.md` for Workshop state).
 - `decompiled/` is the decompiled game (ground truth for hooks/VFX/base classes);
   `decompiled/_baselib_full/` is the BaseLib decompile.
 - The user communicates in Spanish — **respond in Spanish**. Card/mechanic names are authored in
-  Spanish with English + Simplified-Chinese localization.
+  Spanish with English, Simplified-Chinese, Korean and Russian localization.
 
 See [docs/MODDING.md](docs/MODDING.md) (toolchain, mod format, BaseLib API),
 [docs/WORKFLOW-FGO.md](docs/WORKFLOW-FGO.md) (the playbook + gotcha table), and
 `docs/DESIGN-<NAME>.md` (per-character mechanics).
+
+Project-specific agent workflows live in
+[`skills/sts2-fgo-mod-development/`](skills/sts2-fgo-mod-development/) and
+[`skills/sts2-deckbuilder-design/`](skills/sts2-deckbuilder-design/). Use the first for code,
+assets, debugging and validation; use the second before creating or rebalancing a character pool.
 
 ## Key facts
 
@@ -51,4 +58,6 @@ See [docs/MODDING.md](docs/MODDING.md) (toolchain, mod format, BaseLib API),
   the mod.
 - Real deploy = **Steam Workshop** (`tools/workshop_upload.ps1`). Install locally only for playtest
   (`tools/install-mod.ps1`); never have the same id installed locally AND subscribed (duplicate id →
-  crash). Diagnose a non-loading mod from `%APPDATA%/SlayTheSpire2/logs/godot.log` first.
+  crash). All FGO items target **public visibility**, but visibility is not permission to upload:
+  never invoke Steam/SteamCMD unless the user explicitly requests it. Diagnose a non-loading mod
+  from `%APPDATA%/SlayTheSpire2/logs/godot.log` first.

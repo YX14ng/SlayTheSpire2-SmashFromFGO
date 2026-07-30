@@ -46,7 +46,7 @@ public sealed class ArmsPlayedPower : GilgameshPower
 
     public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side == Owner.Side) ThisTurn = 0;
+        if (participants.Contains(Owner)) ThisTurn = 0;
         return Task.CompletedTask;
     }
 

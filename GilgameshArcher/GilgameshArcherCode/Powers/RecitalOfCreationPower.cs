@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -40,7 +41,10 @@ public sealed class RecitalOfCreationPower : GilgameshPower
         Flash();
         // Por acumulacion (audit 2026-07-05): el CritReady ya escalaba con Amount pero el robo no
         // (y el texto prometia 1 fijo) — ahora TODO escala por stack y la loc lo dice.
-        await PowerCmd.Apply<CritReadyPower>(choiceContext, Owner, Amount, Owner, null);
-        await CardPileCmd.Draw(choiceContext, DrawPerManifest * (int)Amount, Owner.Player);
+        await Criticals.GrantReady(choiceContext, Owner, (int)Amount);
+        var requested = DrawPerManifest * (int)Amount;
+        var toDraw = Math.Min(requested, PileType.Draw.GetPile(Owner.Player).Cards.Count);
+        if (toDraw > 0)
+            await CardPileCmd.Draw(choiceContext, toDraw, Owner.Player);
     }
 }

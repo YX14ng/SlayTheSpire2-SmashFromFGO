@@ -15,23 +15,23 @@ namespace OkitaSaber.OkitaSaberCode.Cards.Common;
 public sealed class Feint() : OkitaCard(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(4m, ValueProp.Move), new DynamicVar("Stars", 5)];
+        [new DamageVar(4m, ValueProp.Move), new DynamicVar("Stars", 10)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritStarsPower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         var stars = DynamicVars["Stars"].IntValue;
-        if (stars > 0) await CritStars.Gain(Owner.Creature, stars, this);
+        if (stars > 0) await CritStars.Gain(choiceContext, Owner.Creature, stars, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);  // 4 -> 6
-        DynamicVars["Stars"].UpgradeValueBy(5m); // +5 -> +10★
+        DynamicVars["Stars"].UpgradeValueBy(10m);
     }
 }

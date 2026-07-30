@@ -36,10 +36,10 @@ public sealed class ImpossibleBribe() : GilgameshCard(1, CardType.Attack, CardRa
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        var bonus = await TreasurePower.TrySpend(Owner.Creature, DynamicVars["Treasure"].IntValue)
+        var bonus = await TreasurePower.TrySpend(choiceContext, Owner.Creature, DynamicVars["Treasure"].IntValue)
             ? DynamicVars["Bonus"].IntValue
             : 0;
-        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue + bonus);
+        await AttackTarget(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue + bonus);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);

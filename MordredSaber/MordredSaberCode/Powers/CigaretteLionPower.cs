@@ -18,7 +18,7 @@ namespace MordredSaber.MordredSaberCode.Powers;
 /// Crítico Listo del owner y subió (amount > 0), robamos. Counter: las copias apilan el robo.
 /// El up de la carta baja el costo a 1⚡ (no toca el robo). Personal: no escala en multijugador.
 /// </summary>
-public sealed class CigaretteLionPower : MordredPower
+public sealed class CigaretteLionPower : MordredPower, ICriticalConsumedListener
 {
     public override PowerType Type => PowerType.Buff;
 
@@ -28,24 +28,22 @@ public sealed class CigaretteLionPower : MordredPower
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritReadyPower>()];
 
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public async Task AfterCriticalConsumed(PlayerChoiceContext choiceContext, CriticalHit critical)
     {
-        await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
-        // Sólo nos importa que el owner GANE un Crítico Listo (amount > 0). Una copia roba 1 por
-        // cada crítico obtenido; varias copias multiplican el robo (Counter).
-        if (power is not CritReadyPower || power.Owner != Owner || amount <= 0) return;
-        if (Owner.Player == null || Owner.IsDead) return;
+        if (critical.Owner != Owner) return;
+        var player = Owner.Player;
+        if (player?.PlayerCombatState is not { } playerCombatState || Owner.IsDead) return;
         Flash();
         // BUGFIX (soft-lock): este robo proca a MITAD de la resolución de la carta que disparó el
         // Crítico Listo. Si RESHUFFLEA (mazo vacío), reshufflea el descarte -que en v0.107.1 contiene
         // la carta en curso- y corrompe su estado ("must be added to a CombatState"), colgando el
         // combate. Por eso robamos SOLO lo que hay en el mazo (sin gatillar reshuffle).
-        var inDeck = Owner.Player.PlayerCombatState.AllPiles
+        var inDeck = playerCombatState.AllPiles
             .FirstOrDefault(p => p.Type == PileType.Draw)?.Cards.Count ?? 0;
         var toDraw = System.Math.Min((int)Amount, inDeck);
         if (toDraw > 0)
         {
-            await CardPileCmd.Draw(choiceContext ?? new BlockingPlayerChoiceContext(), toDraw, Owner.Player);
+            await CardPileCmd.Draw(choiceContext, toDraw, player);
         }
     }
 }

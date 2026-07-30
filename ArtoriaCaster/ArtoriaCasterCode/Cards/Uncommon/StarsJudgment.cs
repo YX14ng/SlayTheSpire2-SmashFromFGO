@@ -29,7 +29,7 @@ public sealed class StarsJudgment() : ArtoriaCard(1, CardType.Attack, CardRarity
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         var damage = await ResolveCritDamage(CritCost);
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
     }

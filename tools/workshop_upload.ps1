@@ -1,12 +1,15 @@
 ﻿# Sube los mods FGO a Steam Workshop de StS2 (appid 2868840) como ITEMS SEPARADOS
-# (FGOCore + Mash + Morgan + Artoria = 4 items independientes). Requiere SteamCMD + login.
+# (FGOCore + 12 personajes = 13 items independientes). Requiere SteamCMD + login.
+# Todo el lote se envia dentro de UNA sesion de SteamCMD para no reconectar por cada item.
 #
 # StS2 carga mods de Workshop recursivamente; cada item contiene UNA carpeta de mod (dll+json+pck).
-# La descripcion de cada item (EN + 简体中文) vive en tools\workshop_desc\<Mod>.txt (UTF-8);
+# La descripcion de cada item (ES + EN + 简体中文) vive en tools\workshop_desc\<Mod>.txt (UTF-8);
 # el VDF tambien se escribe en UTF-8 para no romper el chino.
 #
 # USO (primer upload de TODOS, quedan PRIVADOS para testear):
 #   .\tools\workshop_upload.ps1 -SteamUser TU_USUARIO_STEAM
+# Preparar y validar TODO sin conectarse a Steam:
+#   .\tools\workshop_upload.ps1 -StageOnly
 # Subir/actualizar SOLO uno:
 #   .\tools\workshop_upload.ps1 -SteamUser TU_USUARIO -Only MashShielder
 # Hacerlos PUBLICOS (tras testear): re-corre con -Visibility 0 (reusa los ids guardados).
@@ -15,15 +18,19 @@
 #   tools\.workshop_id_<Mod>.txt (un numero por archivo) y los siguientes runs ACTUALIZAN ese
 #   item en vez de crear duplicados. (Si el archivo no existe, el script crea un item NUEVO.)
 param(
-    [Parameter(Mandatory)][string]$SteamUser,
-    [ValidateSet("0","1","2")][string]$Visibility = "2",   # 0=publico 1=amigos 2=privado
+    [string]$SteamUser,
+    [ValidateSet("","0","1","2")][string]$Visibility = "", # vacio=conservar; 0=publico 1=amigos 2=privado
     [string[]]$Only,
-    [string]$SteamCmd = "$PSScriptRoot\steamcmd\steamcmd.exe",
-    [string]$ModsRoot = "C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2\mods"
+    [string]$ChangeNote = "FGO mod update",
+    [switch]$StageOnly,
+    [string]$SteamCmd,
+    [string]$ModsRoot
 )
 $ErrorActionPreference = "Stop"
 $appid = "2868840"
 $repo  = Split-Path $PSScriptRoot -Parent
+$SteamCmd = if ($SteamCmd) { $SteamCmd } else { Join-Path $PSScriptRoot 'steamcmd\steamcmd.exe' }
+$ModsRoot = if ($ModsRoot) { $ModsRoot } else { Join-Path $repo 'dist' }
 $stage = Join-Path $repo ".workshop_stage"
 $descDir = Join-Path $PSScriptRoot "workshop_desc"
 
@@ -39,10 +46,14 @@ $titles = [ordered]@{
     OberonPretender = "FGO - Oberon (Pretender)"
     SiegfriedSaber  = "FGO - Siegfried (Saber)"
     TiamatBeast     = "FGO - Tiamat (Beast)"
+    KagetoraLancer  = "FGO — Nagao Kagetora / Uesugi Kenshin (Lancer → Ruler)"
+    ShutenDouji     = "FGO — Shuten Douji (Assassin / Caster)"
+    AstolfoRider    = "FGO — Astolfo 阿斯托尔福 (Rider)"
 }
 
 $targets = if ($Only) { $Only } else { @($titles.Keys) }
 $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+$uploadQueue = @()
 
 foreach ($m in $targets) {
     if (-not $titles.Contains($m)) { Write-Warning "Mod desconocido: $m -- salteo."; continue }
@@ -54,6 +65,14 @@ foreach ($m in $targets) {
     # id guardado (0 = item nuevo)
     $idFile = Join-Path $PSScriptRoot ".workshop_id_$m.txt"
     $id = if (Test-Path $idFile) { (Get-Content $idFile -Raw).Trim() } else { "0" }
+
+    # Conserva la visibilidad del ultimo upload salvo que se indique una nueva.
+    $previousVdf = Join-Path $stage "$m\item.vdf"
+    $previousVisibility = if (Test-Path $previousVdf) {
+        $match = [regex]::Match([System.IO.File]::ReadAllText($previousVdf), '"visibility"\s+"([0-2])"')
+        if ($match.Success) { $match.Groups[1].Value } else { "2" }
+    } else { "2" }
+    $effectiveVisibility = if ($Visibility) { $Visibility } else { $previousVisibility }
 
     # contenido = una carpeta con la subcarpeta del mod (dll+json+pck)
     $content = Join-Path $stage "$m\content"
@@ -80,24 +99,59 @@ foreach ($m in $targets) {
     "appid" "$appid"
     "publishedfileid" "$id"
     "contentfolder" "$($content -replace '\\','\\')"
-    "visibility" "$Visibility"
+    "visibility" "$effectiveVisibility"
     "title" "$($titles[$m])"
     "description" "$desc"
-    "changenote" "Subida via workshop_upload.ps1"
+    "changenote" "$($ChangeNote -replace '"', "'")"
 }
 "@
     [System.IO.File]::WriteAllText($vdf, $vdfContent, $utf8NoBom)
 
     Write-Host ""
     Write-Host "==================================================================="
-    Write-Host " $m  (item id actual: $id$(if($id -eq '0'){' = NUEVO'}))"
-    Write-Host " Si es NUEVO: anota el 'PublishedFileID' que imprime SteamCMD abajo"
-    Write-Host " y guardalo en: $idFile"
+    Write-Host " Preparado: $m  (item id: $id$(if($id -eq '0'){' = NUEVO'}))"
     Write-Host "==================================================================="
-    & $SteamCmd +login $SteamUser +workshop_build_item $vdf +quit
+    $uploadQueue += [pscustomobject]@{ Mod = $m; Vdf = $vdf; Id = $id; IdFile = $idFile }
+}
+
+if ($uploadQueue.Count -eq 0) { throw "No hay items validos para procesar." }
+
+if ($StageOnly) {
+    Write-Host ""
+    Write-Host "Preparacion terminada sin conectar con Steam. Items: $($uploadQueue.Mod -join ', ')."
+    return
+}
+
+if ([string]::IsNullOrWhiteSpace($SteamUser)) {
+    throw "SteamUser es obligatorio salvo cuando se usa -StageOnly."
+}
+
+# SteamCMD acepta varios comandos consecutivos. Iniciar sesion una sola vez evita que
+# una publicacion completa abra y cierre diez sesiones con la misma cuenta de Steam.
+$steamArgs = @("+login", $SteamUser)
+foreach ($item in $uploadQueue) {
+    $steamArgs += @("+workshop_build_item", $item.Vdf)
+}
+$steamArgs += "+quit"
+
+Write-Host ""
+Write-Host "Conectando una sola vez para publicar $($uploadQueue.Count) item(s)..."
+& $SteamCmd @steamArgs 2>&1 | Tee-Object -Variable steamOutput
+$steamExitCode = if ($null -eq $LASTEXITCODE) { 0 } else { $LASTEXITCODE }
+$successCount = [regex]::Matches(($steamOutput -join "`n"), 'Committing update\.\.\.Success').Count
+
+if ($steamExitCode -ne 0 -or $successCount -ne $uploadQueue.Count) {
+    throw "SteamCMD confirmo $successCount de $($uploadQueue.Count) updates (exit code $steamExitCode)."
+}
+
+foreach ($item in $uploadQueue) {
+    if ($item.Id -ne "0") { continue }
+    $updatedVdf = [System.IO.File]::ReadAllText($item.Vdf)
+    $idMatch = [regex]::Match($updatedVdf, '"publishedfileid"\s+"([1-9][0-9]+)"')
+    if ($idMatch.Success) {
+        [System.IO.File]::WriteAllText($item.IdFile, $idMatch.Groups[1].Value + "`n", $utf8NoBom)
+    }
 }
 
 Write-Host ""
-Write-Host "Listo. Items procesados: $($targets -join ', ')."
-Write-Host "Recorda: guarda cada PublishedFileID en tools\.workshop_id_<Mod>.txt para que los"
-Write-Host "proximos runs ACTUALICEN el item (no creen duplicados)."
+Write-Host "Listo. Items publicados en una sola sesion: $($uploadQueue.Mod -join ', ')."

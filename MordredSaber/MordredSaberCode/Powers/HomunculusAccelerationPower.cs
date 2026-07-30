@@ -23,22 +23,15 @@ public sealed class HomunculusAccelerationPower : MordredPower, ICritConsumedLis
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private bool _firedThisTurn;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritStarsPower>(), HoverTipFactory.FromPower<CritReadyPower>()];
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == Owner.Side) _firedThisTurn = false;
-        return Task.CompletedTask;
-    }
-
     public async Task OnCritConsumed(PlayerChoiceContext? choiceContext)
     {
-        if (_firedThisTurn || Owner.IsDead) return;
-        _firedThisTurn = true;
+        if (FgoCombatState.GetTurn(Owner, 2) != 0 || Owner.IsDead) return;
+        var context = choiceContext ?? new BlockingPlayerChoiceContext();
+        await FgoCombatState.SetTurn(context, Owner, 2, 1);
         Flash();
-        await CritStars.Gain(Owner, StarsPerTurn * (int)Amount, null);
+        await CritStars.Gain(context, Owner, StarsPerTurn * (int)Amount, null);
     }
 }

@@ -31,14 +31,18 @@ public static class OberonExtensions
     /// Goodfellow). Lectura pura + PowerCmd.ModifyAmount negativo (patrón Cadenas del Cielo): la Fuerza
     /// negativa (un debuff que les pusiste) queda intacta. NO instala nada.
     /// </summary>
-    public static async Task StripPositiveStrengthFromAll(ICombatState combatState, Creature ofPlayer)
+    public static Task StripPositiveStrengthFromAll(ICombatState combatState, Creature ofPlayer) =>
+        StripPositiveStrengthFromAll(new BlockingPlayerChoiceContext(), combatState, ofPlayer);
+
+    public static async Task StripPositiveStrengthFromAll(
+        PlayerChoiceContext choiceContext, ICombatState combatState, Creature ofPlayer)
     {
         foreach (var enemy in combatState.GetOpponentsOf(ofPlayer).ToList())
         {
             if (enemy.IsDead) continue;
             var strength = enemy.GetPower<StrengthPower>();
             if (strength == null || strength.Amount <= 0) continue;
-            await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), strength, -strength.Amount, ofPlayer, null);
+            await PowerCmd.ModifyAmount(choiceContext, strength, -strength.Amount, ofPlayer, null);
         }
     }
 
@@ -46,12 +50,21 @@ public static class OberonExtensions
     /// Duerme a todos los enemigos vivos (vía <see cref="Sleep.TryApply"/>, que respeta Insomnio): el
     /// sueño masivo de la Desatada en sobrecarga ≥150. Devuelve cuántos durmió.
     /// </summary>
-    public static async Task<int> SleepAll(ICombatState combatState, Creature ofPlayer, int duration, CardModel? source)
+    public static Task<int> SleepAll(
+        ICombatState combatState, Creature ofPlayer, int duration, CardModel? source) =>
+        SleepAll(new BlockingPlayerChoiceContext(), combatState, ofPlayer, duration, source);
+
+    public static async Task<int> SleepAll(
+        PlayerChoiceContext choiceContext,
+        ICombatState combatState,
+        Creature ofPlayer,
+        int duration,
+        CardModel? source)
     {
         var slept = 0;
         foreach (var enemy in combatState.GetOpponentsOf(ofPlayer).ToList())
         {
-            if (await Sleep.TryApply(enemy, duration, ofPlayer, source)) slept++;
+            if (await Sleep.TryApply(choiceContext, enemy, duration, ofPlayer, source)) slept++;
         }
         return slept;
     }

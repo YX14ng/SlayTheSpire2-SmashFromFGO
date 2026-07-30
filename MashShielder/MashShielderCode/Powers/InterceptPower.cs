@@ -26,6 +26,6 @@ public class InterceptPower : MashShielderPower
         if (!props.IsPoweredAttack() || !result.WasFullyBlocked) return;
 
         Flash();
-        await CreatureCmd.Damage(choiceContext, dealer, Amount, ValueProp.Unpowered | ValueProp.SkipHurtAnim, Owner, null);
+        await CreatureCmd.Damage(choiceContext, dealer, Amount, ValueProp.Unpowered | ValueProp.SkipHurtAnim, Owner);
     }
 }

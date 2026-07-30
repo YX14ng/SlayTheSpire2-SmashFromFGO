@@ -48,11 +48,11 @@ public sealed class RhongomyniadReplica() : MashShielderCard(3, CardType.Attack,
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + bonus);
 
-        await BlackBarrel.Hit(choiceContext, cardPlay.Target, damage, Owner.Creature, this);
+        await BlackBarrel.Hit(choiceContext, cardPlay, cardPlay.Target, damage, Owner.Creature, this);
         if (!cardPlay.Target.IsDead)
         {
             await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);

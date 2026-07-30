@@ -50,11 +50,11 @@
   "GILGAMESHARCHER-WALL_OF_SPEARS.title": "Muro de Lanzas",
   "GILGAMESHARCHER-WALL_OF_SPEARS.description": "#Gana !B! de Bloqueo. Si jugaste un Arma del Tesoro este turno, gana !Bonus! más.",
   "GILGAMESHARCHER-TOTAL_BARRAGE.title": "Andanada Total",
-  "GILGAMESHARCHER-TOTAL_BARRAGE.description": "#Inflige !D! de daño 4 veces a enemigos al azar, más 1 golpe por cada Arma del Tesoro que jugaste este turno (hasta 2).",
+  "GILGAMESHARCHER-TOTAL_BARRAGE.description": "#Inflige !D! de daño 4 veces a enemigos al azar, más 1 golpe por cada Arma del Tesoro que jugaste este turno /(hasta 2).",
   "GILGAMESHARCHER-NAMELESS_BLADE.title": "Hoja Sin Nombre del Tesoro",
   "GILGAMESHARCHER-NAMELESS_BLADE.description": "#Inflige !D! de daño.",
   "GILGAMESHARCHER-MONGRELS_EXECUTION.title": "Ejecución del Mestizo",
-  "GILGAMESHARCHER-MONGRELS_EXECUTION.description": "#Inflige !D! de daño. Si tenés un Crítico Listo, además aplica !Vulnerable! de *Vulnerable.",
+  "GILGAMESHARCHER-MONGRELS_EXECUTION.description": "#Inflige !D! de daño. Si este Ataque es *Crítico, además aplica !Vulnerable! de *Vulnerable.",
   "GILGAMESHARCHER-TWIN_LANCES.title": "Lanzas Gemelas",
   "GILGAMESHARCHER-TWIN_LANCES.description": "#Inflige !D! de daño dos veces. Gana !Stars! *Estrellas de *Crítico.",
   "GILGAMESHARCHER-CALADBOLG_THE_ORIGINAL.title": "Caladbolg, el Original",
@@ -74,9 +74,9 @@
   "GILGAMESHARCHER-WALLS_OF_URUK.title": "Murallas de Uruk",
   "GILGAMESHARCHER-WALLS_OF_URUK.description": "#Gana !B! de Bloqueo. Gana !Np! de *Carga NP.",
   "GILGAMESHARCHER-TREASURE_GUARDS_THE_KING.title": "El Tesoro Protege al Rey",
-  "GILGAMESHARCHER-TREASURE_GUARDS_THE_KING.description": "#Gana !PerArm! de Bloqueo por cada Arma del Tesoro que jugaste este turno (hasta 4).",
+  "GILGAMESHARCHER-TREASURE_GUARDS_THE_KING.description": "#Gana !PerArm! de Bloqueo por cada Arma del Tesoro que jugaste este turno /(hasta 4).",
   "GILGAMESHARCHER-KIT_INDEPENDENT_ACTION.title": "Acción Independiente A+",
-  "GILGAMESHARCHER-KIT_INDEPENDENT_ACTION.description": "#Mientras tengas un Crítico Listo, tus Ataques infligen !Action! más (antes de la duplicación).",
+  "GILGAMESHARCHER-KIT_INDEPENDENT_ACTION.description": "#Tus Ataques *Críticos infligen !Action! más de daño.",
   "GILGAMESHARCHER-KIT_DIVINITY.title": "Divinidad B",
   "GILGAMESHARCHER-KIT_DIVINITY.description": "#Tus Ataques infligen !Divinity! más, incluidas las Armas del Tesoro.",
   "GILGAMESHARCHER-THRONE_OF_THE_ONLOOKER.title": "Trono del Observador",
@@ -114,5 +114,5 @@
   "GILGAMESHARCHER-IMPOSSIBLE_BRIBE.title": "Soborno Imposible",
   "GILGAMESHARCHER-IMPOSSIBLE_BRIBE.description": "#Inflige !D! de daño. Si tenés al menos !Treasure! de *Tesoro, lo gastás e infligís !Bonus! más.",
   "GILGAMESHARCHER-RAIN_OF_TREASURES.title": "Lluvia de Tesoros",
-  "GILGAMESHARCHER-RAIN_OF_TREASURES.description": "#Inflige !D! de daño a TODOS los enemigos, más !PerTreasure! por cada *Tesoro gastado (hasta 6 gastados)."
+  "GILGAMESHARCHER-RAIN_OF_TREASURES.description": "#Inflige !D! de daño a TODOS los enemigos, más !PerTreasure! por cada *Tesoro gastado /(hasta 6 gastados)."
 }

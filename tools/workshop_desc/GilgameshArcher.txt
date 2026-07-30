@@ -1,33 +1,109 @@
-Gilgamesh, the King of Heroes (Archer) of Fate/Grand Order, as a fully playable character. Built on the BaseLib framework and the FGO Core library.
+[h1]Gilgamesh — The Treasury Is a Weapon[/h1]
+Open the Gate of Babylon, spend the run's Gold during combat and punish every enemy deemed unworthy of facing the King of Heroes.
 
-What it adds:
-- The only character who spends the run's GOLD as a combat resource, alongside the Gate of Babylon: a tribe of eight unique 0-cost Treasure Arm tokens manifested to your hand.
-- Four draftable archetypes (Arsenal, Judgement, Extravagance, Avarice) plus Critical Stars and a structural "King's Arrogance" risk that rewards never deigning to defend.
-- His Noble Phantasm, Enuma Elish - the base damage is fixed, but the anti-divine bonus scales with banked Overcharge and consumes the Treasure Arms in your hand.
+[b]RELEASE BUILD — v0.1.10[/b]
 
-Requires: FGO Core (library) + BaseLib.
-Localization: English, Spanish, Simplified Chinese.
+[h2]Core gameplay[/h2]
+[list]
+[*][b]Gold in combat:[/b] Gilgamesh is built around spending the same Gold used at shops. Wealth becomes immediate power, but every extravagant turn changes the rest of the run.
+[*][b]Gate of Babylon:[/b] generate eight distinct 0-cost Treasure Arms with attacks, defense, control and setup instead of one repeated token.
+[*][b]Four build paths:[/b] Arsenal, Judgement, Extravagance and Avarice support different relationships with generated weapons, Gold and the King's Arrogance.
+[*][b]Enuma Elish:[/b] consume Treasure Arms from the hand and scale the anti-divine climax with stored Overcharge.
+[/list]
 
-Found a bug or have feedback? Report it in the discussion thread:
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-To help us fix it fast, please include: which Servant you played and what you did (a screenshot helps); your game log — Steam comments can't attach files, so upload %APPDATA%\SlayTheSpire2\logs\godot.log to a paste site (e.g. pastebin.com) or a file host and paste the LINK, or paste the last ~50 lines; and your full mod list (many bugs are conflicts with other mods).
+[h2]Content[/h2]
+[list]
+[*]43-card reward pool and a 10-card starting deck
+[*]8 distinct Treasure Arms and manifested Noble Phantasm cards
+[*]8 character relics
+[*]Animated official FGO battle model and curated official artwork throughout the mod
+[*]Spanish, English, Simplified Chinese, Korean and Russian localization
+[/list]
 
-Made with the help of Claude Code.
+[h2]Requirements and compatibility[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Built for MAIN 0.107.1 and public BETA 0.109.0
+[/list]
 
-————————————————————
+[h2]Validation status[/h2]
+Build, localization, asset coverage, animation references and package audits pass. Balance, save/load and co-op behavior continue to receive in-game testing.
 
-「Fate/Grand Order」的英雄王吉尔伽美什（弓兵），现已作为可操作角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Source code and bug reports[/url]
 
-本 Mod 带来：
-- 唯一一名把本局攒下的「金币」当作战斗资源来花的角色，配合「王之财宝」(Gate of Babylon)：会在你手中显化八张各不相同、零费的王之财宝（Treasure Arm）衍生卡。
-- 四套可构筑的流派（武库 Arsenal、审判 Judgement、奢华 Extravagance、贪婪 Avarice），外加暴击星，以及贯穿构筑的「王的傲慢」(King's Arrogance) 风险机制——奖励那个不屑于防御的你。
-- 宝具「Enuma Elish」——基础伤害固定，但对「神性」的特攻加成会随累积的超充能（Overcharge）增长，并消耗你手牌中的王之财宝。
+Unofficial fan-made mod. Fate/Grand Order characters and official visual assets belong to their respective rights holders. Not affiliated with TYPE-MOON, Lasengle or Mega Crit.
 
-依赖：FGO Core（库）+ BaseLib。
-支持语言：英文、西班牙文、简体中文。
+[hr][/hr]
+[h1]ESPAÑOL[/h1]
+Abrí la Puerta de Babilonia, gastá el Oro de la partida durante el combate y castigá a todo enemigo indigno de enfrentar al Rey de los Héroes.
 
-发现 Bug 或有建议？请在讨论区反馈：
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-为方便我们尽快修复，请附上：你使用的从者 + 具体操作（截图更佳）；游戏日志——Steam 评论无法上传文件，请把 %APPDATA%\SlayTheSpire2\logs\godot.log 传到网盘或贴站（如 pastebin.com）再贴出链接，或直接粘贴最后约 50 行；以及完整的 Mod 列表（很多 Bug 是与其他 Mod 的冲突）。
+[b]VERSIÓN PÚBLICA — v0.1.10[/b]
 
-在 Claude Code 的协助下制作。
+[h2]Mecánicas principales[/h2]
+[list]
+[*][b]Oro en combate:[/b] Gilgamesh gasta el mismo Oro que se usa en las tiendas. La riqueza se vuelve poder inmediato, pero cada turno extravagante cambia el resto de la partida.
+[*][b]Gate of Babylon:[/b] genera ocho Armas del Tesoro distintas de coste 0, con ataque, defensa, control y preparación en lugar de una ficha repetida.
+[*][b]Cuatro caminos:[/b] Arsenal, Juicio, Extravagancia y Avaricia proponen relaciones diferentes con las armas generadas, el Oro y la Arrogancia del Rey.
+[*][b]Enuma Elish:[/b] consume las Armas del Tesoro de la mano y escala su clímax antideidad con la Sobrecarga acumulada.
+[/list]
+
+[h2]Contenido[/h2]
+[list]
+[*]43 cartas de recompensa y mazo inicial de 10 cartas
+[*]8 Armas del Tesoro distintas y cartas de Noble Phantasm manifestadas
+[*]8 reliquias propias
+[*]Modelo de combate oficial de FGO animado y arte oficial curado en todo el mod
+[*]Localización en español, inglés, chino simplificado, coreano y ruso
+[/list]
+
+[h2]Requisitos y compatibilidad[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Compatible con MAIN 0.107.1 y BETA pública 0.109.0
+[/list]
+
+[h2]Estado de validación[/h2]
+Las auditorías de compilación, idiomas, recursos, animaciones y paquete están aprobadas. El balance, guardado/carga y cooperativo continúan en pruebas dentro del juego.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Código fuente y reporte de errores[/url]
+
+Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
+
+[hr][/hr]
+[h1]简体中文[/h1]
+开启王之财宝，在战斗中消耗本局金币，并惩罚所有不配面对英雄王的敌人。
+
+[b]公开版本 — v0.1.10[/b]
+
+[h2]核心机制[/h2]
+[list]
+[*][b]战斗中消费金币：[/b]吉尔伽美什会使用商店所需的同一份金币。财富能立刻转化为力量，但每个奢华回合都会改变整局游戏的资源规划。
+[*][b]Gate of Babylon：[/b]生成八种不同的零费王之财宝衍生卡，覆盖攻击、防御、控制与准备，而非重复同一种衍生物。
+[*][b]四条构筑路线：[/b]武库、审判、奢华与贪婪分别围绕衍生武器、金币及王的傲慢展开。
+[*][b]Enuma Elish：[/b]消耗手中的王之财宝，并以积累的过充能强化对神性高潮。
+[/list]
+
+[h2]内容[/h2]
+[list]
+[*]43 张奖励卡牌与 10 张初始牌组
+[*]8 种不同的王之财宝与显现型宝具牌
+[*]8 件角色专属遗物
+[*]FGO 官方战斗模型动画及贯穿整个 Mod 的精选官方美术
+[*]支持西班牙语、英语、简体中文、韩语与俄语
+[/list]
+
+[h2]依赖与兼容性[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]兼容正式版 0.107.1 与公开测试版 0.109.0
+[/list]
+
+[h2]验证状态[/h2]
+构建、本地化、资源覆盖、动画引用及安装包检查均已通过；平衡、存档与联机表现仍在游戏内持续测试。
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]源代码与问题反馈[/url]
+
+本项目为非官方同人 Mod，与 TYPE-MOON、Lasengle 及 Mega Crit 无隶属关系。

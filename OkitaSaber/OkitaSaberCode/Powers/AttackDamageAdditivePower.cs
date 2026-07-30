@@ -24,11 +24,11 @@ public abstract class AttackDamageAdditivePower : OkitaPower
 
     /// <summary>¿Se aplica el bono al golpe actual? (Postura Veloz: siempre; los crit-additive lo
     /// gatean con un *Crítico Listo en cola.)</summary>
-    protected virtual bool BonusApplies() => true;
+    protected virtual bool BonusApplies(CardModel? cardSource, CardPlay? cardPlay) => true;
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || !props.IsPoweredAttack() || cardSource == null) return 0m;
-        return BonusApplies() ? Amount : 0m;
+        return BonusApplies(cardSource, cardPlay) ? Amount : 0m;
     }
 }

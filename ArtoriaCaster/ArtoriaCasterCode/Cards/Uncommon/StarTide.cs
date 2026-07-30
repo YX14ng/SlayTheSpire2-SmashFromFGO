@@ -13,17 +13,17 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Uncommon;
 /// </summary>
 public sealed class StarTide() : ArtoriaCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Stars", 3)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Stars", 30)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Stars"].UpgradeValueBy(1m);
+        DynamicVars["Stars"].UpgradeValueBy(20m);
     }
 }

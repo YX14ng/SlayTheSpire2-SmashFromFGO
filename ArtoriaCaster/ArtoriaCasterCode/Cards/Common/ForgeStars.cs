@@ -12,7 +12,7 @@ public sealed class ForgeStars() : ArtoriaCard(1, CardType.Skill, CardRarity.Com
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Stars", 2),
+        new DynamicVar("Stars", 20),
         new CardsVar(1)
     ];
 
@@ -20,12 +20,12 @@ public sealed class ForgeStars() : ArtoriaCard(1, CardType.Skill, CardRarity.Com
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Stars"].UpgradeValueBy(1m);
+        DynamicVars["Stars"].UpgradeValueBy(10m);
     }
 }

@@ -31,9 +31,9 @@ public sealed class RoyalLoan() : OberonCard(1, CardType.Skill, CardRarity.Uncom
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
         await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].IntValue, Owner);
-        await DebtPower.Add(Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
+        await DebtPower.Add(choiceContext, Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Draw"].UpgradeValueBy(1m);

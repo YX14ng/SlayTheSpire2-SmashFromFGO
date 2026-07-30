@@ -18,8 +18,11 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Cards.Rare;
 /// El refund +20 NP NO se hornea en la base: se gana con el Rank-Up (A+ → EX, §6) junto con el
 /// flag anti-doble-refund (P5). Esta es la base (sin refund).
 /// </summary>
-public sealed class Balmung() : SiegfriedCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), ISiegfriedNpCard
+public sealed class Balmung() : SiegfriedCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), ISiegfriedNpCard, ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     // Mínimo = la manifestación a 100 (NP a full, fiel a FGO).
     public const int ChargeCost = 100;
 
@@ -52,20 +55,20 @@ public sealed class Balmung() : SiegfriedCard(2, CardType.Attack, CardRarity.Rar
         // setea el flag) — el refund EX paga full la 1ª ult del turno, reducido en las siguientes.
         var alreadyResolved = NpCharge.WasNpResolvedThisTurn(Owner.Creature);
 
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var scaled = Scales >= ScaledThreshold;
         var perTen = scaled ? OverchargePerTenScaled : OverchargePerTen;
         var overcharge = (tier - ChargeCost) / 10 * perTen;
 
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge);
-        await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState!)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
 
         // Rank-Up A+ → EX (§6): el refund +20 NP es el único rider plano, y SÓLO en la EX.
         if (IsUpgraded)
         {
-            await NpCharge.RefundAfterNpCard(Owner.Creature, RefundFull, RefundReduced, alreadyResolved, this);
+            await NpCharge.RefundAfterNpCard(choiceContext, Owner.Creature, RefundFull, RefundReduced, alreadyResolved, this);
         }
     }
 

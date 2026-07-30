@@ -16,8 +16,11 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Rare;
 /// SOBRECARGA: +1 Anti-Purga por cada 20 sobre el mínimo (tope 5).
 /// Mejora: 3 Fuerza; 12 Bloqueo.
 /// </summary>
-public sealed class AroundCaliburn() : ArtoriaCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self), IArtoriaNpCard
+public sealed class AroundCaliburn() : ArtoriaCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self), IArtoriaNpCard, ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Arts;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 70;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -38,7 +41,7 @@ public sealed class AroundCaliburn() : ArtoriaCard(2, CardType.Skill, CardRarity
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var extraAp = (tier - ChargeCost) / 20 * DynamicVars["PerTwenty"].IntValue;
         var ap = Math.Min(AntiPurgePower.Max, DynamicVars["AntiPurge"].IntValue + extraAp);
 

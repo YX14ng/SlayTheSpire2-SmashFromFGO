@@ -35,17 +35,17 @@ public sealed class DevourTheChildren() : TiamatCard(1, CardType.Attack, CardRar
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var nurture = Lahmu.NurtureOf(Owner.Creature);
-        var eaten = await Lahmu.Devour(Owner.Creature, DynamicVars["Devour"].IntValue);
+        var eaten = await Lahmu.Devour(choiceContext, Owner.Creature, DynamicVars["Devour"].IntValue);
         if (eaten > 0)
         {
             var curseBonus = Curses.Of(cardPlay.Target) / DynamicVars["CurseFraction"].IntValue;
             var dmg = eaten * (DynamicVars.Damage.BaseValue + DynamicVars["PerNurture"].IntValue * nurture) + curseBonus;
             dmg = dmg * Lahmu.DevourBonusMultiplierPct(Owner.Creature) / 100m; // forma Bestia: Devorar +50%
-            await DamageCmd.Attack(dmg).FromCard(this).Targeting(cardPlay.Target)
+            await DamageCmd.Attack(dmg).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_bloody_impact")
                 .Execute(choiceContext);
         }
-        await Lahmu.Spawn(Owner.Creature, 1, this);
+        await Lahmu.Spawn(choiceContext, Owner.Creature, 1, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["PerNurture"].UpgradeValueBy(1m);

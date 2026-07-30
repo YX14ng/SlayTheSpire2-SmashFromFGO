@@ -35,15 +35,15 @@ public sealed class ConceptualRound() : MashShielderCard(1, CardType.Attack, Car
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         VfxCmd.PlayOnCreatureCenter(cardPlay.Target, "vfx/vfx_dramatic_stab");
-        await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue,
-            ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this);
+        await CreatureCmdCompatibility.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue,
+            ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this, cardPlay);
 
         // Pasa por el chokepoint BlackBarrel.RemoveBuffs para que Munición Conceptual también
         // procione con esta carta (P2 2026-06-25): "quitar buff con CUALQUIER carta → ★".
         var removed = await BlackBarrel.RemoveBuffs(cardPlay.Target, 1, Owner.Creature, this);
         if (removed > 0)
         {
-            await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         }
     }
 

@@ -13,8 +13,11 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Rare;
 /// (mínimo 70 NP, consume TODA la carga): 32 a UN enemigo; cada jugador gana
 /// 1 Anti-Purga. SOBRECARGA: +4 de daño por cada 10 sobre el mínimo. Mejora: 40.
 /// </summary>
-public sealed class HopeWillCamelot() : ArtoriaCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IArtoriaNpCard
+public sealed class HopeWillCamelot() : ArtoriaCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IArtoriaNpCard, ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Arts;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 70;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -35,11 +38,11 @@ public sealed class HopeWillCamelot() : ArtoriaCard(2, CardType.Attack, CardRari
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge);
 
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
 

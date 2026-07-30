@@ -60,6 +60,6 @@ public sealed class OathOfUruk : BondRelic
     // Nv 10 «El Rey de los Héroes»: el primer golpe ya es el juicio despectivo.
     protected override async Task ApplyCapstone()
     {
-        await PowerCmd.Apply<CritReadyPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null);
+        await Criticals.GrantReady(new BlockingPlayerChoiceContext(), Owner.Creature, 1);
     }
 }

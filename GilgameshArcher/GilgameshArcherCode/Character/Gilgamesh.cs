@@ -27,27 +27,21 @@ public class Gilgamesh : PlaceholderCharacterModel
     // kit es explosivo (economía de oro → picos de burst comprado), por eso baja del 75 que proponía B.
     public override int StartingHp => 72;
 
-    // Mazo inicial QAABB (DESIGN-GILGAMESH §5.1): 4 Golpe + 4 Defensa + las FIRMAS de comando que enseñan
-    // los DOS hilos FGOCore (Arts: Carga NP → Enuma Elish auto a 100; Quick: Estrellas → Crítico Listo
-    // ×2) Y el motor de TRIBU/economía del Rey: Puerta de Babilonia ×2 (manifiesta Armas del Tesoro a la
-    // mano — sin ella los riders de Armas no disparan) + Regla de Oro ×1 (amplifica +50% cada ganancia de
-    // NP). El "Golpe" vive DENTRO del mazo (compat del tag Strike, patrón Morgan/Siegfried).
+    // Mazo inicial QAABB de 10 cartas (DESIGN-GILGAMESH §5.1): 2 Buster, 2 Arts, 1 Quick,
+    // 2 defensas, 2 Puertas de Babilonia y 1 Regla de Oro.
     public override IEnumerable<CardModel> StartingDeck =>
     [
-        ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(), ModelDb.Card<Strike>(),
-        ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(),
-        ModelDb.Card<Arts>(),
+        ModelDb.Card<Strike>(), ModelDb.Card<Strike>(),
+        ModelDb.Card<Arts>(), ModelDb.Card<Arts>(),
         ModelDb.Card<Quick>(),
+        ModelDb.Card<Defend>(), ModelDb.Card<Defend>(),
         ModelDb.Card<GateOfBabylon>(), ModelDb.Card<GateOfBabylon>(),
         ModelDb.Card<GoldenRule>()
     ];
 
-    // Starters (DESIGN-GILGAMESH §6/§7): el Juramento del Rey de Uruk (BondRelic ×1.25 heredado + Nv7 +20
-    // NP inicial + capstone Nv10 = empezás con 1 Crítico Listo) Y Bab-ilu, la Llave del Tesoro (la
-    // starter-MOTOR: siembra el medidor de Tesoro + el contador de Armas y entreabre la Puerta con 1 Arma
-    // al iniciar combate).
+    // Starters: vínculo, motor del Tesoro y almacén de nivel de NP/dupes.
     public override IReadOnlyList<RelicModel> StartingRelics =>
-        [ModelDb.Relic<OathOfUruk>(), ModelDb.Relic<BabIlu>()];
+        [ModelDb.Relic<OathOfUruk>(), ModelDb.Relic<BabIlu>(), ModelDb.Relic<CatalogOfTheRoyalTreasury>()];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<GilgameshCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<GilgameshRelicPool>();
@@ -72,6 +66,8 @@ public class Gilgamesh : PlaceholderCharacterModel
     [
         $"{MainFile.ResPath}/character/gilgamesh_frames.tres",
     ];
+    public override string CustomMerchantAnimPath => $"{MainFile.ResPath}/character/gilgamesh_merchant.tscn";
+    public override string CustomRestSiteAnimPath => $"{MainFile.ResPath}/character/gilgamesh_rest.tscn";
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/gilgamesh_select_bg.tscn";
 
     public override Control CustomIcon

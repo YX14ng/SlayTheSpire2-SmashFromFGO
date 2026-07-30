@@ -26,8 +26,8 @@ public sealed class SecretRevealed() : MordredCard(2, CardType.Power, CardRarity
         var power = await PowerCmd.Apply<SecretRevealedPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
-            power.Stars = DynamicVars["Stars"].IntValue;
-            power.Cards = DynamicVars.Cards.IntValue;
+            power.Stars = Math.Max(power.Stars, DynamicVars["Stars"].IntValue);
+            power.Cards = Math.Max(power.Cards, DynamicVars.Cards.IntValue);
         }
     }
 

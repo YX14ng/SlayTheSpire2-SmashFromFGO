@@ -23,12 +23,13 @@ public sealed class TiamatBeastPower : TiamatFormPower, ICurseAmplifier, ISwarmB
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != Owner.Player || Owner.Player == null) return;
-        var enemy = Owner.CombatState.GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
+        if (Owner.CombatState is not { } combatState) return;
+        var enemy = combatState.GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
         if (enemy == null) return;
         Flash();
         // Spread propio de la pasiva: applier=null para NO auto-amplificarse (este power es
         // ICurseAmplifier y en Owner, así que pasar Owner doblaría el +1 a +2). La amplificación
         // (+1) sí debe aplicarse a las CARTAS del jugador, no al spread automático del inicio de turno.
-        await Curses.Apply(enemy, 1, null, null);
+        await Curses.Apply(choiceContext, enemy, 1, null, null);
     }
 }

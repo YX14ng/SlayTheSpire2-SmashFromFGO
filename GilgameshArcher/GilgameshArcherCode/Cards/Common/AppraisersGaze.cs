@@ -22,7 +22,7 @@ public sealed class AppraisersGaze() : GilgameshCard(0, CardType.Skill, CardRari
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Weak"].UpgradeValueBy(1m);

@@ -22,7 +22,7 @@ public sealed class Quick() : GilgameshCard(1, CardType.Attack, CardRarity.Basic
     CommandType ICommandTyped.CommandType => CommandType.Quick;
     public bool IsNoblePhantasm => false;
 
-    private const int StarsGain = 30;
+    private const int StarsGain = 20;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -35,13 +35,12 @@ public sealed class Quick() : GilgameshCard(1, CardType.Attack, CardRarity.Basic
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await AttackTarget(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["Stars"].UpgradeValueBy(20m);
     }
 }

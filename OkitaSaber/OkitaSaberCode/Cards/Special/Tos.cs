@@ -32,14 +32,18 @@ public sealed class Tos() : OkitaCard(0, CardType.Status, CardRarity.Status, Tar
     // Mientras esté en tu mano, al fin de tu turno drena 1 Aliento.
     protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
     {
-        await Aliento.Spend(Owner.Creature, BreathDrain, this);
+        await Aliento.Spend(choiceContext, Owner.Creature, BreathDrain, this);
     }
 
     /// <summary>
     /// Genera 1 Tos y la baraja en el mazo de robo (único punto de creación para TODAS las fuentes).
     /// Avisa a los <see cref="ILateBloomListener"/> ("cada vez que ganás una Tos": Florecer Tardío).
     /// </summary>
-    public static async Task ShuffleIntoDraw(Creature creature, CardModel? source)
+    public static Task ShuffleIntoDraw(Creature creature, CardModel? source) =>
+        ShuffleIntoDraw(new BlockingPlayerChoiceContext(), creature, source);
+
+    public static async Task ShuffleIntoDraw(
+        PlayerChoiceContext choiceContext, Creature creature, CardModel? source)
     {
         if (creature.Player == null || creature.CombatState == null) return;
         var card = creature.CombatState.CreateCard<Tos>(creature.Player);
@@ -48,7 +52,10 @@ public sealed class Tos() : OkitaCard(0, CardType.Status, CardRarity.Status, Tar
 
         foreach (var listener in Listeners.PowersOf<ILateBloomListener>(creature).ToList())
         {
-            await listener.OnTosGained(creature, source);
+            if (listener is ILateBloomListenerWithContext contextual)
+                await contextual.OnTosGained(choiceContext, creature, source);
+            else
+                await listener.OnTosGained(creature, source);
         }
     }
 }
@@ -58,4 +65,9 @@ public sealed class Tos() : OkitaCard(0, CardType.Status, CardRarity.Status, Tar
 public interface ILateBloomListener
 {
     Task OnTosGained(Creature creature, CardModel? source);
+}
+
+public interface ILateBloomListenerWithContext : ILateBloomListener
+{
+    Task OnTosGained(PlayerChoiceContext choiceContext, Creature creature, CardModel? source);
 }

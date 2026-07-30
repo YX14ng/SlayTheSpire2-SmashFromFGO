@@ -32,10 +32,10 @@ public sealed class MistVeil() : MorganCard(0, CardType.Skill, CardRarity.Common
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (!await NpCharge.Spend(Owner.Creature, DynamicVars["ChargeCost"].IntValue, this)) return;
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).Where(e => !e.IsDead).ToList())
+        if (!await NpCharge.Spend(choiceContext, Owner.Creature, DynamicVars["ChargeCost"].IntValue, this)) return;
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).Where(e => !e.IsDead).ToList())
         {
-            await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+            await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
         }
     }
 

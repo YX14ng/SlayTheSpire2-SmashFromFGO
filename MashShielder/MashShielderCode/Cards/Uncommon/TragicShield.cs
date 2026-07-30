@@ -17,8 +17,8 @@ public sealed class TragicShield() : MashShielderCard(0, CardType.Skill, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.Damage(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue,
-            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this);
+        await CreatureCmdCompatibility.DamageFromCard(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue,
+            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this, cardPlay);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
     }
 

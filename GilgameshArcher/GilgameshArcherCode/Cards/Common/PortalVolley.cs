@@ -22,7 +22,7 @@ public sealed class PortalVolley() : GilgameshCard(1, CardType.Attack, CardRarit
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = ArmsPlayedPower.PlayedThisTurn(Owner.Creature) > 0 ? DynamicVars["Bonus"].IntValue : 0;
-        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue + bonus);
+        await AttackTarget(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue + bonus);
     }
 
     protected override void OnUpgrade()

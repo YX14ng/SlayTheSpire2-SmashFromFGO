@@ -26,19 +26,22 @@ public partial class MainFile : Node
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 
-        // (audit 2026-07-04) NO se registran frames de formas: los .tres por-forma todavia no
-        // existen (pase de arte pendiente, modelos 2800100/2800110/2800120 — WORKFLOW-FGO 3).
-        // Los FormPower devuelven FramesPath=null (mantienen el sprite base del visuals.tscn).
+        // Precalienta formas hermanas solo en single-player. Cada canvas necesita su
+        // propio pivote; Vortigern usa un recorte oficial estatico y una escala menor.
+        FormVisuals.RegisterFramesWithSpriteTransform(
+            ($"{ResPath}/character/oberon_frames.tres", -71.2f, -268.9f, 0.906667f),
+            ($"{ResPath}/character/oberon_frames_winter.tres", -60.7f, -298.6f, 0.906667f),
+            ($"{ResPath}/character/oberon_frames_vortigern.tres", 35.9f, -134.4f, 0.5f));
 
-// Ulti AUTO-MANIFESTADA por forma (patron ArtoriaCaster, audit 2026-07-04): la Desatada de la
+        // Ulti AUTO-MANIFESTADA por forma (patron ArtoriaCaster, audit 2026-07-04): la Desatada de la
         // forma activa aparece en mano MIENTRAS tengas >=100 NP y NO haya ya una copia en tus pilas.
         // El patron viejo (marker + GaugeDropped) acumulaba copias Retain duplicadas: el cobro de
         // Deuda de fin de turno gasta NP -> GaugeDropped re-armaba el marker cada turno, y al volver
         // a 100 se manifestaba una SEGUNDA copia con la primera todavia en mano.
-        NpCharge.GaugeFilled += TryManifestUlt;
+        NpCharge.GaugeFilledWithContext += TryManifestUlt;
     }
 
-    private static Task TryManifestUlt(Creature creature) => EnsureUltInHand(creature);
+    private static Task TryManifestUlt(PlayerChoiceContext _, Creature creature) => EnsureUltInHand(creature);
 
     /// <summary>Manifiesta la Desatada de la forma ACTIVA si Oberon esta en combate con >=100 de
     /// Carga NP y no hay ya una copia en mano/robo/descarte. Idempotente: seguro de llamar en cada

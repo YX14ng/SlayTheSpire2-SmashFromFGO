@@ -1,0 +1,16 @@
+{
+  "SHUTENDOUJI-SHUTEN.title": "Сютэн-додзи",
+  "SHUTENDOUJI-SHUTEN.titleObject": "они пиршества",
+  "SHUTENDOUJI-SHUTEN.description": "Превращайте Яд в Сакэ, чередуйте стили Assassin и Caster и выбирайте один из двух Благородных фантазмов.",
+  "SHUTENDOUJI-SHUTEN.pronounObject": "её",
+  "SHUTENDOUJI-SHUTEN.possessiveAdjective": "её",
+  "SHUTENDOUJI-SHUTEN.pronounPossessive": "её",
+  "SHUTENDOUJI-SHUTEN.pronounSubject": "она",
+  "SHUTENDOUJI-SHUTEN.goldMonologue": "Древности, яд и прекрасная чаша. Золото обеспечит всё.",
+  "SHUTENDOUJI-SHUTEN.eventDeathPrevention": "Пир не окончен, пока они улыбается.",
+  "SHUTENDOUJI-SHUTEN.aromaPrinciple": "За каждым сладким ароматом скрывается острое послевкусие.",
+  "SHUTENDOUJI-SHUTEN.cardsModifierTitle": "Пир на горе Оэ",
+  "SHUTENDOUJI-SHUTEN.cardsModifierDescription": "Играйте с набором карт Сютэн-додзи.",
+  "SHUTENDOUJI-SHUTEN.banter.alive.endTurnPing": "Пей медленно. Последняя чаша опаснее всего.",
+  "SHUTENDOUJI-SHUTEN.banter.dead.endTurnPing": "Не оставляй пир незаконченным."
+}

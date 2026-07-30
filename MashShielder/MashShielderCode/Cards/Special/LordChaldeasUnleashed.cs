@@ -42,7 +42,7 @@ public sealed class LordChaldeasUnleashed() : MashShielderCard(0, CardType.Skill
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
         // NP level (dupes): +15% per level over the full amount, added as flat extra.
         var total = DynamicVars.Block.BaseValue + bonus;

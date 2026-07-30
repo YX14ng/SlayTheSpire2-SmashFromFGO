@@ -18,7 +18,7 @@ public sealed class GalahadsLegacy() : MashShielderCard(1, CardType.Skill, CardR
         var copies = DynamicVars["Copies"].IntValue;
         for (var i = 0; i < copies; i++)
         {
-            var card = CombatState.CreateCard<MoldCamelot>(Owner);
+            var card = CombatState!.CreateCard<MoldCamelot>(Owner);
             card.UpgradeInternal();
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
         }

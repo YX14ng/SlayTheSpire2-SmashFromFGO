@@ -24,21 +24,21 @@ public sealed class ShieldRam() : MashShielderCard(1, CardType.Attack, CardRarit
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritReadyPower>(), HoverTipFactory.FromPower<VulnerablePower>()];
 
-    private bool HasCritReady => Owner.Creature.GetPowerAmount<CritReadyPower>() > 0;
+    private bool WillCrit => Criticals.WillCrit(Owner.Creature, this);
 
-    protected override bool ShouldGlowGoldInternal => HasCritReady;
+    protected override bool ShouldGlowGoldInternal => WillCrit;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         // Capturado ANTES de pegar: el CRÍTICO LISTO se consume al resolver la carta.
-        var critReady = HasCritReady;
+        var critical = Criticals.IsCritical(cardPlay);
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
 
-        if (critReady && !cardPlay.Target.IsDead)
+        if (critical && !cardPlay.Target.IsDead)
         {
             await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
         }

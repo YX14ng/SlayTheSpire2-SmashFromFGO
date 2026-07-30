@@ -20,7 +20,7 @@ public sealed class Reprisal() : MashShielderCard(1, CardType.Attack, CardRarity
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = FormPower.GetBlockedHits(Owner.Creature) * DynamicVars["PerHit"].IntValue;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
     }

@@ -47,7 +47,8 @@ public sealed class TidalSwarmPower : TiamatPower
     /// con el choiceContext del hook — este es ese patrón exacto.</summary>
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side || Owner.IsDead) return;
+        if (!participants.Contains(Owner) || Owner.IsDead) return;
+        if (Owner.CombatState is not CombatState combatState) return;
         var swarm = Lahmu.Count(Owner);
         if (swarm <= 0 || Amount <= 0) return;
 
@@ -58,15 +59,15 @@ public sealed class TidalSwarmPower : TiamatPower
         Flash();
         for (var i = 0; i < Amount; i++)
         {
-            var target = CursesHelper.MostCursed((CombatState)Owner.CombatState, Owner)
-                         ?? ((CombatState)Owner.CombatState).GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
+            var target = CursesHelper.MostCursed(combatState, Owner)
+                         ?? combatState.GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
             if (target == null || target.IsDead) break;
             // Usar el choiceContext QUE PASA EL HOOK (no uno nuevo): es el contexto sincronizado del flujo
             // de resolución del turno. Con un ThrowingPlayerChoiceContext fresco, cuando esta mordida MATA a
             // un enemigo la muerte queda FUERA del flujo -> el turno "no se resuelve" (无法结算, se cuelga,
             // sobre todo en MP). Patrón vanilla: MagicBomb/Hailstorm/TheBomb dañan al fin del turno con el
             // choiceContext del hook.
-            await CreatureCmd.Damage(choiceContext, target, perBite, ValueProp.Unpowered, Owner, null);
+            await CreatureCmd.Damage(choiceContext, target, perBite, ValueProp.Unpowered, Owner);
         }
     }
 }

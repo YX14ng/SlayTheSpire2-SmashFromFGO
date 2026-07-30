@@ -1,4 +1,3 @@
-using System.Linq;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -19,25 +18,37 @@ public static class Lahmu
     public static int NurtureOf(Creature creature) => creature.GetPowerAmount<LahmuNurturePower>();
 
     /// <summary>Parí <paramref name="n"/> Laḫmu (tope <see cref="LahmuSwarmPower.MaxSwarm"/>). Devuelve los realmente paridos.</summary>
-    public static async Task<int> Spawn(Creature creature, int n, CardModel? source)
+    public static Task<int> Spawn(Creature creature, int n, CardModel? source) =>
+        Spawn(new BlockingPlayerChoiceContext(), creature, n, source);
+
+    public static async Task<int> Spawn(
+        PlayerChoiceContext choiceContext, Creature creature, int n, CardModel? source)
     {
         if (n <= 0) return 0;
         var room = LahmuSwarmPower.MaxSwarm - Count(creature);
         var toAdd = Math.Min(n, room);
         if (toAdd <= 0) return 0;
-        await PowerCmd.Apply<LahmuSwarmPower>(new BlockingPlayerChoiceContext(), creature, toAdd, creature, source);
+        await PowerCmd.Apply<LahmuSwarmPower>(choiceContext, creature, toAdd, creature, source);
         return toAdd;
     }
 
     /// <summary>Sube la Crianza global en <paramref name="n"/>.</summary>
-    public static async Task Feed(Creature creature, int n, CardModel? source)
+    public static Task Feed(Creature creature, int n, CardModel? source) =>
+        Feed(new BlockingPlayerChoiceContext(), creature, n, source);
+
+    public static async Task Feed(
+        PlayerChoiceContext choiceContext, Creature creature, int n, CardModel? source)
     {
         if (n <= 0) return;
-        await PowerCmd.Apply<LahmuNurturePower>(new BlockingPlayerChoiceContext(), creature, n, creature, source);
+        await PowerCmd.Apply<LahmuNurturePower>(choiceContext, creature, n, creature, source);
     }
 
     /// <summary>Sacrifica hasta <paramref name="n"/> Laḫmu. Devuelve cuántos se devoraron (para escalar el burst).</summary>
-    public static async Task<int> Devour(Creature creature, int n)
+    public static Task<int> Devour(Creature creature, int n) =>
+        Devour(new BlockingPlayerChoiceContext(), creature, n);
+
+    public static async Task<int> Devour(
+        PlayerChoiceContext choiceContext, Creature creature, int n)
     {
         var power = creature.GetPower<LahmuSwarmPower>();
         if (power == null || n <= 0) return 0;
@@ -48,7 +59,7 @@ public static class Lahmu
         }
         else
         {
-            await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -eaten, creature, null);
+            await PowerCmd.ModifyAmount(choiceContext, power, -eaten, creature, null);
         }
         // Avisar a los que escuchan el devorar (reliquias Y powers — la interfaz no es solo de
         // reliquias). Se hace tras consumir las larvas para que reflejen el estado ya actualizado.
@@ -66,7 +77,12 @@ public static class Lahmu
             }
             // .ToList(): los listeners pueden aplicar/remover powers al reaccionar (mutan la colección
             // que estamos iterando) → InvalidOperationException latente. Se materializa antes de notificar.
-            foreach (var powerListener in creature.GetPowerInstances<PowerModel>().OfType<ILahmuDevourListener>().ToList())
+            var powerListeners = new List<ILahmuDevourListener>();
+            foreach (var candidate in creature.GetPowerInstances<PowerModel>())
+            {
+                if (candidate is ILahmuDevourListener listener) powerListeners.Add(listener);
+            }
+            foreach (var powerListener in powerListeners)
             {
                 await powerListener.OnLahmuDevoured(creature, eaten);
             }
@@ -76,6 +92,12 @@ public static class Lahmu
 
     /// <summary>150 si la dueña tiene un <see cref="IDevourAmplifier"/> (forma Bestia: Devorar
     /// +50%), si no 100. Las cartas que devoran multiplican su daño por este valor / 100.</summary>
-    public static int DevourBonusMultiplierPct(Creature creature) =>
-        creature.GetPowerInstances<PowerModel>().OfType<IDevourAmplifier>().Any() ? 150 : 100;
+    public static int DevourBonusMultiplierPct(Creature creature)
+    {
+        foreach (var power in creature.GetPowerInstances<PowerModel>())
+        {
+            if (power is IDevourAmplifier) return 150;
+        }
+        return 100;
+    }
 }

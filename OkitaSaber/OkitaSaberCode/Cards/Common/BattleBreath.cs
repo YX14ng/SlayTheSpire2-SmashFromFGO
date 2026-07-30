@@ -22,7 +22,7 @@ public sealed class BattleBreath() : OkitaCard(1, CardType.Skill, CardRarity.Com
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await Aliento.Gain(Owner.Creature, DynamicVars["Breath"].IntValue, this);
+        await Aliento.Gain(choiceContext, Owner.Creature, DynamicVars["Breath"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m); // 6 -> 9

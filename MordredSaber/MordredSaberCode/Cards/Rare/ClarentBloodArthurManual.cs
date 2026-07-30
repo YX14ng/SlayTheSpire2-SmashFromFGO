@@ -17,8 +17,11 @@ namespace MordredSaber.MordredSaberCode.Cards.Rare;
 /// Nicho: disparar la ulti ANTES de cruzar el auto-manifestado a 100 (a 70 ya pega). Como la token
 /// «Desatado», desenmascara PRIMERO (la regla de oro lore) y usa NpLevels.Scale + VersusAuthority().
 /// </summary>
-public sealed class ClarentBloodArthurManual() : MordredCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), IMordredNpCard
+public sealed class ClarentBloodArthurManual() : MordredCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), IMordredNpCard, ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 70;
     public const int Hits = 5;
     private const int OverchargePer = 20;
@@ -47,19 +50,19 @@ public sealed class ClarentBloodArthurManual() : MordredCard(2, CardType.Attack,
         // Regla de oro lore: enmascarada no puede gritar su rebelión → el yelmo cae PRIMERO.
         await Forms.UnmaskForUlt(choiceContext, Owner.Creature, this);
 
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / OverchargePer;
         var authority = Owner.Creature.VersusAuthority() ? DynamicVars["Authority"].IntValue : 0;
 
         var perHit = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge + authority);
         for (var i = 0; i < DynamicVars["Hits"].IntValue; i++)
         {
-            await DamageCmd.Attack(perHit).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState!)
+            await DamageCmd.Attack(perHit).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
                 .WithHitFx("vfx/vfx_starry_impact")
                 .Execute(choiceContext);
         }
 
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Refund"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Refund"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);

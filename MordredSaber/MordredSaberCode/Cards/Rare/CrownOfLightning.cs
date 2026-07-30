@@ -22,7 +22,7 @@ public sealed class CrownOfLightning() : MordredCard(2, CardType.Power, CardRari
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<CrownOfLightningPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        if (power != null) power.StarsPerTurn = DynamicVars["Stars"].IntValue;
+        if (power != null) power.StarsPerTurn = Math.Max(power.StarsPerTurn, DynamicVars["Stars"].IntValue);
     }
 
     protected override void OnUpgrade() => DynamicVars["Stars"].UpgradeValueBy(10m);

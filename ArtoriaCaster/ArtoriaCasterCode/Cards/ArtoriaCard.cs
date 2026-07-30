@@ -50,16 +50,8 @@ public abstract class ArtoriaCard(int cost, CardType type, CardRarity rarity, Ta
     /// por palabra en las cartas de un solo golpe (Arrebato/Tajo/Embate/Juicio/Estrella Fugaz/
     /// Corte de Selección/Anhelo Heredado). Lee Damage/Crit de los DynamicVars de la propia carta.
     /// </summary>
-    protected async Task<decimal> ResolveCritDamage(int critCost)
-    {
-        var damage = DynamicVars.Damage.BaseValue;
-        if (Stars.CanCrit(Owner.Creature, critCost))
-        {
-            await Stars.ConsumeForCrit(Owner.Creature, critCost, this);
-            damage = DynamicVars["Crit"].BaseValue + Stars.CritBonus(Owner.Creature);
-        }
-        return damage;
-    }
+    protected Task<decimal> ResolveCritDamage(int critCost) =>
+        Task.FromResult(DynamicVars.Damage.BaseValue);
 
     /// <summary>
     /// Variante de crítico ESCALABLE (anti feast-or-famine binario, P2 2026-06-25): en vez de un
@@ -69,24 +61,6 @@ public abstract class ArtoriaCard(int cost, CardType type, CardRarity rarity, Ta
     /// PerStar (daño por ★ extra) de los DynamicVars. Baja la varianza sin subir el techo: a maxCost★
     /// iguala el crítico fijo anterior, pero ya rinde algo en el escalón mínimo en lugar de 0.
     /// </summary>
-    protected async Task<decimal> ResolveCritDamageScaling(int baseCost, int maxCost)
-    {
-        var damage = DynamicVars.Damage.BaseValue;
-        if (!Stars.CanCrit(Owner.Creature, baseCost)) return damage;
-
-        // Todo en términos YA descontados: el piso es DiscountedCost(baseCost) y el techo es
-        // DiscountedCost(maxCost). Las ★ extra que escalan el daño = lo que se pueda pagar por
-        // encima del piso, capeado al techo. Se gasta UNA sola vez (sin re-descontar) para que el
-        // descuento (Instinto de la Espada) no beneficie dos veces (bug del doble descuento).
-        var minSpend = Stars.DiscountedCost(Owner.Creature, baseCost);
-        var maxSpend = Stars.DiscountedCost(Owner.Creature, maxCost);
-        var extraAffordable = Math.Min(maxSpend - minSpend, Stars.Of(Owner.Creature) - minSpend);
-        if (extraAffordable < 0) extraAffordable = 0;
-
-        await Stars.ConsumeExactStars(Owner.Creature, minSpend + extraAffordable, this);
-        damage = DynamicVars["Crit"].BaseValue
-                 + extraAffordable * DynamicVars["PerStar"].BaseValue
-                 + Stars.CritBonus(Owner.Creature);
-        return damage;
-    }
+    protected Task<decimal> ResolveCritDamageScaling(int baseCost, int maxCost) =>
+        Task.FromResult(DynamicVars.Damage.BaseValue);
 }

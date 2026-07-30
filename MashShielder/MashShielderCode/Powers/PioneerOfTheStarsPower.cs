@@ -25,6 +25,6 @@ public sealed class PioneerOfTheStarsPower : MashShielderPower, INpCostWaiver
     {
         if (cardPlay.Card is not Cards.IMashNpCard || cardPlay.Card.Owner?.Creature != Owner) return;
         Flash();
-        await FGOCore.FGOCoreCode.Stars.CritStars.Gain(Owner, (int)Amount, null);
+        await FGOCore.FGOCoreCode.Stars.CritStars.Gain(context, Owner, (int)Amount, null);
     }
 }

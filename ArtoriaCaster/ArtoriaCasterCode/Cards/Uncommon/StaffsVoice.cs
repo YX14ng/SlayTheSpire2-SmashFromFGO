@@ -27,7 +27,7 @@ public sealed class StaffsVoice() : ArtoriaCard(1, CardType.Skill, CardRarity.Un
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
         if (Owner.Creature.HasPower<ProphecyCasterFormPower>() || Owner.Creature.HasPower<AvalonFormPower>())
         {
-            await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         }
     }
 

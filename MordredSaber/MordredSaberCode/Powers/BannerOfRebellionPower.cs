@@ -31,23 +31,25 @@ public sealed class BannerOfRebellionPower : MordredPower, IFormChangeListener
 
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
-        if (Owner.Player == null || Owner.IsDead) return;
+        var player = Owner.Player;
+        if (player?.PlayerCombatState is not { } playerCombatState || Owner.IsDead) return;
+        var context = choiceContext ?? new BlockingPlayerChoiceContext();
         Flash();
-        await CritStars.Gain(Owner, StarsPerSwitch * (int)Amount, null);
-        await NpCharge.Gain(Owner, NpPerSwitch * (int)Amount, null);
+        await CritStars.Gain(context, Owner, StarsPerSwitch * (int)Amount, null);
+        await NpCharge.Gain(context, Owner, NpPerSwitch * (int)Amount, null);
         if (DrawsPerSwitch > 0)
         {
             // BUGFIX (soft-lock): el cambio de forma lo dispara una carta a MITAD de su resolución.
             // Si este robo RESHUFFLEA (mazo vacío), reshufflea el descarte -que en v0.107.1 contiene
             // la carta en curso- y corrompe su estado ("must be added to a CombatState"), colgando el
             // combate. Por eso robamos SOLO lo que hay en el mazo (sin gatillar reshuffle).
-            var inDeck = Owner.Player.PlayerCombatState.AllPiles
+            var inDeck = playerCombatState.AllPiles
                 .FirstOrDefault(p => p.Type == PileType.Draw)?.Cards.Count ?? 0;
             var toDraw = System.Math.Min(DrawsPerSwitch * (int)Amount, inDeck);
             if (toDraw > 0)
             {
                 await MegaCrit.Sts2.Core.Commands.CardPileCmd.Draw(
-                    choiceContext ?? new BlockingPlayerChoiceContext(), toDraw, Owner.Player);
+                    context, toDraw, player);
             }
         }
     }

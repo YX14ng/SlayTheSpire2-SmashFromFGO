@@ -20,22 +20,14 @@ public sealed class VimanaGoldenThrone : GilgameshRelic
 
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    private bool _firedThisCombat;
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2)];
-
-    public override Task BeforeCombatStartLate()
-    {
-        _firedThisCombat = false;
-        return Task.CompletedTask;
-    }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (_firedThisCombat || cardPlay.Card.Owner != Owner) return;
+        if (FgoCombatState.GetCombat(Owner.Creature, 1) != 0 || cardPlay.Card.Owner != Owner) return;
         if (ArmsPlayedPower.PlayedThisTurn(Owner.Creature) < ArmsThreshold) return;
 
-        _firedThisCombat = true;
+        await FgoCombatState.SetCombat(context, Owner.Creature, 1, 1, cardPlay.Card);
         Flash();
         await CardPileCmd.Draw(context, DynamicVars.Cards.IntValue, Owner);
     }

@@ -16,7 +16,7 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Powers;
 /// </summary>
 public sealed class FaerieEyesPower : ArtoriaPower, IHitAnnulledListener
 {
-    public const int StarsPerTrigger = 1;
+    public const int StarsPerTrigger = 10;
 
     public override PowerType Type => PowerType.Buff;
 
@@ -29,15 +29,15 @@ public sealed class FaerieEyesPower : ArtoriaPower, IHitAnnulledListener
     {
         if (target != Owner || dealer == null || !props.IsPoweredAttack()) return;
         if (!result.WasFullyBlocked) return;
-        await Trigger();
+        await Trigger(choiceContext);
     }
 
-    public Task AfterHitAnnulled(PlayerChoiceContext choiceContext, Creature attacker) => Trigger();
+    public Task AfterHitAnnulled(PlayerChoiceContext choiceContext, Creature attacker) => Trigger(choiceContext);
 
-    private async Task Trigger()
+    private async Task Trigger(PlayerChoiceContext choiceContext)
     {
         Flash();
-        await Stars.Gain(Owner, StarsPerTrigger, null);
-        await NpCharge.Gain(Owner, NpPerTrigger, null);
+        await Stars.Gain(choiceContext, Owner, StarsPerTrigger, null);
+        await NpCharge.Gain(choiceContext, Owner, NpPerTrigger, null);
     }
 }

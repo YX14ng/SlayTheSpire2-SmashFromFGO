@@ -18,6 +18,6 @@ public sealed class MotherGutsPower : GutsPower
 
     protected override async Task OnTriggered(PlayerChoiceContext choiceContext)
     {
-        await Lahmu.Spawn(Owner, LahmuOnRevive, null);
+        await Lahmu.Spawn(choiceContext, Owner, LahmuOnRevive, null);
     }
 }

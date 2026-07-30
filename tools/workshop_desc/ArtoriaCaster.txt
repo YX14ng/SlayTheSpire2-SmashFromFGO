@@ -1,37 +1,109 @@
-Artoria Caster - Castoria, the Child of Prophecy - of Fate/Grand Order, as a fully playable, fully animated support character. Built on the BaseLib framework and the FGO Core library.
+[h1]Artoria Caster — The Star of Hope[/h1]
+Prepare the battlefield as Fate/Grand Order's Child of Prophecy, then cross into a summer Berserker to cash stored NP and Critical Stars into a boss-killing turn.
 
-What it adds:
-- A complete support character with her own card pool and starting relic.
-- A crit-support playstyle: spin up Critical Stars, charge your Noble Phantasm, and hand defense, buffs and resources to your whole team.
-- Form switching between her Avalon and Prophecy aspects, plus Anti-Purge protection that keeps your buffs from being stripped.
-- Her Noble Phantasm, Around Caliburn - "the star of hope that embraces you."
-- Co-op centerpiece: in multiplayer she shines as a team enabler, feeding Stars, block and NP charge to allies so the whole party hits harder.
+[b]RELEASE BUILD — v0.1.10[/b]
 
-Requires: FGO Core (library) + BaseLib.
-Localization: English, Spanish, Simplified Chinese.
+[h2]Core gameplay[/h2]
+[list]
+[*][b]Three forms:[/b] Caster generates NP, Stars and protection; Berserker spends that setup on aggressive critical turns; Avalon permanently combines both identities without the defensive penalty.
+[*][b]Global Critical system:[/b] Quick attacks generate Critical Stars through FGO Core. At 50 Stars, an eligible Attack gains ×1.5 damage across every hit—the same rules used by the rest of the roster.
+[*][b]Anti-Purge Defense:[/b] limited charges completely negate incoming enemy Attack hits, creating a powerful but timing-sensitive layer beyond Block.
+[*][b]Two Noble Phantasms:[/b] crossing the NP threshold as Caster/Avalon manifests Around Caliburn; crossing it as Berserker manifests Hope Will Camelot. Your active form decides whether the climax protects or executes.
+[/list]
 
-Found a bug or have feedback? Report it in the discussion thread:
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-To help us fix it fast, please include: which Servant you played and what you did (a screenshot helps); your game log — Steam comments can't attach files, so upload %APPDATA%\SlayTheSpire2\logs\godot.log to a paste site (e.g. pastebin.com) or a file host and paste the LINK, or paste the last ~50 lines; and your full mod list (many bugs are conflicts with other mods).
+[h2]Content[/h2]
+[list]
+[*]80 card models across the starting deck, rewards, two Noble Phantasms and generated cards
+[*]20 character powers and 12 relics
+[*]Animated Caster, Summer Berserker and Avalon forms
+[*]Party support designed for co-op without losing solo value
+[*]Spanish, English, Simplified Chinese, Korean and Russian localization
+[/list]
 
-Made with the help of Claude Code.
+[h2]Requirements and compatibility[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Built for MAIN 0.107.1 and public BETA 0.109.0
+[/list]
 
-————————————————————
+[h2]Validation status[/h2]
+Build, localization, asset coverage, animation references and package audits pass. Balance, save/load and co-op behavior continue to receive in-game testing.
 
-「Fate/Grand Order」的阿尔托莉雅·卡斯特——预言之子卡斯托莉雅，现已作为可操作、全动画的辅助角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Source code and bug reports[/url]
 
-本 Mod 带来：
-- 一名完整的辅助角色，配有专属卡池与初始圣遗物。
-- 暴击辅助玩法：攒暴击星、充宝具，把格挡、增益和各种资源源源不断地分给全队。
-- 在阿瓦隆与预言两个阵位之间切换形态，并附带「反净化」保护，让你的增益不会被敌人剥除。
-- 宝具「Around Caliburn」——「那颗将你拥入怀中的希望之星」。
-- 协力核心：联机时她是顶级的团队驱动者，给队友喂暴击星、格挡与宝具充能，让全队输出更上一层楼。
+Unofficial fan-made mod. Fate/Grand Order characters and official visual assets belong to their respective rights holders. Not affiliated with TYPE-MOON, Lasengle or Mega Crit.
 
-依赖：FGO Core（库）+ BaseLib。
-支持语言：英文、西班牙文、简体中文。
+[hr][/hr]
+[h1]ESPAÑOL[/h1]
+Prepará el campo con la Niña de la Profecía de Fate/Grand Order y cruzá a Berserker de verano para convertir NP y Estrellas acumuladas en un turno capaz de derribar jefes.
 
-发现 Bug 或有建议？请在讨论区反馈：
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-为方便我们尽快修复，请附上：你使用的从者 + 具体操作（截图更佳）；游戏日志——Steam 评论无法上传文件，请把 %APPDATA%\SlayTheSpire2\logs\godot.log 传到网盘或贴站（如 pastebin.com）再贴出链接，或直接粘贴最后约 50 行；以及完整的 Mod 列表（很多 Bug 是与其他 Mod 的冲突）。
+[b]VERSIÓN PÚBLICA — v0.1.10[/b]
 
-在 Claude Code 的协助下制作。
+[h2]Mecánicas principales[/h2]
+[list]
+[*][b]Tres formas:[/b] Caster genera NP, Estrellas y protección; Berserker gasta esa preparación en turnos críticos; Avalon combina permanentemente ambas identidades sin la penalización defensiva.
+[*][b]Sistema global de Críticos:[/b] los Ataques Quick generan Estrellas mediante FGO Core. Con 50, un Ataque elegible causa ×1,5 en todos sus impactos, usando exactamente las mismas reglas que el resto del elenco.
+[*][b]Anti-Purga:[/b] cargas limitadas anulan por completo impactos de Ataques enemigos y crean una capa poderosa, pero sensible al momento, más allá del Bloqueo.
+[*][b]Dos Noble Phantasms:[/b] cruzar el umbral en Caster/Avalon manifiesta Around Caliburn; hacerlo en Berserker manifiesta Hope Will Camelot. La forma activa decide si el clímax protege o ejecuta.
+[/list]
+
+[h2]Contenido[/h2]
+[list]
+[*]80 modelos de carta entre mazo inicial, recompensas, dos Noble Phantasms y cartas generadas
+[*]20 poderes y 12 reliquias propias
+[*]Formas Caster, Berserker de Verano y Avalon animadas
+[*]Apoyo de equipo pensado para cooperativo sin perder valor en solitario
+[*]Localización en español, inglés, chino simplificado, coreano y ruso
+[/list]
+
+[h2]Requisitos y compatibilidad[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Compatible con MAIN 0.107.1 y BETA pública 0.109.0
+[/list]
+
+[h2]Estado de validación[/h2]
+Las auditorías de compilación, idiomas, recursos, animaciones y paquete están aprobadas. El balance, guardado/carga y cooperativo continúan en pruebas dentro del juego.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Código fuente y reporte de errores[/url]
+
+Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
+
+[hr][/hr]
+[h1]简体中文[/h1]
+先以《Fate/Grand Order》的预言之子准备战场，再切换为夏日狂战士，将积累的 NP 与暴击星化为击倒 Boss 的回合。
+
+[b]公开版本 — v0.1.10[/b]
+
+[h2]核心机制[/h2]
+[list]
+[*][b]三种形态：[/b]Caster 生成 NP、暴击星与防护；Berserker 把准备转化为进攻暴击回合；Avalon 永久结合两种身份且移除防御惩罚。
+[*][b]全局暴击系统：[/b]Quick 攻击通过 FGO Core 生成暴击星。达到 50 星后，符合条件的攻击全部段数获得 ×1.5 伤害，与其他角色使用完全相同的规则。
+[*][b]对肃正防御：[/b]有限层数可完全无效化敌方攻击段数，形成超越格挡、但必须谨慎把握时机的防线。
+[*][b]双宝具：[/b]Caster/Avalon 形态突破 NP 阈值会显现 Around Caliburn；Berserker 则显现 Hope Will Camelot。当前形态决定高潮是守护还是处决。
+[/list]
+
+[h2]内容[/h2]
+[list]
+[*]80 个卡牌模型，涵盖初始牌组、奖励、两种宝具及衍生卡
+[*]20 个角色能力与 12 件专属遗物
+[*]Caster、夏日 Berserker 与 Avalon 动画形态
+[*]联机辅助能力在单人模式中同样保持价值
+[*]支持西班牙语、英语、简体中文、韩语与俄语
+[/list]
+
+[h2]依赖与兼容性[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]兼容正式版 0.107.1 与公开测试版 0.109.0
+[/list]
+
+[h2]验证状态[/h2]
+构建、本地化、资源覆盖、动画引用及安装包检查均已通过；平衡、存档与联机表现仍在游戏内持续测试。
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]源代码与问题反馈[/url]
+
+本项目为非官方同人 Mod，与 TYPE-MOON、Lasengle 及 Mega Crit 无隶属关系。

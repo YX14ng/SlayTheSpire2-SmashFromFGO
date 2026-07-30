@@ -36,11 +36,11 @@ public sealed class SovereignDebt() : OberonCard(1, CardType.Attack, CardRarity.
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         // Las estrellas cruzan el umbral (auto-payoff → CRÍTICO LISTO) ANTES del golpe, que lo consume.
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
-        await DebtPower.Add(Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
+        await DebtPower.Add(choiceContext, Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);

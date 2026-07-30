@@ -16,6 +16,6 @@ public sealed class TiamatFemmeFatalePower : TiamatFormPower
     {
         if (player != Owner.Player || Owner.Player == null) return;
         Flash();
-        await Lahmu.Feed(Owner, 1, null);
+        await Lahmu.Feed(choiceContext, Owner, 1, null);
     }
 }

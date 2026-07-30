@@ -25,7 +25,7 @@ public sealed class DragonSlayersEdge() : SiegfriedCard(2, CardType.Attack, Card
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = CappedScaleBonus(DynamicVars["MaxBonus"].IntValue);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
     }

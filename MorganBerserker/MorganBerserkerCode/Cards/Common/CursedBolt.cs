@@ -25,15 +25,15 @@ public sealed class CursedBolt() : MorganCard(1, CardType.Attack, CardRarity.Com
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
-            .TargetingAllOpponents(Owner.Creature.CombatState)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay)
+            .TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead)
             {
-                await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+                await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
             }
         }
     }

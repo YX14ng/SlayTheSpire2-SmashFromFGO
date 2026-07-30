@@ -23,7 +23,7 @@ public sealed class StagnantTide() : TiamatCard(1, CardType.Skill, CardRarity.Un
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await Curses.Apply(cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+        await Curses.Apply(choiceContext, cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
         if (!Owner.Creature.HasPower<TidalStasisPower>())
         {
             await PowerCmd.Apply<TidalStasisPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);

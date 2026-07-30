@@ -23,32 +23,30 @@ public partial class MainFile : Node
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 
-        // FGOCore precarga en hilos los frames de cada forma registrada. Okita tiene UN solo swap:
-        // 102710 (traje blanco, modelo inicial) → 102720 (haori asagi) del clímax «Flor del Bakumatsu».
-        // (Si okita_frames_haori.tres aún no existe, FormVisuals loguea y mantiene el sprite actual.)
-        FormVisuals.RegisterFrames(
-            $"{ResPath}/character/okita_frames.tres",
-            $"{ResPath}/character/okita_frames_haori.tres");
+        // La forma final conserva el set animado oficial de Okita; su identidad mecanica se
+        // representa con el poder permanente y su icono, sin duplicar los frames de combate.
+        FormVisuals.RegisterFramesWithSpriteTransform(
+            ($"{ResPath}/character/okita_frames.tres", 2.3f, -357.2f, 0.956f));
 
         // Ulti auto-manifestada (DESIGN-OKITA §5.5): al cruzar 100 NP, el «Mumyou Sandanzuki: Desatado»
         // aparece GRATIS en la mano (Retain + Exhaust). Un marcador (MumyouManifestedPower) evita
         // duplicarla en el mismo pico; gastar por debajo de 100 lo re-arma para el próximo.
-        NpCharge.GaugeFilled += TryManifestUlt;
-        NpCharge.GaugeDropped += DisarmUlt;
+        NpCharge.GaugeFilledWithContext += TryManifestUlt;
+        NpCharge.GaugeDroppedWithContext += DisarmUlt;
     }
 
-    private static async Task TryManifestUlt(Creature creature)
+    private static async Task TryManifestUlt(PlayerChoiceContext choiceContext, Creature creature)
     {
         if (creature.Player?.Character is not Character.Okita) return;
         if (creature.CombatState == null) return;
         if (creature.HasPower<MumyouManifestedPower>()) return;
 
-        await PowerCmd.Apply<MumyouManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+        await PowerCmd.Apply<MumyouManifestedPower>(choiceContext, creature, 1m, creature, null);
 
         await ManifestCards.ManifestToHand<MumyouUnleashed>(creature);
     }
 
-    private static async Task DisarmUlt(Creature creature)
+    private static async Task DisarmUlt(PlayerChoiceContext _, Creature creature)
     {
         if (creature.HasPower<MumyouManifestedPower>())
         {

@@ -27,8 +27,8 @@ public sealed class Unsheathe() : OkitaCard(0, CardType.Skill, CardRarity.Common
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var cost = DynamicVars["NpCost"].IntValue;
-        if (!await NpCharge.Spend(Owner.Creature, cost, this)) return;
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        if (!await NpCharge.Spend(choiceContext, Owner.Creature, cost, this)) return;
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["NpCost"].UpgradeValueBy(-20m); // 50 -> 30

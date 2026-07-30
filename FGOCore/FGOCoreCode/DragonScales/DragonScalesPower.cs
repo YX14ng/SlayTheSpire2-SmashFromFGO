@@ -13,9 +13,10 @@ namespace FGOCore.FGOCoreCode.DragonScales;
 /// armour then worked "for free" (the Linden Leaf relic only refunds NP on a reduced
 /// hit that still deals ≥1, enforced relic-side, P2).
 ///
-/// The "first reaching hit each turn ignores the scales" weakness lives in the relic
+/// The "first reaching hit each turn bypasses one scale" weakness lives in the relic
 /// (the Linden leaf), surfaced here via <see cref="IDragonScalePiercer"/> so FGOCore
-/// never references the character mod. Only real attacks are reduced
+/// never references the character mod. The remaining scales still reduce that hit.
+/// Only real attacks are reduced
 /// (<see cref="ValuePropExtensions.IsPoweredAttack"/> — Curse, Poison and HP-cost
 /// self-damage are not "golpes" and pass through).
 ///
@@ -23,6 +24,8 @@ namespace FGOCore.FGOCoreCode.DragonScales;
 /// </summary>
 public sealed class DragonScalesPower : FGOCorePower
 {
+    private const int ScalesBypassedByPierce = 1;
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -42,12 +45,24 @@ public sealed class DragonScalesPower : FGOCorePower
         // Whole-turn suppression (Espalda Expuesta): the scales reduce nothing this turn.
         if (IsSuppressed()) return amount;
 
-        if (ShouldPierce(props, dealer)) return amount; // exposed back — first reaching hit bypassed
+        decimal reduction = base.Amount;
+        if (ShouldPierce(props, dealer))
+        {
+            // Espalda expuesta: la primera acometida sólo encuentra un punto débil. El resto de
+            // la armadura sigue funcionando, de modo que cada acumulación conserva valor.
+            reduction = System.Math.Max(0m, reduction - ScalesBypassedByPierce);
+        }
 
-        // Sin Flash() acá (audit 2026-07-04): ModifyHpLost* es un hook que este proyecto exige PURO y
-        // que los previews evalúan sin que el golpe se resuelva — un efecto visual acá parpadeaba en
-        // cada preview. Los ModifyHpLost* vanilla tampoco flashean.
-        return System.Math.Max(amount - base.Amount, 0m);
+        // Sin Flash() acá: ModifyHpLost* debe ser una lectura pura porque los previews también
+        // lo evalúan. El feedback visual se dispara en AfterModifyingHpLostBeforeOsty, que el
+        // motor sólo llama en el camino real cuando este modificador cambió el daño entero.
+        return System.Math.Max(amount - reduction, 0m);
+    }
+
+    public override Task AfterModifyingHpLostBeforeOsty()
+    {
+        Flash();
+        return Task.CompletedTask;
     }
 
     // Pure read (preview-safe): any ISdDSuppressor power on the owner disables all reduction this turn.

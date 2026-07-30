@@ -1,0 +1,16 @@
+{
+  "ASTOLFORIDER-ASTOLFO.title": "Astolfo",
+  "ASTOLFORIDER-ASTOLFO.titleObject": "el Paladín Alegre",
+  "ASTOLFORIDER-ASTOLFO.description": "Sigue un Capricho cambiante, reúne Estrellas Críticas con cartas Quick y escapa del peligro a lomos de Hipogrifo.",
+  "ASTOLFORIDER-ASTOLFO.pronounObject": "le",
+  "ASTOLFORIDER-ASTOLFO.possessiveAdjective": "su",
+  "ASTOLFORIDER-ASTOLFO.pronounPossessive": "suyo",
+  "ASTOLFORIDER-ASTOLFO.pronounSubject": "elle",
+  "ASTOLFORIDER-ASTOLFO.goldMonologue": "¡Una aventura necesita bocadillos, cintas y al menos un mapa espantoso!",
+  "ASTOLFORIDER-ASTOLFO.eventDeathPrevention": "Eso casi parecía peligroso. ¡Casi!",
+  "ASTOLFORIDER-ASTOLFO.aromaPrinciple": "El mejor camino es el que termine convirtiéndose en una aventura.",
+  "ASTOLFORIDER-ASTOLFO.cardsModifierTitle": "Una Aventura Imposible",
+  "ASTOLFORIDER-ASTOLFO.cardsModifierDescription": "Juega con el conjunto de cartas de Astolfo.",
+  "ASTOLFORIDER-ASTOLFO.banter.alive.endTurnPing": "¡No te preocupes! Solo olvidé la mitad del plan.",
+  "ASTOLFORIDER-ASTOLFO.banter.dead.endTurnPing": "Sigue adelante. ¡Las aventuras están hechas para terminarlas!"
+}

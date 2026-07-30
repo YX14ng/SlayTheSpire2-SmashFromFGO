@@ -18,7 +18,7 @@ public sealed class SummerBerserkerFormPower : ArtoriaFormPower
     public override string FramesPath => $"{MainFile.ResPath}/character/artoria_frames_berserker.tres";
 
     // ModifyDamageAdditive es DELTA (default 0).
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (!props.IsPoweredAttack()) return 0m;
         if (dealer == Owner) return AttackBonus;

@@ -21,11 +21,11 @@ public sealed class WinterCoronation() : MorganCard(2, CardType.Skill, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await FormSwitch.Enter<WinterQueenFormPower>(choiceContext, Owner.Creature, this);
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead)
             {
-                await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+                await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
             }
         }
     }

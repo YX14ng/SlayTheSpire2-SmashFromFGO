@@ -25,23 +25,22 @@ public abstract class DebtPaidStarsRelic : OberonRelic, IDebtPaidRelicListener
     /// <summary>Tope de procs (puntos premiados) por turno.</summary>
     protected abstract int MaxProcsPerTurn { get; }
 
-    private int _procsThisTurn;
+    /// <summary>Permite que una reliquia de reemplazo desactive el motor anterior.</summary>
+    protected virtual bool IsActive => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<DebtPower>(), HoverTipFactory.FromPower<CritStarsPower>()];
 
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player) _procsThisTurn = 0;
-        return Task.CompletedTask;
-    }
-
     public async Task OnDebtPaid(PlayerChoiceContext? choiceContext, int amountPaid)
     {
-        var procs = Math.Min(amountPaid, MaxProcsPerTurn - _procsThisTurn);
+        if (!IsActive) return;
+        var used = FgoCombatState.GetTurn(Owner.Creature, 2, 3);
+        var procs = Math.Min(amountPaid, MaxProcsPerTurn - used);
         if (procs <= 0) return;
-        _procsThisTurn += procs;
+        var context = choiceContext ?? new BlockingPlayerChoiceContext();
+        await FgoCombatState.SetTurn(
+            context, Owner.Creature, 2, used + procs, null, width: 3);
         Flash();
-        await CritStars.Gain(Owner.Creature, procs * StarsPerDebtPaid, null);
+        await CritStars.Gain(context, Owner.Creature, procs * StarsPerDebtPaid, null);
     }
 }

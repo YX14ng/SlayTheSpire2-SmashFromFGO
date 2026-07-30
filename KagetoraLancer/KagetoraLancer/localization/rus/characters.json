@@ -1,0 +1,16 @@
+{
+  "KAGETORALANCER-KAGETORA.title": "Нагао Кагэтора",
+  "KAGETORALANCER-KAGETORA.titleObject": "богиня войны",
+  "KAGETORALANCER-KAGETORA.description": "Продвигайте Небо, Грудь и Ноги, чтобы управлять полем боя, явить Arts Благородный фантазм и необратимо возвыситься до Уэсуги Кэнсин.",
+  "KAGETORALANCER-KAGETORA.pronounObject": "её",
+  "KAGETORALANCER-KAGETORA.possessiveAdjective": "её",
+  "KAGETORALANCER-KAGETORA.pronounPossessive": "её",
+  "KAGETORALANCER-KAGETORA.pronounSubject": "она",
+  "KAGETORALANCER-KAGETORA.goldMonologue": "Удача на Небесах, доспех в Груди, заслуга в Ногах. А золоту всё равно место в казне.",
+  "KAGETORALANCER-KAGETORA.eventDeathPrevention": "Строй не ломается, пока командующая стоит.",
+  "KAGETORALANCER-KAGETORA.aromaPrinciple": "Справедливость движется вперёд по одному уверенному шагу.",
+  "KAGETORALANCER-KAGETORA.cardsModifierTitle": "Доктрина Этиго",
+  "KAGETORALANCER-KAGETORA.cardsModifierDescription": "Играйте с набором карт Кагэторы.",
+  "KAGETORALANCER-KAGETORA.banter.alive.endTurnPing": "Следующий завет уже ясен. Вперёд.",
+  "KAGETORALANCER-KAGETORA.banter.dead.endTurnPing": "Не дайте строю умереть вместе с командующей."
+}

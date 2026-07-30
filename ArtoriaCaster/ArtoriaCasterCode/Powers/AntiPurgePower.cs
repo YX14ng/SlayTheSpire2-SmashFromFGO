@@ -75,7 +75,7 @@ public sealed class AntiPurgePower : ArtoriaPower
         return Task.CompletedTask;
     }
 
-    public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageCapFgo(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (target != Owner || dealer == null || !props.IsPoweredAttack() || Amount <= 0)
         {

@@ -1,5 +1,6 @@
 using FGOCore.FGOCoreCode.Stars;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -15,7 +16,7 @@ namespace MashShielder.MashShielderCode.Powers;
 /// CRÍTICO LISTO: roba 1 (fijo — el draw-on-CritReady usa el patrón ViciousPower:
 /// AfterPowerAmountChanged + BlockingPlayerChoiceContext).
 /// </summary>
-public sealed class CombatAnalysisPower : MashShielderPower
+public sealed class CombatAnalysisPower : MashShielderPower, ICriticalConsumedListener
 {
     /// <summary>Robo fijo por cada CRÍTICO LISTO obtenido (no escala con stacks).</summary>
     public const int DrawPerCritReady = 1;
@@ -31,13 +32,16 @@ public sealed class CombatAnalysisPower : MashShielderPower
     {
         if (player != Owner.Player) return;
         Flash();
-        await CritStars.Gain(Owner, Amount, null);
+        await CritStars.Gain(choiceContext, Owner, Amount, null);
     }
 
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public async Task AfterCriticalConsumed(PlayerChoiceContext choiceContext, CriticalHit critical)
     {
-        if (amount <= 0m || power is not CritReadyPower || power.Owner != Owner || Owner.Player == null) return;
+        if (critical.Owner != Owner || Owner.Player == null) return;
         Flash();
-        await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), DrawPerCritReady, Owner.Player);
+        var inDeck = PileType.Draw.GetPile(Owner.Player).Cards.Count;
+        var toDraw = Math.Min(DrawPerCritReady, inDeck);
+        if (toDraw > 0)
+            await CardPileCmd.Draw(choiceContext, toDraw, Owner.Player);
     }
 }

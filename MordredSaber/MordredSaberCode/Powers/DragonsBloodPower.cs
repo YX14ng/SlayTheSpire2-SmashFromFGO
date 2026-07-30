@@ -30,7 +30,7 @@ public sealed class DragonsBloodPower : MordredPower
     {
         if (player != Owner.Player || Owner.Player == null || Owner.IsDead) return;
         Flash();
-        await NpCharge.Gain(Owner, NpPerTurn * (int)Amount, null);
+        await NpCharge.Gain(choiceContext, Owner, NpPerTurn * (int)Amount, null);
         await CreatureCmd.GainBlock(Owner, BlockPerTurn * (int)Amount, ValueProp.Unpowered, null);
     }
 }

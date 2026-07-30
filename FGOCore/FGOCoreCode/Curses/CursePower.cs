@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FGOCore.FGOCoreCode.Compatibility;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -29,11 +30,11 @@ public sealed class CursePower : FGOCorePower
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side != Owner.Side || Owner.IsDead) return;
+        if (!participants.Contains(Owner) || Owner.IsDead) return;
 
         Flash();
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), Owner, Amount,
-            ValueProp.Unblockable | ValueProp.Unpowered, null, null);
+        await CreatureCmdCompatibility.Damage(new ThrowingPlayerChoiceContext(), Owner, Amount,
+            ValueProp.Unblockable | ValueProp.Unpowered, null, null, null);
         if (Owner.IsAlive && !DecayIsStopped())
         {
             await PowerCmd.Decrement(this);
@@ -42,7 +43,10 @@ public sealed class CursePower : FGOCorePower
 
     private bool DecayIsStopped()
     {
-        foreach (var opponent in Owner.CombatState.GetOpponentsOf(Owner))
+        var combatState = Owner.CombatState;
+        if (combatState == null) return false;
+
+        foreach (var opponent in combatState.GetOpponentsOf(Owner))
         {
             if (opponent.IsDead) continue;
             foreach (var power in opponent.GetPowerInstances<MegaCrit.Sts2.Core.Models.PowerModel>())

@@ -11,7 +11,7 @@ public sealed class CamelotRam() : MashShielderCard(2, CardType.Attack, CardRari
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(Owner.Creature.Block).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(Owner.Creature.Block).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);
     }

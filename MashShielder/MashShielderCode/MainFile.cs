@@ -24,11 +24,11 @@ public partial class MainFile : Node
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 
-        // FGOCore preloads every registered form's frames in background threads.
-        FormVisuals.RegisterFrames(
-            $"{ResPath}/character/mash_frames_base.tres",
-            $"{ResPath}/character/mash_frames_ortinax.tres",
-            $"{ResPath}/character/mash_frames_paladin.tres");
+        // FGOCore preloads sibling forms in single-player; co-op loads them on demand to cap VRAM.
+        FormVisuals.RegisterFramesWithSpriteTransform(
+            ($"{ResPath}/character/mash_frames_base.tres", -5.9f, -247.2f, 0.945f),
+            ($"{ResPath}/character/mash_frames_ortinax.tres", 48.1f, -248.9f, 0.943f),
+            ($"{ResPath}/character/mash_frames_paladin.tres", 65.7f, -255.2f, 0.977f));
 
         // Ulti auto-manifestada (consistencia con los otros Servants, 2026-06-26): al cruzar
         // 100 NP, la NP correspondiente a la FORMA activa aparece GRATIS en la mano (Retain +
@@ -40,18 +40,18 @@ public partial class MainFile : Node
         //   Shielder (escudo base) → LORD CAMELOT (理想之城, la NP icónica del escudo)
         //   Ortinax  (armadura + cañón) → BLACK BARREL (黑桶)
         //   Paladin  (forma plena)  → LORD CHALDEAS (罗德·迦勒底亚斯)
-        NpCharge.GaugeFilled += TryManifestUlt;
-        NpCharge.GaugeDropped += DisarmUltMarker;
+        NpCharge.GaugeFilledWithContext += TryManifestUlt;
+        NpCharge.GaugeDroppedWithContext += DisarmUltMarker;
     }
 
-    private static async Task TryManifestUlt(Creature creature)
+    private static async Task TryManifestUlt(PlayerChoiceContext choiceContext, Creature creature)
     {
         if (creature.Player?.Character is not Character.MashShielder) return;
         if (creature.CombatState == null) return;
         if (creature.HasPower<CamelotManifestedPower>()) return;
 
         // Una sola ult por pico, sin importar la forma: el marcador genérico se aplica igual.
-        await PowerCmd.Apply<CamelotManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+        await PowerCmd.Apply<CamelotManifestedPower>(choiceContext, creature, 1m, creature, null);
 
         // Gatear la NP por la forma activa (los docstrings viejos tenían Shielder/Paladin invertidos).
         if (creature.HasPower<OrtinaxFormPower>())
@@ -68,7 +68,7 @@ public partial class MainFile : Node
         }
     }
 
-    private static async Task DisarmUltMarker(Creature creature)
+    private static async Task DisarmUltMarker(PlayerChoiceContext _, Creature creature)
     {
         if (creature.HasPower<CamelotManifestedPower>())
         {

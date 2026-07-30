@@ -13,7 +13,7 @@ public abstract class OberonFormPower : FormPower
     public override async Task AfterSideTurnStart(MegaCrit.Sts2.Core.Combat.CombatSide side, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Entities.Creatures.Creature> participants, MegaCrit.Sts2.Core.Combat.ICombatState combatState)
     {
         await base.AfterSideTurnStart(side, participants, combatState);
-        if (side == Owner.Side)
+        if (participants.Contains(Owner))
         {
             await MainFile.EnsureUltInHand(Owner);
         }

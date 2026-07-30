@@ -50,11 +50,11 @@
   "GILGAMESHARCHER-WALL_OF_SPEARS.title": "Wall of Spears",
   "GILGAMESHARCHER-WALL_OF_SPEARS.description": "#Gain !B! Block. If you played a Treasure Arm this turn, gain !Bonus! more.",
   "GILGAMESHARCHER-TOTAL_BARRAGE.title": "Total Barrage",
-  "GILGAMESHARCHER-TOTAL_BARRAGE.description": "#Deal !D! damage 4 times to random enemies, plus 1 hit for each Treasure Arm you played this turn (up to 2).",
+  "GILGAMESHARCHER-TOTAL_BARRAGE.description": "#Deal !D! damage 4 times to random enemies, plus 1 hit for each Treasure Arm you played this turn /(up to 2).",
   "GILGAMESHARCHER-NAMELESS_BLADE.title": "Nameless Blade of the Treasury",
   "GILGAMESHARCHER-NAMELESS_BLADE.description": "#Deal !D! damage.",
   "GILGAMESHARCHER-MONGRELS_EXECUTION.title": "Mongrel's Execution",
-  "GILGAMESHARCHER-MONGRELS_EXECUTION.description": "#Deal !D! damage. If you have a Critical Hit ready, also apply !Vulnerable! *Vulnerable.",
+  "GILGAMESHARCHER-MONGRELS_EXECUTION.description": "#Deal !D! damage. If this Attack is *Critical, also apply !Vulnerable! *Vulnerable.",
   "GILGAMESHARCHER-TWIN_LANCES.title": "Twin Lances",
   "GILGAMESHARCHER-TWIN_LANCES.description": "#Deal !D! damage twice. Gain !Stars! *Critical *Stars.",
   "GILGAMESHARCHER-CALADBOLG_THE_ORIGINAL.title": "Caladbolg the Original",
@@ -74,9 +74,9 @@
   "GILGAMESHARCHER-WALLS_OF_URUK.title": "Walls of Uruk",
   "GILGAMESHARCHER-WALLS_OF_URUK.description": "#Gain !B! Block. Gain !Np! *NP Charge.",
   "GILGAMESHARCHER-TREASURE_GUARDS_THE_KING.title": "Treasure Guards the King",
-  "GILGAMESHARCHER-TREASURE_GUARDS_THE_KING.description": "#Gain !PerArm! Block for each Treasure Arm you played this turn (up to 4).",
+  "GILGAMESHARCHER-TREASURE_GUARDS_THE_KING.description": "#Gain !PerArm! Block for each Treasure Arm you played this turn /(up to 4).",
   "GILGAMESHARCHER-KIT_INDEPENDENT_ACTION.title": "Independent Action A+",
-  "GILGAMESHARCHER-KIT_INDEPENDENT_ACTION.description": "#While you have a Critical Hit ready, your Attacks deal !Action! more (before the doubling).",
+  "GILGAMESHARCHER-KIT_INDEPENDENT_ACTION.description": "#Your *Critical Attacks deal !Action! more damage.",
   "GILGAMESHARCHER-KIT_DIVINITY.title": "Divinity B",
   "GILGAMESHARCHER-KIT_DIVINITY.description": "#Your Attacks deal !Divinity! more, including Treasure Arms.",
   "GILGAMESHARCHER-THRONE_OF_THE_ONLOOKER.title": "Throne of the Onlooker",
@@ -114,5 +114,5 @@
   "GILGAMESHARCHER-IMPOSSIBLE_BRIBE.title": "Impossible Bribe",
   "GILGAMESHARCHER-IMPOSSIBLE_BRIBE.description": "#Deal !D! damage. If you have at least !Treasure! *Treasure, spend it and deal !Bonus! more.",
   "GILGAMESHARCHER-RAIN_OF_TREASURES.title": "Rain of Treasures",
-  "GILGAMESHARCHER-RAIN_OF_TREASURES.description": "#Deal !D! damage to ALL enemies, plus !PerTreasure! for each *Treasure spent (up to 6 spent)."
+  "GILGAMESHARCHER-RAIN_OF_TREASURES.description": "#Deal !D! damage to ALL enemies, plus !PerTreasure! for each *Treasure spent /(up to 6 spent)."
 }

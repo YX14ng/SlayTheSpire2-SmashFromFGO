@@ -34,8 +34,8 @@ public sealed class FaeBloodPactPower : MorganPower
         TickInProgress = true;
         try
         {
-            await CreatureCmd.Damage(choiceContext, Owner, HpCost,
-                ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, null, null);
+            await CreatureCmdCompatibility.Damage(choiceContext, Owner, HpCost,
+                ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, null, null, null);
         }
         finally
         {
@@ -43,7 +43,7 @@ public sealed class FaeBloodPactPower : MorganPower
         }
         if (Owner.IsAlive)
         {
-            await NpCharge.Gain(Owner, Amount, null);
+            await NpCharge.Gain(choiceContext, Owner, Amount, null);
         }
     }
 }

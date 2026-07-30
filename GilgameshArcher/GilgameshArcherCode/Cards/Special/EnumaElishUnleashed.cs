@@ -62,7 +62,7 @@ public sealed class EnumaElishUnleashed() : GilgameshCard(0, CardType.Attack, Ca
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // 1) Consume TODA la carga; tier = lo realmente consumido (>= 100, + OverchargeBlessing).
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / 20 * PerTwenty; // SÓLO escala el bonus anti-divino
 
         // 1.bis) FIX HOMOGENEIZACIÓN (P2): las Armas del Tesoro que queden en la mano se EXHAUSTAN como
@@ -88,7 +88,7 @@ public sealed class EnumaElishUnleashed() : GilgameshCard(0, CardType.Attack, Ca
             if (enemy.IsDead) continue;
             var divineBonus = RoyalTrait.IsDivine(enemy) ? DynamicVars["Divine"].IntValue + overcharge : 0;
             var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + divineBonus);
-            await DamageCmd.Attack(damage).FromCard(this).Targeting(enemy)
+            await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
                 .WithHitFx("vfx/vfx_starry_impact")
                 .Execute(choiceContext);
         }

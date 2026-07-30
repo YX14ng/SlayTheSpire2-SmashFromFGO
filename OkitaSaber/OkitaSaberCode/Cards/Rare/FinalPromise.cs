@@ -22,7 +22,7 @@ public sealed class FinalPromise() : OkitaCard(1, CardType.Skill, CardRarity.Rar
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<GutsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(10m); // +20 -> +30

@@ -14,7 +14,7 @@ namespace MashShielder.MashShielderCode.Cards.Uncommon;
 /// Removida del pool en rediseño v2; borrar en la próxima versión.</summary>
 public sealed class ChaldeaLibrary() : MashShielderCard(2, CardType.Power, CardRarity.Event, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<ChaldeaLibraryPower>(1m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<ChaldeaLibraryPower>("ChaldeaLibrary", 1m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

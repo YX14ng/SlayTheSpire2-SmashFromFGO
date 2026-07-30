@@ -20,29 +20,18 @@ public sealed class AvalonFormPower : ArtoriaFormPower
 
     public override bool IsPermanent => true;
 
-    private bool _firedThisTurn;
-
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        await base.AfterSideTurnStart(side, participants, combatState);
-        if (side == CombatSide.Player)
-        {
-            _firedThisTurn = false;
-        }
-    }
-
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (_firedThisTurn || cardPlay.Card.Owner.Creature != Owner) return;
+        if (FgoCombatState.GetTurn(Owner, 6) != 0 || cardPlay.Card.Owner.Creature != Owner) return;
         if (cardPlay.Card.Type != CardType.Skill) return;
 
-        _firedThisTurn = true;
+        await FgoCombatState.SetTurn(context, Owner, 6, 1, cardPlay.Card);
         Flash();
-        await Stars.Gain(Owner, ProphecyCasterFormPower.StarsOnFirstSkill, null);
-        await NpCharge.Gain(Owner, ProphecyCasterFormPower.NpOnFirstSkill, null);
+        await Stars.Gain(context, Owner, ProphecyCasterFormPower.StarsOnFirstSkill, null);
+        await NpCharge.Gain(context, Owner, ProphecyCasterFormPower.NpOnFirstSkill, null);
     }
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer == Owner && props.IsPoweredAttack()) return SummerBerserkerFormPower.AttackBonus;
         return 0m;

@@ -33,8 +33,8 @@ public sealed class RoyalInvestment() : GilgameshCard(1, CardType.Skill, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (!await TreasurePower.TrySpend(Owner.Creature, DynamicVars["Treasure"].IntValue)) return;
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        if (!await TreasurePower.TrySpend(choiceContext, Owner.Creature, DynamicVars["Treasure"].IntValue)) return;
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Np"].UpgradeValueBy(10m);

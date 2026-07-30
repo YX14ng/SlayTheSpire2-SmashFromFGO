@@ -23,16 +23,17 @@ public sealed class ExistenceTax : MorganRelic
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != CombatSide.Player) return;
+        if (!participants.Contains(Owner.Creature)) return;
+        if (Owner.Creature.CombatState is not { } combatState) return;
 
         var total = 0;
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        foreach (var enemy in combatState.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead) total += Curses.Of(enemy);
         }
         if (total <= 0) return;
 
         Flash();
-        await NpCharge.Gain(Owner.Creature, Math.Min(total, MaxPerTurn), null);
+        await NpCharge.Gain(choiceContext, Owner.Creature, Math.Min(total, MaxPerTurn), null);
     }
 }

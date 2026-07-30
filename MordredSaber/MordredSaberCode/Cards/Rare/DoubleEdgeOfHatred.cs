@@ -22,7 +22,7 @@ public sealed class DoubleEdgeOfHatred() : MordredCard(2, CardType.Power, CardRa
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<DoubleEdgeOfHatredPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        if (power != null) power.AttackBonus = DynamicVars["AttackBonus"].IntValue;
+        if (power != null) power.AttackBonus = Math.Max(power.AttackBonus, DynamicVars["AttackBonus"].IntValue);
     }
 
     protected override void OnUpgrade() => DynamicVars["AttackBonus"].UpgradeValueBy(1m);

@@ -19,7 +19,7 @@ namespace MordredSaber.MordredSaberCode.Cards.Uncommon;
 /// </summary>
 public sealed class DentedHelm() : MordredCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
-    private const int BaseStars = 4; // piso de ★ en cualquier forma
+    private const int BaseStars = 10; // piso normalizado en cualquier forma
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new BlockVar(11m, ValueProp.Move), new DynamicVar("Stars", 10), new DynamicVar("BaseStars", BaseStars)];
@@ -33,7 +33,7 @@ public sealed class DentedHelm() : MordredCard(1, CardType.Skill, CardRarity.Unc
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
         var stars = Forms.InMaskedForm(Owner.Creature) ? DynamicVars["Stars"].IntValue : DynamicVars["BaseStars"].IntValue;
-        await CritStars.Gain(Owner.Creature, stars, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, stars, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(4m);

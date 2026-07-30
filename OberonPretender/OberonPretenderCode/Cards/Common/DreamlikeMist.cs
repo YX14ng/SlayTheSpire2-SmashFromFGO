@@ -34,8 +34,8 @@ public sealed class DreamlikeMist() : OberonCard(0, CardType.Skill, CardRarity.C
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (!CanConvert) return;
-        await NpCharge.Spend(Owner.Creature, DynamicVars["Cost"].IntValue, this);
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await NpCharge.Spend(choiceContext, Owner.Creature, DynamicVars["Cost"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     // Up: la conversión se abarata (50 → 40 NP); el premio en ★ no cambia.

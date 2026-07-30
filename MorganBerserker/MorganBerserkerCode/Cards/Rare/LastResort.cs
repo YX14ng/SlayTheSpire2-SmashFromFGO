@@ -24,13 +24,13 @@ public sealed class LastResort() : MorganCard(1, CardType.Skill, CardRarity.Rare
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<GutsPower>()];
 
     protected override bool IsPlayable =>
-        Owner.Creature.CombatState.RoundNumber >= DynamicVars["Turn"].IntValue;
+        Owner.Creature.CombatState?.RoundNumber >= DynamicVars["Turn"].IntValue;
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         await PowerCmd.Apply<GutsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 

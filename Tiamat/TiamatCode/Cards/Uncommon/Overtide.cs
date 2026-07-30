@@ -29,16 +29,16 @@ public sealed class Overtide() : TiamatCard(1, CardType.Skill, CardRarity.Uncomm
     ];
 
     // El campo de Maldición debe existir para que el canje rinda; si no, brilla apagado.
-    protected override bool ShouldGlowGoldInternal => Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature) != null;
+    protected override bool ShouldGlowGoldInternal => Curses.MostCursed(Owner.Creature) != null;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var prey = Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature);
+        var prey = Curses.MostCursed(Owner.Creature);
         if (prey == null) return;
-        var consumed = await Curses.Consume(prey, DynamicVars["Curse"].IntValue);
+        var consumed = await Curses.Consume(choiceContext, prey, DynamicVars["Curse"].IntValue);
         if (consumed <= 0) return;
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
-        await Lahmu.Feed(Owner.Creature, DynamicVars["Nurture"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await Lahmu.Feed(choiceContext, Owner.Creature, DynamicVars["Nurture"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(6m);

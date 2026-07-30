@@ -26,7 +26,7 @@ public sealed class DragonSlayerStrike() : SiegfriedCard(1, CardType.Attack, Car
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = ScaleThresholdBonus(ScalesThreshold, DynamicVars["Bonus"].IntValue);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

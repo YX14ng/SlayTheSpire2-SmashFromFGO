@@ -22,33 +22,22 @@ public sealed class GreyCatOfTrifas : MordredRelic
 
     public override RelicRarity Rarity => RelicRarity.Rare;
 
-    private bool _attackPlayedThisTurn;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritStarsPower>()];
 
-    public override Task BeforeCombatStartLate()
-    {
-        _attackPlayedThisTurn = false;
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner == Owner && cardPlay.Card.Type == CardType.Attack)
         {
-            _attackPlayedThisTurn = true;
+            await FgoCombatState.SetTurn(context, Owner.Creature, 5, 1, cardPlay.Card);
         }
-        return Task.CompletedTask;
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != CombatSide.Player) return;
-        var played = _attackPlayedThisTurn;
-        _attackPlayedThisTurn = false;
-        if (played) return;
+        if (!participants.Contains(Owner.Creature)) return;
+        if (FgoCombatState.GetTurn(Owner.Creature, 5) != 0) return;
         Flash();
-        await CritStars.Gain(Owner.Creature, Stars, null);
+        await CritStars.Gain(choiceContext, Owner.Creature, Stars, null);
         await CreatureCmd.Heal(Owner.Creature, HealAmount);
     }
 }

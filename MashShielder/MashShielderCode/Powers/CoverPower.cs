@@ -22,7 +22,9 @@ public sealed class CoverPower : MashShielderPower
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.Block)];
 
-    private decimal _pendingTransfer;
+    private Creature? _candidateTarget;
+    private decimal _candidateTransfer;
+    private readonly Dictionary<Creature, decimal> _pendingTransfers = [];
 
     // Guard de re-entrancia (audit 2026-07-04): dos Mash en co-op con Cobertura MUTUA (A cubre a B y
     // B cubre a A) recursionaban hasta colgar el juego — el traspaso de A es un Damage que el Cover de
@@ -39,23 +41,41 @@ public sealed class CoverPower : MashShielderPower
     public override decimal ModifyHpLostBeforeOsty(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (!Covers(target, dealer) || amount <= 0) return amount;
-        // Asignar, no acumular (audit 2026-07-05): AfterDamageReceivedLate corre por evento de dano;
-        // si algun evento no la consumio, un += arrastraba monto viciado al proximo traspaso.
-        _pendingTransfer = amount;
+        // El query también corre en previews. Guardamos sólo un candidato; el hook AfterModifying
+        // lo confirma en el camino real y lo mueve al diccionario por objetivo.
+        _candidateTarget = target;
+        _candidateTransfer = amount;
         return 0m;
+    }
+
+    public override Task AfterModifyingHpLostBeforeOsty()
+    {
+        if (_candidateTarget != null && _candidateTransfer > 0)
+        {
+            _pendingTransfers[_candidateTarget] = _candidateTransfer;
+        }
+        _candidateTarget = null;
+        _candidateTransfer = 0;
+        return Task.CompletedTask;
     }
 
     public override async Task AfterDamageReceivedLate(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (_pendingTransfer <= 0 || !Covers(target, dealer)) return;
+        if (!_pendingTransfers.Remove(target, out var dmg)) return;
+        if (dmg <= 0 || result.UnblockedDamage > 0 || !Covers(target, dealer)) return;
 
-        var dmg = _pendingTransfer;
-        _pendingTransfer = 0;
         Flash();
         _transferring = true;
         try
         {
-            await CreatureCmd.Damage(choiceContext, Owner, dmg, ValueProp.Move, dealer, null);
+            await CreatureCmdCompatibility.Damage(
+                choiceContext,
+                Owner,
+                dmg,
+                ValueProp.Move,
+                dealer,
+                cardSource,
+                null);
         }
         finally
         {
@@ -65,9 +85,11 @@ public sealed class CoverPower : MashShielderPower
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (Owner.Side != side)
+        if (!participants.Contains(Owner))
         {
-            _pendingTransfer = 0; // red de seguridad: nada viciado sobrevive a la expiracion
+            _candidateTarget = null;
+            _candidateTransfer = 0;
+            _pendingTransfers.Clear();
             await PowerCmd.Remove(this);
         }
     }

@@ -20,6 +20,6 @@ public sealed class LuckExPower : OberonPower
     {
         if (player != Owner.Player || Owner.Player == null || Owner.IsDead) return;
         Flash();
-        await CritStars.Gain(Owner, Stars, null);
+        await CritStars.Gain(choiceContext, Owner, Stars, null);
     }
 }

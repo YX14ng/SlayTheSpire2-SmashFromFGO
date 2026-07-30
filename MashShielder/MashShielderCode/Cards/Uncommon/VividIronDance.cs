@@ -20,7 +20,7 @@ public sealed class VividIronDance() : MashShielderCard(2, CardType.Attack, Card
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         for (var i = 0; i < 2; i++)
         {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);

@@ -27,7 +27,7 @@ namespace OkitaSaber.OkitaSaberCode.Cards.Special;
 ///
 /// MEJORADA (up): si tenés Crítico Listo lo consume y dobla el 1er golpe; Vulnerable sube a 3.
 /// </summary>
-public sealed class MumyouUnleashed() : OkitaCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), ICommandTyped
+public sealed class MumyouUnleashed() : OkitaCard(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy), ICommandTyped, INoblePhantasmCritical
 {
     public const int ChargeCost = 100;
 
@@ -66,7 +66,7 @@ public sealed class MumyouUnleashed() : OkitaCard(0, CardType.Attack, CardRarity
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var perHit = (tier - ChargeCost) / 10 * OverchargePerTen;
         var perHitDamage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + perHit);
 
@@ -76,13 +76,13 @@ public sealed class MumyouUnleashed() : OkitaCard(0, CardType.Attack, CardRarity
         {
             // grantTosOnEmpty:false (audit 2026-07-04): con exactamente 4 de Aliento se pagaba el boost Y
             // ADEMAS caia la Tos del agotamiento — el texto es either/or (boost O Tos).
-            await Aliento.Spend(Owner.Creature, BreathBoostCost, this, grantTosOnEmpty: false);
+            await Aliento.Spend(choiceContext, Owner.Creature, BreathBoostCost, this, grantTosOnEmpty: false);
             hits += BoostHits;
         }
         else
         {
             // El cuerpo paga el clímax que el pulmón no banca.
-            await Tos.ShuffleIntoDraw(Owner.Creature, this);
+            await Tos.ShuffleIntoDraw(choiceContext, Owner.Creature, this);
         }
 
         // Golpes perforantes (IGNORA Bloqueo = Unblockable). El ×2 de un Crítico Listo en cola aplica
@@ -92,8 +92,8 @@ public sealed class MumyouUnleashed() : OkitaCard(0, CardType.Attack, CardRarity
         {
             if (cardPlay.Target.IsDead) break;
             VfxCmd.PlayOnCreatureCenter(cardPlay.Target, "vfx/vfx_dramatic_stab");
-            await CreatureCmd.Damage(choiceContext, cardPlay.Target, perHitDamage,
-                ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this);
+            await CreatureCmdCompatibility.Damage(choiceContext, cardPlay.Target, perHitDamage,
+                ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this, cardPlay);
         }
 
         // Tras el daño: Vulnerable (potencia el resto del turno — fidelidad al OC real).

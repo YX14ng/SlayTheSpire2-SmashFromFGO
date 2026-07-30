@@ -27,7 +27,7 @@ public sealed class AroundCaliburnWindowPower : ArtoriaPower
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == Owner.Side)
+        if (participants.Contains(Owner))
         {
             await PowerCmd.Remove(this);
         }

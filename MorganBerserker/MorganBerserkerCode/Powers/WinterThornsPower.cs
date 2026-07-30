@@ -25,7 +25,7 @@ public sealed class WinterThornsPower : MorganPower
         if (!props.IsPoweredAttack()) return;
 
         Flash();
-        await Curses.Apply(dealer, Amount, Owner, null);
+        await Curses.Apply(choiceContext, dealer, Amount, Owner, null);
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

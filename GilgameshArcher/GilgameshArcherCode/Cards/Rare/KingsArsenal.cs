@@ -30,7 +30,7 @@ public sealed class KingsArsenal() : GilgameshCard(2, CardType.Skill, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await TreasureDeck.ManifestRandom(Owner.Creature, DynamicVars["Arms"].IntValue);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Arms"].UpgradeValueBy(1m);

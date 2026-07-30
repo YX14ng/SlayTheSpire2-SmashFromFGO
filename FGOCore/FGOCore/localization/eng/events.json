@@ -1,0 +1,12 @@
+{
+  "FGOCORE-HOLY_GRAIL_RITUAL.title": "A Vessel Beyond Limits",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.description": "A golden chalice rests before you, brimming with power enough to surpass the limits of a Servant. It asks for neither blood nor a wish—only a worthy offering.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL.title": "[Offer !Gold! Gold] Perform Palingenesis.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL_LOCKED.title": "[Locked] Requires !Gold! Gold.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL_LOCKED.description": "The vessel remains silent. Your offering is insufficient.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.DECLINE.title": "[Leave] Refuse the Grail.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.DECLINE.description": "Some limits exist for a reason.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.APPLIED.description": "The offering vanishes in golden light. The Grail answers, reshaping your Saint Graph beyond its former limits.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.DECLINED.description": "You turn away. The golden light fades without protest.",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.UNAVAILABLE.description": "The ritual can no longer be completed. The Grail's light recedes."
+}

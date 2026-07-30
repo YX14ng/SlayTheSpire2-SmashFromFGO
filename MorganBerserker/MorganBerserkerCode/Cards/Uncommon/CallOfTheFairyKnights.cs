@@ -31,14 +31,14 @@ public sealed class CallOfTheFairyKnights() : MorganCard(2, CardType.Skill, Card
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead)
             {
-                await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+                await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
             }
         }
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead)
             {

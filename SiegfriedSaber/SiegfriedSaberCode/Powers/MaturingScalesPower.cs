@@ -22,7 +22,7 @@ public sealed class MaturingScalesPower : SiegfriedPower
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side == Owner.Side)
+        if (participants.Contains(Owner))
         {
             Flash();
             await PowerCmd.Apply<DragonScalesPower>(new BlockingPlayerChoiceContext(), Owner, base.Amount, Owner, null);

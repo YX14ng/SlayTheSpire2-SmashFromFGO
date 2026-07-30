@@ -25,18 +25,19 @@ public sealed class AbyssalToll() : TiamatCard(1, CardType.Attack, CardRarity.Un
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
 
     // El campo de Maldición debe existir para que el canje rinda; si no, brilla apagado.
-    protected override bool ShouldGlowGoldInternal => Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature) != null;
+    protected override bool ShouldGlowGoldInternal => Curses.MostCursed(Owner.Creature) != null;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var prey = Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature);
+        if (Owner.Creature.CombatState is not CombatState combatState) return;
+        var prey = Curses.MostCursed(combatState, Owner.Creature);
         // Fallback (audit 2026-07-05): el texto promete !D! de dano BASE — sin campo de Maldicion la
         // carta se jugaba y no hacia NADA. Sin presa maldita: pega el base al primer enemigo vivo.
-        prey ??= ((CombatState)Owner.Creature.CombatState).GetOpponentsOf(Owner.Creature).FirstOrDefault(e => !e.IsDead);
+        prey ??= combatState.GetOpponentsOf(Owner.Creature).FirstOrDefault(e => !e.IsDead);
         if (prey == null) return;
-        var consumed = await Curses.Consume(prey, DynamicVars["Curse"].IntValue);
+        var consumed = await Curses.Consume(choiceContext, prey, DynamicVars["Curse"].IntValue);
         var dmg = DynamicVars.Damage.BaseValue + consumed;
-        await DamageCmd.Attack(dmg).FromCard(this).Targeting(prey)
+        await DamageCmd.Attack(dmg).FromCardFgoCompatibility(this, cardPlay).Targeting(prey)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);
     }

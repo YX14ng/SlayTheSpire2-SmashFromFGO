@@ -47,11 +47,11 @@ public abstract class MordredFormPower : FormPower, IBlockRetentionSource
         if (player != Owner.Player || Owner.Player == null || Owner.IsDead) return;
         if (NpPerTurnStart <= 0) return;
         Flash();
-        await NpCharge.Gain(Owner, NpPerTurnStart, null);
+        await NpCharge.Gain(choiceContext, Owner, NpPerTurnStart, null);
     }
 
     // ModifyDamageAdditive es DELTA (default 0). Cubre las dos direcciones (espejo SummerBerserker).
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (!props.IsPoweredAttack()) return 0m;
         if (dealer == Owner) return AttackDamageDelta;

@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>AssetStudioAnimatorExport</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="AssetStudio">
+      <HintPath>..\AssetStudioCLI\AssetStudioModCLI_net9_win64\AssetStudio.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="AssetStudioUtility">
+      <HintPath>..\AssetStudioCLI\AssetStudioModCLI_net9_win64\AssetStudioUtility.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="AssetStudioFBXWrapper">
+      <HintPath>..\AssetStudioCLI\AssetStudioModCLI_net9_win64\AssetStudioFBXWrapper.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\AssetStudioCLI\AssetStudioModCLI_net9_win64\*.dll">
+      <Link>%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

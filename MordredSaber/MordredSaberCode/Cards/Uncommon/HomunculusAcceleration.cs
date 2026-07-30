@@ -24,7 +24,7 @@ public sealed class HomunculusAcceleration() : MordredCard(1, CardType.Power, Ca
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<HomunculusAccelerationPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        if (power != null) power.StarsPerTurn = DynamicVars["Stars"].IntValue;
+        if (power != null) power.StarsPerTurn = Math.Max(power.StarsPerTurn, DynamicVars["Stars"].IntValue);
     }
 
     protected override void OnUpgrade() => DynamicVars["Stars"].UpgradeValueBy(10m);

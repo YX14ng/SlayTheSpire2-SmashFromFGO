@@ -89,9 +89,9 @@ están **gitignoradas** — son binarios descargables on-demand). Para hallar/ve
    - Si un clip llena el canvas entero (espadas telequinéticas, piano de hielo del spell de 704720), la unión queda 2048×2048 = recorte muerto → `MEASURE_SKIP` esa anim (los props se cortan en el borde, la figura queda) o recortar la ventana ANTES de que aparezca el prop (precedente: espejo de Morgan).
    - **Idle (wait) que agacha la cabeza ⇒ "sin ojos la mayor parte del tiempo"** (aprendido con la Berserker de verano 704710/704720, 2026-06-13): su `wait` es un cabeceo que baja la cabeza ~94% del ciclo (el flequillo tapa los ojos); la cabeza solo está arriba en la costura del loop (`154→0`). Los ojos renderizan PERFECTO (verificar con frame 0/154) — no es bug de cara. Fix: `FRAMES_OVERRIDE` (lista explícita de frames por modelo/anim, gana sobre `SELECT`) re-ventanea el idle al tramo cabeza-arriba CRUZANDO `154→0` (p.ej. `[150,151,152,153,154,0,1,2,3,4]`): el save numera 000,001… en ese orden y loopea sin salto porque cruza el punto de loop natural del clip. El idle queda corto (10 frames) ⇒ bajarle la velocidad en el `.tres` (≈14fps) para un cabeceo calmo. El pass `list` ahora vuelca CLIP/MESH/**BONE**/EYETRACK/BLENDSHAPE (reproduce wait antes de volcar, si no el esqueleto da 0 huesos); el pass `debug` vuelca `RBONE`; existe un pass `faceexp` + `crop_face.gd` para barrer/ampliar la cara cuando el rig es raro. ⚠️ El regex de `Set-Pass` en `render_all_artoria.ps1` debe incluir TODOS los pases (incl. `faceexp`) o queda pegado en el último.
 3. **SpriteFrames**: `tools/make_frames_tres.ps1` genera los `.tres` (idle loop **30fps**, attack 30, cast 15, hurt/die 30; die = hurt). ⚠️ El idle a 15fps (step 2) se ve ENTRECORTADO en modelos con pelo/capa fluidos (feedback de playtest con Morgan) — renderizar idle con step 1 y speed 30.
-4. **Escena** `<char>_visuals.tscn`: Control + `Visuals`(Node2D) + AnimatedSprite2D (`scale 0.5`, `flip_h = true` ¡el juego espeja al jugador!, posición calculada de GROUND_ROW/CAM_CENTER impresos por el renderer) + script `mash_sprite.gd` (volver a idle al terminar) + Bounds + markers. BaseLib detecta el AnimatedSprite2D y rutea las señales con animaciones llamadas **idle/attack/cast/hurt/die**.
-5. **Cambio de forma en combate**: un `.tres` por forma + swap de `sprite.SpriteFrames` vía `NCombatRoom.Instance.GetCreatureNode(creature).FindChild("Sprite")` (ver `FormVisuals.cs`). ⚠️ `ResourceLoader.Load` sincrónico de un `.tres` con ~150 webp (~35 MB) congela el juego varios segundos en el primer swap — precargar TODAS las formas con `ResourceLoader.LoadThreadedRequest(path, "SpriteFrames", useSubThreads: true)` y pinnearlas en un caché estático. ⚠️⚠️ **El disparador importa** (bug de Morgan v2): `FormVisuals.PreloadAll` corre recién en el primer `Apply()` = el primer cambio REAL igual se trababa. Resolución: la **starter relic** hace `FormSwitch.Enter<FormaInicial>(null, creature, null)` en `BeforeCombatStartLate` — eso (a) fija la forma inicial (sin esto el personaje pelea SIN forma activa hasta el primer cambio: pasiva muerta, bug silencioso), (b) dispara la precarga al ARRANCAR el primer combate, y como `source == null` no cuenta como "cambio de forma" para los bonus de primer cambio.
-6. ⚠️ Tras el publish, **parchear los `.webp.import`** con `tools/patch_webp_imports.ps1`: `compress/mode=1`, `lossy_quality=0.85`, `mipmaps/generate=true` **y `process/size_limit=1024`** — sin comprimir el pck infla (Mash: 206MB→122MB), y sin size_limit las texturas a resolución completa (~1900px) comen **~1.5 GB de VRAM por personaje** (3 formas pinneadas) y producen micro-trabas en el playback. Con size_limit la textura se achica (factor `1024/cropW`) → **ajustar `scale` del sprite en los .tscn**: `scale = 0.5 / (1024/cropW)` (Morgan: 0.9326); las POSICIONES no cambian (el offset en mundo se conserva). Luego publicar de nuevo.
+4. **Escena** `<char>_visuals.tscn`: Control + `Visuals`(Node2D) + AnimatedSprite2D (`flip_h = true`, el juego espeja al jugador) + script `mash_sprite.gd` (volver a idle al terminar) + Bounds + markers. BaseLib detecta el AnimatedSprite2D y rutea las señales con animaciones llamadas **idle/attack/cast/hurt/die**. Para centrar X no alcanza con `CAM_CENTER`: medir el centro alfa de todos los frames `idle`, aplicar el factor real de `process/size_limit` y la escala del sprite, e invertir la compensación por `flip_h`. Para apoyar los pies, usar `SpriteY = (sourceHeight/2 - alphaBottom) * min(1, sizeLimit/max(sourceSize)) * spriteScale`; recalcular también `Bounds`, `IntentPosition` y `CenterPos` con el alto importado. Cada forma con un lienzo distinto necesita su propio `SpriteX/SpriteY`.
+5. **Cambio de forma en combate**: un `.tres` por forma + swap de `sprite.SpriteFrames` vía `NCombatRoom.Instance.GetCreatureNode(creature).FindChild("Sprite")` (ver `FormVisuals.cs`). ⚠️ `ResourceLoader.Load` sincrónico de un `.tres` con cientos de WebP congela el hilo de simulación y puede cortar el heartbeat multijugador. Usar siempre `ResourceLoader.LoadThreadedRequest(path, "SpriteFrames", useSubThreads: true)`. En solitario, `FormVisuals` precarga el grupo completo del personaje activo para que los cambios sean inmediatos; en co-op carga sólo la forma actual de cada jugador y deja cualquier forma alternativa bajo demanda para no agotar VRAM. La **starter relic** debe ejecutar `FormSwitch.Enter<FormaInicial>(null, creature, null)` en `BeforeCombatStartLate`: fija la pasiva inicial y dispara la carga sin contar como cambio de forma.
+6. ⚠️ Tras el publish, **parchear los `.webp.import`** con `tools/patch_webp_imports.ps1`: `compress/mode=1`, `lossy_quality=0.85`, `mipmaps/generate=true`, límite general de 1024 y **`process/size_limit=768` para `character/frames*`**. Los frames RGBA8 con mipmaps ocupan memoria según sus dimensiones descomprimidas, no según el tamaño del PCK. Al cambiar el límite, multiplicar la escala previa por `oldEffectiveMax / newEffectiveMax` para conservar exactamente el tamaño visible; `oldEffectiveMax = min(sourceMax, oldLimit)`. Recalcular además el pivote X/Y cuando cambie el lienzo importado. Luego publicar de nuevo.
 
 ## 4. Arte de cartas (CEs oficiales)
 
@@ -101,7 +101,11 @@ están **gitignoradas** — son binarios descargables on-demand). Para hallar/ve
 4. Iconos de powers = iconos de skill FGO; reliquias = iconos de item (con `_outline` = silueta blanca del alpha): `tools/make_icons.ps1`. ⚠️ Para powers que son ESTADOS del juego original (Maldición, quemadura, veneno…) usar el icono de **estado** real (`static.atlasacademy.io/JP/BuffIcons/bufficon_XXX.png` — Curse = `bufficon_521`; sacarlo del campo `buffs[].icon` del JSON de un servant que lo aplique), NO un icono de skill: los jugadores de FGO reconocen el estado (feedback de playtest).
 5. Pantalla de selección: bg = escena Control con arte atenuado; `char_select_*.png` = charagraph (+ gris para locked); icono/marker = recorte de cara con `tools/make_face_icons.ps1` (calibrar -FaceX/-FaceY mirando el resultado: el centro de la cara NUNCA es donde uno cree).
 6. **Tienda y fogata** (si no se hace, sale el Ironclad placeholder): override `CustomMerchantAnimPath` y `CustomRestSiteAnimPath`. Mercader = Node2D + AnimatedSprite2D con anim `idle` (BaseLib la encuentra recursivamente; también acepta un `.png` directo). Fogata = igual PERO necesita `ControlRoot` (Control hijo directo) + `%Hitbox` (unique name); reticle y thought-bubbles se autogeneran del Hitbox. ⚠️ Estas escenas NO se espejan como el combate, y el mercader/fogata quedan a la DERECHA del personaje: usar `flip_h = true` (mirar a la derecha) y **negar el offset X** del sprite respecto al de combate (verificado con feedback de playtest: sin flip el personaje le da la espalda al mercader).
-7. **Fanart (Danbooru, sin login)**: `posts.json?tags=<personaje>+rating:g+order:score&limit=200&page=N` (máx 2 tags reales; `solo` ya no entra → filtrar client-side con `tag_string -match '\bsolo\b'` y `tag_string_character`). ⚠️ Paginar la query ordenada por score, NO la default (default = más recientes). Acreditar al artista en `assets/reference/fanart/CREDITS.txt`.
+7. **Sólo arte oficial en el paquete**: no usar fanart de Pixiv, Danbooru ni redes sociales. Para
+   cartas y pantallas elegir `CharaGraph`, CE, Command Card, iconos o capturas del cliente oficial de
+   FGO servidos por Atlas Academy. Registrar `assetId`, nombre y foco de recorte en un CSV bajo
+   `assets/reference/ce/`; `tools/make_card_art.ps1` acepta `cropX`/`cropY` opcionales para conservar
+   la cara o el objeto principal sin recurrir a otra fuente.
 
 ## 4.5 Arquitectura: cómo encarar el próximo personaje
 
@@ -111,7 +115,20 @@ están **gitignoradas** — son binarios descargables on-demand). Para hallar/ve
 - Multijugador sincroniza mods por versión: mods chicos y estables = menos fricción.
 - El `id` del manifest es inmutable: no hay vuelta atrás de un mod general.
 
-**FGOCore** (`FGOCore/` en este repo) contiene lo compartido: sistema de Carga NP (eventos `NpCharge.GaugeFilled`/`GaugeDropped` para que cada personaje enganche su ulti; `INpCostWaiver` para "primer NP gratis" — los waivers EXCLUYEN cartas Event y resuelven a tier mínimo), **Estrellas de Crítico** (`CritStarsPower`: a 100 se auto-pagan y dan 1 `CritReadyPower` = próximo Ataque ×2, un stack por carta), sistema de formas (`FormPower` base con `FramesPath`/`IsPermanent`, `FormSwitch.Enter<T>`, `IFormChangeListener`, `FormVisuals.RegisterFrames` + precarga), retención de Bloqueo (`BulwarkPower` + `BlockRetention` + `IBlockRetentionSource`), Maldición (`CursePower` cap 25 + `Curses` + `ICurseAmplifier`/`ICursePreserver`), Alzarse (`GutsPower` + `IGutsFloorBooster`), dupes/NP level (`INpLevelStore` + `NpLevels.Scale` +15%/nivel + botón Invocar), `OverchargeBlessingPower`, sistema de 好感度 (`BondRelic` abstracto con curvas/capstone virtuales + `BondPower` **+ `ServantDamage/BlockMultiplier` ×1.25 global** — el techo del entorno modded, skill §1.bis), y las cartas meme incoloras (viven SOLO acá — no copiarlas a mods de personaje). ⚠️ **PUBLICAR SIEMPRE JUNTOS**: FGOCore y TODOS los mods de personaje en la misma pasada — las firmas de FGOCore cambian (ej. `NpCharge.CanPay` ganó un parámetro) y un dll de personaje viejo contra un FGOCore nuevo tira `MissingMethodException` en runtime. Los iconos de los powers core (NP, Baluarte, vínculo, FormShifted) y el arte de memes viven en el pck de FGOCore; los powers/reliquias del personaje que extienden clases core deben re-overridear las rutas de imagen a su propio mod (ver `MashFormPower`/`MashBond`). Los mods de personaje declaran `"dependencies": ["BaseLib", "FGOCore"]` y referencian `FGOCore.dll` con `Private=false` (el dll lo distribuye solo FGOCore; el loader del juego resuelve por nombre). **Orden de build: FGOCore primero** (Mash referencia el dll publicado en `mods/`). ⚠️ Migrar modelos entre mods cambia su ID (prefijo) — los saves de runs A MEDIO TERMINAR que contengan esas cartas/powers se rompen; terminar la run antes de actualizar.
+**FGOCore** (`FGOCore/` en este repo) contiene lo compartido: Carga NP y niveles de NP,
+**Críticos v2** (banco 0–100, reserva 50, ×1,5 por carta, `CritReady` y recompensa Quick
+posresolución), formas, retención de Bloqueo, Maldición, Alzarse, Overcharge, atributos FGO,
+Evasión, Sello de Habilidad, Certero/Sure Hit, vínculo por run y las cartas meme incoloras.
+`FgoCombatState` guarda flags/contadores efímeros de turno o combate en powers ocultos sincronizados;
+usar eso en vez de campos privados cuando guardar/cargar deba conservar el uso. Los hooks de preview
+(`ModifyDamage*`, `ModifyBlock*`) sólo calculan: nunca consumen cargas.
+
+⚠️ **PUBLICAR SIEMPRE JUNTOS**: FGOCore y los doce mods de personaje en la misma pasada. Un DLL
+viejo contra una API nueva produce `MissingMethodException`/`ReflectionTypeLoadException` y el mod
+puede omitirse silenciosamente. Los iconos core viven en su PCK; los modelos propios que extienden
+clases core re-overridean sus rutas. Los manifests usan dependencias con `min_version`, los proyectos
+referencian `FGOCore.dll` con `Private=false` y el orden es FGOCore primero. Migrar un modelo entre
+mods cambia su ID y rompe runs activas que lo contengan.
 
 Checklist del personaje nuevo: copiar `MashShielder/` como plantilla → cambiar id/nombres → borrar contenido Mash-específico → seguir §2-§4 para assets → mecánicas nuevas sobre las bases de FGOCore.
 
@@ -129,8 +146,8 @@ referencia del usuario) y `pools_audit.json`. Reglas que TODO pool nuevo cumple:
 3. **Denominaciones fijas** 10/20/30/50/100 (básica=30, gate=50, umbral/payoff=100).
 4. **Starter relic = motor**: convierte eventos universales en recursos del kit
    (golpe-totalmente-bloqueado→estrellas en Mash; perder-Vida→estrellas en Morgan),
-   SIEMPRE con cap de 3 procs/turno (reset en `AfterSideTurnStart` lado jugador = cubre
-   la ronda entera). Los riders del pool se calibran contra ese flujo garantizado.
+   SIEMPRE con cap de 3 procs/turno (reset en `BeforeSideTurnStart` y sólo si
+   `participants.Contains(Owner)`). Los riders del pool se calibran contra ese flujo garantizado.
 5. **Glow dorado** (`ShouldGlowGoldInternal`) en TODA carta condicional — hace visibles
    los hilos en la mano.
 6. **Los poderes engordan hilos existentes**, no abren nuevos.
@@ -181,10 +198,17 @@ referencia del usuario) y `pools_audit.json`. Reglas que TODO pool nuevo cumple:
 - **REGLA — icono de la reliquia starter de mecánica**: SIEMPRE el icono de la clase del servant (Saber/Lancer/Shielder/…), en la variante que corresponda a sus estrellas de rareza en FGO: **1–3★ = bronce, 4★ = plata, 5★ = oro**. (Mash usa `Shieldergold.png`.)
 - **Iconos del wiki fandom**: `static.wikia.nocookie.net` sirve **WebP aunque la URL diga .png** (GDI+ explota con "Parameter is not valid") — agregar `&format=original` a la URL. Los iconos de clase se llaman `<Clase><variante>.png` (p. ej. `Shieldergold.png`); buscarlos con la API: `fategrandorder.fandom.com/api.php?action=query&list=allimages&aiprefix=<Clase>`.
 
-## 7. Localización trilingüe
+## 7. Localización en cinco idiomas
 
-Carpetas: `eng` (base), `esp` (¡español **latino**! distinto de `spa`=España), `zhs` (chino simplificado). Mapa completo en `LocManager.cs` del decompilado. Verificar paridad de claves contra eng al terminar (script de comparación con `ConvertFrom-Json`). Terminología CN: usar el wiki Mooncell (玛修, 宝具值, 格挡, 黑桶...).
+Carpetas obligatorias: `eng` (base), `esp` (español latino, distinto de `spa`=España), `zhs`
+(chino simplificado), `kor` y `rus`. Mapa completo en `LocManager.cs` del decompilado. Ejecutar
+`tools/audit_localization_parity.ps1` para paridad de archivos, claves y `!Variables!`, y después
+`tools/audit_simpleloc.ps1`. Terminología CN: usar Mooncell (玛修, 宝具值, 格挡, 黑桶...).
 
 ## 8. Ciclo de trabajo
 
-`dotnet build` = solo código (rápido, el analizador valida localización). `dotnet publish` = código + assets al pck + copia a `mods/` (necesario para CUALQUIER cambio no-código). Validar escenas: import headless del proyecto del mod + revisar el log del juego tras probar. El warning MSB3077 del export de MegaDot es benigno.
+`dotnet build` = código y manifiesto a `dist/<Id>/`. `dotnet publish` = código + assets al PCK en
+el mismo staging (necesario para CUALQUIER cambio no-código); no instala en el juego salvo el opt-in
+explícito de deploy. Validar escenas con import/export headless, auditar el PCK y revisar
+`godot.log` después del playtest. El warning MSB3077 del export de MegaDot puede ser benigno: manda
+la presencia y contenido final del paquete.

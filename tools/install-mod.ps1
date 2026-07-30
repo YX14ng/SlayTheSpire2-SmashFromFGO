@@ -26,7 +26,7 @@ $Dist = Join-Path $RepoRoot 'dist'
 # Lista canónica de mods FGO (para -Clean y para validar nombres).
 $FgoMods = @('FGOCore','MashShielder','MorganBerserker','ArtoriaCaster','MordredSaber',
              'GilgameshArcher','OkitaSaber','OberonPretender','SiegfriedSaber','TiamatBeast',
-             'CoopDeterminismPatch')
+             'KagetoraLancer','ShutenDouji','AstolfoRider')
 
 function Install-One([string]$name) {
     $src = Join-Path $Dist $name

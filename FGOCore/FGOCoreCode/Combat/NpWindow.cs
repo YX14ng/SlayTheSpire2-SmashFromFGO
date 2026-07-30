@@ -26,11 +26,16 @@ public static class NpWindow
     /// si tiene jugador, devuelve recursos (+<paramref name="energy"/>⚡, robar <paramref name="draw"/>).
     /// El marcador "ya se abrió este pico/combate" y los efectos extra los maneja el caller.
     /// </summary>
-    public static async Task OpenWindow<TWindow>(Creature creature, int energy = 1, int draw = 1)
+    public static Task OpenWindow<TWindow>(Creature creature, int energy = 1, int draw = 1)
+        where TWindow : PowerModel =>
+        OpenWindow<TWindow>(new BlockingPlayerChoiceContext(), creature, energy, draw);
+
+    public static async Task OpenWindow<TWindow>(
+        PlayerChoiceContext choiceContext, Creature creature, int energy = 1, int draw = 1)
         where TWindow : PowerModel
     {
-        await PowerCmd.Apply<TWindow>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
-        await ReturnResources(creature, energy, draw);
+        await PowerCmd.Apply<TWindow>(choiceContext, creature, 1m, creature, null);
+        await ReturnResources(choiceContext, creature, energy, draw);
     }
 
     /// <summary>
@@ -39,20 +44,36 @@ public static class NpWindow
     /// marcador primero, ventana después). El caller sigue siendo dueño de chequear
     /// <c>HasPower&lt;TMarker&gt;()</c> y de re-armarlo en <c>GaugeDropped</c>.
     /// </summary>
-    public static async Task OpenWindow<TWindow, TMarker>(Creature creature, int energy = 1, int draw = 1)
+    public static Task OpenWindow<TWindow, TMarker>(Creature creature, int energy = 1, int draw = 1)
+        where TWindow : PowerModel
+        where TMarker : PowerModel =>
+        OpenWindow<TWindow, TMarker>(new BlockingPlayerChoiceContext(), creature, energy, draw);
+
+    public static async Task OpenWindow<TWindow, TMarker>(
+        PlayerChoiceContext choiceContext, Creature creature, int energy = 1, int draw = 1)
         where TWindow : PowerModel
         where TMarker : PowerModel
     {
-        await PowerCmd.Apply<TMarker>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
-        await PowerCmd.Apply<TWindow>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
-        await ReturnResources(creature, energy, draw);
+        await PowerCmd.Apply<TMarker>(choiceContext, creature, 1m, creature, null);
+        await PowerCmd.Apply<TWindow>(choiceContext, creature, 1m, creature, null);
+        await ReturnResources(choiceContext, creature, energy, draw);
     }
 
     /// <summary>
     /// El cierre común de recursos: +<paramref name="energy"/> energía y robar <paramref name="draw"/>
     /// cartas, sólo si la criatura tiene jugador. No-op para montos &lt;= 0.
     /// </summary>
-    public static async Task ReturnResources(Creature creature, int energy, int draw)
+    public static Task ReturnResources(Creature creature, int energy, int draw) =>
+        ReturnResources(new BlockingPlayerChoiceContext(), creature, energy, draw);
+
+    /// <summary>
+    /// Variante para efectos que ya se están resolviendo dentro de un contexto de jugador.
+    /// </summary>
+    public static async Task ReturnResources(
+        PlayerChoiceContext choiceContext,
+        Creature creature,
+        int energy,
+        int draw)
     {
         var player = creature.Player;
         if (player == null) return;
@@ -63,7 +84,7 @@ public static class NpWindow
         }
         if (draw > 0)
         {
-            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), draw, player);
+            await CardPileCmd.Draw(choiceContext, draw, player);
         }
     }
 }

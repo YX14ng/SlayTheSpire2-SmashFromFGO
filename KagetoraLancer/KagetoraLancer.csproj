@@ -1,0 +1,45 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CheckDependencyPaths">
+  <Import Project="..\Sts2Compatibility.props"/>
+  <Import Project="..\FGOCore\Sts2PathDiscovery.props"/>
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>true</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GodotDisabledSourceGenerators>GodotPluginsInitializer</GodotDisabledSourceGenerators>
+    <NoWarn>$(NoWarn);MSB3270</NoWarn>
+  </PropertyGroup>
+  <ItemGroup Condition="Exists('$(Sts2DataDir)')">
+    <Reference Include="0Harmony"><HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="sts2"><HintPath>$(Sts2DataDir)/sts2.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="FGOCore"><HintPath>$(StagingPath)FGOCore/FGOCore.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Alchyr.Sts2.BaseLib" Version="$(BaseLibPackageVersion)" PrivateAssets="All"/>
+    <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="All"/>
+    <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="*"/>
+    <AdditionalFiles Include="KagetoraLancer/localization/**/*.json"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="KagetoraLancer/**"/>
+    <EmbeddedResource Remove="KagetoraLancer/**"/>
+    <None Include="KagetoraLancer.json"/>
+    <None Include="project.godot"/>
+    <None Include="KagetoraLancer/**"/>
+  </ItemGroup>
+  <Target Name="CheckDependencyPaths">
+    <Error Text="Slay the Spire 2 data not found at '$(Sts2DataDir)'" Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')"/>
+  </Target>
+  <Target Name="CopyToStaging" AfterTargets="PostBuildEvent">
+    <Message Text="Copying .dll .pdb and .json to staging." Importance="high"/>
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DeployDir)$(MSBuildProjectName)/"/>
+    <Copy SourceFiles="$(AssemblyName).json" DestinationFolder="$(DeployDir)$(MSBuildProjectName)/"/>
+    <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(DeployDir)$(MSBuildProjectName)/"/>
+  </Target>
+  <Target Name="NeedGodotForPublish" BeforeTargets="Publish">
+    <Error Text="Godot 4.5.1 path is required for publish." Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')"/>
+  </Target>
+  <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
+    <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(DeployDir)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;" EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue"/>
+  </Target>
+</Project>

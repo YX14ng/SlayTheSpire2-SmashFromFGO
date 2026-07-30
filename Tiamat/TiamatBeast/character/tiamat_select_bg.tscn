@@ -17,12 +17,13 @@ color = Color(0.02, 0.04, 0.09, 1)
 
 [node name="Art" type="TextureRect" parent="."]
 anchors_preset = 15
+anchor_left = 0.42
 anchor_right = 1.0
 anchor_bottom = 1.0
 modulate = Color(0.62, 0.6, 0.66, 1)
 texture = ExtResource("bg")
 expand_mode = 1
-stretch_mode = 6
+stretch_mode = 5
 
 [node name="Gradient" type="ColorRect" parent="."]
 anchors_preset = 15

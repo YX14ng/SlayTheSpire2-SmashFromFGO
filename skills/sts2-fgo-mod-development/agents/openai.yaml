@@ -1,0 +1,4 @@
+interface:
+  display_name: "StS2 FGO Mod Development"
+  short_description: "Develop and diagnose StS2 FGO mods safely"
+  default_prompt: "Use $sts2-fgo-mod-development to implement or diagnose this StS2 FGO mod change."

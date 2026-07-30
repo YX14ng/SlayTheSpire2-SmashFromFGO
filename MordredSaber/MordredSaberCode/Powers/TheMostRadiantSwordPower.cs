@@ -32,16 +32,16 @@ public sealed class TheMostRadiantSwordPower : MordredPower, ICritConsumedListen
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritReadyPower>(), HoverTipFactory.FromPower<NpChargePower>()];
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || !props.IsPoweredAttack() || cardSource == null) return 0m;
         // +Crítico extra solo cuando hay un Crítico Listo en cola (el golpe que se va a doblar).
-        return Owner.GetPowerAmount<CritReadyPower>() > 0 ? CritBonus * (int)Amount : 0m;
+        return Criticals.WillCrit(Owner, cardSource) ? CritBonus * (int)Amount : 0m;
     }
 
     public async Task OnCritConsumed(PlayerChoiceContext? choiceContext)
     {
         Flash();
-        await NpCharge.Gain(Owner, NpOnConsume, null);
+        await NpCharge.Gain(choiceContext ?? new BlockingPlayerChoiceContext(), Owner, NpOnConsume, null);
     }
 }

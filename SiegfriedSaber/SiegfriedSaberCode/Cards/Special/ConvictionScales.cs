@@ -11,7 +11,8 @@ public sealed class ConvictionScales() : SiegfriedCard(0, CardType.Skill, CardRa
 {
     public const int ScalesGain = 3;
 
-    public async Task ApplyConviction() => await PowerCmd.Apply<DragonScalesPower>(new BlockingPlayerChoiceContext(), Owner.Creature, ScalesGain, Owner.Creature, this);
+    public async Task ApplyConviction(PlayerChoiceContext choiceContext) =>
+        await PowerCmd.Apply<DragonScalesPower>(choiceContext, Owner.Creature, ScalesGain, Owner.Creature, this);
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) => Task.CompletedTask;
 }

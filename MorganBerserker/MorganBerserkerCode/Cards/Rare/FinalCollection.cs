@@ -28,16 +28,16 @@ public sealed class FinalCollection() : MorganCard(1, CardType.Attack, CardRarit
     protected override bool IsPlayable => true;
 
     protected override bool ShouldGlowGoldInternal =>
-        Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature) != null;
+        Curses.MostCursed(Owner.Creature) != null;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var consumed = await Curses.Consume(cardPlay.Target, CursePower.MaxPerEnemy);
+        var consumed = await Curses.Consume(choiceContext, cardPlay.Target, CursePower.MaxPerEnemy);
         if (consumed <= 0) return;
 
-        await DamageCmd.Attack(consumed * DynamicVars["PerPoint"].IntValue).FromCard(this)
+        await DamageCmd.Attack(consumed * DynamicVars["PerPoint"].IntValue).FromCardFgoCompatibility(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);

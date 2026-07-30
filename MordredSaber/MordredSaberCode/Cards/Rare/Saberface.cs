@@ -25,9 +25,9 @@ public sealed class Saberface() : MordredCard(1, CardType.Power, CardRarity.Rare
         var power = await PowerCmd.Apply<SaberfacePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
-            power.StarsPerHit = DynamicVars["Stars"].IntValue;
-            power.NpPerHit = DynamicVars["NpCharge"].IntValue;
-            power.Upgraded = IsUpgraded;
+            await power.Configure(
+                choiceContext, DynamicVars["Stars"].IntValue,
+                DynamicVars["NpCharge"].IntValue, IsUpgraded, this);
         }
     }
 }

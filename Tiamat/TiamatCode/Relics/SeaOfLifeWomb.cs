@@ -104,6 +104,7 @@ public sealed class SeaOfLifeWomb : TiamatRelic, INpLevelStore
     public override async Task BeforeCombatStartLate()
     {
         await base.BeforeCombatStartLate();
+        await CommandBonusPower.EnsureInstalled(Owner.Creature);
         _firstCursedEnemies.Clear();
         Flash();
         await FormSwitch.Enter<TiamatFemmeFatalePower>(null, Owner.Creature, null);
@@ -120,6 +121,6 @@ public sealed class SeaOfLifeWomb : TiamatRelic, INpLevelStore
         if (enemy == null || !enemy.IsMonster) return;
         if (!_firstCursedEnemies.Add(enemy)) return;
         Flash();
-        await Lahmu.Spawn(Owner.Creature, LahmuPerFirstCurse, null);
+        await Lahmu.Spawn(choiceContext, Owner.Creature, LahmuPerFirstCurse, null);
     }
 }

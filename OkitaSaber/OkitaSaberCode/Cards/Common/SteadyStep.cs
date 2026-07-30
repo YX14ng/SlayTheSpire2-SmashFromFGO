@@ -23,7 +23,8 @@ public sealed class SteadyStep() : OkitaCard(1, CardType.Power, CardRarity.Commo
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<SteadyStepPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        if (power != null) power.RefundStarsValue = DynamicVars["Stars"].IntValue;
+        if (power != null)
+            await power.Configure(choiceContext, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Stars"].UpgradeValueBy(5m); // 0 -> +5★

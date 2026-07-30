@@ -29,7 +29,7 @@ public sealed class LarvalSurge() : TiamatCard(2, CardType.Skill, CardRarity.Rar
     {
         // ¿El empujón CRUZA el umbral? (estaba por debajo de 100 y queda en 100+ tras cargar).
         var before = NpCharge.Current(Owner.Creature);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         var crossed = before < NpChargePower.ManifestThreshold
                       && NpCharge.Current(Owner.Creature) >= NpChargePower.ManifestThreshold;
         if (crossed)

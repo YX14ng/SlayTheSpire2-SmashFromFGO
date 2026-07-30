@@ -23,7 +23,7 @@ public sealed class ProdigysGlare() : OkitaCard(0, CardType.Skill, CardRarity.Co
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Stars"].UpgradeValueBy(10m); // +10 -> +20

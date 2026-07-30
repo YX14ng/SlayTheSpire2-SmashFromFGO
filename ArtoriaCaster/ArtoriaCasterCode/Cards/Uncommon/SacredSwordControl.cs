@@ -15,7 +15,7 @@ public sealed class SacredSwordControl() : ArtoriaCard(2, CardType.Power, CardRa
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<SacredSwordControlPower>("Stacks", 1m),
+        new PowerVar<SacredSwordControlPower>("Stacks", 10m),
         new DynamicVar("AntiPurge", 1)
     ];
 

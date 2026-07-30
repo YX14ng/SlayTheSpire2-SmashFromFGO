@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 
@@ -23,7 +22,12 @@ public static class Listeners
 {
     /// <summary>Los powers del dueño que implementan <typeparamref name="T"/>.</summary>
     public static IEnumerable<T> PowersOf<T>(Creature creature) where T : class
-        => creature.GetPowerInstances<PowerModel>().OfType<T>();
+    {
+        foreach (var power in creature.GetPowerInstances<PowerModel>())
+        {
+            if (power is T match) yield return match;
+        }
+    }
 
     /// <summary>Las reliquias del jugador dueño que implementan <typeparamref name="T"/> (vacío si no hay jugador).</summary>
     public static IEnumerable<T> RelicsOf<T>(Creature creature) where T : class
@@ -41,15 +45,40 @@ public static class Listeners
     /// luego reliquias — el orden que usaba <c>Lahmu.Devour</c> y <c>BlockRetention.Cap</c>).
     /// </summary>
     public static IEnumerable<T> Of<T>(Creature creature) where T : class
-        => PowersOf<T>(creature).Concat(RelicsOf<T>(creature));
+    {
+        foreach (var listener in PowersOf<T>(creature)) yield return listener;
+        foreach (var listener in RelicsOf<T>(creature)) yield return listener;
+    }
 
     /// <summary>True si algún power o reliquia del dueño implementa <typeparamref name="T"/>.</summary>
     public static bool Any<T>(Creature creature) where T : class
-        => PowersOf<T>(creature).Any() || RelicsOf<T>(creature).Any();
+    {
+        foreach (var power in creature.GetPowerInstances<PowerModel>())
+        {
+            if (power is T) return true;
+        }
+        if (creature.Player?.Relics is not { } relics) return false;
+        foreach (var relic in relics)
+        {
+            if (relic is T) return true;
+        }
+        return false;
+    }
 
     /// <summary>El primero (power o reliquia) que implementa <typeparamref name="T"/>, o null.</summary>
     public static T? First<T>(Creature creature) where T : class
-        => Of<T>(creature).FirstOrDefault();
+    {
+        foreach (var power in creature.GetPowerInstances<PowerModel>())
+        {
+            if (power is T match) return match;
+        }
+        if (creature.Player?.Relics is not { } relics) return null;
+        foreach (var relic in relics)
+        {
+            if (relic is T match) return match;
+        }
+        return null;
+    }
 
     /// <summary>
     /// Notifica de forma asíncrona y EN ORDEN a cada listener <typeparamref name="T"/> del dueño
@@ -59,7 +88,19 @@ public static class Listeners
     {
         // .ToList(): un listener puede aplicar/remover powers al reaccionar (muta la colección en
         // iteración) → InvalidOperationException latente. Se materializa antes de notificar.
-        foreach (var listener in Of<T>(creature).ToList())
+        var snapshot = new List<T>();
+        foreach (var power in creature.GetPowerInstances<PowerModel>())
+        {
+            if (power is T match) snapshot.Add(match);
+        }
+        if (creature.Player?.Relics is { } relics)
+        {
+            foreach (var relic in relics)
+            {
+                if (relic is T match) snapshot.Add(match);
+            }
+        }
+        foreach (var listener in snapshot)
         {
             await action(listener);
         }
@@ -68,9 +109,14 @@ public static class Listeners
     /// <summary>Variante síncrona de <see cref="ForEachListener{T}"/> (acumular cap/suma/flag).</summary>
     public static void ForEach<T>(Creature creature, Action<T> action) where T : class
     {
-        foreach (var listener in Of<T>(creature))
+        foreach (var power in creature.GetPowerInstances<PowerModel>())
         {
-            action(listener);
+            if (power is T match) action(match);
+        }
+        if (creature.Player?.Relics is not { } relics) return;
+        foreach (var relic in relics)
+        {
+            if (relic is T match) action(match);
         }
     }
 }

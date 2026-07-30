@@ -34,7 +34,7 @@ public sealed class ChispaDeClarent() : MordredCard(0, CardType.Attack, CardRari
     {
         // El +2 de la forma (Rebelión/Clímax) se aplica solo: es un Ataque potenciado y la forma
         // modifica todo Ataque potenciado del owner (espejo del Desatado, que tampoco lo hornea).
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState!)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
     }

@@ -20,7 +20,7 @@ public sealed class PrincesSmile() : OberonCard(0, CardType.Skill, CardRarity.Co
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Np"].UpgradeValueBy(10m);

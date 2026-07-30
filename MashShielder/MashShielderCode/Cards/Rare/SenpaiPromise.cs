@@ -26,7 +26,7 @@ public sealed class SenpaiPromise() : MashShielderCard(2, CardType.Power, CardRa
         // Co-op («proteger a Senpai» = cubrir a otro): cada aliado vivo recibe su propia Promesa, de
         // modo que cuando SU Bloqueo detenga un golpe, ÉL gane Carga NP (el power opera sobre su Owner).
         // En 1 jugador PlayerCreatures es solo el Owner -> el foreach queda vacío (idéntico a hoy).
-        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
+        foreach (var ally in Owner.Creature.CombatState!.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
         {
             await PowerCmd.Apply<SenpaiPromisePower>(choiceContext, ally, DynamicVars["SenpaiPromise"].BaseValue, Owner.Creature, this);
         }

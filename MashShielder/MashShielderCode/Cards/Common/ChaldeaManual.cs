@@ -35,7 +35,7 @@ public sealed class ChaldeaManual() : MashShielderCard(1, CardType.Skill, CardRa
             await CardCmd.DiscardAndDraw(choiceContext, selected, 0);
         }
 
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

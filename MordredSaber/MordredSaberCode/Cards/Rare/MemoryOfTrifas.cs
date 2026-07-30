@@ -25,8 +25,8 @@ public sealed class MemoryOfTrifas() : MordredCard(2, CardType.Power, CardRarity
         var power = await PowerCmd.Apply<MemoryOfTrifasPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         if (power != null)
         {
-            power.HealPerTurn = DynamicVars["Heal"].IntValue;
-            power.NpPerTurn = DynamicVars["NpCharge"].IntValue;
+            power.HealPerTurn = Math.Max(power.HealPerTurn, DynamicVars["Heal"].IntValue);
+            power.NpPerTurn = Math.Max(power.NpPerTurn, DynamicVars["NpCharge"].IntValue);
         }
     }
 

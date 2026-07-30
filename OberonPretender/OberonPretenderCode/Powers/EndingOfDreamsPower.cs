@@ -37,28 +37,25 @@ public sealed class EndingOfDreamsPower : OberonPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private bool _nextNpDoubled = true;
-
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicativeFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || !props.IsPoweredAttack()) return 1m;
         var mult = AttackMultiplier;
-        if (_nextNpDoubled && cardSource is IOberonNpCard) mult *= 2m;
+        if (Amount < 2m && cardSource is IOberonNpCard) mult *= 2m;
         return mult;
     }
 
-    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (_nextNpDoubled && cardPlay.Card is IOberonNpCard && cardPlay.Card.Owner?.Creature == Owner)
+        if (Amount < 2m && cardPlay.Card is IOberonNpCard && cardPlay.Card.Owner?.Creature == Owner)
         {
-            _nextNpDoubled = false;
+            await PowerCmd.ModifyAmount(context, this, 2m - Amount, Owner, cardPlay.Card, silent: true);
         }
-        return Task.CompletedTask;
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side || Owner.IsDead) return;
+        if (!participants.Contains(Owner) || Owner.IsDead) return;
         Flash();
 
         // El Sueño Eterno: no robás el próximo turno.
@@ -86,27 +83,28 @@ public sealed class NoDrawNextTurnPower : OberonPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private bool _armed;
+    private bool IsArmed => Amount >= 2m;
 
     public override decimal ModifyHandDraw(Player player, decimal count)
     {
-        if (player != Owner.Player || !_armed) return count;
+        if (player != Owner.Player || !IsArmed) return count;
         return 0m;
     }
 
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         // Se aplicó en el AfterTurnEnd del jugador; el primer inicio de turno (enemigo) lo arma para
         // que el robo del PRÓXIMO turno propio sea el que se anula (ModifyHandDraw → 0).
-        if (side != Owner.Side) _armed = true;
-        return Task.CompletedTask;
+        if (side != Owner.Side && !IsArmed)
+            await PowerCmd.ModifyAmount(
+                new BlockingPlayerChoiceContext(), this, 2m - Amount, Owner, null, silent: true);
     }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         // El robo del turno propio ya pasó (anulado por el bloqueo armado): consumido, se auto-remueve.
         // AfterPlayerTurnStart corre tras el robo (patrón NightReadingPower que roba aquí).
-        if (player != Owner.Player || !_armed || Owner.IsDead) return;
+        if (player != Owner.Player || !IsArmed || Owner.IsDead) return;
         Flash();
         await PowerCmd.Remove(this);
     }

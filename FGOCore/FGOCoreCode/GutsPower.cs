@@ -49,14 +49,24 @@ public class GutsPower : FGOCorePower
         var hp = Owner.CurrentHp;
         if (hp <= 0 || amount < hp) return amount;
 
-        _triggered = true;
         var floor = Math.Min(Floor, hp);
         return hp - floor;
+    }
+
+    public override Task AfterModifyingHpLostAfterOsty()
+    {
+        _triggered = true;
+        return Task.CompletedTask;
     }
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (!_triggered || target != Owner) return;
+        if (result.UnblockedDamage <= 0)
+        {
+            _triggered = false;
+            return;
+        }
         Flash();
         await OnTriggered(choiceContext);
         await PowerCmd.Remove(this);

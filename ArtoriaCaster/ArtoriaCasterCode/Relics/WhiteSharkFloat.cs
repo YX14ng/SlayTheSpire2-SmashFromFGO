@@ -9,7 +9,7 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Relics;
 /// </summary>
 public sealed class WhiteSharkFloat : ArtoriaRelic
 {
-    public const int StartingStars = 3;
+    public const int StartingStars = 30;
 
     public override RelicRarity Rarity => RelicRarity.Shop;
 

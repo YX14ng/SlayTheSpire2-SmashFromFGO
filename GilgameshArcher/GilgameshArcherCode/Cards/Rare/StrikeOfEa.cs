@@ -24,8 +24,8 @@ public sealed class StrikeOfEa() : GilgameshCard(2, CardType.Attack, CardRarity.
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var divineBonus = RoyalTrait.IsDivine(cardPlay.Target) ? DynamicVars["Divine"].IntValue : 0;
-        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue + divineBonus);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await AttackTarget(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue + divineBonus);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(6m);

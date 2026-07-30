@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace MordredSaber.MordredSaberCode.Relics;
@@ -16,18 +17,10 @@ public sealed class MagicResistanceBCharm : MordredRelic
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    private bool _usedThisCombat;
-
-    public override Task BeforeCombatStartLate()
-    {
-        _usedThisCombat = false;
-        return Task.CompletedTask;
-    }
-
     public override bool TryModifyPowerAmountReceived(PowerModel canonicalPower, Creature target, decimal amount, Creature? applier, out decimal modifiedAmount)
     {
         modifiedAmount = amount;
-        if (_usedThisCombat) return false;
+        if (FgoCombatState.GetCombat(Owner.Creature, 9) != 0) return false;
         if (target != Owner.Creature || applier == null || applier.Side == target.Side) return false;
         if (canonicalPower.GetTypeForAmount(amount) != PowerType.Debuff) return false;
         // Solo debuffs VISIBLES (audit 2026-07-05, espejo de ArtifactPower vanilla): sin este gate
@@ -40,10 +33,10 @@ public sealed class MagicResistanceBCharm : MordredRelic
 
     // El COMMIT va aca (audit 2026-07-05, contrato vanilla): el hook Try debe ser puro — el motor
     // puede evaluarlo especulativamente; AfterModifyingPowerAmountReceived corre solo si aplico.
-    public override Task AfterModifyingPowerAmountReceived(PowerModel power)
+    public override async Task AfterModifyingPowerAmountReceived(PowerModel power)
     {
-        _usedThisCombat = true;
+        await FgoCombatState.SetCombat(
+            new BlockingPlayerChoiceContext(), Owner.Creature, 9, 1);
         Flash();
-        return Task.CompletedTask;
     }
 }

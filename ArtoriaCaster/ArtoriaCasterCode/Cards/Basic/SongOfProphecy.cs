@@ -18,7 +18,7 @@ public sealed class SongOfProphecy() : ArtoriaCard(1, CardType.Skill, CardRarity
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(4m, ValueProp.Move),
-        new DynamicVar("Stars", 1)
+        new DynamicVar("Stars", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -28,12 +28,12 @@ public sealed class SongOfProphecy() : ArtoriaCard(1, CardType.Skill, CardRarity
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
         await FormSwitch.Enter<ProphecyCasterFormPower>(choiceContext, Owner.Creature, this);
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(3m);
-        DynamicVars["Stars"].UpgradeValueBy(1m);
+        DynamicVars["Stars"].UpgradeValueBy(10m);
     }
 }

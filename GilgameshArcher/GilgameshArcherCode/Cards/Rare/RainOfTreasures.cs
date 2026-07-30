@@ -32,10 +32,10 @@ public sealed class RainOfTreasures() : GilgameshCard(2, CardType.Attack, CardRa
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var spend = Math.Min(TreasurePower.Of(Owner.Creature), MaxSpend);
-        var bonus = await TreasurePower.TrySpend(Owner.Creature, spend)
+        var bonus = await TreasurePower.TrySpend(choiceContext, Owner.Creature, spend)
             ? spend * DynamicVars["PerTreasure"].IntValue
             : 0;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay)
             .TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

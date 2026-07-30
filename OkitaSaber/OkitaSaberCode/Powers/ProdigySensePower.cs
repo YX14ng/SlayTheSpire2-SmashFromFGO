@@ -14,7 +14,7 @@ namespace OkitaSaber.OkitaSaberCode.Powers;
 /// Listo): +<see cref="NpGain"/> Carga NP y robá 1 (DESIGN-OKITA §5.3). Engorda el hilo ★→NP.
 /// Misma detección que Makoto (CritReadyPower ganado), patrón CombatAnalysisPower de Mash.
 /// </summary>
-public sealed class ProdigySensePower : OkitaPower
+public sealed class ProdigySensePower : OkitaPower, ICriticalConsumedListener
 {
     public int NpGain = 10; // up: 20 (la carta lo setea desde su DynamicVar)
     public const int Draw = 1;
@@ -28,19 +28,20 @@ public sealed class ProdigySensePower : OkitaPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritStarsPower>(), HoverTipFactory.FromPower<NpChargePower>()];
 
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public async Task AfterCriticalConsumed(PlayerChoiceContext choiceContext, CriticalHit critical)
     {
-        await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
-        if (amount <= 0m || power is not CritReadyPower || power.Owner != Owner || Owner.Player == null) return;
+        var player = Owner.Player;
+        if (critical.Owner != Owner ||
+            player?.PlayerCombatState is not { } playerCombatState) return;
         Flash();
         for (var i = 0; i < Amount; i++)
         {
-            await NpCharge.Gain(Owner, NpGain, null);
+            await NpCharge.Gain(choiceContext, Owner, NpGain, null);
             // Capeá el robo al mazo restante para no reshufflear mid-play (saltá si está vacío).
-            var inDeck = Owner.Player.PlayerCombatState.AllPiles.FirstOrDefault(p => p.Type == PileType.Draw)?.Cards.Count ?? 0;
+            var inDeck = playerCombatState.AllPiles.FirstOrDefault(p => p.Type == PileType.Draw)?.Cards.Count ?? 0;
             var toDraw = Math.Min(Draw, inDeck);
             if (toDraw > 0)
-                await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), toDraw, Owner.Player);
+                await CardPileCmd.Draw(choiceContext, toDraw, player);
         }
     }
 }

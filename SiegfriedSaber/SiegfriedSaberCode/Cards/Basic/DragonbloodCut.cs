@@ -51,10 +51,10 @@ public sealed class DragonbloodCut() : SiegfriedCard(1, CardType.Attack, CardRar
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = ScaleThresholdBonus(ScalesThreshold, DynamicVars["Bonus"].IntValue);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     // Up: +3 a la base (9→12; con SdD≥3 llega a 15 = pico de Común poco-común, pagado por la

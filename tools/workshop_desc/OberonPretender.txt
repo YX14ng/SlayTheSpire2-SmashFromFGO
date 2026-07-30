@@ -1,33 +1,109 @@
-Oberon (Pretender) of Fate/Grand Order, as a fully playable character. Built on the BaseLib framework and the FGO Core library.
+[h1]Oberon — Borrow Now, Let the Lie Pay Later[/h1]
+Take NP Charge and Critical Stars from a dream, delay the bill and decide who pays when the story finally collapses.
 
-What it adds:
-- The dream-lender: a Debt resource you accrue for NP and Stars NOW, paid off by your NP charge at end of turn - or it bleeds you and grows interest.
-- Three forms that change the terms: the Storybook King sweetens the first loan, the Winter Prince defers the bill, and Vortigern inverts everything - unpaid Debt becomes AoE damage when the dream collapses.
-- His Noble Phantasm, Rye Rhyme Goodfellow - now consumes your built-up Debt for extra damage, so the lie you sold gets collected against the world.
+[b]RELEASE BUILD — v0.1.10[/b]
 
-Requires: FGO Core (library) + BaseLib.
-Localization: English, Spanish, Simplified Chinese.
+[h2]Core gameplay[/h2]
+[list]
+[*][b]Debt:[/b] gain powerful resources immediately, then repay them with NP Charge at the end of the turn. Unpaid Debt deals damage and accumulates interest.
+[*][b]Controlled insolvency:[/b] borrow for tempo, refinance through cards and choose whether the current fight or the future deck should carry the cost.
+[*][b]Three faces of the lie:[/b] the Storybook King improves the first loan, the Winter Prince delays payment and Vortigern converts remaining Debt into damage against every enemy.
+[*][b]Rye Rhyme Goodfellow:[/b] build NP and Overcharge toward a Noble Phantasm that makes the world answer for Oberon's unpaid promise.
+[/list]
 
-Found a bug or have feedback? Report it in the discussion thread:
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-To help us fix it fast, please include: which Servant you played and what you did (a screenshot helps); your game log — Steam comments can't attach files, so upload %APPDATA%\SlayTheSpire2\logs\godot.log to a paste site (e.g. pastebin.com) or a file host and paste the LINK, or paste the last ~50 lines; and your full mod list (many bugs are conflicts with other mods).
+[h2]Content[/h2]
+[list]
+[*]68-card reward pool and a 10-card starting deck
+[*]Manifested Noble Phantasm and 11 character relics
+[*]Animated Oberon and Vortigern identities with official FGO visuals
+[*]Curated official artwork for cards, powers, relics and character UI
+[*]Spanish, English, Simplified Chinese, Korean and Russian localization
+[/list]
 
-Made with the help of Claude Code.
+[h2]Requirements and compatibility[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Built for MAIN 0.107.1 and public BETA 0.109.0
+[/list]
 
-————————————————————
+[h2]Validation status[/h2]
+Build, localization, asset coverage, animation references and package audits pass. Balance, save/load and co-op behavior continue to receive in-game testing.
 
-「Fate/Grand Order」的奥伯龙（伪装者），现已作为可操作角色登场。基于 BaseLib 框架与 FGO Core 库制作。
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Source code and bug reports[/url]
 
-本 Mod 带来：
-- 借梦之人：一种名为「债」(Debt) 的资源——你「当下」靠借债换取宝具充能与暴击星，回合结束时用宝具充能来还债；还不上，债就会反咬你掉血并滚出利息。
-- 三种形态各自改写借贷条款：童话之王让首笔借款更划算，冬之王子让账单延期，而 Vortigern 则把一切反转——梦境崩塌时，未偿还的「债」会化作 AoE 伤害砸向全场。
-- 宝具「Rye Rhyme Goodfellow」——如今会消耗你累积的「债」来追加伤害，你兜售出去的那个谎言，最终向整个世界讨债。
+Unofficial fan-made mod. Fate/Grand Order characters and official visual assets belong to their respective rights holders. Not affiliated with TYPE-MOON, Lasengle or Mega Crit.
 
-依赖：FGO Core（库）+ BaseLib。
-支持语言：英文、西班牙文、简体中文。
+[hr][/hr]
+[h1]ESPAÑOL[/h1]
+Pedí Carga NP y Estrellas prestadas a un sueño, aplazá la cuenta y decidí quién paga cuando el cuento finalmente se derrumbe.
 
-发现 Bug 或有建议？请在讨论区反馈：
-https://steamcommunity.com/workshop/filedetails/discussion/3747876334/571542161324009444/
-为方便我们尽快修复，请附上：你使用的从者 + 具体操作（截图更佳）；游戏日志——Steam 评论无法上传文件，请把 %APPDATA%\SlayTheSpire2\logs\godot.log 传到网盘或贴站（如 pastebin.com）再贴出链接，或直接粘贴最后约 50 行；以及完整的 Mod 列表（很多 Bug 是与其他 Mod 的冲突）。
+[b]VERSIÓN PÚBLICA — v0.1.10[/b]
 
-在 Claude Code 的协助下制作。
+[h2]Mecánicas principales[/h2]
+[list]
+[*][b]Deuda:[/b] obtené recursos poderosos de inmediato y pagalos con Carga NP al final del turno. La Deuda impaga causa daño y acumula interés.
+[*][b]Insolvencia controlada:[/b] pedí prestado para ganar ritmo, refinanciá con cartas y elegí si el combate actual o el mazo futuro debe soportar el costo.
+[*][b]Tres rostros de la mentira:[/b] el Rey del Cuento mejora el primer préstamo, el Príncipe del Invierno posterga el pago y Vortigern convierte la Deuda restante en daño a todos los enemigos.
+[*][b]Rye Rhyme Goodfellow:[/b] acumulá NP y Sobrecarga para manifestar un Noble Phantasm que obliga al mundo a responder por la promesa impaga de Oberon.
+[/list]
+
+[h2]Contenido[/h2]
+[list]
+[*]68 cartas de recompensa y mazo inicial de 10 cartas
+[*]Noble Phantasm manifestado y 11 reliquias propias
+[*]Identidades Oberon y Vortigern animadas con visuales oficiales de FGO
+[*]Arte oficial curado para cartas, poderes, reliquias e interfaz
+[*]Localización en español, inglés, chino simplificado, coreano y ruso
+[/list]
+
+[h2]Requisitos y compatibilidad[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]Compatible con MAIN 0.107.1 y BETA pública 0.109.0
+[/list]
+
+[h2]Estado de validación[/h2]
+Las auditorías de compilación, idiomas, recursos, animaciones y paquete están aprobadas. El balance, guardado/carga y cooperativo continúan en pruebas dentro del juego.
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]Código fuente y reporte de errores[/url]
+
+Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
+
+[hr][/hr]
+[h1]简体中文[/h1]
+从梦境借取 NP 与暴击星、推迟账单，并决定童话最终崩塌时由谁偿还代价。
+
+[b]公开版本 — v0.1.10[/b]
+
+[h2]核心机制[/h2]
+[list]
+[*][b]债务：[/b]立刻获得强力资源，并在回合结束时以 NP 充能偿还。未付债务会造成伤害并积累利息。
+[*][b]可控破产：[/b]借款换取节奏、用卡牌再融资，并选择由当前战斗还是未来牌组承担成本。
+[*][b]谎言的三张面孔：[/b]童话之王强化首笔借款，冬之王子延后付款，Vortigern 则将剩余债务化为对所有敌人的伤害。
+[*][b]Rye Rhyme Goodfellow：[/b]积累 NP 与过充能，让宝具迫使整个世界为奥伯龙未偿还的承诺买单。
+[/list]
+
+[h2]内容[/h2]
+[list]
+[*]68 张奖励卡牌与 10 张初始牌组
+[*]显现型宝具与 11 件角色专属遗物
+[*]使用 FGO 官方视觉素材的 Oberon 与 Vortigern 动画身份
+[*]卡牌、能力、遗物与角色界面均采用精心筛选的官方美术
+[*]支持西班牙语、英语、简体中文、韩语与俄语
+[/list]
+
+[h2]依赖与兼容性[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*]兼容正式版 0.107.1 与公开测试版 0.109.0
+[/list]
+
+[h2]验证状态[/h2]
+构建、本地化、资源覆盖、动画引用及安装包检查均已通过；平衡、存档与联机表现仍在游戏内持续测试。
+
+[url=https://github.com/YX14ng/SlayTheSpire2-SmashFromFGO]源代码与问题反馈[/url]
+
+本项目为非官方同人 Mod，与 TYPE-MOON、Lasengle 及 Mega Crit 无隶属关系。

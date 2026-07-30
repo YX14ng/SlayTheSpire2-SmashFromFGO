@@ -21,7 +21,7 @@ public sealed class VespersOfTheEnd() : OberonCard(1, CardType.Power, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var power = await PowerCmd.Apply<VespersOfTheEndPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        if (power != null) power.Bonus = DynamicVars["Bonus"].IntValue;
+        if (power != null) power.Bonus = Math.Max(power.Bonus, DynamicVars["Bonus"].IntValue);
     }
 
     protected override void OnUpgrade() => DynamicVars["Bonus"].UpgradeValueBy(2m);

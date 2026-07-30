@@ -43,11 +43,11 @@ public sealed class BlackBarrelUnleashed() : MashShielderCard(0, CardType.Attack
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + bonus);
 
-        await BlackBarrel.Hit(choiceContext, cardPlay.Target, damage, Owner.Creature, this);
+        await BlackBarrel.Hit(choiceContext, cardPlay, cardPlay.Target, damage, Owner.Creature, this);
         if (!cardPlay.Target.IsDead)
         {
             await BlackBarrel.RemoveAllBuffs(cardPlay.Target, Owner.Creature, this);

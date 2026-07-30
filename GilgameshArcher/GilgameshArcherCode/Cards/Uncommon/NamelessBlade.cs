@@ -15,7 +15,7 @@ public sealed class NamelessBlade() : GilgameshCard(1, CardType.Attack, CardRari
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
+        await AttackTarget(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);

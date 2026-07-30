@@ -4,7 +4,7 @@
   "SIEGFRIEDSABER-DEFEND.title": "Defend",
   "SIEGFRIEDSABER-DEFEND.description": "#Gain !B! Block.",
   "SIEGFRIEDSABER-BALMUNG.title": "Balmung: Unleashed",
-  "SIEGFRIEDSABER-BALMUNG.description": "#Consume ALL your NP Charge, at least 100. Deal !D! damage to ALL enemies, plus 1 for every 10 NP Charge above 100 — or 2 instead while your Dragon Scales are 3 or higher.+When it resolves, refund 20 NP Charge (10 if an NP card already resolved this turn).+",
+  "SIEGFRIEDSABER-BALMUNG.description": "#Consume ALL your NP Charge, at least 100. Deal !D! damage to ALL enemies, plus 1 for every 10 NP Charge above 100 — or 2 instead while your Dragon Scales are 3 or higher.+When it resolves, refund 20 NP Charge /(10 if an NP card already resolved this turn).+",
   "SIEGFRIEDSABER-EXPOSED_BACK.title": "Exposed Back",
   "SIEGFRIEDSABER-EXPOSED_BACK.description": "#Deal !D! damage. This turn, your Dragon Scales reduce NO incoming hits.",
   "SIEGFRIEDSABER-LINDEN_SCAR.title": "Linden Scar",

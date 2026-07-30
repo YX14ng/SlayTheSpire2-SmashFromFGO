@@ -33,7 +33,7 @@ public sealed class ArtoriaBond : BondRelic
     // Castoria reparte estrellas, no Bloqueo plano.
     protected override int StartingBlock(int lv) => 0;
 
-    private static int StartingStars(int lv) => lv >= 7 ? 2 : lv >= 4 ? 1 : 0;
+    private static int StartingStars(int lv) => lv >= 7 ? 20 : lv >= 4 ? 10 : 0;
 
     public override async Task BeforeCombatStartLate()
     {

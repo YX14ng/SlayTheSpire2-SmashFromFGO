@@ -21,14 +21,14 @@ public sealed class ADreamRaisedToTheBeyond() : OberonCard(1, CardType.Skill, Ca
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
     protected override bool ShouldGlowGoldInternal =>
-        Sleep.SleepingEnemies(Owner.Creature.CombatState, Owner.Creature) > 0;
+        Sleep.SleepingEnemies(Owner.Creature) > 0;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
-        if (Sleep.SleepingEnemies(Owner.Creature.CombatState, Owner.Creature) > 0)
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        if (Sleep.SleepingEnemies(Owner.Creature) > 0)
         {
-            await NpCharge.Gain(Owner.Creature, DynamicVars["SleepBonus"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["SleepBonus"].IntValue, this);
             await CardPileCmd.Draw(choiceContext, 1, Owner);
         }
     }

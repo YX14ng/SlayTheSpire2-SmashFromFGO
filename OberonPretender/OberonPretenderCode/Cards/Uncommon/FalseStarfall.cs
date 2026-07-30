@@ -31,9 +31,9 @@ public sealed class FalseStarfall() : OberonCard(1, CardType.Skill, CardRarity.U
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].IntValue, Owner);
-        await DebtPower.Add(Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
+        await DebtPower.Add(choiceContext, Owner.Creature, DynamicVars["Debt"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Draw"].UpgradeValueBy(1m);

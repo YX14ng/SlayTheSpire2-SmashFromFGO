@@ -15,10 +15,10 @@ public sealed class RisingTide() : TiamatCard(1, CardType.Skill, CardRarity.Comm
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).ToList())
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).ToList())
         {
             if (enemy.IsDead) continue;
-            await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+            await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
         }
     }
 

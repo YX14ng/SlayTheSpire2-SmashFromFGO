@@ -1,0 +1,16 @@
+{
+  "ASTOLFORIDER-ASTOLFO.title": "Astolfo",
+  "ASTOLFORIDER-ASTOLFO.titleObject": "the Joyful Paladin",
+  "ASTOLFORIDER-ASTOLFO.description": "Follow a changing Caprice, gather Critical Stars with Quick cards, and escape danger aboard Hippogriff.",
+  "ASTOLFORIDER-ASTOLFO.pronounObject": "them",
+  "ASTOLFORIDER-ASTOLFO.possessiveAdjective": "their",
+  "ASTOLFORIDER-ASTOLFO.pronounPossessive": "theirs",
+  "ASTOLFORIDER-ASTOLFO.pronounSubject": "they",
+  "ASTOLFORIDER-ASTOLFO.goldMonologue": "An adventure needs snacks, ribbons, and at least one terrible map!",
+  "ASTOLFORIDER-ASTOLFO.eventDeathPrevention": "That almost looked dangerous. Almost!",
+  "ASTOLFORIDER-ASTOLFO.aromaPrinciple": "The best path is whichever one becomes an adventure.",
+  "ASTOLFORIDER-ASTOLFO.cardsModifierTitle": "An Impossible Adventure",
+  "ASTOLFORIDER-ASTOLFO.cardsModifierDescription": "Play with Astolfo's card pool.",
+  "ASTOLFORIDER-ASTOLFO.banter.alive.endTurnPing": "Don't worry! I only forgot half the plan.",
+  "ASTOLFORIDER-ASTOLFO.banter.dead.endTurnPing": "Keep going. Adventures are meant to be finished!"
+}

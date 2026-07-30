@@ -19,23 +19,23 @@ public sealed class GeniusCut() : OkitaCard(3, CardType.Attack, CardRarity.Rare,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritReadyPower>()];
 
-    private bool HasCritReady => Owner.Creature.GetPowerAmount<CritReadyPower>() > 0;
+    private bool WillCrit => Criticals.WillCrit(Owner.Creature, this);
 
-    protected override bool ShouldGlowGoldInternal => HasCritReady;
+    protected override bool ShouldGlowGoldInternal => WillCrit;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        if (HasCritReady)
+        if (Criticals.IsCritical(cardPlay))
         {
             // IGNORA Bloqueo: daño directo Unblockable (el ×2 de CritReadyPower lo dobla igual).
             VfxCmd.PlayOnCreatureCenter(cardPlay.Target, "vfx/vfx_dramatic_stab");
-            await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue,
-                ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this);
+            await CreatureCmdCompatibility.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue,
+                ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this, cardPlay);
         }
         else
         {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_dramatic_stab")
                 .Execute(choiceContext);
         }

@@ -23,14 +23,12 @@ namespace OkitaSaber.OkitaSaberCode.Relics;
 /// NO fija el Aliento inicial: el Haori al que reemplaza ya lo hace, y un Ancient asume que el motor base
 /// ya está en juego (la Capital Imperial es el "te lo cambio por una versión más poderosa").
 /// </summary>
-public sealed class FlowerOfImperialCapital : OkitaRelic
+public sealed class FlowerOfImperialCapital : OkitaRelic, ICriticalConsumedListener
 {
     public const int StarsPerAttack = HaoriAsagi.StarsPerAttack * 2; // 20
     public const int NpPerCrit = HaoriAsagi.NpPerCrit * 2;           // 40
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
-
-    private int _attackProcsThisTurn;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
@@ -39,32 +37,21 @@ public sealed class FlowerOfImperialCapital : OkitaRelic
         HoverTipFactory.FromPower<NpChargePower>()
     ];
 
-    public override Task BeforeCombatStartLate()
-    {
-        _attackProcsThisTurn = 0;
-        return base.BeforeCombatStartLate();
-    }
-
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player) _attackProcsThisTurn = 0;
-        return Task.CompletedTask;
-    }
-
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (cardPlay.Card.Type != CardType.Attack || cardPlay.Card.Owner?.Creature != Owner.Creature) return;
-        if (_attackProcsThisTurn >= HaoriAsagi.MaxProcsPerTurn) return;
-        _attackProcsThisTurn++;
+        if (FgoCombatState.GetTurn(Owner.Creature, 5, 2) >= HaoriAsagi.MaxProcsPerTurn) return;
+        await FgoCombatState.IncrementTurn(
+            context, Owner.Creature, 5, HaoriAsagi.MaxProcsPerTurn, cardPlay.Card, width: 2);
         Flash();
-        await CritStars.Gain(Owner.Creature, StarsPerAttack, null);
+        await CritStars.Gain(context, Owner.Creature, StarsPerAttack, null);
     }
 
     // amount < 0 sobre CritReadyPower = un Crítico Listo CONSUMIDO (un crítico consumado) → +NP.
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public async Task AfterCriticalConsumed(PlayerChoiceContext choiceContext, CriticalHit critical)
     {
-        if (amount >= 0m || power is not CritReadyPower || power.Owner != Owner.Creature) return;
+        if (critical.Owner != Owner.Creature) return;
         Flash();
-        await NpCharge.Gain(Owner.Creature, NpPerCrit, null);
+        await NpCharge.Gain(choiceContext, Owner.Creature, NpPerCrit, null);
     }
 }

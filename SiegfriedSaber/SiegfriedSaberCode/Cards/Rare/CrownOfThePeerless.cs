@@ -19,6 +19,6 @@ public sealed class CrownOfThePeerless() : SiegfriedCard(3, CardType.Power, Card
     {
         var power = await PowerCmd.Apply<PeerlessCrownPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         // |= (audit 2026-07-04): una copia base tras la mejorada le quitaba el rider de +5 NP al power.
-        if (power != null) power.Upgraded |= IsUpgraded;
+        if (power != null) await power.Configure(choiceContext, IsUpgraded, this);
     }
 }

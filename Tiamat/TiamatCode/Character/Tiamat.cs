@@ -61,6 +61,8 @@ public class Tiamat : PlaceholderCharacterModel
         $"{MainFile.ResPath}/character/tiamat_frames_human.tres",
         $"{MainFile.ResPath}/character/tiamat_frames_beast.tres",
     ];
+    public override string CustomMerchantAnimPath => $"{MainFile.ResPath}/character/tiamat_merchant.tscn";
+    public override string CustomRestSiteAnimPath => $"{MainFile.ResPath}/character/tiamat_rest.tscn";
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/tiamat_select_bg.tscn";
 
     public override Control CustomIcon

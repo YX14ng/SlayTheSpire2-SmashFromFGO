@@ -29,7 +29,7 @@ public sealed class AbyssalChrysalis() : TiamatCard(2, CardType.Skill, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await BlockRetention.GainBulwarkBlock(this, Owner.Creature, DynamicVars.Block.BaseValue);
-        await Lahmu.Feed(Owner.Creature, DynamicVars["Nurture"].IntValue, this);
+        await Lahmu.Feed(choiceContext, Owner.Creature, DynamicVars["Nurture"].IntValue, this);
     }
 
     protected override void OnUpgrade()

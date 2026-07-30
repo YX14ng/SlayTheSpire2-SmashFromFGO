@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 
 namespace OkitaSaber.OkitaSaberCode.Powers;
 
@@ -16,7 +17,7 @@ namespace OkitaSaber.OkitaSaberCode.Powers;
 /// </summary>
 public sealed class ThousandThrustsPower : OkitaPower
 {
-    public int StarsGain = 10;       // up 20 (la carta lo setea)
+    public int StarsGain => Math.Max(10, FgoCombatState.GetCombat(Owner, 0, 5));
     public int NpGainValue = 10;
     public const int ThrustNumber = 3;
 
@@ -26,27 +27,27 @@ public sealed class ThousandThrustsPower : OkitaPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private int _attacksThisTurn;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritStarsPower>(), HoverTipFactory.FromPower<NpChargePower>()];
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public Task Configure(PlayerChoiceContext context, int stars, int np, CardModel source)
     {
-        if (side == Owner.Side) _attacksThisTurn = 0;
-        return Task.CompletedTask;
+        NpGainValue = Math.Max(NpGainValue, np);
+        return FgoCombatState.SetCombat(
+            context, Owner, 0, Math.Max(StarsGain, stars), source, width: 5);
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (cardPlay.Card.Type != CardType.Attack || cardPlay.Card.Owner?.Creature != Owner) return;
-        _attacksThisTurn++;
-        if (_attacksThisTurn != ThrustNumber) return;
+        var attacks = await FgoCombatState.IncrementTurn(
+            context, Owner, 0, ThrustNumber, cardPlay.Card, width: 2);
+        if (attacks != ThrustNumber) return;
         Flash();
         for (var i = 0; i < Amount; i++)
         {
-            await CritStars.Gain(Owner, StarsGain, null);
-            await NpCharge.Gain(Owner, NpGainValue, null);
+            await CritStars.Gain(context, Owner, StarsGain, null);
+            await NpCharge.Gain(context, Owner, NpGainValue, null);
         }
     }
 }

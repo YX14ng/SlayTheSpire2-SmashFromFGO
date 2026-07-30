@@ -33,7 +33,7 @@ public sealed class FormDrill() : MashShielderCard(0, CardType.Skill, CardRarity
         if (Owner.Creature.HasPower<PaladinFormPower>())
         {
             // Paladín es permanente: no hay vuelta atrás — el simulacro carga el medidor.
-            await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         }
         else if (Owner.Creature.HasPower<OrtinaxFormPower>())
         {

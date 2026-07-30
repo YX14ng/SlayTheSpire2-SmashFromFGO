@@ -13,7 +13,7 @@ namespace MashShielder.MashShielderCode.Powers;
 /// This will generate a class that extends this one.
 /// You can also just create the class manually; just make sure to inherit from this class.
 /// </summary>
-public abstract class MashShielderPower : CustomPowerModel
+public abstract class MashShielderPower : FGOCore.FGOCoreCode.FGOCorePower
 {
     //Loads from MashShielder/images/powers/your_power.png
     public override string CustomPackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
@@ -36,11 +36,11 @@ public abstract class MashShielderPower : CustomPowerModel
     /// "resetear un contador/flag al inicio del turno DEL JUGADOR" que se repetía idéntico en
     /// varios powers (WallDoctrine, ConceptualAmmo, OrtinaxServos, HomunculusHeart).
     /// Las subclases sólo sobrescriben <see cref="OnPlayerTurnStartReset"/> con su reset; el
-    /// guard <c>side == CombatSide.Player</c> y el <c>Task.CompletedTask</c> viven una sola vez.
+    /// guard de participaci贸n del due帽o y el <c>Task.CompletedTask</c> viven una sola vez.
     /// </summary>
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side == CombatSide.Player) OnPlayerTurnStartReset();
+        if (participants.Contains(Owner)) OnPlayerTurnStartReset();
         return Task.CompletedTask;
     }
 

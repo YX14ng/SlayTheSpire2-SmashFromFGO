@@ -25,7 +25,7 @@ public sealed class BattleInstinct() : MordredCard(1, CardType.Skill, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (!CritStars.CanPay(Owner.Creature, DynamicVars["StarCost"].IntValue)) return;
-        await CritStars.Gain(Owner.Creature, -DynamicVars["StarCost"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, -DynamicVars["StarCost"].IntValue, this);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
     }
 

@@ -23,33 +23,33 @@ public partial class MainFile : Node
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 
-        // FGOCore preloads every registered form's frames in background threads.
-        FormVisuals.RegisterFrames(
-            $"{ResPath}/character/morgan_frames_queen.tres",
-            $"{ResPath}/character/morgan_frames_aesc.tres",
-            $"{ResPath}/character/morgan_frames_winter.tres");
+        // FGOCore preloads sibling forms in single-player; co-op loads them on demand to cap VRAM.
+        FormVisuals.RegisterFramesWithSpriteTransform(
+            ($"{ResPath}/character/morgan_frames_queen.tres", 59.2f, -216.4f, 0.981333f),
+            ($"{ResPath}/character/morgan_frames_aesc.tres", 66.4f, -220.8f, 1.006667f),
+            ($"{ResPath}/character/morgan_frames_winter.tres", 52.8f, -204.6f, 0.901333f));
 
         // Ulti auto-manifestada (consistencia con los otros Servants, 2026-06-26): al cruzar 100 NP,
         // SENTENCIA DE LA REINA: Desatado aparece GRATIS en la mano (Retain + Exhaust), igual que el
         // «Mumyou Desatado» de Okita. La carta lleva la detonación AoE de Maldición (antes inline en
         // este handler). Un marcador (NpManifestedPower) evita duplicarla en el mismo pico; gastar por
         // debajo de 100 lo re-arma. (Sin +1⚡/robar: los 8 personajes solo dan la carta.)
-        NpCharge.GaugeFilled += TryManifestUlt;
-        NpCharge.GaugeDropped += DisarmUltMarker;
+        NpCharge.GaugeFilledWithContext += TryManifestUlt;
+        NpCharge.GaugeDroppedWithContext += DisarmUltMarker;
     }
 
-    private static async Task TryManifestUlt(Creature creature)
+    private static async Task TryManifestUlt(PlayerChoiceContext choiceContext, Creature creature)
     {
         if (creature.Player?.Character is not Character.MorganBerserker) return;
         if (creature.CombatState == null) return;
         if (creature.HasPower<NpManifestedPower>()) return;
 
-        await PowerCmd.Apply<NpManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+        await PowerCmd.Apply<NpManifestedPower>(choiceContext, creature, 1m, creature, null);
 
         await ManifestCards.ManifestToHand<QueensSentenceUnleashed>(creature);
     }
 
-    private static async Task DisarmUltMarker(Creature creature)
+    private static async Task DisarmUltMarker(PlayerChoiceContext _, Creature creature)
     {
         if (creature.HasPower<NpManifestedPower>())
         {

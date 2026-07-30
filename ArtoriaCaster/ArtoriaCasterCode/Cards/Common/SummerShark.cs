@@ -13,8 +13,8 @@ public sealed class SummerShark() : ArtoriaCard(1, CardType.Attack, CardRarity.C
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
-            .TargetingAllOpponents(Owner.Creature.CombatState)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay)
+            .TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);
     }

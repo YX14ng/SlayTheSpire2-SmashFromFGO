@@ -14,19 +14,12 @@ public sealed class RabbitEarsDiadem : ArtoriaRelic, IFormChangeListener
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    private bool _usedThisCombat;
-
-    public override Task BeforeCombatStartLate()
-    {
-        _usedThisCombat = false;
-        return Task.CompletedTask;
-    }
-
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
-        if (_usedThisCombat) return;
+        if (FgoCombatState.GetCombat(Owner.Creature, 1) != 0) return;
         if (!Owner.Creature.HasPower<SummerBerserkerFormPower>()) return;
-        _usedThisCombat = true;
+        await FgoCombatState.SetCombat(
+            choiceContext ?? new BlockingPlayerChoiceContext(), Owner.Creature, 1, 1);
         Flash();
         await PlayerCmd.GainEnergy(1, Owner);
     }

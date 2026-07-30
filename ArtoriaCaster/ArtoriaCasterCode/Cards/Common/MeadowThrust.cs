@@ -15,7 +15,7 @@ public sealed class MeadowThrust() : ArtoriaCard(1, CardType.Attack, CardRarity.
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(8m, ValueProp.Move),
-        new DynamicVar("Stars", 1)
+        new DynamicVar("Stars", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -23,13 +23,13 @@ public sealed class MeadowThrust() : ArtoriaCard(1, CardType.Attack, CardRarity.
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
         // Avalon tiene ambas pasivas: cuenta como Berserker (precedente QueensFury/WinterQueen).
         if (Owner.Creature.HasPower<SummerBerserkerFormPower>() || Owner.Creature.HasPower<AvalonFormPower>())
         {
-            await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+            await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         }
     }
 

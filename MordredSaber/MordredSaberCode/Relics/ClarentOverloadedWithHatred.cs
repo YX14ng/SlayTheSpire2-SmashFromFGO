@@ -27,9 +27,6 @@ public sealed class ClarentOverloadedWithHatred : MordredRelic, ICritConsumedLis
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
-    private int _starProcsThisTurn;
-    private int _npProcsThisTurn;
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Stars", StarsPerHpLoss),
@@ -46,8 +43,6 @@ public sealed class ClarentOverloadedWithHatred : MordredRelic, ICritConsumedLis
     public override async Task BeforeCombatStartLate()
     {
         await base.BeforeCombatStartLate();
-        _starProcsThisTurn = 0;
-        _npProcsThisTurn = 0;
         // Hace por su cuenta la precarga de forma + el watcher (la starter cede si coexisten).
         await Forms.Enter<MaskedKnightFormPower>(null, Owner.Creature, null);
         await PowerCmd.Apply<RedLightningChannelPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null, silent: true);
@@ -56,34 +51,28 @@ public sealed class ClarentOverloadedWithHatred : MordredRelic, ICritConsumedLis
         await PowerCmd.Apply<RedLightningSparkPower>(new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null, silent: true);
     }
 
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player)
-        {
-            _starProcsThisTurn = 0;
-            _npProcsThisTurn = 0;
-        }
-        return Task.CompletedTask;
-    }
-
     /// <summary>Perder Vida → Estrellas dobladas (máx 3/turno).</summary>
     public override async Task AfterCurrentHpChanged(Creature creature, decimal delta)
     {
         if (creature != Owner.Creature || delta >= 0) return;
         if (!CombatManager.Instance.IsInProgress) return;
-        if (_starProcsThisTurn >= MaxProcsPerTurn) return;
-        _starProcsThisTurn++;
+        if (FgoCombatState.GetTurn(Owner.Creature, 6, 2) >= MaxProcsPerTurn) return;
+        var context = new BlockingPlayerChoiceContext();
+        await FgoCombatState.IncrementTurn(
+            context, Owner.Creature, 6, MaxProcsPerTurn, null, width: 2);
         Flash();
-        await CritStars.Gain(Owner.Creature, StarsPerHpLoss, null);
+        await CritStars.Gain(context, Owner.Creature, StarsPerHpLoss, null);
     }
 
     /// <summary>Crítico Listo consumido → Carga NP doblada (máx 3/turno).</summary>
     public async Task OnCritConsumed(PlayerChoiceContext? choiceContext)
     {
         if (!CombatManager.Instance.IsInProgress) return;
-        if (_npProcsThisTurn >= MaxProcsPerTurn) return;
-        _npProcsThisTurn++;
+        if (FgoCombatState.GetTurn(Owner.Creature, 8, 2) >= MaxProcsPerTurn) return;
+        var context = choiceContext ?? new BlockingPlayerChoiceContext();
+        await FgoCombatState.IncrementTurn(
+            context, Owner.Creature, 8, MaxProcsPerTurn, null, width: 2);
         Flash();
-        await NpCharge.Gain(Owner.Creature, NpPerCritConsumed, null);
+        await NpCharge.Gain(context, Owner.Creature, NpPerCritConsumed, null);
     }
 }

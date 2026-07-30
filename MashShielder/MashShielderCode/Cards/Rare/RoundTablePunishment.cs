@@ -12,7 +12,7 @@ public sealed class RoundTablePunishment() : MashShielderCard(3, CardType.Attack
         var block = Owner.Creature.Block;
         if (block <= 0) return;
 
-        await DamageCmd.Attack(block).FromCard(this).TargetingAllOpponents(CombatState)
+        await DamageCmd.Attack(block).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(CombatState!)
             .WithHitFx("vfx/vfx_attack_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);
     }

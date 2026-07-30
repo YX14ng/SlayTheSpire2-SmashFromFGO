@@ -1,6 +1,6 @@
 {
   "SIEGFRIEDSABER-LINDEN_LEAF.title": "La Hoja de Tilo",
-  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#Al inicio de cada combate, gana 2 de Sangre de Dragón. El primer ataque que te alcanza cada turno la ignora. Cuando un ataque reducido aún inflige 1 o más de daño, gana 5 de Carga NP (hasta 3 veces por turno).",
+  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#Al inicio de cada combate, gana 2 de Sangre de Dragón. El primer ataque que te alcanza cada turno ignora 1 Escama; los siguientes usan la reducción completa. Cuando uno de esos ataques siguientes es reducido y aún hace daño, gana 5 de Carga NP (hasta 3 veces por turno). El contador muestra el nivel NP: cada nivel aumenta en 100 la Carga NP máxima y en 15% el daño NP.",
   "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "Una sola hoja se pegó a su espalda mientras se bañaba en la sangre del dragón. Una palma de piel que la sangre nunca tocó — y la única muerte de un héroe.",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.title": "El Oro del Rin",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.description": "#La primera carta NP que juegues cada turno: gana 20 Estrellas de Crítico y roba 1.",
@@ -19,5 +19,8 @@
   "SIEGFRIEDSABER-RHINEGOLD_SHARD.flavor": "Una esquirla del maldito tesoro de los Nibelungos, arrancada del antro del dragón.",
   "SIEGFRIEDSABER-FAFNIRS_BANE.title": "Perdición de Fafnir",
   "SIEGFRIEDSABER-FAFNIRS_BANE.description": "#Mientras tu *Sangre de Dragón sea 3 o más, tus cartas Cazadragones infligen 5 de daño adicional.",
-  "SIEGFRIEDSABER-FAFNIRS_BANE.flavor": "El matador de dragones, dragón él mismo: su filo muerde más hondo en los de su clase."
+  "SIEGFRIEDSABER-FAFNIRS_BANE.flavor": "El matador de dragones, dragón él mismo: su filo muerde más hondo en los de su clase.",
+  "SIEGFRIEDSABER-HOLY_GRAIL_OF_THE_DRAGON_SLAYER.title": "Santo Grial del Matadragones",
+  "SIEGFRIEDSABER-HOLY_GRAIL_OF_THE_DRAGON_SLAYER.description": "#Palingénesis: gana !MaxHp! de Vida máxima. Mientras lo tengas, los límites se rompen: el Vínculo puede llegar al nivel 12 y el nivel de NP a 6.",
+  "SIEGFRIEDSABER-HOLY_GRAIL_OF_THE_DRAGON_SLAYER.flavor": "Un recipiente dorado templado por el deseo de un héroe que nunca pidió uno propio."
 }

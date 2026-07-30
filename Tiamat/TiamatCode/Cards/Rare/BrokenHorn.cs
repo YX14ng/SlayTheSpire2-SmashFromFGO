@@ -27,19 +27,19 @@ public sealed class BrokenHorn() : TiamatCard(0, CardType.Attack, CardRarity.Rar
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var nurture = Lahmu.NurtureOf(Owner.Creature);
-        var eaten = await Lahmu.Devour(Owner.Creature, Lahmu.Count(Owner.Creature));
+        var eaten = await Lahmu.Devour(choiceContext, Owner.Creature, Lahmu.Count(Owner.Creature));
         if (eaten <= 0) return;
 
         var dmg = eaten * (DynamicVars["PerHorn"].IntValue + DynamicVars["PerNurture"].IntValue * nurture);
         dmg = dmg * Lahmu.DevourBonusMultiplierPct(Owner.Creature) / 100; // forma Bestia: Devorar +50%
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).ToList())
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).ToList())
         {
             if (enemy.IsDead) continue;
-            await DamageCmd.Attack(dmg).FromCard(this).Targeting(enemy)
+            await DamageCmd.Attack(dmg).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
                 .WithHitFx("vfx/vfx_bloody_impact")
                 .Execute(choiceContext);
         }
-        await NpCharge.Gain(Owner.Creature, eaten * DynamicVars["NpPerLahmu"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, eaten * DynamicVars["NpPerLahmu"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["PerNurture"].UpgradeValueBy(1m);

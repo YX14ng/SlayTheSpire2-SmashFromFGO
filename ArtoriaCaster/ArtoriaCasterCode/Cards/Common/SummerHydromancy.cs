@@ -15,7 +15,7 @@ public sealed class SummerHydromancy() : ArtoriaCard(1, CardType.Skill, CardRari
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(5m, ValueProp.Move),
-        new DynamicVar("Stars", 1)
+        new DynamicVar("Stars", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -26,7 +26,7 @@ public sealed class SummerHydromancy() : ArtoriaCard(1, CardType.Skill, CardRari
         // Avalon tiene ambas pasivas: cuenta como Caster (precedente RainChant/WinterQueen).
         if (Owner.Creature.HasPower<ProphecyCasterFormPower>() || Owner.Creature.HasPower<AvalonFormPower>())
         {
-            await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+            await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         }
     }
 

@@ -15,8 +15,11 @@ namespace MordredSaber.MordredSaberCode.Cards.Rare;
 /// carga sobre el mínimo (up: base 22). Glow al poder pagarse. Mini-NP barato que cierra el ciclo de
 /// ultis. Implementa IMordredNpCard + ConsumeAllForNpCard + NpLevels.Scale como las tokens.
 /// </summary>
-public sealed class ManaBurstRedLightning() : MordredCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IMordredNpCard
+public sealed class ManaBurstRedLightning() : MordredCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IMordredNpCard, ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 50;
     private const int OverchargePer = 10; // +4 por cada 10 sobre el mínimo
 
@@ -40,11 +43,11 @@ public sealed class ManaBurstRedLightning() : MordredCard(1, CardType.Attack, Ca
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / OverchargePer * DynamicVars["OverchargeDamage"].IntValue;
 
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge);
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
     }

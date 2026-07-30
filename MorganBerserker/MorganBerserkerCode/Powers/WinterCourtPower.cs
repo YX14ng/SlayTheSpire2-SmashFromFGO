@@ -33,6 +33,6 @@ public sealed class WinterCourtPower : MorganPower
     {
         if (cardPlay.Card is not KnightsArm || cardPlay.Card.Owner != Owner.Player) return;
         Flash();
-        await NpCharge.Gain(Owner, NpPerArm, null);
+        await NpCharge.Gain(context, Owner, NpPerArm, null);
     }
 }

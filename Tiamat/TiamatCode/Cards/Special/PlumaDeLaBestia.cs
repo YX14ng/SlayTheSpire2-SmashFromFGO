@@ -20,8 +20,11 @@ namespace TiamatBeast.TiamatCode.Cards.Special;
 /// lo que montaste, jamás por un ×plano. Cap duro (<see cref="DamageCap"/>) para que el pico no
 /// supere ~180-220. Tras disparar, CIERRA la ventana (revierte a Lily y purga el mazo efímero).
 /// </summary>
-public sealed class PlumaDeLaBestia() : TiamatCard(1, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IBeastEphemeral
+public sealed class PlumaDeLaBestia() : TiamatCard(1, CardType.Attack, CardRarity.Event, TargetType.AllEnemies), IBeastEphemeral, ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 1;
 
     /// <summary>Tope duro del pico de cierre (riesgo #3 de REDESIGN-TIAMAT: pico &gt; ~220).</summary>
@@ -52,21 +55,21 @@ public sealed class PlumaDeLaBestia() : TiamatCard(1, CardType.Attack, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // 1) Consume TODA la carga recargada dentro de la ventana; tier = lo realmente consumido.
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
 
         // 2) Limpia TODOS tus debuffs (el respiro del cierre; preserva recursos y la forma).
         await Cleanse.RemoveDebuffs(Owner.Creature);
 
         // 3) Mordida: (Laḫmu × Crianza × PerNurture) + (Maldición del más maldito × PerCurse).
-        var mostCursed = Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature);
+        var mostCursed = Curses.MostCursed(Owner.Creature);
         var topCurse = mostCursed != null ? Curses.Of(mostCursed) : 0;
         var bite = Lahmu.Count(Owner.Creature) * Lahmu.NurtureOf(Owner.Creature) * DynamicVars["PerNurture"].IntValue
                    + topCurse * DynamicVars["PerCurse"].IntValue;
 
         var raw = DynamicVars.Damage.BaseValue + overcharge + bite;
         var damage = NpLevels.Scale(Owner, Math.Min(raw, DamageCap));
-        await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
 

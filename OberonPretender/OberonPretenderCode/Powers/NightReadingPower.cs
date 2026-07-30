@@ -20,6 +20,6 @@ public sealed class NightReadingPower : OberonPower
     {
         if (player != Owner.Player || Owner.Player == null || Owner.IsDead) return;
         Flash();
-        await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), Amount, Owner.Player);
+        await CardPileCmd.Draw(choiceContext, Amount, Owner.Player);
     }
 }

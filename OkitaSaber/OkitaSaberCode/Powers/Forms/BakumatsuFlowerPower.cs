@@ -9,34 +9,28 @@ using OkitaSaber.OkitaSaberCode.Cards.Special;
 namespace OkitaSaber.OkitaSaberCode.Powers.Forms;
 
 /// <summary>
-/// Flor del Bakumatsu (幕末之华) — la ÚNICA forma de Okita, el clímax PERMANENTE (DESIGN-OKITA §3.4):
-/// la enfermedad ya ganó, pelea igual. (1) Tus *RÁFAGAS dejan de costar *Aliento (<see cref="IRafagaCostModifier"/>,
-/// sin pago de HP). (2) Al final de cada turno ganás 1 *Tos al mazo de robo. Hace el swap de modelo
-/// 102710 (traje blanco) → 102720 (haori asagi) vía <see cref="FormVisuals"/> (precarga en hilos).
-///
-/// <see cref="FormPower.IsPermanent"/> = true: una vez entrás, nunca se reemplaza (FormSwitch lo respeta).
-/// El power lo aplica la carta «Flor del Bakumatsu» (Poder 2⚡, Exhaust) vía FormSwitch.Enter.
+/// Forma permanente de climax: las Rafagas dejan de gastar Aliento y agrega Tos al mazo.
+/// Comparte el set animado oficial de Okita para no cargar un recurso inexistente.
 /// </summary>
 public sealed class BakumatsuFlowerPower : OkitaFormPower, IRafagaCostModifier
 {
     public override bool IsPermanent => true;
 
-    // Modelo haori asagi (102720). Si los frames aún no existen, FormVisuals loguea y mantiene el sprite actual.
-    // FramesPath = null (audit 2026-07-04): el .tres "okita_frames_haori" no existe en el repo — el
-    // swap declaraba un recurso inexistente (no-op con log de error). null = mantener el sprite
-    // actual. TODO pase de arte: generar el .tres y restaurar el path.
-    public override string? FramesPath => null;
+    public override string FramesPath => $"{MainFile.ResPath}/character/okita_frames.tres";
 
     public bool WaivesBreathCost => true;
 
-    public int HpPerBreathPoint => 0; // gratis, sin pagar HP (a diferencia de «Hasta el Final»)
+    public int HpPerBreathPoint => 0;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<AlientoPower>()];
 
-    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override async Task BeforeSideTurnEnd(
+        PlayerChoiceContext choiceContext,
+        CombatSide side,
+        IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side) return;
+        if (!participants.Contains(Owner)) return;
         Flash();
-        await Tos.ShuffleIntoDraw(Owner, null);
+        await Tos.ShuffleIntoDraw(choiceContext, Owner, null);
     }
 }

@@ -18,8 +18,8 @@ public sealed class SummerDance() : ArtoriaCard(1, CardType.Attack, CardRarity.U
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(9m, ValueProp.Move),
-        new DynamicVar("Stars", 1),
-        new DynamicVar("BerserkerStars", 2)
+        new DynamicVar("Stars", 10),
+        new DynamicVar("BerserkerStars", 20)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -29,14 +29,14 @@ public sealed class SummerDance() : ArtoriaCard(1, CardType.Attack, CardRarity.U
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
         var stars = Owner.Creature.HasPower<SummerBerserkerFormPower>() || Owner.Creature.HasPower<AvalonFormPower>()
             ? DynamicVars["BerserkerStars"].IntValue
             : DynamicVars["Stars"].IntValue;
-        await Stars.Gain(Owner.Creature, stars, this);
+        await Stars.Gain(choiceContext, Owner.Creature, stars, this);
     }
 
     protected override void OnUpgrade()

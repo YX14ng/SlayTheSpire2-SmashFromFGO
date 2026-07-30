@@ -18,7 +18,15 @@ public static class Curses
 
     /// <summary>Apply curse from <paramref name="applier"/>, adding its amplifiers and
     /// respecting the per-enemy cap. Returns the amount actually applied.</summary>
-    public static async Task<int> Apply(Creature target, int amount, Creature? applier, CardModel? cardSource)
+    public static Task<int> Apply(Creature target, int amount, Creature? applier, CardModel? cardSource) =>
+        Apply(new BlockingPlayerChoiceContext(), target, amount, applier, cardSource);
+
+    public static async Task<int> Apply(
+        PlayerChoiceContext choiceContext,
+        Creature target,
+        int amount,
+        Creature? applier,
+        CardModel? cardSource)
     {
         if (target.IsDead || amount <= 0) return 0;
 
@@ -37,13 +45,19 @@ public static class Curses
         var toAdd = Math.Min(amount, CursePower.MaxPerEnemy - Of(target));
         if (toAdd <= 0) return 0;
 
-        await PowerCmd.Apply<CursePower>(new BlockingPlayerChoiceContext(), target, toAdd, applier, cardSource);
+        await PowerCmd.Apply<CursePower>(choiceContext, target, toAdd, applier, cardSource);
         return toAdd;
     }
 
     /// <summary>Impuesto (存在税): consume up to <paramref name="upTo"/> Curse from the
     /// target (forfeiting its deferred damage). Returns the amount consumed.</summary>
-    public static async Task<int> Consume(Creature target, int upTo)
+    public static Task<int> Consume(Creature target, int upTo) =>
+        Consume(new BlockingPlayerChoiceContext(), target, upTo);
+
+    public static async Task<int> Consume(
+        PlayerChoiceContext choiceContext,
+        Creature target,
+        int upTo)
     {
         var power = target.GetPower<CursePower>();
         if (power == null || upTo <= 0) return 0;
@@ -55,7 +69,7 @@ public static class Curses
         }
         else
         {
-            await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -consumed, target, null);
+            await PowerCmd.ModifyAmount(choiceContext, power, -consumed, target, null);
         }
         return consumed;
     }
@@ -78,6 +92,11 @@ public static class Curses
         return best;
     }
 
+    public static Creature? MostCursed(Creature ofPlayer)
+        => ofPlayer.CombatState is CombatState combatState
+            ? MostCursed(combatState, ofPlayer)
+            : null;
+
     /// <summary>How many living enemies are cursed right now.</summary>
     public static int CursedEnemies(CombatState combatState, Creature ofPlayer)
     {
@@ -88,4 +107,9 @@ public static class Curses
         }
         return count;
     }
+
+    public static int CursedEnemies(Creature ofPlayer)
+        => ofPlayer.CombatState is CombatState combatState
+            ? CursedEnemies(combatState, ofPlayer)
+            : 0;
 }

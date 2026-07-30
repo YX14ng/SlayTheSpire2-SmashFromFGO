@@ -29,23 +29,17 @@ public sealed class DrMatsumotoMedicine : OkitaRelic
 
     private const int NpGain = 20;
 
-    private bool _firedThisCombat;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
-
-    public override Task BeforeCombatStartLate()
-    {
-        _firedThisCombat = false;
-        return base.BeforeCombatStartLate();
-    }
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side != Owner.Creature.Side || _firedThisCombat) return;
+        if (!participants.Contains(Owner.Creature) ||
+            FgoCombatState.GetCombat(Owner.Creature, 8) != 0) return;
         if (!HasTos(combatState)) return;
-        _firedThisCombat = true;
+        var context = new BlockingPlayerChoiceContext();
+        await FgoCombatState.SetCombat(context, Owner.Creature, 8, 1);
         Flash();
-        await NpCharge.Gain(Owner.Creature, NpGain, null);
+        await NpCharge.Gain(context, Owner.Creature, NpGain, null);
     }
 
     private bool HasTos(ICombatState combatState)

@@ -21,7 +21,7 @@ public sealed class Caladbolg() : GilgameshCard(0, CardType.Attack, CardRarity.E
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue,
-            ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this);
+        await CreatureCmdCompatibility.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue,
+            ValueProp.Move | ValueProp.Unblockable, Owner.Creature, this, cardPlay);
     }
 }

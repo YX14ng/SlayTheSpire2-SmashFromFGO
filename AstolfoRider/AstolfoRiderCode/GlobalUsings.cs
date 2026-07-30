@@ -1,0 +1,13 @@
+global using BaseLib.Utils;
+global using FGOCore.FGOCoreCode;
+global using FGOCore.FGOCoreCode.Attributes;
+global using FGOCore.FGOCoreCode.Bond;
+global using FGOCore.FGOCoreCode.CardTypes;
+global using FGOCore.FGOCoreCode.Cleanse;
+global using FGOCore.FGOCoreCode.Combat;
+global using FGOCore.FGOCoreCode.Compatibility;
+global using FGOCore.FGOCoreCode.Evasion;
+global using FGOCore.FGOCoreCode.Np;
+global using FGOCore.FGOCoreCode.Stars;
+global using FGOCore.FGOCoreCode.SureHit;
+global using MegaCrit.Sts2.Core.Entities.Cards;

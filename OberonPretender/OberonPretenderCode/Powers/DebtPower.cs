@@ -59,23 +59,30 @@ public sealed class DebtPower : OberonPower, IResourcePower
     public static bool CreditCut(Creature creature) => Of(creature) >= EffectiveCreditLimit(creature);
 
     /// <summary>Apila Deuda respetando el cap (TODA la suma de Deuda pasa por aca).</summary>
-    public static async Task Add(Creature creature, int amount, Creature? applier, CardModel? source)
+    public static Task Add(Creature creature, int amount, Creature? applier, CardModel? source) =>
+        Add(new BlockingPlayerChoiceContext(), creature, amount, applier, source);
+
+    public static async Task Add(PlayerChoiceContext choiceContext, Creature creature, int amount,
+        Creature? applier, CardModel? source)
     {
         if (amount <= 0) return;
         var toAdd = Math.Min(amount, Max - Of(creature));
         if (toAdd <= 0) return;
-        await PowerCmd.Apply<DebtPower>(new BlockingPlayerChoiceContext(), creature, toAdd, applier, source);
+        await PowerCmd.Apply<DebtPower>(choiceContext, creature, toAdd, applier, source);
     }
 
     /// <summary>Condona (remueve) hasta <paramref name="upTo"/> puntos de Deuda -- Palabras Dulces,
     /// El Final donde Britania..., la Pluma del Contrato. Devuelve lo removido.</summary>
-    public static async Task<int> Forgive(Creature creature, int upTo)
+    public static Task<int> Forgive(Creature creature, int upTo) =>
+        Forgive(new BlockingPlayerChoiceContext(), creature, upTo);
+
+    public static async Task<int> Forgive(PlayerChoiceContext choiceContext, Creature creature, int upTo)
     {
         var power = creature.GetPower<DebtPower>();
         if (power == null || upTo <= 0) return 0;
         var removed = Math.Min(upTo, power.Amount);
         if (removed >= power.Amount) await PowerCmd.Remove(power);
-        else await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -removed, creature, null);
+        else await PowerCmd.ModifyAmount(choiceContext, power, -removed, creature, null);
         return removed;
     }
 
@@ -85,23 +92,25 @@ public sealed class DebtPower : OberonPower, IResourcePower
     {
         var power = creature.GetPower<DebtPower>();
         if (power == null || upTo <= 0) return 0;
-        var paid = await PayWithCharge(creature, Math.Min(upTo, power.Amount));
+        var context = choiceContext ?? new BlockingPlayerChoiceContext();
+        var paid = await PayWithCharge(context, creature, Math.Min(upTo, power.Amount));
         if (paid > 0)
         {
             power.Flash();
-            await NotifyDebtPaid(choiceContext, creature, paid);
+            await NotifyDebtPaid(context, creature, paid);
         }
         return paid;
     }
 
     // Paga `points` con NP (10 c/u, solo lo que el medidor cubre), removiendo esa Deuda. Devuelve lo saldado.
-    private static async Task<int> PayWithCharge(Creature creature, int points)
+    private static async Task<int> PayWithCharge(
+        PlayerChoiceContext choiceContext, Creature creature, int points)
     {
         if (points <= 0) return 0;
         var affordable = Math.Min(points, NpCharge.Current(creature) / NpPerDebt);
         if (affordable <= 0) return 0;
-        await NpCharge.Spend(creature, affordable * NpPerDebt, null);
-        await Forgive(creature, affordable);
+        await NpCharge.Spend(choiceContext, creature, affordable * NpPerDebt, null);
+        await Forgive(choiceContext, creature, affordable);
         return affordable;
     }
 
@@ -122,7 +131,7 @@ public sealed class DebtPower : OberonPower, IResourcePower
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side || Owner.IsDead || Amount <= 0) return;
+        if (!participants.Contains(Owner) || Owner.IsDead || Amount <= 0) return;
 
         // Vortigern cede el cobro: su VortigernPower vira la Deuda impaga a dano AoE en su fin de turno.
         if (Owner.HasPower<VortigernPower>()) return;
@@ -131,14 +140,14 @@ public sealed class DebtPower : OberonPower, IResourcePower
         if (Owner.HasPower<WinterPrincePower>())
         {
             Flash();
-            await Add(Owner, 1, Owner, null);
+            await Add(choiceContext, Owner, 1, Owner, null);
             return;
         }
 
         Flash();
 
         // 1) Pagar con NP: 10 por punto, hasta lo que el medidor cubra.
-        var paid = await PayWithCharge(Owner, Amount);
+        var paid = await PayWithCharge(choiceContext, Owner, Amount);
         if (paid > 0) await NotifyDebtPaid(choiceContext, Owner, paid);
 
         // 2) Lo impago sangra (3 HP/punto, imparable) -- salvo el perdon del jefe a la 1a impaga.
@@ -149,12 +158,12 @@ public sealed class DebtPower : OberonPower, IResourcePower
             if (ForgivesFirstUnpaid()) bleeding = Math.Max(0, bleeding - 1);
             if (bleeding > 0)
             {
-                await CreatureCmd.Damage(choiceContext, Owner, bleeding * HpPerUnpaid,
-                    ValueProp.Unblockable | ValueProp.Unpowered, null, null);
+                await CreatureCmdCompatibility.Damage(choiceContext, Owner, bleeding * HpPerUnpaid,
+                    ValueProp.Unblockable | ValueProp.Unpowered, null, null, null);
             }
 
             // 3) Interes: la Deuda impaga gana +1 TOTAL (interés plano, no por punto — así lo dice también la loc) al turno siguiente (la bola de nieve).
-            if (Owner.IsAlive) await Add(Owner, 1, Owner, null);
+            if (Owner.IsAlive) await Add(choiceContext, Owner, 1, Owner, null);
         }
     }
 

@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 
@@ -17,18 +18,10 @@ public sealed class MagicResistanceAmulet : GilgameshRelic
 {
     public override RelicRarity Rarity => RelicRarity.Shop;
 
-    private bool _usedThisCombat;
-
-    public override Task BeforeCombatStartLate()
-    {
-        _usedThisCombat = false;
-        return Task.CompletedTask;
-    }
-
     public override bool TryModifyPowerAmountReceived(PowerModel canonicalPower, Creature target, decimal amount, Creature? applier, out decimal modifiedAmount)
     {
         modifiedAmount = amount;
-        if (_usedThisCombat) return false;
+        if (FgoCombatState.GetCombat(Owner.Creature, 6) != 0) return false;
         if (target != Owner.Creature || applier == null || applier.Side == target.Side) return false;
         if (canonicalPower is not WeakPower) return false;
 
@@ -38,11 +31,11 @@ public sealed class MagicResistanceAmulet : GilgameshRelic
 
     // El COMMIT va aca (audit 2026-07-05, contrato vanilla RuinedHelmet): el hook Try debe ser puro —
     // el motor puede evaluarlo especulativamente; este After corre solo si de verdad aplico.
-    public override Task AfterModifyingPowerAmountReceived(PowerModel power)
+    public override async Task AfterModifyingPowerAmountReceived(PowerModel power)
     {
-        if (_usedThisCombat || power is not WeakPower) return Task.CompletedTask;
-        _usedThisCombat = true;
+        if (FgoCombatState.GetCombat(Owner.Creature, 6) != 0 || power is not WeakPower) return;
+        await FgoCombatState.SetCombat(
+            new BlockingPlayerChoiceContext(), Owner.Creature, 6, 1);
         Flash();
-        return Task.CompletedTask;
     }
 }

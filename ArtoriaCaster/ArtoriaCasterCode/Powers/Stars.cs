@@ -1,42 +1,28 @@
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using ArtoriaCaster.ArtoriaCasterCode.Powers.Forms;
 
 namespace ArtoriaCaster.ArtoriaCasterCode.Powers;
 
 /// <summary>
-/// Helper for the Critical Stars economy (mirrors FGOCore's Curses helper).
-/// CRITICAL X★: an attack card may consume X stars to use its critical value —
-/// ONLY in Berserker or Avalon form (the hard form gate of the design).
+/// Fachada compatible del antiguo recurso local. Toda lectura, ganancia y gasto nuevo se dirige al
+/// banco global de FGOCore; las interfaces históricas permanecen para no romper saves/binarios.
 /// </summary>
 public static class Stars
 {
-    public static int Of(Creature creature) => (int)creature.GetPowerAmount<CriticalStarsPower>();
+    public static int Of(Creature creature) => CritStars.Of(creature);
 
-    /// <summary>Gain stars, clamped to the cap (10). Excess is wasted by design.</summary>
-    public static async Task Gain(Creature creature, int amount, CardModel? source)
-    {
-        var current = Of(creature);
-        var room = CriticalStarsPower.Max - current;
-        if (room <= 0 || amount <= 0) return;
-        await PowerCmd.Apply<CriticalStarsPower>(new BlockingPlayerChoiceContext(), creature, Math.Min(amount, room), creature, source);
-    }
+    public static Task Gain(Creature creature, int amount, CardModel? source) =>
+        CritStars.Gain(creature, amount, source);
 
-    /// <summary>Critical discount from POWERS implementing <see cref="ICritDiscount"/> (min cost 1).</summary>
-    public static int DiscountedCost(Creature creature, int cost)
-    {
-        // Solo powers (Instinto de la Espada); foreach directo sin iteradores LINQ (audit 2026-07-05:
-        // se evalua en cada IsPlayable/glow de las cartas de Critico).
-        foreach (var p in creature.GetPowerInstances<MegaCrit.Sts2.Core.Models.PowerModel>())
-        {
-            if (p is ICritDiscount discount) cost -= discount.CritCostReduction;
-        }
-        return Math.Max(1, cost);
-    }
+    public static Task Gain(
+        PlayerChoiceContext choiceContext, Creature creature, int amount, CardModel? source) =>
+        CritStars.Gain(choiceContext, creature, amount, source);
 
-    /// <summary>Flat bonus added to every critical value (powers + relics implementing <see cref="ICritDamageBoost"/>).</summary>
+    [Obsolete("Critical v2 always spends 50 stars; discounts no longer alter the global cost.")]
+    public static int DiscountedCost(Creature creature, int cost) => CritStarsPower.CritCost;
+
+    [Obsolete("Use a damage hook gated by Criticals.WillCrit instead.")]
     public static int CritBonus(Creature creature)
     {
         var bonus = 0;
@@ -44,51 +30,54 @@ public static class Stars
         return bonus;
     }
 
-    /// <summary>True if the owner can crit (Berserker/Avalon form, OR the Around Caliburn
-    /// NP window is open) and has ≥cost stars.</summary>
-    public static bool CanCrit(Creature creature, int cost)
+    [Obsolete("Use Criticals.WillCrit(owner, card).")]
+    public static bool CanCrit(Creature creature, int cost) =>
+        (creature.HasPower<Forms.SummerBerserkerFormPower>() ||
+         creature.HasPower<Forms.AvalonFormPower>() ||
+         creature.HasPower<AroundCaliburnWindowPower>()) &&
+        CritStars.CanPay(creature, CritStarsPower.CritCost);
+
+    public static Task ConsumeForCrit(Creature creature, int cost, CardModel? source) =>
+        ConsumeForCrit(new BlockingPlayerChoiceContext(), creature, cost, source);
+
+    public static async Task ConsumeForCrit(
+        PlayerChoiceContext choiceContext, Creature creature, int cost, CardModel? source)
     {
-        if (!creature.HasPower<SummerBerserkerFormPower>()
-            && !creature.HasPower<AvalonFormPower>()
-            && !creature.HasPower<AroundCaliburnWindowPower>()) return false;
-        return Of(creature) >= DiscountedCost(creature, cost);
+        await ConsumeExactStars(choiceContext, creature, CritStarsPower.CritCost, source);
     }
 
-    /// <summary>Consume the stars for a critical, applying the discount to <paramref name="cost"/>.
-    /// Call only after <see cref="CanCrit"/>. For a pre-discounted amount use
-    /// <see cref="ConsumeExactStars"/> (do NOT pass a discounted value here — it would discount twice).</summary>
-    public static Task ConsumeForCrit(Creature creature, int cost, CardModel? source)
-        => ConsumeExactStars(creature, DiscountedCost(creature, cost), source);
+    public static Task ConsumeExactStars(Creature creature, int exactStars, CardModel? source) =>
+        ConsumeExactStars(new BlockingPlayerChoiceContext(), creature, exactStars, source);
 
-    /// <summary>Consume EXACTLY <paramref name="exactStars"/> (no discount re-applied) and notify
-    /// <see cref="ICritListener"/>s with that same count. Use when the spend was already computed in
-    /// discounted terms (e.g. <see cref="ArtoriaCard.ResolveCritDamageScaling"/>) so the discount is
-    /// never applied twice.</summary>
-    public static async Task ConsumeExactStars(Creature creature, int exactStars, CardModel? source)
+    public static async Task ConsumeExactStars(
+        PlayerChoiceContext choiceContext, Creature creature, int exactStars, CardModel? source)
     {
-        if (exactStars <= 0) return;
-        var power = creature.GetPowerInstances<CriticalStarsPower>().FirstOrDefault();
-        if (power == null) return;
-        await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -exactStars, creature, source, silent: true);
-        // Avisa a los listeners (powers primero, luego reliquias) en orden — Lupa, Magia Única.
-        await Listeners.ForEachListener<ICritListener>(creature, listener => listener.AfterCritConsumed(exactStars));
+        if (!await CritStars.Spend(choiceContext, creature, CritStarsPower.CritCost, source)) return;
+        await Listeners.ForEachListener<ICritListener>(creature, listener =>
+            listener is ICritListenerWithContext contextual
+                ? contextual.AfterCritConsumed(choiceContext, CritStarsPower.CritCost)
+                : listener.AfterCritConsumed(CritStarsPower.CritCost));
     }
 }
 
-/// <summary>A power/relic that reduces the star cost of criticals (Instinto de la Espada).</summary>
+/// <summary>Contrato histórico; Critical v2 mantiene fijo el coste global.</summary>
 public interface ICritDiscount
 {
     int CritCostReduction { get; }
 }
 
-/// <summary>A power/relic that adds flat damage to critical values (Magia Única, Lupa).</summary>
+/// <summary>Contrato histórico de bono plano de crítico.</summary>
 public interface ICritDamageBoost
 {
     int CritDamageBonus { get; }
 }
 
-/// <summary>Reacts to a critical consuming stars (Lupa de la Detective, Magia Única).</summary>
 public interface ICritListener
 {
     Task AfterCritConsumed(int starsSpent);
+}
+
+public interface ICritListenerWithContext : ICritListener
+{
+    Task AfterCritConsumed(PlayerChoiceContext choiceContext, int starsSpent);
 }

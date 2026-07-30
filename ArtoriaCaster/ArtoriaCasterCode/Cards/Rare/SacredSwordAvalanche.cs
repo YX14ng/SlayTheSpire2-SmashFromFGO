@@ -34,18 +34,11 @@ public sealed class SacredSwordAvalanche() : ArtoriaCard(2, CardType.Attack, Car
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         var perHit = DynamicVars.Damage.BaseValue;
-        var firstHitBonus = 0m;
-        if (Stars.CanCrit(Owner.Creature, CritCost))
-        {
-            await Stars.ConsumeForCrit(Owner.Creature, CritCost, this);
-            perHit += DynamicVars["Crit"].BaseValue;
-            firstHitBonus = Stars.CritBonus(Owner.Creature);
-        }
 
         for (var i = 0; i < Hits; i++)
         {
             if (cardPlay.Target.IsDead) break;
-            await DamageCmd.Attack(perHit + (i == 0 ? firstHitBonus : 0m)).FromCard(this)
+            await DamageCmd.Attack(perHit).FromCardFgoCompatibility(this, cardPlay)
                 .Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);

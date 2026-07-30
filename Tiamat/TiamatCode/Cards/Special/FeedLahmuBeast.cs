@@ -23,7 +23,7 @@ public sealed class FeedLahmuBeast() : TiamatCard(1, CardType.Skill, CardRarity.
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await Lahmu.Feed(Owner.Creature, DynamicVars["Nurture"].IntValue, this);
+        await Lahmu.Feed(choiceContext, Owner.Creature, DynamicVars["Nurture"].IntValue, this);
         if (Lahmu.Count(Owner.Creature) >= 4 && Owner.Creature.Player != null)
         {
             await CardPileCmd.Draw(choiceContext, 1, Owner.Creature.Player);

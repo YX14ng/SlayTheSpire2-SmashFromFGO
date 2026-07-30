@@ -1,13 +1,8 @@
 namespace MordredSaber.MordredSaberCode.Powers.Forms;
 
 /// <summary>
-/// CABALLERO DE LA REBELIÓN (sin casco, asc 3) — la ventana de cobro (DESIGN-MORDRED §3.bis,
-/// forma 2): entrar con Crítico armado, reventar, volver a ponerse el yelmo.
-///   - tus Ataques hacen +2;
-///   - recibís +2 de daño por golpe enemigo (la tasa Berserker; cada golpe recibido = +10★ vía
-///     la starter — parkear acá es un all-in consciente, no un error).
-/// Sin Baluarte ni +NP/turno: la armadura está arrancada. Las cartas «en Rebelión: +X»
-/// (Velocidad del Relámpago, Doble Filo del Odio) leen esta forma.
+/// Forma ofensiva: aumenta el dano de los ataques a cambio de recibir dano adicional.
+/// Comparte el set animado oficial de Mordred con las otras formas para evitar duplicarlo.
 /// </summary>
 public sealed class RebellionFormPower : MordredFormPower
 {
@@ -15,8 +10,5 @@ public sealed class RebellionFormPower : MordredFormPower
 
     protected override bool TakesExtraDamage => true;
 
-    // FramesPath = null (audit 2026-07-04): el .tres "mordred_frames_unmasked" no existe en el repo — el
-    // swap declaraba un recurso inexistente (no-op con log de error). null = mantener el sprite
-    // actual. TODO pase de arte: generar el .tres y restaurar el path.
-    public override string? FramesPath => null;
+    public override string FramesPath => $"{MainFile.ResPath}/character/mordred_frames.tres";
 }

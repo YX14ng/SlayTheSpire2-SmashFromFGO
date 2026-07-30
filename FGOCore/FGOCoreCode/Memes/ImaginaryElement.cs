@@ -26,7 +26,7 @@ public sealed class ImaginaryElement() : MemeCard(1, CardType.Skill, CardRarity.
     {
         // La carga base de ESTA carta NO se auto-amplifica: primero el +50 plano, después el
         // buff, así el +30% rige solo para los generadores SIGUIENTES del turno.
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         await PowerCmd.Apply<FormalCraftPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 

@@ -6,7 +6,7 @@ extends Node3D
 #   PASS = "save":    renders selected frames cropped to the merged union rect.
 # Run once per form in measure mode, then once per form in save mode.
 
-const PASS := "save"   # "measure" | "save" | "list" (lista clips) | "probe" (movimiento por frame)
+const PASS := "list"   # Compatibilidad con wrappers viejos; CLI: -- --pass=debug
 const FPS := 30
 const OUT_DIR := "res://frames"
 const CROP_FILE := "res://crop_union.txt"
@@ -16,7 +16,7 @@ const CAM_SIZE := 43.8
 # Selected frame windows per model: anim -> [from, to, step] (indices at 30fps).
 const SELECT := {
 	"800100": { "idle": [0, 155, 2], "attack": [27, 53, 1], "cast": [0, 59, 2], "hurt": [0, 16, 1] },
-	"800150": { "idle": [0, 154, 2], "attack": [0, 20, 1], "cast": [0, 79, 2], "hurt": [0, 16, 1] },
+	"800150": { "idle": [0, 154, 2], "attack": [0, 20, 1], "cast": [0, 44, 2], "hurt": [0, 16, 1] },
 	# Paladín: attack_b tiene root motion salvaje (estocada profunda) en los primeros ~15 frames
 	# (src20-35) → la figura se agacha abajo-izquierda y la cabeza se "descoloca" vs el idle (reporte
 	# del jugador). Ventana recortada a [38,66]: arranca en el empuje erguido del escudo y termina en
@@ -33,23 +33,37 @@ const SELECT := {
 	# attack_b/attack_a son surfs aereos con root motion salvaje. cast de 704720 =
 	# el final del spell [76..96]: el resto invoca el piano de hielo gigante
 	# (mismo caso que el espejo de Morgan). Idle a step 1 (30fps, regla Morgan).
-	"504520": { "idle": [0, 153, 1], "attack": [28, 68, 1], "cast": [0, 72, 2], "hurt": [0, 16, 1] },
+	"504520": { "idle": [0, 153, 1], "attack": [28, 64, 1], "cast": [0, 72, 2], "hurt": [0, 16, 1] },
 	"704710": { "idle": [0, 154, 1], "attack": [3, 33, 1], "cast": [0, 74, 2], "hurt": [0, 16, 1] },
-	"704720": { "idle": [0, 154, 1], "attack": [20, 62, 1], "cast": [76, 96, 1], "hurt": [0, 16, 1] },
+	"704720": { "idle": [0, 154, 1], "attack": [20, 55, 1], "cast": [76, 87, 1], "hurt": [0, 16, 1] },
 	# Tiamat (Beast II). VENTANAS PLACEHOLDER — medir tras el primer render exploratorio
 	# (-Mode list/probe con render_all_tiamat.ps1). 9935400 (Femme Fatale humanoide) NO
 	# tiene clip attack -> CLIP_OVERRIDE mapea attack->spell. 9935410 (Bestia) tiene 8
 	# clips y 3 ATLAS de textura (multi-atlas NO soportado aun por _setup_meshes).
-	"9935400": { "idle": [0, 153, 2], "attack": [0, 72, 2], "cast": [0, 72, 2], "hurt": [0, 16, 1] },
-	"9935410": { "idle": [0, 153, 2], "attack": [0, 72, 1], "cast": [0, 72, 2], "hurt": [0, 16, 1] },
+	"9935400": { "idle": [0, 153, 2], "attack": [0, 72, 2], "cast": [0, 42, 2], "hurt": [0, 16, 1] },
+	"9935410": { "idle": [0, 153, 2], "attack": [0, 35, 1], "cast": [0, 42, 2], "hurt": [0, 16, 1] },
 	# Personajes nuevos (forma única). Ventanas PRIMER PASE: idle = loop completo step 2 (15fps;
 	# subir a step 1 si entrecortado, regla Morgan), attack/cast = clip completo step 2, hurt corto.
 	# Refinar con -Mode probe/debug si attack/cast trae wind-up largo u off-canvas.
-	"100800":  { "idle": [0, 201, 2], "attack": [0, 74, 1],  "cast": [0, 201, 2], "hurt": [0, 16, 1] },
-	"100900":  { "idle": [0, 153, 2], "attack": [0, 153, 2], "cast": [0, 77, 1],  "hurt": [0, 16, 1] },
-	"200200":  { "idle": [0, 153, 2], "attack": [0, 153, 2], "cast": [0, 77, 1],  "hurt": [0, 16, 1] },
-	"102700":  { "idle": [0, 153, 2], "attack": [0, 153, 2], "cast": [0, 153, 2], "hurt": [0, 14, 1] },
-	"2800100": { "idle": [0, 153, 2], "attack": [0, 153, 2], "cast": [0, 153, 2], "hurt": [0, 14, 1] },
+	"100800":  { "idle": [0, 201, 2], "attack": [33, 57, 2], "cast": [0, 44, 1], "hurt": [0, 16, 1] },
+	"100900":  { "idle": [0, 153, 2], "attack": [0, 62, 2], "cast": [0, 44, 1], "hurt": [0, 16, 1] },
+	"200200":  { "idle": [0, 153, 2], "attack": [0, 30, 1], "cast": [0, 44, 1], "hurt": [0, 16, 1] },
+	"102700":  { "idle": [0, 153, 2], "attack": [0, 44, 2], "cast": [0, 44, 2], "hurt": [0, 14, 1] },
+	"2800100": { "idle": [0, 153, 2], "attack": [0, 56, 2], "cast": [0, 56, 2], "hurt": [0, 14, 1] },
+	"2800110": { "idle": [0, 153, 2], "attack": [0, 56, 2], "cast": [0, 56, 2], "hurt": [0, 14, 1] },
+	"2800120": { "idle": [0, 153, 2], "attack": [0, 153, 2], "cast": [0, 153, 2], "hurt": [0, 14, 1] },
+	# Kagetora conserva su Quick oficial. Kenshin usa una seleccion segura de attack_a
+	# definida en FRAMES_OVERRIDE: preparacion en suelo [0..20] y disparo [56..70].
+	# Se omite el tramo intermedio donde el rig separa cuerpo y armas fuera del recorte.
+	"303800": { "idle": [0, 154, 2], "attack": [12, 47, 1], "cast": [0, 42, 2], "hurt": [0, 16, 1] },
+	"901820": { "idle": [0, 154, 2], "attack": [0, 70, 2], "cast": [0, 42, 2], "hurt": [0, 16, 1] },
+	# Shuten Douji: Assassin (dos ascensiones visuales) y Caster de verano.
+	# Ventanas iniciales; se refinan con list/probe antes del render definitivo.
+	"602100": { "idle": [0, 154, 2], "attack": [0, 57, 1], "cast": [0, 79, 2], "hurt": [0, 16, 1] },
+	"504000": { "idle": [0, 154, 2], "attack": [0, 87, 2], "cast": [0, 119, 2], "hurt": [0, 16, 1] },
+	# Astolfo Rider: Quick conserva la lanza y el movimiento terrestre; las ventanas se
+	# recortan al gesto completo sin esperar los 155 frames vacíos del contenedor FBX.
+	"400400": { "idle": [0, 154, 2], "attack": [8, 62, 1], "cast": [0, 59, 2], "hurt": [0, 16, 1] },
 }
 const CLIP_FOR := { "idle": "wait", "attack": "attack_b", "cast": "spell", "hurt": "damage_01" }
 # Overrides de clip por modelo: el attack_q de la Berserker de verano es el
@@ -57,36 +71,73 @@ const CLIP_FOR := { "idle": "wait", "attack": "attack_b", "cast": "spell", "hurt
 # acrobatica); attack_b y attack_a son surfs aereos sobre la espada.
 const CLIP_OVERRIDE := {
 	"704710": { "attack": "attack_q" },
+	# Clips completos de ataque de Gil/Okita son incompatibles o quedan casi estaticos.
+	"200200": { "attack": "spell" },
+	"102700": { "attack": "spell" },
+	"100800": { "cast": "spell02" },
 	# Tiamat Femme Fatale (9935400) no tiene clip de ataque (solo wait/spell/damage_01):
 	# usar spell como stand-in de attack hasta portar/improvisar uno.
 	"9935400": { "attack": "spell" },
+	"303800": { "attack": "attack_q" },
+	"901820": { "attack": "attack_a" },
+	"602100": { "attack": "attack_q" },
+	"400400": { "attack": "attack_q" },
 }
 # Anims excluidas del union de crop: el attack_b de Aesc lanza fragmentos de corona
 # hasta el borde del canvas; en el save esos fragmentos se recortan y la figura queda.
 # El attack_q de 704710 lanza las espadas telequineticas por TODO el canvas
 # (union 2048x2048 = recorte muerto) — mismo tratamiento: las espadas se cortan
 # en el borde del crop durante el ataque, la figura queda intacta.
-const MEASURE_SKIP := { "505320": ["attack"], "704710": ["attack"] }
+const MEASURE_SKIP := { "505320": ["attack"], "704710": ["attack"], "400400": ["attack"] }
 # Mallas de props ocultadas por modelo (patrones, match por contiene).
 const HIDE_MESHES := {}
 # Modelos con VARIOS atlas de textura (1 mesh, N superficies, cada una su atlas). Para estos
 # se preserva la textura importada por superficie en vez de pisar todo con un atlas unico; el
 # staging copia los N atlas con su nombre original (<id>_01/_02/_03.png) para que el import resuelva.
 const MULTI_ATLAS := ["9935410"]  # Tiamat Bestia (3 atlas)
+# Vortigern agrega/reordena demasiados huesos para retargetear con seguridad las
+# curvas de 2800100. Se conserva su puppet oficial completo en pose de reposo.
+const STATIC_VISUALS := ["2800120"]
 # Factor extra sobre la escala normalizada por cabeza, para modelos GIGANTES (superGiant)
 # cuyo cuerpo desborda el canvas aunque la cabeza quede a tamano normal (la Bestia de Tiamat:
 # alas/colas enormes respecto de la cabeza). <1 achica para que entre toda la figura.
 const SCALE_MULT := { "9935410": 0.42 }
+# Recortes de compatibilidad: conservan exactamente el canvas y el pivote ya publicado
+# aunque el clip alternativo tenga armas/capas que amplien la union automatica.
+const CROP_OVERRIDE := {
+	"200200": Rect2i(711, 851, 538, 867),
+	"100800": Rect2i(259, 0, 1604, 1905),
+	# Ambas identidades comparten este recorte y plano de suelo publicados. Fijarlo
+	# permite re-renderizar una sola forma sin recalcular un canvas incompatible.
+	"303800": Rect2i(12, 0, 2036, 1712),
+	"901820": Rect2i(12, 0, 2036, 1712),
+}
 # Huesos colapsados a escala 0 en cada pose (mismo truco que FACE_POSE): las 4
 # espadas teal del NP de Castoria viven DENTRO de la malla weapon (no se pueden
 # ocultar por nodo) colgadas de joint_weaponA-D; en el juego solo aparecen en el
 # NP (clips treasureArms). joint_sword es el baculo — NO tocarlo.
 const HIDE_BONES := { "504520": ["joint_weaponA", "joint_weaponB", "joint_weaponC", "joint_weaponD"] }
 
+# Los dos rigs de Kagetora traen pequenas piezas selectoras bajo el plano del suelo.
+# No pertenecen a la silueta jugable, pero get_used_rect las contaria y haria que el
+# recorte compartido quedase mucho mas grande. Medir solo hasta 16 px bajo el suelo.
+const GROUND_CLAMP_MODELS := ["303800", "901820"]
+
 const FACE_POSE := {
 	"joint_open_eye": 1.0, "joint_close_eye": 0.0,
 	"joint_open_mouth": 0.0, "joint_close_mouth": 1.0,
 	"joint_eyebrow": 1.0, "joint_eyebrow_attack": 0.0,
+	# Rigs nuevos de FGO usan selectores A/B en lugar de open/close genericos.
+	"joint_eye_openA": 1.0, "joint_eye_closeA": 0.0, "joint_eye_closeB": 0.0,
+	"joint_eyebrowA": 1.0, "joint_eyebrowB": 0.0,
+	"joint_mouth_closeA": 1.0, "joint_mouth_closeB": 0.0,
+	"joint_mouth_openA": 0.0, "joint_mouth_openB": 0.0,
+	# Kagetora (303800) y Kenshin (901820) usan nombres de selector distintos.
+	"joint_eye": 1.0, "joint_eye_normal": 1.0, "joint_eye_close": 0.0,
+	"joint_eye_smile": 0.0, "joint_eye_ta": 0.0,
+	"joint_eyebrow_normal": 1.0, "joint_eyebrow_anger": 0.0, "joint_eyebrow_smile": 0.0,
+	"joint_mouth": 1.0, "joint_mouth_normal": 1.0, "joint_mouth_open": 0.0,
+	"joint_mouth_shout": 0.0, "joint_mouth_smile": 0.0,
 }
 # Lista EXPLICITA de frames por modelo/anim (gana sobre la ventana [from,to,step] de
 # SELECT). Las Berserker de verano (704710/704720) tienen un idle (wait) que agacha la
@@ -103,14 +154,25 @@ const FACE_POSE := {
 const FRAMES_OVERRIDE := {
 	"704710": { "idle": [150, 151, 152, 153, 154, 0, 1, 2, 3, 4] },
 	"704720": { "idle": [150, 151, 152, 153, 154, 0, 1, 2, 3, 4] },
+	"901820": { "attack": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70] },
 }
 
 var _model: Node3D
+var _visual_model: Node3D
 var _player: AnimationPlayer
 var _skeleton: Skeleton3D
+var _carrier_skeleton: Skeleton3D
+var _face_neutral := {}
 var _model_id := ""
+var _pass := PASS
+var _debug_clips: Array[String] = []
+var _debug_from := 0
+var _debug_to := -1
+var _debug_step := 5
+var _force_retarget := false
 
 func _ready() -> void:
+	_parse_command_line()
 	get_viewport().transparent_bg = true
 
 	for f in DirAccess.get_files_at("res://"):
@@ -120,18 +182,44 @@ func _ready() -> void:
 			rx.compile("_\\d+$")
 			_model_id = rx.sub(f.get_basename(), "")
 			break
-	print("MODEL: ", _model_id, "  PASS: ", PASS)
+	print("MODEL: ", _model_id, "  PASS: ", _pass)
 
 	var packed: PackedScene = load("res://chr.fbx")
-	_model = packed.instantiate()
+	_visual_model = packed.instantiate()
+	_player = _visual_model.find_child("AnimationPlayer", true, false)
+
+	if _player == null and ResourceLoader.exists("res://anim.fbx"):
+		# Las ascensiones alternativas traen malla/rig pero no AnimationClips en el
+		# export CLI. Conducimos su Skin con el esqueleto animado oficial de la forma
+		# base del mismo Servant; los nombres e indices de hueso son compatibles.
+		_model = Node3D.new()
+		_model.add_child(_visual_model)
+		var carrier: Node3D = load("res://anim.fbx").instantiate()
+		_model.add_child(carrier)
+		_player = carrier.find_child("AnimationPlayer", true, false)
+		_carrier_skeleton = _find_body_skeleton(carrier)
+		_skeleton = _find_body_skeleton(_visual_model)
+		for child in carrier.find_children("*", "MeshInstance3D", true, false):
+			(child as MeshInstance3D).visible = false
+	else:
+		_model = _visual_model
+		_skeleton = _find_body_skeleton(_visual_model)
 	add_child(_model)
 
-	_player = _model.find_child("AnimationPlayer", true, false)
+	if _player == null:
+		push_error("El FBX no contiene AnimationPlayer y no hay anim.fbx conductor")
+		get_tree().quit(2)
+		return
 
-	if PASS == "list":
+	if _pass == "list":
 		for anim_name in _player.get_animation_list():
 			var a := _player.get_animation(anim_name)
 			print("CLIP: ", anim_name, " len=", a.length, " frames=", int(a.length * FPS))
+		print("=== DONE ===")
+		get_tree().quit(0)
+		return
+
+	if _pass == "listdeep":
 		# Volcar las pistas de los clips de ojos para saber qué animan (hueso o blendshape).
 		for anim_name in _player.get_animation_list():
 			if anim_name.contains("eye"):
@@ -172,6 +260,8 @@ func _ready() -> void:
 	_player.play(wait_clip)
 	_player.pause()
 	_player.seek(0.0, true)
+	_sync_visual_pose()
+	_capture_face_neutral()
 	var head_raw := _head_position()
 	var s := 15.0 / head_raw.y if head_raw != Vector3.INF and head_raw.y > 0.0001 else 1000.0
 	if SCALE_MULT.has(_model_id):
@@ -181,12 +271,12 @@ func _ready() -> void:
 
 	# Volcado de huesos en el contexto donde el esqueleto SI existe (el list pass
 	# en frio devuelve 0 huesos). Solo en debug, para diagnosticar nombres de cara.
-	if PASS == "debug" and _skeleton != null:
+	if _pass == "debug" and _skeleton != null:
 		print("RBONECOUNT: ", _skeleton.get_bone_count())
 		for b in range(_skeleton.get_bone_count()):
 			print("RBONE: ", _skeleton.get_bone_name(b))
 
-	if PASS == "probe":
+	if _pass == "probe":
 		_probe_motion()
 		print("=== DONE ===")
 		get_tree().quit(0)
@@ -195,16 +285,41 @@ func _ready() -> void:
 	_setup_meshes()
 	_setup_camera()
 
-	if PASS == "measure":
+	if _pass == "measure":
 		await _measure()
-	elif PASS == "debug":
+	elif _pass == "check":
+		await _check_frame()
+	elif _pass == "debug":
 		await _debug_snaps()
-	elif PASS == "faceexp":
+	elif _pass == "faceexp":
 		await _face_experiment()
 	else:
 		await _save_cropped()
 	print("=== DONE ===")
 	get_tree().quit(0)
+
+func _parse_command_line() -> void:
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--pass="):
+			_pass = argument.trim_prefix("--pass=")
+		elif argument.begins_with("--debug-clips="):
+			for clip in argument.trim_prefix("--debug-clips=").split(",", false):
+				_debug_clips.append(clip)
+		elif argument.begins_with("--debug-from="):
+			_debug_from = int(argument.trim_prefix("--debug-from="))
+		elif argument.begins_with("--debug-to="):
+			_debug_to = int(argument.trim_prefix("--debug-to="))
+		elif argument.begins_with("--debug-step="):
+			_debug_step = maxi(1, int(argument.trim_prefix("--debug-step=")))
+		elif argument == "--force-retarget":
+			_force_retarget = true
+
+func _check_frame() -> void:
+	var clip := _find_animation("wait")
+	_player.play(clip)
+	_player.pause()
+	await _pose_anchored(clip, 76, INF)
+	_capture().save_webp(ProjectSettings.globalize_path("res://debug_check.webp"), true, 0.95)
 
 # Experimento de diagnostico: en el frame idle 77 barre cada hueso de expresion de
 # ojos por separado, prueba reproducir el clip eye_open, y baja el alpha scissor,
@@ -245,7 +360,7 @@ func _face_experiment() -> void:
 	_capture().save_webp(ProjectSettings.globalize_path("res://faceexp_all1.webp"), true, 0.95)
 	print("FACEEXP all1")
 	# 3) alpha scissor bajo + normal=1 (por si la linea del ojo cae bajo el umbral 0.4)
-	for child in _model.find_children("*", "MeshInstance3D", true, false):
+	for child in _visual_model.find_children("*", "MeshInstance3D", true, false):
 		var mi := child as MeshInstance3D
 		if not mi.visible: continue
 		for su in range(mi.get_surface_override_material_count()):
@@ -262,6 +377,23 @@ func _face_experiment() -> void:
 # Guarda capturas sin recorte (canvas completo) del primer/medio/ultimo frame
 # de cada ventana, para inspeccion visual.
 func _debug_snaps() -> void:
+	if not _debug_clips.is_empty():
+		for clip_short in _debug_clips:
+			var clip := _find_animation(clip_short)
+			var animation := _player.get_animation(clip)
+			var last_frame := int(animation.length * FPS)
+			if _debug_to >= 0:
+				last_frame = mini(last_frame, _debug_to)
+			var picks := range(_debug_from, last_frame + 1, _debug_step)
+			_player.play(clip)
+			_player.pause()
+			var anchor_z := INF
+			for frame_idx in picks:
+				anchor_z = await _pose_anchored(clip, frame_idx, anchor_z)
+				var image := _capture()
+				image.save_webp(ProjectSettings.globalize_path("res://debug_%s_%03d.webp" % [clip_short, frame_idx]), true, 0.9)
+			print("DEBUG ", clip_short, ": ", picks)
+		return
 	for anim in SELECT[_model_id].keys():
 		var clip := _find_animation(_clip_for(anim))
 		_player.play(clip)
@@ -315,7 +447,19 @@ func _selected_frames(anim: String) -> Array:
 
 func _pose_frame(clip: String, frame_idx: int) -> void:
 	_player.seek(float(frame_idx) / FPS, true)
+	_sync_visual_pose()
 	_apply_face_pose()
+
+func _sync_visual_pose() -> void:
+	if (_model_id in STATIC_VISUALS and not _force_retarget) or _carrier_skeleton == null or _skeleton == null:
+		return
+	for dst_idx in range(_skeleton.get_bone_count()):
+		var src_idx := _carrier_skeleton.find_bone(_skeleton.get_bone_name(dst_idx))
+		if src_idx < 0:
+			continue
+		_skeleton.set_bone_pose_position(dst_idx, _carrier_skeleton.get_bone_pose_position(src_idx))
+		_skeleton.set_bone_pose_rotation(dst_idx, _carrier_skeleton.get_bone_pose_rotation(src_idx))
+		_skeleton.set_bone_pose_scale(dst_idx, _carrier_skeleton.get_bone_pose_scale(src_idx))
 
 func _capture() -> Image:
 	return get_viewport().get_texture().get_image()
@@ -332,7 +476,11 @@ func _measure() -> void:
 		var anchor_z := INF
 		for i in _selected_frames(anim):
 			anchor_z = await _pose_anchored(clip, i, anchor_z)
-			var r := _capture().get_used_rect()
+			var captured := _capture()
+			var r := captured.get_used_rect()
+			if _model_id in GROUND_CLAMP_MODELS:
+				var ground_limit := int(ceil((CAM_SIZE * 0.32 + CAM_SIZE * 0.5) / CAM_SIZE * 2048.0)) + 16
+				r = captured.get_region(Rect2i(0, 0, 2048, ground_limit)).get_used_rect()
 			if r.size.x == 0:
 				continue
 			union = r if first else union.merge(r)
@@ -344,6 +492,8 @@ func _measure() -> void:
 	fa.close()
 
 func _merged_crop() -> Rect2i:
+	if CROP_OVERRIDE.has(_model_id):
+		return CROP_OVERRIDE[_model_id]
 	var union := Rect2i()
 	var first := true
 	var fa := FileAccess.open(CROP_FILE, FileAccess.READ)
@@ -399,11 +549,11 @@ func _setup_meshes() -> void:
 	if not multi and ResourceLoader.exists("res://" + _model_id + ".png"):
 		atlas = load("res://" + _model_id + ".png")
 	var best_body := ""
-	for child in _model.find_children("*", "MeshInstance3D", true, false):
+	for child in _visual_model.find_children("*", "MeshInstance3D", true, false):
 		var nm := String(child.name)
 		if nm.begins_with("body") and nm > best_body:
 			best_body = nm
-	for child in _model.find_children("*", "MeshInstance3D", true, false):
+	for child in _visual_model.find_children("*", "MeshInstance3D", true, false):
 		var mi := child as MeshInstance3D
 		var nm := String(mi.name)
 		var show := not nm.begins_with("body") or nm == best_body
@@ -428,6 +578,20 @@ func _setup_meshes() -> void:
 			mat.alpha_scissor_threshold = 0.4
 			mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 			mi.set_surface_override_material(su, mat)
+
+func _find_body_skeleton(root: Node3D) -> Skeleton3D:
+	var best_body: MeshInstance3D
+	for child in root.find_children("*", "MeshInstance3D", true, false):
+		var mesh := child as MeshInstance3D
+		if not String(mesh.name).begins_with("body"):
+			continue
+		if best_body == null or String(mesh.name) > String(best_body.name):
+			best_body = mesh
+	if best_body != null and not best_body.skeleton.is_empty():
+		var bound := best_body.get_node_or_null(best_body.skeleton) as Skeleton3D
+		if bound != null:
+			return bound
+	return root.find_child("Skeleton3D", true, false) as Skeleton3D
 
 func _setup_camera() -> void:
 	var cam := Camera3D.new()
@@ -458,6 +622,10 @@ func _head_position() -> Vector3:
 			return Vector3.INF
 	var idx := _skeleton.find_bone("joint_head")
 	if idx < 0:
+		# Rigs FGO mas viejos (p.ej. Kagetora 303800) nombran el pivote humano
+		# joint_head_root; no confundirlo con joint_h_head_root (la montura).
+		idx = _skeleton.find_bone("joint_head_root")
+	if idx < 0:
 		return Vector3.INF
 	return (_skeleton.global_transform * _skeleton.get_bone_global_pose(idx)).origin
 
@@ -481,9 +649,30 @@ func _apply_face_pose() -> void:
 	for joint in FACE_POSE.keys():
 		var idx := _skeleton.find_bone(joint)
 		if idx >= 0:
-			_skeleton.set_bone_pose_scale(idx, Vector3.ONE * FACE_POSE[joint])
+			var amount: float = FACE_POSE[joint]
+			_skeleton.set_bone_pose_scale(idx, Vector3.ONE * amount)
+			# Una malla skinned escalada exactamente a cero todavia rasteriza todos
+			# sus vertices sobre un unico pixel. Alejar los selectores inactivos
+			# evita esos ojos/bocas diminutos flotando fuera del personaje.
+			if amount == 0.0:
+				_skeleton.set_bone_pose_position(idx, Vector3(0.0, 1000.0, 0.0))
+			elif _face_neutral.has(joint):
+				var neutral: Dictionary = _face_neutral[joint]
+				_skeleton.set_bone_pose_position(idx, neutral.position)
+				_skeleton.set_bone_pose_rotation(idx, neutral.rotation)
 	if HIDE_BONES.has(_model_id):
 		for joint in HIDE_BONES[_model_id]:
 			var idx := _skeleton.find_bone(joint)
 			if idx >= 0:
 				_skeleton.set_bone_pose_scale(idx, Vector3.ONE * 0.0001)
+
+func _capture_face_neutral() -> void:
+	if _skeleton == null:
+		return
+	for joint in FACE_POSE.keys():
+		var idx := _skeleton.find_bone(joint)
+		if idx >= 0:
+			_face_neutral[joint] = {
+				"position": _skeleton.get_bone_pose_position(idx),
+				"rotation": _skeleton.get_bone_pose_rotation(idx),
+			}

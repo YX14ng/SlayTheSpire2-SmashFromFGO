@@ -22,8 +22,8 @@ public sealed class TotalBarrage() : GilgameshCard(2, CardType.Attack, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var extraHits = Math.Min(ArmsPlayedPower.PlayedThisTurn(Owner.Creature), MaxExtraHits);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(BaseHits + extraHits).FromCard(this)
-            .TargetingRandomOpponents(Owner.Creature.CombatState)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(BaseHits + extraHits).FromCardFgoCompatibility(this, cardPlay)
+            .TargetingRandomOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

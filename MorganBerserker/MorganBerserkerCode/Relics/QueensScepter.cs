@@ -36,15 +36,8 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<CursePower>()];
 
-    private bool _usedThisCombat;
-    private bool _switchTokenGranted;
-    private readonly Powers.PerTurnTriggerCounter _curseTriggers = new();
-
     public override async Task BeforeCombatStartLate()
     {
-        _usedThisCombat = false;
-        _switchTokenGranted = false;
-        _curseTriggers.OnSideTurnStart(CombatSide.Player); // reset al arrancar el combate.
         // Forma inicial: Reina. source == null -> no cuenta como "cambio de forma".
         await FormSwitch.Enter<Powers.Forms.FairyQueenFormPower>(null, Owner.Creature, null);
     }
@@ -55,8 +48,8 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
     /// desde el turno 1 sin diluir el mazo; usarla dispara el bono (2) de primer cambio.</summary>
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Players.Player player)
     {
-        if (player != Owner || _switchTokenGranted) return;
-        _switchTokenGranted = true;
+        if (player != Owner || FgoCombatState.GetCombat(Owner.Creature, 1) != 0) return;
+        await FgoCombatState.SetCombat(choiceContext, Owner.Creature, 1, 1);
         await FGOCore.FGOCoreCode.Combat.ManifestCards.ManifestToHand<Cards.Special.QueensMetamorphosis>(Owner.Creature, 1.0f);
     }
 
@@ -64,7 +57,7 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
     {
         // Tope P2 por RONDA: se resetea al inicio del turno del jugador y cuenta
         // tanto el autodaño propio como los golpes tanqueados en el turno enemigo.
-        _curseTriggers.OnSideTurnStart(side);
+        // FgoTurnStatePower resets the synchronized counter for participating owners.
         return Task.CompletedTask;
     }
 
@@ -73,34 +66,39 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
         if (!CombatManager.Instance.IsInProgress || target != Owner.Creature || result.UnblockedDamage <= 0) return;
         if (Powers.FaeBloodPactPower.TickInProgress) return; // P4: el tick del Pacto no siembra Maldición.
 
+        if (Owner.Creature.CombatState is not { } combatState) return;
         var living = new List<Creature>();
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        foreach (var enemy in combatState.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead) living.Add(enemy);
         }
         if (living.Count == 0) return;
-        if (!_curseTriggers.TryConsume(CurseTriggersPerTurn)) return;
+        if (FgoCombatState.GetTurn(Owner.Creature, 5, 2) >= CurseTriggersPerTurn) return;
+        await FgoCombatState.IncrementTurn(
+            choiceContext, Owner.Creature, 5, CurseTriggersPerTurn, cardSource, width: 2);
 
         Flash();
         var victim = living[Owner.RunState.Rng.CombatCardGeneration.NextInt(living.Count)];
         // applier = Owner.Creature para que los amplificadores de Maldición (Caster/Invierno) cuenten.
-        await Curses.Apply(victim, CursePerHpLoss, Owner.Creature, null);
+        await Curses.Apply(choiceContext, victim, CursePerHpLoss, Owner.Creature, null);
     }
 
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
-        if (_usedThisCombat) return;
-        _usedThisCombat = true;
+        if (FgoCombatState.GetCombat(Owner.Creature, 0) != 0) return;
+        var context = choiceContext ?? new BlockingPlayerChoiceContext();
+        await FgoCombatState.SetCombat(context, Owner.Creature, 0, 1);
         Flash();
         await PlayerCmd.GainEnergy(1, Owner);
-        await NpCharge.Gain(Owner.Creature, NpOnFirstSwitch, null);
+        await NpCharge.Gain(context, Owner.Creature, NpOnFirstSwitch, null);
         if (choiceContext != null)
         {
+            if (Owner.Creature.Player?.PlayerCombatState is not { } playerCombatState) return;
             // BUGFIX (soft-lock): el cambio de forma lo dispara una carta a MITAD de su resolución.
             // Si este robo RESHUFFLEA (mazo vacío), reshufflea el descarte -que en v0.107.1 contiene
             // la carta en curso- y corrompe su estado ("must be added to a CombatState"), colgando el
             // combate. Por eso robamos SOLO lo que hay en el mazo (sin gatillar reshuffle).
-            var inDeck = Owner.Creature.Player?.PlayerCombatState.AllPiles
+            var inDeck = playerCombatState.AllPiles
                 .FirstOrDefault(p => p.Type == PileType.Draw)?.Cards.Count ?? 0;
             if (inDeck > 0)
             {

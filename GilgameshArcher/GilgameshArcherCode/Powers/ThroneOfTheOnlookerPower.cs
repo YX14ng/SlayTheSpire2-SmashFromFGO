@@ -30,11 +30,11 @@ public sealed class ThroneOfTheOnlookerPower : GilgameshPower
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == Owner.Side && Owner.Block == 0)
+        if (participants.Contains(Owner) && Owner.Block == 0)
         {
             Flash();
-            await CritStars.Gain(Owner, Stars, null);
-            await NpCharge.Gain(Owner, Np, null);
+            await CritStars.Gain(choiceContext, Owner, Stars, null);
+            await NpCharge.Gain(choiceContext, Owner, Np, null);
         }
     }
 }

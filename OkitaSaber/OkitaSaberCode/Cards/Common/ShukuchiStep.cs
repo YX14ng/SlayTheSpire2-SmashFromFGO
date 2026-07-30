@@ -29,7 +29,7 @@ public sealed class ShukuchiStep() : OkitaCard(0, CardType.Skill, CardRarity.Com
     {
         await Rafaga.Pay(choiceContext, Owner.Creature, RafagaCost, this);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m); // robá 1 -> 2

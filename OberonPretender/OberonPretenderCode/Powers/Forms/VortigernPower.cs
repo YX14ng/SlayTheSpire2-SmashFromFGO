@@ -29,14 +29,11 @@ public sealed class VortigernPower : OberonFormPower, ISleepIgnorer
 
     public override bool IsPermanent => true;
 
-    // FramesPath = null (audit 2026-07-04): el .tres "oberon_frames_vortigern" no existe en el repo — el
-    // swap declaraba un recurso inexistente (no-op con log de error). null = mantener el sprite
-    // actual. TODO pase de arte: generar el .tres y restaurar el path.
-    public override string? FramesPath => null;
+    public override string FramesPath => $"{MainFile.ResPath}/character/oberon_frames_vortigern.tres";
 
     public bool IgnoresSleep(Creature target) => true; // el abismo devora en el sueno
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || !props.IsPoweredAttack()) return 0m;
         return AttackBonus;
@@ -44,7 +41,7 @@ public sealed class VortigernPower : OberonFormPower, ISleepIgnorer
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side || Owner.IsDead) return;
+        if (!participants.Contains(Owner) || Owner.IsDead) return;
         var debt = DebtPower.Of(Owner);
         if (debt <= 0) return;
 
@@ -64,14 +61,15 @@ public sealed class VortigernPower : OberonFormPower, ISleepIgnorer
         var defaulted = Math.Min(unpaid, DebtPower.VortigernUnpaidCap);
         if (defaulted > 0)
         {
-            await DebtPower.Forgive(Owner, defaulted);
+            await DebtPower.Forgive(choiceContext, Owner, defaulted);
             var aoe = defaulted * DamagePerPoint;
-            foreach (var enemy in Owner.CombatState.GetOpponentsOf(Owner).ToList())
+            if (Owner.CombatState is not { } combatState) return;
+            foreach (var enemy in combatState.GetOpponentsOf(Owner).ToList())
             {
                 if (!enemy.IsDead)
                 {
                     await CreatureCmd.Damage(choiceContext, enemy, aoe,
-                        ValueProp.Unblockable | ValueProp.Unpowered, Owner, null);
+                        ValueProp.Unblockable | ValueProp.Unpowered, Owner);
                 }
             }
         }
@@ -80,9 +78,9 @@ public sealed class VortigernPower : OberonFormPower, ISleepIgnorer
         var bleed = DebtPower.Of(Owner);
         if (bleed > 0 && Owner.IsAlive)
         {
-            await CreatureCmd.Damage(choiceContext, Owner, bleed * DebtPower.HpPerUnpaid,
-                ValueProp.Unblockable | ValueProp.Unpowered, null, null);
-            await DebtPower.Add(Owner, 1, Owner, null);
+            await CreatureCmdCompatibility.Damage(choiceContext, Owner, bleed * DebtPower.HpPerUnpaid,
+                ValueProp.Unblockable | ValueProp.Unpowered, null, null, null);
+            await DebtPower.Add(choiceContext, Owner, 1, Owner, null);
         }
     }
 }

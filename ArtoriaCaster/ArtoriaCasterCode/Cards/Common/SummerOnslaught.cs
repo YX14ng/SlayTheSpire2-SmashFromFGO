@@ -27,7 +27,7 @@ public sealed class SummerOnslaught() : ArtoriaCard(2, CardType.Attack, CardRari
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         var damage = await ResolveCritDamage(CritCost);
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);
     }

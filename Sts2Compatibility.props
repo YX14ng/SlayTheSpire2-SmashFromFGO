@@ -1,0 +1,18 @@
+<Project>
+    <PropertyGroup>
+        <Sts2TargetBranch Condition="'$(Sts2TargetBranch)' == ''">main</Sts2TargetBranch>
+        <BaseLibPackageVersion>3.3.6</BaseLibPackageVersion>
+        <Sts2CompatibilityRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '.compat'))</Sts2CompatibilityRoot>
+        <MainSts2ReferencePath>$(Sts2CompatibilityRoot)sts2-main-0.107.1</MainSts2ReferencePath>
+        <BetaSts2ReferencePath>$(Sts2CompatibilityRoot)sts2-beta-0.109.0</BetaSts2ReferencePath>
+
+        <Sts2Path Condition="'$(Sts2TargetBranch)' == 'main' and Exists('$(MainSts2ReferencePath)/data_sts2_windows_x86_64/sts2.dll')">$(MainSts2ReferencePath)</Sts2Path>
+        <Sts2Path Condition="'$(Sts2TargetBranch)' == 'beta' and Exists('$(BetaSts2ReferencePath)/data_sts2_windows_x86_64/sts2.dll')">$(BetaSts2ReferencePath)</Sts2Path>
+        <DefineConstants Condition="'$(Sts2TargetBranch)' == 'beta'">$(DefineConstants);STS2_BETA</DefineConstants>
+    </PropertyGroup>
+
+    <Target Name="ValidateSts2TargetBranch" BeforeTargets="PrepareForBuild">
+        <Error Text="Sts2TargetBranch must be 'main' or 'beta', got '$(Sts2TargetBranch)'."
+               Condition="'$(Sts2TargetBranch)' != 'main' and '$(Sts2TargetBranch)' != 'beta'" />
+    </Target>
+</Project>

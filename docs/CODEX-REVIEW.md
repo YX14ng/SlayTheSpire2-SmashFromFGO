@@ -30,14 +30,14 @@ Rules of engagement:
 > If `AGENTS.md` says "a single Mash mod for v0.103.x", that's stale. This is the current truth
 > (also in `CLAUDE.md`).
 
-- **Multi-mod monorepo**: one shared mechanics library **`FGOCore/`** (~72 `.cs`) + **9 character
+- **Multi-mod monorepo**: one shared mechanics library **`FGOCore/`** (~88 `.cs`) + **12 character
   mods** (MashShielder, MorganBerserker, ArtoriaCaster, MordredSaber, GilgameshArcher, OkitaSaber,
-  OberonPretender, SiegfriedSaber, Tiamat→`TiamatBeast`) + `CoopDeterminismPatch/` (an auxiliary
-  Harmony patch). ~1,089 `.cs` across the character mods.
+  OberonPretender, SiegfriedSaber, Tiamat→`TiamatBeast`, KagetoraLancer, ShutenDouji y
+  AstolfoRider). ~1,068 `.cs` across the character mods.
 - Each top-level folder with a `*.csproj` is an **independent mod** with its own manifest, assets,
   localization. All depend on FGOCore + BaseLib.
-- Targets the **MAIN public branch v0.107.1**, **BaseLib pinned 3.3.0** (the pin must match the
-  BaseLib loaded in the game or the mod won't load).
+- Targets **MAIN v0.107.1 and BETA v0.109.0** with one artifact set, compiled against **BaseLib
+  3.3.6** and runtime-verified with 3.3.7.
 - **`decompiled/`** = the decompiled game (incl. a full BaseLib decompile under
   `decompiled/_baselib_full/`). This is the **ground truth** for hook signatures, VFX paths, and
   base-class behavior.
@@ -57,8 +57,11 @@ Rules of engagement:
 - Machine-local paths (`GodotPath`, `Sts2Path`) live in each project's `Directory.Build.props`
   (**gitignored**); `Sts2PathDiscovery.props` autodetects when possible. There is no `.sln` — build
   each project from its own dir. **.NET 9 SDK** + a **MegaDot 4.5.1** export binary are required.
-- **Compile-green is the only automated gate.** Build a changed character csproj (and `FGOCore`
-  first) after edits.
+- **Compile-green is not the only automated gate.** Build a changed character csproj (and `FGOCore`
+  first), then run the relevant localization, asset, VFX, animation and context audits under `tools/`.
+- For context-sensitive changes, run
+  `dotnet run --project tools/choice_context_audit/ChoiceContextAudit.csproj -- .`; it must report
+  zero calls that discard an available `PlayerChoiceContext`.
 - **Publish-all-together (CRITICAL)**: if you change FGOCore's public API (a method signature like
   `NpCharge.CanPay`, or `BondRelic`), **every dependent character dll must be rebuilt in the same
   batch** — an old character dll against a new FGOCore throws `MissingMethodException` /
@@ -78,8 +81,9 @@ why it bites, where to look.
    (`decompiled/.../Hook.cs` ~line 2519). If you mutate there (e.g. `_pending = 0`, `_card ??= x`),
    a preview that runs *after* you cache consumes the bonus and the real hit gets 0. Pattern: cache
    in `BeforeCardPlayed` (real only), return the bonus **pure** in `ModifyDamageAdditive`, clear in
-   `AfterDamageReceived` (real only). Grep: `ModifyDamageAdditive|ModifyDamageMultiplier` and check
-   for assignments to fields inside.
+   `AfterDamageGiven` (real only y también corre si el golpe mata). `AfterDamageReceived` se omite
+   en golpes letales. Grep: `ModifyDamageAdditive|ModifyDamageMultiplier` and check for assignments
+   to fields inside.
 2. **`ModifyHpLost*` / `ModifyHandDraw` / `ModifyCardPlayCount` are ABSOLUTE** (default return =
    input). Returning `0` **annuls all damage that combat**. Always return the input / call `base`
    when not changing it. (Contrast: `ModifyDamageAdditive`/`ModifyBlock` are DELTAs, default 0.)
@@ -87,8 +91,8 @@ why it bites, where to look.
    stream** consumed inside the synchronized combat sim. Consuming it in a **local-only** flow
    (card-reward, dupe roll, per-player event) desyncs its counter on one client → divergent states.
    Local/per-player rolls must use **`player.PlayerRng.Rewards`** (seed `^ NetId`, not part of the
-   sim). Canonical correct example: `FGOCore/FGOCoreCode/Np/NpLevels.cs`. Pattern validated in
-   `CoopDeterminismPatch/`. Grep: `RunState.Rng`, `CombatCardGeneration`, `PlayerRng`.
+   sim). Canonical correct example: `FGOCore/FGOCoreCode/Np/NpLevels.cs`.
+   Grep: `RunState.Rng`, `CombatCardGeneration`, `PlayerRng`.
 4. **Synchronous resource load freezes the netcode.** `ResourceLoader.Load<T>()` of a heavy `.tres`
    blocks the simulation thread → breaks the network heartbeat → timeout/disconnect (reported as a
    "crash"). Async-only: `LoadThreadedRequest` + poll `LoadThreadedGetStatus`; apply deferred via a
@@ -117,7 +121,7 @@ why it bites, where to look.
      `grep '"vfx/' decompiled/`.
    - **IDs are immutable with active saves** (mod id, model id, power id — the mod prefix is part of
      the id). Never rename; never migrate a mechanic between mods while saves exist.
-   - Manifest `dependencies` use the **object form** `[{"id":"BaseLib","min_version":"v3.3.0"}, ...]`.
+   - Manifest `dependencies` use the **object form** `[{"id":"BaseLib","min_version":"v3.3.6"}, ...]`.
    - **One** Block-retention preventer per game — all custom retention must delegate to
      `FGOCore/FGOCoreCode/Block/BlockRetention.cs` (`IBlockRetentionSource`, MAX wins).
    - Write `.tscn`/`.tres` as UTF-8 **no BOM** (BOM → Godot rejects at runtime).
@@ -131,7 +135,9 @@ why it bites, where to look.
   guard), `Np/NpLevels.cs` (dupe RNG — MP), `Np/NpChargePower.cs`.
 - `Forms/FormVisuals.cs` (async load + static cache + per-char grouping).
 - `GutsPower.cs` and `DragonScales/DragonScalesPower.cs` (**absolute** `ModifyHpLost*` hooks).
-- `Stars/CritStarsPower.cs` (`_isProcessing` re-entrancy guard, auto-proc at ≥100).
+- `Stars/CriticalBank.cs`, `CritStarsPower.cs` and `CriticalResolver.cs` (reservation at 50,
+  `CritReady` priority, one payment/event per card and Quick post-resolution reward).
+- `FgoCombatState.cs` (hidden synchronized bitfields, turn reset ordering and participant filter).
 - `Block/BlockRetention.cs` + `Block/IBlockRetentionSource.cs`, `Curses/CursePower.cs` (cap 25,
   decay, amplifiers), `Bond/BondRelic.cs` (`Points` `SavedProperty`, MP gift scaling).
 - Cross-cutting interfaces to trace implementers of: `IGutsFloorBooster`, `ILimitBreaker`,
@@ -142,8 +148,8 @@ why it bites, where to look.
 - Everything under `Powers/` (this is where hook overrides — and thus hook-contract bugs — live).
 - `Cards/**/*.cs` that touch damage, RNG, form-switching, or NP spend.
 - Layout is consistent: `Cards/{Basic,Common,Uncommon,Rare,Special}/`, `Powers/`, `Relics/`,
-  `Character/`. Approx surface: Mash ~138 files, Artoria ~127, Mordred ~129, Oberon ~124, Morgan
-  ~123, Okita ~121, Gilgamesh ~90, Siegfried ~71, Tiamat ~66.
+  `Character/`. Approx surface: Mash 137 files, Artoria 126, Mordred 129, Oberon 124, Morgan 124,
+  Okita 121, Gilgamesh 90, Siegfried 72, Tiamat 80, Kagetora 21, Shuten 22 y Astolfo 22.
 
 ---
 

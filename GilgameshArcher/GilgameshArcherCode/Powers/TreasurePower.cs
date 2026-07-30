@@ -36,12 +36,20 @@ public sealed class TreasurePower : GilgameshPower
     public static int Of(Creature creature) => creature.GetPowerAmount<TreasurePower>();
 
     /// <summary>Suma Tesoro respetando el cap. Toda ganancia de Tesoro pasa por acá.</summary>
-    public static async Task Add(Creature creature, int amount, Creature? applier, CardModel? source)
+    public static Task Add(Creature creature, int amount, Creature? applier, CardModel? source) =>
+        Add(new BlockingPlayerChoiceContext(), creature, amount, applier, source);
+
+    public static async Task Add(
+        PlayerChoiceContext choiceContext,
+        Creature creature,
+        int amount,
+        Creature? applier,
+        CardModel? source)
     {
         if (amount <= 0) return;
         var toAdd = Math.Min(amount, Max - Of(creature));
         if (toAdd <= 0) return;
-        await PowerCmd.Apply<TreasurePower>(new BlockingPlayerChoiceContext(), creature, toAdd, applier, source);
+        await PowerCmd.Apply<TreasurePower>(choiceContext, creature, toAdd, applier, source);
     }
 
     /// <summary>Siembra el Tesoro de apertura una sola vez por combate (lo llama Bab-ilu).</summary>
@@ -52,13 +60,17 @@ public sealed class TreasurePower : GilgameshPower
 
     /// <summary>Intenta gastar <paramref name="cost"/> de Tesoro. Devuelve true si pagó (y lo descontó);
     /// false si no alcanzaba (no descuenta nada — el rider chequea CanAfford en IsPlayable antes).</summary>
-    public static async Task<bool> TrySpend(Creature creature, int cost)
+    public static Task<bool> TrySpend(Creature creature, int cost) =>
+        TrySpend(new BlockingPlayerChoiceContext(), creature, cost);
+
+    public static async Task<bool> TrySpend(
+        PlayerChoiceContext choiceContext, Creature creature, int cost)
     {
         if (cost <= 0) return true;
         var power = creature.GetPower<TreasurePower>();
         if (power == null || power.Amount < cost) return false;
         power.Flash();
-        await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, -cost, creature, null);
+        await PowerCmd.ModifyAmount(choiceContext, power, -cost, creature, null);
         return true;
     }
 }

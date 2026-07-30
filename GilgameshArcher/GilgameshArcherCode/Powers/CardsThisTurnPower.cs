@@ -35,7 +35,7 @@ public sealed class CardsThisTurnPower : GilgameshPower
 
     public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side == Owner.Side) Played = 0;
+        if (participants.Contains(Owner)) Played = 0;
         return Task.CompletedTask;
     }
 

@@ -26,6 +26,6 @@ public sealed class MemoryOfTrifasPower : MordredPower
         if (player != Owner.Player || Owner.Player == null || Owner.IsDead) return;
         Flash();
         await CreatureCmd.Heal(Owner, HealPerTurn * (int)Amount);
-        await NpCharge.Gain(Owner, NpPerTurn * (int)Amount, null);
+        await NpCharge.Gain(choiceContext, Owner, NpPerTurn * (int)Amount, null);
     }
 }

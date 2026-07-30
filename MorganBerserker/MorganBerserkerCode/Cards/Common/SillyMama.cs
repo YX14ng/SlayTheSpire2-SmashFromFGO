@@ -28,12 +28,12 @@ public sealed class SillyMama() : MorganCard(0, CardType.Skill, CardRarity.Commo
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
         if (DynamicVars["Curse"].IntValue > 0)
         {
-            foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).Where(e => !e.IsDead).ToList())
+            foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).Where(e => !e.IsDead).ToList())
             {
-                await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+                await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
             }
         }
     }

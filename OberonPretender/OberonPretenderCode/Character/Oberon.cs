@@ -41,7 +41,13 @@ public class Oberon : PlaceholderCharacterModel
         ModelDb.Card<Nightfall>()
     ];
 
-    public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<DreamContract>()];
+    // Starters del diseño: motor de Deuda/formas, vínculo y almacén de nivel de NP/dupes.
+    public override IReadOnlyList<RelicModel> StartingRelics =>
+    [
+        ModelDb.Relic<DreamContract>(),
+        ModelDb.Relic<ChronicleOfAvalon>(),
+        ModelDb.Relic<ForgetMeNotOfAutumnWood>()
+    ];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<OberonCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<OberonRelicPool>();
@@ -66,6 +72,8 @@ public class Oberon : PlaceholderCharacterModel
     [
         $"{MainFile.ResPath}/character/oberon_frames.tres",
     ];
+    public override string CustomMerchantAnimPath => $"{MainFile.ResPath}/character/oberon_merchant.tscn";
+    public override string CustomRestSiteAnimPath => $"{MainFile.ResPath}/character/oberon_rest.tscn";
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/oberon_select_bg.tscn";
 
     public override Control CustomIcon

@@ -30,25 +30,25 @@ public partial class MainFile : Node
         //
         // NO se registran frames de FormVisuals: Gilgamesh tiene un solo modelo de batalla (200200,
         // §3.5) — el swap cosmético opcional con NP≥100 NO usa FormPower y no entra en la espina.
-        NpCharge.GaugeFilled += TryManifestEnuma;
-        NpCharge.GaugeDropped += DisarmEnumaMarker;
+        NpCharge.GaugeFilledWithContext += TryManifestEnuma;
+        NpCharge.GaugeDroppedWithContext += DisarmEnumaMarker;
     }
 
-    private static async Task TryManifestEnuma(Creature creature)
+    private static async Task TryManifestEnuma(PlayerChoiceContext choiceContext, Creature creature)
     {
         if (creature.Player?.Character is not Character.Gilgamesh) return;
         if (creature.HasPower<EnumaManifestedPower>()) return;          // ya se manifestó este pico
         if (creature.CombatState == null || creature.Player == null) return;
 
         // Marcador: la ulti ya se manifestó (se re-arma al bajar < 100, abajo).
-        await PowerCmd.Apply<EnumaManifestedPower>(new BlockingPlayerChoiceContext(), creature, 1m, creature, null);
+        await PowerCmd.Apply<EnumaManifestedPower>(choiceContext, creature, 1m, creature, null);
 
         // El viento de la creación parte cielo y tierra: la carta-ulti aparece en mano, lista (Retain).
         // Helper compartido de FGOCore (antes: CreateCard + AddGeneratedCardToCombat + PreviewCardPileAdd).
         await FGOCore.FGOCoreCode.Combat.ManifestCards.ManifestToHand<EnumaElishUnleashed>(creature, 1.2f);
     }
 
-    private static async Task DisarmEnumaMarker(Creature creature)
+    private static async Task DisarmEnumaMarker(PlayerChoiceContext _, Creature creature)
     {
         if (creature.HasPower<EnumaManifestedPower>())
         {

@@ -26,6 +26,6 @@ public sealed class FeatherOfTheContract : OberonRelic
         if (cardPlay.Card.Owner != Owner || cardPlay.Card is not IOberonNpCard) return;
         if (DebtPower.Of(Owner.Creature) <= 0) return;
         Flash();
-        await DebtPower.Forgive(Owner.Creature, DebtForgiven);
+        await DebtPower.Forgive(context, Owner.Creature, DebtForgiven);
     }
 }

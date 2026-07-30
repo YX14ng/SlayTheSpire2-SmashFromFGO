@@ -154,7 +154,7 @@
   "MORGANBERSERKER-ARTS_MORGAN.title": "아츠",
   "MORGANBERSERKER-ARTS_MORGAN.description": "#커맨드 카드: !D!의 피해를 줍니다. *NP *충전을 !NpCharge! 얻습니다.",
   "MORGANBERSERKER-QUICK_MORGAN.title": "퀵",
-  "MORGANBERSERKER-QUICK_MORGAN.description": "#커맨드 카드: !D!의 피해를 줍니다. *저주를 !Curse! 부여합니다.",
+  "MORGANBERSERKER-QUICK_MORGAN.description": "#커맨드 카드: !D!의 피해를 줍니다. *저주를 !Curse! 부여하고 *크리티컬 *스타를 !Stars! 얻습니다.",
   "MORGANBERSERKER-QUEENS_SACRIFICE.title": "여왕의 희생",
   "MORGANBERSERKER-QUEENS_SACRIFICE.description": "#!D!의 피해를 주고, *거츠가 있다면 /+!Bonus!의 피해를 줍니다. 체력을 !HpLoss! 잃습니다.",
   "MORGANBERSERKER-FAE_RESPITE.title": "요정의 휴식",

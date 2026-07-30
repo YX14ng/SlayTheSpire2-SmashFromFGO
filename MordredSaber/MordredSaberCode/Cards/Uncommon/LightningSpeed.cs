@@ -19,7 +19,7 @@ namespace MordredSaber.MordredSaberCode.Cards.Uncommon;
 /// </summary>
 public sealed class LightningSpeed() : MordredCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    private const int BaseStars = 4; // piso de ★ en cualquier forma
+    private const int BaseStars = 10; // piso normalizado en cualquier forma
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(9m, ValueProp.Move), new DynamicVar("Stars", 10), new DynamicVar("BaseStars", BaseStars)];
@@ -32,11 +32,11 @@ public sealed class LightningSpeed() : MordredCard(1, CardType.Attack, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         var stars = Forms.InRebellion(Owner.Creature) ? DynamicVars["Stars"].IntValue : DynamicVars["BaseStars"].IntValue;
-        await CritStars.Gain(Owner.Creature, stars, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, stars, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);

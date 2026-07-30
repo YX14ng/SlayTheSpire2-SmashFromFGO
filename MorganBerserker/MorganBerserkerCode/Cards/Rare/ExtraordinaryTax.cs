@@ -25,15 +25,15 @@ public sealed class ExtraordinaryTax() : MorganCard(1, CardType.Skill, CardRarit
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead)
             {
-                await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+                await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
             }
         }
 
-        var cursed = Curses.CursedEnemies((CombatState)Owner.Creature.CombatState, Owner.Creature);
+        var cursed = Curses.CursedEnemies(Owner.Creature);
         if (cursed > 0)
         {
             await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue * cursed);

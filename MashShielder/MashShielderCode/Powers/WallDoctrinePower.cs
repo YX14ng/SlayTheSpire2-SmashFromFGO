@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -13,14 +14,11 @@ public sealed class WallDoctrinePower : MashShielderPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    private bool _usedThisTurn;
-
-    protected override void OnPlayerTurnStartReset() => _usedThisTurn = false;
-
     public override async Task AfterBlockGained(Creature creature, decimal amount, ValueProp props, CardModel? cardSource)
     {
-        if (creature != Owner || cardSource == null || _usedThisTurn) return;
-        _usedThisTurn = true;
+        if (creature != Owner || cardSource == null || FgoCombatState.GetTurn(Owner, 0) != 0) return;
+        await FgoCombatState.SetTurn(
+            new BlockingPlayerChoiceContext(), Owner, 0, 1, cardSource);
         Flash();
         await NpCharge.Gain(Owner, Amount, null);
     }

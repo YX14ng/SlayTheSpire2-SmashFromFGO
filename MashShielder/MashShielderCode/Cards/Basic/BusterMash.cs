@@ -11,14 +11,17 @@ namespace MashShielder.MashShielderCode.Cards.Basic;
 /// El daño puro: la salida simple de la economía. Números estándar de la triada
 /// de comando FGO (Buster 10 / Arts 6+30 NP / Quick 6+30 estrellas).
 /// </summary>
-public sealed class BusterMash() : MashShielderCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class BusterMash() : MashShielderCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);
     }

@@ -24,7 +24,7 @@ public sealed class NibelungHoard() : SiegfriedCard(0, CardType.Skill, CardRarit
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<DragonScalesPower>(choiceContext, Owner.Creature, DynamicVars["Scales"].IntValue, Owner.Creature, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
         await CardPileCmd.AddCurseToDeck<Regret>(Owner);
     }
 

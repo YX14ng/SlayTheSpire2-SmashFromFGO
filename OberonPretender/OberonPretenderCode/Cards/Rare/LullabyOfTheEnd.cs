@@ -19,7 +19,7 @@ public sealed class LullabyOfTheEnd() : OberonCard(2, CardType.Skill, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await Sleep.TryApply(cardPlay.Target, DynamicVars["Duration"].IntValue, Owner.Creature, this);
+        await Sleep.TryApply(choiceContext, cardPlay.Target, DynamicVars["Duration"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Duration"].UpgradeValueBy(1m);

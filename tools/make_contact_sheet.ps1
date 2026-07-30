@@ -10,6 +10,8 @@ Add-Type -AssemblyName System.Drawing
 $thumbW = 150; $thumbH = 114; $labelH = 16
 $cellW = $thumbW + 6; $cellH = $thumbH + $labelH + 8
 $files = Get-ChildItem $Dir -Filter *.png | Sort-Object Name
+$outDir = Split-Path $OutPrefix -Parent
+if ($outDir) { New-Item -ItemType Directory -Force $outDir | Out-Null }
 $font = New-Object System.Drawing.Font("Consolas", 7)
 $brush = [System.Drawing.Brushes]::White
 $sheet = 0

@@ -1,4 +1,4 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -22,19 +22,19 @@ public sealed class RudeKick() : MordredCard(1, CardType.Attack, CardRarity.Unco
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<CritReadyPower>()];
 
-    private bool HasCritReady => Owner.Creature.GetPowerAmount<CritReadyPower>() > 0;
+    private bool WillCrit => Criticals.WillCrit(Owner.Creature, this);
 
-    protected override bool ShouldGlowGoldInternal => HasCritReady;
+    protected override bool ShouldGlowGoldInternal => WillCrit;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
         // Rider RELATIVO (+1) en vez de "2 fijo" (audit 2026-07-05): con la carta mejorada
         // (Vulnerable base 2) el max(2, 2) dejaba el rider muerto pero la carta seguia brillando.
-        var vulnerable = DynamicVars["Vulnerable"].IntValue + (HasCritReady ? 1 : 0);
+        var vulnerable = DynamicVars["Vulnerable"].IntValue + (Criticals.IsCritical(cardPlay) ? 1 : 0);
         await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, vulnerable, Owner.Creature, this);
     }
 

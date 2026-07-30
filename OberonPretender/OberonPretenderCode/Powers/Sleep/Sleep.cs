@@ -30,17 +30,33 @@ public static class Sleep
         return count;
     }
 
+    /// <summary>Version segura para glows y previews, que tambien se evaluan fuera de combate.</summary>
+    public static int SleepingEnemies(Creature ofPlayer) =>
+        ofPlayer.CombatState is { } combatState ? SleepingEnemies(combatState, ofPlayer) : 0;
+
     /// <summary>
     /// Duerme al objetivo: salta su proxima accion (Stun) y lo vuelve intocable hasta el final de su
     /// turno (SleepPower). NO duerme si tiene Insomnio o ya esta dormido. Devuelve true si durmio.
     /// </summary>
-    public static async Task<bool> TryApply(Creature target, int duration, Creature? applier, MegaCrit.Sts2.Core.Models.CardModel? source)
+    public static Task<bool> TryApply(
+        Creature target,
+        int duration,
+        Creature? applier,
+        MegaCrit.Sts2.Core.Models.CardModel? source) =>
+        TryApply(new BlockingPlayerChoiceContext(), target, duration, applier, source);
+
+    public static async Task<bool> TryApply(
+        PlayerChoiceContext choiceContext,
+        Creature target,
+        int duration,
+        Creature? applier,
+        MegaCrit.Sts2.Core.Models.CardModel? source)
     {
         if (target.IsDead || duration <= 0) return false;
         if (HasInsomnia(target) || IsAsleep(target)) return false;
 
         await CreatureCmd.Stun(target);
-        await PowerCmd.Apply<SleepPower>(new BlockingPlayerChoiceContext(), target, duration, applier, source);
+        await PowerCmd.Apply<SleepPower>(choiceContext, target, duration, applier, source);
         return true;
     }
 }

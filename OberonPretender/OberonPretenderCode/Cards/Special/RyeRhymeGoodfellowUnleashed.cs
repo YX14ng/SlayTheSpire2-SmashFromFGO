@@ -57,27 +57,27 @@ public sealed class RyeRhymeGoodfellowUnleashed() : OberonCard(0, CardType.Attac
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var overcharge = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
 
         // P1: consume hasta 5 puntos de Deuda → +2 daño AoE por punto (el recurso de firma alimenta el
         // ulti; patrón LieLikeVortigern: Forgive devuelve lo realmente consumido).
         var consumable = Math.Min(DebtPower.Of(Owner.Creature), DebtConsumeCap);
-        var consumed = await DebtPower.Forgive(Owner.Creature, consumable);
+        var consumed = await DebtPower.Forgive(choiceContext, Owner.Creature, consumable);
         var debtBonus = consumed * DynamicVars["PerDebt"].IntValue;
 
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge + debtBonus);
 
-        await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
 
-        await OberonExtensions.StripPositiveStrengthFromAll(Owner.Creature.CombatState, Owner.Creature);
+        await OberonExtensions.StripPositiveStrengthFromAll(choiceContext, Owner.Creature.CombatState!, Owner.Creature);
 
         // El sueño masivo vive en la sobrecarga (≥150): paga por FRECUENCIA, no por daño base.
         if (tier >= MassSleepTier)
         {
-            await OberonExtensions.SleepAll(Owner.Creature.CombatState, Owner.Creature, Powers.Sleep.Sleep.DefaultDuration, this);
+            await OberonExtensions.SleepAll(choiceContext, Owner.Creature.CombatState!, Owner.Creature, Powers.Sleep.Sleep.DefaultDuration, this);
         }
     }
 }

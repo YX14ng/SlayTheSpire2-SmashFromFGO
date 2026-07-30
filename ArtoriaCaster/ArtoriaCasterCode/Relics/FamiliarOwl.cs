@@ -19,30 +19,19 @@ public sealed class FamiliarOwl : ArtoriaRelic
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
 
-    private bool _attackPlayedThisTurn;
-
-    public override Task BeforeCombatStartLate()
-    {
-        _attackPlayedThisTurn = false;
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner == Owner && cardPlay.Card.Type == CardType.Attack)
         {
-            _attackPlayedThisTurn = true;
+            await FgoCombatState.SetTurn(context, Owner.Creature, 7, 1, cardPlay.Card);
         }
-        return Task.CompletedTask;
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != CombatSide.Player) return;
-        var played = _attackPlayedThisTurn;
-        _attackPlayedThisTurn = false;
-        if (played) return;
+        if (!participants.Contains(Owner.Creature)) return;
+        if (FgoCombatState.GetTurn(Owner.Creature, 7) != 0) return;
         Flash();
-        await Stars.Gain(Owner.Creature, 1, null);
+        await Stars.Gain(choiceContext, Owner.Creature, 1, null);
     }
 }

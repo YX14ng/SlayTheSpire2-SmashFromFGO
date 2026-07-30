@@ -21,7 +21,6 @@ public sealed class PrincesFlowerCrown : OberonRelic
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    private bool _usedThisCombat;
     private bool _pending;
     private int _debtBefore;
 
@@ -29,14 +28,14 @@ public sealed class PrincesFlowerCrown : OberonRelic
 
     public override Task BeforeCombatStartLate()
     {
-        _usedThisCombat = false;
         _pending = false;
         return base.BeforeCombatStartLate();
     }
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (!_usedThisCombat && cardPlay.Card.Owner == Owner && cardPlay.Card is ILoanCard)
+        if (FgoCombatState.GetCombat(Owner.Creature, 0) == 0 &&
+            cardPlay.Card.Owner == Owner && cardPlay.Card is ILoanCard)
         {
             _pending = true;
             _debtBefore = DebtPower.Of(Owner.Creature);
@@ -48,14 +47,14 @@ public sealed class PrincesFlowerCrown : OberonRelic
     {
         if (!_pending) return;
         _pending = false;
-        _usedThisCombat = true;
+        await FgoCombatState.SetCombat(context, Owner.Creature, 0, 1, cardPlay.Card);
 
         // Condona todo lo que este primer prestamo añadio (base + endulzante): la primera dosis es gratis.
         var added = DebtPower.Of(Owner.Creature) - _debtBefore;
         if (added > 0)
         {
             Flash();
-            await DebtPower.Forgive(Owner.Creature, added);
+            await DebtPower.Forgive(context, Owner.Creature, added);
         }
     }
 }

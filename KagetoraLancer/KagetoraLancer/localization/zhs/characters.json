@@ -1,0 +1,16 @@
+{
+  "KAGETORALANCER-KAGETORA.title": "长尾景虎",
+  "KAGETORALANCER-KAGETORA.titleObject": "军神",
+  "KAGETORALANCER-KAGETORA.description": "推进天、胸、足以统御战场，显现Arts宝具，并不可逆地升华为上杉谦信。",
+  "KAGETORALANCER-KAGETORA.pronounObject": "她",
+  "KAGETORALANCER-KAGETORA.possessiveAdjective": "她的",
+  "KAGETORALANCER-KAGETORA.pronounPossessive": "她的",
+  "KAGETORALANCER-KAGETORA.pronounSubject": "她",
+  "KAGETORALANCER-KAGETORA.goldMonologue": "运在天，铠在胸，功在足。至于黄金，仍应归入府库。",
+  "KAGETORALANCER-KAGETORA.eventDeathPrevention": "大将尚立，军阵便不会崩溃。",
+  "KAGETORALANCER-KAGETORA.aromaPrinciple": "正义每次只前进一步，但从不停下。",
+  "KAGETORALANCER-KAGETORA.cardsModifierTitle": "越后教条",
+  "KAGETORALANCER-KAGETORA.cardsModifierDescription": "使用景虎的卡池进行游戏。",
+  "KAGETORALANCER-KAGETORA.banter.alive.endTurnPing": "下一项教条已经清楚。前进。",
+  "KAGETORALANCER-KAGETORA.banter.dead.endTurnPing": "不要让军阵与大将一同死去。"
+}

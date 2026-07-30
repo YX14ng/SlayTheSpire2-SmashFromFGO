@@ -1,0 +1,12 @@
+{
+  "FGOCORE-HOLY_GRAIL_RITUAL.title": "超越极限之器",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.description": "一只金色圣杯静置于你面前，其中蕴含着足以让从者超越极限的力量。它不索求鲜血，也不要求愿望——只需要一份配得上的供奉。",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL.title": "[献上!Gold!金币] 进行圣杯转临。",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL_LOCKED.title": "[锁定] 需要!Gold!金币。",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.APPLY_GRAIL_LOCKED.description": "圣杯沉默不语。你的供奉尚且不足。",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.DECLINE.title": "[离开] 拒绝圣杯。",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.INITIAL.options.DECLINE.description": "有些界限的存在自有其理由。",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.APPLIED.description": "供奉消失在金色光芒中。圣杯回应了你，将你的灵基重塑至昔日极限之外。",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.DECLINED.description": "你转身离去。金色光芒无声地消散了。",
+  "FGOCORE-HOLY_GRAIL_RITUAL.pages.UNAVAILABLE.description": "仪式已无法完成。圣杯的光芒逐渐退去。"
+}

@@ -7,5 +7,8 @@
   "TIAMATBEAST-MOTHERS_TEARS.flavor": "Llora por cada hijo que consume, y esa pena es lo que la mantiene en pie.",
   "TIAMATBEAST-KING_HASSANS_HORN.title": "Cuerno de King Hassan",
   "TIAMATBEAST-KING_HASSANS_HORN.description": "#Al inicio del combate, ganás Agallas: la primera vez que caerías, revivís a 1 HP y parís 3 Laḫmu.",
-  "TIAMATBEAST-KING_HASSANS_HORN.flavor": "Solo otorgándole la muerte se la vence, así que ella le responde a la muerte con más hijos."
+  "TIAMATBEAST-KING_HASSANS_HORN.flavor": "Solo otorgándole la muerte se la vence, así que ella le responde a la muerte con más hijos.",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.title": "Santo Grial del Mar de Vida",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.description": "#Palingénesis: ganás !MaxHp! de Vida máxima. Mientras lo tengas, los límites se rompen: el Vínculo puede llegar al nivel 12 y el nivel de NP a 6.",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.flavor": "La madre de la vida acuna el recipiente que promete vida sin límites."
 }

@@ -21,7 +21,7 @@ public sealed class BedtimeStory() : OberonCard(1, CardType.Skill, CardRarity.Co
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].IntValue, Owner);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Np"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Np"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Np"].UpgradeValueBy(20m);

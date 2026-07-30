@@ -42,7 +42,14 @@ assets/reference/ce/*.json
 assets/reference/fanart/*
 !assets/reference/fanart/CREDITS.txt
 /decompiled/
-CoopDeterminismPatch/Directory.Build.props
-
 # Staging de build (separación workspace/juego)
 /dist/
+
+# Referencias locales de compatibilidad entre ramas de Steam (binarios del juego, no versionar)
+/.compat/
+**/.compat/
+
+# Caches y notas locales de herramientas/agentes
+**/__pycache__/
+*.pyc
+/.learnings/

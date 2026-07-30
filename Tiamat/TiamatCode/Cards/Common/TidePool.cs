@@ -25,7 +25,7 @@ public sealed class TidePool() : TiamatCard(1, CardType.Skill, CardRarity.Common
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await BlockRetention.GainBulwarkBlock(this, Owner.Creature, DynamicVars.Block.BaseValue);
-        await Curses.Apply(cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+        await Curses.Apply(choiceContext, cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

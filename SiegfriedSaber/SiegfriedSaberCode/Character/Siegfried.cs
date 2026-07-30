@@ -63,6 +63,8 @@ public class Siegfried : PlaceholderCharacterModel
     [
         $"{MainFile.ResPath}/character/siegfried_frames.tres",
     ];
+    public override string CustomMerchantAnimPath => $"{MainFile.ResPath}/character/siegfried_merchant.tscn";
+    public override string CustomRestSiteAnimPath => $"{MainFile.ResPath}/character/siegfried_rest.tscn";
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/siegfried_select_bg.tscn";
 
     public override Control CustomIcon

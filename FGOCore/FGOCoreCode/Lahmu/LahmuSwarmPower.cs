@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -33,6 +34,29 @@ public sealed class LahmuSwarmPower : FGOCorePower
 
     public override bool ShouldScaleInMultiplayer => false;
 
+    // PowerModel does not inject custom runtime values into its normal description. Route mutable
+    // instances through Description so the hover tip can show the exact next Block and bite totals.
+    protected override string SmartDescriptionLocKey => $"{Id.Entry}.runtimeDescription";
+
+    public override LocString Description
+    {
+        get
+        {
+            if (!IsMutable) return base.Description;
+
+            var nurture = Lahmu.NurtureOf(Owner);
+            var biteCount = GetBiteCount();
+            var biteDamage = Amount * (BitePerLahmu + nurture);
+            var description = new LocString("powers", $"{Id.Entry}.smartDescription");
+            description.Add("Nurture", nurture);
+            description.Add("Block", Amount * (BlockPerLahmu + nurture));
+            description.Add("BiteDamage", biteDamage);
+            description.Add("BiteCount", biteCount);
+            description.Add("TotalBiteDamage", biteDamage * biteCount);
+            return description;
+        }
+    }
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<LahmuNurturePower>(), HoverTipFactory.FromPower<CursePower>()];
 
@@ -55,21 +79,25 @@ public sealed class LahmuSwarmPower : FGOCorePower
     // (entre tu último input y los ataques enemigos): mismo objetivo (más maldito), mismo daño.
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side || Owner.IsDead || Amount <= 0) return;
+        if (!participants.Contains(Owner) || Owner.IsDead || Amount <= 0) return;
+        if (Owner.CombatState is not CombatState combatState) return;
 
         var nurture = Lahmu.NurtureOf(Owner);
         Flash();
 
         // La forma Bestia muerde DOS veces (ISwarmBiteAmplifier.ExtraBites=1). Se re-resuelve el
         // objetivo en cada mordida porque el más maldito puede morir entre golpes.
-        var bites = 1 + Owner.GetPowerInstances<PowerModel>().OfType<ISwarmBiteAmplifier>().Sum(a => a.ExtraBites);
+        var bites = GetBiteCount();
         for (var i = 0; i < bites; i++)
         {
-            var target = CursesHelper.MostCursed((CombatState)Owner.CombatState, Owner)
-                         ?? ((CombatState)Owner.CombatState).GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
+            var target = CursesHelper.MostCursed(combatState, Owner)
+                         ?? combatState.GetOpponentsOf(Owner).FirstOrDefault(e => !e.IsDead);
             if (target == null || target.IsDead) break;
             await CreatureCmd.Damage(choiceContext, target,
-                Amount * (BitePerLahmu + nurture), ValueProp.Unpowered, Owner, null);
+                Amount * (BitePerLahmu + nurture), ValueProp.Unpowered, Owner);
         }
     }
+
+    private int GetBiteCount() =>
+        1 + Owner.GetPowerInstances<PowerModel>().OfType<ISwarmBiteAmplifier>().Sum(a => a.ExtraBites);
 }

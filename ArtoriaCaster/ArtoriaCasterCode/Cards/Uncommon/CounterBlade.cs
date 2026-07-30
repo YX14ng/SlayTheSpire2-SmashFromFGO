@@ -29,7 +29,7 @@ public sealed class CounterBlade() : ArtoriaCard(1, CardType.Attack, CardRarity.
 
         var damage = DynamicVars.Damage.BaseValue +
                      DynamicVars["PerHit"].BaseValue * AntiPurgePower.FullyStoppedHits(Owner.Creature);
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

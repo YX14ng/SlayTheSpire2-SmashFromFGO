@@ -16,7 +16,7 @@ public sealed class MobileWallPower : MashShielderPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (Owner != dealer || !props.IsPoweredAttack()) return 0m;
         return Amount;
@@ -32,7 +32,7 @@ public sealed class MobileWallPower : MashShielderPower
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == Owner.Side)
+        if (participants.Contains(Owner))
         {
             await PowerCmd.Remove(this);
         }

@@ -10,7 +10,8 @@ public sealed class ConvictionCharge() : SiegfriedCard(0, CardType.Skill, CardRa
 {
     public const int NpGain = 50;
 
-    public async Task ApplyConviction() => await NpCharge.Gain(Owner.Creature, NpGain, this);
+    public async Task ApplyConviction(PlayerChoiceContext choiceContext) =>
+        await NpCharge.Gain(choiceContext, Owner.Creature, NpGain, this);
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) => Task.CompletedTask;
 }

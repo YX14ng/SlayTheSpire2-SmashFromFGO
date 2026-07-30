@@ -15,8 +15,5 @@ namespace OberonPretender.OberonPretenderCode.Powers.Forms;
 /// </summary>
 public sealed class WinterPrincePower : OberonFormPower
 {
-    // FramesPath = null (audit 2026-07-04): el .tres "oberon_frames_winter" no existe en el repo — el
-    // swap declaraba un recurso inexistente (no-op con log de error). null = mantener el sprite
-    // actual. TODO pase de arte: generar el .tres y restaurar el path.
-    public override string? FramesPath => null;
+    public override string FramesPath => $"{MainFile.ResPath}/character/oberon_frames_winter.tres";
 }

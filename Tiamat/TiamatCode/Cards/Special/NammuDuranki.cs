@@ -59,7 +59,7 @@ public sealed class NammuDuranki() : TiamatCard(0, CardType.Attack, CardRarity.E
         var creature = Owner.Creature;
 
         // 1) Consume TODA la carga; tier = lo consumido (>= 100). La ventana dura clamp(tier/100,1,3).
-        var tier = await NpCharge.ConsumeAllForNpCard(creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, creature, ChargeCost, this);
         var duration = Math.Clamp(tier / 100, 1, 3);
 
         // 2) Limpia TODOS tus debuffs (preserva recursos y formas vía Cleanse).
@@ -67,15 +67,15 @@ public sealed class NammuDuranki() : TiamatCard(0, CardType.Attack, CardRarity.E
 
         // 3) AoE FIJO + Sello de Habilidad a todos los enemigos.
         var damage = DynamicVars["BaseDamage"].IntValue + tier / DynamicVars["PerTen"].IntValue;
-        foreach (var enemy in creature.CombatState.GetOpponentsOf(creature).ToList())
+        foreach (var enemy in creature.CombatState!.GetOpponentsOf(creature).ToList())
         {
             if (enemy.IsDead) continue;
-            await DamageCmd.Attack(damage).FromCard(this).Targeting(enemy)
+            await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
                 .WithHitFx("vfx/vfx_starry_impact")
                 .Execute(choiceContext);
             if (enemy.IsAlive)
             {
-                await Sello.Apply(enemy, DynamicVars["Seal"].IntValue, creature, this);
+                await Sello.Apply(choiceContext, enemy, DynamicVars["Seal"].IntValue, creature, this);
             }
         }
 
@@ -88,6 +88,6 @@ public sealed class NammuDuranki() : TiamatCard(0, CardType.Attack, CardRarity.E
         await PowerCmd.Apply<TiamatBeastWindowPower>(choiceContext, creature, duration, creature, this);
 
         // 6) Cierre de recursos de la ventana-NP (+1⚡, robar 2) — factorizado en FGOCore.
-        await NpWindow.ReturnResources(creature, 1, 2);
+        await NpWindow.ReturnResources(choiceContext, creature, 1, 2);
     }
 }

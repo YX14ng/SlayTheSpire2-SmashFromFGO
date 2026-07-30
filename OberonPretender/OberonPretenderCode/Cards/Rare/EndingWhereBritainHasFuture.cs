@@ -27,7 +27,7 @@ public sealed class EndingWhereBritainHasFuture() : OberonCard(2, CardType.Skill
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        await DebtPower.Forgive(Owner.Creature, DynamicVars["Debt"].IntValue);
+        await DebtPower.Forgive(choiceContext, Owner.Creature, DynamicVars["Debt"].IntValue);
     }
 
     protected override void OnUpgrade()

@@ -35,7 +35,7 @@ public sealed class EyeOfTheRedStar() : TiamatCard(1, CardType.Skill, CardRarity
         {
             amount += DynamicVars["Overflow"].IntValue;
         }
-        await Curses.Apply(cardPlay.Target, amount, Owner.Creature, this);
+        await Curses.Apply(choiceContext, cardPlay.Target, amount, Owner.Creature, this);
         // −Fuerza con el patrón vanilla Malaise (StrengthPower negativo).
         await PowerCmd.Apply<StrengthPower>(choiceContext, cardPlay.Target, -DynamicVars["Strength"].BaseValue, Owner.Creature, this);
     }

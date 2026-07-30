@@ -29,7 +29,7 @@ public sealed class PromiseUnderTheStorm() : ArtoriaCard(2, CardType.Skill, Card
         await PowerCmd.Apply<AntiPurgePower>(choiceContext, Owner.Creature, DynamicVars["AntiPurge"].BaseValue, Owner.Creature, this);
         if (DynamicVars["Stars"].IntValue > 0)
         {
-            await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+            await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         }
 
         // Co-op: la promesa cubre a todo el party con 1 Anti-Purga (las ★ son self, no compartibles).
@@ -39,6 +39,6 @@ public sealed class PromiseUnderTheStorm() : ArtoriaCard(2, CardType.Skill, Card
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Stars"].UpgradeValueBy(2m);
+        DynamicVars["Stars"].UpgradeValueBy(20m);
     }
 }

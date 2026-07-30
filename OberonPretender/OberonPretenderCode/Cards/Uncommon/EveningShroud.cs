@@ -30,17 +30,17 @@ public sealed class EveningShroud() : OberonCard(1, CardType.Skill, CardRarity.U
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["Charge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["Charge"].IntValue, this);
         var power = await PowerCmd.Apply<EveningShroudPower>(choiceContext, Owner.Creature, DynamicVars["Duration"].BaseValue, Owner.Creature, this);
         // Math.Max (audit 2026-07-04): una copia base tras la mejorada degradaba el % de TODOS los stacks.
         if (power != null) power.BonusPct = Math.Max(power.BonusPct, DynamicVars["BonusPct"].IntValue);
         // Co-op (DESIGN-OBERON §6.3, el SOPORTE): el Velo cubre a la party — cada aliado recibe el mismo
         // buff de daño NP (+%) y +10 de Carga NP. En 1 jugador el foreach queda vacío (fiel a 1 jugador).
-        foreach (var ally in Owner.Creature.CombatState.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
+        foreach (var ally in Owner.Creature.CombatState!.PlayerCreatures.Where(c => c != Owner.Creature && !c.IsDead))
         {
             var ap = await PowerCmd.Apply<EveningShroudPower>(choiceContext, ally, DynamicVars["Duration"].BaseValue, Owner.Creature, this);
             if (ap != null) ap.BonusPct = Math.Max(ap.BonusPct, DynamicVars["BonusPct"].IntValue);
-            await NpCharge.Gain(ally, 10, this);
+            await NpCharge.Gain(choiceContext, ally, 10, this);
         }
     }
 

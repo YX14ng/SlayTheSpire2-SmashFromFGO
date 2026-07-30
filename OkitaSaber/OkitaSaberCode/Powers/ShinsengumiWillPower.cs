@@ -27,30 +27,24 @@ public sealed class ShinsengumiWillPower : OkitaPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private int _attacksThisTurn;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (side == Owner.Side) _attacksThisTurn = 0;
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner?.Creature == Owner) _attacksThisTurn++;
-        return Task.CompletedTask;
+        if (cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner?.Creature == Owner)
+            await FgoCombatState.IncrementTurn(
+                context, Owner, 3, AttacksRequired, cardPlay.Card, width: 2);
     }
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side || _attacksThisTurn < AttacksRequired) return;
+        if (!participants.Contains(Owner) ||
+            FgoCombatState.GetTurn(Owner, 3, 2) < AttacksRequired) return;
         Flash();
         for (var i = 0; i < Amount; i++)
         {
             await CreatureCmd.GainBlock(Owner, Block, ValueProp.Move, null, false);
-            await NpCharge.Gain(Owner, NpGainValue, null);
+            await NpCharge.Gain(choiceContext, Owner, NpGainValue, null);
         }
     }
 }

@@ -32,25 +32,16 @@ public sealed class WinterQueenFormPower : MorganFormPower, ICursePreserver, ICu
 
     public int ExtraCurse => 1;
 
-    private bool _npThisTurn;
     private int _pendingSentence;
-
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        await base.AfterSideTurnStart(side, participants, combatState);
-        if (side == CombatSide.Player)
-        {
-            _npThisTurn = false;
-        }
-    }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Players.Player player)
     {
         if (player != Owner.Player || Owner.Player == null) return;
+        if (Owner.CombatState is not { } combatState) return;
         Flash();
-        foreach (var enemy in Owner.CombatState.GetOpponentsOf(Owner).Where(e => !e.IsDead).ToList())
+        foreach (var enemy in combatState.GetOpponentsOf(Owner).Where(e => !e.IsDead).ToList())
         {
-            await Curses.Apply(enemy, RainWitchFormPower.SpreadPerTurn, null, null);
+            await Curses.Apply(choiceContext, enemy, RainWitchFormPower.SpreadPerTurn, null, null);
         }
     }
 
@@ -72,8 +63,8 @@ public sealed class WinterQueenFormPower : MorganFormPower, ICursePreserver, ICu
     }
 
     // PURO (no muta): ver FairyQueenFormPower — el hook corre también en preview y NO recibe el
-    // previewMode, así que el bono se limpia en AfterDamageReceived (real) y no en una preview.
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    // previewMode, así que el bono se limpia en AfterDamageGiven (real) y no en una preview.
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (Owner != dealer || !props.IsPoweredAttack() || _pendingSentence <= 0) return 0m;
         return _pendingSentence;
@@ -88,21 +79,27 @@ public sealed class WinterQueenFormPower : MorganFormPower, ICursePreserver, ICu
         return Task.CompletedTask;
     }
 
-    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer,
+        DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
     {
-        await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
-
-        // Limpiar la Sentencia tras la primera pegada REAL (anti doble-dip en multi-hit); ver FairyQueen.
+        // Este callback también corre para golpes letales, a diferencia de AfterDamageReceived.
         if (dealer == Owner && !target.IsPlayer && props.IsPoweredAttack() && _pendingSentence > 0)
         {
             _pendingSentence = 0;
         }
 
-        if (_npThisTurn || dealer != Owner || target.IsPlayer) return;
+        return Task.CompletedTask;
+    }
+
+    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
+
+        if (FgoCombatState.GetTurn(Owner, 3) != 0 || dealer != Owner || target.IsPlayer) return;
         if (!props.IsPoweredAttack() || result.UnblockedDamage <= 0) return;
 
-        _npThisTurn = true;
+        await FgoCombatState.SetTurn(choiceContext, Owner, 3, 1, cardSource);
         Flash();
-        await NpCharge.Gain(Owner, FairyQueenFormPower.NpOnDamage, null);
+        await NpCharge.Gain(choiceContext, Owner, FairyQueenFormPower.NpOnDamage, null);
     }
 }

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Texture2D" path="res://MashShielder/character/select_bg_charagraph.png" id="fanart"]
+[ext_resource type="Texture2D" path="res://MashShielder/character/select_bg_charagraph.png" id="official_art"]
 
 [node name="MashSelectBg" type="Control"]
 anchors_preset = 15
@@ -17,16 +17,16 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.04, 0.035, 0.08, 1)
 
-[node name="Fanart" type="TextureRect" parent="."]
+[node name="OfficialArt" type="TextureRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 modulate = Color(0.58, 0.55, 0.62, 1)
-texture = ExtResource("fanart")
+texture = ExtResource("official_art")
 expand_mode = 1
-stretch_mode = 6
+stretch_mode = 5
 
 [node name="Gradient" type="ColorRect" parent="."]
 anchors_preset = 15

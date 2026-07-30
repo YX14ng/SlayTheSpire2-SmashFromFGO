@@ -24,6 +24,6 @@ public sealed class UsurersPurse : OberonRelic
     {
         if (cardPlay.Card.Owner != Owner || cardPlay.Card is not ILoanCard) return;
         Flash();
-        await CritStars.Gain(Owner.Creature, ExtraStars, null);
+        await CritStars.Gain(context, Owner.Creature, ExtraStars, null);
     }
 }

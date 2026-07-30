@@ -24,10 +24,10 @@ public sealed class CamlannGutsPower : GutsPower
 
     protected override async Task OnTriggered(PlayerChoiceContext choiceContext)
     {
-        await NpCharge.Gain(Owner, NpOnTrigger, null);
+        await NpCharge.Gain(choiceContext, Owner, NpOnTrigger, null);
         if (Upgraded)
         {
-            await CritStars.Gain(Owner, StarsOnTrigger, null);
+            await CritStars.Gain(choiceContext, Owner, StarsOnTrigger, null);
         }
     }
 }

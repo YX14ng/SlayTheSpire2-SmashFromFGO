@@ -26,7 +26,7 @@ public sealed class SuppressingShot() : MashShielderCard(1, CardType.Attack, Car
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await BlackBarrel.Hit(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, Owner.Creature, this);
+        await BlackBarrel.Hit(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue, Owner.Creature, this);
         if (!cardPlay.Target.IsDead)
         {
             await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);

@@ -81,6 +81,8 @@ public class Mordred : PlaceholderCharacterModel
     [
         $"{MainFile.ResPath}/character/mordred_frames.tres",
     ];
+    public override string CustomMerchantAnimPath => $"{MainFile.ResPath}/character/mordred_merchant.tscn";
+    public override string CustomRestSiteAnimPath => $"{MainFile.ResPath}/character/mordred_rest.tscn";
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/mordred_select_bg.tscn";
 
     public override Control CustomIcon

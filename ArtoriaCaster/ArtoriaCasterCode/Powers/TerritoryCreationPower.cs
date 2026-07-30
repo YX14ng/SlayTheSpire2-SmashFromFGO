@@ -21,31 +21,20 @@ public sealed class TerritoryCreationPower : ArtoriaPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    private int _skillsThisTurn;
-
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player)
-        {
-            _skillsThisTurn = 0;
-        }
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner?.Creature == Owner && cardPlay.Card.Type == CardType.Skill)
         {
-            _skillsThisTurn++;
+            await FgoCombatState.IncrementTurn(
+                context, Owner, 0, SkillThreshold, cardPlay.Card, width: 2);
         }
-        return Task.CompletedTask;
     }
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != CombatSide.Player) return;
+        if (!participants.Contains(Owner)) return;
         Flash();
-        var block = _skillsThisTurn >= SkillThreshold ? Amount * 2 : Amount;
+        var block = FgoCombatState.GetTurn(Owner, 0, 2) >= SkillThreshold ? Amount * 2 : Amount;
         await CreatureCmd.GainBlock(Owner, block, ValueProp.Unpowered, null);
     }
 }

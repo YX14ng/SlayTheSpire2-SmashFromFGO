@@ -1,6 +1,6 @@
 {
   "SIEGFRIEDSABER-LINDEN_LEAF.title": "Linden Leaf",
-  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#At the start of each combat, gain 2 Dragon Scales. The first attack that reaches you each turn ignores them. When a reduced attack still deals 1 or more damage, gain 5 NP Charge (up to 3 times per turn).",
+  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#At the start of each combat, gain 2 Dragon Scales. The first attack that reaches you each turn ignores 1 Scale; later attacks use the full reduction. When one of those later attacks is reduced and still deals damage, gain 5 NP Charge (up to 3 times per turn). The counter shows NP level: each level raises maximum NP Charge by 100 and NP damage by 15%.",
   "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "A single leaf clung to his back as he bathed in the dragon's blood. One palm of skin the blood never touched — and a hero's only death.",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.title": "Das Rheingold",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.description": "#The first NP card you play each turn: gain 20 Critical Stars and draw 1.",
@@ -19,5 +19,8 @@
   "SIEGFRIEDSABER-RHINEGOLD_SHARD.flavor": "A sliver of the cursed Nibelung hoard he won from the worm's hollow.",
   "SIEGFRIEDSABER-FAFNIRS_BANE.title": "Fafnir's Bane",
   "SIEGFRIEDSABER-FAFNIRS_BANE.description": "#While your *Dragon Scales are 3 or higher, your Dragon Slayer cards deal 5 more damage.",
-  "SIEGFRIEDSABER-FAFNIRS_BANE.flavor": "The dragon's slayer, dragon-blooded himself — his edge bites deepest into his own kind."
+  "SIEGFRIEDSABER-FAFNIRS_BANE.flavor": "The dragon's slayer, dragon-blooded himself — his edge bites deepest into his own kind.",
+  "SIEGFRIEDSABER-HOLY_GRAIL_OF_THE_DRAGON_SLAYER.title": "Holy Grail of the Dragon Slayer",
+  "SIEGFRIEDSABER-HOLY_GRAIL_OF_THE_DRAGON_SLAYER.description": "#Palingenesis: gain !MaxHp! Max HP. While held, limits break: Bond can reach level 12 and NP level can reach 6.",
+  "SIEGFRIEDSABER-HOLY_GRAIL_OF_THE_DRAGON_SLAYER.flavor": "A golden vessel tempered by the wish of a hero who never asked for one of his own."
 }

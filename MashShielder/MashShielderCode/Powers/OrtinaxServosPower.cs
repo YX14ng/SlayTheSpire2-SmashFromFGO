@@ -20,24 +20,19 @@ public sealed class OrtinaxServosPower : MashShielderPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    private int _attacksThisTurn;
-
-    protected override void OnPlayerTurnStartReset() => _attacksThisTurn = 0;
-
-    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner?.Creature == Owner)
         {
-            _attacksThisTurn++;
+            await FgoCombatState.IncrementTurn(context, Owner, 1, 2, cardPlay.Card, width: 2);
         }
-        return Task.CompletedTask;
     }
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != CombatSide.Player || Owner.Side != side || _attacksThisTurn < 2) return;
+        if (!participants.Contains(Owner) || FgoCombatState.GetTurn(Owner, 1, 2) < 2) return;
         Flash();
         await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Move, null);
-        await NpCharge.Gain(Owner, NpPerProc, null);
+        await NpCharge.Gain(choiceContext, Owner, NpPerProc, null);
     }
 }

@@ -33,7 +33,7 @@ public sealed class KnightsSteadfastness() : MordredCard(2, CardType.Skill, Card
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
         var np = Forms.InMaskedForm(Owner.Creature) ? DynamicVars["NpCharge"].IntValue : DynamicVars["BaseNp"].IntValue;
-        await NpCharge.Gain(Owner.Creature, np, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, np, this);
     }
 
     protected override void OnUpgrade()

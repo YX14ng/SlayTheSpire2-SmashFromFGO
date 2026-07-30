@@ -1,11 +1,14 @@
 {
-  "TIAMATBEAST-SEA_OF_LIFE_WOMB.title": "生命之海之宫",
-  "TIAMATBEAST-SEA_OF_LIFE_WOMB.description": "#每场战斗开始时，进入蛇蝎美人形态，获得10点NP充能并孕育1只拉赫穆。每个敌人首次被施加诅咒时，孕育1只拉赫穆。",
+  "TIAMATBEAST-SEA_OF_LIFE_WOMB.title": "生命之海的母胎",
+  "TIAMATBEAST-SEA_OF_LIFE_WOMB.description": "#每场战斗开始时，进入魔性之女形态，获得10点宝具值并孕育1只拉赫穆。每个敌人首次被施加诅咒时，孕育1只拉赫穆。",
   "TIAMATBEAST-SEA_OF_LIFE_WOMB.flavor": "从创世被弃的子宫中，生命仍在涌出——无尽、无人所求，且属于她。",
   "TIAMATBEAST-MOTHERS_TEARS.title": "母亲的眼泪",
   "TIAMATBEAST-MOTHERS_TEARS.description": "#每当你吞噬拉赫穆时，每吞噬1只回复2点生命。",
   "TIAMATBEAST-MOTHERS_TEARS.flavor": "她为每个吞噬的孩子哭泣——而正是那份悲恸支撑着她。",
-  "TIAMATBEAST-KING_HASSANS_HORN.title": "King Hassan之角",
+  "TIAMATBEAST-KING_HASSANS_HORN.title": "山中老人之角",
   "TIAMATBEAST-KING_HASSANS_HORN.description": "#战斗开始时获得坚韧：你第一次将要死亡时，以1点生命复活并孕育3只拉赫穆。",
-  "TIAMATBEAST-KING_HASSANS_HORN.flavor": "唯有「赐予死亡」方能将她击倒——于是她以更多孩子回应死亡。"
+  "TIAMATBEAST-KING_HASSANS_HORN.flavor": "唯有「赐予死亡」方能将她击倒——于是她以更多孩子回应死亡。",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.title": "生命之海的圣杯",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.description": "#圣杯转临：获得!MaxHp!点最大生命。持有期间突破界限：羁绊最高可达12级，宝具等级最高可达6级。",
+  "TIAMATBEAST-HOLY_GRAIL_OF_THE_SEA_OF_LIFE.flavor": "生命之母怀抱着许诺无尽生命的容器。"
 }

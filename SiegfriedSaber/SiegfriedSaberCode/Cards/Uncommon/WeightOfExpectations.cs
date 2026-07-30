@@ -25,7 +25,8 @@ public sealed class WeightOfExpectations() : SiegfriedCard(1, CardType.Power, Ca
     {
         var power = await PowerCmd.Apply<WeightOfExpectationsPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
         // Math.Max (audit 2026-07-04): una copia base tras la mejorada degradaba el NP de TODOS los stacks.
-        if (power != null) power.NpPerTrigger = Math.Max(power.NpPerTrigger, DynamicVars["NpGain"].IntValue);
+        if (power != null)
+            await power.Configure(choiceContext, DynamicVars["NpGain"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["NpGain"].UpgradeValueBy(10m);

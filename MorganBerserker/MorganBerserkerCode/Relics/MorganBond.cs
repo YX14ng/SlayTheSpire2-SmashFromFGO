@@ -40,7 +40,8 @@ public sealed class MorganBond : BondRelic
 
         var curse = StartingCurse(Level);
         if (curse <= 0) return;
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        if (Owner.Creature.CombatState is not { } combatState) return;
+        foreach (var enemy in combatState.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead)
             {

@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 namespace MashShielder.MashShielderCode.Extensions;
 
@@ -21,12 +22,13 @@ public static class BlockExtensions
     /// Consume TODO el Bloqueo de la criatura y devuelve cuánto consumió (0 si no tenía).
     /// Sólo emite <see cref="CreatureCmd.LoseBlock"/> si había Bloqueo (&gt; 0).
     /// </summary>
-    public static async Task<int> ConsumeAllBlock(this Creature creature)
+    public static async Task<int> ConsumeAllBlock(this Creature creature, PlayerChoiceContext choiceContext,
+        Creature? remover = null)
     {
         var block = creature.Block;
         if (block > 0)
         {
-            await CreatureCmd.LoseBlock(creature, block);
+            await CreatureCmdCompatibility.LoseBlock(choiceContext, creature, block, remover);
         }
         return block;
     }
@@ -35,12 +37,13 @@ public static class BlockExtensions
     /// Consume hasta <paramref name="cap"/> de Bloqueo y devuelve cuánto consumió (0 si no tenía).
     /// Sólo emite <see cref="CreatureCmd.LoseBlock"/> si el monto a consumir es &gt; 0.
     /// </summary>
-    public static async Task<int> ConsumeBlockUpTo(this Creature creature, int cap)
+    public static async Task<int> ConsumeBlockUpTo(this Creature creature, int cap,
+        PlayerChoiceContext choiceContext, Creature? remover = null)
     {
         var consumed = creature.BlockCappedAt(cap);
         if (consumed > 0)
         {
-            await CreatureCmd.LoseBlock(creature, consumed);
+            await CreatureCmdCompatibility.LoseBlock(choiceContext, creature, consumed, remover);
         }
         return consumed;
     }

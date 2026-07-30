@@ -13,7 +13,7 @@ public sealed class LetsTryIt() : ArtoriaCard(0, CardType.Skill, CardRarity.Comm
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Stars", 1),
+        new DynamicVar("Stars", 10),
         new DynamicVar("NpCharge", 5)
     ];
 
@@ -22,12 +22,12 @@ public sealed class LetsTryIt() : ArtoriaCard(0, CardType.Skill, CardRarity.Comm
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await Stars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Stars"].UpgradeValueBy(1m);
+        DynamicVars["Stars"].UpgradeValueBy(10m);
     }
 }

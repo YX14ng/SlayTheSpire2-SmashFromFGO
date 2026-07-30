@@ -1,6 +1,6 @@
 {
   "SIEGFRIEDSABER-LINDEN_LEAF.title": "피나무 잎",
-  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#각 전투 시작 시 용의 비늘을 2 얻습니다. 매 턴 처음으로 내게 닿는 공격은 용의 비늘을 무시합니다. 감소된 공격이 여전히 1 이상의 피해를 주면 NP 충전을 5 얻습니다 /(턴마다 최대 3회).",
+  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#전투 시작 시 용의 비늘을 2 얻습니다. 매 턴 처음 적중하는 공격은 비늘 1만 무시하며, 이후 공격에는 전체 감소량이 적용됩니다. 이후 공격이 감소된 뒤에도 피해를 주면 NP 충전을 5 얻습니다 /(턴당 최대 3회/). 카운터는 NP 레벨이며, 레벨당 최대 NP 충전이 100, NP 피해가 15% 증가합니다.",
   "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "용의 피로 목욕할 때 잎 하나가 그의 등에 붙었습니다. 피가 닿지 않은 손바닥만 한 피부, 그리고 영웅의 유일한 죽음입니다.",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.title": "라인의 황금",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.description": "#매 턴 처음 사용하는 NP 카드: 크리티컬 스타를 20 얻고 카드를 1장 뽑습니다.",

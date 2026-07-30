@@ -2,6 +2,7 @@ using FGOCore.FGOCoreCode.Curses;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -23,14 +24,6 @@ public sealed class MidsummerNightsDreamEx : OberonRelic
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    private bool _usedThisCombat;
-
-    public override Task BeforeCombatStartLate()
-    {
-        _usedThisCombat = false;
-        return base.BeforeCombatStartLate();
-    }
-
     public override bool TryModifyPowerAmountReceived(PowerModel canonicalPower, Creature target, decimal amount, Creature? applier, out decimal modifiedAmount)
     {
         modifiedAmount = amount;
@@ -39,19 +32,30 @@ public sealed class MidsummerNightsDreamEx : OberonRelic
         // (1) Inmunidad a Maldicion: SIEMPRE se anula la Maldicion entrante (permanente, fuera del gate 1/combate).
         if (canonicalPower is CursePower && canonicalPower.GetTypeForAmount(amount) == PowerType.Debuff)
         {
-            Flash();
             modifiedAmount = 0m;
             return true;
         }
 
         // (2) SOLO Debil/Fragil/Vulnerable (la resistencia mental EX), 1/combate.
-        if (_usedThisCombat) return false;
+        if (FgoCombatState.GetCombat(Owner.Creature, 1) != 0) return false;
         if (canonicalPower is not (WeakPower or FrailPower or VulnerablePower)) return false;
         if (canonicalPower.GetTypeForAmount(amount) != PowerType.Debuff) return false;
 
-        _usedThisCombat = true;
-        Flash();
         modifiedAmount = 0m;
         return true;
+    }
+
+    public override async Task AfterModifyingPowerAmountReceived(PowerModel power)
+    {
+        if (power is CursePower)
+        {
+            Flash();
+            return;
+        }
+
+        if (FgoCombatState.GetCombat(Owner.Creature, 1) != 0) return;
+        await FgoCombatState.SetCombat(
+            new BlockingPlayerChoiceContext(), Owner.Creature, 1, 1);
+        Flash();
     }
 }

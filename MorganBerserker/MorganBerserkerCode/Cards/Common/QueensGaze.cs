@@ -23,7 +23,7 @@ public sealed class QueensGaze() : MorganCard(0, CardType.Skill, CardRarity.Comm
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()

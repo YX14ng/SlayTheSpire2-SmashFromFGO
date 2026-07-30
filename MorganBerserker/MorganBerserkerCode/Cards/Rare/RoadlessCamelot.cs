@@ -11,8 +11,11 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 /// ROADLESS CAMELOT (业已无法抵达的理想乡) — Morgan's real NP (min 70, consumes ALL):
 /// AoE damage + Curse to ALL + Blessing of Rhongomyniad (the "Overcharge +1").
 /// </summary>
-public sealed class RoadlessCamelot() : MorganCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
+public sealed class RoadlessCamelot() : MorganCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), ICommandTyped
 {
+    CommandType ICommandTyped.CommandType => CommandType.Buster;
+    public bool IsNoblePhantasm => true;
+
     public const int ChargeCost = 70;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -32,18 +35,18 @@ public sealed class RoadlessCamelot() : MorganCard(2, CardType.Attack, CardRarit
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var tier = await NpCharge.ConsumeAllForNpCard(Owner.Creature, ChargeCost, this);
+        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
         var bonus = (tier - ChargeCost) / 10 * DynamicVars["PerTen"].IntValue;
         var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + bonus);
 
-        await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(Owner.Creature.CombatState)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).TargetingAllOpponents(Owner.Creature.CombatState!)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
-        foreach (var enemy in Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature))
+        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature))
         {
             if (!enemy.IsDead)
             {
-                await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+                await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
             }
         }
         await PowerCmd.Apply<OverchargeBlessingPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);

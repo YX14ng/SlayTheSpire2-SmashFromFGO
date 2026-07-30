@@ -17,6 +17,6 @@ public sealed class AvalonBenedictionPower : ArtoriaPower
     {
         if (player != Owner.Player || Owner.Player == null) return;
         Flash();
-        await NpCharge.Gain(Owner, Amount, null);
+        await NpCharge.Gain(choiceContext, Owner, Amount, null);
     }
 }

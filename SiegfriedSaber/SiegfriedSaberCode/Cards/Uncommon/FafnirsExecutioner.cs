@@ -31,7 +31,7 @@ public sealed class FafnirsExecutioner() : SiegfriedCard(2, CardType.Attack, Car
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var scaleBonus = CappedScaleBonus(4, ScaleCap);
         var tribeBonus = DragonTrait.IsDragon(cardPlay.Target) ? TribeBonus : 0;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + scaleBonus + tribeBonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + scaleBonus + tribeBonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

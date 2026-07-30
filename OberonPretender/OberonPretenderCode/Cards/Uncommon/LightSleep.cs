@@ -17,12 +17,12 @@ public sealed class LightSleep() : OberonCard(1, CardType.Skill, CardRarity.Unco
         [new BlockVar(8m, ValueProp.Move), new DynamicVar("Draw", 2)];
 
     protected override bool ShouldGlowGoldInternal =>
-        Sleep.SleepingEnemies(Owner.Creature.CombatState, Owner.Creature) > 0;
+        Sleep.SleepingEnemies(Owner.Creature) > 0;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
-        if (Sleep.SleepingEnemies(Owner.Creature.CombatState, Owner.Creature) > 0)
+        if (Sleep.SleepingEnemies(Owner.Creature) > 0)
         {
             await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].IntValue, Owner);
         }

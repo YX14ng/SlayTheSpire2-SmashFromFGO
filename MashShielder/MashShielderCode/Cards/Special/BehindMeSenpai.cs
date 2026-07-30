@@ -21,7 +21,7 @@ public sealed class BehindMeSenpai() : MashShielderCard(0, CardType.Skill, CardR
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<CoverPower>(1m),
+        new PowerVar<CoverPower>("Cover", 1m),
         new PowerVar<ProvokePower>("Provoke", 3m),
         new BlockVar(5m, ValueProp.Move)
     ];

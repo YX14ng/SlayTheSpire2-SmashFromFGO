@@ -19,7 +19,7 @@ public sealed class CurseHarvest() : MorganCard(1, CardType.Skill, CardRarity.Un
     protected override bool IsPlayable => true;
 
     protected override bool ShouldGlowGoldInternal =>
-        Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature) != null;
+        Curses.MostCursed(Owner.Creature) != null;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -28,7 +28,7 @@ public sealed class CurseHarvest() : MorganCard(1, CardType.Skill, CardRarity.Un
         var toAdd = Math.Min(Curses.Of(cardPlay.Target), DynamicVars["Max"].IntValue);
         if (toAdd <= 0) return;
 
-        await Curses.Apply(cardPlay.Target, toAdd, Owner.Creature, this);
+        await Curses.Apply(choiceContext, cardPlay.Target, toAdd, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

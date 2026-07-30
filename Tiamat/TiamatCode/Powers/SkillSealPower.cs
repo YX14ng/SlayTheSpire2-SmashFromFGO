@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using TiamatBeast.TiamatCode.Powers.Seal;
+using FGOCore.FGOCoreCode.Seal;
 
 namespace TiamatBeast.TiamatCode.Powers;
 
@@ -37,16 +37,7 @@ public sealed class SkillSealPower : TiamatPower
     /// HABILIDAD, la cancelamos (Stun); el ataque pasa. Luego el sello decae 1 (mismo timing/decay
     /// que la Maldición). Va en BeforeSideTurnStart para cancelar ANTES de que la acción se ejecute.
     /// </summary>
-    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side != Owner.Side || Owner.IsDead) return;
-
-        if (Sello.IntendsToUseSkill(Owner))
-        {
-            Flash();
-            await CreatureCmd.Stun(Owner); // la marea ahoga la técnica: la habilidad NO ocurre
-        }
-
-        await PowerCmd.Decrement(this);
-    }
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side,
+        IReadOnlyList<Creature> participants, ICombatState combatState) =>
+        SkillSeal.ResolveTurn(this, choiceContext, participants, combatState, Flash);
 }

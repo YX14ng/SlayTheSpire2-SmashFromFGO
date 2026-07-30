@@ -26,8 +26,8 @@ public sealed class SicklyConstitution() : OkitaCard(0, CardType.Skill, CardRari
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
-        await Tos.ShuffleIntoDraw(Owner.Creature, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        await Tos.ShuffleIntoDraw(choiceContext, Owner.Creature, this);
         if (DynamicVars.Cards.IntValue > 0) await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
     }
 

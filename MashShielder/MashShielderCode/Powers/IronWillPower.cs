@@ -19,7 +19,7 @@ public sealed class IronWillPower : MashShielderPower
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != CombatSide.Player || Owner.Side != side) return;
+        if (!participants.Contains(Owner)) return;
         Flash();
         await BlockRetention.GainBulwarkBlock(null, Owner, Amount, choiceContext: choiceContext);
     }

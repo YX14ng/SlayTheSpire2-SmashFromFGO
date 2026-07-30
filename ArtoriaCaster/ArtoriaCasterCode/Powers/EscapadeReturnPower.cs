@@ -27,7 +27,7 @@ public sealed class EscapadeReturnPower : ArtoriaPower
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side) return;
+        if (!participants.Contains(Owner)) return;
 
         Flash();
         if (ReturnToCaster)
@@ -40,7 +40,7 @@ public sealed class EscapadeReturnPower : ArtoriaPower
         }
         if (StarsOnReturn > 0)
         {
-            await Stars.Gain(Owner, StarsOnReturn, null);
+            await Stars.Gain(choiceContext, Owner, StarsOnReturn, null);
         }
         await PowerCmd.Remove(this);
     }

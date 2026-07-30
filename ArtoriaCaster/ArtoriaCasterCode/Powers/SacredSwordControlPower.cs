@@ -17,6 +17,6 @@ public sealed class SacredSwordControlPower : ArtoriaPower
     {
         if (player != Owner.Player || Owner.Player == null) return;
         Flash();
-        await Stars.Gain(Owner, Amount, null);
+        await Stars.Gain(choiceContext, Owner, Amount, null);
     }
 }

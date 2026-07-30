@@ -28,7 +28,7 @@ public sealed class SaberfacePower : MordredPower
     public int StarsPerHit = 10;
     public int NpPerHit = 10;
 
-    public bool Upgraded;
+    public bool Upgraded => FgoCombatState.GetCombat(Owner, 7) != 0;
 
     public override PowerType Type => PowerType.Buff;
 
@@ -36,21 +36,21 @@ public sealed class SaberfacePower : MordredPower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private bool _firedThisTurn;
-
     /// <summary>★ ya generadas por Saberface este combate (techo en <see cref="StarsCap"/>).</summary>
-    public int StarsThisCombat { get; private set; }
+    public int StarsThisCombat => FgoCombatState.GetCombat(Owner, 0, 7);
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public async Task Configure(
+        PlayerChoiceContext context, int starsPerHit, int npPerHit, bool upgraded, CardModel source)
     {
-        if (side == Owner.Side) _firedThisTurn = false;
-        return Task.CompletedTask;
+        StarsPerHit = Math.Max(StarsPerHit, starsPerHit);
+        NpPerHit = Math.Max(NpPerHit, npPerHit);
+        if (upgraded) await FgoCombatState.SetCombat(context, Owner, 7, 1, source);
     }
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (_firedThisTurn || target != Owner || dealer == null || dealer == Owner || result.UnblockedDamage <= 0) return;
-        _firedThisTurn = true;
+        if (FgoCombatState.GetTurn(Owner, 0) != 0 || target != Owner || dealer == null || dealer == Owner || result.UnblockedDamage <= 0) return;
+        await FgoCombatState.SetTurn(choiceContext, Owner, 0, 1, cardSource);
         Flash();
 
         // ★ acotadas al techo de combate: lo pedido (StarsPerHit × copias) recortado a lo que falta para el cap.
@@ -59,12 +59,13 @@ public sealed class SaberfacePower : MordredPower
         var stars = Math.Max(0, Math.Min(wanted, room));
         if (stars > 0)
         {
-            StarsThisCombat += stars;
-            await CritStars.Gain(Owner, stars, null);
+            await FgoCombatState.SetCombat(
+                choiceContext, Owner, 0, StarsThisCombat + stars, cardSource, width: 7);
+            await CritStars.Gain(choiceContext, Owner, stars, null);
         }
         if (Upgraded)
         {
-            await NpCharge.Gain(Owner, NpPerHit, null);
+            await NpCharge.Gain(choiceContext, Owner, NpPerHit, null);
         }
     }
 }

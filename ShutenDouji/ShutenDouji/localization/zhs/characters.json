@@ -1,0 +1,16 @@
+{
+  "SHUTENDOUJI-SHUTEN.title": "酒吞童子",
+  "SHUTENDOUJI-SHUTEN.titleObject": "宴会之鬼",
+  "SHUTENDOUJI-SHUTEN.description": "将毒转化为酒气，交错Assassin与Caster风格，并从两种宝具中选择终局。",
+  "SHUTENDOUJI-SHUTEN.pronounObject": "她",
+  "SHUTENDOUJI-SHUTEN.possessiveAdjective": "她的",
+  "SHUTENDOUJI-SHUTEN.pronounPossessive": "她的",
+  "SHUTENDOUJI-SHUTEN.pronounSubject": "她",
+  "SHUTENDOUJI-SHUTEN.goldMonologue": "古董、毒酒与漂亮酒杯。黄金能备齐三样。",
+  "SHUTENDOUJI-SHUTEN.eventDeathPrevention": "只要鬼还在笑，宴会就没有结束。",
+  "SHUTENDOUJI-SHUTEN.aromaPrinciple": "每一种甜香都藏着更锋利的余味。",
+  "SHUTENDOUJI-SHUTEN.cardsModifierTitle": "大江山之宴",
+  "SHUTENDOUJI-SHUTEN.cardsModifierDescription": "使用酒吞童子的卡牌池。",
+  "SHUTENDOUJI-SHUTEN.banter.alive.endTurnPing": "慢慢喝。最后一杯才最危险。",
+  "SHUTENDOUJI-SHUTEN.banter.dead.endTurnPing": "别让宴会半途而废。"
+}

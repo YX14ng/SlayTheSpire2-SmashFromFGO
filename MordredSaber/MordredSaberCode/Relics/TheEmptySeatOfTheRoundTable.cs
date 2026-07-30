@@ -26,6 +26,6 @@ public sealed class TheEmptySeatOfTheRoundTable : MordredRelic
     {
         if (cardPlay.Card.Owner != Owner || cardPlay.Card is not IMordredNpCard) return;
         Flash();
-        await CritStars.Gain(Owner.Creature, StarsPerNp, null);
+        await CritStars.Gain(context, Owner.Creature, StarsPerNp, null);
     }
 }

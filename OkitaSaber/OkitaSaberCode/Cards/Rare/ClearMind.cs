@@ -27,7 +27,7 @@ public sealed class ClearMind() : OkitaCard(1, CardType.Skill, CardRarity.Rare, 
         var tosCount = Owner.PlayerCombatState.Hand.Cards.OfType<Tos>().Count();
         for (var i = 0; i < tosCount; i++)
         {
-            await NpCharge.Gain(Owner.Creature, NpPerTos, this);
+            await NpCharge.Gain(choiceContext, Owner.Creature, NpPerTos, this);
         }
     }
 

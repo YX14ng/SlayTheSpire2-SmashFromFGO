@@ -29,10 +29,10 @@ public sealed class Battojutsu() : OkitaCard(1, CardType.Attack, CardRarity.Comm
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var first = IsFirstAttack;
         await AttacksThisTurnPower.EnsureInstalled(Owner.Creature);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        if (first) await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+        if (first) await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
     protected override void OnUpgrade()

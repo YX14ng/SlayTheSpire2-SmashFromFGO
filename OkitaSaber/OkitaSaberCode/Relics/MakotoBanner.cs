@@ -18,7 +18,7 @@ namespace OkitaSaber.OkitaSaberCode.Relics;
 /// amount > 0 = un Crítico Listo GANADO = un umbral cumplido. Engorda el hilo ★→NP, igual que la
 /// carta-Poder Sentido del Prodigio pero como reliquia.
 /// </summary>
-public sealed class MakotoBanner : OkitaRelic
+public sealed class MakotoBanner : OkitaRelic, ICriticalConsumedListener
 {
     public override RelicRarity Rarity => RelicRarity.Rare;
 
@@ -28,16 +28,16 @@ public sealed class MakotoBanner : OkitaRelic
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<CritStarsPower>(), HoverTipFactory.FromPower<NpChargePower>()];
 
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public async Task AfterCriticalConsumed(PlayerChoiceContext choiceContext, CriticalHit critical)
     {
-        if (amount <= 0m || power is not CritReadyPower || power.Owner != Owner.Creature || Owner.Creature.Player == null) return;
+        if (critical.Owner != Owner.Creature || Owner.Creature.Player == null) return;
         Flash();
-        await NpCharge.Gain(Owner.Creature, NpGain, null);
+        await NpCharge.Gain(choiceContext, Owner.Creature, NpGain, null);
         // Guard de mazo vacio (audit 2026-07-04, espejo de ProdigySensePower): robar aca dispara un
         // reshuffle a mitad de un play — se saltea si no hay cartas en el mazo de robo.
         if (MegaCrit.Sts2.Core.Entities.Cards.PileType.Draw.GetPile(Owner.Creature.Player).Cards.Count > 0)
         {
-            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), Draw, Owner.Creature.Player);
+            await CardPileCmd.Draw(choiceContext, Draw, Owner.Creature.Player);
         }
     }
 }

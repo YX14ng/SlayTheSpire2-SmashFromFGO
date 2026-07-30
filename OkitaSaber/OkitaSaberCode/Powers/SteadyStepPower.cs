@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 using OkitaSaber.OkitaSaberCode.Cards;
 
 namespace OkitaSaber.OkitaSaberCode.Powers;
@@ -22,9 +24,7 @@ public sealed class SteadyStepPower : OkitaPower, IFirstRafagaRefund
     public override bool ShouldScaleInMultiplayer => false;
 
     /// <summary>★ extra del reembolso (0 base; 5 con la mejora — la carta lo setea).</summary>
-    public int RefundStarsValue = 0;
-
-    private bool _usedThisTurn;
+    public int RefundStarsValue => FgoCombatState.GetCombat(Owner, 5, 3);
 
     public int RefundAmount => 1;
 
@@ -32,17 +32,15 @@ public sealed class SteadyStepPower : OkitaPower, IFirstRafagaRefund
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<AlientoPower>()];
 
-    public bool TryConsumeRefund()
+    public Task Configure(PlayerChoiceContext context, int refundStars, CardModel source) =>
+        FgoCombatState.SetCombat(
+            context, Owner, 5, Math.Max(RefundStarsValue, refundStars), source, width: 3);
+
+    public async Task<bool> TryConsumeRefund(PlayerChoiceContext context, CardModel? source)
     {
-        if (_usedThisTurn) return false;
-        _usedThisTurn = true;
+        if (FgoCombatState.GetTurn(Owner, 2) != 0) return false;
+        await FgoCombatState.SetTurn(context, Owner, 2, 1, source);
         Flash();
         return true;
-    }
-
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == Owner.Side) _usedThisTurn = false;
-        return Task.CompletedTask;
     }
 }

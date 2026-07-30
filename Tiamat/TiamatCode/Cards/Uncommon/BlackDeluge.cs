@@ -21,16 +21,16 @@ public sealed class BlackDeluge() : TiamatCard(2, CardType.Skill, CardRarity.Unc
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var enemies = Owner.Creature.CombatState.GetOpponentsOf(Owner.Creature).Where(e => !e.IsDead).ToList();
+        var enemies = Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).Where(e => !e.IsDead).ToList();
         // "Por enemigo YA maldito": contar ANTES de esparcir el diluvio (el campo previo, no este).
         var alreadyCursed = enemies.Count(e => Curses.Of(e) > 0);
         foreach (var enemy in enemies)
         {
-            await Curses.Apply(enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+            await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
         }
         if (alreadyCursed > 0)
         {
-            await Lahmu.Feed(Owner.Creature, DynamicVars["Nurture"].IntValue * alreadyCursed, this);
+            await Lahmu.Feed(choiceContext, Owner.Creature, DynamicVars["Nurture"].IntValue * alreadyCursed, this);
         }
     }
 

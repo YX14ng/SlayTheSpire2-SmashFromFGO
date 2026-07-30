@@ -28,7 +28,7 @@ public sealed class FaerieNegotiation() : OberonCard(0, CardType.Skill, CardRari
         var counted = Math.Min(DebtPower.Of(Owner.Creature), DynamicVars["MaxDebt"].IntValue);
         if (counted > 0)
         {
-            await CritStars.Gain(Owner.Creature, counted * StarsPerDebt, this);
+            await CritStars.Gain(choiceContext, Owner.Creature, counted * StarsPerDebt, this);
         }
     }
 

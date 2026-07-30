@@ -20,7 +20,7 @@ public sealed class MirrorStrike() : MorganCard(1, CardType.Attack, CardRarity.U
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var hits = Owner.Creature.HasPower<FormShiftedPower>() ? 3 : 2;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(hits).FromCard(this)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(hits).FromCardFgoCompatibility(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

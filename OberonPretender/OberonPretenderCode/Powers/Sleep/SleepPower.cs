@@ -36,8 +36,13 @@ public sealed class SleepPower : OberonPower
     {
         if (target != Owner || amount <= 0m || !props.IsPoweredAttack()) return amount;
         if (dealer != null && IgnoredBy(dealer)) return amount; // Vortigern devora sin despertar
-        Flash();
         return 0m; // intocable en el mundo de los suenos
+    }
+
+    public override Task AfterModifyingHpLostBeforeOsty()
+    {
+        Flash();
+        return Task.CompletedTask;
     }
 
     // Lectura pura: el atacante tiene un power que ignora el Sueno de este objetivo?
@@ -52,7 +57,7 @@ public sealed class SleepPower : OberonPower
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side || Owner.IsDead) return;
+        if (!participants.Contains(Owner) || Owner.IsDead) return;
         await PowerCmd.Decrement(this);
         if (Amount <= 0 && Owner.IsAlive)
         {

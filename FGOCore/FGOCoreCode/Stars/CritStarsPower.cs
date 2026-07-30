@@ -22,6 +22,9 @@ public sealed class CritStarsPower : FGOCorePower, IResourcePower
     /// <summary>Umbral del auto-proc (★ → próximo Ataque ×2) para quien NO banca.</summary>
     public const int Threshold = 100;
 
+    /// <summary>Máximo del banco global. Threshold se conserva como alias compatible.</summary>
+    public const int Max = 100;
+
     /// <summary>Costo estándar de la keyword "Crítico" (gasto manual) en una carta.</summary>
     public const int CritCost = 50;
 
@@ -31,22 +34,22 @@ public sealed class CritStarsPower : FGOCorePower, IResourcePower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private bool _isProcessing;
+    private bool _isClamping;
 
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
-        if (power != this || _isProcessing) return;
+        if (power != this || _isClamping) return;
 
         // Auto-proc por defecto (Mash): una sola carta puede cruzar 200+ (ej. +100 de golpe).
-        while (Amount >= Threshold)
+        if (Amount > Max)
         {
-            _isProcessing = true;
-            Flash();
-            await PowerCmd.ModifyAmount(choiceContext, this, -Threshold, Owner, null);
-            await PowerCmd.Apply<CritReadyPower>(choiceContext, Owner, 1m, Owner, null);
-            _isProcessing = false;
+            _isClamping = true;
+            await PowerCmd.ModifyAmount(choiceContext, this, Max - Amount, Owner, cardSource);
+            _isClamping = false;
         }
+
+        await Criticals.EnsureInstalled(choiceContext, Owner);
     }
 }
 
@@ -55,19 +58,37 @@ public static class CritStars
 {
     public static int Of(Creature creature) => (int)creature.GetPowerAmount<CritStarsPower>();
 
-    public static async Task Gain(Creature creature, int amount, CardModel? source)
+    public static Task Gain(Creature creature, int amount, CardModel? source) =>
+        Gain(new BlockingPlayerChoiceContext(), creature, amount, source);
+
+    /// <summary>Context-preserving star change for card and hook resolution paths.</summary>
+    public static async Task Gain(
+        PlayerChoiceContext choiceContext, Creature creature, int amount, CardModel? source)
     {
         if (amount == 0) return;
         if (amount > 0)
         {
-            await PowerCmd.Apply<CritStarsPower>(new BlockingPlayerChoiceContext(), creature, amount, creature, source);
+            var room = CritStarsPower.Max - Of(creature);
+            if (room <= 0) return;
+            await PowerCmd.Apply<CritStarsPower>(choiceContext, creature, Math.Min(amount, room), creature, source);
             return;
         }
-        var power = creature.GetPowerInstances<CritStarsPower>().FirstOrDefault();
+        var power = creature.GetPower<CritStarsPower>();
         if (power == null) return;
-        await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), power, Math.Max(amount, -power.Amount), creature, source);
+        await PowerCmd.ModifyAmount(choiceContext, power, Math.Max(amount, -power.Amount), creature, source);
     }
 
     /// <summary>¿Puede pagar un coste de estrellas (conversores estilo 等价交换)?</summary>
     public static bool CanPay(Creature creature, int cost) => Of(creature) >= cost;
+
+    /// <summary>Gasta exactamente el coste pedido. Devuelve false sin mutar si no alcanza.</summary>
+    public static async Task<bool> Spend(
+        PlayerChoiceContext choiceContext, Creature creature, int cost, CardModel? source)
+    {
+        if (cost <= 0 || !CanPay(creature, cost)) return false;
+        var power = creature.GetPower<CritStarsPower>();
+        if (power == null) return false;
+        await PowerCmd.ModifyAmount(choiceContext, power, -cost, creature, source);
+        return true;
+    }
 }

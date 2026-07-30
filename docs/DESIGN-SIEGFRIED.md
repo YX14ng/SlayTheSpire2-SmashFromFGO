@@ -7,7 +7,7 @@ Manifest id **`SiegfriedSaber`** (inmutable). Lore investigado JP+中文 (regla 
 
 ## 1. Identidad en una frase
 **El héroe que sólo cae si le exponen la espalda: una armadura que anula casi todo (Sangre de Dragón)
-pero deja pasar UN golpe por turno (la Hoja de Tilo), y un loop AoE de Balmung que se afila cuanto
+pero pierde 1 punto ante UN golpe por turno (la Hoja de Tilo), y un loop AoE de Balmung que se afila cuanto
 más gruesa lleva la armadura.** Farmer/bruiser Buster anti-todo, taciturno, sin Resistencia Mágica.
 
 ## 2. Sin formas (justificado)
@@ -19,10 +19,10 @@ sin cambio de modelo violaría §5 de la skill → **NO hay FormPower**. El traj
 - **Sangre de Dragón (SdD)** = poder-contador NUEVO (FGOCore): **reduce cada golpe entrante en SdD**
   (escamas; reducción por-golpe, NO bloqueo que se gasta). Empieza el combate en **2** (starter).
   Persiste entre turnos (es su piel, no bloqueo). Es la identidad tanque-bruiser END A.
-- **La Hoja de Tilo** (starter relic): el **primer golpe que te ALCANZA cada turno IGNORA la SdD**
+- **La Hoja de Tilo** (starter relic): el **primer golpe que te ALCANZA cada turno ignora 1 SdD**
   (el punto débil de la espalda) — la debilidad canónica hecha regla. Orden de hooks: **post-Bloqueo,
   pre-Guts** ("primer golpe que te alcanza", no el primero absoluto).
-- **Anti-batería-AFK (P2, crítico):** el +NP del proc exige que **el golpe reducido aún inflija ≥1 de
+- **Anti-batería-AFK (P2, crítico):** el +NP de los golpes posteriores exige que **el golpe reducido aún inflija ≥1 de
   daño** tras la SdD. Un golpe ANULADO del todo = la armadura trabajó gratis → **sin NP** (el jugador
   empuja, no acampa). La inmunidad estilo Intangible vs golpes chicos queda (análogo vanilla), pero
   deja de ser NP-positiva.
@@ -66,8 +66,8 @@ Los **3 strengthenings reales** son **upgrades de carta** (no cartas separadas):
 | **Acecho de Grani** | básica/PC | 0 | +10 Estrellas (up +20) — UN solo rider, sin +NP (P10). |
 
 ## 8. Reliquias (SIN multiplicador global)
-1. **STARTER — La Hoja de Tilo**: SdD inicial 2; el 1er golpe que te alcanza/turno ignora la SdD; cuando
-   un golpe reducido aún inflige ≥1 daño: +5 NP (cap 3/turno — P1/P2). Doccomment: orden de hooks (post-Bloqueo, pre-Guts).
+1. **STARTER — La Hoja de Tilo**: SdD inicial 2; el 1er golpe que te alcanza/turno ignora 1 SdD; cuando
+   un golpe posterior reducido aún inflige ≥1 daño: +5 NP (cap 3/turno — P1/P2). Doccomment: orden de hooks (post-Bloqueo, pre-Guts).
 2. **Das Rheingold** (Bond CE, **deduplicada P4**): *la PRIMERA carta-NP de cada turno: +20 Estrellas y robá 1*
    (cap estructural + el robo que el pool no tiene). NO clonar "Oro del Rin" (P4: evitar el dúo +40-50★/NP que rompía el loop).
 3. **Reliquia de JEFE**: sube SOLO la conversión Vida→NP (+20×2), dejando la absorción en +5×3 (P3 — techo pasivo combinado ~70 NP/turno solo con jefe+rara+multi-hit, documentado como caso máximo).
@@ -83,7 +83,7 @@ Siegfried NO tiene Resistencia Mágica (rarísimo en Saber). Regla de pool **esc
   `OverchargeBlessingPower`, `CritStarsPower`/`CritReadyPower` (Estrellas/Das Rheingold), `GutsPower`,
   `BondRelic` (×1.25 daño/bloqueo, SIN ×global), `ILimitBreaker` (Santo Grial), keyword `Cazadragones`.
 - **NUEVO (acotado, 1 mecánica + su excepción narrativa):** `DragonScalesPower` (SdD = reducción
-  por-golpe, persistente) + el gancho de "primer golpe que te alcanza ignora SdD" para la Hoja de Tilo
+  por-golpe, persistente) + el gancho de "primer golpe que te alcanza ignora 1 SdD" para la Hoja de Tilo
   (interfaz-gancho estilo `ICurseAmplifier`, en FGOCore, sin que FGOCore conozca el mod). El proc de +NP
   exige daño residual ≥1 (P2). Keyword `Cazadragones` (trait dragón).
 

@@ -36,7 +36,7 @@ public sealed class InheritedLongingStrike() : ArtoriaCard(2, CardType.Attack, C
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         var damage = await ResolveCritDamageScaling(CritCost, MaxCritCost);
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

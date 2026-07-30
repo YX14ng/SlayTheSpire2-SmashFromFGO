@@ -19,7 +19,7 @@ public sealed class VespersOfTheEndPower : OberonPower
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || !props.IsPoweredAttack() || !Owner.HasPower<VortigernPower>()) return 0m;
         return Bonus;

@@ -17,7 +17,7 @@ public sealed class TenPullSummon() : MemeCard(1, CardType.Skill, CardRarity.Unc
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var pulls = CardFactory.GetDistinctForCombat(Owner,
-            Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState, RunState.CardMultiplayerConstraint),
+            Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint),
             DynamicVars.Cards.IntValue, Owner.RunState.Rng.CombatCardGeneration);
         foreach (var card in pulls)
         {

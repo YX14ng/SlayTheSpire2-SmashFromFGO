@@ -1,0 +1,16 @@
+{
+  "KAGETORALANCER-KAGETORA.title": "Nagao Kagetora",
+  "KAGETORALANCER-KAGETORA.titleObject": "the God of War",
+  "KAGETORALANCER-KAGETORA.description": "Advance Heaven, Chest and Feet to command the battlefield, manifest an Arts Noble Phantasm, and ascend irreversibly into Uesugi Kenshin.",
+  "KAGETORALANCER-KAGETORA.pronounObject": "her",
+  "KAGETORALANCER-KAGETORA.possessiveAdjective": "her",
+  "KAGETORALANCER-KAGETORA.pronounPossessive": "hers",
+  "KAGETORALANCER-KAGETORA.pronounSubject": "she",
+  "KAGETORALANCER-KAGETORA.goldMonologue": "Fortune is in heaven, armor in the chest, and merit in the feet. Gold still belongs in the treasury.",
+  "KAGETORALANCER-KAGETORA.eventDeathPrevention": "A formation does not break while its commander still stands.",
+  "KAGETORALANCER-KAGETORA.aromaPrinciple": "Justice advances one deliberate step at a time.",
+  "KAGETORALANCER-KAGETORA.cardsModifierTitle": "Doctrine of Echigo",
+  "KAGETORALANCER-KAGETORA.cardsModifierDescription": "Play with Kagetora's card pool.",
+  "KAGETORALANCER-KAGETORA.banter.alive.endTurnPing": "The next precept is already clear. Advance.",
+  "KAGETORALANCER-KAGETORA.banter.dead.endTurnPing": "Do not let the formation die with its commander."
+}

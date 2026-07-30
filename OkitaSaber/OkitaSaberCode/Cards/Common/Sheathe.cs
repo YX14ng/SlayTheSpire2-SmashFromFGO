@@ -28,8 +28,8 @@ public sealed class Sheathe() : OkitaCard(0, CardType.Skill, CardRarity.Common, 
     {
         var cost = DynamicVars["StarCost"].IntValue;
         if (!CritStars.CanPay(Owner.Creature, cost)) return;
-        await CritStars.Gain(Owner.Creature, -cost, this);
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await CritStars.Gain(choiceContext, Owner.Creature, -cost, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["StarCost"].UpgradeValueBy(-20m); // 50 -> 30

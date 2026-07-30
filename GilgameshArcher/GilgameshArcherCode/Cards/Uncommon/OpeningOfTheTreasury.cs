@@ -26,7 +26,7 @@ public sealed class OpeningOfTheTreasury() : GilgameshCard(1, CardType.Skill, Ca
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await TreasureDeck.ManifestRandom(Owner.Creature, DynamicVars["Arms"].IntValue);
-        await TreasurePower.Add(Owner.Creature, DynamicVars["Treasure"].IntValue, Owner.Creature, this);
+        await TreasurePower.Add(choiceContext, Owner.Creature, DynamicVars["Treasure"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() => DynamicVars["Arms"].UpgradeValueBy(1m);

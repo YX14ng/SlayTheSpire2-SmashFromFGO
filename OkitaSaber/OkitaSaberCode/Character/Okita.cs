@@ -39,15 +39,20 @@ public class Okita : PlaceholderCharacterModel
         ModelDb.Card<CatchYourBreath>()
     ];
 
-    // Starter = el Haori Asagi (el motor: atacar→★, criticar→NP, y fija el Aliento inicial 6).
-    public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<HaoriAsagi>()];
+    // Starters: motor Haori Asagi, vínculo de la Primera Unidad y almacén de nivel de NP/dupes.
+    public override IReadOnlyList<RelicModel> StartingRelics =>
+    [
+        ModelDb.Relic<HaoriAsagi>(),
+        ModelDb.Relic<BondFirstUnit>(),
+        ModelDb.Relic<MenkyoKaiden>()
+    ];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<OkitaCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<OkitaRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<OkitaPotionPool>();
 
-    // Modelo de batalla único 102710 (traje blanco); el clímax «Flor del Bakumatsu» hace el swap a
-    // 102720 (haori asagi) vía FormVisuals (DESIGN-OKITA §3.4/§8). El render directo vendrá tras el export.
+    // Modelo de batalla oficial 102710. La forma final comparte este set para mantener estable
+    // el consumo de memoria cuando hay varios personajes FGO en combate.
     public override string CustomVisualPath => $"{MainFile.ResPath}/character/okita_visuals.tscn";
 
     // Robustez anti-conflicto: construye las visuals directo desde la factory de BaseLib, en vez
@@ -65,6 +70,8 @@ public class Okita : PlaceholderCharacterModel
     [
         $"{MainFile.ResPath}/character/okita_frames.tres",
     ];
+    public override string CustomMerchantAnimPath => $"{MainFile.ResPath}/character/okita_merchant.tscn";
+    public override string CustomRestSiteAnimPath => $"{MainFile.ResPath}/character/okita_rest.tscn";
     public override string CustomCharacterSelectBg => $"{MainFile.ResPath}/character/okita_select_bg.tscn";
 
     public override Control CustomIcon

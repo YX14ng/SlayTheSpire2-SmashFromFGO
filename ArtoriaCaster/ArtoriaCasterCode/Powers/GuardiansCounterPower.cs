@@ -26,17 +26,6 @@ public sealed class GuardiansCounterPower : ArtoriaPower, IHitAnnulledListener
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    private int _countersThisTurn;
-
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side == CombatSide.Player)
-        {
-            _countersThisTurn = 0;
-        }
-        return Task.CompletedTask;
-    }
-
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (target != Owner || dealer == null || !props.IsPoweredAttack() || !result.WasFullyBlocked) return;
@@ -52,10 +41,11 @@ public sealed class GuardiansCounterPower : ArtoriaPower, IHitAnnulledListener
 
     private async Task Counter(PlayerChoiceContext choiceContext, Creature attacker)
     {
-        if (_countersThisTurn >= MaxPerTurn || Amount <= 0 || attacker.IsDead) return;
-        _countersThisTurn++;
+        if (FgoCombatState.GetTurn(Owner, 4, 2) >= MaxPerTurn || Amount <= 0 || attacker.IsDead) return;
+        await FgoCombatState.IncrementTurn(
+            choiceContext, Owner, 4, MaxPerTurn, null, width: 2);
         Flash();
         await CreatureCmd.Damage(choiceContext, attacker, Amount,
-            ValueProp.Unblockable | ValueProp.Unpowered, Owner, null);
+            ValueProp.Unblockable | ValueProp.Unpowered, Owner);
     }
 }

@@ -34,7 +34,7 @@ public sealed class SwordAndSong() : ArtoriaCard(1, CardType.Attack, CardRarity.
         {
             damage += DynamicVars["Bonus"].BaseValue;
         }
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

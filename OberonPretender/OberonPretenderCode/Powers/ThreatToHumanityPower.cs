@@ -24,7 +24,7 @@ public sealed class ThreatToHumanityPower : OberonPower
     {
         if (dealer != Owner || !result.WasTargetKilled) return;
         Flash();
-        await NpCharge.Gain(Owner, Charge, null);
-        await CritStars.Gain(Owner, Stars, null);
+        await NpCharge.Gain(choiceContext, Owner, Charge, null);
+        await CritStars.Gain(choiceContext, Owner, Stars, null);
     }
 }

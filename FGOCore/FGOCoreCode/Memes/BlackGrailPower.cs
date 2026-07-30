@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FGOCore.FGOCoreCode.Compatibility;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -34,7 +35,7 @@ public sealed class BlackGrailPower : FGOCorePower
 
     public override bool ShouldScaleInMultiplayer => false;
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicativeFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (Owner != dealer || !props.IsPoweredAttack()) return 1m;
         // +50% por acumulación, aditivo (1 stack ×1.5, 2 stacks ×2.0, ...).
@@ -43,9 +44,10 @@ public sealed class BlackGrailPower : FGOCorePower
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side != Owner.Side || Owner.IsDead) return;
+        if (!participants.Contains(Owner) || Owner.IsDead) return;
         Flash();
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), Owner, HpLossPerTurn * (int)Math.Max(1m, Amount),
-            ValueProp.Unblockable | ValueProp.Unpowered, null, null);
+        await CreatureCmdCompatibility.Damage(new ThrowingPlayerChoiceContext(), Owner,
+            HpLossPerTurn * (int)Math.Max(1m, Amount),
+            ValueProp.Unblockable | ValueProp.Unpowered, null, null, null);
     }
 }

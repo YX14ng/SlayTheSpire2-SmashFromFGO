@@ -25,7 +25,7 @@ public sealed class TwoFaced() : OberonCard(1, CardType.Attack, CardRarity.Uncom
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         var bonus = Owner.Creature.HasPower<FormShiftedPower>() ? DynamicVars["Bonus"].IntValue : 0;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

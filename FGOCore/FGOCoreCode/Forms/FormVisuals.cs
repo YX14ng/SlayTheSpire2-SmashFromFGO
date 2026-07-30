@@ -10,8 +10,9 @@ namespace FGOCore.FGOCoreCode.Forms;
 /// so BaseLib's animation routing keeps working untouched.
 /// Frames resources are heavy (hundreds of MB of textures per character). Each character
 /// mod registers its OWN forms once (<see cref="RegisterFrames"/>, one call = one group);
-/// when a creature enters combat we background-load ONLY that character's group and pin it
-/// in a static cache, so the form swap is instant.
+/// when a creature enters combat we background-load that character's group in single-player.
+/// Multiplayer loads only the current form: several FGO players preloading every alternate form
+/// at once can still exhaust VRAM even though unrelated installed characters remain lazy.
 /// <para>VRAM: do NOT preload every registered group. With N FGO character mods installed,
 /// preloading all groups would pin N×(hundreds of frames) into VRAM at once even if you
 /// only play one of them — that exhausted VRAM on normal GPUs (cards/intent failed to
@@ -22,6 +23,9 @@ public static class FormVisuals
 {
     // path -> the group (one character's full set of form paths) it belongs to.
     private static readonly Dictionary<string, string[]> GroupOf = [];
+    private static readonly Dictionary<string, float> SpriteXOf = [];
+    private static readonly Dictionary<string, float> SpriteYOf = [];
+    private static readonly Dictionary<string, float> SpriteScaleOf = [];
     private static readonly Dictionary<string, SpriteFrames> Cache = [];
     private static readonly HashSet<string> Requested = [];
     // Paths whose background load failed once: never re-requested (a broken FramesPath would
@@ -41,11 +45,66 @@ public static class FormVisuals
         foreach (var p in group) GroupOf[p] = group;
     }
 
-    /// <summary>Background-load only the forms that belong to the same character as
-    /// <paramref name="path"/> (idempotent).</summary>
-    private static void PreloadGroup(string path)
+    /// <summary>
+    /// Registers a form group and the horizontal sprite pivot required by each frame set.
+    /// FGO renders use asymmetric transparent canvases; because player sprites are mirrored,
+    /// the compensation must also change when a form swaps to a differently framed model.
+    /// </summary>
+    public static void RegisterFramesWithSpriteX(params (string Path, float SpriteX)[] forms)
     {
-        if (!GroupOf.TryGetValue(path, out var group)) group = [path];
+        var valid = forms.Where(f => !string.IsNullOrEmpty(f.Path)).ToArray();
+        var group = valid.Select(f => f.Path).ToArray();
+        foreach (var form in valid)
+        {
+            GroupOf[form.Path] = group;
+            SpriteXOf[form.Path] = form.SpriteX;
+        }
+    }
+
+    /// <summary>
+    /// Registers a form group and its full sprite pivot. The vertical component is required when
+    /// imported textures use <c>process/size_limit</c>: Godot reduces the canvas coordinates but
+    /// does not reduce the scene's <see cref="Node2D.Position"/> automatically.
+    /// </summary>
+    public static void RegisterFramesWithSpritePosition(
+        params (string Path, float SpriteX, float SpriteY)[] forms)
+    {
+        var valid = forms.Where(f => !string.IsNullOrEmpty(f.Path)).ToArray();
+        var group = valid.Select(f => f.Path).ToArray();
+        foreach (var form in valid)
+        {
+            GroupOf[form.Path] = group;
+            SpriteXOf[form.Path] = form.SpriteX;
+            SpriteYOf[form.Path] = form.SpriteY;
+        }
+    }
+
+    /// <summary>
+    /// Registers a form group with a complete sprite transform. A separate uniform scale is needed
+    /// when forms use differently cropped canvases; applying the same scene scale would move their
+    /// heads even when their feet share the same ground line.
+    /// </summary>
+    public static void RegisterFramesWithSpriteTransform(
+        params (string Path, float SpriteX, float SpriteY, float UniformScale)[] forms)
+    {
+        var valid = forms.Where(f => !string.IsNullOrEmpty(f.Path)).ToArray();
+        var group = valid.Select(f => f.Path).ToArray();
+        foreach (var form in valid)
+        {
+            GroupOf[form.Path] = group;
+            SpriteXOf[form.Path] = form.SpriteX;
+            SpriteYOf[form.Path] = form.SpriteY;
+            SpriteScaleOf[form.Path] = form.UniformScale;
+        }
+    }
+
+    /// <summary>Background-load the current form and, when allowed, its sibling forms.
+    /// Multiplayer deliberately skips siblings to keep several FGO players within the VRAM budget.</summary>
+    private static void PreloadGroup(string path, bool preloadAlternates)
+    {
+        var group = preloadAlternates && GroupOf.TryGetValue(path, out var registered)
+            ? registered
+            : [path];
         foreach (var p in group)
         {
             if (Cache.ContainsKey(p) || Requested.Contains(p) || Failed.Contains(p)) continue;
@@ -128,7 +187,7 @@ public static class FormVisuals
     private static HashSet<string> _activePaths = [];
     private static HashSet<string> _prevPaths = [];
 
-    private static void TrackCombatAndEvict(string path)
+    private static void TrackCombatAndEvict(string path, bool keepWholeGroup)
     {
         var room = NCombatRoom.Instance;
         if (room == null) return;
@@ -139,7 +198,7 @@ public static class FormVisuals
             _prevPaths = _activePaths;
             _activePaths = [];
         }
-        if (GroupOf.TryGetValue(path, out var group))
+        if (keepWholeGroup && GroupOf.TryGetValue(path, out var group))
         {
             foreach (var p in group) _activePaths.Add(p);
         }
@@ -166,11 +225,13 @@ public static class FormVisuals
     {
         if (form.FramesPath == null) return;
 
-        // Warm ONLY this character's forms in the background (not every installed mod's). Because
-        // this fires for the base form at combat start too, the whole group (incl. mid-combat forms
-        // like Ortinax) is usually fully loaded by the time the player actually switches.
-        TrackCombatAndEvict(form.FramesPath);
-        PreloadGroup(form.FramesPath);
+        // Single-player can afford to warm this character's complete form group for seamless swaps.
+        // In co-op, each player loads only the form currently in use; a later switch remains async
+        // and keeps the old sprite visible until ready instead of risking a black screen from VRAM
+        // exhaustion when several FGO characters preload all of their alternatives together.
+        var isMultiplayer = creature.Player?.RunState.Players.Count > 1;
+        TrackCombatAndEvict(form.FramesPath, keepWholeGroup: !isMultiplayer);
+        PreloadGroup(form.FramesPath, preloadAlternates: !isMultiplayer);
 
         var node = NCombatRoom.Instance?.GetCreatureNode(creature);
         if (node?.FindChild("Sprite", recursive: true, owned: false) is not AnimatedSprite2D sprite) return;
@@ -179,7 +240,7 @@ public static class FormVisuals
         // slow load can't resolve last and overwrite the sprite with the previous form (race).
         var gen = (sprite.HasMeta(GenMeta) ? sprite.GetMeta(GenMeta).AsInt32() : 0) + 1;
         sprite.SetMeta(GenMeta, gen);
-        ApplyWhenReady(sprite, form.FramesPath, gen);
+        _ = ApplyWhenReadyAsync(sprite, form.FramesPath, gen);
     }
 
     /// <summary>
@@ -187,7 +248,7 @@ public static class FormVisuals
     /// signal instead of ever blocking. Usually resolves on the first poll (group preloaded at
     /// combat start); the loop is the fallback for a switch on turn 1 before the load completes.
     /// </summary>
-    private static async void ApplyWhenReady(AnimatedSprite2D sprite, string path, int gen)
+    private static async Task ApplyWhenReadyAsync(AnimatedSprite2D sprite, string path, int gen)
     {
         try
         {
@@ -209,6 +270,23 @@ public static class FormVisuals
 
             if (frames == null || !GodotObject.IsInstanceValid(sprite)) return;
             if (sprite.GetMeta(GenMeta, 0).AsInt32() != gen) return; // a newer Apply won; don't stomp it.
+            var position = sprite.Position;
+            var hasPositionOverride = false;
+            if (SpriteXOf.TryGetValue(path, out var spriteX))
+            {
+                position.X = spriteX;
+                hasPositionOverride = true;
+            }
+            if (SpriteYOf.TryGetValue(path, out var spriteY))
+            {
+                position.Y = spriteY;
+                hasPositionOverride = true;
+            }
+            if (hasPositionOverride) sprite.Position = position;
+            if (SpriteScaleOf.TryGetValue(path, out var uniformScale))
+            {
+                sprite.Scale = new Vector2(uniformScale, uniformScale);
+            }
             if (sprite.SpriteFrames == frames) return;
 
             sprite.SpriteFrames = frames;

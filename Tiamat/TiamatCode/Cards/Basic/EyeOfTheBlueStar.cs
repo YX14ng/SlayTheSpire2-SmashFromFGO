@@ -33,9 +33,9 @@ public sealed class EyeOfTheBlueStar() : TiamatCard(1, CardType.Skill, CardRarit
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
 
-        var prey = Curses.MostCursed((CombatState)Owner.Creature.CombatState, Owner.Creature);
+        var prey = Curses.MostCursed(Owner.Creature);
         if (prey != null)
         {
             await PowerCmd.Apply<WeakPower>(choiceContext, prey, DynamicVars["Weak"].IntValue, Owner.Creature, this);

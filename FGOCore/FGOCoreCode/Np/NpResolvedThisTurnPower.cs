@@ -26,6 +26,6 @@ public sealed class NpResolvedThisTurnPower : FGOCorePower
 
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side == Owner.Side) await PowerCmd.Remove(this);
+        if (participants.Contains(Owner)) await PowerCmd.Remove(this);
     }
 }

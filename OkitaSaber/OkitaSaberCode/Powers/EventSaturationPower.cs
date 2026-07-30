@@ -34,11 +34,11 @@ public sealed class EventSaturationPower : OkitaPower
         if (dealer != Owner || cardSource == null || !props.IsPoweredAttack()) return;
         if (target.Side == Owner.Side || target.IsDead || target.Block <= 0) return;
         Flash();
-        await CreatureCmd.LoseBlock(target, target.Block);
+        await CreatureCmdCompatibility.LoseBlock(choiceContext, target, target.Block, Owner);
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (Owner.Side == side) await PowerCmd.Remove(this);
+        if (participants.Contains(Owner)) await PowerCmd.Remove(this);
     }
 }

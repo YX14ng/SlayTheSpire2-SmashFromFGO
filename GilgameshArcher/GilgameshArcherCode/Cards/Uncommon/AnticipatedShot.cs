@@ -31,11 +31,11 @@ public sealed class AnticipatedShot() : GilgameshCard(1, CardType.Attack, CardRa
         var first = IsFirstCard;
         await CardsThisTurnPower.EnsureInstalled(Owner.Creature);
 
-        await AttackTarget(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue);
+        await AttackTarget(choiceContext, cardPlay, cardPlay.Target, DynamicVars.Damage.BaseValue);
 
         if (first)
         {
-            await CritStars.Gain(Owner.Creature, DynamicVars["Stars"].IntValue, this);
+            await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         }
     }
 

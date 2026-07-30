@@ -60,7 +60,7 @@
   "MORDREDSABER-INSTINCT_B.title": "Instinto B",
   "MORDREDSABER-INSTINCT_B.description": "#Agotar. Obtén !Stars! *Estrellas de *Crítico y roba !C! carta.",
   "MORDREDSABER-CIGARETTE_LION_B_PLUS.title": "León del Cigarrillo B+",
-  "MORDREDSABER-CIGARETTE_LION_B_PLUS.description": "#Al jugarla, obtén !Stars! *Estrellas de *Crítico. Cada vez que obtenés un Crítico, roba 1 carta.",
+  "MORDREDSABER-CIGARETTE_LION_B_PLUS.description": "#Al jugarla, obtén !Stars! *Estrellas de *Crítico. Cada vez que realizás un *Crítico, roba 1 carta.",
   "MORDREDSABER-SECRET_OF_PEDIGREE_E_X.title": "Secreto de Cuna EX",
   "MORDREDSABER-SECRET_OF_PEDIGREE_E_X.description": "#Agotar. Elimina todos los Debuffs de ti misma. Gana !B! de Bloqueo y !NpCharge! de *Carga NP. Si estás en forma *Caballero Enmascarado: gana !MaskedNp! de *Carga NP más.",
   "MORDREDSABER-LIGHTNING_OF_CLARENT.title": "Relámpago de Clarent",
@@ -80,7 +80,7 @@
   "MORDREDSABER-LIGHTNING_VISIT.title": "Visita Relámpago",
   "MORDREDSABER-LIGHTNING_VISIT.description": "#Cambiá de forma. Al final del turno, volvés a la forma anterior.+ Cuando volvés, obtén !Stars! *Estrellas de *Crítico.+",
   "MORDREDSABER-RUDE_KICK.title": "Patada Descortés",
-  "MORDREDSABER-RUDE_KICK.description": "#Inflige !D! de daño. Aplica !Vulnerable! de *Vulnerable (+1 si tenés un *Crítico *Listo).",
+  "MORDREDSABER-RUDE_KICK.description": "#Inflige !D! de daño. Aplica !Vulnerable! de *Vulnerable /(+1 si este Ataque es *Crítico).",
   "MORDREDSABER-PLUNDER_OF_THE_ROYAL_HOARD.title": "Saqueo del Tesoro Real",
   "MORDREDSABER-PLUNDER_OF_THE_ROYAL_HOARD.description": "#Agotar. Gana !NpCharge! de *Carga NP y !Stars! *Estrellas de *Crítico.",
   "MORDREDSABER-CHAINED_LIGHTNING.title": "Relámpago Encadenado",
@@ -94,7 +94,7 @@
   "MORDREDSABER-DEMANDED_DUEL.title": "Duelo Exigido",
   "MORDREDSABER-DEMANDED_DUEL.description": "#Aplica !Weak! de Débil y !Vulnerable! de Vulnerable a un enemigo. Gana !NpCharge! de *Carga NP.",
   "MORDREDSABER-FATHERS_SWORD.title": "Espada del Padre",
-  "MORDREDSABER-FATHERS_SWORD.description": "#Inflige !D! de daño. Si tenés al menos !Threshold! de *Carga NP (sin gastarla): inflige !Bonus! más.",
+  "MORDREDSABER-FATHERS_SWORD.description": "#Inflige !D! de daño. Si tenés al menos !Threshold! de *Carga NP /(sin gastarla): inflige !Bonus! más.",
   "MORDREDSABER-ROYAL_TANTRUM.title": "Berrinche Real",
   "MORDREDSABER-ROYAL_TANTRUM.description": "#Inflige !D! de daño. Pierde !HpLoss! de Vida.",
   "MORDREDSABER-TOURNAMENT_GUARD.title": "Guardia del Torneo",
@@ -154,5 +154,5 @@
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.title": "Clarent Blood Arthur",
   "MORDREDSABER-CLARENT_BLOOD_ARTHUR_INTERLUDE.description": "#Retener. Agotar. Consume TODA tu *Carga NP, mínimo 100. Inflige !D! de daño !Hits! veces a TODOS los enemigos; contra Élites y Jefes, !Authority! más por golpe; más 1 por golpe por cada 15 de Carga NP sobre 100. Luego gana !Refund! de *Carga NP.",
   "MORDREDSABER-CHISPA_DE_CLARENT.title": "Chispa de Clarent",
-  "MORDREDSABER-CHISPA_DE_CLARENT.description": "#Agotar. Inflige !D! de daño a TODOS los enemigos. (El relámpago carmesí que desprende tu Crítico; pega más fuerte sin el yelmo.)"
+  "MORDREDSABER-CHISPA_DE_CLARENT.description": "#Agotar. Inflige !D! de daño a TODOS los enemigos. /(El relámpago carmesí que desprende tu Crítico; pega más fuerte sin el yelmo.)"
 }
