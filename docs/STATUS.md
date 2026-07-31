@@ -2,6 +2,24 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-07-31 — compatibilidad BETA v0.110.1
+
+- **Nueva referencia verificada:** la rama `public-beta` instalada corresponde al build Steam
+  `24489008`, versión `v0.110.1` y commit del juego `db5d3552`.
+- **Sin ruptura para los mods FGO:** los contratos usados de `AbstractModel`, `AttackCommand`,
+  `CreatureCmd` y los targets Harmony conservan las firmas necesarias. Las APIs cambiadas de
+  `CombatManager` y `CardPileCmd` no son invocadas directamente por los 13 proyectos.
+- **Matriz completa aprobada:** 26/26 builds MAIN/BETA con 0 errores y 0 advertencias; las sondas
+  MAIN→MAIN, artefacto MAIN→BETA y BETA→BETA resolvieron correctamente `CardPlay`. La auditoría de
+  contexto terminó con 0 hallazgos y las 13 descripciones de Workshop quedaron coherentes.
+- **Fixture y herramientas actualizados:** la referencia BETA incorpora las nuevas dependencias
+  `Sentry.dll` y `Sentry.Godot.dll`; la matriz las valida antes de compilar. La auditoría de fichas
+  deriva las versiones desde `Sts2Compatibility.props`, y las rutas locales siguen la instalación
+  activa de Steam en C:.
+- **Distribución sin cambios funcionales:** no fue necesario modificar C# de juego ni subir la
+  versión de los mods. Steam Workshop no fue actualizado en esta pasada; queda pendiente el
+  playtest real dentro de BETA v0.110.1.
+
 ## 2026-07-31 — Mash v0.1.11 publicada
 
 - **Cobertura endurecida:** la previsualización de daño ya no muta el objetivo/monto pendiente; el

@@ -630,7 +630,7 @@ produce el set de batalla incluido y el segundo se conserva solo como fuente de 
 1. Descargar/extractar bundles verificados y producir el set de batalla Assassin.
 2. Mapear CEs, generar retratos, iconos, char select y animaciones.
 3. Build FGOCore primero y recompilar los 11 personajes en el mismo lote si cambia su API.
-4. Probar MAIN 0.107.1 y BETA 0.109.0, SimpleLoc, PCK, guardado/carga, cooperativo y bosses con
+4. Probar MAIN 0.107.1 y BETA 0.110.1, SimpleLoc, PCK, guardado/carga, cooperativo y bosses con
    Artifact/cleanse.
 5. Playtest de tres drafts forzados: Assassin puro, Caster puro e híbrido.
 

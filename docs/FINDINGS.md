@@ -147,7 +147,19 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
   transformación no recupera el desplazamiento anterior. Las nueve escenas base también llevan su
   pivote corregido. La corrección vertical del 2026-07-19 amplió este registro de X a X/Y.
 
-## v0.109.0 BETA — compatibilidad dual (verificada con ilspycmd + arranque real)
+## v0.109.0–v0.110.1 BETA — compatibilidad dual
+
+- La comparación completa de `sts2.dll` entre BETA 0.109.0 y 0.110.1 confirmó que
+  `AbstractModel`, `AttackCommand` y `Hook` no cambiaron. `CreatureCmd` conserva las firmas usadas
+  por FGOCore. Por eso siguen vigentes los puentes universales descritos debajo.
+- BETA 0.110.1 sí cambia APIs ajenas al código FGO: varios métodos públicos de `CombatManager`
+  reciben ahora `CombatId?`, y `CardPileCmd.DrawWithoutBlockingOnOtherPlayers` agrega el
+  `CardModel source`. Ninguno de los 13 proyectos invoca esas firmas directamente.
+- Las escenas objetivo de los hardenings de tienda, fogata, recompensas y Darv conservan sus
+  métodos; los targets Harmony continúan resolviendo en 0.110.1.
+- La copia de referencia mínima necesita ahora `Sentry.dll` y `Sentry.Godot.dll`: un inicializador
+  del assembly los toca al cargar `sts2.dll`. La matriz valida ambos archivos antes de compilar para
+  no confundir una dependencia ausente con una incompatibilidad de FGOCore.
 
 - `AbstractModel.ModifyDamageAdditive`, `ModifyDamageMultiplicative` y `ModifyDamageCap` agregan
   `CardPlay?`; FGOCore conserva los overrides MAIN y un patch Harmony BETA los invoca sin duplicar DLL.
@@ -172,7 +184,7 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
   `Owner.Creature` para reliquias). Se conservaron los guards por lado cuando el efecto pertenece
   deliberadamente a la fase contraria, por ejemplo la cobertura de Lahmu al comenzar el turno
   enemigo y la expiración de Espinas/Espalda Expuesta al terminarlo.
-- Referencias aisladas: `.compat/sts2-main-0.107.1` y `.compat/sts2-beta-0.109.0`; no apuntar la
+- Referencias aisladas: `.compat/sts2-main-0.107.1` y `.compat/sts2-beta-0.110.1`; no apuntar la
   compilación de compatibilidad a la rama que esté montada en Steam.
 - **`CardPlay` debe conservarse hasta el modificador concreto**: en BETA, preview entrega `null` y
   una resolución real entrega la jugada. Un adaptador que sólo invoque el override MAIN mantiene la
@@ -186,7 +198,7 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
   multicast async directamente sólo espera la última `Task`.
 - **La matriz BETA no produce el paquete distribuible**: al terminar deja DLL compilados contra las
   firmas nuevas. Hay que publicar nuevamente contra MAIN, cuyo bridge se verificó cargando sobre el
-  runtime BETA. Procedimiento y contrato completo en `docs/COMPATIBILITY-0.109.md`.
+  runtime BETA. Procedimiento y contrato completo en `docs/COMPATIBILITY-0.110.md`.
 
 ## v0.107.1 — cambios de API (verificados con ilspycmd sobre sts2.dll)
 - Hooks de inicio de turno: `AfterSideTurnStart(CombatSide, IReadOnlyList<Creature> participants, ICombatState)`; `BeforeSideTurnStart` igual +participants.
@@ -229,7 +241,11 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
 - Cada `PowerModel` necesita loc `title/description/smartDescription` o el build tira `STS001`.
 
 ## Deploy / entorno (CRÍTICO)
-- Install en uso: `G:\SteamLibrary\steamapps\common\Slay the Spire 2` (v0.107.1). **El juego se movió de biblioteca Steam (C:→G:) el 2026-06-25**; el viejo `C:\Program Files (x86)\Steam\...` quedó con restos (solo `mods/` + `window_state.json`, sin `data_sts2_windows_x86_64`). El build apunta a G: vía `Sts2Path` en los `Directory.Build.props` (machine-local, gitignored); `tools/install-mod.ps1` usa G: por default. Workshop ahora en `G:\SteamLibrary\steamapps\workshop\content\2868840\`.
+- Install en uso: `C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2` (BETA
+  v0.110.1). Steam movió la instalación activa de G: nuevamente a C: el 2026-07-31; la carpeta G:
+  conserva `mods/`, pero ya no contiene `data_sts2_windows_x86_64/sts2.dll`. Los
+  `Directory.Build.props` locales y `tools/install-mod.ps1` apuntan a C:. Workshop está en
+  `C:\Program Files (x86)\Steam\steamapps\workshop\content\2868840\`.
 - El tool **Bash corre SANDBOXEADO** con overlay de FS → para tocar el FS real usar `dangerouslyDisableSandbox:true` (Bash) o la tool PowerShell.
 - dotnet **10.0.301** (`/c/Program Files/dotnet/`); MegaDot 4.5.1 en el repo; `ilspycmd` en `/c/Users/YX14n/.dotnet/tools/`.
 - **godot.log**: `C:\Users\YX14n\AppData\Roaming\SlayTheSpire2\logs\godot.log` — PRIMER lugar a diagnosticar un mod que no carga.

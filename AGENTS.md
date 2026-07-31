@@ -18,7 +18,7 @@ Astolfo).
 ("Smash" in the repo name is a pun on Mash, the first character — no FGO Servant is named Smash.)
 Each top-level folder with a `*.csproj` is an independent mod depending on FGOCore + BaseLib.
 
-- Targets **MAIN v0.107.1 and BETA v0.109.0** with one artifact set, compiled against **BaseLib
+- Targets **MAIN v0.107.1 and BETA v0.110.1** with one artifact set, compiled against **BaseLib
   3.3.6** and runtime-verified with 3.3.7. All 13 projects compile green; Kagetora, Shuten and Astolfo
   remain in validation/playtest state (see `docs/STATUS.md` for Workshop state).
 - `decompiled/` is the decompiled game (ground truth for hooks/VFX/base classes);
@@ -41,8 +41,8 @@ assets, debugging and validation; use the second before creating or rebalancing 
   `<Id>.pck` in the game's `mods/`. Framework = **BaseLib** (`CustomCharacterModel`/`CustomCardModel`/
   `CustomRelicModel`, custom keywords, localization, automatic ID prefixing —
   https://alchyr.github.io/BaseLib-Wiki/).
-- Game install: `G:\SteamLibrary\steamapps\common\Slay the Spire 2` (the old `C:\Program Files
-  (x86)\Steam\...` path is stale). BaseLib + ModConfig are installed there.
+- Game install: `C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2`. Steam moved the
+  active install back from G: on 2026-07-31; BaseLib + ModConfig are installed through Workshop.
 - A manifest **`id` never changes** once chosen — it determines loaded filenames and the model-id
   prefix. Model/power IDs must never be renamed while saves are active.
 

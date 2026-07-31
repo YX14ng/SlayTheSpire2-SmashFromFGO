@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Custom character mods for **Slay the Spire 2** (Early Access, Godot 4 / C#), building **Fate/Grand Order Servants** as playable characters. ("Smash" in the repo name is a pun on Mash, the first character — no FGO Servant is literally named Smash.) The same Workshop artifacts target **MAIN v0.107.1 and BETA v0.109.0**. They compile against **BaseLib 3.3.6** and were runtime-verified with Workshop **BaseLib 3.3.7**.
+Custom character mods for **Slay the Spire 2** (Early Access, Godot 4 / C#), building **Fate/Grand Order Servants** as playable characters. ("Smash" in the repo name is a pun on Mash, the first character — no FGO Servant is literally named Smash.) The same Workshop artifacts target **MAIN v0.107.1 and BETA v0.110.1**. They compile against **BaseLib 3.3.6** and were runtime-verified with Workshop **BaseLib 3.3.7**.
 
 The repo is a **multi-mod monorepo**: one shared mechanics library (`FGOCore/`) and many character mods that depend on it. Each top-level folder with a `*.csproj` is an independent mod with its own manifest, assets, and localization.
 
-All 13 projects compile against MAIN v0.107.1 and BETA v0.109.0. FGOCore and the original nine
+All 13 projects compile against MAIN v0.107.1 and BETA v0.110.1. FGOCore and the original nine
 characters are public on Steam Workshop; Kagetora has a private test item, while Shuten and Astolfo
 remain staging-only pending runtime playtest (see STATUS.md).
 
@@ -70,7 +70,7 @@ FGO battle models are **Unity 2D puppets / 3D FBX rigs, NOT frame spritesheets**
 
 ## Key facts & gotchas
 - StS2 runs on **MegaDot** (Mega Crit's Godot 4 fork). Mods = `<Id>.json` + `<Id>.dll` + `<Id>.pck` in the game's `mods/` folder. The standard framework is **BaseLib** (NuGet `Alchyr.Sts2.BaseLib`, docs https://alchyr.github.io/BaseLib-Wiki/): `CustomCharacterModel`/`CustomCardModel`/`CustomRelicModel`, custom keywords/enums, localization, automatic ID prefixing.
-- Game install: `G:\SteamLibrary\steamapps\common\Slay the Spire 2` (moved off C: — the old `C:\Program Files (x86)\Steam\...` path is stale; the cracked `F:\Games\...v0.103.3` install is discarded). BaseLib + ModConfig are installed through Workshop. Package baseline is **3.3.6** and manifests require `>= v3.3.6`; runtime is verified with **3.3.7**.
+- Game install: `C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2` (Steam moved the active install back from G: on 2026-07-31; the remaining G: folder no longer contains the game binary). BaseLib + ModConfig are installed through Workshop. Package baseline is **3.3.6** and manifests require `>= v3.3.6`; runtime is verified with **3.3.7**.
 - A mod's manifest `id` **must never change** once chosen — it determines the loaded filenames. Model/power IDs must never be renamed while saves are active (the mod prefix is part of the ID); migrating a mechanic between mods changes its ID and breaks in-progress runs.
 - `PowerVar<T>` always with an explicit name. `ModifyHpLost*` hooks are ABSOLUTE. Validate VFX paths against `grep '"vfx/' decompiled/`. Full gotcha table in WORKFLOW-FGO.
 - Scaffolding: `dotnet new install Alchyr.Sts2.Templates` → "Slay the Spire 2 Character". Project name has no spaces; "Put solution and project in same directory" must be enabled.

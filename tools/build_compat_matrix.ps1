@@ -29,12 +29,20 @@ try {
         $referenceRoot = if ($target -eq 'main') {
             Join-Path $repo '.compat\sts2-main-0.107.1'
         } else {
-            Join-Path $repo '.compat\sts2-beta-0.109.0'
+            Join-Path $repo '.compat\sts2-beta-0.110.1'
         }
-        $assembly = Join-Path $referenceRoot 'data_sts2_windows_x86_64\sts2.dll'
-        if (-not (Test-Path $assembly)) {
-            throw "Falta la referencia $target en $assembly"
+        $assemblyDir = Join-Path $referenceRoot 'data_sts2_windows_x86_64'
+        $requiredReferences = @('sts2.dll', '0Harmony.dll', 'GodotSharp.dll')
+        if ($target -eq 'beta') {
+            $requiredReferences += @('Sentry.dll', 'Sentry.Godot.dll')
         }
+        foreach ($reference in $requiredReferences) {
+            $referencePath = Join-Path $assemblyDir $reference
+            if (-not (Test-Path $referencePath)) {
+                throw "Falta la referencia $target en $referencePath"
+            }
+        }
+        $assembly = Join-Path $assemblyDir 'sts2.dll'
 
         $stage = Join-Path $repo ".compat\build-$target\"
         foreach ($project in $projects) {
@@ -48,7 +56,7 @@ try {
         }
 
         $probeProject = Join-Path $repo 'tools\compatibility_probe\CompatibilityProbe.csproj'
-        $probeAssemblyDir = Split-Path $assembly -Parent
+        $probeAssemblyDir = $assemblyDir
         $probeCore = Join-Path $stage 'FGOCore\FGOCore.dll'
         Write-Host "[$target] runtime compatibility probe"
         $probeArgs = @('run', '--project', $probeProject)
@@ -60,7 +68,7 @@ try {
         }
 
         if ($target -eq 'main') {
-            $betaAssemblyDir = Join-Path $repo '.compat\sts2-beta-0.109.0\data_sts2_windows_x86_64'
+            $betaAssemblyDir = Join-Path $repo '.compat\sts2-beta-0.110.1\data_sts2_windows_x86_64'
             Write-Host "[main -> beta] universal artifact compatibility probe"
             $crossProbeArgs = @('run', '--project', $probeProject)
             if ($NoRestore) { $crossProbeArgs += '--no-restore' }

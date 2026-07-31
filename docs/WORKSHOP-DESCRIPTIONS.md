@@ -46,4 +46,4 @@ Los patrones más útiles son:
 
 Las 13 fichas de `tools/workshop_desc/` ya siguen este formato: inglés primero, traducciones completas de la ficha al español y chino simplificado, BBCode de Steam, cifras concretas, requisitos enlazados y estado de pruebas visible. Una edición puramente editorial no requiere recompilar binarios ni volver a exportar PCK.
 
-Regla de mantenimiento: las 12 fichas de personaje deben declarar como mínimo FGO Core `0.1.10+`, BaseLib `3.3.6+` y compatibilidad con MAIN `0.107.1` / BETA `0.109.0`, hasta que cambie el contrato real del repositorio. La ficha de FGOCore sólo enlaza BaseLib porque no depende de sí misma.
+Regla de mantenimiento: las 12 fichas de personaje deben declarar como mínimo FGO Core `0.1.10+`, BaseLib `3.3.6+` y compatibilidad con MAIN `0.107.1` / BETA `0.110.1`, hasta que cambie el contrato real del repositorio. La ficha de FGOCore sólo enlaza BaseLib porque no depende de sí misma.

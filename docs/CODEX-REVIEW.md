@@ -36,7 +36,7 @@ Rules of engagement:
   AstolfoRider). ~1,068 `.cs` across the character mods.
 - Each top-level folder with a `*.csproj` is an **independent mod** with its own manifest, assets,
   localization. All depend on FGOCore + BaseLib.
-- Targets **MAIN v0.107.1 and BETA v0.109.0** with one artifact set, compiled against **BaseLib
+- Targets **MAIN v0.107.1 and BETA v0.110.1** with one artifact set, compiled against **BaseLib
   3.3.6** and runtime-verified with 3.3.7.
 - **`decompiled/`** = the decompiled game (incl. a full BaseLib decompile under
   `decompiled/_baselib_full/`). This is the **ground truth** for hook signatures, VFX paths, and

@@ -19,7 +19,7 @@ FGO Core does not add a playable character by itself. Install it together with a
 [*]Required by 12 playable FGO characters
 [*]Spanish, English, Simplified Chinese, Korean and Russian localization
 [*]Designed for solo play and multiplayer synchronization
-[*]One artifact set for MAIN 0.107.1 and public BETA 0.109.0
+[*]One artifact set for MAIN 0.107.1 and public BETA 0.110.1
 [*]Shared safeguards for card rewards, events, custom scenes, save/load and mixed-mod environments
 [/list]
 
@@ -59,7 +59,7 @@ FGO Core no añade un personaje jugable por sí solo. Instalalo junto con cualqu
 [*]Obligatorio para 12 personajes FGO jugables
 [*]Localización en español, inglés, chino simplificado, coreano y ruso
 [*]Diseñado para juego individual y sincronización multijugador
-[*]Un solo conjunto de archivos para MAIN 0.107.1 y BETA pública 0.109.0
+[*]Un solo conjunto de archivos para MAIN 0.107.1 y BETA pública 0.110.1
 [*]Protecciones compartidas para recompensas, eventos, escenas, guardado/carga y entornos con muchos mods
 [/list]
 
@@ -99,7 +99,7 @@ FGO Core 本身不提供可玩角色，请与任一受支持的 FGO 角色一同
 [*]12 名 FGO 可玩角色的必需依赖
 [*]支持西班牙语、英语、简体中文、韩语与俄语
 [*]兼顾单人游戏与多人同步
-[*]同一套文件兼容正式版 0.107.1 与公开测试版 0.109.0
+[*]同一套文件兼容正式版 0.107.1 与公开测试版 0.110.1
 [*]为卡牌奖励、事件、自定义场景、存档及多 Mod 环境提供共用防护
 [/list]
 

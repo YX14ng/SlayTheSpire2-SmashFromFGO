@@ -4,6 +4,15 @@ param()
 $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path $PSScriptRoot -Parent
 $descriptionRoot = Join-Path $PSScriptRoot "workshop_desc"
+$compatibilityPropsPath = Join-Path $repoRoot 'Sts2Compatibility.props'
+$compatibilityProps = Get-Content -LiteralPath $compatibilityPropsPath -Raw -Encoding UTF8
+$mainVersionMatch = [regex]::Match($compatibilityProps, 'sts2-main-(?<version>[0-9.]+)')
+$betaVersionMatch = [regex]::Match($compatibilityProps, 'sts2-beta-(?<version>[0-9.]+)')
+if (-not $mainVersionMatch.Success -or -not $betaVersionMatch.Success) {
+    throw "No se pudieron obtener las versiones MAIN/BETA desde $compatibilityPropsPath"
+}
+$mainVersionPattern = [regex]::Escape($mainVersionMatch.Groups['version'].Value)
+$betaVersionPattern = [regex]::Escape($betaVersionMatch.Groups['version'].Value)
 $expectedMods = @(
     "FGOCore",
     "MashShielder",
@@ -68,7 +77,7 @@ foreach ($mod in $expectedMods) {
     if ($text -notmatch 'BaseLib 3\.3\.6\+') {
         Add-Failure "${mod}: no declara BaseLib 3.3.6+."
     }
-    if ($text -notmatch 'MAIN 0\.107\.1' -or $text -notmatch 'BETA (public |p.blica )?0\.109\.0') {
+    if ($text -notmatch "MAIN $mainVersionPattern" -or $text -notmatch "BETA (public |p.blica )?$betaVersionPattern") {
         Add-Failure "${mod}: no declara las ramas MAIN/BETA compatibles."
     }
     if ($text -notmatch 'github\.com/YX14ng/SlayTheSpire2-SmashFromFGO') {

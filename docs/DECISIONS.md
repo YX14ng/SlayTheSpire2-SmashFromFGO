@@ -4,7 +4,7 @@ Solo decisiones **cerradas** + caminos abandonados, para no volver a girar sobre
 Patrón tomado de `iryuko/sts2-mod-dev`. Estado vivo → [STATUS.md](STATUS.md). Evidencia → [FINDINGS.md](FINDINGS.md).
 
 ## Versión / plataforma
-- Target dual con un único artefacto de Workshop: **MAIN v0.107.1 + BETA v0.109.0**. Baseline de compilación **BaseLib 3.3.6**; manifiestos exigen `>= v3.3.6`; runtime verificado con Workshop **3.3.7**.
+- Target dual con un único artefacto de Workshop: **MAIN v0.107.1 + BETA v0.110.1**. Baseline de compilación **BaseLib 3.3.6**; manifiestos exigen `>= v3.3.6`; runtime verificado con Workshop **3.3.7**.
 - **MegaDot 4.5.1** para exportar el `.pck` (el juego no carga un `.pck` de un Godot más nuevo).
 
 ## Deploy

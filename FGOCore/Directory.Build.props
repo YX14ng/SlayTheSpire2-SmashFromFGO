@@ -4,8 +4,8 @@
         <!-- MegaDot / Godot 4.5.1 mono executable used for export-pack when publishing -->
         <GodotPath>F:/Programs/SlayTheSpire2-SmashFromFGO/MegaDot/MegaDot_v4.5.1-stable_mono_win64.exe</GodotPath>
 
-        <!-- El juego que se corre es la copia en F:\Games (NO el install de Steam) — se fija el path para
-             que build/publish vayan SOLOS al folder de mods correcto. Machine-local (Directory.Build.props gitignorado). -->
-        <Sts2Path>G:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path>
+        <!-- Instalación activa de Steam. El build/publish normal usa dist/; esta ruta queda para
+             referencias locales y deploys de playtest explícitos. -->
+        <Sts2Path>C:/Program Files (x86)/Steam/steamapps/common/Slay the Spire 2</Sts2Path>
     </PropertyGroup>
 </Project>
