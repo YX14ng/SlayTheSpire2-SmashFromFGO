@@ -11,7 +11,7 @@ public sealed class ProvokePower : InterceptPower
 {
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (!participants.Contains(Owner))
+        if (Owner.Side != side)
         {
             await PowerCmd.Remove(this);
         }

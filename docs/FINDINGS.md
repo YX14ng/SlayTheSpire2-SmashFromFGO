@@ -3,6 +3,25 @@
 Conclusiones de alta densidad (no historial). **Verificado** = visto en código/log/decompilado;
 lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas → [DECISIONS.md](DECISIONS.md).
 
+## Cobertura debe separar preview, confirmación y expiración (verificado, 2026-07-31)
+
+- `ModifyHpLostBeforeOsty` también corre durante previews. `CoverPower` guardaba allí el objetivo y
+  el daño candidato, de modo que una consulta de UI podía reemplazar el estado de una resolución
+  real antes de `AfterModifyingHpLostBeforeOsty`; el resultado era una transferencia omitida o
+  dirigida con un monto ajeno.
+- El camino seguro usa `BeforeDamageReceived` para registrar sólo resoluciones reales, mantiene
+  `ModifyHpLostBeforeOsty` como lectura pura y deja que `AfterModifyingHpLostBeforeOsty` confirme
+  únicamente al Cover que realmente cambió el monto. Stacks por resolución/objetivo cubren daño
+  reentrante y varias Mash; `DamageResult.BlockedDamage` permite transferir sólo lo que atravesó el
+  Bloqueo del aliado. El guard estático sigue cortando Coberturas mutuas.
+- En cooperativo, `!participants.Contains(Owner)` no equivale a «terminó el turno enemigo»: un turno
+  extra de otro jugador también excluye al owner y retiraba la defensa antes de la siguiente volea.
+  Cobertura, Provocación y Pared Absoluta ahora expiran con `Owner.Side != side`, el mismo contrato
+  de `FlameBarrierPower` vanilla.
+- Verificación: orden de `CreatureCmd.Damage` contrastado con el decompilado; auditoría de contextos
+  con 0 hallazgos; los 13 proyectos compilan sin advertencias en MAIN y BETA y pasan los tres probes
+  de enlace runtime.
+
 ## `PlaceholderCharacterModel` también hereda al Guerrero en tienda/fogata (verificado, 2026-07-30)
 
 - BaseLib implementa `CustomMerchantAnimPath` y `CustomRestSiteAnimPath` en
