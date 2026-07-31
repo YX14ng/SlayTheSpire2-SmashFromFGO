@@ -2,6 +2,21 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-07-31 — Mash v0.1.11 publicada
+
+- **Cobertura endurecida:** la previsualización de daño ya no muta el objetivo/monto pendiente; el
+  camino real usa `BeforeDamageReceived`, confirmación posterior y stacks por resolución para
+  soportar daño reentrante y varias Mash sin omitir ni duplicar transferencias.
+- **Duración cooperativa correcta:** Cobertura, Provocación y Pared Absoluta expiran al terminar el
+  lado enemigo, no por un turno extra de otro jugador.
+- **Paquete verificado:** el manifiesto `v0.1.11` está dentro y fuera del PCK; sus 1.709 entradas
+  incluyen combate, tienda, fogata y las tres formas. DLL/JSON/PCK coinciden por SHA-256 entre
+  `dist` y `.workshop_stage`.
+- **Workshop actualizado:** SteamCMD confirmó `Committing update...Success` para MashShielder
+  (`3747876464`), conservando visibilidad pública (`0`) y la preview existente; `stderr` quedó vacío.
+- **Pendiente externo:** reiniciar Steam para forzar la descarga y probar Cobertura en cooperativo,
+  especialmente con turnos extra y dos Mash.
+
 ## 2026-07-30 — paquete final publicado y hotfix de costes
 
 - **Pagos gratuitos válidos:** FGOCore acepta correctamente costes de 0 NP y 0 Estrellas tras
