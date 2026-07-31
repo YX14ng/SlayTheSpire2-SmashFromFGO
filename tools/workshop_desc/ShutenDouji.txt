@@ -1,7 +1,7 @@
 [h1]Shuten-Douji — Distill Poison into Sake[/h1]
 Weave Assassin and Caster cards through one deck, turn Poison into a 0–100 Sake economy and choose which of two Noble Phantasms will end the banquet.
 
-[b]PLAYTEST BUILD — v0.1.1[/b]
+[b]PLAYTEST BUILD — v0.1.2[/b]
 The character and presentation are complete for testing; balance, save/load and co-op validation are still in progress.
 
 [h2]Core gameplay[/h2]
@@ -40,7 +40,7 @@ Unofficial fan-made mod. Fate/Grand Order characters and official visual assets 
 [h1]ESPAÑOL[/h1]
 Combiná cartas Assassin y Caster en un mismo mazo, convertí Veneno en una economía de Sake de 0 a 100 y elegí con cuál de dos Noble Phantasms terminar el banquete.
 
-[b]VERSIÓN DE PLAYTEST — v0.1.1[/b]
+[b]VERSIÓN DE PLAYTEST — v0.1.2[/b]
 El personaje y su presentación están completos para pruebas; el balance, guardado/carga y cooperativo todavía están en validación.
 
 [h2]Mecánicas principales[/h2]
@@ -79,7 +79,7 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [h1]简体中文[/h1]
 在同一套牌组中交织 Assassin 与 Caster 卡牌，把毒素酿成 0–100 的酒资源，并从两种宝具中选择宴席的终幕。
 
-[b]测试版本 — v0.1.1[/b]
+[b]测试版本 — v0.1.2[/b]
 角色与视觉内容已可完整测试；平衡、存档及联机验证仍在进行。
 
 [h2]核心机制[/h2]

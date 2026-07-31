@@ -1,11 +1,14 @@
 using System.Reflection;
+using System.Reflection.Metadata;
+using System.Reflection.Metadata.Ecma335;
+using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
 
 if (args.Length < 4 || args[0] is not ("main" or "beta") || args[1] is not ("main" or "beta"))
 {
     Console.Error.WriteLine(
-        "Usage: CompatibilityProbe <runtime-branch> <build-branch> <game-assembly-dir> <FGOCore.dll> [dependency-dir ...]");
+        "Usage: CompatibilityProbe <runtime-branch> <build-branch> <game-assembly-dir> <FGOCore.dll> [artifact.dll ...]");
     return 2;
 }
 
@@ -13,14 +16,17 @@ var runtimeBranch = args[0];
 var buildBranch = args[1];
 var gameAssemblyDir = Path.GetFullPath(args[2]);
 var corePath = Path.GetFullPath(args[3]);
-var explicitSearchDirectories = args.Skip(4)
-    .Select(Path.GetFullPath)
+var artifactPaths = args.Skip(4).Select(Path.GetFullPath).ToArray();
+var explicitSearchDirectories = artifactPaths
+    .Select(path => Path.GetDirectoryName(path)!)
     .Prepend(Path.GetDirectoryName(corePath)!)
     .Prepend(gameAssemblyDir)
     .ToList();
 
+var userProfile = Environment.GetEnvironmentVariable("USERPROFILE")
+                  ?? Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 var nugetRoot = Environment.GetEnvironmentVariable("NUGET_PACKAGES")
-                ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".nuget", "packages");
+                ?? Path.Combine(userProfile, ".nuget", "packages");
 var baseLibPackageRoot = Path.Combine(nugetRoot, "alchyr.sts2.baselib");
 if (Directory.Exists(baseLibPackageRoot))
 {
@@ -43,6 +49,18 @@ AssemblyLoadContext.Default.Resolving += (_, assemblyName) =>
     return null;
 };
 
+var baseLibPath = searchDirectories
+    .Select(directory => Path.Combine(directory, "BaseLib.dll"))
+    .FirstOrDefault(File.Exists);
+if (baseLibPath is null)
+{
+    Console.Error.WriteLine(
+        $"BaseLib.dll was not found in the compatibility probe search paths: {string.Join("; ", searchDirectories)}");
+    return 2;
+}
+
+AssemblyLoadContext.Default.LoadFromAssemblyPath(baseLibPath);
+
 try
 {
     static void Assert(bool condition, string message)
@@ -62,6 +80,66 @@ try
         type.GetMethod(name, BindingFlags.Static | BindingFlags.Public,
             binder: null, types: parameters, modifiers: null)
         ?? throw new MissingMethodException(type.FullName, $"{name}({string.Join(", ", parameters.Select(t => t.Name))})");
+
+    static string? GetReferenceAssemblyName(MetadataReader metadata, EntityHandle handle)
+    {
+        while (!handle.IsNil)
+        {
+            switch (handle.Kind)
+            {
+                case HandleKind.AssemblyReference:
+                    return metadata.GetString(metadata.GetAssemblyReference((AssemblyReferenceHandle)handle).Name);
+                case HandleKind.TypeReference:
+                    handle = metadata.GetTypeReference((TypeReferenceHandle)handle).ResolutionScope;
+                    continue;
+                default:
+                    return null;
+            }
+        }
+
+        return null;
+    }
+
+    static int ValidateGameMemberReferences(string artifactPath, Module module, string runtime)
+    {
+        using var stream = File.OpenRead(artifactPath);
+        using var pe = new PEReader(stream);
+        var metadata = pe.GetMetadataReader();
+        var resolved = 0;
+
+        foreach (var handle in metadata.MemberReferences)
+        {
+            var member = metadata.GetMemberReference(handle);
+            if (!string.Equals(GetReferenceAssemblyName(metadata, member.Parent), "sts2",
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            var token = MetadataTokens.GetToken(handle);
+            try
+            {
+                if (module.ResolveMember(token) is null)
+                {
+                    throw new MissingMemberException($"Metadata token 0x{token:X8} did not resolve.");
+                }
+
+                resolved++;
+            }
+            catch (Exception exception)
+            {
+                var typeName = member.Parent.Kind == HandleKind.TypeReference
+                    ? metadata.GetString(metadata.GetTypeReference((TypeReferenceHandle)member.Parent).Name)
+                    : member.Parent.Kind.ToString();
+                var memberName = metadata.GetString(member.Name);
+                throw new InvalidOperationException(
+                    $"{Path.GetFileName(artifactPath)} references sts2 member {typeName}.{memberName} " +
+                    $"that is unavailable on the {runtime} runtime (token 0x{token:X8}).", exception);
+            }
+        }
+
+        return resolved;
+    }
 
     var game = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.Combine(gameAssemblyDir, "sts2.dll"));
     var core = AssemblyLoadContext.Default.LoadFromAssemblyPath(corePath);
@@ -175,8 +253,24 @@ try
             $"{nestedName} bridge state mismatch: expected {expectedBridge}, actual {bridgeEnabled}.");
     }
 
+    var auditedArtifacts = artifactPaths.Prepend(corePath).ToArray();
+    var resolvedGameMembers = 0;
+    foreach (var artifactPath in auditedArtifacts)
+    {
+        if (!File.Exists(artifactPath))
+        {
+            throw new FileNotFoundException("Compatibility artifact not found.", artifactPath);
+        }
+
+        var artifact = string.Equals(artifactPath, corePath, StringComparison.OrdinalIgnoreCase)
+            ? core
+            : AssemblyLoadContext.Default.LoadFromAssemblyPath(artifactPath);
+        resolvedGameMembers += ValidateGameMemberReferences(artifactPath, artifact.ManifestModule, runtimeBranch);
+    }
+
     Console.WriteLine(
-        $"Compatibility OK: build={buildBranch}, runtime={runtimeBranch}, CardPlay={supportsCardPlay}");
+        $"Compatibility OK: build={buildBranch}, runtime={runtimeBranch}, CardPlay={supportsCardPlay}, " +
+        $"artifacts={auditedArtifacts.Length}, sts2 members={resolvedGameMembers}");
     return 0;
 }
 catch (Exception exception)

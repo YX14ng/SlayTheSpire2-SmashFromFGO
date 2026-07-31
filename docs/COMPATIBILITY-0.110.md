@@ -7,8 +7,9 @@ Estado verificado el 2026-07-31 contra copias aisladas de `sts2.dll`:
 - BaseLib de compilación: 3.3.6; runtime comprobado: 3.3.7
 
 La referencia BETA mínima debe incluir `sts2.dll`, `sts2.xml`, `0Harmony.dll`, `GodotSharp.dll`,
-`Sentry.dll` y `Sentry.Godot.dll`. Los dos últimos son dependencias nuevas de 0.110.1; sin ellos la
-sonda de enlace no puede inicializar el assembly aunque el código compile.
+`Sentry.dll` y `Sentry.Godot.dll`. `Sentry.dll` ya existía como referencia; 0.110.1 agrega
+`Sentry.Godot.dll`. La sonda necesita ambas para inicializar el assembly BETA aunque el código
+compile.
 
 ## Cambios de API relevantes
 
@@ -54,6 +55,11 @@ Los delegates de compatibilidad de `CreatureCmd` se resuelven una sola vez. Las 
 usan tipos exactos, no sólo cantidad de parámetros, para no seleccionar un overload incorrecto si
 el juego agrega nuevas firmas.
 
+La sonda también recorre las referencias binarias a `sts2` de FGOCore y de los doce personajes, y
+las fuerza a resolver contra el runtime examinado. Esto cubre métodos que permanecen dormidos hasta
+que se juega una carta: fue lo que detectó la llamada directa de `PoisonedBanquet` a la sobrecarga
+MAIN de seis parámetros de `CreatureCmd.Damage`. Esa carta usa ahora `CreatureCmdCompatibility`.
+
 ## Validación
 
 Ejecutar:
@@ -67,10 +73,12 @@ La matriz exige:
 
 1. Los 13 proyectos compilan contra MAIN sin advertencias ni errores.
 2. El probe MAIN encuentra las firmas antiguas y desactiva `CardPlay`.
-3. El DLL MAIN de FGOCore carga contra BETA, detecta `CardPlay` y activa sólo el bridge universal.
-4. Los 13 proyectos compilan contra BETA sin advertencias ni errores.
-5. El probe BETA comprueba overrides nativos y bridge desactivado.
+3. Los 13 DLL MAIN resuelven todas sus referencias a `sts2` contra MAIN.
+4. Los 13 DLL MAIN cargan contra BETA, detectan `CardPlay`, activan sólo el bridge universal y no
+   conservan referencias a miembros eliminados.
+5. Los 13 proyectos compilan contra BETA sin advertencias ni errores.
+6. El probe BETA comprueba los 13 DLL, los overrides nativos y el bridge desactivado.
 
-Después de una matriz completa siempre hay que volver a publicar contra MAIN: la fase BETA es la
-última y deja en `dist` DLL específicos de BETA. El paquete MAIN es el artefacto universal que se
-distribuye para ambas ramas.
+La matriz escribe únicamente en `.compat/build-main` y `.compat/build-beta`; no modifica `dist`.
+El paquete distribuible sigue siendo el compilado contra MAIN y se genera por separado mediante el
+flujo normal de build/publish hacia `dist`.

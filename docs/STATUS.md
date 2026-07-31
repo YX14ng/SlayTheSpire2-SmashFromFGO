@@ -2,23 +2,41 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-07-31 — publicación global MAIN/BETA y hotfixes
+
+- **Lote público completo:** SteamCMD confirmó `Committing update...Success` 13 veces en una sola
+  sesión para FGOCore y los 12 personajes, reutilizando sus IDs existentes y visibilidad pública.
+- **Versiones nuevas:** FGOCore y Siegfried quedaron en `v0.1.12`; Shuten subió a `v0.1.2` con el
+  puente de `CreatureCmd.Damage` requerido por BETA v0.110.1. Los otros diez paquetes se
+  reconstruyeron y republicaron para mantener el conjunto alineado.
+- **Paquetes inspeccionados:** los 39 DLL/JSON/PCK de `.workshop_stage` coinciden por SHA-256 con
+  `dist`. Los 13 PCK contienen un manifiesto idéntico al externo, los cinco idiomas y, para cada
+  personaje, las escenas compiladas de tienda y descanso. Se corrigieron los filtros de exportación
+  que excluían por error los manifiestos internos de Shuten y Astolfo.
+- **Validación previa:** matriz MAIN/BETA 26/26 sin errores ni advertencias; sondas MAIN→MAIN,
+  MAIN→BETA y BETA→BETA sobre los 13 DLL, paridad de localización, SimpleLoc, assets, VFX,
+  presentación, animaciones, contextos y las 13 fichas de Workshop aprobados.
+- **Sin instalación duplicada:** no se copiaron mods FGO a la carpeta local del juego. Falta que
+  Steam sincronice los nuevos paquetes y realizar el playtest de Siegfried y `PoisonedBanquet` en
+  BETA v0.110.1.
+
 ## 2026-07-31 — compatibilidad BETA v0.110.1
 
 - **Nueva referencia verificada:** la rama `public-beta` instalada corresponde al build Steam
   `24489008`, versión `v0.110.1` y commit del juego `db5d3552`.
-- **Sin ruptura para los mods FGO:** los contratos usados de `AbstractModel`, `AttackCommand`,
-  `CreatureCmd` y los targets Harmony conservan las firmas necesarias. Las APIs cambiadas de
-  `CombatManager` y `CardPileCmd` no son invocadas directamente por los 13 proyectos.
-- **Matriz completa aprobada:** 26/26 builds MAIN/BETA con 0 errores y 0 advertencias; las sondas
-  MAIN→MAIN, artefacto MAIN→BETA y BETA→BETA resolvieron correctamente `CardPlay`. La auditoría de
-  contexto terminó con 0 hallazgos y las 13 descripciones de Workshop quedaron coherentes.
-- **Fixture y herramientas actualizados:** la referencia BETA incorpora las nuevas dependencias
-  `Sentry.dll` y `Sentry.Godot.dll`; la matriz las valida antes de compilar. La auditoría de fichas
-  deriva las versiones desde `Sts2Compatibility.props`, y las rutas locales siguen la instalación
-  activa de Steam en C:.
-- **Distribución sin cambios funcionales:** no fue necesario modificar C# de juego ni subir la
-  versión de los mods. Steam Workshop no fue actualizado en esta pasada; queda pendiente el
-  playtest real dentro de BETA v0.110.1.
+- **Ruptura latente corregida:** `PoisonedBanquet` de Shuten todavía enlazaba la sobrecarga MAIN de
+  seis parámetros de `CreatureCmd.Damage`, eliminada en BETA. La carta pasa ahora por
+  `CreatureCmdCompatibility` y conserva la atribución nula de daño que ya tenía.
+- **Matriz completa endurecida:** 26/26 builds MAIN/BETA con 0 errores y 0 advertencias. Las sondas
+  MAIN→MAIN, artefactos MAIN→BETA y BETA→BETA resolvieron 1.286 referencias a `sts2` en los 13 DLL;
+  la auditoría de contexto terminó con 0 hallazgos.
+- **Preflight y configuración corregidos:** la matriz valida ambas fixtures completas antes de
+  compilar, deriva las versiones desde `Sts2Compatibility.props` y reconoce que sólo
+  `Sentry.Godot.dll` es una referencia nueva de 0.110.1. Las cuatro rutas absolutas versionadas se
+  retiraron del índice y permanecen como configuración local ignorada.
+- **Release publicado:** `ShutenDouji` subió a `v0.1.2`; su DLL universal y PCK fueron regenerados y
+  publicados dentro del lote global. Queda pendiente el playtest real de `PoisonedBanquet` dentro
+  de BETA v0.110.1.
 
 ## 2026-07-31 — Mash v0.1.11 publicada
 
@@ -84,8 +102,8 @@ Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md
   Core 0.1.12. Los PCK montados contienen manifiestos y traducciones correctos.
 - **Validación:** 26 builds MAIN/BETA sin errores ni advertencias, sondas MAIN→MAIN, MAIN→BETA y
   BETA→BETA correctas; paridad de cinco idiomas, SimpleLoc y las 13 fichas de Workshop aprobadas.
-- **Pendiente externo:** publicar FGOCore y Siegfried juntos y confirmar el comportamiento en juego.
-  Steam Workshop no fue modificado en este hotfix.
+- **Workshop actualizado:** FGOCore y Siegfried `v0.1.12` se publicaron juntos dentro del lote global.
+  Queda pendiente confirmar el comportamiento en juego después de que Steam sincronice el contenido.
 
 ## 2026-07-30 — hotfix de animación y texto de invocación de Kagetora/Kenshin
 

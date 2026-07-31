@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <!-- Copiar este archivo como Directory.Build.props en la raíz del repositorio. -->
+    <GodotPath>C:/ruta/a/MegaDot_v4.5.1-stable_mono_win64.exe</GodotPath>
+
+    <!-- Opcional: Sts2PathDiscovery.props intenta detectar Steam automáticamente. -->
+    <Sts2Path>C:/Program Files (x86)/Steam/steamapps/common/Slay the Spire 2</Sts2Path>
+  </PropertyGroup>
+</Project>

@@ -3,6 +3,17 @@
 Conclusiones de alta densidad (no historial). **Verificado** = visto en código/log/decompilado;
 lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas → [DECISIONS.md](DECISIONS.md).
 
+## El filtro del exportador puede omitir el manifiesto sin fallar (verificado, 2026-07-31)
+
+- `dotnet publish` y MegaDot pueden terminar con código 0 aunque `export_presets.cfg` excluya el
+  manifiesto real del mod. Shuten y Astolfo usaban `exclude_filter="<ModId>.json,..."`, por lo que
+  sus PCK nuevos contenían recursos y localización pero no el JSON interno.
+- El filtro correcto excluye únicamente el placeholder `ModTemplate.json`. Después del cambio, los
+  manifiestos internos de los 13 PCK coinciden por SHA-256 con sus JSON externos.
+- Un gate de publicación debe abrir cada PCK y comprobar manifiesto, cinco idiomas y escenas
+  compiladas de tienda/descanso; el exit code del exportador no demuestra que el contenido esté
+  completo.
+
 ## Cobertura debe separar preview, confirmación y expiración (verificado, 2026-07-31)
 
 - `ModifyHpLostBeforeOsty` también corre durante previews. `CoverPower` guardaba allí el objetivo y
@@ -157,14 +168,15 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
   `CardModel source`. Ninguno de los 13 proyectos invoca esas firmas directamente.
 - Las escenas objetivo de los hardenings de tienda, fogata, recompensas y Darv conservan sus
   métodos; los targets Harmony continúan resolviendo en 0.110.1.
-- La copia de referencia mínima necesita ahora `Sentry.dll` y `Sentry.Godot.dll`: un inicializador
-  del assembly los toca al cargar `sts2.dll`. La matriz valida ambos archivos antes de compilar para
-  no confundir una dependencia ausente con una incompatibilidad de FGOCore.
+- La copia de referencia BETA mínima necesita `Sentry.dll` y `Sentry.Godot.dll`: `Sentry.dll` ya
+  existía como referencia y 0.110.1 agrega `Sentry.Godot.dll`. Un inicializador los toca al cargar
+  `sts2.dll`. La matriz valida las fixtures MAIN/BETA completas antes de compilar para no confundir
+  una dependencia ausente con una incompatibilidad de los mods.
 
 - `AbstractModel.ModifyDamageAdditive`, `ModifyDamageMultiplicative` y `ModifyDamageCap` agregan
   `CardPlay?`; FGOCore conserva los overrides MAIN y un patch Harmony BETA los invoca sin duplicar DLL.
 - `AttackCommand.FromCard(CardModel)` pasa a `FromCard(CardModel, CardPlay?)`; usar siempre
-  `BaseLib.Utils.FromCardCompatibility`.
+  `FromCardFgoCompatibility` de FGOCore.
 - Las sobrecargas de `CreatureCmd.Damage` con carta agregan `CardPlay?`. `CreatureCmd.LoseBlock`
   pasa de `(Creature, decimal)` a `(PlayerChoiceContext, Creature, decimal, Creature?)`.
   `CreatureCmdCompatibility` selecciona la firma disponible en runtime.
@@ -177,6 +189,14 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
   parámetros con `dealer` explícito pueden seguir directas. Los hooks `AfterSideTurnStart` deben
   filtrar con `participants.Contains(Owner)`, como `PoisonPower` vanilla, para respetar turnos extra
   en multijugador.
+- **Un build por rama no demuestra un DLL universal (2026-07-31)**: `PoisonedBanquet` de Shuten
+  todavía llamaba directamente la sobrecarga MAIN completa de seis parámetros. MAIN y BETA
+  compilaban por separado porque el compilador elegía una firma válida en cada referencia, pero el
+  DLL MAIN conservaba el token eliminado y lanzaba `MissingMethodException` al ejecutar la carta en
+  BETA. La sonda debe recorrer y resolver contra el host todas las referencias a `sts2` de FGOCore y
+  de los doce personajes; cargar sólo FGOCore no alcanza porque los cuerpos de métodos se enlazan de
+  forma diferida. `PoisonedBanquet` usa ahora `CreatureCmdCompatibility.Damage` preservando `dealer`,
+  `cardSource` y `CardPlay` nulos, sin cambiar la atribución del daño.
 - **Participantes de turno (2026-07-22)**: `CombatSide.Player` no implica que todos los jugadores
   participen. En cooperativo, los turnos extra omiten a los otros personajes de `participants`; un
   guard basado solo en `side` resetea sus contadores, consume poderes temporales o dispara efectos
@@ -196,9 +216,10 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
   overloads viejos se conservan para consumidores binarios, mientras el código del repositorio usa
   las variantes con contexto. Los eventos de medidor iteran y esperan cada suscriptor; invocar un
   multicast async directamente sólo espera la última `Task`.
-- **La matriz BETA no produce el paquete distribuible**: al terminar deja DLL compilados contra las
-  firmas nuevas. Hay que publicar nuevamente contra MAIN, cuyo bridge se verificó cargando sobre el
-  runtime BETA. Procedimiento y contrato completo en `docs/COMPATIBILITY-0.110.md`.
+- **La matriz no modifica el paquete distribuible**: MAIN y BETA se escriben en
+  `.compat/build-main` y `.compat/build-beta`. `dist` conserva el último build/publish normal. El
+  artefacto que se distribuye sigue compilándose contra MAIN, cuyo bridge se verifica cargando sobre
+  el runtime BETA. Procedimiento y contrato completo en `docs/COMPATIBILITY-0.110.md`.
 
 ## v0.107.1 — cambios de API (verificados con ilspycmd sobre sts2.dll)
 - Hooks de inicio de turno: `AfterSideTurnStart(CombatSide, IReadOnlyList<Creature> participants, ICombatState)`; `BeforeSideTurnStart` igual +participants.

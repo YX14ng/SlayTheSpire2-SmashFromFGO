@@ -104,8 +104,8 @@ public sealed class PoisonedBanquet() : ShutenCard(
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         if (cardPlay.Target.GetPower<PoisonPower>() is not { } poison) return;
-        await CreatureCmd.Damage(context, cardPlay.Target, poison.Amount,
-            ValueProp.Unblockable | ValueProp.Unpowered, null, null);
+        await CreatureCmdCompatibility.Damage(context, cardPlay.Target, poison.Amount,
+            ValueProp.Unblockable | ValueProp.Unpowered, null, null, null);
         if (!cardPlay.Target.IsDead && cardPlay.Target.GetPower<PoisonPower>() is { } remaining)
             await PowerCmd.Decrement(remaining);
         await SakeBank.Gain(context, Owner.Creature, DynamicVars["Sake"].IntValue, this);

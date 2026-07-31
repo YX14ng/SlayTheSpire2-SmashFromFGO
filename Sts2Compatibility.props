@@ -3,8 +3,10 @@
         <Sts2TargetBranch Condition="'$(Sts2TargetBranch)' == ''">main</Sts2TargetBranch>
         <BaseLibPackageVersion>3.3.6</BaseLibPackageVersion>
         <Sts2CompatibilityRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '.compat'))</Sts2CompatibilityRoot>
-        <MainSts2ReferencePath>$(Sts2CompatibilityRoot)sts2-main-0.107.1</MainSts2ReferencePath>
-        <BetaSts2ReferencePath>$(Sts2CompatibilityRoot)sts2-beta-0.110.1</BetaSts2ReferencePath>
+        <MainSts2Version>0.107.1</MainSts2Version>
+        <BetaSts2Version>0.110.1</BetaSts2Version>
+        <MainSts2ReferencePath>$(Sts2CompatibilityRoot)sts2-main-$(MainSts2Version)</MainSts2ReferencePath>
+        <BetaSts2ReferencePath>$(Sts2CompatibilityRoot)sts2-beta-$(BetaSts2Version)</BetaSts2ReferencePath>
 
         <Sts2Path Condition="'$(Sts2TargetBranch)' == 'main' and Exists('$(MainSts2ReferencePath)/data_sts2_windows_x86_64/sts2.dll')">$(MainSts2ReferencePath)</Sts2Path>
         <Sts2Path Condition="'$(Sts2TargetBranch)' == 'beta' and Exists('$(BetaSts2ReferencePath)/data_sts2_windows_x86_64/sts2.dll')">$(BetaSts2ReferencePath)</Sts2Path>

@@ -10,6 +10,9 @@
 **/obj/
 **/.godot/
 
+# Rutas locales de MegaDot/Steam (usar Directory.Build.props.example como plantilla)
+Directory.Build.props
+
 # IDE
 .vs/
 .idea/
