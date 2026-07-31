@@ -21,7 +21,8 @@ Patrón tomado de `iryuko/sts2-mod-dev`. Estado vivo → [STATUS.md](STATUS.md).
 - **Compatibilidad con Infinite Upgrades:** la primera mejora de cada carta FGO conserva su diseño.
   Desde la segunda, los Poderes bajan su coste de Energía hasta 0; las Habilidades con Agotar,
   hasta 0; las Habilidades reutilizables, sólo hasta 1. Los Ataques no repiten indefinidamente una
-  rebaja de Energía. Costes de recursos y autodaño tienen suelo 0; divisores y turnos, suelo 1.
+  rebaja de Energía. Costes de recursos y autodaño tienen suelo 0, salvo Ráfaga, que conserva suelo
+  1 para no crear una cadena gratuita; divisores y turnos también tienen suelo 1.
 - **Santo Grial = evento exclusivo de Acto 2 (Plan 2, 2026-07-22)**: cuesta 200 de oro, concede el
   `ILimitBreaker` temático del personaje y no aparece si ya se posee uno. Los Griales son reliquias
   de Evento, nunca recompensas/tienda; la carta `Palingenesis` conserva únicamente su aumento menor

@@ -2,6 +2,19 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-07-30 — paquete final publicado y hotfix de costes
+
+- **Pagos gratuitos válidos:** FGOCore acepta correctamente costes de 0 NP y 0 Estrellas tras
+  reducciones repetidas, pero sigue rechazando valores negativos. La compatibilidad con
+  `Infinite Upgrades` mantiene Ráfaga con suelo 1 para que su cadena no se vuelva gratuita.
+- **Workshop actualizado en un solo lote:** SteamCMD confirmó `Committing update...Success` para
+  FGOCore y los 12 personajes, todos sobre sus 13 IDs existentes y con visibilidad pública (`0`).
+  Los 39 DLL/JSON/PCK preparados coinciden por SHA-256 con `dist`; la auditoría de las 13 fichas
+  también terminó correctamente.
+- **Sin instalación duplicada:** no se copió ningún mod FGO a la carpeta local del juego.
+- **Pendiente externo:** reiniciar Steam para forzar la sincronización y hacer el playtest visual y
+  funcional dentro del juego.
+
 ## 2026-07-30 — tienda/fogata propias y suavizado visual global
 
 - **Fallback del Guerrero eliminado:** Mordred, Gilgamesh, Okita, Oberon, Siegfried y Tiamat ahora
@@ -20,7 +33,8 @@ Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md
   conocidas), presentación 12/12 aprobada y los seis PCK afectados contienen sus cuatro entradas
   compiladas de tienda/descanso.
 - **Pendiente externo:** playtest visual dentro del juego para confirmar encuadre, orientación y
-  percepción del suavizado en combate, tienda y fogata. No se instaló nada ni se modificó Steam.
+  percepción del suavizado en combate, tienda y fogata. No se instaló ninguna copia local; el lote
+  final se publicó en el cierre descrito arriba.
 
 ## 2026-07-30 — hotfix 0.1.12 de Sangre de Dragón de Siegfried
 
@@ -62,9 +76,9 @@ Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md
 - **Escalado compartido:** la primera mejora no cambia. Desde la segunda, Poderes y Habilidades con
   Agotar pueden bajar hasta 0 de Energía; las Habilidades reutilizables conservan un suelo de 1 y
   los Ataques no acumulan rebajas de coste más allá de la mejora diseñada.
-- **Topes de seguridad:** costes de NP, Estrellas, Sake, Deuda y Ráfaga, además del autodaño, no
-  bajan de 0; divisores y turnos no bajan de 1. Esto evita pagos negativos, división por cero y
-  cadenas gratuitas deterministas sin quitar el escalado numérico normal de cada carta.
+- **Topes de seguridad:** costes de NP, Estrellas, Sake y Deuda, además del autodaño, no bajan de 0;
+  Ráfaga conserva un suelo de 1, y divisores y turnos tampoco bajan de 1. Esto evita pagos negativos,
+  división por cero y cadenas gratuitas deterministas sin quitar el escalado numérico normal.
 - **Validación:** matriz completa de 26 builds sin errores ni advertencias; sondas MAIN→MAIN,
   MAIN→BETA y BETA→BETA correctas; 25 reductores auditados sin suelos faltantes y las 13 fichas
   de Workshop coherentes. El paquete MAIN final contiene el manifest v0.1.11 y los cinco idiomas.
