@@ -129,7 +129,7 @@ public static class NpCharge
     /// una ulti Event con un waiver activo reportaba jugable con el medidor vacío (la exclusión P3 de
     /// GetWaiver solo ve la rareza si le pasás la carta). Las cartas pasan <c>this</c>.</summary>
     public static bool CanPay(Creature creature, int amount, CardModel? source) =>
-        Current(creature) >= amount || GetWaiver(creature, source) != null;
+        amount >= 0 && (Current(creature) >= amount || GetWaiver(creature, source) != null);
 
     /// <summary>
     /// True when the gauge reached the 100 threshold — NP cards played now trigger their
@@ -238,6 +238,9 @@ public static class NpCharge
     public static async Task<bool> Spend(
         PlayerChoiceContext choiceContext, Creature creature, int amount, CardModel? source)
     {
+        if (amount < 0) return false;
+        if (amount == 0) return true;
+
         var power = creature.GetPower<NpChargePower>();
         if (power == null || power.Amount < amount) return false;
         var wasAtOrAbove = Current(creature) >= NpChargePower.ManifestThreshold;

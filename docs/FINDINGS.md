@@ -46,6 +46,13 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
 - La compatibilidad vive en FGOCore y sólo actúa desde la segunda mejora sobre cartas de los 12
   assemblies FGO. Se ejecuta igualmente durante preview, carga y combate, por lo que el resultado es
   determinista y no agrega estado nuevo al guardado.
+- Un coste reducido a 0 sigue siendo un pago válido. `NpCharge.Spend` y `CritStars.Spend` deben
+  devolver `true` sin exigir que exista el power ni mutarlo; un coste negativo es inválido tanto en
+  `CanPay` como en `Spend`. Antes, varias conversiones de Mash, Morgan, Mordred, Okita y Astolfo eran
+  jugables a 0 pero abortaban su recompensa o tomaban la rama de fallo.
+- `RafagaCost` es la excepción semántica y conserva suelo 1: Velocidad Cegadora ya cuesta 0 Energía,
+  gana 1 Energía y roba 1, de modo que eliminar también su segundo coste habilita un ciclo
+  determinista. El diseño de Okita fija expresamente Ráfaga en 1-3 de Aliento.
 
 ## Preview y guardado exigen separar cálculo de consumo (verificado, 2026-07-29)
 

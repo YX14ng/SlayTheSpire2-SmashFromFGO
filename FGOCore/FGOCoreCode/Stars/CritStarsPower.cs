@@ -79,13 +79,15 @@ public static class CritStars
     }
 
     /// <summary>¿Puede pagar un coste de estrellas (conversores estilo 等价交换)?</summary>
-    public static bool CanPay(Creature creature, int cost) => Of(creature) >= cost;
+    public static bool CanPay(Creature creature, int cost) => cost >= 0 && Of(creature) >= cost;
 
     /// <summary>Gasta exactamente el coste pedido. Devuelve false sin mutar si no alcanza.</summary>
     public static async Task<bool> Spend(
         PlayerChoiceContext choiceContext, Creature creature, int cost, CardModel? source)
     {
-        if (cost <= 0 || !CanPay(creature, cost)) return false;
+        if (cost < 0) return false;
+        if (cost == 0) return true;
+        if (!CanPay(creature, cost)) return false;
         var power = creature.GetPower<CritStarsPower>();
         if (power == null) return false;
         await PowerCmd.ModifyAmount(choiceContext, power, -cost, creature, source);

@@ -91,6 +91,10 @@ internal static class InfiniteUpgradeCompatibility
 
     private static decimal? MinimumFor(string dynamicVarName)
     {
+        // Ráfaga is the second cost that keeps Okita's authored 0-energy draw/energy card from
+        // becoming a deterministic loop. Its design space is explicitly 1-3 Breath, never free.
+        if (dynamicVarName == "RafagaCost") return 1m;
+
         if (dynamicVarName.EndsWith("Cost", StringComparison.Ordinal) ||
             dynamicVarName is "Debt" or "HpLoss")
             return 0m;
