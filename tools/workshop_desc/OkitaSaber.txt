@@ -1,7 +1,7 @@
 [h1]Okita Souji — Win Before the Breath Runs Out[/h1]
 Chain fast attacks, generate Critical Stars and end the fight before Okita's own body turns her strongest turns into a deck full of Cough.
 
-[b]RELEASE BUILD — v0.1.10[/b]
+[b]RELEASE BUILD — v0.1.11[/b]
 
 [h2]Core gameplay[/h2]
 [list]
@@ -23,7 +23,7 @@ Chain fast attacks, generate Critical Stars and end the fight before Okita's own
 [h2]Requirements and compatibility[/h2]
 [list]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.14+[/url]
 [*]Built for MAIN 0.107.1 and public BETA 0.110.1
 [/list]
 
@@ -38,7 +38,7 @@ Unofficial fan-made mod. Fate/Grand Order characters and official visual assets 
 [h1]ESPAÑOL[/h1]
 Encadená ataques veloces, generá Estrellas de Crítico y terminá el combate antes de que el propio cuerpo de Okita convierta sus mejores turnos en un mazo lleno de Tos.
 
-[b]VERSIÓN PÚBLICA — v0.1.10[/b]
+[b]VERSIÓN PÚBLICA — v0.1.11[/b]
 
 [h2]Mecánicas principales[/h2]
 [list]
@@ -60,7 +60,7 @@ Encadená ataques veloces, generá Estrellas de Crítico y terminá el combate a
 [h2]Requisitos y compatibilidad[/h2]
 [list]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.14+[/url]
 [*]Compatible con MAIN 0.107.1 y BETA pública 0.110.1
 [/list]
 
@@ -75,7 +75,7 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [h1]简体中文[/h1]
 连锁高速攻击、生成暴击星，并在冲田自己的身体把爆发回合变成满牌组“咳嗽”前结束战斗。
 
-[b]公开版本 — v0.1.10[/b]
+[b]公开版本 — v0.1.11[/b]
 
 [h2]核心机制[/h2]
 [list]
@@ -97,7 +97,7 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [h2]依赖与兼容性[/h2]
 [list]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.10+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.14+[/url]
 [*]兼容正式版 0.107.1 与公开测试版 0.110.1
 [/list]
 

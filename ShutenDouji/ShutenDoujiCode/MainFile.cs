@@ -1,5 +1,6 @@
 using Godot;
 using HarmonyLib;
+using FGOCore.FGOCoreCode.Forms;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -24,6 +25,8 @@ public partial class MainFile : Node
     public static void Initialize()
     {
         new Harmony(ModId).PatchAll();
+        FormVisuals.RegisterFramesWithSpriteTransform(
+            ($"{ResPath}/character/shuten_frames.tres", 15.8f, -261.3f, 1f));
         NpCharge.GaugeFilledWithContext += EnsureNpsInCombat;
         NpCharge.GaugeDroppedWithContext += DisarmManifest;
         FgoAttributes.RegisterOverride(ModelDb.GetId<Shuten>(), FgoAttribute.Earth);

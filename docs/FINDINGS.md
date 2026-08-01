@@ -3,6 +3,25 @@
 Conclusiones de alta densidad (no historial). **Verificado** = visto en código/log/decompilado;
 lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas → [DECISIONS.md](DECISIONS.md).
 
+## Una variante HD debe preservar ruta lógica, escala y carga asíncrona (verificado, 2026-08-01)
+
+- Los 12 personajes reúnen 21 recursos animados y 3.324 fotogramas. La variante de 1024 px puede
+  vivir bajo `character/quality_high/` sin duplicar lógica: FGOCore conserva la ruta de 768 px como
+  identidad estable y resuelve la alternativa sólo al crear el modelo de combate.
+- Copiar el arte fuente no basta. El import de cada frame HD necesita su propio `.import`, mipmaps,
+  compresión VRAM y límite de 1024 px; la escala visual debe multiplicarse por `768/1024`. Cuando la
+  fuente no llega a 1024 px —Gilgamesh mide 867 px— el factor correcto es `768/867`.
+- Los personajes de una sola forma no pasan naturalmente por `FormPower`. Un postfix después de
+  crear los nodos aliados identifica el `SpriteFrames` registrado y aplica la misma selección
+  asíncrona; las formas guardadas siguen teniendo prioridad para que una partida reanudada no vuelva
+  brevemente al modelo inicial.
+- Precargar todos los mods sería contraproducente: se carga únicamente el personaje presente. En
+  solitario se anticipan sus formas hermanas; en cooperativo se mantiene sólo la forma actual. Si
+  falla la detección, falta el recurso o no hay margen de VRAM, el resultado sigue siendo 768 px.
+- `tools/audit_visual_quality.py` compara rutas, registros, hashes e imports para evitar variantes
+  incompletas, escalas no registradas y assets huérfanos. Vortigern es una imagen estática ya servida
+  a resolución fuente, por lo que no necesita una copia HD artificial.
+
 ## El filtro del exportador puede omitir el manifiesto sin fallar (verificado, 2026-07-31)
 
 - `dotnet publish` y MegaDot pueden terminar con código 0 aunque `export_presets.cfg` excluya el

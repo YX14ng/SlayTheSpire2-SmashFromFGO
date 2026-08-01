@@ -1,5 +1,6 @@
 using Godot;
 using FGOCore.FGOCoreCode.Visuals;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 
@@ -27,6 +28,7 @@ public static class FormVisuals
     private static readonly Dictionary<string, float> SpriteXOf = [];
     private static readonly Dictionary<string, float> SpriteYOf = [];
     private static readonly Dictionary<string, float> SpriteScaleOf = [];
+    private static readonly Dictionary<string, float> HighQualityScaleOf = [];
     private static readonly Dictionary<string, SpriteFrames> Cache = [];
     private static readonly HashSet<string> Requested = [];
     // Paths whose background load failed once: never re-requested (a broken FramesPath would
@@ -100,6 +102,34 @@ public static class FormVisuals
         }
     }
 
+    /// <summary>
+    /// Registers a form group whose high-quality imports do not reach the standard 1024 px cap.
+    /// The explicit multiplier preserves the exact on-screen size when the source canvas is
+    /// smaller than 1024 px (for example, a native 867 px render).
+    /// </summary>
+    public static void RegisterFramesWithSpriteTransform(
+        params (string Path, float SpriteX, float SpriteY, float UniformScale,
+            float HighQualityScaleMultiplier)[] forms)
+    {
+        var valid = forms.Where(f => !string.IsNullOrEmpty(f.Path)).ToArray();
+        var group = valid.Select(f => f.Path).ToArray();
+        foreach (var form in valid)
+        {
+            GroupOf[form.Path] = group;
+            SpriteXOf[form.Path] = form.SpriteX;
+            SpriteYOf[form.Path] = form.SpriteY;
+            SpriteScaleOf[form.Path] = form.UniformScale;
+            HighQualityScaleOf[form.Path] = form.HighQualityScaleMultiplier;
+        }
+    }
+
+    private static FrameResourceSelection Resolve(string logicalPath, FrameQualityTier tier)
+    {
+        return HighQualityScaleOf.TryGetValue(logicalPath, out var highQualityScale)
+            ? FgoVisualQuality.ResolveFrames(logicalPath, tier, highQualityScale)
+            : FgoVisualQuality.ResolveFrames(logicalPath, tier);
+    }
+
     /// <summary>Background-load the current form and, when allowed, its sibling forms.
     /// Multiplayer deliberately skips siblings to keep several FGO players within the VRAM budget.</summary>
     private static FrameResourceSelection[] ResolveGroup(
@@ -110,7 +140,7 @@ public static class FormVisuals
         var group = includeAlternates && GroupOf.TryGetValue(logicalPath, out var registered)
             ? registered
             : [logicalPath];
-        return group.Select(path => FgoVisualQuality.ResolveFrames(path, tier)).ToArray();
+        return group.Select(path => Resolve(path, tier)).ToArray();
     }
 
     private static void PreloadGroup(IEnumerable<FrameResourceSelection> selections)
@@ -229,14 +259,19 @@ public static class FormVisuals
     {
         if (form.FramesPath == null) return;
 
+        Apply(creature, form.FramesPath);
+    }
+
+    private static void Apply(Creature creature, string logicalPath)
+    {
         // Single-player can afford to warm this character's complete form group for seamless swaps.
         // In co-op, each player loads only the form currently in use; a later switch remains async
         // and keeps the old sprite visible until ready instead of risking a black screen from VRAM
         // exhaustion when several FGO characters preload all of their alternatives together.
         var isMultiplayer = creature.Player?.RunState.Players.Count > 1;
         var tier = FgoVisualQuality.GetFrameTier(isMultiplayer);
-        var group = ResolveGroup(form.FramesPath, includeAlternates: !isMultiplayer, tier);
-        var current = FgoVisualQuality.ResolveFrames(form.FramesPath, tier);
+        var group = ResolveGroup(logicalPath, includeAlternates: !isMultiplayer, tier);
+        var current = Resolve(logicalPath, tier);
         TrackCombatAndEvict(group);
         PreloadGroup(group);
 
@@ -248,6 +283,34 @@ public static class FormVisuals
         var gen = (sprite.HasMeta(GenMeta) ? sprite.GetMeta(GenMeta).AsInt32() : 0) + 1;
         sprite.SetMeta(GenMeta, gen);
         _ = ApplyWhenReadyAsync(sprite, current, gen);
+    }
+
+    /// <summary>
+    /// Applies quality selection after ally nodes exist. Form characters prefer their saved active
+    /// form; single-form characters are identified from the SpriteFrames path embedded in their
+    /// scene. This keeps every FGO model on the same asynchronous quality path without requiring a
+    /// gameplay power or starter relic solely for presentation.
+    /// </summary>
+    internal static void ApplyRegisteredInitialFrames(NCombatRoom room)
+    {
+        foreach (var node in room.CreatureNodes)
+        {
+            var creature = node.Entity;
+            if (creature.Player is null) continue;
+
+            var logicalPath = creature.GetPowerInstances<FormPower>()
+                .FirstOrDefault(form => form.FramesPath is not null)?.FramesPath;
+            if (logicalPath is null
+                && node.FindChild("Sprite", recursive: true, owned: false) is AnimatedSprite2D sprite)
+            {
+                logicalPath = sprite.SpriteFrames?.ResourcePath;
+            }
+
+            if (logicalPath is not null && GroupOf.ContainsKey(logicalPath))
+            {
+                Apply(creature, logicalPath);
+            }
+        }
     }
 
     /// <summary>
@@ -311,4 +374,11 @@ public static class FormVisuals
             MainFile.Logger.Error($"FormVisuals: deferred apply failed for {path}: {e.Message}");
         }
     }
+}
+
+[HarmonyPatch(typeof(NCombatRoom), "CreateAllyNodes")]
+internal static class InitialFrameQualityPatch
+{
+    private static void Postfix(NCombatRoom __instance)
+        => FormVisuals.ApplyRegisteredInitialFrames(__instance);
 }

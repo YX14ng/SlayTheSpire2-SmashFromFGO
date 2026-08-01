@@ -1,5 +1,6 @@
 using Godot;
 using HarmonyLib;
+using FGOCore.FGOCoreCode.Forms;
 using GilgameshArcher.GilgameshArcherCode.Cards.Special;
 using GilgameshArcher.GilgameshArcherCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
@@ -24,12 +25,17 @@ public partial class MainFile : Node
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 
+        // El render oficial de Gilgamesh mide 867 px: Alta conserva su resolución nativa y usa una
+        // compensación específica en vez del factor estándar 768/1024.
+        FormVisuals.RegisterFramesWithSpriteTransform(
+            ($"{ResPath}/character/gilgamesh_frames.tres", 4.2f, -175.9f, 0.504621f, 768f / 867f));
+
         // ENUMA ELISH: Desatado es una ulti AUTO-MANIFESTADA (DESIGN-GILGAMESH §6): a diferencia de
         // Siegfried (cuyo Balmung es una carta manual del pool), cruzar 100 de Carga NP genera la
         // carta-ulti a la mano (0⚡, Retain, Exhaust). Por eso SÍ se enganchan GaugeFilled/Dropped.
         //
-        // NO se registran frames de FormVisuals: Gilgamesh tiene un solo modelo de batalla (200200,
-        // §3.5) — el swap cosmético opcional con NP≥100 NO usa FormPower y no entra en la espina.
+        // Gilgamesh tiene un solo modelo de batalla (200200, §3.5); el registro anterior permite
+        // que el selector visual lo actualice sin introducir una forma de gameplay artificial.
         NpCharge.GaugeFilledWithContext += TryManifestEnuma;
         NpCharge.GaugeDroppedWithContext += DisarmEnumaMarker;
     }

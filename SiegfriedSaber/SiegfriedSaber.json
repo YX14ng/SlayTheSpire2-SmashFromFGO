@@ -3,7 +3,7 @@
     "name":  "Siegfried - Dragon-Blooded Knight",
     "author":  "Chaldea",
     "description":  "Adds Siegfried from Fate/Grand Order as a playable character: the dragon-slaying (and dragon-blooded) knight of the Nibelungenlied, whose cursed armor stops everything but the blade at his back, and whose Balmung never stops apologizing. Sumanai.",
-    "version":  "v0.1.12",
+    "version":  "v0.1.13",
     "has_pck":  true,
     "has_dll":  true,
     "dependencies":  [
@@ -13,7 +13,7 @@
                          },
                          {
                              "id":  "FGOCore",
-                             "min_version":  "v0.1.12"
+                             "min_version":  "v0.1.14"
                          }
                      ],
     "affects_gameplay":  true

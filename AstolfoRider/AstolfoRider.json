@@ -3,12 +3,12 @@
   "name": "Astolfo — Rider",
   "author": "Chaldea",
   "description": "Adds Astolfo from Fate/Grand Order. Follow a changing Caprice, turn Quick cards into Critical Stars, and escape danger aboard Hippogriff.",
-  "version": "v0.1.1",
+  "version": "v0.1.2",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [
     { "id": "BaseLib", "min_version": "v3.3.6" },
-    { "id": "FGOCore", "min_version": "v0.1.10" }
+    { "id": "FGOCore", "min_version": "v0.1.14" }
   ],
   "affects_gameplay": true
 }

@@ -3,6 +3,7 @@ using AstolfoRider.AstolfoRiderCode.Character;
 using AstolfoRider.AstolfoRiderCode.Powers;
 using Godot;
 using HarmonyLib;
+using FGOCore.FGOCoreCode.Forms;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -23,6 +24,8 @@ public partial class MainFile : Node
     public static void Initialize()
     {
         new Harmony(ModId).PatchAll();
+        FormVisuals.RegisterFramesWithSpriteTransform(
+            ($"{ResPath}/character/astolfo_frames.tres", -102f, -229f, 1f));
         NpCharge.GaugeFilledWithContext += EnsureNpInCombat;
         NpCharge.GaugeDroppedWithContext += DisarmManifest;
         FgoAttributes.RegisterOverride(ModelDb.GetId<Astolfo>(), FgoAttribute.Earth);

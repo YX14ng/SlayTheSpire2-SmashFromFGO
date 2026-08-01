@@ -2,6 +2,29 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-01 — calidad visual adaptativa extendida a los 12 personajes
+
+- **Cobertura completa:** los 12 mods disponen ahora de una variante activable de combate a
+  1024 px, además del fallback previo de 768 px. Son 21 recursos animados y 3.324 fotogramas WebP;
+  cada variante reutiliza exactamente el render fuente y compensa su escala para no cambiar el
+  tamaño del personaje en pantalla.
+- **Modelos de una sola forma:** Astolfo, Gilgamesh, Shuten y Siegfried entraron en la misma ruta
+  asíncrona de calidad que los personajes con transformaciones. Gilgamesh conserva sus 867 px
+  nativos mediante un factor propio; Vortigern mantiene su imagen estática a resolución fuente.
+- **Configuración común:** FGOCore `v0.1.14` conserva `Automática`, `Equilibrada` y `Alta`, junto con
+  el suavizado opcional. No precarga personajes ajenos: sólo el modelo activo y, en solitario, sus
+  formas alternativas. En cooperativo evita esa precarga adicional y mantiene el fallback seguro.
+- **Versiones preparadas:** Mash `v0.1.12`; Morgan, Artoria, Mordred, Gilgamesh, Okita, Oberon y
+  Tiamat `v0.1.11`; Siegfried `v0.1.13`; Kagetora `v0.1.4`; Shuten `v0.1.3`; Astolfo `v0.1.2`.
+  Los 12 manifiestos exigen FGOCore `v0.1.14`, por lo que el lote debe publicarse unido.
+- **Paquetes inspeccionados:** los 13 PCK contienen su manifiesto correcto, cinco idiomas y las
+  escenas de tienda/fogata de cada personaje. Los imports HD presentes en cada PCK coinciden con
+  su inventario esperado. El lote todavía no fue subido a Workshop ni instalado localmente; queda
+  pendiente un playtest visual real y una orden explícita de publicación.
+- **Validación:** matriz MAIN/BETA 26/26 con 0 errores y 0 advertencias; las tres sondas enlazaron
+  1.288 referencias del juego. Las auditorías de calidad HD, animaciones, presentación, assets,
+  VFX, localización, SimpleLoc y fichas de Workshop aprobaron.
+
 ## 2026-08-01 — Kagetora jugable y calidad visual adaptativa preparada
 
 - **Hotfix público:** Kagetora `v0.1.2` fue publicado en su item existente de Workshop

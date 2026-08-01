@@ -1,4 +1,5 @@
 using FGOCore.FGOCoreCode.Combat;
+using FGOCore.FGOCoreCode.Forms;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
@@ -23,8 +24,10 @@ public partial class MainFile : Node
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 
-        // Siegfried no tiene formas (modelo de batalla único 100800), por eso NO se engancha
-        // FormVisuals.RegisterFrames (cf. Tiamat).
+        // Siegfried no tiene formas de gameplay, pero registra su set visual único para que
+        // FGOCore pueda elegir entre los recursos de 768 y 1024 px al crear el combate.
+        FormVisuals.RegisterFramesWithSpriteTransform(
+            ($"{ResPath}/character/siegfried_frames.tres", -27.4f, -294.5f, 1.004f));
         //
         // Ulti auto-manifestada (consistencia con los otros Servants, 2026-06-26): al cruzar 100 NP,
         // «BALMUNG: Desatado» aparece GRATIS en la mano (Retain + Exhaust), igual que el «Mumyou

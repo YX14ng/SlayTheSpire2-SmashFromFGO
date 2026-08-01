@@ -82,7 +82,10 @@ internal static class FgoVisualQuality
         return _activeCombatTier;
     }
 
-    internal static FrameResourceSelection ResolveFrames(string logicalPath, FrameQualityTier tier)
+    internal static FrameResourceSelection ResolveFrames(
+        string logicalPath,
+        FrameQualityTier tier,
+        float highQualityScaleMultiplier = HighToBalancedScale)
     {
         if (tier != FrameQualityTier.High)
         {
@@ -98,7 +101,7 @@ internal static class FgoVisualQuality
         var insertAt = markerIndex + CharacterPathSegment.Length;
         var highPath = logicalPath.Insert(insertAt, HighQualitySubdirectory);
         return ResourceLoader.Exists(highPath, "SpriteFrames")
-            ? new FrameResourceSelection(logicalPath, highPath, HighToBalancedScale)
+            ? new FrameResourceSelection(logicalPath, highPath, highQualityScaleMultiplier)
             : new FrameResourceSelection(logicalPath, logicalPath, 1f);
     }
 
