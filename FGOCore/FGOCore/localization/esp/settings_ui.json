@@ -1,0 +1,12 @@
+{
+  "FGOCORE-VISUAL_QUALITY.title": "Calidad de modelos",
+  "FGOCORE-VISUAL_QUALITY.Auto": "Automática (recomendada)",
+  "FGOCORE-VISUAL_QUALITY.Balanced": "Equilibrada (768 px)",
+  "FGOCORE-VISUAL_QUALITY.High": "Alta (1024 px)",
+  "FGOCORE-VISUAL_QUALITY.hover.desc": "Selecciona la resolución de las animaciones de los personajes. Alta se usa sólo cuando ese personaje incluye recursos HD; de lo contrario vuelve de forma segura a Equilibrada. Los cambios se aplican desde el próximo combate.",
+  "FGOCORE-ANIMATION_SMOOTHING.title": "Suavizado de animaciones",
+  "FGOCORE-ANIMATION_SMOOTHING.Disabled": "Desactivado",
+  "FGOCORE-ANIMATION_SMOOTHING.Standard": "Estándar",
+  "FGOCORE-ANIMATION_SMOOTHING.Enhanced": "Mejorado",
+  "FGOCORE-ANIMATION_SMOOTHING.hover.desc": "Ajusta la mezcla entre fotogramas y el movimiento sutil del personaje. Mejorado se ve más suave, con un pequeño costo de dibujo adicional. Los cambios se aplican a los personajes creados después de modificar la opción."
+}

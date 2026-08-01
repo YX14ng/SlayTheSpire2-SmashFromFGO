@@ -1,0 +1,12 @@
+{
+  "FGOCORE-VISUAL_QUALITY.title": "캐릭터 모델 품질",
+  "FGOCORE-VISUAL_QUALITY.Auto": "자동 (권장)",
+  "FGOCORE-VISUAL_QUALITY.Balanced": "균형 (768 px)",
+  "FGOCORE-VISUAL_QUALITY.High": "높음 (1024 px)",
+  "FGOCORE-VISUAL_QUALITY.hover.desc": "캐릭터 애니메이션 리소스의 해상도를 선택합니다. 높음은 해당 캐릭터에 HD 리소스가 있을 때만 사용되며, 없으면 안전하게 균형으로 돌아갑니다. 변경 사항은 다음 전투부터 적용됩니다.",
+  "FGOCORE-ANIMATION_SMOOTHING.title": "애니메이션 부드럽게",
+  "FGOCORE-ANIMATION_SMOOTHING.Disabled": "사용 안 함",
+  "FGOCORE-ANIMATION_SMOOTHING.Standard": "표준",
+  "FGOCORE-ANIMATION_SMOOTHING.Enhanced": "향상",
+  "FGOCORE-ANIMATION_SMOOTHING.hover.desc": "프레임 혼합과 캐릭터의 미세한 움직임을 조정합니다. 향상은 더 부드럽지만 그리기 부하가 조금 늘어납니다. 변경 사항은 이후 생성되는 캐릭터 화면에 적용됩니다."
+}

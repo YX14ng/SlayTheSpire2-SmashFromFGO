@@ -1,4 +1,5 @@
 using System;
+using FGOCore.FGOCoreCode.Visuals;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Combat;
@@ -33,15 +34,17 @@ internal static class FgoAnimationSmoothing
 
     internal static T Prepare<T>(T root) where T : Node
     {
+        var profile = FgoVisualQuality.GetAnimationProfile();
         if (root.FindChild("Sprite", recursive: true, owned: false) is not AnimatedSprite2D sprite
             || sprite.SpriteFrames is null
             || !IsFgoResource(sprite.SpriteFrames.ResourcePath)
+            || !profile.Enabled
             || sprite.GetNodeOrNull<Node>(ControllerName) is not null)
         {
             return root;
         }
 
-        sprite.AddChild(new FgoSpriteMotion { Name = ControllerName });
+        sprite.AddChild(new FgoSpriteMotion { Name = ControllerName, Profile = profile });
         return root;
     }
 
@@ -62,11 +65,7 @@ internal static class FgoAnimationSmoothing
 /// </summary>
 internal partial class FgoSpriteMotion : Node2D
 {
-    private const float IdleBlendAlpha = 0.10f;
-    private const float ActionBlendAlpha = 0.16f;
-    private const float BlendFadeSeconds = 0.055f;
-    private const float OffsetResponse = 18f;
-    private const float IdleCycleSeconds = 3.2f;
+    internal FgoAnimationProfile Profile { get; init; }
 
     private AnimatedSprite2D _sprite = null!;
     private Sprite2D _previousFrame = null!;
@@ -115,13 +114,13 @@ internal partial class FgoSpriteMotion : Node2D
 
         var seconds = (float)delta;
         var target = TargetMotionOffset(seconds);
-        var response = 1f - Mathf.Exp(-OffsetResponse * seconds);
+        var response = 1f - Mathf.Exp(-Profile.OffsetResponse * seconds);
         _motionOffset = _motionOffset.Lerp(target, response);
         _sprite.Offset = _baseOffset + _motionOffset;
         _lastVisualOffset = _sprite.Offset;
 
         if (_blendAlpha <= 0f || !_previousFrame.Visible) return;
-        _blendAlpha = Mathf.MoveToward(_blendAlpha, 0f, seconds / BlendFadeSeconds);
+        _blendAlpha = Mathf.MoveToward(_blendAlpha, 0f, seconds / Profile.BlendFadeSeconds);
         _previousFrame.SelfModulate = new Color(1f, 1f, 1f, _blendAlpha);
         if (_blendAlpha <= 0f) _previousFrame.Visible = false;
     }
@@ -131,17 +130,18 @@ internal partial class FgoSpriteMotion : Node2D
         var animation = _sprite.Animation;
         if (animation == "idle")
         {
-            _idleTime = (_idleTime + delta) % IdleCycleSeconds;
-            var phase = _idleTime / IdleCycleSeconds * Mathf.Tau;
+            _idleTime = (_idleTime + delta) % Profile.IdleCycleSeconds;
+            var phase = _idleTime / Profile.IdleCycleSeconds * Mathf.Tau;
             // Siempre hacia arriba: los pies nunca atraviesan el plano de suelo.
-            return new Vector2(Mathf.Sin(phase * 0.5f) * 0.25f, -(1f + Mathf.Sin(phase)) * 0.75f);
+            return new Vector2(Mathf.Sin(phase * 0.5f) * 0.25f, -(1f + Mathf.Sin(phase)) * 0.75f)
+                * Profile.MotionScale;
         }
 
         var progress = AnimationProgress();
         var ease = Mathf.Sin(progress * Mathf.Pi);
-        if (animation == "attack") return new Vector2(ease * 3.0f, -ease * 0.5f);
-        if (animation == "cast") return new Vector2(0f, -ease * 2.2f);
-        if (animation == "hurt") return new Vector2(-ease * 2.0f, 0f);
+        if (animation == "attack") return new Vector2(ease * 3.0f, -ease * 0.5f) * Profile.MotionScale;
+        if (animation == "cast") return new Vector2(0f, -ease * 2.2f) * Profile.MotionScale;
+        if (animation == "hurt") return new Vector2(-ease * 2.0f, 0f) * Profile.MotionScale;
         return Vector2.Zero;
     }
 
@@ -153,7 +153,7 @@ internal partial class FgoSpriteMotion : Node2D
 
     private void OnAnimationChanged()
     {
-        ShowPreviousFrame(ActionBlendAlpha);
+        ShowPreviousFrame(Profile.ActionBlendAlpha);
         _lastTexture = CurrentTexture();
         if (_sprite.Animation == "idle") _idleTime = 0f;
     }
@@ -163,7 +163,7 @@ internal partial class FgoSpriteMotion : Node2D
         var current = CurrentTexture();
         if (_lastTexture is not null && current != _lastTexture)
         {
-            ShowPreviousFrame(_sprite.Animation == "idle" ? IdleBlendAlpha : ActionBlendAlpha);
+            ShowPreviousFrame(_sprite.Animation == "idle" ? Profile.IdleBlendAlpha : Profile.ActionBlendAlpha);
         }
         _lastTexture = current;
     }

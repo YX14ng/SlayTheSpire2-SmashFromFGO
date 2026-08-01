@@ -46,6 +46,11 @@ Patrón tomado de `iryuko/sts2-mod-dev`. Estado vivo → [STATUS.md](STATUS.md).
   máximo una carga y no cubre pérdidas propias ni ambientales.
 
 ## Técnico (cerrado)
+- **Calidad visual FGO centralizada en FGOCore + BaseLib:** la configuración es local y puramente
+  visual; no se sincroniza como estado de gameplay. Los personajes conservan sus rutas lógicas y
+  FGOCore resuelve por convención variantes `character/quality_high/`, con fallback al recurso de
+  768 px. `Automática` sólo usa Alta con GPU dedicada, VRAM suficiente y partida en solitario; la
+  elección se congela por combate. RitsuLib no se vuelve dependencia para esta función.
 - `CardRarity.Special` **no existe** en el enum del juego → usar `CardRarity.Event` para cartas manifestadas / no-drafteables (quedan fuera de recompensas).
 - Las cartas se **auto-registran** por `[Pool(typeof(<X>Pool))]` en la clase base; no hay lista manual que editar.
 - IDs de mod / model / power **NUNCA** se renombran con saves activos (el prefijo del mod es parte del ID; migrar una mecánica entre mods rompe runs en progreso).

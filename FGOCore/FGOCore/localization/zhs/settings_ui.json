@@ -1,0 +1,12 @@
+{
+  "FGOCORE-VISUAL_QUALITY.title": "角色模型画质",
+  "FGOCORE-VISUAL_QUALITY.Auto": "自动（推荐）",
+  "FGOCORE-VISUAL_QUALITY.Balanced": "均衡（768 像素）",
+  "FGOCORE-VISUAL_QUALITY.High": "高（1024 像素）",
+  "FGOCORE-VISUAL_QUALITY.hover.desc": "选择角色动画资源的分辨率。高画质仅在该角色包含高清资源时启用，否则会安全回退到均衡。更改将在下一场战斗生效。",
+  "FGOCORE-ANIMATION_SMOOTHING.title": "动画平滑",
+  "FGOCORE-ANIMATION_SMOOTHING.Disabled": "关闭",
+  "FGOCORE-ANIMATION_SMOOTHING.Standard": "标准",
+  "FGOCORE-ANIMATION_SMOOTHING.Enhanced": "增强",
+  "FGOCORE-ANIMATION_SMOOTHING.hover.desc": "调整帧间混合和角色的细微移动。增强模式更柔和，但会略微增加绘制开销。更改会对之后创建的角色画面生效。"
+}

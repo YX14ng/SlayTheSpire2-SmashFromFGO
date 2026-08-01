@@ -1,0 +1,12 @@
+{
+  "FGOCORE-VISUAL_QUALITY.title": "Качество моделей персонажей",
+  "FGOCORE-VISUAL_QUALITY.Auto": "Авто (рекомендуется)",
+  "FGOCORE-VISUAL_QUALITY.Balanced": "Сбалансированное (768 пкс)",
+  "FGOCORE-VISUAL_QUALITY.High": "Высокое (1024 пкс)",
+  "FGOCORE-VISUAL_QUALITY.hover.desc": "Выбирает разрешение ресурсов анимации персонажей. Высокое качество используется только при наличии HD-ресурсов; иначе применяется безопасный сбалансированный вариант. Изменения вступают в силу со следующего боя.",
+  "FGOCORE-ANIMATION_SMOOTHING.title": "Сглаживание анимации",
+  "FGOCORE-ANIMATION_SMOOTHING.Disabled": "Выключено",
+  "FGOCORE-ANIMATION_SMOOTHING.Standard": "Стандартное",
+  "FGOCORE-ANIMATION_SMOOTHING.Enhanced": "Улучшенное",
+  "FGOCORE-ANIMATION_SMOOTHING.hover.desc": "Настраивает смешивание кадров и плавные движения персонажа. Улучшенный режим выглядит мягче, но немного увеличивает нагрузку отрисовки. Изменения применяются к новым визуальным моделям персонажей."
+}

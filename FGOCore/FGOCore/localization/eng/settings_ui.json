@@ -1,0 +1,12 @@
+{
+  "FGOCORE-VISUAL_QUALITY.title": "Character model quality",
+  "FGOCORE-VISUAL_QUALITY.Auto": "Auto (recommended)",
+  "FGOCORE-VISUAL_QUALITY.Balanced": "Balanced (768 px)",
+  "FGOCORE-VISUAL_QUALITY.High": "High (1024 px)",
+  "FGOCORE-VISUAL_QUALITY.hover.desc": "Selects the resolution of character animation resources. High is used only when that character includes HD resources; otherwise it safely falls back to Balanced. Changes apply from the next combat.",
+  "FGOCORE-ANIMATION_SMOOTHING.title": "Animation smoothing",
+  "FGOCORE-ANIMATION_SMOOTHING.Disabled": "Disabled",
+  "FGOCORE-ANIMATION_SMOOTHING.Standard": "Standard",
+  "FGOCORE-ANIMATION_SMOOTHING.Enhanced": "Enhanced",
+  "FGOCORE-ANIMATION_SMOOTHING.hover.desc": "Adjusts frame blending and subtle character motion. Enhanced looks softer but adds a small amount of drawing work. Changes apply to newly created character visuals."
+}

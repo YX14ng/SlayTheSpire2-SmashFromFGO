@@ -1,5 +1,7 @@
 using Godot;
 using HarmonyLib;
+using BaseLib.Config;
+using FGOCore.FGOCoreCode.Visuals;
 using MegaCrit.Sts2.Core.Modding;
 
 namespace FGOCore.FGOCoreCode;
@@ -14,6 +16,7 @@ public partial class MainFile : Node
 
     public static void Initialize()
     {
+        ModConfigRegistry.Register(ModId, new FgoVisualConfig());
         Harmony harmony = new(ModId);
         harmony.PatchAll();
     }

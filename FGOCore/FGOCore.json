@@ -2,8 +2,8 @@
     "id":  "FGOCore",
     "name":  "FGO Core",
     "author":  "Chaldea",
-    "description":  "Shared FGO mechanics library: NP gauge with Overcharge, Critical Stars, Evasion, form stances, Bulwark block retention, Bond, safe repeated-upgrade scaling, and colorless FGO meme cards. Required by FGO character mods.",
-    "version":  "v0.1.12",
+    "description":  "Shared FGO mechanics library: NP gauge with Overcharge, Critical Stars, Evasion, form stances, visual quality controls, animation smoothing, Bulwark block retention, Bond, safe repeated-upgrade scaling, and colorless FGO meme cards. Required by FGO character mods.",
+    "version":  "v0.1.13",
     "has_pck":  true,
     "has_dll":  true,
     "dependencies":  [

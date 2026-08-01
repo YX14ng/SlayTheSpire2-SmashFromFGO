@@ -1,4 +1,5 @@
 using Godot;
+using FGOCore.FGOCoreCode.Visuals;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 
@@ -35,6 +36,7 @@ public static class FormVisuals
     // Per-sprite generation stamp (Godot meta): a later Apply supersedes earlier ones so a slow
     // load can't overwrite the sprite with a stale form. Meta lives/dies with the node (no leak).
     private const string GenMeta = "fgo_form_gen";
+    private const string BaseScaleMeta = "fgo_form_base_scale";
 
     /// <summary>Register ONE character's form frame resources (call once at mod init).
     /// Each call is treated as a group: only the group of the character entering combat
@@ -100,13 +102,22 @@ public static class FormVisuals
 
     /// <summary>Background-load the current form and, when allowed, its sibling forms.
     /// Multiplayer deliberately skips siblings to keep several FGO players within the VRAM budget.</summary>
-    private static void PreloadGroup(string path, bool preloadAlternates)
+    private static FrameResourceSelection[] ResolveGroup(
+        string logicalPath,
+        bool includeAlternates,
+        FrameQualityTier tier)
     {
-        var group = preloadAlternates && GroupOf.TryGetValue(path, out var registered)
+        var group = includeAlternates && GroupOf.TryGetValue(logicalPath, out var registered)
             ? registered
-            : [path];
-        foreach (var p in group)
+            : [logicalPath];
+        return group.Select(path => FgoVisualQuality.ResolveFrames(path, tier)).ToArray();
+    }
+
+    private static void PreloadGroup(IEnumerable<FrameResourceSelection> selections)
+    {
+        foreach (var selection in selections)
         {
+            var p = selection.ResourcePath;
             if (Cache.ContainsKey(p) || Requested.Contains(p) || Failed.Contains(p)) continue;
             if (ResourceLoader.LoadThreadedRequest(p, "SpriteFrames", useSubThreads: true) == Error.Ok)
             {
@@ -187,7 +198,7 @@ public static class FormVisuals
     private static HashSet<string> _activePaths = [];
     private static HashSet<string> _prevPaths = [];
 
-    private static void TrackCombatAndEvict(string path, bool keepWholeGroup)
+    private static void TrackCombatAndEvict(IEnumerable<FrameResourceSelection> selections)
     {
         var room = NCombatRoom.Instance;
         if (room == null) return;
@@ -198,14 +209,7 @@ public static class FormVisuals
             _prevPaths = _activePaths;
             _activePaths = [];
         }
-        if (keepWholeGroup && GroupOf.TryGetValue(path, out var group))
-        {
-            foreach (var p in group) _activePaths.Add(p);
-        }
-        else
-        {
-            _activePaths.Add(path);
-        }
+        foreach (var selection in selections) _activePaths.Add(selection.ResourcePath);
 
         List<string>? evict = null;
         foreach (var key in Cache.Keys)
@@ -230,8 +234,11 @@ public static class FormVisuals
         // and keeps the old sprite visible until ready instead of risking a black screen from VRAM
         // exhaustion when several FGO characters preload all of their alternatives together.
         var isMultiplayer = creature.Player?.RunState.Players.Count > 1;
-        TrackCombatAndEvict(form.FramesPath, keepWholeGroup: !isMultiplayer);
-        PreloadGroup(form.FramesPath, preloadAlternates: !isMultiplayer);
+        var tier = FgoVisualQuality.GetFrameTier(isMultiplayer);
+        var group = ResolveGroup(form.FramesPath, includeAlternates: !isMultiplayer, tier);
+        var current = FgoVisualQuality.ResolveFrames(form.FramesPath, tier);
+        TrackCombatAndEvict(group);
+        PreloadGroup(group);
 
         var node = NCombatRoom.Instance?.GetCreatureNode(creature);
         if (node?.FindChild("Sprite", recursive: true, owned: false) is not AnimatedSprite2D sprite) return;
@@ -240,7 +247,7 @@ public static class FormVisuals
         // slow load can't resolve last and overwrite the sprite with the previous form (race).
         var gen = (sprite.HasMeta(GenMeta) ? sprite.GetMeta(GenMeta).AsInt32() : 0) + 1;
         sprite.SetMeta(GenMeta, gen);
-        _ = ApplyWhenReadyAsync(sprite, form.FramesPath, gen);
+        _ = ApplyWhenReadyAsync(sprite, current, gen);
     }
 
     /// <summary>
@@ -248,8 +255,12 @@ public static class FormVisuals
     /// signal instead of ever blocking. Usually resolves on the first poll (group preloaded at
     /// combat start); the loop is the fallback for a switch on turn 1 before the load completes.
     /// </summary>
-    private static async Task ApplyWhenReadyAsync(AnimatedSprite2D sprite, string path, int gen)
+    private static async Task ApplyWhenReadyAsync(
+        AnimatedSprite2D sprite,
+        FrameResourceSelection selection,
+        int gen)
     {
+        var path = selection.ResourcePath;
         try
         {
             var frames = GetFrames(path);
@@ -272,21 +283,24 @@ public static class FormVisuals
             if (sprite.GetMeta(GenMeta, 0).AsInt32() != gen) return; // a newer Apply won; don't stomp it.
             var position = sprite.Position;
             var hasPositionOverride = false;
-            if (SpriteXOf.TryGetValue(path, out var spriteX))
+            if (SpriteXOf.TryGetValue(selection.LogicalPath, out var spriteX))
             {
                 position.X = spriteX;
                 hasPositionOverride = true;
             }
-            if (SpriteYOf.TryGetValue(path, out var spriteY))
+            if (SpriteYOf.TryGetValue(selection.LogicalPath, out var spriteY))
             {
                 position.Y = spriteY;
                 hasPositionOverride = true;
             }
             if (hasPositionOverride) sprite.Position = position;
-            if (SpriteScaleOf.TryGetValue(path, out var uniformScale))
+            if (!sprite.HasMeta(BaseScaleMeta)) sprite.SetMeta(BaseScaleMeta, sprite.Scale);
+            var baseScale = sprite.GetMeta(BaseScaleMeta).AsVector2();
+            if (SpriteScaleOf.TryGetValue(selection.LogicalPath, out var uniformScale))
             {
-                sprite.Scale = new Vector2(uniformScale, uniformScale);
+                baseScale = new Vector2(uniformScale, uniformScale);
             }
+            sprite.Scale = baseScale * selection.ScaleMultiplier;
             if (sprite.SpriteFrames == frames) return;
 
             sprite.SpriteFrames = frames;

@@ -2,6 +2,27 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-01 — Kagetora jugable y calidad visual adaptativa preparada
+
+- **Hotfix público:** Kagetora `v0.1.2` fue publicado en su item existente de Workshop
+  (`3773261707`) y sincronizado con `main`. El diálogo Ancient propio evita que Neow quede sin
+  opciones de reliquia inicial en MAIN y BETA. Falta confirmar el flujo completo en un playtest
+  real después de que Steam descargue la actualización.
+- **Configuración común:** FGOCore `v0.1.13` agrega, mediante BaseLib, opciones de calidad de
+  modelos (`Automática`, `Equilibrada`, `Alta`) y suavizado (`Desactivado`, `Estándar`, `Mejorado`),
+  localizadas en los cinco idiomas. No se agregó RitsuLib como dependencia.
+- **Selección segura:** en Windows, `Automática` identifica el adaptador activo y lee su VRAM
+  dedicada registrada. Sólo elige Alta en solitario con GPU dedicada de al menos 8 GiB y 3 GiB de
+  margen estimado; en cooperativo, hardware desconocido o recursos HD ausentes vuelve a 768 px.
+  La elección queda fija durante cada combate y las cargas siguen siendo asíncronas.
+- **Piloto Kagetora `v0.1.3`:** sus formas Nagao Kagetora y Uesugi Kenshin incluyen recursos de
+  1024 px con escala compensada, además del fallback de 768 px. Los 306 WebP HD conservan las
+  fuentes originales, tienen imports únicos y el PCK final queda en 68,7 MB.
+- **Validación:** matriz MAIN/BETA 26/26 con 0 errores y 0 advertencias; las tres sondas resolvieron
+  1.286 referencias. Paridad de localización, SimpleLoc, presentación tienda/descanso, assets,
+  descripciones y animaciones aprobaron. FGOCore/Kagetora `v0.1.13`/`v0.1.3` aún no se publicaron:
+  falta el playtest visual y una orden explícita de upload.
+
 ## 2026-07-31 — Kagetora v0.1.2: hotfix de Neow preparado
 
 - **Reporte externo:** al iniciar una partida con Kagetora, Neow podía quedar mostrando el diálogo
@@ -18,8 +39,8 @@ Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md
 - **Validación:** builds MAIN/BETA con 0 errores y 0 advertencias; sondas MAIN→MAIN y MAIN→BETA
   resolvieron 255 referencias de juego entre FGOCore y Kagetora. Paridad de localización, SimpleLoc,
   ficha de Workshop y `git diff --check` aprobados.
-- **Pendiente externo:** falta el playtest real del inicio de partida y publicar el hotfix en Steam.
-  No se instaló una copia local ni se modificaron las suscripciones.
+- **Publicación posterior:** el hotfix fue publicado el 2026-08-01. Falta el playtest real del
+  inicio de partida; no se instaló una copia local ni se modificaron las suscripciones.
 
 ## 2026-07-31 — publicación global MAIN/BETA y hotfixes
 
