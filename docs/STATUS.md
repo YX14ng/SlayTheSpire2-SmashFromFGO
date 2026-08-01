@@ -2,6 +2,25 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-07-31 — Kagetora v0.1.2: hotfix de Neow preparado
+
+- **Reporte externo:** al iniciar una partida con Kagetora, Neow podía quedar mostrando el diálogo
+  sin habilitar las opciones de reliquia; el usuario confirmó el mismo síntoma en MAIN y BETA con
+  sólo BaseLib, FGOCore y Kagetora.
+- **Mitigación dirigida:** el flujo de `NEventRoom.SetupLayout` sólo agrega y habilita las opciones
+  después de resolver un diálogo Ancient válido. Kagetora dependía del diálogo genérico `ANY`; ahora
+  aporta un diálogo propio de Neow, de una sola línea y repetible, en los cinco idiomas. BaseLib
+  obtiene así una secuencia no vacía para la primera visita y todas las posteriores, y la misma línea
+  habilita las opciones sin requerir un clic intermedio.
+- **Paquete v0.1.2:** se regeneraron DLL, manifest y PCK. El manifest interno y externo marca
+  `v0.1.2`; el PCK contiene las cinco claves de Neow y sus archivos coinciden por SHA-256 con las
+  fuentes.
+- **Validación:** builds MAIN/BETA con 0 errores y 0 advertencias; sondas MAIN→MAIN y MAIN→BETA
+  resolvieron 255 referencias de juego entre FGOCore y Kagetora. Paridad de localización, SimpleLoc,
+  ficha de Workshop y `git diff --check` aprobados.
+- **Pendiente externo:** falta el playtest real del inicio de partida y publicar el hotfix en Steam.
+  No se instaló una copia local ni se modificaron las suscripciones.
+
 ## 2026-07-31 — publicación global MAIN/BETA y hotfixes
 
 - **Lote público completo:** SteamCMD confirmó `Committing update...Success` 13 veces en una sola
