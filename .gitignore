@@ -44,7 +44,7 @@ assets/reference/ce/icons/
 assets/reference/ce/*.json
 assets/reference/fanart/*
 !assets/reference/fanart/CREDITS.txt
-/decompiled/
+/decompiled
 # Staging de build (separación workspace/juego)
 /dist/
 
