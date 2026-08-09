@@ -23,8 +23,10 @@ Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md
 - **Verificación:** inventario del PCK idéntico al v0.1.8 publicado (1325/1325); alpha de los
   frames medido con PIL (idle/cast/hurt sin contacto de borde). Fuentes de render enlazadas desde
   la copia hermana (`assets/reference/{extracted,bundles}`, ahora gitignoreados).
-- **Pendiente:** playtest visual del galope y del tamaño en pantalla; upload de `v0.1.9` a
-  Workshop con orden explícita.
+- **PUBLICADO:** `v0.1.9` subido al item `3774222236` con orden explícita del usuario y
+  verificado por API (visibility=0, 40,6 MB, descripción actualizada). El conteo de éxitos del
+  uploader ya funciona en Linux (fix de la regex de la entrada (d)). Pendiente sólo el playtest
+  visual del galope y del tamaño en pantalla.
 
 ## 2026-08-09 (d) — lote publicado en Workshop desde la máquina Linux
 
