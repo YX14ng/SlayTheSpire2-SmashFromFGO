@@ -4,7 +4,8 @@ using Godot;
 
 namespace MashShielder.MashShielderCode.Character;
 
-public class MashShielderCardPool : CustomCardPoolModel
+public class MashShielderCardPool : CustomCardPoolModel,
+    STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool
 {
     public override string Title => MashShielder.CharacterId; //This is not a display name.
     

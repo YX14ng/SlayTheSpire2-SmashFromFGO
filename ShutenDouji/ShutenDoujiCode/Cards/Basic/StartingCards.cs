@@ -80,8 +80,11 @@ public sealed class Defender() : ShutenCard(
 }
 
 public sealed class FruityWineAroma() : ShutenCard(
-    1, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy, ShutenStyle.Assassin)
+    1, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy, ShutenStyle.Assassin), BaseLib.Abstracts.ITranscendenceCard
 {
+    public MegaCrit.Sts2.Core.Models.CardModel GetTranscendenceTransformedCard() =>
+        MegaCrit.Sts2.Core.Models.ModelDb.Card<Rare.FruityAromaEx>();
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new PowerVar<PoisonPower>("Poison", 4m), new DynamicVar("Sake", 20)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

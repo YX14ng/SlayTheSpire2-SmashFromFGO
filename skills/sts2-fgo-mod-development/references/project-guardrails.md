@@ -54,6 +54,7 @@ de red o de combate.
 
 - `tools/build_compat_matrix.ps1`: compilacion MAIN/BETA.
 - `tools/audit_simpleloc.ps1`: reglas reales de SimpleLoc.
+- `tools/audit_pck_packages.ps1`: manifiestos internos identicos a staging y cero DLL embebidas.
 - `tools/make_card_art.ps1`: recorte reproducible desde mappings oficiales.
 - `tools/install-mod.ps1`: solo playtest local y evitando IDs duplicados.
 - `%APPDATA%/SlayTheSpire2/logs/godot.log`: primera evidencia de fallos runtime.

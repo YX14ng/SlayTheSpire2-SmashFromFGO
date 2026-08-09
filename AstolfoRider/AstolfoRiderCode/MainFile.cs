@@ -1,3 +1,5 @@
+using FGOCore.FGOCoreCode.Ritsu;
+using STS2RitsuLib;
 using AstolfoRider.AstolfoRiderCode.Cards.Special;
 using AstolfoRider.AstolfoRiderCode.Character;
 using AstolfoRider.AstolfoRiderCode.Powers;
@@ -19,10 +21,16 @@ public partial class MainFile : Node
     public const string ModId = "AstolfoRider";
     public const string ResPath = $"res://{ModId}";
     public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } =
-        new(ModId, MegaCrit.Sts2.Core.Logging.LogType.Generic);
+        RitsuLibFramework.CreateLogger(ModId);
 
     public static void Initialize()
     {
+        FgoRitsuIntegration.RegisterCharacterMod<
+            Astolfo,
+            Relics.ReasonEvaporatedRelic,
+            Relics.CompletelyEvaporatedReason,
+            Cards.Basic.PaladinsHunch,
+            Cards.Rare.PerfectImprovisation>(ModId, "reason_evaporated_relic");
         new Harmony(ModId).PatchAll();
         FormVisuals.RegisterFramesWithSpriteTransform(
             ($"{ResPath}/character/astolfo_frames.tres", -102f, -229f, 1f));

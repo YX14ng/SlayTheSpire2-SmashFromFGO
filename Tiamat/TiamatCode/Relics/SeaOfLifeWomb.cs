@@ -27,7 +27,7 @@ namespace TiamatBeast.TiamatCode.Relics;
 /// sobre un enemigo nunca antes contado este combate (patrón MakotoBanner/KairisCigarettes).
 /// (source=null en el FormSwitch inicial: fija la forma sin contar como "cambio de forma".)
 /// </summary>
-public sealed class SeaOfLifeWomb : TiamatRelic, INpLevelStore
+public class SeaOfLifeWomb : TiamatRelic, INpLevelStore
 {
     // ---- Gacha de dupes / INpLevelStore (audit 2026-07-05, HIGH) ----
     // Sin un INpLevelStore el medidor de NP capeaba en 100 PARA SIEMPRE (NpCharge.Max lee el nivel
@@ -90,6 +90,13 @@ public sealed class SeaOfLifeWomb : TiamatRelic, INpLevelStore
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<SeaOfLifeGenesis>();
+
+    protected virtual int StartingNpAmount => StartingNp;
+    protected virtual int StartingLahmuAmount => LahmuOnCombatStart;
+    protected virtual int LahmuPerFirstCurseAmount => LahmuPerFirstCurse;
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
         HoverTipFactory.FromPower<LahmuSwarmPower>(),
@@ -108,8 +115,8 @@ public sealed class SeaOfLifeWomb : TiamatRelic, INpLevelStore
         _firstCursedEnemies.Clear();
         Flash();
         await FormSwitch.Enter<TiamatFemmeFatalePower>(null, Owner.Creature, null);
-        await NpCharge.Gain(Owner.Creature, StartingNp, null);
-        await Lahmu.Spawn(Owner.Creature, LahmuOnCombatStart, null);
+        await NpCharge.Gain(Owner.Creature, StartingNpAmount, null);
+        await Lahmu.Spawn(Owner.Creature, StartingLahmuAmount, null);
     }
 
     // amount > 0 sobre un CursePower de un ENEMIGO = ese enemigo recibió Maldición. Si es la 1ª
@@ -121,6 +128,19 @@ public sealed class SeaOfLifeWomb : TiamatRelic, INpLevelStore
         if (enemy == null || !enemy.IsMonster) return;
         if (!_firstCursedEnemies.Add(enemy)) return;
         Flash();
-        await Lahmu.Spawn(choiceContext, Owner.Creature, LahmuPerFirstCurse, null);
+        await Lahmu.Spawn(choiceContext, Owner.Creature, LahmuPerFirstCurseAmount, null);
     }
+}
+
+/// <summary>
+/// Mar de Vida: Génesis. La evolución Ancient del Útero conserva la forma, el motor de
+/// Maldición→Laḫmu y el nivel de NP, pero abre cada combate con el doble de NP y de cría.
+/// </summary>
+public sealed class SeaOfLifeGenesis : SeaOfLifeWomb
+{
+    public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    protected override int StartingNpAmount => 20;
+    protected override int StartingLahmuAmount => 2;
+
 }

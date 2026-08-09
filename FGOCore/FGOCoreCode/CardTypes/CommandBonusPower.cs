@@ -1,5 +1,6 @@
 using FGOCore.FGOCoreCode.Np;
 using FGOCore.FGOCoreCode.Stars;
+using FGOCore.FGOCoreCode.Ritsu;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -94,6 +95,7 @@ public sealed class CommandBonusPower : FGOCorePower
     /// para que el hook capture la PRIMERA carta tipada del combate. Idempotente.</summary>
     public static async Task EnsureInstalled(Creature creature)
     {
+        await FgoSecondaryResources.SynchronizeFromLegacyPowers(creature);
         await Criticals.EnsureInstalled(creature);
         if (creature.GetPower<CommandBonusPower>() == null)
         {

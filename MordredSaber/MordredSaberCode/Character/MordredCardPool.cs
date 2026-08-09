@@ -4,7 +4,8 @@ using MordredSaber.MordredSaberCode.Extensions;
 
 namespace MordredSaber.MordredSaberCode.Character;
 
-public class MordredCardPool : CustomCardPoolModel
+public class MordredCardPool : CustomCardPoolModel,
+    STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool
 {
     public override string Title => Mordred.CharacterId;
 

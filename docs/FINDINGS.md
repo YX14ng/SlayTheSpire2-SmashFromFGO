@@ -3,6 +3,72 @@
 Conclusiones de alta densidad (no historial). **Verificado** = visto en código/log/decompilado;
 lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas → [DECISIONS.md](DECISIONS.md).
 
+## Una forma final no debe manifestar una NP inferior a la forma que reemplaza (verificado, 2026-08-04)
+
+- Paladín es una forma permanente obtenida por una carta rara: conserva las pasivas completas de
+  Shielder y Ortinax y elimina la penalización defensiva. Su tooltip sólo nombraba ambas pasivas,
+  por lo que el jugador no podía consultar allí los umbrales y valores heredados. La descripción
+  ahora explicita los cuatro efectos y sus números en los cinco idiomas.
+- `LordChaldeasUnleashed` otorgaba 35 de Baluarte, mientras la NP anterior de Shielder otorgaba 30,
+  3 de Fuerza, 12 de Intercepción y, en cooperativo, 12 de Baluarte más 6 de Intercepción a cada
+  aliado. El cambio de forma perdía todos esos efectos por apenas 5 de Bloqueo. Lord Chaldeas ahora
+  preserva Fuerza, Intercepción, soporte cooperativo y mejora de carta, y mantiene sus 35 de
+  Baluarte como incremento propio de Paladín.
+- Cuando una forma cambia automáticamente una carta o NP, la comparación debe incluir efectos
+  persistentes, duración, aliados, mejoras, hover tips y localización; comparar sólo el número
+  principal puede ocultar una degradación estricta del payoff final.
+
+## Consumidores vanilla cerrados y referencias dinámicas necesitan un gate propio (verificado, 2026-08-01)
+
+- `ColorfulPhilosophers.CardPoolColorOrder` enumera sólo los cinco pools vanilla. RitsuLib 0.5.10
+  amplía la lista exclusivamente para pools que implementan `IModColorfulPhilosophersCardPool`;
+  ninguno de los doce FGO lo declaraba. Los doce ya optan al contrato y FGOCore aporta las 24
+  claves (`title`/`description`) en cada uno de los cinco idiomas, construidas desde el
+  `EnergyColorName` real. El audit del PCK confirma que las 120 claves llegaron al paquete.
+- `NMapPointHistoryEntry.GetSmallHitSfx/GetBigHitSfx` usa un switch cerrado sobre los cinco tipos
+  vanilla y devuelve una lista vacía para cualquier personaje custom. El replay de historial FGO
+  quedaba silencioso. Dos postfixes limitados a assemblies que referencian FGOCore agregan los clips
+  vanilla `slash_attack.mp3` y `heavy_attack.mp3` sólo cuando el resultado original está vacío.
+- `tools/audit_vanilla_contracts.ps1` convierte esta clase de investigación en un gate repetible:
+  454 comprobaciones sobre los doce mazos y los decompilados MAIN/BETA, fingerprints de ocho
+  consumidores sensibles, localización derivada del ID y un inventario cerrado de reflexión.
+  La matriz lo ejecuta antes de compilar, por lo que un cambio de contrato vanilla obliga a revisar
+  el hardening correspondiente.
+- El `compatibility_probe` ya no resuelve sólo miembros de `sts2`: valida tipos y miembros de
+  `sts2`, BaseLib, RitsuLib, FGOCore, Harmony y Godot, además de todos los destinos Harmony y el
+  campo privado de Orobas. El lote actual resolvió 1.837 tipos, 2.275 miembros y 21 destinos en
+  MAIN/BETA (24 al cargar el artefacto universal MAIN sobre BETA), sin referencias inexistentes.
+
+## Las reliquias Ancient con visuales o tablas por personaje necesitan registro custom (verificado, 2026-08-01)
+
+- `SeaGlass.Title` usa `SEA_GLASS.<Character.Id.Entry>.title`; el juego sólo incluye esas claves
+  para sus cinco personajes. Orobas puede asignarle cualquier personaje desbloqueado, incluidos
+  los Servants, por lo que consultar el título custom termina en `LocException`. FGOCore devuelve
+  `SEA_GLASS.title` para los doce prefijos FGO, sin tocar los casos vanilla.
+- `ArchaicTooth` sólo ofrece una opción si el mazo contiene una clave de su tabla de
+  trascendencias. Los doce mods registran ahora el par carta inicial→carta Ancient mediante el
+  contrato oficial de RitsuLib; `ITranscendenceCard` se conserva como fallback compatible. La
+  reliquia conserva mejora y encantamiento al crear la carta destino.
+- `YummyCookie.IconBaseName` cae a `ironclad` para cualquier tipo desconocido. RitsuLib 0.5.10
+  parchea las tres superficies visuales de reliquia por personaje; cada Servant registra el icono,
+  contorno y arte grande de su starter identitaria. La sonda de compatibilidad exige en adelante
+  el overload compartido y los doce contratos de trascendencia.
+
+## Touch of Orobas convierte starters custom sin mapeo en Circlet (verificado, 2026-08-01)
+
+- El juego busca la **primera** reliquia de rareza `Starter`. Su tabla sólo conoce las cinco
+  iniciales vanilla; cualquier ID restante cae explícitamente a `Circlet`.
+- BaseLib intercepta esa consulta para `CustomRelicModel`, pero su implementación base de
+  `GetUpgradeReplacement()` devuelve `null`; cuando un mod no lo sobrescribe, BaseLib deja correr
+  la tabla vanilla y reaparece el mismo Circlet.
+- Los doce personajes FGO registran ahora el par starter→reemplazo mediante el contrato oficial de
+  RitsuLib y conservan el override anterior como fallback compatible. Las Ancient reinstalan
+  cualquier forma o contador que dependía de la starter eliminada. Gilgamesh agrega
+  `EaSwordOfRupture`; Tiamat agrega `SeaOfLifeGenesis`.
+- `RelicCmd.Replace` no copia propiedades guardadas. FGOCore preserva `NpLevel` y `DupePity` cuando
+  origen y destino implementan `INpLevelStore`; su único parche de Orobas restante recalcula una
+  elección Circlet ya preparada por una versión anterior usando el mapa oficial de RitsuLib.
+
 ## Una variante HD debe preservar ruta lógica, escala y carga asíncrona (verificado, 2026-08-01)
 
 - Los 12 personajes reúnen 21 recursos animados y 3.324 fotogramas. La variante de 1024 px puede
@@ -15,8 +81,11 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
   crear los nodos aliados identifica el `SpriteFrames` registrado y aplica la misma selección
   asíncrona; las formas guardadas siguen teniendo prioridad para que una partida reanudada no vuelva
   brevemente al modelo inicial.
-- Precargar todos los mods sería contraproducente: se carga únicamente el personaje presente. En
-  solitario se anticipan sus formas hermanas; en cooperativo se mantiene sólo la forma actual. Si
+- Precargar todas las formas hermanas también es demasiado costoso: Mash, Tiamat y Mordred pueden
+  reservar varios GiB antes del primer turno, especialmente con la variante HD. Se solicita sólo la
+  forma visible, tanto en solitario como en cooperativo; los cambios posteriores siguen siendo
+  asíncronos y conservan el sprite anterior hasta terminar. Al salir del combate se vacían las
+  referencias fuertes de FGOCore para que tienda, evento y descanso no hereden esas texturas. Si
   falla la detección, falta el recurso o no hay margen de VRAM, el resultado sigue siendo 768 px.
 - `tools/audit_visual_quality.py` compara rutas, registros, hashes e imports para evitar variantes
   incompletas, escalas no registradas y assets huérfanos. Vortigern es una imagen estática ya servida
@@ -295,7 +364,7 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
 - El parámetro `IRunState` ⇒ la carga está pensada para ser **por-run** → palanca para "cargar solo el personaje elegido" (la idea del mod de optimización). *(A confirmar: si hoy precarga TODOS en el menú (eager) o ya por-run.)*
 - Síntoma medido: **~120 mods → VRAM 4.7GB en el menú, 320s de arranque**.
 - **CONFIRMADO (2026-06-26, reportes de players + código)**: `FormVisuals.Apply` (FGOCore) llamaba `PreloadAll()` que cargaba en VRAM **TODAS las formas de TODOS los mods FGO instalados** (`Registered` es un flat-list de todos los `RegisterFrames` de cada char) a un `Cache` **estático nunca liberado** — aunque jugaras un solo char. Con N chars FGO instalados ⇒ N×(cientos de frames) pinneados. Síntomas de players: en GPU débil las texturas de cartas/intención/NP **no se alocan → "solo barras de vida"** (injugable); con 3 chars instalados → **crash** (掉帧→闪退); multi = "massive performance issues". El usuario (RTX 4080/16GB) NO lo reproduce. **Fix**: `FormVisuals` agrupa por-char (`RegisterFrames` = 1 grupo) y `Apply` solo precarga el grupo del char que pelea (`PreloadGroup`), no todos.
-- **REMANENTE CO-OP (2026-07-22, reporte + código)**: el arreglo por grupo seguía precargando todas las formas alternativas de **cada jugador FGO activo**. Con varios personajes animados en la misma partida, la suma todavía podía dejar la pantalla negra por falta de VRAM. **Fix**: en solitario se conserva la precarga del grupo completo; con más de un jugador, `FormVisuals` solicita y retiene sólo la forma actual de cada criatura. Los cambios posteriores siguen siendo asíncronos y mantienen el sprite anterior hasta que la nueva forma esté lista.
+- **CARGA FINAL ACOTADA (2026-08-03, reporte + código)**: incluso un solo personaje podía tener cientos de frames alternativos; precargar el grupo completo en HD reservaba varios GiB al entrar al combate y el caché sobrevivía en las salas siguientes. `FormVisuals` ahora solicita sólo la forma visible en solo/co-op, carga cualquier transformación bajo demanda sin ocultar el sprite actual y libera sus referencias al salir de `NCombatRoom`. El reporte externo no incluyó un log reproducible, por lo que esto es hardening de una causa verificable de presión de memoria, no una atribución definitiva del crash.
 - **Textura de frames**: `compress/mode=1` es *lossy de DISCO* pero **descomprime a RGBA8 en VRAM** (`"vram_texture": false`) → VRAM = nº_frames × (lado² × 4 × 1.33 mipmaps). A 1024 ≈ 5.6MB/frame; **Mash tenía `size_limit=0` (sin cap, ~1900px ≈ 19MB/frame ≈ 6GB solo Mash)**. **Fix**: capear los frames de los 4 animados a `process/size_limit=768` (~44% menos VRAM vs 1024; ~6× para Mash). Cambiar el `.import` re-importa solo (no hay que borrar `.godot/imported`); el `.pck` baja como verificación.
 - **Cap global de personajes (2026-07-22)**: los 3.354 WebP de combate de los nueve personajes usan ahora `process/size_limit=768`. Los ocho que seguían en 1024 reducen aproximadamente 44% su peor caso de VRAM; Gilgamesh reduce ~22% porque su fuente máxima era 867 px. Las escalas de escena y de cada forma se compensaron con el factor real para que cabeza y pies no cambien de lugar.
 - **NO usar `compress/mode=2` (VRAM Compressed)**: guarda BC7 en DISCO → infla el `.pck`/descarga de Workshop ~10×. `size_limit` baja VRAM **y** disco. (`mode=4` Basis = chico en ambos pero con pérdida; no probado.)
@@ -307,7 +376,7 @@ El combate de StS2 es **lockstep determinista**: cada cliente simula a TODOS los
 - Las pantallas de elección (`CardSelectCmd.FromChooseACardScreen`/`FromDeckForUpgrade`/`FromDeckForEnchantment`) **SÍ son MP-safe** (usan `PlayerChoiceSynchronizer`: reserva choiceId + `ShouldSelectLocalCard`/`WaitForRemoteChoice`, igual que relics vanilla). No eran el desync.
 - Leer `player.PlayerCombatState.AllPiles...DrawPile.Cards.Count` **es determinista cross-client** (todos los `PlayerCombatState` se pueblan para locales Y remotos en `CombatManager.SetUpCombat`, barajados con el `RunState.Rng.Shuffle` sincronizado). El cap de robo en cambio de forma es seguro.
 - `ShouldScaleInMultiplayer` solo afecta el escalado de powers cuyo target es un enemigo (`MultiplayerScalingModel`); para self-buffs (Fuerza/★/NP propio) `false` es correcto y nunca crashea.
-- **Carga síncrona = desconexión en MP**: `ResourceLoader.Load<T>()` de un `.tres` pesado **congela el hilo de simulación** → rompe el heartbeat de red → timeout/desconexión (se reporta como "crash"). **CONFIRMADO**: `FormVisuals.GetFrames` tenía un `Load()` síncrono de fallback → la **forma Ortinax de Mash crasheaba en multi** (Ortinax es la forma que se entra MID-combat materializando otro `.tres`; Shielder no, porque entra al inicio con los frames ya cargados). Fix = `GetFrames` nunca bloquea (solo devuelve si `LoadThreadedGetStatus==Loaded`, si no `null`); `Apply` aplica el sprite diferido vía el signal `process_frame` cuando el background-load termina. El grupo se precarga al inicio del combate (la `Apply` de la forma base dispara `PreloadGroup` del grupo entero), así el switch mid-combat suele estar listo.
+- **Carga síncrona = desconexión en MP**: `ResourceLoader.Load<T>()` de un `.tres` pesado **congela el hilo de simulación** → rompe el heartbeat de red → timeout/desconexión (se reporta como "crash"). **CONFIRMADO**: `FormVisuals.GetFrames` tenía un `Load()` síncrono de fallback → la **forma Ortinax de Mash crasheaba en multi** (Ortinax es la forma que se entra MID-combat materializando otro `.tres`; Shielder no, porque entra al inicio con los frames ya cargados). Fix = `GetFrames` nunca bloquea (solo devuelve si `LoadThreadedGetStatus==Loaded`, si no `null`); `Apply` aplica el sprite diferido vía el signal `process_frame` cuando el background-load termina. Sólo la forma visible se solicita al inicio; un cambio conserva el sprite anterior mientras carga el nuevo recurso.
 
 ## Hooks de daño / preview (CRÍTICO — verificado, 2026-06-27)
 - **`ModifyDamageAdditive`/`ModifyDamage*` NO deben MUTAR estado.** El hook corre TAMBIÉN en modo PREVIEW (cálculo del número que se muestra), y el hook por-power **NO recibe el `previewMode`**: `Hook.ModifyDamage(...)` sí tiene un param `CardPreviewMode previewMode` (`decompiled/.../Hook.cs:1486`) pero al iterar los listeners llama `item.ModifyDamageAdditive(target, num, props, dealer, cardSource)` **sin** reenviarlo (`Hook.cs:2519`). ⇒ un power no puede distinguir preview de real dentro de ese hook. Si mutás ahí (p.ej. `_pending = 0` para "una vez por golpe"), una preview que ocurra **después** de cachear el bono se lo come y la pegada real recibe 0. **Patrón vanilla correcto = PURO**: `PhantomBladesPower.ModifyDamageAdditive` decide leyendo el historial (`CombatManager.Instance.History.CardPlaysFinished`), nunca muta.
@@ -319,6 +388,65 @@ El combate de StS2 es **lockstep determinista**: cada cliente simula a TODOS los
   hook de cálculo; luego, al mover la limpieza sólo a `AfterDamageReceived`, los golpes letales aún
   dejaban el bono vivo para el siguiente impacto. Fix: 3 powers con lectura pura y limpieza en
   `AfterDamageGiven`.
+
+## BaseLib 3.4.x: UI útil y hotfix necesario para formas (verificado, 2026-08-01)
+
+- NuGet termina en 3.4.0, mientras la release oficial y el Workshop ya avanzaron a 3.4.1. Los dos
+  assemblies mantienen la misma superficie pública; compilar contra 3.4.0 y exigir 3.4.1 en runtime
+  evita introducir una referencia local no reproducible.
+- 3.4.0 agrega placas de tipo extensibles, múltiples reliquias iniciales en selección y personajes
+  custom en estadísticas. `ICommandTyped` aprovecha `ICustomTypeTextCard` para envolver el tipo
+  vanilla con Buster/Arts/Quick usando localización propia en los cinco idiomas.
+- El diff binario 3.4.0→3.4.1 sólo agrega `OptionalFormNodePatch`, `%FormVfx` a los nodos requeridos de
+  `NCreatureVisualsFactory` y la versión de assembly. Es relevante para todos nuestros personajes:
+  sus `CreateCustomVisuals()` pasan por esa factory y las escenas no declaran un holder manual.
+- El Workshop avanzó después a 3.4.3 con un binario compilado contra BETA. Su postfix de Embark
+  referencia `StartRunLobby.get_LocalPlayer()` con retorno `StartRunLobbyPlayer`; MAIN 0.107.1 sólo
+  expone la misma propiedad con retorno `LobbyPlayer`. Como el retorno forma parte de la firma CLR,
+  el resultado es `MissingMethodException`. FGOCore la filtra únicamente cuando el método objetivo
+  y el stack pertenecen a `CharacterSelectStartingRelicsPatch.OnEmbarkPressedPostfix`. La sonda
+  cargó la DLL real 3.4.3 contra MAIN, provocó la excepción antes de entrar al cuerpo y comprobó el
+  filtro; una `MissingMethodException` ajena no se suprime.
+
+## RitsuLib: integración transversal y recursos FGO (verificado, 2026-08-04)
+
+- RitsuLib 0.5.10 coexiste con BaseLib y mantiene paquetes compatibles por rama: MAIN usa
+  `STS2.RitsuLib.Compat.0.107.1`; BETA usa `STS2.RitsuLib`. El id runtime es siempre
+  `STS2-RitsuLib`, por lo que los manifiestos son universales.
+- La superficie más útil para el ecosistema FGO es `ModCardTagRegistry` + capacidades de modelo:
+  FGOCore registra `FGO_CORE_CARDTAG_COMMAND_BUSTER`, `..._ARTS` y `..._QUICK`, y una capacidad sin
+  estado los aporta automáticamente a cualquier `CardModel` que implemente `ICommandTyped`.
+  RitsuLib conserva esa capacidad en clones y transformaciones, sin duplicar lógica en las cartas.
+- Hallazgo de carga: `NormalizePublicStem("FGOCore")` produce `FGO_CORE`, no `FGOCORE`. El probe
+  anterior sólo comparaba constantes hardcodeadas consigo mismas y por eso daba verde mientras el
+  inicializador rechazaba el ID real. Ahora invoca `GetQualifiedCardTagId` y
+  `GetQualifiedModelCapabilityId`/`GetResourceId` de la versión cargada y exige además los seis
+  valores estables.
+- Los 12 personajes tienen referencia directa a RitsuLib, crean su logger mediante el framework y
+  se registran en `FgoRitsuIntegration`. Al completarse `ModelDb`, el audit exige exactamente un tag
+  correcto por carta de comando y deja en log los módulos activos.
+- FGOCore registra `FGO_CORE_SECONDARY_RESOURCE_NP_CHARGE` y
+  `FGO_CORE_SECONDARY_RESOURCE_CRIT_STARS`. RitsuLib aporta UI, hooks y API interoperable; los powers
+  publicados conservan sus IDs como respaldo de saves y se sincronizan en ambos sentidos, incluso
+  al reanudar un combate. Los powers quedan ocultos para evitar medidores duplicados.
+- Los doce inicializadores registran en RitsuLib sus pares de Touch of Orobas y Archaic Tooth. Se
+  conserva un adaptador pequeño para reparar saves que ya habían guardado Circlet y otro para copiar
+  `NpLevel`/`DupePity`; los fallbacks Sea Glass, historial SFX y BaseLib 3.4.3 siguen siendo necesarios.
+- `FGOTelemetry` fue descartado: no se compila, instala ni publica. La integración no solicita
+  consentimiento, no captura historial y no escribe lotes JSON.
+- El riesgo de versiones sigue siendo real (el caso Archetto 0.4.x de abajo); por eso las versiones
+  están fijadas en `Sts2Compatibility.props`, los 13 manifiestos exigen `>=0.5.10` y la matriz obliga
+  a que cada DLL enlace la variante correcta de RitsuLib en MAIN, MAIN→BETA y BETA.
+
+## Los paths de energía custom son opcionales, pero todo override debe existir (verificado, 2026-08-01)
+
+- `CustomCardPoolModel`, `CustomRelicPoolModel` y `CustomPotionPoolModel` devuelven `null` por defecto
+  en `BigEnergyIconPath`/`TextEnergyIconPath`; `CustomEnergyIconPatches` deja entonces que el juego
+  use el icono estándar. Shuten y Astolfo ya seguían ese camino seguro.
+- Kagetora anulaba los seis valores hacia `charui/big_energy.png` y `charui/text_energy.png`, pero
+  ninguno existía en fuentes ni PCK. La carga fallaba al construir hover tips de Neow. Se eliminaron
+  los overrides y el auditor de assets ahora resuelve cualquier literal `"...".ImagePath()` usado
+  por esas propiedades, para que un path explícito ausente corte la validación antes del publish.
 
 ## Mods de OTROS autores rotos (desuscribir) — 2026-06-25
 - **Crash al iniciar run**: NRE en `HsrSimulatedUniverseCurios` (`CarnivalsTailPatch.OnRelicObtained`) disparado por `ReAstralPartyMod` (reliquia inicial). Workshop `3747553484` / `3747579249`.

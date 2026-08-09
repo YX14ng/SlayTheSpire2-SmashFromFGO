@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Saves.Runs;
@@ -23,6 +24,9 @@ namespace ShutenDouji.ShutenDoujiCode.Relics;
 public sealed class ScarletGourd : ShutenRelic, IStylePlayedListener
 {
     public override RelicRarity Rarity => RelicRarity.Starter;
+
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<InexhaustibleGourd>();
 
     public override async Task BeforeCombatStartLate()
     {

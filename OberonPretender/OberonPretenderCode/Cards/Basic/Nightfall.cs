@@ -13,8 +13,11 @@ namespace OberonPretender.OberonPretenderCode.Cards.Basic;
 /// el combate 1 (patron Truco del Clan del Espejo): evita atascarse en una sola forma. En Vortigern
 /// (permanente) el toggle no hace nada -- el insecto no vuelve atras.
 /// </summary>
-public sealed class Nightfall() : OberonCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
+public sealed class Nightfall() : OberonCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self), BaseLib.Abstracts.ITranscendenceCard
 {
+    public MegaCrit.Sts2.Core.Models.CardModel GetTranscendenceTransformedCard() =>
+        MegaCrit.Sts2.Core.Models.ModelDb.Card<Rare.EndOfTheTale>();
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(4m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

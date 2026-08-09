@@ -1,7 +1,12 @@
 <Project>
     <PropertyGroup>
         <Sts2TargetBranch Condition="'$(Sts2TargetBranch)' == ''">main</Sts2TargetBranch>
-        <BaseLibPackageVersion>3.3.6</BaseLibPackageVersion>
+        <BaseLibPackageVersion>3.4.0</BaseLibPackageVersion>
+        <RitsuLibPackageVersion>0.5.10</RitsuLibPackageVersion>
+        <RitsuLibMainPackageId>STS2.RitsuLib.Compat.0.107.1</RitsuLibMainPackageId>
+        <RitsuLibBetaPackageId>STS2.RitsuLib</RitsuLibBetaPackageId>
+        <RitsuLibPackageId Condition="'$(Sts2TargetBranch)' == 'main'">$(RitsuLibMainPackageId)</RitsuLibPackageId>
+        <RitsuLibPackageId Condition="'$(Sts2TargetBranch)' == 'beta'">$(RitsuLibBetaPackageId)</RitsuLibPackageId>
         <Sts2CompatibilityRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '.compat'))</Sts2CompatibilityRoot>
         <MainSts2Version>0.107.1</MainSts2Version>
         <BetaSts2Version>0.110.1</BetaSts2Version>

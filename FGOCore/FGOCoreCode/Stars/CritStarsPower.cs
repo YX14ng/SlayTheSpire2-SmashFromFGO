@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using FGOCore.FGOCoreCode.Cleanse;
+using FGOCore.FGOCoreCode.Ritsu;
 
 namespace FGOCore.FGOCoreCode.Stars;
 
@@ -33,6 +34,9 @@ public sealed class CritStarsPower : FGOCorePower, IResourcePower
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override bool ShouldScaleInMultiplayer => false;
+
+    // El medidor visible lo aporta RitsuLib. El power conserva el ID y el estado de saves viejos.
+    protected override bool IsVisibleInternal => false;
 
     private bool _isClamping;
 
@@ -71,11 +75,13 @@ public static class CritStars
             var room = CritStarsPower.Max - Of(creature);
             if (room <= 0) return;
             await PowerCmd.Apply<CritStarsPower>(choiceContext, creature, Math.Min(amount, room), creature, source);
+            await FgoSecondaryResources.SynchronizeStarsFromLegacy(creature, source);
             return;
         }
         var power = creature.GetPower<CritStarsPower>();
         if (power == null) return;
         await PowerCmd.ModifyAmount(choiceContext, power, Math.Max(amount, -power.Amount), creature, source);
+        await FgoSecondaryResources.SynchronizeStarsFromLegacy(creature, source);
     }
 
     /// <summary>¿Puede pagar un coste de estrellas (conversores estilo 等价交换)?</summary>
@@ -91,6 +97,7 @@ public static class CritStars
         var power = creature.GetPower<CritStarsPower>();
         if (power == null) return false;
         await PowerCmd.ModifyAmount(choiceContext, power, -cost, creature, source);
+        await FgoSecondaryResources.SynchronizeStarsFromLegacy(creature, source);
         return true;
     }
 }

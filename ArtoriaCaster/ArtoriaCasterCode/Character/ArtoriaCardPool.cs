@@ -4,7 +4,8 @@ using ArtoriaCaster.ArtoriaCasterCode.Extensions;
 
 namespace ArtoriaCaster.ArtoriaCasterCode.Character;
 
-public class ArtoriaCardPool : CustomCardPoolModel
+public class ArtoriaCardPool : CustomCardPoolModel,
+    STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool
 {
     public override string Title => ArtoriaCaster.CharacterId; //This is not a display name.
 

@@ -1,3 +1,5 @@
+using FGOCore.FGOCoreCode.Ritsu;
+using STS2RitsuLib;
 using Godot;
 using HarmonyLib;
 using FGOCore.FGOCoreCode.Combat;
@@ -17,10 +19,17 @@ public partial class MainFile : Node
     public const string ModId = "MordredSaber";
     public const string ResPath = $"res://{ModId}";
 
-    public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } = new(ModId, MegaCrit.Sts2.Core.Logging.LogType.Generic);
+    public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } =
+        RitsuLibFramework.CreateLogger(ModId);
 
     public static void Initialize()
     {
+        FgoRitsuIntegration.RegisterCharacterMod<
+            Character.Mordred,
+            Relics.ClarentTheStolenSword,
+            Relics.ClarentOverloadedWithHatred,
+            Cards.Basic.Rebellion,
+            Cards.Rare.CoupDEtat>(ModId, "clarent_the_stolen_sword");
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 

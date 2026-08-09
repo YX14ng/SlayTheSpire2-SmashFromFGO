@@ -1,12 +1,13 @@
 [h1]Siegfried — Armor Forged from Dragon Blood[/h1]
 Reduce every incoming hit with persistent Dragon Scales, survive what should be lethal and choose when to sacrifice the armor for a decisive eruption.
 
-[b]RELEASE BUILD — v0.1.13[/b]
+[b]RELEASE BUILD — v0.1.19[/b]
 
 [h2]Core gameplay[/h2]
 [list]
 [*][b]Dragon Scales:[/b] persistent reduction applies after Block. It is not Block, is not consumed and remains between turns.
 [*][b]The Linden Leaf:[/b] the first attack that reaches you each turn ignores only 1 Scale; remaining stacks still reduce it, and later hits use the full value.
+[*][b]Persistent growth:[/b] choosing Summon in card rewards permanently adds 1 starting Scale, up to 5. Every attack that deals HP damage grants 5 NP Charge, up to 3 times per turn.
 [*][b]Scale Eruption:[/b] sacrifice the entire defensive engine to damage every enemy. The safest position can become the strongest offensive turn.
 [*][b]Balmung:[/b] charge the Noble Phantasm and let its payoff scale with the dragon-blood defense built during the fight.
 [/list]
@@ -22,8 +23,9 @@ Reduce every incoming hit with persistent Dragon Scales, survive what should be 
 
 [h2]Requirements and compatibility[/h2]
 [list]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.14+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.4.1+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747602295]RitsuLib 0.5.10+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.20+[/url]
 [*]Built for MAIN 0.107.1 and public BETA 0.110.1
 [/list]
 
@@ -38,12 +40,13 @@ Unofficial fan-made mod. Fate/Grand Order characters and official visual assets 
 [h1]ESPAÑOL[/h1]
 Reducí cada impacto con Escamas de Dragón persistentes, sobreviví a lo que debería ser letal y elegí cuándo sacrificar la armadura para liberar una erupción decisiva.
 
-[b]VERSIÓN PÚBLICA — v0.1.13[/b]
+[b]VERSIÓN PÚBLICA — v0.1.19[/b]
 
 [h2]Mecánicas principales[/h2]
 [list]
 [*][b]Escamas de Dragón:[/b] una reducción persistente se aplica después del Bloqueo. No es Bloqueo, no se consume y permanece entre turnos.
 [*][b]Hoja de Tilo:[/b] el primer ataque que te alcanza cada turno ignora sólo 1 Escama; las restantes todavía lo reducen y los golpes siguientes usan el valor completo.
+[*][b]Progresión persistente:[/b] elegir Invocar en una recompensa añade permanentemente 1 Escama inicial, hasta 5. Cada ataque que quite Vida otorga 5 de Carga NP, hasta 3 veces por turno.
 [*][b]Erupción de Escamas:[/b] sacrificá todo el motor defensivo para dañar a cada enemigo. La posición más segura puede transformarse en el turno más ofensivo.
 [*][b]Balmung:[/b] cargá el Noble Phantasm y hacé que su resultado escale con la defensa de sangre de dragón construida durante el combate.
 [/list]
@@ -59,8 +62,9 @@ Reducí cada impacto con Escamas de Dragón persistentes, sobreviví a lo que de
 
 [h2]Requisitos y compatibilidad[/h2]
 [list]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.14+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.4.1+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747602295]RitsuLib 0.5.10+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.20+[/url]
 [*]Compatible con MAIN 0.107.1 y BETA pública 0.110.1
 [/list]
 
@@ -75,12 +79,13 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [h1]简体中文[/h1]
 用持续生效的龙血鳞片削减每一段伤害、挺过本应致命的攻击，并选择何时牺牲铠甲发动决定性的爆发。
 
-[b]公开版本 — v0.1.13[/b]
+[b]公开版本 — v0.1.19[/b]
 
 [h2]核心机制[/h2]
 [list]
 [*][b]龙血鳞片：[/b]持续减伤会在格挡后生效。它不是格挡，不会被消耗，并在回合间保留。
 [*][b]菩提叶：[/b]每回合第一次击中你的攻击仅无视1点鳞片；其余层数仍会减伤，之后的攻击则使用完整数值。
+[*][b]永久成长：[/b]在卡牌奖励中选择召唤会永久增加1点初始龙鳞，最多5点。每次攻击对生命造成伤害时获得5点宝具值，每回合至多3次。
 [*][b]鳞甲爆发：[/b]牺牲全部防御体系，对所有敌人造成伤害。最安全的局面也能转化为最强的进攻回合。
 [*][b]Balmung：[/b]充能宝具，让高潮效果随战斗中建立的龙血防御一同成长。
 [/list]
@@ -96,8 +101,9 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 
 [h2]依赖与兼容性[/h2]
 [list]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.3.6+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.14+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.4.1+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747602295]RitsuLib 0.5.10+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.20+[/url]
 [*]兼容正式版 0.107.1 与公开测试版 0.110.1
 [/list]
 

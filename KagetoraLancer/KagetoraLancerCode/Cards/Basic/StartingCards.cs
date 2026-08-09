@@ -102,8 +102,11 @@ public sealed class FortuneIsInHeaven() : KagetoraCard(
 }
 
 public sealed class IncarnationOfBishamonten() : KagetoraCard(
-    1, CardType.Power, CardRarity.Basic, TargetType.Self)
+    1, CardType.Power, CardRarity.Basic, TargetType.Self), BaseLib.Abstracts.ITranscendenceCard
 {
+    public MegaCrit.Sts2.Core.Models.CardModel GetTranscendenceTransformedCard() =>
+        MegaCrit.Sts2.Core.Models.ModelDb.Card<Rare.ManifestationOfBishamonten>();
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new PowerVar<IncarnationPower>("Incarnation", 1m)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

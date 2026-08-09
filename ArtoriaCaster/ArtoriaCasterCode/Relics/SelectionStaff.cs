@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ArtoriaCaster.ArtoriaCasterCode.Powers;
 using ArtoriaCaster.ArtoriaCasterCode.Powers.Forms;
@@ -19,6 +20,9 @@ public sealed class SelectionStaff : ArtoriaRelic, IFormChangeListener
     public const int Block = 4;
 
     public override RelicRarity Rarity => RelicRarity.Starter;
+
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<ForgedSacredSword>();
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
 

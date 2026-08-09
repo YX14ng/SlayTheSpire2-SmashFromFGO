@@ -11,8 +11,11 @@ namespace MashShielder.MashShielderCode.Cards.Basic;
 /// Golpe de Escudo — signature starter attack: 9 daño + 10 NP (up +3/+10;
 /// rediseño v2: el up de NP pasó de +5 a +10 — denominación fija).
 /// </summary>
-public sealed class ShieldBash() : MashShielderCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class ShieldBash() : MashShielderCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), BaseLib.Abstracts.ITranscendenceCard
 {
+    public MegaCrit.Sts2.Core.Models.CardModel GetTranscendenceTransformedCard() =>
+        MegaCrit.Sts2.Core.Models.ModelDb.Card<Rare.PaladinAssault>();
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(9m, ValueProp.Move),

@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Models;
 
 namespace MashShielder.MashShielderCode.Relics;
 
@@ -20,6 +21,9 @@ public sealed class RoundTableFragment : BulwarkEngineRelic
     public const int NpPerHp = 10;
 
     public override RelicRarity Rarity => RelicRarity.Starter;
+
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<LordCamelotRestored>();
 
     protected override int MaxRetainedBlock => MaxRetained;
     protected override int StarsPerFullBlock => StarsPerBlock;

@@ -4,7 +4,8 @@ using TiamatBeast.TiamatCode.Extensions;
 
 namespace TiamatBeast.TiamatCode.Character;
 
-public class TiamatCardPool : CustomCardPoolModel
+public class TiamatCardPool : CustomCardPoolModel,
+    STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool
 {
     public override string Title => Tiamat.CharacterId;
 

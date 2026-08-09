@@ -1,3 +1,5 @@
+using FGOCore.FGOCoreCode.Ritsu;
+using STS2RitsuLib;
 using FGOCore.FGOCoreCode.Combat;
 using Godot;
 using HarmonyLib;
@@ -16,10 +18,17 @@ public partial class MainFile : Node
     public const string ModId = "OkitaSaber";
     public const string ResPath = $"res://{ModId}";
 
-    public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } = new(ModId, MegaCrit.Sts2.Core.Logging.LogType.Generic);
+    public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } =
+        RitsuLibFramework.CreateLogger(ModId);
 
     public static void Initialize()
     {
+        FgoRitsuIntegration.RegisterCharacterMod<
+            Character.Okita,
+            Relics.HaoriAsagi,
+            Relics.FlowerOfImperialCapital,
+            Cards.Basic.Shukuchi,
+            Cards.Rare.InfiniteInstant>(ModId, "haori_asagi");
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 

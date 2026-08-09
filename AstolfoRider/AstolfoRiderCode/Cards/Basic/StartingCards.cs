@@ -67,8 +67,10 @@ public sealed class Defender() : AstolfoCard(
 }
 
 public sealed class PaladinsHunch() : AstolfoCard(
-    1, CardType.Skill, CardRarity.Basic, TargetType.Self)
+    1, CardType.Skill, CardRarity.Basic, TargetType.Self), BaseLib.Abstracts.ITranscendenceCard
 {
+    public CardModel GetTranscendenceTransformedCard() => ModelDb.Card<Rare.PerfectImprovisation>();
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(5m, ValueProp.Move)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {

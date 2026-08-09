@@ -67,6 +67,10 @@ si estás en humanoide te volvés **Bestia gratis**. Las cartas-NP drafteadas so
 2. **Lágrimas de la Madre**: al Devorar un Laḫmu, curás 2 HP.
 3. **Cuerno de King Hassan** (`IGutsFloorBooster`): tu Guts revive a 1 HP **pariendo 3 Laḫmu**
    (la inmortalidad girada a favor; guiño a que solo "otorgándole la muerte" cae). 1/combate.
+4. **Mar de Vida: Génesis** — **JEFE/Ancient, reemplaza al Útero**: conserva la forma inicial,
+   el almacén de nivel NP y el parto por primera Maldición de cada enemigo; empieza con **20 NP**
+   y **2 Laḫmu**. La mejora sube el arranque sin multiplicar daño ni quitar el coste de alimentar
+   y devorar la cría.
 
 ## FGOCore: reusa vs NUEVO
 - **Reusa tal cual:** `CursePower`+`Curses` (Marea), `NpChargePower`+`NpCharge` (`GaugeFilled`/

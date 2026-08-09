@@ -1,4 +1,7 @@
 {
+  "FGOCORE-COMMAND_TYPE_BUSTER": "{Type} Buster",
+  "FGOCORE-COMMAND_TYPE_ARTS": "{Type} Arts",
+  "FGOCORE-COMMAND_TYPE_QUICK": "{Type} Quick",
   "FGOCORE-GOLDEN_APPLE.title": "Manzana Dorada",
   "FGOCORE-GOLDEN_APPLE.description": "#Obtén !Energy! de Energía. Roba !C! carta(s). El grindeo nunca termina.",
   "FGOCORE-MAPO_TOFU.title": "Mapo Tofu Extra Picante",

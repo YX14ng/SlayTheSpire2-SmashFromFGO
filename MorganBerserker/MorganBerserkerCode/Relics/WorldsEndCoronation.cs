@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MorganBerserker.MorganBerserkerCode.Powers.Forms;
 
 namespace MorganBerserker.MorganBerserkerCode.Relics;
 
@@ -13,6 +14,21 @@ namespace MorganBerserker.MorganBerserkerCode.Relics;
 public sealed class WorldsEndCoronation : MorganRelic, IFormChangeListener
 {
     public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    public override async Task BeforeCombatStartLate()
+    {
+        await FormSwitch.Enter<FairyQueenFormPower>(null, Owner.Creature, null);
+    }
+
+    public override async Task AfterPlayerTurnStart(
+        PlayerChoiceContext choiceContext,
+        MegaCrit.Sts2.Core.Entities.Players.Player player)
+    {
+        if (player != Owner || FgoCombatState.GetCombat(Owner.Creature, 1) != 0) return;
+        await FgoCombatState.SetCombat(choiceContext, Owner.Creature, 1, 1);
+        await FGOCore.FGOCoreCode.Combat.ManifestCards
+            .ManifestToHand<Cards.Special.QueensMetamorphosis>(Owner.Creature, 1.0f);
+    }
 
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {

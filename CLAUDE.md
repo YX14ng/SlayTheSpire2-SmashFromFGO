@@ -4,13 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Custom character mods for **Slay the Spire 2** (Early Access, Godot 4 / C#), building **Fate/Grand Order Servants** as playable characters. ("Smash" in the repo name is a pun on Mash, the first character — no FGO Servant is literally named Smash.) The same Workshop artifacts target **MAIN v0.107.1 and BETA v0.110.1**. They compile against **BaseLib 3.3.6** and were runtime-verified with Workshop **BaseLib 3.3.7**.
+Custom character mods for **Slay the Spire 2** (Early Access, Godot 4 / C#), building **Fate/Grand Order Servants** as playable characters. ("Smash" in the repo name is a pun on Mash, the first character — no FGO Servant is literally named Smash.) The same Workshop artifacts target **MAIN v0.107.1 and BETA v0.110.1**. They compile against **BaseLib 3.4.0** (latest NuGet) and require/runtime-link against **BaseLib 3.4.1**.
 
-The repo is a **multi-mod monorepo**: one shared mechanics library (`FGOCore/`) and many character mods that depend on it. Each top-level folder with a `*.csproj` is an independent mod with its own manifest, assets, and localization.
+The repo is a **multi-mod monorepo**: one shared mechanics library (`FGOCore/`) and twelve character
+mods that depend on it. Every gameplay artifact depends on BaseLib and RitsuLib; characters also
+depend on FGOCore.
 
-All 13 projects compile against MAIN v0.107.1 and BETA v0.110.1. FGOCore and the original nine
-characters are public on Steam Workshop; Kagetora has a private test item, while Shuten and Astolfo
-remain staging-only pending runtime playtest (see STATUS.md).
+All 13 projects compile against MAIN v0.107.1 and BETA v0.110.1. FGOCore and all twelve characters
+are public on Steam Workshop; Kagetora, Shuten and Astolfo remain in runtime/playtest validation
+despite already having public items (see STATUS.md).
 
 | Folder | Mod id (manifest) | Servant | Status |
 |---|---|---|---|
@@ -24,9 +26,9 @@ remain staging-only pending runtime playtest (see STATUS.md).
 | `OberonPretender/` | `OberonPretender` | Oberon (Pretender) | implemented + published |
 | `SiegfriedSaber/` | `SiegfriedSaber` | Siegfried (Saber) | implemented + published |
 | `Tiamat/` | `TiamatBeast` | Tiamat (Beast) | implemented + art + published (folder ≠ project name) |
-| `KagetoraLancer/` | `KagetoraLancer` | Nagao Kagetora → Uesugi Kenshin | complete + two animated forms; private playtest |
-| `ShutenDouji/` | `ShutenDouji` | Shuten-Douji (Assassin/Caster styles) | complete + animated; staging playtest |
-| `AstolfoRider/` | `AstolfoRider` | Astolfo (Rider) | complete + animated; staging playtest |
+| `KagetoraLancer/` | `KagetoraLancer` | Nagao Kagetora → Uesugi Kenshin | published + two animated forms; runtime playtest pending |
+| `ShutenDouji/` | `ShutenDouji` | Shuten-Douji (Assassin/Caster styles) | published + animated; runtime playtest pending |
+| `AstolfoRider/` | `AstolfoRider` | Astolfo (Rider) | published + animated; runtime playtest pending |
 
 > **Estado + orden de lectura** (método adoptado de `iryuko/sts2-mod-dev`): al retomar una sesión, leé PRIMERO [docs/STATUS.md](docs/STATUS.md) (estado vivo, sobreescribe la tabla de arriba), [docs/DECISIONS.md](docs/DECISIONS.md) (reglas cerradas, no re-discutir) y [docs/FINDINGS.md](docs/FINDINGS.md) (hallazgos verificados). Las conclusiones van a esos docs de alta densidad, **no al chat**; marcá lo no verificado como *(probable)*/*(a confirmar)* y no escribas especulación como hecho. [docs/HANDOFF.md](docs/HANDOFF.md) queda como handoff histórico/cross-máquina.
 
@@ -40,7 +42,16 @@ The user communicates in Spanish — **respond in Spanish**. Card/mechanic names
 `FGOCore/FGOCoreCode/` holds engine-level mechanics that every character reuses by **subclassing base powers/relics** and overriding image paths and tuning (see `MashFormPower`, `MashBond`). Core icons live in the FGOCore `.pck`; character subclasses re-override the image routes. Major subsystems (one folder each): `Np` (Carga NP / Overcharge gauge with `GaugeFilled`/`GaugeDropped` events, `Max=300`, `ManifestThreshold=100`; `NpLevels` is the dupe NP-level store that raises the per-run cap), `Forms` (`FormPower`/`FormSwitch`/`FormVisuals` stance switching, now **lazy per-character** preload — see VRAM fix in STATUS), `Block` (Baluarte retention via `IBlockRetentionSource`), `Bond` (好感度 `BondRelic` abstract — `ServantDamageMultiplier`/`ServantBlockMultiplier`/`ServantRegenPerTurn` lifts inherited by every Servant), `CardTypes` (Buster/Arts/Quick command-card typing → `CommandType`/`ICommandTyped`/`CommandBonusPower`), `Combat` (`ManifestCards` — manifest the ult card at 100 Overcharge; `NpWindow`), `Stars` (crit stars → `CritReadyPower`), `Evasion`, `SureHit`, `Seal`, `Curses`, `DragonScales`, `Lahmu`, `Cleanse`, `Memes` (colorless FGO meme cards + the 8 draftable 5★ Craft Essences: Kaleidoscope, Black Grail, 2030, Prisma Cosmos, Imaginary Element, Heaven's Feel, Formal Craft, Zero Over), `Extensions`. Cross-cutting interfaces let relics/cards hook the engine: `ILimitBreaker` (Holy Grail — raise level caps), `IGutsFloorBooster`, `IFormChangeListener`, `INpLevelStore`/`INpCard` (dupe mechanic). `MainFile.cs` is the `[ModInitializer]` and runs `Harmony.PatchAll()`.
 
 ### Character mod anatomy
-Each character is a Godot mod project: `<Name>.csproj` + `<Name>.json` (manifest) + `project.godot` + an inner `<Name>/` asset folder (`character/`, `images/{card_portraits,powers,relics}/` with `big/` variants, `localization/<lang>/*.json`, `mod_image.png`) + `<Name>Code/` C# source. The csproj wires the dependency two ways that must agree: a `<Reference Include="FGOCore">` with **`Private=false`** (compile against `dist/FGOCore/FGOCore.dll` via `$(StagingPath)`, don't redistribute it) and a manifest `dependencies` list in the **new object format** — `[{"id":"BaseLib","min_version":"v3.3.6"}, {"id":"FGOCore","min_version":"v0.1.1"}]` (the old `["BaseLib","FGOCore"]` string-array form is gone; loader resolves each by id). The game install's other character mods (e.g. `JeanneAlter`) are structural references; `decompiled/` is the decompiled game used to find/verify base classes and VFX paths.
+Each character is a Godot mod project: `<Name>.csproj` + `<Name>.json` (manifest) + `project.godot` + an inner `<Name>/` asset folder (`character/`, `images/{card_portraits,powers,relics}/` with `big/` variants, `localization/<lang>/*.json`, `mod_image.png`) + `<Name>Code/` C# source. The csproj wires the dependencies two ways that must agree: a `<Reference Include="FGOCore">` with **`Private=false`** (compile against `dist/FGOCore/FGOCore.dll` via `$(StagingPath)`, don't redistribute it), PackageReferences to BaseLib/RitsuLib, and a manifest `dependencies` list in object format — `[{"id":"BaseLib","min_version":"v3.4.1"}, {"id":"STS2-RitsuLib","min_version":"v0.5.10"}, {"id":"FGOCore","min_version":"v0.1.20"}]`. The game install's other character mods (e.g. `JeanneAlter`) are structural references; `decompiled/` is the decompiled game used to find/verify base classes and VFX paths.
+
+### RitsuLib integration
+All 13 gameplay mods require RitsuLib 0.5.10. MAIN compiles against
+`STS2.RitsuLib.Compat.0.107.1`; BETA compiles against the regular `STS2.RitsuLib` package. FGOCore
+registers stable dynamic card tags for Buster, Arts and Quick through a model capability, exposes
+NP/Stars through the secondary-resource API, and registers both Ancient mappings for every
+character. RitsuLib remains an external Workshop
+dependency: never copy `STS2-RitsuLib.dll` into a mod artifact. The abandoned `FGOTelemetry`
+companion is not part of the repository or release graph.
 
 ### CRITICAL: publish all mods together
 When FGOCore's public API changes (e.g. a method signature like `NpCharge.CanPay` or `BondRelic`), **every dependent character dll must be republished in the same batch** — an old character dll against a new FGOCore throws `MissingMethodException` / `ReflectionTypeLoadException` and the mod silently fails to load. Never ship FGOCore alone.
@@ -69,8 +80,8 @@ FGO battle models are **Unity 2D puppets / 3D FBX rigs, NOT frame spritesheets**
 - `docs/DESIGN.md` (Mash) and `docs/DESIGN-<NAME>.md` / `docs/REDESIGN-<NAME>.md` — per-character mechanics, card pools, relics. Design any new card/character/relic with the [.claude/skills/sts2-mechanics-design](.claude/skills/sts2-mechanics-design/SKILL.md) skill (it has the real vanilla balance baselines).
 
 ## Key facts & gotchas
-- StS2 runs on **MegaDot** (Mega Crit's Godot 4 fork). Mods = `<Id>.json` + `<Id>.dll` + `<Id>.pck` in the game's `mods/` folder. The standard framework is **BaseLib** (NuGet `Alchyr.Sts2.BaseLib`, docs https://alchyr.github.io/BaseLib-Wiki/): `CustomCharacterModel`/`CustomCardModel`/`CustomRelicModel`, custom keywords/enums, localization, automatic ID prefixing.
-- Game install: `C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2` (Steam moved the active install back from G: on 2026-07-31; the remaining G: folder no longer contains the game binary). BaseLib + ModConfig are installed through Workshop. Package baseline is **3.3.6** and manifests require `>= v3.3.6`; runtime is verified with **3.3.7**.
+- StS2 runs on **MegaDot** (Mega Crit's Godot 4 fork). Gameplay mods normally ship `<Id>.json` + `<Id>.dll` + `<Id>.pck`; a DLL-only companion can set `has_pck: false`. The standard framework is **BaseLib** (NuGet `Alchyr.Sts2.BaseLib`, docs https://alchyr.github.io/BaseLib-Wiki/): `CustomCharacterModel`/`CustomCardModel`/`CustomRelicModel`, custom keywords/enums, localization, automatic ID prefixing.
+- Game install: `C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2` (Steam moved the active install back from G: on 2026-07-31; the remaining G: folder no longer contains the game binary). BaseLib + ModConfig are installed through Workshop. Package baseline is **3.4.0** because NuGet has no 3.4.1 yet; manifests require `>= v3.4.1` and the probes link against the official 3.4.1 runtime binary.
 - A mod's manifest `id` **must never change** once chosen — it determines the loaded filenames. Model/power IDs must never be renamed while saves are active (the mod prefix is part of the ID); migrating a mechanic between mods changes its ID and breaks in-progress runs.
 - `PowerVar<T>` always with an explicit name. `ModifyHpLost*` hooks are ABSOLUTE. Validate VFX paths against `grep '"vfx/' decompiled/`. Full gotcha table in WORKFLOW-FGO.
 - Scaffolding: `dotnet new install Alchyr.Sts2.Templates` → "Slay the Spire 2 Character". Project name has no spaces; "Put solution and project in same directory" must be enabled.

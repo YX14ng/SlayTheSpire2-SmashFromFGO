@@ -1,3 +1,5 @@
+using FGOCore.FGOCoreCode.Ritsu;
+using STS2RitsuLib;
 using FGOCore.FGOCoreCode.Combat;
 using FGOCore.FGOCoreCode.Forms;
 using Godot;
@@ -17,10 +19,17 @@ public partial class MainFile : Node
     public const string ModId = "SiegfriedSaber";
     public const string ResPath = $"res://{ModId}";
 
-    public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } = new(ModId, MegaCrit.Sts2.Core.Logging.LogType.Generic);
+    public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } =
+        RitsuLibFramework.CreateLogger(ModId);
 
     public static void Initialize()
     {
+        FgoRitsuIntegration.RegisterCharacterMod<
+            Character.Siegfried,
+            Relics.LindenLeaf,
+            Relics.FafnirHeartblood,
+            Cards.Basic.BloodBaptism,
+            Cards.Rare.DragonbloodAscendant>(ModId, "linden_leaf");
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 

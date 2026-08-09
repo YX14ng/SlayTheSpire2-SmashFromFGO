@@ -1,6 +1,6 @@
 {
   "SIEGFRIEDSABER-LINDEN_LEAF.title": "La Hoja de Tilo",
-  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#Al inicio de cada combate, gana 2 de Sangre de Dragón. El primer ataque que te alcanza cada turno ignora 1 Escama; los siguientes usan la reducción completa. Cuando uno de esos ataques siguientes es reducido y aún hace daño, gana 5 de Carga NP (hasta 3 veces por turno). El contador muestra el nivel NP: cada nivel aumenta en 100 la Carga NP máxima y en 15% el daño NP.",
+  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#Al inicio de cada combate, gana de 2 a 5 de Sangre de Dragón; elegir Invocar en las recompensas aumenta esta cantidad permanentemente en 1, hasta 5. El primer ataque que te alcanza cada turno ignora 1 Escama; los siguientes usan la reducción completa. Cada ataque que te quite Vida otorga 5 de Carga NP (hasta 3 veces por turno). El contador muestra el nivel NP.",
   "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "Una sola hoja se pegó a su espalda mientras se bañaba en la sangre del dragón. Una palma de piel que la sangre nunca tocó — y la única muerte de un héroe.",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.title": "El Oro del Rin",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.description": "#La primera carta NP que juegues cada turno: gana 20 Estrellas de Crítico y roba 1.",

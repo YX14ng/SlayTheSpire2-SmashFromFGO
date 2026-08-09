@@ -151,7 +151,7 @@
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.title": "Lord Camelot",
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.description": "#NP (!ChargeCost! Charge): gain !B! *Bulwark Block, !Strength! *Strength and !Provoke! *Intercept this turn. +!PerTen! Block per 10 Charge beyond the minimum. In co-op, each ally gains !AllyBlock! *Bulwark Block and !AllyProvoke! *Intercept this turn.",
   "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.title": "LORD CHALDEAS: Unleashed",
-  "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.description": "#NP (!ChargeCost! Charge): gain !B! *Bulwark Block, +!PerTen! per 10 Charge beyond the minimum.",
+  "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.description": "#NP (!ChargeCost! Charge): gain !B! *Bulwark Block, !Strength! *Strength and !Provoke! *Intercept this turn. +!PerTen! Block per 10 Charge beyond the minimum. In co-op, each ally gains !AllyBlock! *Bulwark Block and !AllyProvoke! *Intercept this turn.",
   "MASHSHIELDER-BLACK_BARREL_UNLEASHED.title": "BLACK BARREL: Unleashed",
   "MASHSHIELDER-BLACK_BARREL_UNLEASHED.description": "#NP (!ChargeCost! Charge): deal !D! unblockable damage, +!PerTen! per 10 Charge beyond the minimum. Remove ALL the target's buffs.",
   "MASHSHIELDER-BEHIND_ME_SENPAI.title": "Behind Me!",

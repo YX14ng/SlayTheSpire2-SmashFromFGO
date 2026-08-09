@@ -26,8 +26,11 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Cards.Basic;
 /// acotado por el pierce 1/turno de la Hoja de Tilo). No hay loop AFK: NO genera por golpe recibido
 /// (eso es la Hoja de Tilo, con su tope P2/P3), sólo al JUGARLA. El jugador empuja, no acampa.
 /// </summary>
-public sealed class BloodBaptism() : SiegfriedCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public sealed class BloodBaptism() : SiegfriedCard(1, CardType.Skill, CardRarity.Common, TargetType.Self), BaseLib.Abstracts.ITranscendenceCard
 {
+    public MegaCrit.Sts2.Core.Models.CardModel GetTranscendenceTransformedCard() =>
+        MegaCrit.Sts2.Core.Models.ModelDb.Card<Rare.DragonbloodAscendant>();
+
     private const int NpGain = 8;   // SKILL §2: ~10 NP ≈ ½⚡; 8 por ir grapado al bloqueo
     private const int ScalesGain = 1;
 

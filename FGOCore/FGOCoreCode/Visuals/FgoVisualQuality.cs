@@ -82,6 +82,13 @@ internal static class FgoVisualQuality
         return _activeCombatTier;
     }
 
+    internal static void ReleaseCombatSelection(ulong exitingCombatId)
+    {
+        if (_hasActiveCombat && _activeCombatId != exitingCombatId) return;
+        _hasActiveCombat = false;
+        _activeCombatId = 0;
+    }
+
     internal static FrameResourceSelection ResolveFrames(
         string logicalPath,
         FrameQualityTier tier,

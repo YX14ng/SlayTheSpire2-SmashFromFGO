@@ -22,4 +22,7 @@ public sealed class NpChargePower : FGOCorePower, IResourcePower
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    // El medidor visible lo aporta RitsuLib. El power conserva el ID y el estado de saves viejos.
+    protected override bool IsVisibleInternal => false;
 }

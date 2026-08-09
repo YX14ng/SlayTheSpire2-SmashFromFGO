@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using FGOCore.FGOCoreCode.Ritsu;
 
 namespace FGOCore.FGOCoreCode.Np;
 
@@ -98,6 +99,7 @@ public static class NpCharge
         if (toAdd > 0)
         {
             await PowerCmd.Apply<NpChargePower>(choiceContext, creature, toAdd, creature, source);
+            await FgoSecondaryResources.SynchronizeNpFromLegacy(creature, source);
         }
         // GaugeFilled SOLO en el CRUCE real del umbral (below -> >=100): no re-invocar los handlers de
         // los 9 personajes en cada gain con el medidor ya lleno (son no-op por sus markers, pero es
@@ -253,6 +255,8 @@ public static class NpCharge
         {
             await PowerCmd.ModifyAmount(choiceContext, power, -amount, creature, source);
         }
+
+        await FgoSecondaryResources.SynchronizeNpFromLegacy(creature, source);
 
         // GaugeDropped SOLO en el CRUCE real (>=100 → below): no re-disparar si ya estabas debajo.
         if (wasAtOrAbove && Current(creature) < NpChargePower.ManifestThreshold)

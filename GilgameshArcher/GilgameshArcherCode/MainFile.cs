@@ -1,3 +1,5 @@
+using FGOCore.FGOCoreCode.Ritsu;
+using STS2RitsuLib;
 using Godot;
 using HarmonyLib;
 using FGOCore.FGOCoreCode.Forms;
@@ -18,10 +20,17 @@ public partial class MainFile : Node
     public const string ModId = "GilgameshArcher";
     public const string ResPath = $"res://{ModId}";
 
-    public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } = new(ModId, MegaCrit.Sts2.Core.Logging.LogType.Generic);
+    public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } =
+        RitsuLibFramework.CreateLogger(ModId);
 
     public static void Initialize()
     {
+        FgoRitsuIntegration.RegisterCharacterMod<
+            Character.Gilgamesh,
+            Relics.BabIlu,
+            Relics.EaSwordOfRupture,
+            Cards.Basic.GateOfBabylon,
+            Cards.Rare.KingsArsenal>(ModId, "bab_ilu");
         Harmony harmony = new(ModId);
         harmony.PatchAll();
 

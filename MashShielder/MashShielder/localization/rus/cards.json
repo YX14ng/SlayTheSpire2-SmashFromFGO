@@ -151,7 +151,7 @@
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.title": "Лорд Камелот",
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.description": "#NP /(!ChargeCost! заряда): получите !B! Блока *Оплота, !Strength! *Силы и !Provoke! *Перехвата в этом ходу. Ещё !PerTen! Блока за каждые 10 заряда сверх минимума. В совместной игре каждый союзник получает !AllyBlock! Блока *Оплота и !AllyProvoke! *Перехвата в этом ходу.",
   "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.title": "ЛОРД ХАЛДЕАС: Высвобождение",
-  "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.description": "#NP /(!ChargeCost! заряда): получите !B! Блока *Оплота и ещё !PerTen! за каждые 10 заряда сверх минимума.",
+  "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.description": "#NP /(!ChargeCost! заряда): получите !B! Блока *Оплота, !Strength! *Силы и !Provoke! *Перехвата в этом ходу. Ещё !PerTen! Блока за каждые 10 заряда сверх минимума. В совместной игре каждый союзник получает !AllyBlock! Блока *Оплота и !AllyProvoke! *Перехвата в этом ходу.",
   "MASHSHIELDER-BLACK_BARREL_UNLEASHED.title": "ЧЁРНЫЙ СТВОЛ: Высвобождение",
   "MASHSHIELDER-BLACK_BARREL_UNLEASHED.description": "#NP /(!ChargeCost! заряда): нанесите !D! неблокируемого урона и ещё !PerTen! за каждые 10 заряда сверх минимума. Снимите ВСЕ усиления цели.",
   "MASHSHIELDER-BEHIND_ME_SENPAI.title": "За мной!",

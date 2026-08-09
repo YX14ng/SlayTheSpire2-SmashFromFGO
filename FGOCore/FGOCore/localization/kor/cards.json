@@ -1,4 +1,7 @@
 {
+  "FGOCORE-COMMAND_TYPE_BUSTER": "버스터 {Type}",
+  "FGOCORE-COMMAND_TYPE_ARTS": "아츠 {Type}",
+  "FGOCORE-COMMAND_TYPE_QUICK": "퀵 {Type}",
   "FGOCORE-GOLDEN_APPLE.title": "황금 사과",
   "FGOCORE-GOLDEN_APPLE.description": "#!Energy! 에너지를 얻습니다. 카드를 !C!장 뽑습니다. 파밍은 끝나지 않습니다.",
   "FGOCORE-MAPO_TOFU.title": "극신 마파두부",

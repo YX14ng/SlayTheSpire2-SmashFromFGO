@@ -9,11 +9,11 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Relics;
 /// <summary>
 /// Sangre del Corazón de Fafnir (法夫纳的心头血) — reliquia de JEFE (§8.3). Al iniciar combate aplica un
 /// Bautismo de Fafnir oculto: cuando un golpe ATRAVIESA tu Sangre de Dragón (la espalda expuesta te cuesta
-/// HP), la herida se bautiza → +20 Carga NP. Estructuralmente 1/turno (el pierce ya es ≤1/turno). Sube SOLO
-/// la conversión por pierce; reusa el listener IDragonScalePierceListener (un relic no recibe el broadcast,
-/// por eso aplica el power BaptismOfFafnirPower).
+/// HP), la herida se bautiza → +20 Carga NP. Estructuralmente 1/turno (el pierce ya es ≤1/turno).
+/// Hereda el motor completo de LindenLeaf porque Orobas elimina la starter: conserva Escamas,
+/// debilidad de la espalda, recompensa defensiva y el almacén persistente de nivel NP.
 /// </summary>
-public sealed class FafnirHeartblood : SiegfriedRelic
+public sealed class FafnirHeartblood : LindenLeaf
 {
     public override RelicRarity Rarity => RelicRarity.Ancient;
 

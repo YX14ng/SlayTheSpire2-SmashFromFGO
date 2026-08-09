@@ -151,7 +151,7 @@
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.title": "已然遥远的理想之城·全解放",
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.description": "#宝具（!ChargeCost!点宝具值）：获得!B!点*壁垒*格挡、!Strength!点*力量*，并在本回合获得!Provoke!点*拦截*。超出最低值的每10点宝具值额外+!PerTen!点格挡。协作模式下，每个队友获得!AllyBlock!点*壁垒*格挡，并在本回合获得!AllyProvoke!点*拦截*。",
   "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.title": "假想宝具·拟似展开／人理之础·全解放",
-  "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.description": "#宝具（!ChargeCost!点宝具值）：获得!B!点*壁垒*格挡，超出最低值的每10点宝具值额外+!PerTen!。",
+  "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.description": "#宝具（!ChargeCost!点宝具值）：获得!B!点*壁垒*格挡、!Strength!点*力量*，并在本回合获得!Provoke!点*拦截*。超出最低值的每10点宝具值额外+!PerTen!点格挡。协作模式下，每个队友获得!AllyBlock!点*壁垒*格挡，并在本回合获得!AllyProvoke!点*拦截*。",
   "MASHSHIELDER-BLACK_BARREL_UNLEASHED.title": "黑色炮身·全解放",
   "MASHSHIELDER-BLACK_BARREL_UNLEASHED.description": "#宝具（!ChargeCost!点宝具值）：造成!D!点无法格挡的伤害，超出最低值的每10点宝具值额外+!PerTen!。移除目标的全部增益。",
   "MASHSHIELDER-BEHIND_ME_SENPAI.title": "请退到我身后！",

@@ -41,7 +41,7 @@ public class Gilgamesh : PlaceholderCharacterModel
 
     // Starters: vínculo, motor del Tesoro y almacén de nivel de NP/dupes.
     public override IReadOnlyList<RelicModel> StartingRelics =>
-        [ModelDb.Relic<OathOfUruk>(), ModelDb.Relic<BabIlu>(), ModelDb.Relic<CatalogOfTheRoyalTreasury>()];
+        [ModelDb.Relic<BabIlu>(), ModelDb.Relic<OathOfUruk>(), ModelDb.Relic<CatalogOfTheRoyalTreasury>()];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<GilgameshCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<GilgameshRelicPool>();

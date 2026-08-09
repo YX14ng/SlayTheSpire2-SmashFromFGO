@@ -11,8 +11,11 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Basic;
 /// Firma S1: Lanza del Confín (止境之枪) — 8 de daño + 2 de Maldición.
 /// El "Bash" de Morgan: básica con rider que siembra el motor.
 /// </summary>
-public sealed class LanceOfTheWorldsEnd() : MorganCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class LanceOfTheWorldsEnd() : MorganCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), BaseLib.Abstracts.ITranscendenceCard
 {
+    public MegaCrit.Sts2.Core.Models.CardModel GetTranscendenceTransformedCard() =>
+        MegaCrit.Sts2.Core.Models.ModelDb.Card<Rare.FromTheWorldsEnd>();
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(8m, ValueProp.Move),

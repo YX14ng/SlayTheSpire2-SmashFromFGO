@@ -14,8 +14,11 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Basic;
 /// 6 damage, THEN enter Berserker form (damage resolves before the switch so it never
 /// self-buffs). Critical 2★: 12 (only crits if you were ALREADY in Berserker/Avalon).
 /// </summary>
-public sealed class SummerOutburst() : ArtoriaCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class SummerOutburst() : ArtoriaCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), BaseLib.Abstracts.ITranscendenceCard
 {
+    public MegaCrit.Sts2.Core.Models.CardModel GetTranscendenceTransformedCard() =>
+        MegaCrit.Sts2.Core.Models.ModelDb.Card<Rare.SummerComet>();
+
     public const int CritCost = 2;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

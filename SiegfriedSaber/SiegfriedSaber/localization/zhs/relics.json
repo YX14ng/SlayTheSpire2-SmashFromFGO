@@ -1,6 +1,6 @@
 {
   "SIEGFRIEDSABER-LINDEN_LEAF.title": "菩提叶",
-  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#每场战斗开始时，获得2点龙血护甲。每回合第一次击中你的攻击仅无视1点龙血护甲，之后的攻击享受完整减伤。之后的攻击被减伤后仍造成伤害时，获得5点宝具值（每回合至多3次）。计数器显示宝具等级：每级使宝具值上限提高100、宝具伤害提高15%。",
+  "SIEGFRIEDSABER-LINDEN_LEAF.description": "#每场战斗开始时，获得2至5点龙血护甲；在卡牌奖励中选择召唤会永久使初始值增加1点，最多5点。每回合第一次击中你的攻击仅无视1点龙血护甲，之后的攻击享受完整减伤。每当攻击对生命造成伤害时，获得5点宝具值（每回合至多3次）。计数器显示宝具等级。",
   "SIEGFRIEDSABER-LINDEN_LEAF.flavor": "他浴于龙血之时，一片菩提叶贴在了背上。一掌之地的皮肤未被龙血浸染——也是英雄唯一的死穴。",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.title": "莱茵的黄金",
   "SIEGFRIEDSABER-DAS_RHEINGOLD.description": "#每回合你打出的第一张宝具牌：获得20颗暴击星，并抽1张牌。",

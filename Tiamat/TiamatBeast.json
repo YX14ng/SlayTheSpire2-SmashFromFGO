@@ -3,17 +3,21 @@
     "name":  "Tiamat",
     "author":  "Chaldea",
     "description":  "Tiamat (Beast II, la Madre Diosa de FGO) como personaje jugable. No pelea: cría. Esparce Marea de Caos y pare Laḫmu que bloquean y muerden solos; decide parir, alimentar o devorar, y se transforma en la Bestia gigante. Requiere FGOCore.",
-    "version":  "v0.1.11",
+    "version":  "v0.1.16",
     "has_pck":  true,
     "has_dll":  true,
     "dependencies":  [
                          {
                              "id":  "BaseLib",
-                             "min_version":  "v3.3.6"
+                             "min_version":  "v3.4.1"
+                         },
+                         {
+                             "id":  "STS2-RitsuLib",
+                             "min_version":  "v0.5.10"
                          },
                          {
                              "id":  "FGOCore",
-                             "min_version":  "v0.1.14"
+                             "min_version":  "v0.1.20"
                          }
                      ],
     "affects_gameplay":  true

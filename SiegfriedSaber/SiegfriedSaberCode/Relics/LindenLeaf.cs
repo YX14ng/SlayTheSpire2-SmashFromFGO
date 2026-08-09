@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using HarmonyLib;
 
 namespace SiegfriedSaber.SiegfriedSaberCode.Relics;
 
@@ -21,15 +22,15 @@ namespace SiegfriedSaber.SiegfriedSaberCode.Relics;
 /// Su gancho <see cref="IDragonScalePiercer"/> hace que el PRIMER golpe que te ALCANZA cada
 /// turno ignore 1 escama (la espalda expuesta — la debilidad canónica hecha regla); las
 /// acumulaciones restantes todavía reducen ese golpe.
-/// Cuando un golpe SÍ reducido por las escamas aún inflige ≥1 (P2: la armadura no trabajó
-/// gratis), refunda +5 NP, con tope de 3 procs/turno (P1/P3).
+/// Cada ataque que realmente alcanza la Vida refunda +5 NP, con tope de 3 procs/turno. Los golpes
+/// anulados por Bloqueo o por la armadura no pagan NP.
 ///
 /// Sincronía con DragonScalesPower (orden del pipeline: ModifyHpLostBeforeOsty del power →
 /// LoseHp → AfterDamageReceived de esta reliquia, por golpe): el power consulta
 /// <see cref="ShouldPierceScales"/> como LECTURA PURA (a prueba de previews de daño); el
 /// consumo del cupo 1/turno ocurre aquí, en el camino real del daño.
 /// </summary>
-public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelStore
+public class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelStore
 {
     // ---- Gacha de dupes / INpLevelStore (audit 2026-07-05, HIGH) ----
     // Sin un INpLevelStore el medidor de NP capeaba en 100 PARA SIEMPRE (NpCharge.Max lee el nivel
@@ -40,6 +41,7 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelSt
 
     private int _npLevel = 1;
     private int _dupePity;
+    private int _startingScales = 2;
 
     public override bool ShowCounter => true;
 
@@ -68,6 +70,21 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelSt
         }
     }
 
+    /// <summary>
+    /// Persistent reward for choosing Siegfried's alternative card reward. It is independent of
+    /// the NP dupe roll, so even a failed summon makes future combats start more defensively.
+    /// </summary>
+    [SavedProperty]
+    public int StartingScales
+    {
+        get => _startingScales;
+        set
+        {
+            AssertMutable();
+            _startingScales = Math.Clamp(value, BaseStartingScales, MaximumStartingScales);
+        }
+    }
+
     public override bool TryModifyCardRewardAlternatives(Player player, CardReward cardReward, List<CardRewardAlternative> alternatives)
     {
         if (Owner != player) return false;
@@ -80,7 +97,13 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelSt
 
     private async Task OnDupeRoll()
     {
-        if (await NpLevels.TryRollDupeWithConsolation(Owner))
+        var gainedNpLevel = await NpLevels.TryRollDupeWithConsolation(Owner);
+        var gainedScale = StartingScales < MaximumStartingScales;
+        if (gainedScale)
+        {
+            StartingScales++;
+        }
+        if (gainedNpLevel || gainedScale)
         {
             Flash();
         }
@@ -88,9 +111,13 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelSt
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
-    private const int StartingScales = 2;   // SdD inicial (§3)
-    private const int NpPerReducedHit = 5;   // +NP por golpe reducido con residual ≥1 (§8.1)
-    private const int NpProcCapPerTurn = 3;  // tope agregado del trigger defensivo (P1/P3)
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<FafnirHeartblood>();
+
+    private const int BaseStartingScales = 2;
+    private const int MaximumStartingScales = 5;
+    private const int NpPerHpHit = 5;
+    private const int NpProcCapPerTurn = 3;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DragonScalesPower>()];
 
@@ -145,27 +172,56 @@ public sealed class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelSt
             await FgoCombatState.SetTurn(
                 choiceContext, Owner.Creature, 2, 1, cardSource);
             await DragonScalesPierce.Broadcast(Owner.Creature, choiceContext);
-            return;
         }
 
-        // El golpe chocó contra las escamas. P2: solo refunda NP si AÚN infligió ≥1 tras la SdD
-        // (un golpe anulado del todo = la armadura trabajó gratis, sin NP).
-        // Gates de la reduccion REAL (audit 2026-07-04): el +NP es el pago por "las escamas
-        // redujeron este golpe" — con SdD en 0 (Erupcion de Escamas) o suprimida (Espalda
-        // Expuesta/ISdDSuppressor) no redujeron nada y no corresponde pagar.
-        var scalesWorked = Owner.Creature.GetPowerAmount<DragonScalesPower>() > 0
-                           && !FGOCore.FGOCoreCode.Listeners.PowersOf<ISdDSuppressor>(Owner.Creature).Any(s => s.SuppressScales);
-        if (scalesWorked && result.UnblockedDamage >= 1 &&
+        // La batería es fácil de leer: cada ataque powered que realmente quita Vida paga +5 NP.
+        // Los golpes anulados no pagan y el límite compartido evita abusos con multi-hit.
+        if (result.UnblockedDamage >= 1 &&
             FgoCombatState.GetTurn(Owner.Creature, 3, 2) < NpProcCapPerTurn)
         {
             await FgoCombatState.IncrementTurn(
                 choiceContext, Owner.Creature, 3, NpProcCapPerTurn, cardSource, width: 2);
             Flash();
-            await NpCharge.Gain(choiceContext, Owner.Creature, NpPerReducedHit, null);
+            await NpCharge.Gain(choiceContext, Owner.Creature, NpPerHpHit, null);
         }
     }
 
     // ¿Hay un power que cubre la espalda expuesta (Tarnkappe)? Lectura pura, preview-safe.
     private bool IsPierceSuppressed()
         => Listeners.PowersOf<IDragonScalePierceSuppressor>(Owner.Creature).Any(suppressor => suppressor.SuppressPierce);
+}
+
+/// <summary>
+/// Orobas replaces the starter with a fresh Ancient instance. Preserve the extra starting Scale
+/// progression just like FGOCore already preserves the shared NP level and pity properties.
+/// </summary>
+[HarmonyPatch(typeof(RelicCmd), nameof(RelicCmd.Replace))]
+internal static class LindenLeafReplacementStatePatch
+{
+    [HarmonyPrefix]
+    private static void CaptureStartingScales(RelicModel original, RelicModel replace, out int? __state)
+    {
+        __state = original is LindenLeaf source && replace is LindenLeaf
+            ? source.StartingScales
+            : null;
+    }
+
+    [HarmonyPostfix]
+    private static void RestoreStartingScales(ref Task<RelicModel> __result, int? __state)
+    {
+        if (__state is not { } startingScales) return;
+        __result = AwaitAndRestore(__result, startingScales);
+    }
+
+    private static async Task<RelicModel> AwaitAndRestore(
+        Task<RelicModel> replacementTask,
+        int startingScales)
+    {
+        var replacement = await replacementTask;
+        if (replacement is LindenLeaf target)
+        {
+            target.StartingScales = startingScales;
+        }
+        return replacement;
+    }
 }

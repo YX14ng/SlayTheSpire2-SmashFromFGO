@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Saves.Runs;
 
@@ -19,6 +20,8 @@ namespace AstolfoRider.AstolfoRiderCode.Relics;
 public sealed class ReasonEvaporatedRelic : AstolfoRelic
 {
     public override RelicRarity Rarity => RelicRarity.Starter;
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<CompletelyEvaporatedReason>();
     public override async Task BeforeCombatStartLate()
     {
         if (Owner.Relics.Any(relic => relic is CompletelyEvaporatedReason)) return;

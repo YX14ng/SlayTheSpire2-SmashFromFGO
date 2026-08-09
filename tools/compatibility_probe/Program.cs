@@ -23,6 +23,16 @@ var explicitSearchDirectories = artifactPaths
     .Prepend(gameAssemblyDir)
     .ToList();
 
+string? baseLibRuntimeOverride = null;
+var configuredBaseLibRuntime = Environment.GetEnvironmentVariable("FGO_BASELIB_RUNTIME_DLL");
+if (!string.IsNullOrWhiteSpace(configuredBaseLibRuntime))
+{
+    baseLibRuntimeOverride = Path.GetFullPath(configuredBaseLibRuntime);
+    if (!File.Exists(baseLibRuntimeOverride))
+        throw new FileNotFoundException("Configured BaseLib runtime override was not found.", baseLibRuntimeOverride);
+    explicitSearchDirectories.Insert(0, Path.GetDirectoryName(baseLibRuntimeOverride)!);
+}
+
 var userProfile = Environment.GetEnvironmentVariable("USERPROFILE")
                   ?? Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 var nugetRoot = Environment.GetEnvironmentVariable("NUGET_PACKAGES")
@@ -36,20 +46,40 @@ if (Directory.Exists(baseLibPackageRoot))
         .OrderByDescending(directory => directory, StringComparer.OrdinalIgnoreCase));
 }
 
+const string expectedRitsuVersion = "0.5.10";
+var ritsuPackageName = runtimeBranch == "main"
+    ? "sts2.ritsulib.compat.0.107.1"
+    : "sts2.ritsulib";
+var ritsuPackageRoot = Path.Combine(nugetRoot, ritsuPackageName, expectedRitsuVersion);
+var ritsuAssemblyDirectory = Path.Combine(ritsuPackageRoot, "lib", "net9.0");
+if (!File.Exists(Path.Combine(ritsuAssemblyDirectory, "STS2-RitsuLib.dll")))
+{
+    Console.Error.WriteLine(
+        $"RitsuLib {expectedRitsuVersion} for {runtimeBranch} was not found at {ritsuAssemblyDirectory}");
+    return 2;
+}
+explicitSearchDirectories.Insert(0, ritsuAssemblyDirectory);
+
 var searchDirectories = explicitSearchDirectories.Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
 
 AssemblyLoadContext.Default.Resolving += (_, assemblyName) =>
 {
+    string? fallback = null;
     foreach (var directory in searchDirectories)
     {
         var candidate = Path.Combine(directory, $"{assemblyName.Name}.dll");
-        if (File.Exists(candidate)) return AssemblyLoadContext.Default.LoadFromAssemblyPath(candidate);
+        if (!File.Exists(candidate)) continue;
+
+        fallback ??= candidate;
+        if (assemblyName.Version == null ||
+            AssemblyName.GetAssemblyName(candidate).Version == assemblyName.Version)
+            return AssemblyLoadContext.Default.LoadFromAssemblyPath(candidate);
     }
 
-    return null;
+    return fallback == null ? null : AssemblyLoadContext.Default.LoadFromAssemblyPath(fallback);
 };
 
-var baseLibPath = searchDirectories
+var baseLibPath = baseLibRuntimeOverride ?? searchDirectories
     .Select(directory => Path.Combine(directory, "BaseLib.dll"))
     .FirstOrDefault(File.Exists);
 if (baseLibPath is null)
@@ -59,7 +89,9 @@ if (baseLibPath is null)
     return 2;
 }
 
-AssemblyLoadContext.Default.LoadFromAssemblyPath(baseLibPath);
+var baseLib = AssemblyLoadContext.Default.LoadFromAssemblyPath(baseLibPath);
+var ritsuLibPath = Path.Combine(ritsuAssemblyDirectory, "STS2-RitsuLib.dll");
+var ritsuLib = AssemblyLoadContext.Default.LoadFromAssemblyPath(ritsuLibPath);
 
 try
 {
@@ -100,21 +132,53 @@ try
         return null;
     }
 
-    static int ValidateGameMemberReferences(string artifactPath, Module module, string runtime)
+    static bool IsRuntimeContractAssembly(string? assemblyName) =>
+        assemblyName is not null && assemblyName.ToUpperInvariant() is
+            "STS2" or "BASELIB" or "STS2-RITSULIB" or "FGOCORE" or "0HARMONY" or "GODOTSHARP";
+
+    static (int Types, int Members) ValidateRuntimeReferences(
+        string artifactPath,
+        Module module,
+        string runtime)
     {
         using var stream = File.OpenRead(artifactPath);
         using var pe = new PEReader(stream);
         var metadata = pe.GetMetadataReader();
-        var resolved = 0;
+        var resolvedTypes = 0;
+        var resolvedMembers = 0;
+
+        foreach (var handle in metadata.TypeReferences)
+        {
+            var type = metadata.GetTypeReference(handle);
+            var assemblyName = GetReferenceAssemblyName(metadata, type.ResolutionScope);
+            if (!IsRuntimeContractAssembly(assemblyName)) continue;
+
+            var token = MetadataTokens.GetToken(handle);
+            try
+            {
+                if (module.ResolveType(token) is null)
+                {
+                    throw new TypeLoadException($"Metadata token 0x{token:X8} did not resolve.");
+                }
+
+                resolvedTypes++;
+            }
+            catch (Exception exception)
+            {
+                var namespaceName = metadata.GetString(type.Namespace);
+                var typeName = metadata.GetString(type.Name);
+                throw new InvalidOperationException(
+                    $"{Path.GetFileName(artifactPath)} references {assemblyName} type " +
+                    $"{namespaceName}.{typeName} that is unavailable on the {runtime} runtime " +
+                    $"(token 0x{token:X8}).", exception);
+            }
+        }
 
         foreach (var handle in metadata.MemberReferences)
         {
             var member = metadata.GetMemberReference(handle);
-            if (!string.Equals(GetReferenceAssemblyName(metadata, member.Parent), "sts2",
-                    StringComparison.OrdinalIgnoreCase))
-            {
-                continue;
-            }
+            var assemblyName = GetReferenceAssemblyName(metadata, member.Parent);
+            if (!IsRuntimeContractAssembly(assemblyName)) continue;
 
             var token = MetadataTokens.GetToken(handle);
             try
@@ -124,7 +188,7 @@ try
                     throw new MissingMemberException($"Metadata token 0x{token:X8} did not resolve.");
                 }
 
-                resolved++;
+                resolvedMembers++;
             }
             catch (Exception exception)
             {
@@ -133,8 +197,155 @@ try
                     : member.Parent.Kind.ToString();
                 var memberName = metadata.GetString(member.Name);
                 throw new InvalidOperationException(
-                    $"{Path.GetFileName(artifactPath)} references sts2 member {typeName}.{memberName} " +
+                    $"{Path.GetFileName(artifactPath)} references {assemblyName} member {typeName}.{memberName} " +
                     $"that is unavailable on the {runtime} runtime (token 0x{token:X8}).", exception);
+            }
+        }
+
+        return (resolvedTypes, resolvedMembers);
+    }
+
+    static IEnumerable<CustomAttributeData> HarmonyPatchAttributes(MemberInfo member) =>
+        member.CustomAttributes.Where(attribute =>
+            attribute.AttributeType.FullName == "HarmonyLib.HarmonyPatch");
+
+    static bool IsHarmonyPatchMethod(MethodInfo method) =>
+        method.Name is "Prefix" or "Postfix" or "Transpiler" or "Finalizer" or
+            "InnerPrefix" or "InnerPostfix" ||
+        method.CustomAttributes.Any(attribute => attribute.AttributeType.FullName is
+            "HarmonyLib.HarmonyPrefix" or "HarmonyLib.HarmonyPostfix" or
+            "HarmonyLib.HarmonyTranspiler" or "HarmonyLib.HarmonyFinalizer" or
+            "HarmonyLib.HarmonyInnerPrefix" or "HarmonyLib.HarmonyInnerPostfix");
+
+    static void MergeHarmonyPatchAttribute(
+        CustomAttributeData attribute,
+        ref Type? declaringType,
+        ref string? methodName,
+        ref string? methodType,
+        ref Type[]? argumentTypes)
+    {
+        var parameters = attribute.Constructor.GetParameters();
+        for (var index = 0; index < parameters.Length; index++)
+        {
+            var parameter = parameters[index];
+            var argument = attribute.ConstructorArguments[index];
+            switch (parameter.Name)
+            {
+                case "declaringType" when argument.Value is Type type:
+                    declaringType = type;
+                    break;
+                case "methodName" when argument.Value is string name:
+                    methodName = name;
+                    break;
+                case "methodType" when argument.Value is not null:
+                    methodType = Enum.GetName(argument.ArgumentType, argument.Value);
+                    break;
+                case "argumentTypes" when argument.Value is IReadOnlyCollection<CustomAttributeTypedArgument> values:
+                    argumentTypes = values.Select(value => (Type)value.Value!).ToArray();
+                    break;
+            }
+        }
+    }
+
+    static MethodBase? ResolveHarmonyTarget(
+        Type declaringType,
+        string? methodName,
+        string? methodType,
+        Type[]? argumentTypes)
+    {
+        const BindingFlags declared = BindingFlags.Instance | BindingFlags.Static |
+                                      BindingFlags.Public | BindingFlags.NonPublic |
+                                      BindingFlags.DeclaredOnly;
+        methodType ??= "Normal";
+
+        if (methodType == "Getter")
+        {
+            return methodName is null
+                ? null
+                : declaringType.GetProperty(methodName, declared)?.GetGetMethod(nonPublic: true);
+        }
+        if (methodType == "Setter")
+        {
+            return methodName is null
+                ? null
+                : declaringType.GetProperty(methodName, declared)?.GetSetMethod(nonPublic: true);
+        }
+        if (methodType == "Constructor")
+        {
+            return argumentTypes is null
+                ? declaringType.GetConstructors(declared).SingleOrDefault()
+                : declaringType.GetConstructor(declared, binder: null, argumentTypes, modifiers: null);
+        }
+        if (methodType == "StaticConstructor")
+        {
+            return declaringType.TypeInitializer;
+        }
+        if (methodType != "Normal" || string.IsNullOrEmpty(methodName)) return null;
+
+        var methods = declaringType.GetMethods(declared).Where(method => method.Name == methodName);
+        if (argumentTypes is not null)
+        {
+            methods = methods.Where(method => method.GetParameters()
+                .Select(parameter => parameter.ParameterType)
+                .SequenceEqual(argumentTypes));
+        }
+        return methods.SingleOrDefault();
+    }
+
+    static int ValidateHarmonyTargets(Assembly artifact, string runtime)
+    {
+        const BindingFlags declared = BindingFlags.Instance | BindingFlags.Static |
+                                      BindingFlags.Public | BindingFlags.NonPublic |
+                                      BindingFlags.DeclaredOnly;
+        var resolved = 0;
+
+        foreach (var type in artifact.GetTypes())
+        {
+            var classAttributes = HarmonyPatchAttributes(type).ToArray();
+            if (classAttributes.Length == 0) continue;
+
+            foreach (var patchMethod in type.GetMethods(declared).Where(IsHarmonyPatchMethod))
+            {
+                Type? declaringType = null;
+                string? methodName = null;
+                string? methodType = null;
+                Type[]? argumentTypes = null;
+                foreach (var attribute in classAttributes.Concat(HarmonyPatchAttributes(patchMethod)))
+                {
+                    MergeHarmonyPatchAttribute(
+                        attribute, ref declaringType, ref methodName, ref methodType, ref argumentTypes);
+                }
+
+                MethodBase? target;
+                if (declaringType is not null)
+                {
+                    target = ResolveHarmonyTarget(declaringType, methodName, methodType, argumentTypes);
+                }
+                else
+                {
+                    var prepare = type.GetMethod("Prepare", declared, binder: null, Type.EmptyTypes, modifiers: null);
+                    if (prepare?.ReturnType == typeof(bool) && !(bool)prepare.Invoke(null, null)!)
+                    {
+                        continue;
+                    }
+
+                    var targetMethod = type.GetMethod(
+                        "TargetMethod", declared, binder: null, Type.EmptyTypes, modifiers: null);
+                    target = targetMethod?.Invoke(null, null) as MethodBase;
+                }
+
+                if (target is null)
+                {
+                    var signature = argumentTypes is null
+                        ? string.Empty
+                        : $"({string.Join(", ", argumentTypes.Select(type => type.Name))})";
+                    throw new MissingMethodException(
+                        $"Harmony target for {type.FullName}.{patchMethod.Name} is unavailable on " +
+                        $"{runtime}: {declaringType?.FullName ?? "<dynamic>"}.{methodName}{signature} " +
+                        $"[{methodType ?? "Normal"}].");
+                }
+
+                resolved++;
             }
         }
 
@@ -143,6 +354,132 @@ try
 
     var game = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.Combine(gameAssemblyDir, "sts2.dll"));
     var core = AssemblyLoadContext.Default.LoadFromAssemblyPath(corePath);
+    RequireType(core, "FGOCore.FGOCoreCode.Compatibility.PreparedOrobasUpgradeCompatibility");
+    RequireType(core, "FGOCore.FGOCoreCode.Compatibility.FgoRelicReplacementStateCompatibility");
+    RequireType(core, "FGOCore.FGOCoreCode.Compatibility.SeaGlassCompatibility");
+    var customTypeTextCard = RequireType(baseLib, "BaseLib.Abstracts.ICustomTypeTextCard");
+    var customCardPoolModel = RequireType(baseLib, "BaseLib.Abstracts.CustomCardPoolModel");
+    var transcendenceCard = RequireType(baseLib, "BaseLib.Abstracts.ITranscendenceCard");
+    var colorfulPhilosophersPool = RequireType(
+        ritsuLib, "STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool");
+    var commandTyped = RequireType(core, "FGOCore.FGOCoreCode.CardTypes.ICommandTyped");
+    Assert(customTypeTextCard.IsAssignableFrom(commandTyped),
+        "ICommandTyped must expose BaseLib's custom card-type plaque API.");
+
+    var ritsuIntegration = RequireType(core, "FGOCore.FGOCoreCode.Ritsu.FgoRitsuIntegration");
+    Assert(ritsuIntegration.GetMethods(BindingFlags.Public | BindingFlags.Static).Any(method =>
+            method.Name == "RegisterCharacterMod" && method.IsGenericMethodDefinition &&
+            method.GetGenericArguments().Length == 1 &&
+            method.GetParameters().Select(parameter => parameter.ParameterType).SequenceEqual([typeof(string), typeof(string)])),
+        "FgoRitsuIntegration must expose the character-owned Yummy Cookie registration overload.");
+    Assert(ritsuIntegration.GetMethods(BindingFlags.Public | BindingFlags.Static).Any(method =>
+            method.Name == "RegisterCharacterMod" && method.IsGenericMethodDefinition &&
+            method.GetGenericArguments().Length == 3 &&
+            method.GetParameters().Select(parameter => parameter.ParameterType).SequenceEqual([typeof(string), typeof(string)])),
+        "FgoRitsuIntegration must expose the RitsuLib Orobas registration overload.");
+    Assert(ritsuIntegration.GetMethods(BindingFlags.Public | BindingFlags.Static).Any(method =>
+            method.Name == "RegisterCharacterMod" && method.IsGenericMethodDefinition &&
+            method.GetGenericArguments().Length == 5 &&
+            method.GetParameters().Select(parameter => parameter.ParameterType).SequenceEqual([typeof(string), typeof(string)])),
+        "FgoRitsuIntegration must expose the combined Orobas/Archaic Tooth registration overload.");
+    var ritsuContentRegistry = RequireType(ritsuLib, "STS2RitsuLib.Content.ModContentRegistry");
+    var getQualifiedCardTagId = RequirePublicStaticMethod(
+        ritsuContentRegistry, "GetQualifiedCardTagId", typeof(string), typeof(string));
+    var getQualifiedModelCapabilityId = RequirePublicStaticMethod(
+        ritsuContentRegistry, "GetQualifiedModelCapabilityId", typeof(string), typeof(string));
+    var expectedRitsuIds = new Dictionary<string, string>
+    {
+        ["BusterTagId"] = (string)getQualifiedCardTagId.Invoke(null, ["FGOCore", "COMMAND_BUSTER"])!,
+        ["ArtsTagId"] = (string)getQualifiedCardTagId.Invoke(null, ["FGOCore", "COMMAND_ARTS"])!,
+        ["QuickTagId"] = (string)getQualifiedCardTagId.Invoke(null, ["FGOCore", "COMMAND_QUICK"])!,
+        ["CommandTagCapabilityId"] = (string)getQualifiedModelCapabilityId.Invoke(
+            null, ["FGOCore", "COMMAND_TAG"])!
+    };
+    foreach (var (fieldName, generatedId) in expectedRitsuIds)
+    {
+        var publishedId = (string)(ritsuIntegration.GetField(
+            fieldName, BindingFlags.Public | BindingFlags.Static)?.GetRawConstantValue()
+            ?? throw new MissingFieldException(ritsuIntegration.FullName, fieldName));
+        Assert(string.Equals(publishedId, generatedId, StringComparison.Ordinal),
+            $"{fieldName} must match RitsuLib's official ID generator: expected {generatedId}, got {publishedId}.");
+    }
+
+    var secondaryResources = RequireType(core, "FGOCore.FGOCoreCode.Ritsu.FgoSecondaryResources");
+    var secondaryResourceRegistry = RequireType(
+        ritsuLib, "STS2RitsuLib.Combat.SecondaryResources.ModSecondaryResourceRegistry");
+    var getSecondaryResourceId = RequirePublicStaticMethod(
+        secondaryResourceRegistry, "GetResourceId", typeof(string), typeof(string));
+    var expectedSecondaryResourceIds = new Dictionary<string, string>
+    {
+        ["NpChargeResourceId"] = (string)getSecondaryResourceId.Invoke(null, ["FGOCore", "NP_CHARGE"])!,
+        ["CritStarsResourceId"] = (string)getSecondaryResourceId.Invoke(null, ["FGOCore", "CRIT_STARS"])!
+    };
+    foreach (var (fieldName, generatedId) in expectedSecondaryResourceIds)
+    {
+        var publishedId = (string)(secondaryResources.GetField(
+            fieldName, BindingFlags.Public | BindingFlags.Static)?.GetRawConstantValue()
+            ?? throw new MissingFieldException(secondaryResources.FullName, fieldName));
+        Assert(string.Equals(publishedId, generatedId, StringComparison.Ordinal),
+            $"{fieldName} must match RitsuLib's official secondary-resource ID generator: " +
+            $"expected {generatedId}, got {publishedId}.");
+    }
+
+    var ritsuCapability = RequireType(core, "FGOCore.FGOCoreCode.Ritsu.FgoCommandTagCapability");
+    Assert(ritsuCapability.GetInterfaces().Any(type =>
+            type.FullName == "STS2RitsuLib.Models.Capabilities.ICardPropertyContributor"),
+        "FgoCommandTagCapability must contribute RitsuLib card properties.");
+
+    var baseLibCharacterSelectCompatibility = RequireType(core,
+        "FGOCore.FGOCoreCode.Compatibility.BaseLibCharacterSelectCompatibility");
+    var touchOfOrobas = RequireType(game, "MegaCrit.Sts2.Core.Models.Relics.TouchOfOrobas");
+    Assert(touchOfOrobas.GetField("_upgradedRelic", BindingFlags.Instance | BindingFlags.NonPublic) is not null,
+        "TouchOfOrobas._upgradedRelic reflection target is missing.");
+    var recognizesBaseLibMismatch = baseLibCharacterSelectCompatibility.GetMethod(
+        "IsKnownBaseLibMismatch", BindingFlags.NonPublic | BindingFlags.Static)
+        ?? throw new MissingMethodException(baseLibCharacterSelectCompatibility.FullName,
+            "IsKnownBaseLibMismatch(Exception)");
+    var suppressBaseLibMismatch = baseLibCharacterSelectCompatibility.GetMethod(
+        "SuppressBrokenBaseLibPostfix", BindingFlags.NonPublic | BindingFlags.Static)
+        ?? throw new MissingMethodException(baseLibCharacterSelectCompatibility.FullName,
+            "SuppressBrokenBaseLibPostfix(Exception)");
+    Assert((bool)recognizesBaseLibMismatch.Invoke(null,
+               [new MissingMethodException("unrelated member")])! == false,
+        "BaseLib compatibility guard must not suppress unrelated MissingMethodException instances.");
+
+    if (Environment.GetEnvironmentVariable("FGO_EXPECT_BASELIB_MAIN_LOBBY_MISMATCH") == "1")
+    {
+        Assert(runtimeBranch == "main",
+            "The BaseLib StartRunLobby mismatch reproducer is only valid against MAIN.");
+        var brokenPatch = baseLib.GetType(
+            "BaseLib.Patches.UI.CharacterSelectStartingRelicsPatch", throwOnError: true)!;
+        var brokenPostfix = brokenPatch.GetMethod("OnEmbarkPressedPostfix",
+                                BindingFlags.NonPublic | BindingFlags.Static)
+                            ?? throw new MissingMethodException(brokenPatch.FullName,
+                                "OnEmbarkPressedPostfix(NCharacterSelectScreen)");
+        var characterSelectScreen = RequireType(game,
+            "MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect.NCharacterSelectScreen");
+        var uninitializedScreen = RuntimeHelpers.GetUninitializedObject(characterSelectScreen);
+        Exception? reproducedMismatch = null;
+        try
+        {
+            brokenPostfix.Invoke(null, [uninitializedScreen]);
+        }
+        catch (TargetInvocationException exception)
+        {
+            reproducedMismatch = exception.InnerException;
+        }
+
+        Assert(reproducedMismatch is MissingMethodException,
+            $"Expected BaseLib's MAIN/BETA LocalPlayer mismatch, got {reproducedMismatch?.GetType().FullName ?? "no exception"}.");
+        Assert((bool)recognizesBaseLibMismatch.Invoke(null, [reproducedMismatch])!,
+            "FGOCore did not recognize BaseLib 3.4.3's reproduced StartRunLobby.LocalPlayer mismatch.");
+        var warningLogged = baseLibCharacterSelectCompatibility.GetField(
+            "_warningLogged", BindingFlags.NonPublic | BindingFlags.Static)
+            ?? throw new MissingFieldException(baseLibCharacterSelectCompatibility.FullName, "_warningLogged");
+        warningLogged.SetValue(null, 1); // The game logger requires a live Godot host, absent in this probe.
+        Assert(suppressBaseLibMismatch.Invoke(null, [reproducedMismatch]) is null,
+            "FGOCore did not suppress BaseLib 3.4.3's reproduced StartRunLobby.LocalPlayer mismatch.");
+    }
     var compatibilityType = core.GetType(
         "FGOCore.FGOCoreCode.Compatibility.CreatureCmdCompatibility", throwOnError: true)!;
     RuntimeHelpers.RunClassConstructor(compatibilityType.TypeHandle);
@@ -155,6 +492,7 @@ try
 
     var creature = RequireType(game, "MegaCrit.Sts2.Core.Entities.Creatures.Creature");
     var cardModel = RequireType(game, "MegaCrit.Sts2.Core.Models.CardModel");
+    var relicModel = RequireType(game, "MegaCrit.Sts2.Core.Models.RelicModel");
     var cardPlay = RequireType(game, "MegaCrit.Sts2.Core.Entities.Cards.CardPlay");
     var valueProp = RequireType(game, "MegaCrit.Sts2.Core.ValueProps.ValueProp");
     var choiceContext = RequireType(game, "MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext");
@@ -254,7 +592,87 @@ try
     }
 
     var auditedArtifacts = artifactPaths.Prepend(corePath).ToArray();
-    var resolvedGameMembers = 0;
+    var starterUpgradeTypes = new Dictionary<string, (string Starter, string Upgrade)>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["MashShielder"] = (
+            "MashShielder.MashShielderCode.Relics.RoundTableFragment",
+            "MashShielder.MashShielderCode.Relics.LordCamelotRestored"),
+        ["MorganBerserker"] = (
+            "MorganBerserker.MorganBerserkerCode.Relics.QueensScepter",
+            "MorganBerserker.MorganBerserkerCode.Relics.WorldsEndCoronation"),
+        ["ArtoriaCaster"] = (
+            "ArtoriaCaster.ArtoriaCasterCode.Relics.SelectionStaff",
+            "ArtoriaCaster.ArtoriaCasterCode.Relics.ForgedSacredSword"),
+        ["MordredSaber"] = (
+            "MordredSaber.MordredSaberCode.Relics.ClarentTheStolenSword",
+            "MordredSaber.MordredSaberCode.Relics.ClarentOverloadedWithHatred"),
+        ["GilgameshArcher"] = (
+            "GilgameshArcher.GilgameshArcherCode.Relics.BabIlu",
+            "GilgameshArcher.GilgameshArcherCode.Relics.EaSwordOfRupture"),
+        ["OkitaSaber"] = (
+            "OkitaSaber.OkitaSaberCode.Relics.HaoriAsagi",
+            "OkitaSaber.OkitaSaberCode.Relics.FlowerOfImperialCapital"),
+        ["OberonPretender"] = (
+            "OberonPretender.OberonPretenderCode.Relics.DreamContract",
+            "OberonPretender.OberonPretenderCode.Relics.BookOfDreamsEnd"),
+        ["SiegfriedSaber"] = (
+            "SiegfriedSaber.SiegfriedSaberCode.Relics.LindenLeaf",
+            "SiegfriedSaber.SiegfriedSaberCode.Relics.FafnirHeartblood"),
+        ["TiamatBeast"] = (
+            "TiamatBeast.TiamatCode.Relics.SeaOfLifeWomb",
+            "TiamatBeast.TiamatCode.Relics.SeaOfLifeGenesis"),
+        ["KagetoraLancer"] = (
+            "KagetoraLancer.KagetoraLancerCode.Relics.JeweledPagodaOfBishamonten",
+            "KagetoraLancer.KagetoraLancerCode.Relics.GreatPagodaOfBishamonten"),
+        ["ShutenDouji"] = (
+            "ShutenDouji.ShutenDoujiCode.Relics.ScarletGourd",
+            "ShutenDouji.ShutenDoujiCode.Relics.InexhaustibleGourd"),
+        ["AstolfoRider"] = (
+            "AstolfoRider.AstolfoRiderCode.Relics.ReasonEvaporatedRelic",
+            "AstolfoRider.AstolfoRiderCode.Relics.CompletelyEvaporatedReason")
+    };
+    var transcendenceTypes = new Dictionary<string, (string Starter, string Transcendence)>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["MashShielder"] = (
+            "MashShielder.MashShielderCode.Cards.Basic.ShieldBash",
+            "MashShielder.MashShielderCode.Cards.Rare.PaladinAssault"),
+        ["MorganBerserker"] = (
+            "MorganBerserker.MorganBerserkerCode.Cards.Basic.LanceOfTheWorldsEnd",
+            "MorganBerserker.MorganBerserkerCode.Cards.Rare.FromTheWorldsEnd"),
+        ["ArtoriaCaster"] = (
+            "ArtoriaCaster.ArtoriaCasterCode.Cards.Basic.SummerOutburst",
+            "ArtoriaCaster.ArtoriaCasterCode.Cards.Rare.SummerComet"),
+        ["MordredSaber"] = (
+            "MordredSaber.MordredSaberCode.Cards.Basic.Rebellion",
+            "MordredSaber.MordredSaberCode.Cards.Rare.CoupDEtat"),
+        ["GilgameshArcher"] = (
+            "GilgameshArcher.GilgameshArcherCode.Cards.Basic.GateOfBabylon",
+            "GilgameshArcher.GilgameshArcherCode.Cards.Rare.KingsArsenal"),
+        ["OkitaSaber"] = (
+            "OkitaSaber.OkitaSaberCode.Cards.Basic.Shukuchi",
+            "OkitaSaber.OkitaSaberCode.Cards.Rare.InfiniteInstant"),
+        ["OberonPretender"] = (
+            "OberonPretender.OberonPretenderCode.Cards.Basic.Nightfall",
+            "OberonPretender.OberonPretenderCode.Cards.Rare.EndOfTheTale"),
+        ["SiegfriedSaber"] = (
+            "SiegfriedSaber.SiegfriedSaberCode.Cards.Basic.BloodBaptism",
+            "SiegfriedSaber.SiegfriedSaberCode.Cards.Rare.DragonbloodAscendant"),
+        ["TiamatBeast"] = (
+            "TiamatBeast.TiamatCode.Cards.Basic.SpawnLahmu",
+            "TiamatBeast.TiamatCode.Cards.Rare.ElevenBelLahmu"),
+        ["KagetoraLancer"] = (
+            "KagetoraLancer.KagetoraLancerCode.Cards.Basic.IncarnationOfBishamonten",
+            "KagetoraLancer.KagetoraLancerCode.Cards.Rare.ManifestationOfBishamonten"),
+        ["ShutenDouji"] = (
+            "ShutenDouji.ShutenDoujiCode.Cards.Basic.FruityWineAroma",
+            "ShutenDouji.ShutenDoujiCode.Cards.Rare.FruityAromaEx"),
+        ["AstolfoRider"] = (
+            "AstolfoRider.AstolfoRiderCode.Cards.Basic.PaladinsHunch",
+            "AstolfoRider.AstolfoRiderCode.Cards.Rare.PerfectImprovisation")
+    };
+    var resolvedRuntimeTypes = 0;
+    var resolvedRuntimeMembers = 0;
+    var resolvedHarmonyTargets = 0;
     foreach (var artifactPath in auditedArtifacts)
     {
         if (!File.Exists(artifactPath))
@@ -265,12 +683,77 @@ try
         var artifact = string.Equals(artifactPath, corePath, StringComparison.OrdinalIgnoreCase)
             ? core
             : AssemblyLoadContext.Default.LoadFromAssemblyPath(artifactPath);
-        resolvedGameMembers += ValidateGameMemberReferences(artifactPath, artifact.ManifestModule, runtimeBranch);
+        Assert(artifact.GetReferencedAssemblies().Any(reference =>
+                string.Equals(reference.Name, "STS2-RitsuLib", StringComparison.OrdinalIgnoreCase)),
+            $"{Path.GetFileName(artifactPath)} must directly require RitsuLib.");
+
+        if (starterUpgradeTypes.TryGetValue(artifact.GetName().Name ?? string.Empty, out var upgradeTypes))
+        {
+            var characterPools = artifact.GetTypes()
+                .Where(type => !type.IsAbstract && customCardPoolModel.IsAssignableFrom(type))
+                .ToArray();
+            Assert(characterPools.Length == 1,
+                $"{artifact.GetName().Name} must expose exactly one custom character card pool; " +
+                $"found {characterPools.Length}.");
+            Assert(colorfulPhilosophersPool.IsAssignableFrom(characterPools[0]),
+                $"{characterPools[0].FullName} must opt into RitsuLib's Colorful Philosophers integration.");
+
+            var starter = RequireType(artifact, upgradeTypes.Starter);
+            var upgrade = RequireType(artifact, upgradeTypes.Upgrade);
+            var mapping = starter.GetMethod(
+                "GetUpgradeReplacement",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+                ?? throw new MissingMethodException(starter.FullName, "GetUpgradeReplacement()");
+            Assert(mapping.ReturnType.FullName == "MegaCrit.Sts2.Core.Models.RelicModel",
+                $"{starter.FullName} has an invalid Orobas replacement signature.");
+            Assert(relicModel.IsAssignableFrom(upgrade),
+                $"{upgrade.FullName} is not a valid relic model type.");
+
+            if (string.Equals(artifact.GetName().Name, "SiegfriedSaber", StringComparison.OrdinalIgnoreCase))
+            {
+                var startingScales = starter.GetProperty(
+                    "StartingScales",
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+                    ?? throw new MissingMemberException(starter.FullName, "StartingScales");
+                Assert(startingScales.PropertyType == typeof(int) && startingScales.CanRead && startingScales.CanWrite,
+                    $"{starter.FullName}.StartingScales must be a mutable Int32 saved property.");
+                Assert(startingScales.CustomAttributes.Any(attribute =>
+                        attribute.AttributeType.Name == "SavedPropertyAttribute"),
+                    $"{starter.FullName}.StartingScales must carry SavedPropertyAttribute.");
+                Assert(starter.IsAssignableFrom(upgrade),
+                    $"{upgrade.FullName} must inherit {starter.FullName} so Orobas can preserve starting Scales.");
+            }
+        }
+
+        if (transcendenceTypes.TryGetValue(artifact.GetName().Name ?? string.Empty, out var cardTypes))
+        {
+            var starter = RequireType(artifact, cardTypes.Starter);
+            var transcendence = RequireType(artifact, cardTypes.Transcendence);
+            Assert(transcendenceCard.IsAssignableFrom(starter),
+                $"{starter.FullName} must implement BaseLib ITranscendenceCard.");
+            var mapping = starter.GetMethod(
+                "GetTranscendenceTransformedCard",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+                ?? throw new MissingMethodException(starter.FullName, "GetTranscendenceTransformedCard()");
+            Assert(mapping.ReturnType == cardModel,
+                $"{starter.FullName} has an invalid Archaic Tooth mapping signature.");
+            Assert(cardModel.IsAssignableFrom(transcendence),
+                $"{transcendence.FullName} is not a valid card model type.");
+        }
+
+        var resolvedReferences = ValidateRuntimeReferences(
+            artifactPath, artifact.ManifestModule, runtimeBranch);
+        resolvedRuntimeTypes += resolvedReferences.Types;
+        resolvedRuntimeMembers += resolvedReferences.Members;
+        resolvedHarmonyTargets += ValidateHarmonyTargets(artifact, runtimeBranch);
     }
 
     Console.WriteLine(
         $"Compatibility OK: build={buildBranch}, runtime={runtimeBranch}, CardPlay={supportsCardPlay}, " +
-        $"artifacts={auditedArtifacts.Length}, sts2 members={resolvedGameMembers}");
+        $"artifacts={auditedArtifacts.Length}, runtime types={resolvedRuntimeTypes}, " +
+        $"runtime members={resolvedRuntimeMembers}, Harmony targets={resolvedHarmonyTargets}, " +
+        $"BaseLib={baseLib.GetName().Version}, RitsuLib={ritsuLib.GetName().Version}, " +
+        $"direct RitsuLib references={auditedArtifacts.Length}");
     return 0;
 }
 catch (Exception exception)

@@ -20,8 +20,8 @@ namespace OkitaSaber.OkitaSaberCode.Relics;
 ///
 /// Misma maquinaria que HaoriAsagi (AfterCardPlayed para el ★-por-Ataque; AfterPowerAmountChanged con
 /// amount < 0 sobre CritReadyPower para el NP-por-crítico), con los números al doble (20★ / 40 NP).
-/// NO fija el Aliento inicial: el Haori al que reemplaza ya lo hace, y un Ancient asume que el motor base
-/// ya está en juego (la Capital Imperial es el "te lo cambio por una versión más poderosa").
+/// Como Orobas elimina el Haori, la Flor también instala el Aliento inicial, su regeneración y el
+/// contador de ataques; no depende de que ambas reliquias coexistan.
 /// </summary>
 public sealed class FlowerOfImperialCapital : OkitaRelic, ICriticalConsumedListener
 {
@@ -36,6 +36,32 @@ public sealed class FlowerOfImperialCapital : OkitaRelic, ICriticalConsumedListe
         HoverTipFactory.FromPower<CritReadyPower>(),
         HoverTipFactory.FromPower<NpChargePower>()
     ];
+
+    public override async Task BeforeCombatStartLate()
+    {
+        await base.BeforeCombatStartLate();
+        Aliento.ResetHitZero(Owner.Creature);
+        await AttacksThisTurnPower.EnsureInstalled(Owner.Creature);
+        await MegaCrit.Sts2.Core.Commands.PowerCmd.Apply<AlientoPower>(
+            new BlockingPlayerChoiceContext(), Owner.Creature,
+            AlientoPower.StartingBreath, Owner.Creature, null);
+    }
+
+    public override async Task BeforeSideTurnStart(
+        PlayerChoiceContext choiceContext,
+        CombatSide side,
+        IReadOnlyList<Creature> participants,
+        ICombatState combatState)
+    {
+        if (!participants.Contains(Owner.Creature)) return;
+        Aliento.ResetHitZero(Owner.Creature);
+
+        var regen = AlientoPower.RegenPerTurn;
+        foreach (var booster in FGOCore.FGOCoreCode.Listeners.PowersOf<IBreathRegenBooster>(Owner.Creature))
+            regen += booster.ExtraBreathRegen;
+
+        await Aliento.Gain(choiceContext, Owner.Creature, regen, null);
+    }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
@@ -53,5 +79,11 @@ public sealed class FlowerOfImperialCapital : OkitaRelic, ICriticalConsumedListe
         if (critical.Owner != Owner.Creature) return;
         Flash();
         await NpCharge.Gain(choiceContext, Owner.Creature, NpPerCrit, null);
+        if (FgoCombatState.GetTurn(Owner.Creature, 7) == 0)
+        {
+            await FgoCombatState.SetTurn(
+                choiceContext, Owner.Creature, 7, 1, critical.Card);
+            await Aliento.Gain(choiceContext, Owner.Creature, HaoriAsagi.BreathPerCrit, null);
+        }
     }
 }

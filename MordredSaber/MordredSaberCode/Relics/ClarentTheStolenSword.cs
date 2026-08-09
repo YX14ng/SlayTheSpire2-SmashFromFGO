@@ -43,6 +43,9 @@ public sealed class ClarentTheStolenSword : MordredRelic, ICritConsumedListener
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<ClarentOverloadedWithHatred>();
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Stars", StarsPerHpLoss),

@@ -1,3 +1,6 @@
+using BaseLib.Abstracts;
+using MegaCrit.Sts2.Core.Localization;
+
 namespace FGOCore.FGOCoreCode.CardTypes;
 
 /// <summary>
@@ -10,11 +13,33 @@ namespace FGOCore.FGOCoreCode.CardTypes;
 /// (<see cref="CommandBonusPower.AfterCardPlayed"/>, sembrado en TODOS los Servants por
 /// <see cref="Bond.BondRelic"/>) lee este tipo después de resolver la carta y aplica el efecto.
 /// </summary>
-public interface ICommandTyped
+public interface ICommandTyped : ICustomTypeTextCard
 {
     /// <summary>El color del comando (Buster/Arts/Quick).</summary>
     CommandType CommandType { get; }
 
     /// <summary>True si esta carta es un Noble Phantasm (ulti): activa el bonus reforzado.</summary>
     bool IsNoblePhantasm { get; }
+
+    /// <summary>
+    /// BaseLib 3.4 muestra el tipo de comando junto al tipo normal de la carta
+    /// (por ejemplo, "Buster Attack") sin duplicarlo en cada descripción.
+    /// </summary>
+    IEnumerable<LocString> ICustomTypeTextCard.GetTypeModifiers() => [CommandTypeText.Get(CommandType)];
+}
+
+internal static class CommandTypeText
+{
+    internal static LocString Get(CommandType type)
+    {
+        var key = type switch
+        {
+            CommandType.Buster => "FGOCORE-COMMAND_TYPE_BUSTER",
+            CommandType.Arts => "FGOCORE-COMMAND_TYPE_ARTS",
+            CommandType.Quick => "FGOCORE-COMMAND_TYPE_QUICK",
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
+
+        return new LocString("cards", key);
+    }
 }

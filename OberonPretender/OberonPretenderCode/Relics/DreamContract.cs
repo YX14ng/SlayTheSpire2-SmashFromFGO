@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Models;
 using OberonPretender.OberonPretenderCode.Powers.Forms;
 
 namespace OberonPretender.OberonPretenderCode.Relics;
@@ -15,6 +16,9 @@ namespace OberonPretender.OberonPretenderCode.Relics;
 public sealed class DreamContract : DebtPaidStarsRelic
 {
     public override RelicRarity Rarity => RelicRarity.Starter;
+
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<BookOfDreamsEnd>();
 
     protected override int StarsPerDebtPaid => 10;
 

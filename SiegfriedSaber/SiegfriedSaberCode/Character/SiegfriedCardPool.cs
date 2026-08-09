@@ -4,7 +4,8 @@ using SiegfriedSaber.SiegfriedSaberCode.Extensions;
 
 namespace SiegfriedSaber.SiegfriedSaberCode.Character;
 
-public class SiegfriedCardPool : CustomCardPoolModel
+public class SiegfriedCardPool : CustomCardPoolModel,
+    STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool
 {
     public override string Title => Siegfried.CharacterId;
 

@@ -15,7 +15,8 @@
     <Reference Include="FGOCore"><HintPath>$(StagingPath)FGOCore/FGOCore.dll</HintPath><Private>false</Private></Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Alchyr.Sts2.BaseLib" Version="$(BaseLibPackageVersion)" PrivateAssets="All"/>
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="$(BaseLibPackageVersion)" PrivateAssets="All"/>
+        <PackageReference Include="$(RitsuLibPackageId)" Version="$(RitsuLibPackageVersion)" PrivateAssets="All"/>
     <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="All"/>
     <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="*"/>
     <AdditionalFiles Include="AstolfoRider/localization/**/*.json"/>

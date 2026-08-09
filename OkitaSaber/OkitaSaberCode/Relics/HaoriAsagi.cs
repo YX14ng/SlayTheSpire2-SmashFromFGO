@@ -36,6 +36,9 @@ public sealed class HaoriAsagi : OkitaRelic, ICriticalConsumedListener
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<FlowerOfImperialCapital>();
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
         HoverTipFactory.FromPower<CritStarsPower>(),

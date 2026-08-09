@@ -17,8 +17,11 @@ namespace GilgameshArcher.GilgameshArcherCode.Cards.Basic;
 /// igual que Arts/Quick). El up sube a 3 Armas. Usa <see cref="TreasureDeck.ManifestRandom"/> (espejo
 /// de <c>BeastDeck</c> de Tiamat + el RNG determinista de combate).
 /// </summary>
-public sealed class GateOfBabylon() : GilgameshCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
+public sealed class GateOfBabylon() : GilgameshCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self), BaseLib.Abstracts.ITranscendenceCard
 {
+    public MegaCrit.Sts2.Core.Models.CardModel GetTranscendenceTransformedCard() =>
+        MegaCrit.Sts2.Core.Models.ModelDb.Card<Rare.KingsArsenal>();
+
     private const int Arms = 2;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Arms", Arms)];

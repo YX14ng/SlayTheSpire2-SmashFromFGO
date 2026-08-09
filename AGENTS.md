@@ -16,10 +16,12 @@ Godot 4 / C#): one shared mechanics library **`FGOCore/`** + **12 character mods
 Artoria Caster, Mordred, Gilgamesh, Okita, Oberon, Siegfried, Tiamat, Kagetora/Kenshin, Shuten and
 Astolfo).
 ("Smash" in the repo name is a pun on Mash, the first character — no FGO Servant is named Smash.)
-Each top-level folder with a `*.csproj` is an independent mod depending on FGOCore + BaseLib.
+Each top-level folder with a `*.csproj` is an independent mod. All gameplay mods depend on BaseLib
++ RitsuLib; characters additionally depend on FGOCore.
 
 - Targets **MAIN v0.107.1 and BETA v0.110.1** with one artifact set, compiled against **BaseLib
-  3.3.6** and runtime-verified with 3.3.7. All 13 projects compile green; Kagetora, Shuten and Astolfo
+  3.4.0** (latest NuGet), requiring runtime 3.4.1+ and guarding the 3.4.3 MAIN signature mismatch,
+  plus **RitsuLib 0.5.10**. All 13 projects compile green; Kagetora, Shuten and Astolfo
   remain in validation/playtest state (see `docs/STATUS.md` for Workshop state).
 - `decompiled/` is the decompiled game (ground truth for hooks/VFX/base classes);
   `decompiled/_baselib_full/` is the BaseLib decompile.
@@ -37,8 +39,8 @@ assets, debugging and validation; use the second before creating or rebalancing 
 
 ## Key facts
 
-- StS2 runs on **MegaDot** (Mega Crit's Godot 4 fork). A mod = `<Id>.json` (manifest) + `<Id>.dll` +
-  `<Id>.pck` in the game's `mods/`. Framework = **BaseLib** (`CustomCharacterModel`/`CustomCardModel`/
+- StS2 runs on **MegaDot** (Mega Crit's Godot 4 fork). A gameplay mod = `<Id>.json` (manifest) +
+  `<Id>.dll` + `<Id>.pck`; a DLL-only companion can declare `has_pck: false`. Framework = **BaseLib** (`CustomCharacterModel`/`CustomCardModel`/
   `CustomRelicModel`, custom keywords, localization, automatic ID prefixing —
   https://alchyr.github.io/BaseLib-Wiki/).
 - Game install: `C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2`. Steam moved the
@@ -52,7 +54,7 @@ assets, debugging and validation; use the second before creating or rebalancing 
   project's `Directory.Build.props` (gitignored); `Sts2PathDiscovery.props` autodetects. No `.sln`.
 - **Build/publish go to the repo staging `dist/<Id>/`, never the game folder.** `dotnet build`
   copies dll/json; `dotnet publish -c Release` also runs MegaDot `--export-pack` for the `.pck`
-  (required for any non-code change). Build `FGOCore` first.
+  (required for any non-code change in mods with assets). Build `FGOCore` first.
 - **Publish-all-together**: an FGOCore API change requires rebuilding every character dll in the same
   batch, or the game throws `MissingMethodException`/`ReflectionTypeLoadException` and silently skips
   the mod.

@@ -1,4 +1,7 @@
 {
+  "FGOCORE-COMMAND_TYPE_BUSTER": "{Type} Buster",
+  "FGOCORE-COMMAND_TYPE_ARTS": "{Type} Arts",
+  "FGOCORE-COMMAND_TYPE_QUICK": "{Type} Quick",
   "FGOCORE-GOLDEN_APPLE.title": "Золотое яблоко",
   "FGOCORE-GOLDEN_APPLE.description": "#Получите !Energy! энергии. Возьмите !C! карт. Фарм никогда не заканчивается.",
   "FGOCORE-MAPO_TOFU.title": "Сверхострый мапо-тофу",

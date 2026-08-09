@@ -151,7 +151,7 @@
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.title": "로드 카멜롯",
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.description": "#NP /(!ChargeCost! 충전): *보루 *방어도를 !B!, *힘을 !Strength!과 이번 턴에 *요격을 !Provoke! 얻습니다. 최소치를 초과한 충전 10마다 방어도를 /+!PerTen! 얻습니다. 협동에서는 각 아군이 *보루 *방어도를 !AllyBlock!과 이번 턴에 *요격을 !AllyProvoke! 얻습니다.",
   "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.title": "로드 칼데아스: 해방",
-  "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.description": "#NP /(!ChargeCost! 충전): *보루 *방어도를 !B! 얻고, 최소치를 초과한 충전 10마다 /+!PerTen! 얻습니다.",
+  "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.description": "#NP /(!ChargeCost! 충전): *보루 *방어도를 !B!, *힘을 !Strength!과 이번 턴에 *요격을 !Provoke! 얻습니다. 최소치를 초과한 충전 10마다 방어도를 /+!PerTen! 얻습니다. 협동에서는 각 아군이 *보루 *방어도를 !AllyBlock!과 이번 턴에 *요격을 !AllyProvoke! 얻습니다.",
   "MASHSHIELDER-BLACK_BARREL_UNLEASHED.title": "블랙 배럴: 해방",
   "MASHSHIELDER-BLACK_BARREL_UNLEASHED.description": "#NP /(!ChargeCost! 충전): 방어할 수 없는 피해를 !D! 주고, 최소치를 초과한 충전 10마다 /+!PerTen!의 피해를 줍니다. 대상의 모든 강화를 제거합니다.",
   "MASHSHIELDER-BEHIND_ME_SENPAI.title": "제 뒤로!",

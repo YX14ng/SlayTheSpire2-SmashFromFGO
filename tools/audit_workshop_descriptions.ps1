@@ -8,8 +8,10 @@ $compatibilityPropsPath = Join-Path $repoRoot 'Sts2Compatibility.props'
 $compatibilityProps = [xml](Get-Content -LiteralPath $compatibilityPropsPath -Raw -Encoding UTF8)
 $mainVersion = [string]$compatibilityProps.Project.PropertyGroup.MainSts2Version
 $betaVersion = [string]$compatibilityProps.Project.PropertyGroup.BetaSts2Version
-if ([string]::IsNullOrWhiteSpace($mainVersion) -or [string]::IsNullOrWhiteSpace($betaVersion)) {
-    throw "No se pudieron obtener las versiones MAIN/BETA desde $compatibilityPropsPath"
+$ritsuVersion = [string]$compatibilityProps.Project.PropertyGroup.RitsuLibPackageVersion
+if ([string]::IsNullOrWhiteSpace($mainVersion) -or [string]::IsNullOrWhiteSpace($betaVersion) -or
+    [string]::IsNullOrWhiteSpace($ritsuVersion)) {
+    throw "No se pudieron obtener las versiones MAIN/BETA/RitsuLib desde $compatibilityPropsPath"
 }
 $mainVersionPattern = [regex]::Escape($mainVersion)
 $betaVersionPattern = [regex]::Escape($betaVersion)
@@ -31,6 +33,7 @@ $expectedMods = @(
 
 $failures = [System.Collections.Generic.List[string]]::new()
 $totalCharacters = 0
+$totalUtf8Bytes = 0
 $spanishHeading = '[h1]ESPA' + [char]0x00D1 + 'OL[/h1]'
 $simplifiedChineseHeading = '[h1]' + [char]0x7B80 + [char]0x4F53 + [char]0x4E2D + [char]0x6587 + '[/h1]'
 
@@ -55,9 +58,11 @@ foreach ($mod in $expectedMods) {
     $text = Get-Content -LiteralPath $descriptionPath -Raw -Encoding UTF8
     $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
     $totalCharacters += $text.Length
+    $utf8Bytes = [System.Text.Encoding]::UTF8.GetByteCount($text)
+    $totalUtf8Bytes += $utf8Bytes
 
-    if ($text.Length -gt 8000) {
-        Add-Failure "${mod}: la ficha supera 8000 caracteres ($($text.Length))."
+    if ($utf8Bytes -gt 8000) {
+        Add-Failure "${mod}: la ficha supera el limite de Steam de 8000 bytes UTF-8 ($utf8Bytes)."
     }
     if ($text -notmatch '^\[h1\]') {
         Add-Failure "${mod}: la ficha no abre con un h1 en ingles."
@@ -74,8 +79,17 @@ foreach ($mod in $expectedMods) {
     if ($text -notmatch [regex]::Escape([string]$manifest.version)) {
         Add-Failure "${mod}: no declara la version actual $($manifest.version)."
     }
-    if ($text -notmatch 'BaseLib 3\.3\.6\+') {
-        Add-Failure "${mod}: no declara BaseLib 3.3.6+."
+    if ($text -notmatch 'BaseLib 3\.4\.1\+') {
+        Add-Failure "${mod}: no declara BaseLib 3.4.1+."
+    }
+    $ritsuDependency = @($manifest.dependencies | Where-Object { $_.id -eq 'STS2-RitsuLib' } | Select-Object -First 1)
+    if ($ritsuDependency.Count -eq 0) {
+        Add-Failure "${mod}: el manifest no declara la dependencia STS2-RitsuLib."
+    } elseif ([string]$ritsuDependency[0].min_version -ne "v$ritsuVersion") {
+        Add-Failure "${mod}: el manifest no exige RitsuLib v$ritsuVersion."
+    }
+    if ($text -notmatch [regex]::Escape("RitsuLib $ritsuVersion+")) {
+        Add-Failure "${mod}: la ficha no declara RitsuLib $ritsuVersion+."
     }
     if ($text -notmatch "MAIN $mainVersionPattern" -or $text -notmatch "BETA (public |p.blica )?$betaVersionPattern") {
         Add-Failure "${mod}: no declara las ramas MAIN/BETA compatibles."
@@ -127,4 +141,4 @@ if ($failures.Count -gt 0) {
     exit 1
 }
 
-Write-Host "Auditoria de descripciones: OK - $($expectedMods.Count) fichas, $totalCharacters caracteres, BBCode y versiones coherentes."
+Write-Host "Auditoria de descripciones: OK - $($expectedMods.Count) fichas, $totalCharacters caracteres, $totalUtf8Bytes bytes UTF-8, BBCode y versiones coherentes."

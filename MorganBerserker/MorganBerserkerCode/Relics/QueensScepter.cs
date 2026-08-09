@@ -33,6 +33,9 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<WorldsEndCoronation>();
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<NpChargePower>(), HoverTipFactory.FromPower<CursePower>()];
 

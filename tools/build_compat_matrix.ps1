@@ -6,8 +6,8 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path $PSScriptRoot -Parent
-$projects = @(
-    'FGOCore\FGOCore.csproj',
+$coreProject = 'FGOCore\FGOCore.csproj'
+$characterProjects = @(
     'MashShielder\MashShielder.csproj',
     'MorganBerserker\MorganBerserker.csproj',
     'ArtoriaCaster\ArtoriaCaster.csproj',
@@ -21,6 +21,7 @@ $projects = @(
     'ShutenDouji\ShutenDouji.csproj',
     'AstolfoRider\AstolfoRider.csproj'
 )
+$projects = @($coreProject) + $characterProjects
 $branches = if ($Branch -eq 'all') { @('main', 'beta') } else { @($Branch) }
 $compatibilityPropsPath = Join-Path $repo 'Sts2Compatibility.props'
 [xml]$compatibilityProps = Get-Content -Raw $compatibilityPropsPath
@@ -62,6 +63,12 @@ foreach ($target in $preflightTargets) {
 
 Push-Location $repo
 try {
+    Write-Host '[source] vanilla/custom-content contract audit'
+    & (Join-Path $PSScriptRoot 'audit_vanilla_contracts.ps1') -Root $repo
+    if (-not $?) {
+        throw 'Fallo la auditoria de contratos vanilla/custom-content'
+    }
+
     foreach ($target in $branches) {
         $referenceRoot = Get-ReferenceRoot $target
         $assemblyDir = Join-Path $referenceRoot 'data_sts2_windows_x86_64'
@@ -79,15 +86,16 @@ try {
 
         $probeProject = Join-Path $repo 'tools\compatibility_probe\CompatibilityProbe.csproj'
         $probeCore = Join-Path $stage 'FGOCore\FGOCore.dll'
-        $characterArtifacts = @($projects | Select-Object -Skip 1 | ForEach-Object {
+        $characterArtifacts = @($characterProjects | ForEach-Object {
             $projectName = [System.IO.Path]::GetFileNameWithoutExtension($_)
             Join-Path $stage "$projectName\$projectName.dll"
         })
+        $probeArtifacts = $characterArtifacts
         Write-Host "[$target] runtime compatibility probe"
         $probeArgs = @('run', '--project', $probeProject)
         if ($NoRestore) { $probeArgs += '--no-restore' }
         $probeArgs += @('--', $target, $target, $assemblyDir, $probeCore)
-        $probeArgs += $characterArtifacts
+        $probeArgs += $probeArtifacts
         & dotnet @probeArgs
         if ($LASTEXITCODE -ne 0) {
             throw "Fallo de enlace runtime en $target"
@@ -99,7 +107,7 @@ try {
             $crossProbeArgs = @('run', '--project', $probeProject)
             if ($NoRestore) { $crossProbeArgs += '--no-restore' }
             $crossProbeArgs += @('--', 'beta', 'main', $betaAssemblyDir, $probeCore)
-            $crossProbeArgs += $characterArtifacts
+            $crossProbeArgs += $probeArtifacts
             & dotnet @crossProbeArgs
             if ($LASTEXITCODE -ne 0) {
                 throw 'El artefacto universal compilado contra MAIN no enlaza correctamente en BETA'

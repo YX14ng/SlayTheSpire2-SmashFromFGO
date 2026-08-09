@@ -151,7 +151,7 @@
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.title": "Lord Camelot",
   "MASHSHIELDER-LORD_CAMELOT_UNLEASHED.description": "#NP (!ChargeCost! de Carga): obtén !B! de Bloqueo con *Baluarte, !Strength! de *Fuerza y !Provoke! de *Intercepción este turno. +!PerTen! de Bloqueo por cada 10 de Carga sobre el mínimo. En co-op, cada aliado obtiene !AllyBlock! de Bloqueo con *Baluarte y !AllyProvoke! de *Intercepción este turno.",
   "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.title": "LORD CHALDEAS: Desatado",
-  "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.description": "#NP (!ChargeCost! de Carga): obtén !B! de Bloqueo con *Baluarte, +!PerTen! por cada 10 de Carga sobre el mínimo.",
+  "MASHSHIELDER-LORD_CHALDEAS_UNLEASHED.description": "#NP (!ChargeCost! de Carga): obtén !B! de Bloqueo con *Baluarte, !Strength! de *Fuerza y !Provoke! de *Intercepción este turno. +!PerTen! de Bloqueo por cada 10 de Carga sobre el mínimo. En co-op, cada aliado obtiene !AllyBlock! de Bloqueo con *Baluarte y !AllyProvoke! de *Intercepción este turno.",
   "MASHSHIELDER-BLACK_BARREL_UNLEASHED.title": "BLACK BARREL: Desatado",
   "MASHSHIELDER-BLACK_BARREL_UNLEASHED.description": "#NP (!ChargeCost! de Carga): inflige !D! de daño imbloqueable, +!PerTen! por cada 10 de Carga sobre el mínimo. Elimina TODAS las mejoras del objetivo.",
   "MASHSHIELDER-BEHIND_ME_SENPAI.title": "¡Detrás de Mí!",

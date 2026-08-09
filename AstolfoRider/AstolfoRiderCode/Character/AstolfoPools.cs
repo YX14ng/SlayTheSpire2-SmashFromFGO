@@ -3,7 +3,8 @@ using Godot;
 
 namespace AstolfoRider.AstolfoRiderCode.Character;
 
-public sealed class AstolfoCardPool : CustomCardPoolModel
+public sealed class AstolfoCardPool : CustomCardPoolModel,
+    STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool
 {
     public override string Title => Astolfo.CharacterId;
     public override float H => 0.92f;

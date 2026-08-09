@@ -2,6 +2,211 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-04 — migración de FGOCore a RitsuLib 0.5.10 publicada
+
+- **Recursos interoperables:** Carga NP y Estrellas de Crítico se registran como recursos secundarios
+  estables de RitsuLib. La UI nueva evita duplicados; los powers publicados conservan sus IDs y se
+  sincronizan en ambos sentidos para que runs y combates guardados sigan cargando.
+- **Ancient 12/12:** cada personaje registra oficialmente en RitsuLib su par de Touch of Orobas y
+  su transformación de Archaic Tooth. FGOCore conserva sólo los adaptadores necesarios para reparar
+  un Circlet ya guardado y transferir `NpLevel`/`DupePity` durante el reemplazo.
+- **Framework actualizado:** los 13 proyectos compilan contra RitsuLib `0.5.10` y sus manifiestos lo
+  exigen como mínimo. Continúan los parches FGOCore que RitsuLib no cubre: Sea Glass, historial SFX,
+  firmas MAIN/BETA y el guard específico de BaseLib 3.4.3.
+- **Versiones publicadas:** FGOCore `v0.1.20`; Mash `v0.1.18`; Morgan, Artoria, Mordred, Gilgamesh,
+  Okita, Oberon y Tiamat `v0.1.16`; Siegfried `v0.1.19`; Kagetora `v0.1.9`; Shuten `v0.1.8` y
+  Astolfo `v0.1.7`. Todos los personajes exigen FGOCore `v0.1.20`.
+- **Validación:** matriz MAIN→MAIN, MAIN→BETA y BETA→BETA verde para 13 artefactos, cero errores o
+  advertencias; 454 contratos, 1.837 tipos, 2.275 miembros y 21/24 destinos Harmony resueltos.
+  También pasan paridad 13×5, SimpleLoc (0 ambigüedades), 288 VFX, 867 cartas, 257 poderes y
+  124 reliquias. Los 13 PCK abren con manifiesto idéntico al externo y cero DLL internas.
+- **Workshop actualizado:** SteamCMD confirmó `Committing update...Success` para los 13 ítems
+  públicos existentes. La API pública confirmó las versiones nuevas y visibilidad pública; Steamworks
+  verificó los 38 vínculos de BaseLib, RitsuLib y FGOCore. No se instaló ninguna copia local. Falta
+  el playtest visual/runtime de los recursos secundarios y las transformaciones Ancient.
+
+## 2026-08-04 — Mash v0.1.17 publicada: Paladín y Lord Chaldeas
+
+- **Paladín legible:** su tooltip ya no obliga a recordar Shielder y Ortinax; enumera directamente
+  el Bloqueo adicional, el umbral y ganancia de NP, el consumo ofensivo de Bloqueo, la ausencia de
+  penalización defensiva y su permanencia en los cinco idiomas.
+- **NP final corregida:** `LordChaldeasUnleashed` conserva sus 35 de Baluarte y ahora también otorga
+  3 de Fuerza y 12 de Intercepción. En cooperativo replica el soporte de Lord Camelot —12 de
+  Baluarte y 6 de Intercepción por aliado— y su mejora agrega 10 de Baluarte y 1 de Fuerza.
+- **Artefacto publicado:** Mash `v0.1.17` compila sin errores ni advertencias. Paridad 13×5,
+  SimpleLoc y ficha de Workshop aprobaron; el PCK contiene 2.610 archivos, manifiesto interno
+  idéntico al externo y cero DLL embebidas. Se verificaron dentro del paquete la versión y los
+  textos corregidos de los cinco idiomas.
+- **Workshop actualizado:** SteamCMD confirmó `Committing update...Success` para el ítem existente
+  de Mash (`3747876464`). La API pública de Steam devolvió resultado correcto, visibilidad pública
+  y descripción `v0.1.17`. No se instaló una copia local; queda pendiente el playtest real de la
+  transición a Paladín y de Lord Chaldeas en solitario/cooperativo.
+
+## 2026-08-03 — hardening de transiciones y ajuste de Siegfried publicados
+
+- **Presión de memoria acotada:** `FormVisuals` ya no precarga todas las formas alternativas al
+  entrar al combate. Solicita únicamente el modelo visible, mantiene la imagen anterior durante un
+  cambio asíncrono y libera las referencias fuertes al salir de `NCombatRoom`, evitando que evento,
+  tienda o descanso hereden varios GiB de texturas. El reporte externo no aportó un log reproducible;
+  se corrigió una causa verificable de presión de memoria sin atribuirle definitivamente el crash.
+- **Siegfried más claro y flexible:** la alternativa Invocar incrementa de forma permanente las
+  Escamas iniciales de 2 hasta 5 aunque falle el dupe. Cada Ataque que quite Vida otorga 5 NP, con
+  límite de 3 activaciones por turno; la Hoja de Tilo conserva su debilidad canónica de ignorar una
+  Escama en el primer golpe. El progreso nuevo se guarda y sobrevive al reemplazo Ancient de Orobas.
+- **Versiones publicadas:** FGOCore `v0.1.19` y Siegfried `v0.1.18`, que exige FGOCore `v0.1.19`.
+  La matriz MAIN/BETA completó 26/26 builds sin errores ni advertencias, incluidas las sondas
+  MAIN→BETA y 450 contratos fuente. Pasan paridad 13×5, SimpleLoc, 288 VFX, 867 cartas, 257 poderes,
+  124 reliquias, calidad HD (21 recursos/3.324 frames), presentación 12/12 y animaciones (0 errores).
+  Los 13 PCK abren con manifiesto exacto y cero DLL internas; FGOCore y Siegfried contienen las
+  versiones nuevas.
+- **Workshop actualizado:** SteamCMD confirmó `Committing update...Success` para los ítems públicos
+  existentes de FGOCore (`3747876334`) y Siegfried (`3751611015`). No se instaló ninguna copia
+  local, por lo que no hay IDs duplicados con las suscripciones. Sigue pendiente el playtest real y
+  un `godot.log` posterior del reporte externo.
+
+## 2026-08-01 — auditoría de colisiones vanilla y referencias inexistentes publicada
+
+- **Gate nuevo:** `tools/audit_vanilla_contracts.ps1` ejecuta 440 comprobaciones sobre los doce
+  mazos y los consumidores sensibles de MAIN/BETA. La matriz lo corre automáticamente antes de
+  compilar y corta ante cambios de contrato, reflexión no inventariada, llamadas directas frágiles,
+  cargas síncronas o localización derivada faltante.
+- **Colorful Philosophers 12/12:** los pools implementan el marcador oficial de RitsuLib 0.5.4 y
+  FGOCore incluye sus títulos/descripciones en los cinco idiomas. El audit abre el PCK y verifica
+  las 24 claves por idioma, evitando opciones ausentes o `LocException`.
+- **Historial con audio:** el juego devolvía cero SFX para todo tipo custom. FGOCore agrega un
+  fallback de sonidos vanilla únicamente para personajes de assemblies que lo referencian y sólo
+  cuando el juego no produjo ningún sonido.
+- **Referencias reales:** la sonda resuelve 1.823 tipos, 2.254 miembros y 19 destinos Harmony contra
+  MAIN/BETA; el artefacto universal MAIN resuelve 22 destinos en BETA. Incluye `sts2`, BaseLib,
+  RitsuLib, FGOCore, Harmony y Godot, además de los contratos de reflexión conocidos.
+- **Validación local:** 26/26 builds con cero errores/advertencias; paridad 13×5, SimpleLoc,
+  288 VFX, 867 cartas, 257 poderes y 124 reliquias verdes. Se regeneraron y abrieron los 13 PCK:
+  manifiestos idénticos, localización nueva presente y cero DLL internas.
+- **Workshop publicado:** SteamCMD actualizó los 13 items públicos existentes en una sola sesión y
+  confirmó 13/13 commits exitosos. Se conservaron todos los IDs; Kagetora, Shuten y Astolfo también
+  actualizaron sus previews desde los fondos oficiales configurados. No se realizó instalación
+  local, por lo que no existe riesgo de IDs duplicados con las suscripciones de Workshop.
+
+## 2026-08-01 — compatibilidad completa con reliquias Ancient preparada
+
+- **Sea Glass / Orobas:** el título vanilla concatena el ID del personaje y sólo existen claves
+  para los cinco personajes base. FGOCore detecta los doce prefijos FGO y usa el título genérico
+  ya localizado, evitando la `LocException` que bloqueaba la opción de Orobas.
+- **Archaic Tooth 12/12:** una carta firma de cada mazo inicial implementa ahora el contrato
+  `ITranscendenceCard` de BaseLib y se transforma en una carta temática existente del mismo
+  personaje. No se renombró ningún ID ni se alteró la composición de los mazos guardados.
+- **Yummy Cookie 12/12:** RitsuLib registra una visual por personaje para la reliquia vanilla. Se
+  reutiliza el icono completo de su starter identitaria (normal, contorno y grande), eliminando el
+  fallback visual de Ironclad sin agregar recursos duplicados.
+- **Versiones preparadas:** FGOCore `v0.1.18`; Mash `v0.1.16`; Morgan, Artoria, Mordred, Gilgamesh,
+  Okita, Oberon y Tiamat `v0.1.15`; Siegfried `v0.1.17`; Kagetora `v0.1.8`; Shuten `v0.1.7` y
+  Astolfo `v0.1.6`. Los personajes exigen FGOCore `v0.1.18`.
+- **Validación local:** matriz MAIN/BETA 26/26 y tres sondas verdes (1.284 referencias del juego),
+  incluida la carga del artefacto MAIN sobre BETA. Paridad 13×5, SimpleLoc, 288 VFX, 629
+  identidades, 867 cartas, 257 poderes, 124 reliquias, 15 perfiles animados y presentación 12/12
+  sin errores. Los 13 PCK contienen el manifiesto staged exacto y cero DLL internas.
+- **Pendiente externo:** no se instaló ni se subió nada a Steam; el lote queda preparado para
+  publicación conjunta después del playtest real de las tres reliquias.
+
+## 2026-08-01 — hotfix global de Touch of Orobas preparado
+
+- **Causa verificada:** Orobas refina la primera reliquia `Starter`; su tabla vanilla cae a
+  `Circlet` para IDs desconocidos. BaseLib sólo evita esa caída cuando el `CustomRelicModel`
+  sobrescribe `GetUpgradeReplacement()`, cosa que ningún starter FGO hacía.
+- **Cobertura 12/12:** cada starter mecánica ahora declara su Ancient correspondiente. Gilgamesh
+  coloca Bab-ilu primero y la refina en **Ea, la Espada de la Ruptura**; Tiamat incorpora
+  **Mar de Vida: Génesis**. Ambas tienen iconos y localización en cinco idiomas.
+- **Reemplazo completo:** Morgan, Artoria, Okita, Oberon, Siegfried y Kagetora reinstalan la forma,
+  los contadores o el motor que antes sólo sembraba la starter eliminada. Siegfried y Tiamat
+  conservan `NpLevel` y `DupePity` durante el reemplazo.
+- **Protección compartida:** FGOCore evita que una futura starter FGO olvidada se convierta en
+  Circlet y recalcula elecciones de Orobas ya preparadas por una versión anterior. La sonda de
+  compatibilidad exige en adelante los doce mapeos.
+- **Versiones preparadas:** FGOCore `v0.1.17`; Mash `v0.1.15`; Morgan, Artoria, Mordred, Gilgamesh,
+  Okita, Oberon y Tiamat `v0.1.14`; Siegfried `v0.1.16`; Kagetora `v0.1.7`; Shuten `v0.1.6` y
+  Astolfo `v0.1.5`. Los personajes exigen FGOCore `v0.1.17`.
+- **Validación local:** matriz MAIN/BETA 26/26 y tres sondas verdes (1.283 referencias del juego);
+  paridad 13×5, SimpleLoc, 288 VFX, 629 identidades, 124 reliquias, 15 perfiles animados sin
+  errores, presentación 12/12, calidad visual y fichas de Workshop aprobadas. Los 13 PCK en
+  `dist/` contienen manifiestos idénticos,
+  cinco idiomas y ningún DLL interno; Ea y Génesis incluyen sus texturas importadas.
+- **Pendiente externo:** no se instaló ni se subió nada a Steam. Falta un playtest real de Orobas
+  y, cuando el usuario lo pida explícitamente, publicar el lote completo en Workshop.
+
+## 2026-08-01 — hotfix de carga RitsuLib, energía de Kagetora y BaseLib 3.4.3 publicado
+
+- **Reporte externo reproducido:** MAIN `0.107.1` con BaseLib `3.4.3`, RitsuLib `0.5.4`, FGOCore
+  `v0.1.15` y Kagetora `v0.1.5` fallaba en tres puntos independientes: el inicializador de FGOCore
+  rechazaba los IDs generados por RitsuLib, BaseLib llamaba una firma BETA de
+  `StartRunLobby.LocalPlayer`, y Kagetora pedía dos texturas de energía ausentes.
+- **RitsuLib corregido:** el normalizador oficial separa `FGOCore` como `FGO_CORE`; los IDs estables
+  reales son `FGO_CORE_CARDTAG_COMMAND_{BUSTER,ARTS,QUICK}` y
+  `FGO_CORE_MODELCAPABILITY_COMMAND_TAG`. La sonda ahora pregunta al generador de RitsuLib 0.5.4 y
+  compara su salida con los cuatro contratos fijos, evitando el falso verde anterior.
+- **Kagetora corregida:** sus pools ya no fuerzan `charui/big_energy.png` ni
+  `charui/text_energy.png`; vuelven al fallback nulo seguro de BaseLib, igual que Shuten y Astolfo.
+  El auditor de assets valida en adelante cualquier override explícito de iconos de energía.
+- **BaseLib 3.4.3 protegido en MAIN:** esa DLL fue compilada con el retorno BETA
+  `StartRunLobbyPlayer`, mientras MAIN devuelve `LobbyPlayer`. Un finalizer de FGOCore neutraliza
+  exclusivamente la `MissingMethodException` de
+  `CharacterSelectStartingRelicsPatch.OnEmbarkPressedPostfix`; cualquier excepción distinta se
+  sigue propagando. La sonda reprodujo el fallo contra la DLL de Workshop y validó el filtro.
+- **Versiones publicadas:** FGOCore `v0.1.16`; Mash `v0.1.14`; Morgan, Artoria, Mordred, Gilgamesh,
+  Okita, Oberon y Tiamat `v0.1.13`; Siegfried `v0.1.15`; Kagetora `v0.1.6`; Shuten `v0.1.5` y
+  Astolfo `v0.1.4`. Los 13 manifiestos exigen RitsuLib `v0.5.4`; los personajes exigen FGOCore
+  `v0.1.16`.
+- **Validación local completa:** matriz MAIN/BETA 26/26 con 0 errores y 0 advertencias; tres sondas
+  con 1.277 referencias del juego y RitsuLib 0.5.4 en los 13 DLL; reproducción adicional de BaseLib
+  3.4.3 en MAIN; localización 13×5, SimpleLoc, 288 referencias VFX, 629 identidades de carta,
+  contextos, assets, 15 perfiles animados, presentación 12/12 y 3.324 fotogramas HD aprobados. Los
+  13 paquetes de `dist/` tienen manifiesto interno idéntico por SHA-256, cero DLL dentro del PCK y
+  Kagetora no contiene los recursos de energía inválidos.
+- **Workshop actualizado:** SteamCMD confirmó `Committing update...Success` 13/13 sobre los ítems
+  públicos existentes. Las tres previews nuevas se enviaron sólo para Kagetora, Shuten y Astolfo.
+  Una consulta posterior por Steamworks dejó los 13 ítems en `OK`: FGOCore requiere BaseLib y
+  RitsuLib; cada personaje requiere BaseLib, RitsuLib y FGOCore (38 vínculos en total).
+- **Pendiente externo:** no se instaló ninguna copia local. Antes de declararlo validado en juego
+  falta que Steam sincronice el lote y un playtest real del inicio de partida y de Embark en MAIN
+  con BaseLib 3.4.3 + RitsuLib 0.5.4.
+
+## 2026-08-01 — BaseLib 3.4.1 + integración transversal RitsuLib 0.5.3 completada
+
+- **Contrato actualizado:** los 13 proyectos compilan contra BaseLib `3.4.0` y exigen runtime
+  `v3.4.1`; además compilan contra RitsuLib `0.5.3` (`Compat.0.107.1` en MAIN, paquete regular en
+  BETA). Los 13 manifiestos declaran `STS2-RitsuLib >= v0.5.3`; los personajes también exigen
+  FGOCore `v0.1.15`.
+- **Interoperabilidad de comandos:** FGOCore registra IDs estables para Buster, Arts y Quick y una
+  capacidad de modelo de RitsuLib los agrega a toda carta `ICommandTyped`, incluidas copias y
+  transformaciones. El lifecycle audit valida exactamente un tag correcto por carta.
+- **Integración de los 12 personajes:** cada DLL referencia RitsuLib directamente, usa su factory de
+  logger y registra el mod en `FgoRitsuIntegration`. La matriz falla si un artefacto queda fuera.
+- **Telemetry abandonado:** se eliminó `FGOTelemetry` del código, build, instalador y release graph.
+  La nueva ruta no captura historial, no pide consentimiento y no persiste lotes JSON.
+- **Mejoras BaseLib:** `ICommandTyped` implementa `ICustomTypeTextCard`; Buster, Arts y Quick aparecen
+  en la placa de tipo, localizados en los cinco idiomas. BaseLib 3.4.1 también corrige `%FormVfx`.
+- **Versiones preparadas:** FGOCore `v0.1.15`; Mash `v0.1.13`; Morgan, Artoria, Mordred, Gilgamesh,
+  Okita, Oberon y Tiamat `v0.1.12`; Siegfried `v0.1.14`; Kagetora `v0.1.5`; Shuten `v0.1.4`;
+  Astolfo `v0.1.3`. El lote completo debe publicarse unido.
+- **Validación completa:** matriz MAIN/BETA 26/26 con 0 errores y 0 advertencias; probes MAIN→MAIN,
+  MAIN→BETA y BETA→BETA con las 13 referencias directas a RitsuLib; auditorías de manifests,
+  Workshop, localización, SimpleLoc, VFX, identidad de cartas, contextos de elección, assets,
+  presentación, calidad visual y animaciones aprobadas. Los 13 PCK fueron publicados a `dist/` e
+  inspeccionados: manifiestos internos idénticos a los externos y ningún DLL de BaseLib/RitsuLib
+  empaquetado.
+- **Workshop actualizado:** SteamCMD confirmó `Committing update...Success` 13/13 sobre los ítems
+  públicos existentes. Kagetora, Shuten y Astolfo usan ahora como `mod_image` y preview la misma
+  ilustración oficial de su fondo de selección; las otras diez previews se preservaron. Las tres
+  imágenes quedaron por debajo de 1 MB, Steam confirmó tres `Uploading preview image...` y
+  `stderr.txt` quedó vacío.
+- **Required Items sincronizados:** la API oficial de Steamworks confirmó 38 vínculos en total.
+  FGOCore requiere BaseLib `3737335127` y RitsuLib `3747602295`; cada uno de los 12 personajes
+  requiere esos dos ítems y FGOCore `3747876334`. Se agregaron únicamente los 10 vínculos que
+  faltaban y una segunda consulta independiente dejó los 13 ítems en `OK`. La herramienta
+  idempotente queda en `tools/workshop_dependencies/` para futuras verificaciones.
+- **Pendiente externo:** no se instaló ninguna copia local. Falta que Steam sincronice el lote y
+  realizar el playtest de carga con BaseLib 3.4.1 + RitsuLib 0.5.3, además de validar visualmente las
+  tres previews en la interfaz real de Workshop.
+
 ## 2026-08-01 — calidad visual adaptativa extendida a los 12 personajes
 
 - **Cobertura completa:** los 12 mods disponen ahora de una variante activable de combate a
@@ -19,11 +224,13 @@ Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md
   Los 12 manifiestos exigen FGOCore `v0.1.14`, por lo que el lote debe publicarse unido.
 - **Paquetes inspeccionados:** los 13 PCK contienen su manifiesto correcto, cinco idiomas y las
   escenas de tienda/fogata de cada personaje. Los imports HD presentes en cada PCK coinciden con
-  su inventario esperado. El lote todavía no fue subido a Workshop ni instalado localmente; queda
-  pendiente un playtest visual real y una orden explícita de publicación.
+  su inventario esperado. SteamCMD confirmó el 2026-08-01 las 13 actualizaciones en los ítems
+  públicos existentes (`Committing update...Success` 13/13). No se instaló localmente; queda
+  pendiente reiniciar/sincronizar Steam y hacer un playtest visual real.
 - **Validación:** matriz MAIN/BETA 26/26 con 0 errores y 0 advertencias; las tres sondas enlazaron
   1.288 referencias del juego. Las auditorías de calidad HD, animaciones, presentación, assets,
-  VFX, localización, SimpleLoc y fichas de Workshop aprobaron.
+  VFX, localización, SimpleLoc y fichas de Workshop aprobaron. El auditor de fichas ahora controla
+  el límite real de 8.000 bytes UTF-8 de Steam, después de detectar y corregir FGOCore antes del lote.
 
 ## 2026-08-01 — Kagetora jugable y calidad visual adaptativa preparada
 
@@ -745,7 +952,8 @@ Los fixes están **publicados y en Workshop (PÚBLICOS)** (2026-06-26). Falta **
 ## Pendiente (orden)
 1. **Re-publicar TODO a Workshop junto**: webp patch (VRAM) + NP fixes + manifests (formato nuevo) + Tiamat + los servants que faltan subir (Mordred/Gilgamesh/Okita/Oberon/Siegfried). Ahora usa el **staging** (`dist/` → install-mod / upload).
 2. **Mod de optimización de VRAM** (lazy character loading) — DESPUÉS de Tiamat.
-3. Telemetría RitsuLib (futuro).
+3. Playtest de carga con RitsuLib 0.5.10 y confirmar recursos NP/Estrellas, los contratos Ancient y
+   el audit de tags Buster/Arts/Quick en `godot.log`.
 
 ## Bloqueado / a decidir
 - ✅ **Resuelto (2026-06-25)**: el juego no estaba desinstalado — se **movió de biblioteca Steam a `G:\SteamLibrary\steamapps\common\Slay the Spire 2`** (el viejo C: quedó con restos). `Sts2Path`→G: en los Directory.Build.props. **Build verificado end-to-end**: FGOCore + los 7 personajes con fixes + Tiamat compilan VERDE → `dist/` (solo faltaba 1 `using` en Gil, arreglado). Falta: **playtest** (balance) + **publish/install**.

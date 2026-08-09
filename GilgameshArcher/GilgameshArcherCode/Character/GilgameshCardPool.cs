@@ -4,7 +4,8 @@ using GilgameshArcher.GilgameshArcherCode.Extensions;
 
 namespace GilgameshArcher.GilgameshArcherCode.Character;
 
-public class GilgameshCardPool : CustomCardPoolModel
+public class GilgameshCardPool : CustomCardPoolModel,
+    STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool
 {
     public override string Title => Gilgamesh.CharacterId;
 

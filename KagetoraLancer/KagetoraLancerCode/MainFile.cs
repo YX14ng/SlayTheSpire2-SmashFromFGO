@@ -1,3 +1,5 @@
+using FGOCore.FGOCoreCode.Ritsu;
+using STS2RitsuLib;
 using Godot;
 using HarmonyLib;
 using KagetoraLancer.KagetoraLancerCode.Cards.Special;
@@ -19,10 +21,16 @@ public partial class MainFile : Node
     public const string ResPath = $"res://{ModId}";
 
     public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } =
-        new(ModId, MegaCrit.Sts2.Core.Logging.LogType.Generic);
+        RitsuLibFramework.CreateLogger(ModId);
 
     public static void Initialize()
     {
+        FgoRitsuIntegration.RegisterCharacterMod<
+            Kagetora,
+            Relics.JeweledPagodaOfBishamonten,
+            Relics.GreatPagodaOfBishamonten,
+            Cards.Basic.IncarnationOfBishamonten,
+            Cards.Rare.ManifestationOfBishamonten>(ModId, "jeweled_pagoda_of_bishamonten");
         new Harmony(ModId).PatchAll();
         NpCharge.GaugeFilledWithContext += TryManifestNp;
         NpCharge.GaugeDroppedWithContext += DisarmManifest;

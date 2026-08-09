@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Saves.Runs;
 
@@ -21,6 +22,9 @@ namespace KagetoraLancer.KagetoraLancerCode.Relics;
 public sealed class JeweledPagodaOfBishamonten : KagetoraRelic, IDoctrineCycleListener
 {
     public override RelicRarity Rarity => RelicRarity.Starter;
+
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<GreatPagodaOfBishamonten>();
 
     public override async Task BeforeCombatStartLate()
     {
@@ -44,6 +48,13 @@ public sealed class JeweledPagodaOfBishamonten : KagetoraRelic, IDoctrineCycleLi
 public sealed class GreatPagodaOfBishamonten : KagetoraRelic, IDoctrineCycleListener
 {
     public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    public override async Task BeforeCombatStartLate()
+    {
+        await FormSwitch.Enter<NagaoKagetoraFormPower>(null, Owner.Creature, null);
+        await DoctrinePower.EnsureInstalled(Owner.Creature);
+        await CommandBonusPower.EnsureInstalled(Owner.Creature);
+    }
 
     public async Task AfterDoctrineCycle(PlayerChoiceContext context, DoctrineAdvance result)
     {

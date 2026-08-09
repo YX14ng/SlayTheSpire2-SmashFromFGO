@@ -1,4 +1,7 @@
 {
+  "FGOCORE-COMMAND_TYPE_BUSTER": "Buster{Type}",
+  "FGOCORE-COMMAND_TYPE_ARTS": "Arts{Type}",
+  "FGOCORE-COMMAND_TYPE_QUICK": "Quick{Type}",
   "FGOCORE-GOLDEN_APPLE.title": "黄金果实",
   "FGOCORE-GOLDEN_APPLE.description": "#获得!Energy!点能量。抽!C!张牌。肝就完事了。",
   "FGOCORE-MAPO_TOFU.title": "特辣麻婆豆腐",

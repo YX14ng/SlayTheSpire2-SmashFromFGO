@@ -33,16 +33,25 @@ Rules of engagement:
 - **Multi-mod monorepo**: one shared mechanics library **`FGOCore/`** (~88 `.cs`) + **12 character
   mods** (MashShielder, MorganBerserker, ArtoriaCaster, MordredSaber, GilgameshArcher, OkitaSaber,
   OberonPretender, SiegfriedSaber, Tiamat→`TiamatBeast`, KagetoraLancer, ShutenDouji y
-  AstolfoRider). ~1,068 `.cs` across the character mods.
-- Each top-level folder with a `*.csproj` is an **independent mod** with its own manifest, assets,
-  localization. All depend on FGOCore + BaseLib.
+  AstolfoRider). ~1,068 `.cs`
+  across the character mods.
+- Each top-level folder with a `*.csproj` is an **independent mod**. Gameplay characters have their
+  own manifest/assets/localization and depend on FGOCore + BaseLib + RitsuLib.
 - Targets **MAIN v0.107.1 and BETA v0.110.1** with one artifact set, compiled against **BaseLib
-  3.3.6** and runtime-verified with 3.3.7.
+  3.4.0** (latest NuGet), runtime minimum 3.4.1, plus RitsuLib 0.5.10. FGOCore contains a narrow
+  compatibility guard for BaseLib 3.4.3's BETA-only `StartRunLobby.LocalPlayer` signature on MAIN.
 - **`decompiled/`** = the decompiled game (incl. a full BaseLib decompile under
   `decompiled/_baselib_full/`). This is the **ground truth** for hook signatures, VFX paths, and
   base-class behavior.
-- **There is NO test suite.** No `*.Tests`, no xunit/nunit. Correctness = reasoning + decompiled
-  cross-reference. (The `decompiled/` test stubs are vanilla game code, not ours.)
+- **There is no conventional unit-test suite.** No `*.Tests`, xunit or nunit. Correctness = reasoning
+  + decompiled cross-reference + the compatibility probe. The probe resolves every metadata type
+  and member referenced in sts2/BaseLib/RitsuLib/FGOCore/Harmony/Godot, resolves Harmony targets
+  (including dynamic branch bridges), and verifies the stable RitsuLib command-tag bridge, the
+  two stable FGO secondary-resource IDs, the twelve official Touch of Orobas mappings, the twelve
+  official Archaic Tooth mappings, Colorful Philosophers,
+  Sea Glass fallback, the shared Yummy Cookie registration and a direct RitsuLib reference from
+  every artifact. (The `decompiled/` test stubs are vanilla
+  game code, not ours.)
 
 ---
 
@@ -53,12 +62,19 @@ Rules of engagement:
 - **Publish** (any non-code change — localization JSON, images, scenes): `dotnet publish
   <Mod>/<Mod>.csproj -c Release` → dll **+** MegaDot `--export-pack` `.pck` to `dist/<Mod>/`. The
   export prints benign warnings (`no solution file`, `MSB3077 ExitCode -1`) but still produces a
-  valid `.pck` — **verify by content, not exit code**.
+  valid `.pck` — **verify by content, not exit code**. `tools/audit_pck_packages.ps1` compara el
+  manifiesto interno con staging y rechaza DLL embebidas.
+- RitsuLib is an external dependency; its DLL must not be copied into any gameplay staging directory.
 - Machine-local paths (`GodotPath`, `Sts2Path`) live in each project's `Directory.Build.props`
   (**gitignored**); `Sts2PathDiscovery.props` autodetects when possible. There is no `.sln` — build
   each project from its own dir. **.NET 9 SDK** + a **MegaDot 4.5.1** export binary are required.
 - **Compile-green is not the only automated gate.** Build a changed character csproj (and `FGOCore`
   first), then run the relevant localization, asset, VFX, animation and context audits under `tools/`.
+- `tools/audit_vanilla_contracts.ps1` is the drift gate for closed vanilla consumers and dynamic
+  calls. It checks all twelve pools plus both decompilations, inventories reflection, rejects new
+  direct `AttackCommand.FromCard`/synchronous resource loads, and requires the Colorful
+  Philosophers localization keys. `tools/build_compat_matrix.ps1` runs it automatically before any
+  build, then probes MAIN→MAIN, MAIN→BETA and BETA→BETA.
 - For context-sensitive changes, run
   `dotnet run --project tools/choice_context_audit/ChoiceContextAudit.csproj -- .`; it must report
   zero calls that discard an available `PlayerChoiceContext`.
@@ -99,9 +115,10 @@ why it bites, where to look.
    `process_frame` signal. Reference impl: `FGOCore/FGOCoreCode/Forms/FormVisuals.cs`. Grep:
    `ResourceLoader.Load(` (sync) anywhere in combat paths.
 5. **Static caches / VRAM.** Never preload all forms / all mods into a process-static cache (it pins
-   VRAM forever → "only health bars" on weak GPUs, or crash). Group by character; preload only the
-   fighting character's group. Frame textures capped `process/size_limit=768` in the `.import`.
-   Check any `static` mutable collection for unbounded growth / missing cleanup.
+   VRAM forever → "only health bars" on weak GPUs, or crash). Request only the visible form, keep
+   later swaps asynchronous, and release strong references when `NCombatRoom` exits. Frame textures
+   are capped `process/size_limit=768` in the `.import`. Check any `static` mutable collection for
+   unbounded growth / missing cleanup.
 6. **Multicast delegate await.** `NpCharge.GaugeFilled/GaugeDropped.Invoke()` over N subscribers
    only returns the **last** one's `Task`; earlier async handlers are fire-and-forget. If order /
    completion matters, iterate `GetInvocationList()` and `await` each.
@@ -121,7 +138,10 @@ why it bites, where to look.
      `grep '"vfx/' decompiled/`.
    - **IDs are immutable with active saves** (mod id, model id, power id — the mod prefix is part of
      the id). Never rename; never migrate a mechanic between mods while saves exist.
-   - Manifest `dependencies` use the **object form** `[{"id":"BaseLib","min_version":"v3.3.6"}, ...]`.
+   - Manifest `dependencies` use the **object form** `[{"id":"BaseLib","min_version":"v3.4.1"}, ...]`.
+   - Touch of Orobas refina la **primera** `Starter`: la mecánica va primera en `StartingRelics`,
+     sobrescribe `GetUpgradeReplacement()` y su Ancient debe reinstalar todo setup que la starter
+     eliminada aportaba. Si ambas son `INpLevelStore`, el estado debe transferirse.
    - **One** Block-retention preventer per game — all custom retention must delegate to
      `FGOCore/FGOCoreCode/Block/BlockRetention.cs` (`IBlockRetentionSource`, MAX wins).
    - Write `.tscn`/`.tres` as UTF-8 **no BOM** (BOM → Godot rejects at runtime).

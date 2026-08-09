@@ -1,5 +1,9 @@
+using GilgameshArcher.GilgameshArcherCode.Cards;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 using GilgameshArcher.GilgameshArcherCode.Powers;
 
 namespace GilgameshArcher.GilgameshArcherCode.Relics;
@@ -24,9 +28,12 @@ namespace GilgameshArcher.GilgameshArcherCode.Relics;
 /// El Vínculo (BondRelic), Arrogancia del Rey y el contador de cartas-del-turno siguen en
 /// <see cref="OathOfUruk"/>; Bab-ilu es el SEGUNDO starter, enfocado en el arsenal.
 /// </summary>
-public sealed class BabIlu : GilgameshRelic
+public class BabIlu : GilgameshRelic
 {
     public override RelicRarity Rarity => RelicRarity.Starter;
+
+    public override RelicModel? GetUpgradeReplacement() =>
+        ModelDb.Relic<EaSwordOfRupture>();
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<TreasurePower>()];
@@ -36,5 +43,43 @@ public sealed class BabIlu : GilgameshRelic
         await base.BeforeCombatStartLate();
         await ArmsPlayedPower.EnsureInstalled(Owner.Creature);
         await TreasurePower.Seed(Owner.Creature, TreasurePower.StartingAmount);
+    }
+}
+
+/// <summary>
+/// Ea, la Espada de la Ruptura: la mejora Ancient de Bab-ilu. Conserva el Tesoro inicial,
+/// manifiesta dos Armas al abrir el primer turno y convierte las primeras tres Armas jugadas
+/// de cada turno en Carga NP adicional.
+/// </summary>
+public sealed class EaSwordOfRupture : BabIlu
+{
+    private const int StartingArms = 2;
+    private const int NpPerArm = 5;
+    private const int MaxProcsPerTurn = 3;
+
+    public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromPower<TreasurePower>(), HoverTipFactory.FromPower<NpChargePower>()];
+
+    public override async Task AfterPlayerTurnStart(
+        PlayerChoiceContext choiceContext,
+        MegaCrit.Sts2.Core.Entities.Players.Player player)
+    {
+        if (player != Owner || FgoCombatState.GetCombat(Owner.Creature, 13) != 0) return;
+        await FgoCombatState.SetCombat(choiceContext, Owner.Creature, 13, 1);
+        Flash();
+        await TreasureDeck.ManifestRandom(Owner.Creature, StartingArms);
+    }
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    {
+        if (cardPlay.Card.Owner?.Creature != Owner.Creature || cardPlay.Card is not ITreasureArm) return;
+        if (FgoCombatState.GetTurn(Owner.Creature, 10, 2) >= MaxProcsPerTurn) return;
+
+        await FgoCombatState.IncrementTurn(
+            context, Owner.Creature, 10, MaxProcsPerTurn, cardPlay.Card, width: 2);
+        Flash();
+        await NpCharge.Gain(context, Owner.Creature, NpPerArm, cardPlay.Card);
     }
 }

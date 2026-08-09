@@ -14,8 +14,11 @@ namespace OkitaSaber.OkitaSaberCode.Cards.Basic;
 /// combate 1 (DESIGN-OKITA §5.1): es una *RÁFAGA (doble coste ⚡ + 1 *Aliento) y ATACAR = GENERAR
 /// (★). 5 daño ×2; +10★ (up: 7×2; +20★). El paso que acorta la tierra.
 /// </summary>
-public sealed class Shukuchi() : OkitaCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), IRafagaCard
+public sealed class Shukuchi() : OkitaCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), IRafagaCard, BaseLib.Abstracts.ITranscendenceCard
 {
+    public MegaCrit.Sts2.Core.Models.CardModel GetTranscendenceTransformedCard() =>
+        MegaCrit.Sts2.Core.Models.ModelDb.Card<Rare.InfiniteInstant>();
+
     public int RafagaCost => 1;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

@@ -12,19 +12,17 @@ namespace FGOCore.FGOCoreCode.Forms;
 /// so BaseLib's animation routing keeps working untouched.
 /// Frames resources are heavy (hundreds of MB of textures per character). Each character
 /// mod registers its OWN forms once (<see cref="RegisterFrames"/>, one call = one group);
-/// when a creature enters combat we background-load that character's group in single-player.
-/// Multiplayer loads only the current form: several FGO players preloading every alternate form
-/// at once can still exhaust VRAM even though unrelated installed characters remain lazy.
+/// when a creature enters combat we background-load only its current form. Alternate forms are
+/// requested on demand and keep the previous sprite visible while they finish loading.
 /// <para>VRAM: do NOT preload every registered group. With N FGO character mods installed,
 /// preloading all groups would pin N×(hundreds of frames) into VRAM at once even if you
 /// only play one of them — that exhausted VRAM on normal GPUs (cards/intent failed to
 /// render → "just health bars", or a hard crash with 3 characters). We scope the preload
-/// to the group of the character actually fighting.</para>
+/// to the form of the character actually visible.</para>
 /// </summary>
 public static class FormVisuals
 {
-    // path -> the group (one character's full set of form paths) it belongs to.
-    private static readonly Dictionary<string, string[]> GroupOf = [];
+    private static readonly HashSet<string> RegisteredPaths = [];
     private static readonly Dictionary<string, float> SpriteXOf = [];
     private static readonly Dictionary<string, float> SpriteYOf = [];
     private static readonly Dictionary<string, float> SpriteScaleOf = [];
@@ -40,13 +38,11 @@ public static class FormVisuals
     private const string GenMeta = "fgo_form_gen";
     private const string BaseScaleMeta = "fgo_form_base_scale";
 
-    /// <summary>Register ONE character's form frame resources (call once at mod init).
-    /// Each call is treated as a group: only the group of the character entering combat
-    /// is preloaded, never every installed character's frames.</summary>
+    /// <summary>Register one character's form frame resources (call once at mod init).
+    /// Registration identifies paths eligible for adaptive quality; only the visible path loads.</summary>
     public static void RegisterFrames(params string[] paths)
     {
-        var group = paths.Where(p => !string.IsNullOrEmpty(p)).ToArray();
-        foreach (var p in group) GroupOf[p] = group;
+        foreach (var path in paths.Where(p => !string.IsNullOrEmpty(p))) RegisteredPaths.Add(path);
     }
 
     /// <summary>
@@ -57,10 +53,9 @@ public static class FormVisuals
     public static void RegisterFramesWithSpriteX(params (string Path, float SpriteX)[] forms)
     {
         var valid = forms.Where(f => !string.IsNullOrEmpty(f.Path)).ToArray();
-        var group = valid.Select(f => f.Path).ToArray();
         foreach (var form in valid)
         {
-            GroupOf[form.Path] = group;
+            RegisteredPaths.Add(form.Path);
             SpriteXOf[form.Path] = form.SpriteX;
         }
     }
@@ -74,10 +69,9 @@ public static class FormVisuals
         params (string Path, float SpriteX, float SpriteY)[] forms)
     {
         var valid = forms.Where(f => !string.IsNullOrEmpty(f.Path)).ToArray();
-        var group = valid.Select(f => f.Path).ToArray();
         foreach (var form in valid)
         {
-            GroupOf[form.Path] = group;
+            RegisteredPaths.Add(form.Path);
             SpriteXOf[form.Path] = form.SpriteX;
             SpriteYOf[form.Path] = form.SpriteY;
         }
@@ -92,10 +86,9 @@ public static class FormVisuals
         params (string Path, float SpriteX, float SpriteY, float UniformScale)[] forms)
     {
         var valid = forms.Where(f => !string.IsNullOrEmpty(f.Path)).ToArray();
-        var group = valid.Select(f => f.Path).ToArray();
         foreach (var form in valid)
         {
-            GroupOf[form.Path] = group;
+            RegisteredPaths.Add(form.Path);
             SpriteXOf[form.Path] = form.SpriteX;
             SpriteYOf[form.Path] = form.SpriteY;
             SpriteScaleOf[form.Path] = form.UniformScale;
@@ -112,10 +105,9 @@ public static class FormVisuals
             float HighQualityScaleMultiplier)[] forms)
     {
         var valid = forms.Where(f => !string.IsNullOrEmpty(f.Path)).ToArray();
-        var group = valid.Select(f => f.Path).ToArray();
         foreach (var form in valid)
         {
-            GroupOf[form.Path] = group;
+            RegisteredPaths.Add(form.Path);
             SpriteXOf[form.Path] = form.SpriteX;
             SpriteYOf[form.Path] = form.SpriteY;
             SpriteScaleOf[form.Path] = form.UniformScale;
@@ -128,19 +120,6 @@ public static class FormVisuals
         return HighQualityScaleOf.TryGetValue(logicalPath, out var highQualityScale)
             ? FgoVisualQuality.ResolveFrames(logicalPath, tier, highQualityScale)
             : FgoVisualQuality.ResolveFrames(logicalPath, tier);
-    }
-
-    /// <summary>Background-load the current form and, when allowed, its sibling forms.
-    /// Multiplayer deliberately skips siblings to keep several FGO players within the VRAM budget.</summary>
-    private static FrameResourceSelection[] ResolveGroup(
-        string logicalPath,
-        bool includeAlternates,
-        FrameQualityTier tier)
-    {
-        var group = includeAlternates && GroupOf.TryGetValue(logicalPath, out var registered)
-            ? registered
-            : [logicalPath];
-        return group.Select(path => Resolve(path, tier)).ToArray();
     }
 
     private static void PreloadGroup(IEnumerable<FrameResourceSelection> selections)
@@ -255,6 +234,29 @@ public static class FormVisuals
         MainFile.Logger.Info($"FormVisuals: evicted {evict.Count} cached frame set(s) from inactive character groups");
     }
 
+    /// <summary>
+    /// Drops FGOCore's strong references once the combat room leaves the scene tree. The sprites
+    /// keep their resources alive until Godot frees the room, but event/rest/merchant rooms no
+    /// longer inherit every frame set visited during the previous fight.
+    /// </summary>
+    internal static void ReleaseCombatFrames(NCombatRoom exitingRoom)
+    {
+        var exitingCombatId = exitingRoom.GetInstanceId();
+        if (_activeCombatId != 0 && _activeCombatId != exitingCombatId) return;
+
+        var released = Cache.Count;
+        Cache.Clear();
+        _activeCombatId = 0;
+        _activePaths = [];
+        _prevPaths = [];
+        FgoVisualQuality.ReleaseCombatSelection(exitingCombatId);
+
+        if (released > 0)
+        {
+            MainFile.Logger.Info($"FormVisuals: released {released} cached frame set(s) after combat");
+        }
+    }
+
     public static void Apply(Creature creature, FormPower form)
     {
         if (form.FramesPath == null) return;
@@ -264,16 +266,15 @@ public static class FormVisuals
 
     private static void Apply(Creature creature, string logicalPath)
     {
-        // Single-player can afford to warm this character's complete form group for seamless swaps.
-        // In co-op, each player loads only the form currently in use; a later switch remains async
-        // and keeps the old sprite visible until ready instead of risking a black screen from VRAM
-        // exhaustion when several FGO characters preload all of their alternatives together.
+        // Load only what is visible. Some HD groups contain hundreds of 1024 px frames; warming all
+        // alternates at room entry can reserve several GiB before the first turn. A later form switch
+        // remains asynchronous and keeps the old sprite visible until the requested form is ready.
         var isMultiplayer = creature.Player?.RunState.Players.Count > 1;
         var tier = FgoVisualQuality.GetFrameTier(isMultiplayer);
-        var group = ResolveGroup(logicalPath, includeAlternates: !isMultiplayer, tier);
         var current = Resolve(logicalPath, tier);
-        TrackCombatAndEvict(group);
-        PreloadGroup(group);
+        FrameResourceSelection[] visible = [current];
+        TrackCombatAndEvict(visible);
+        PreloadGroup(visible);
 
         var node = NCombatRoom.Instance?.GetCreatureNode(creature);
         if (node?.FindChild("Sprite", recursive: true, owned: false) is not AnimatedSprite2D sprite) return;
@@ -306,7 +307,7 @@ public static class FormVisuals
                 logicalPath = sprite.SpriteFrames?.ResourcePath;
             }
 
-            if (logicalPath is not null && GroupOf.ContainsKey(logicalPath))
+            if (logicalPath is not null && RegisteredPaths.Contains(logicalPath))
             {
                 Apply(creature, logicalPath);
             }
@@ -315,8 +316,8 @@ public static class FormVisuals
 
     /// <summary>
     /// Swaps the sprite as soon as the background load finishes, polling the scene's process_frame
-    /// signal instead of ever blocking. Usually resolves on the first poll (group preloaded at
-    /// combat start); the loop is the fallback for a switch on turn 1 before the load completes.
+    /// signal instead of ever blocking. The current form usually resolves on the first poll; the
+    /// loop keeps a later on-demand form switch non-blocking until its frames are ready.
     /// </summary>
     private static async Task ApplyWhenReadyAsync(
         AnimatedSprite2D sprite,
@@ -381,4 +382,12 @@ internal static class InitialFrameQualityPatch
 {
     private static void Postfix(NCombatRoom __instance)
         => FormVisuals.ApplyRegisteredInitialFrames(__instance);
+}
+
+[HarmonyPatch(typeof(NCombatRoom), nameof(NCombatRoom._ExitTree))]
+internal static class CombatFrameReleasePatch
+{
+    [HarmonyPostfix]
+    private static void Postfix(NCombatRoom __instance)
+        => FormVisuals.ReleaseCombatFrames(__instance);
 }

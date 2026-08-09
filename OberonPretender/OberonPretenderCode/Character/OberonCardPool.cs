@@ -4,7 +4,8 @@ using OberonPretender.OberonPretenderCode.Extensions;
 
 namespace OberonPretender.OberonPretenderCode.Character;
 
-public class OberonCardPool : CustomCardPoolModel
+public class OberonCardPool : CustomCardPoolModel,
+    STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool
 {
     public override string Title => Oberon.CharacterId;
 

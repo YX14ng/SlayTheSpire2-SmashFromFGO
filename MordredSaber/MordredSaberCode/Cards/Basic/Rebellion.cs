@@ -15,8 +15,11 @@ namespace MordredSaber.MordredSaberCode.Cards.Basic;
 /// no el número de la firma que la activa). La escena de Apocrypha ante Sisigou, jugable desde
 /// el combate 1.
 /// </summary>
-public sealed class Rebellion() : MordredCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public sealed class Rebellion() : MordredCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), BaseLib.Abstracts.ITranscendenceCard
 {
+    public MegaCrit.Sts2.Core.Models.CardModel GetTranscendenceTransformedCard() =>
+        MegaCrit.Sts2.Core.Models.ModelDb.Card<Rare.CoupDEtat>();
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Move)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<RebellionFormPower>()];

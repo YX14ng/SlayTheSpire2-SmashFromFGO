@@ -4,7 +4,8 @@ using OkitaSaber.OkitaSaberCode.Extensions;
 
 namespace OkitaSaber.OkitaSaberCode.Character;
 
-public class OkitaCardPool : CustomCardPoolModel
+public class OkitaCardPool : CustomCardPoolModel,
+    STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool
 {
     public override string Title => Okita.CharacterId;
 

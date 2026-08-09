@@ -51,6 +51,14 @@ $titles = [ordered]@{
     AstolfoRider    = "FGO — Astolfo 阿斯托尔福 (Rider)"
 }
 
+# Estos tres items usan como preview la misma ilustracion oficial que su fondo de seleccion.
+# Los demas conservan la portada configurada manualmente en Workshop.
+$previewSources = [ordered]@{
+    KagetoraLancer = "KagetoraLancer\KagetoraLancer\mod_image.png"
+    ShutenDouji    = "ShutenDouji\ShutenDouji\mod_image.png"
+    AstolfoRider   = "AstolfoRider\AstolfoRider\mod_image.png"
+}
+
 $targets = if ($Only) { $Only } else { @($titles.Keys) }
 $utf8NoBom = New-Object System.Text.UTF8Encoding $false
 $uploadQueue = @()
@@ -83,11 +91,26 @@ foreach ($m in $targets) {
     Copy-Item (Join-Path $src "$m.json") $dst
     Copy-Item (Join-Path $src "$m.pck")  $dst
 
+    $previewLine = ""
+    if ($previewSources.Contains($m)) {
+        $previewSource = Join-Path $repo $previewSources[$m]
+        if (-not (Test-Path -LiteralPath $previewSource)) {
+            throw "Falta el preview de ${m}: $previewSource"
+        }
+        if ((Get-Item -LiteralPath $previewSource).Length -gt 1MB) {
+            throw "El preview de $m supera el limite seguro de 1 MB de Workshop."
+        }
+
+        $preview = Join-Path $stage "$m\preview.png"
+        Copy-Item -LiteralPath $previewSource -Destination $preview -Force
+        $previewLine = "    `"previewfile`" `"$($preview -replace '\\','\\')`""
+    }
+
     # descripcion DEFAULT (ingles) desde archivo; sin comillas dobles para no romper el VDF.
     # NOTA: SteamCMD solo setea UNA descripcion (la default/ingles). Las descripciones por
     # idioma (es/zh) se ponen aparte (editor web o herramienta Steamworks).
-    # PREVIEW: NO se toca aca a proposito -- el usuario puso fondos/iconos a mano en la web;
-    # re-subir el preview los pisaria.
+    # PREVIEW: solo Kagetora, Shuten y Astolfo se actualizan desde los fondos oficiales pedidos.
+    # Los demas no reciben previewfile y conservan su imagen actual de Workshop.
     $descFile = Join-Path $descDir "$m.txt"
     if (-not (Test-Path $descFile)) { throw "Falta la descripcion: $descFile" }
     $desc = ([System.IO.File]::ReadAllText($descFile)).Trim() -replace '"', "'"
@@ -99,6 +122,7 @@ foreach ($m in $targets) {
     "appid" "$appid"
     "publishedfileid" "$id"
     "contentfolder" "$($content -replace '\\','\\')"
+$previewLine
     "visibility" "$effectiveVisibility"
     "title" "$($titles[$m])"
     "description" "$desc"

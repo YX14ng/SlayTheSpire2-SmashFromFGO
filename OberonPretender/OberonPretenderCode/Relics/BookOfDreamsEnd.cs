@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Entities.Relics;
 using OberonPretender.OberonPretenderCode.Powers;
+using OberonPretender.OberonPretenderCode.Powers.Forms;
 
 namespace OberonPretender.OberonPretenderCode.Relics;
 
@@ -25,4 +26,10 @@ public sealed class BookOfDreamsEnd : DebtPaidStarsRelic, IFirstUnpaidDebtForgiv
     protected override int StarsPerDebtPaid => 10;
 
     protected override int MaxProcsPerTurn => 5;
+
+    public override async Task BeforeCombatStartLate()
+    {
+        await base.BeforeCombatStartLate();
+        await FormSwitch.Enter<StorybookKingPower>(null, Owner.Creature, null);
+    }
 }

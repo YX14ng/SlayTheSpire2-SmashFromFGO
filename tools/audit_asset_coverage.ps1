@@ -37,9 +37,21 @@ function LocalizedNames([string]$file, [string]$prefix) {
     } | Sort-Object -Unique)
 }
 
+function Is-GameplayProject([IO.DirectoryInfo]$project) {
+    $manifestFile = Get-ChildItem $project.FullName -File -Filter '*.json' -ErrorAction SilentlyContinue |
+        Select-Object -First 1
+    if (-not $manifestFile) { return $true }
+
+    $manifest = Get-Content $manifestFile.FullName -Raw | ConvertFrom-Json
+    $gameplayProperty = $manifest.PSObject.Properties['affects_gameplay']
+    if ($null -eq $gameplayProperty) { return $true }
+    return [bool]$gameplayProperty.Value
+}
+
 $projects = @(Get-ChildItem $Root -Directory | Where-Object {
     $_.Name -notin @('decompiled', 'FGOCore') -and
-    (Get-ChildItem $_.FullName -File -Filter '*.csproj' -ErrorAction SilentlyContinue)
+    (Get-ChildItem $_.FullName -File -Filter '*.csproj' -ErrorAction SilentlyContinue) -and
+    (Is-GameplayProject $_)
 })
 
 foreach ($project in $projects) {
@@ -92,6 +104,17 @@ foreach ($project in $projects) {
         }
     }
     if (-not $completeCharUi) { $missing.Add("$($project.Name): set completo images/charui") }
+
+    $energyPathPattern = [regex]'override\s+string\??\s+(?:BigEnergyIconPath|TextEnergyIconPath)\s*=>\s*"(?<path>[^"]+)"\.ImagePath\(\)'
+    $sourceFiles = Get-ChildItem $project.FullName -Recurse -File -Filter '*.cs' |
+        Where-Object { $_.FullName -notmatch '[\\/](?:bin|obj)[\\/]' }
+    foreach ($sourceFile in $sourceFiles) {
+        $source = Get-Content $sourceFile.FullName -Raw
+        foreach ($match in $energyPathPattern.Matches($source)) {
+            $relativePath = $match.Groups['path'].Value -replace '/', [IO.Path]::DirectorySeparatorChar
+            Assert-Image (Join-Path $images $relativePath) 0 0
+        }
+    }
 }
 
 if ($missing.Count -or $wrongSize.Count) {

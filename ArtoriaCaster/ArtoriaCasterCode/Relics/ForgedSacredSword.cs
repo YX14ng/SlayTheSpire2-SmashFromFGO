@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using ArtoriaCaster.ArtoriaCasterCode.Powers;
+using ArtoriaCaster.ArtoriaCasterCode.Powers.Forms;
 
 namespace ArtoriaCaster.ArtoriaCasterCode.Relics;
 
@@ -17,6 +18,11 @@ public sealed class ForgedSacredSword : ArtoriaRelic, IFormChangeListener
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
+
+    public override async Task BeforeCombatStartLate()
+    {
+        await FormSwitch.Enter<ProphecyCasterFormPower>(null, Owner.Creature, null);
+    }
 
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {

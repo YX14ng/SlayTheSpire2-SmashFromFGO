@@ -3,7 +3,8 @@ using Godot;
 
 namespace ShutenDouji.ShutenDoujiCode.Character;
 
-public sealed class ShutenCardPool : CustomCardPoolModel
+public sealed class ShutenCardPool : CustomCardPoolModel,
+    STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool
 {
     public override string Title => Shuten.CharacterId;
     public override float H => 0.82f;

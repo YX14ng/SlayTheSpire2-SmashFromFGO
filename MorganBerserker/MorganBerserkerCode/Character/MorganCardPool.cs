@@ -4,7 +4,8 @@ using MorganBerserker.MorganBerserkerCode.Extensions;
 
 namespace MorganBerserker.MorganBerserkerCode.Character;
 
-public class MorganCardPool : CustomCardPoolModel
+public class MorganCardPool : CustomCardPoolModel,
+    STS2RitsuLib.Scaffolding.Characters.IModColorfulPhilosophersCardPool
 {
     public override string Title => MorganBerserker.CharacterId; //This is not a display name.
 

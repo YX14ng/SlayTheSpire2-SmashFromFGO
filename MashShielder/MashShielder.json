@@ -3,17 +3,21 @@
     "name":  "Mash Kyrielight - The Shielder",
     "author":  "Chaldea",
     "description":  "Adds Mash Kyrielight from Fate/Grand Order as a playable character: hoard unbreakable Block, charge her Noble Phantasm, and switch between Shielder, Ortinax and Paladin forms.",
-    "version":  "v0.1.12",
+    "version":  "v0.1.18",
     "has_pck":  true,
     "has_dll":  true,
     "dependencies":  [
                          {
                              "id":  "BaseLib",
-                             "min_version":  "v3.3.6"
+                             "min_version":  "v3.4.1"
+                         },
+                         {
+                             "id":  "STS2-RitsuLib",
+                             "min_version":  "v0.5.10"
                          },
                          {
                              "id":  "FGOCore",
-                             "min_version":  "v0.1.14"
+                             "min_version":  "v0.1.20"
                          }
                      ],
     "affects_gameplay":  true
