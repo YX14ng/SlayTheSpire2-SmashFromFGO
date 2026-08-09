@@ -162,7 +162,12 @@ Write-Host ""
 Write-Host "Conectando una sola vez para publicar $($uploadQueue.Count) item(s)..."
 & $SteamCmd @steamArgs 2>&1 | Tee-Object -Variable steamOutput
 $steamExitCode = if ($null -eq $LASTEXITCODE) { 0 } else { $LASTEXITCODE }
-$successCount = [regex]::Matches(($steamOutput -join "`n"), 'Committing update\.\.\.Success').Count
+# Singleline + .*? : el steamcmd de Linux intercala secuencias ANSI y avisos IPC entre
+# "Committing update..." y "Success." — el match literal contaba 0 con uploads exitosos.
+$successCount = [regex]::Matches(
+    ($steamOutput -join "`n"),
+    'Committing update\.\.\..*?Success\.',
+    [System.Text.RegularExpressions.RegexOptions]::Singleline).Count
 
 if ($steamExitCode -ne 0 -or $successCount -ne $uploadQueue.Count) {
     throw "SteamCMD confirmo $successCount de $($uploadQueue.Count) updates (exit code $steamExitCode)."
