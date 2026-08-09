@@ -2,6 +2,54 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-09 — lote de fixes por reportes de Steam (preparado en la máquina Linux)
+
+- **Crash de tienda (ArgoDevilian, Linux MAIN):** `NMerchantCharacter._Ready` construye
+  `MegaSpineBinding` sobre `GetChild(0)` asumiendo SpineSprite; el camino `TryAutoConvert` de
+  BaseLib no marca `CreatedFromFactory`, así que la guardia de BaseLib 3.4.3 no corre y la escena
+  raster FGO abortaba el juego al entrar a la tienda. Fix: `MerchantSpineGuard` en FGOCore
+  (prefixes `Priority.Low` sobre `_Ready` y `PlayAnimation` con fallback raster; mismo chequeo
+  `GetClass()=="SpineSprite"` que usa `NRestSiteCharacter`). Reportar upstream a Alchyr.
+- **~100 `ArgumentException: Undefined resource string ID:0x80070057` por sesión (Linux):**
+  `set_name` C# sobre `FgoSpriteMotion` propaga `NOTIFICATION_PATH_RENAMED` al bridge, roto en el
+  runtime Linux recortado (MegaDot 4.5.1.m.12; misma firma documentada por carlineng/STS2Dojo).
+  Fix: el nodo de suavizado ya no se nombra desde C# (dedup por tipo), guard null en `_Process`.
+  FGOCore ahora loggea `FrameworkDescription`/`OSDescription` al iniciar para triaje futuro.
+- **Tooltips de reliquias FGO rotos:** `RelicModel.Pool` hace `First()` y explota para TODA
+  reliquia fuera de un relic pool (todas las de personajes custom; RitsuLib ya lo advertía).
+  Fix: `RelicPoolFallback` (finalizer que devuelve el pool del personaje dueño o el primero).
+  No se registran pools nuevos: gobiernan drops.
+- **NP/Estrellas invisibles post-v0.1.20 (Smooth, AnneFlank88):** RitsuLib NO dibuja UI por
+  defecto para recursos secundarios — `RegisterCombatUi` es API para el mod y nadie la llamaba,
+  con los powers legacy ya ocultos. Fix: FGOCore registra `NSecondaryResourceCounterRow` anclada
+  sobre `EnergyCounterContainer` (offset −72 px, ajustar en playtest); si el registro falla, los
+  powers legacy vuelven a ser visibles (`CombatMetersActive`).
+- **Reliquia inicial → Circlet (reporte chino 1/8):** era el mapeo de Touch of Orobas sin
+  registrar, cubierto por v0.1.20 (los 12 personajes registran los 5 genéricos + adaptador que
+  repara saves). Confirmar en runtime; no requiere código nuevo.
+- **Artoria `v0.1.17`:** «Dos Caras del Verano» ahora difiere a `AfterCardPlayed` los robos que
+  el mazo no cubre (patrón Driftwood vanilla; el reshuffle ahí es seguro — antes simplemente no
+  robaba con mazo vacío, reporte chino 6/8). «Tajo de la Espada Sagrada» 6/13→**9/16** (up
+  12/21): base al piso de común 1⚡ pura, crítico pagado con 2★ a 3,5/★ (banda 3-5).
+- **Astolfo `v0.1.8` (parcial):** escala 1.0→**0.8** y pivotes X/Y −102/−229→**+47/−182**
+  (tienda/fogata −47 por la regla de no-espejado); Bounds/markers a valores tipo Okita. Estaba
+  +24,5% sobre la baseline (~360 px visibles) por el factor de import de su lienzo 1513×1010 sin
+  compensar. **Pendiente re-render:** los frames de attack están recortados EN los WebP (54/55
+  tocan borde; `MEASURE_SKIP["400400"]` excluyó attack del union de crop en `render.gd:91`) —
+  sacar el skip, re-medir, regenerar 768+1024 y recalcular pivotes/escala con el canvas nuevo.
+- **Descartado:** la detección de VRAM ya estaba guardada por plataforma (en Linux Auto→Balanced
+  768 px, seguro); `aliento_power.png` existe (WARN benigno del PreloadManager); el frame de
+  `MumyouUnleashed` en los logs era ruido de OstyAnime (mod ajeno roto en v0.107.1); el crash de
+  Treasure Chest no muestra mecanismo FGO en los gists — pedir log completo al jugador.
+- **Versiones preparadas:** FGOCore `v0.1.21`, Artoria `v0.1.17`, Astolfo `v0.1.8` (manifiestos
+  y fichas de Workshop actualizados; el resto del roster no cambia — FGOCore v0.1.21 es aditivo
+  y satisface los `min_version v0.1.20`).
+- **Validación:** los 13 proyectos compilan en verde en Linux contra el juego local MAIN
+  v0.107.1 (Sts2DataDir del install de Steam). **Omitido en esta máquina:** matriz MAIN/BETA
+  (PowerShell/Windows), export de PCK (MegaDot), `.uid` de los dos .cs nuevos (los genera el
+  editor al importar), playtest visual (posición del medidor NP/Estrellas y escala de Astolfo) y
+  publicación a Workshop — todo queda para la máquina Windows con orden explícita de upload.
+
 ## 2026-08-04 — migración de FGOCore a RitsuLib 0.5.10 publicada
 
 - **Recursos interoperables:** Carga NP y Estrellas de Crítico se registran como recursos secundarios
