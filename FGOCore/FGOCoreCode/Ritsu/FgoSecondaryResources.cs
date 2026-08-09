@@ -1,10 +1,12 @@
 using FGOCore.FGOCoreCode.Np;
 using FGOCore.FGOCoreCode.Stars;
+using Godot;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Characters;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib;
 using STS2RitsuLib.Combat.SecondaryResources;
 
@@ -21,10 +23,21 @@ public static class FgoSecondaryResources
     public const string CritStarsLocalId = "CRIT_STARS";
     public const string NpChargeResourceId = "FGO_CORE_SECONDARY_RESOURCE_NP_CHARGE";
     public const string CritStarsResourceId = "FGO_CORE_SECONDARY_RESOURCE_CRIT_STARS";
+    private const string CombatCounterRowLocalId = "COMBAT_COUNTER_ROW";
+
+    /// <summary>Separación vertical entre el contador de Energía y la fila de medidores FGO.</summary>
+    private const float CounterRowLiftAboveEnergy = 72f;
 
     private static readonly object Sync = new();
     private static readonly HashSet<(Player Player, string ResourceId)> ActiveBridges = [];
     private static bool _initialized;
+
+    /// <summary>
+    /// True sólo cuando la fila de medidores quedó registrada en la UI de combate de RitsuLib.
+    /// Mientras sea false, los powers legacy de NP/Estrellas vuelven a dibujarse como antes de
+    /// v0.1.20 para que el jugador nunca se quede sin indicador visible.
+    /// </summary>
+    public static bool CombatMetersActive { get; private set; }
 
     public static void Initialize()
     {
@@ -60,11 +73,66 @@ public static class FgoSecondaryResources
             ValidateStableId(stars, CritStarsResourceId);
             SecondaryResourceHook.RegisterGlobalListener(new LegacyPowerBridge());
             RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>(OnCombatStarting, replayCurrentState: false);
+            RegisterCombatMeters(registry);
 
             _initialized = true;
             MainFile.Logger.Info(
                 $"RitsuLib recursos FGO registrados: {NpChargeResourceId}, {CritStarsResourceId}.");
         }
+    }
+
+    /// <summary>
+    /// Registra la fila de medidores (NP + Estrellas) sobre la UI de combate. RitsuLib no crea
+    /// ninguna visual por defecto para los recursos secundarios: sin este paso los valores corren
+    /// pero nunca se dibujan, que es exactamente el bug reportado tras v0.1.20.
+    /// </summary>
+    private static void RegisterCombatMeters(ModSecondaryResourceRegistry registry)
+    {
+        try
+        {
+            registry.RegisterCombatUi(
+                CombatCounterRowLocalId,
+                static (NCombatUi _) =>
+                {
+                    var row = new NSecondaryResourceCounterRow();
+                    row.Configure();
+                    return row;
+                },
+                static context =>
+                {
+                    PositionCounterRow(context.Parent, context.Node);
+                    context.Node.Refresh(context.Player, context.VisibleDefinitions);
+                },
+                static context =>
+                {
+                    PositionCounterRow(context.Parent, context.Node);
+                    context.Node.Refresh(context.Player, context.VisibleDefinitions);
+                });
+            CombatMetersActive = true;
+        }
+        catch (Exception exception)
+        {
+            CombatMetersActive = false;
+            MainFile.Logger.ErrorNoTrace(
+                $"No se pudo registrar la fila de medidores FGO; los powers legacy vuelven a ser visibles: {exception}");
+        }
+    }
+
+    /// <summary>
+    /// Ancla la fila justo arriba del contador de Energía para heredar su posición real en
+    /// cualquier resolución. Si el contenedor no está listo aún, se reintenta en el próximo update.
+    /// </summary>
+    private static void PositionCounterRow(NCombatUi combatUi, NSecondaryResourceCounterRow row)
+    {
+        var energy = combatUi.EnergyCounterContainer;
+        if (energy is null
+            || !GodotObject.IsInstanceValid(energy)
+            || !GodotObject.IsInstanceValid(row)
+            || !row.IsInsideTree()
+            || !energy.IsInsideTree())
+            return;
+
+        row.GlobalPosition = energy.GlobalPosition + new Vector2(0f, -CounterRowLiftAboveEnergy);
     }
 
     /// <summary>Muestra ambos medidores de RitsuLib incluso cuando el personaje empieza en cero.</summary>

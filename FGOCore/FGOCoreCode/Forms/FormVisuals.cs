@@ -249,11 +249,35 @@ public static class FormVisuals
         _activeCombatId = 0;
         _activePaths = [];
         _prevPaths = [];
+        DrainFinishedRequests();
         FgoVisualQuality.ReleaseCombatSelection(exitingCombatId);
 
         if (released > 0)
         {
             MainFile.Logger.Info($"FormVisuals: released {released} cached frame set(s) after combat");
+        }
+    }
+
+    /// <summary>
+    /// Un LoadThreadedRequest que quedó en vuelo al terminar el combate deja el recurso cargado
+    /// pinneado en el cache interno del loader hasta que alguien haga LoadThreadedGet. Acá se
+    /// descargan los que ya terminaron; los InProgress se dejan (Get bloquearía el hilo) y se
+    /// drenan en el próximo release o cuando GetFrames los reclame.
+    /// </summary>
+    private static void DrainFinishedRequests()
+    {
+        foreach (var path in Requested.ToArray())
+        {
+            var status = ResourceLoader.LoadThreadedGetStatus(path);
+            if (status == ResourceLoader.ThreadLoadStatus.Loaded)
+            {
+                ResourceLoader.LoadThreadedGet(path);
+                Requested.Remove(path);
+            }
+            else if (status is ResourceLoader.ThreadLoadStatus.Failed or ResourceLoader.ThreadLoadStatus.InvalidResource)
+            {
+                Requested.Remove(path);
+            }
         }
     }
 

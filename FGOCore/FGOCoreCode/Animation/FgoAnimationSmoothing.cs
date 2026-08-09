@@ -14,8 +14,6 @@ namespace FGOCore.FGOCoreCode.Animation;
 /// </summary>
 internal static class FgoAnimationSmoothing
 {
-    private const string ControllerName = "FgoAnimationSmoothing";
-
     private static readonly string[] ResourcePrefixes =
     [
         "res://MashShielder/",
@@ -39,13 +37,28 @@ internal static class FgoAnimationSmoothing
             || sprite.SpriteFrames is null
             || !IsFgoResource(sprite.SpriteFrames.ResourcePath)
             || !profile.Enabled
-            || sprite.GetNodeOrNull<Node>(ControllerName) is not null)
+            || HasMotionController(sprite))
         {
             return root;
         }
 
-        sprite.AddChild(new FgoSpriteMotion { Name = ControllerName, Profile = profile });
+        // NUNCA setear Name acá: set_name sobre un nodo con script C# propaga
+        // NOTIFICATION_PATH_RENAMED al bridge nativo→managed, que en el runtime Linux recortado
+        // del juego (MegaDot 4.5.1.m.12) tira "ArgumentException: Undefined resource string
+        // ID:0x80070057" en cada spawn de criatura (~100 por sesión en reportes de jugadores).
+        // add_child sin nombre asigna el auto-nombre por vía interna, sin callp al script.
+        sprite.AddChild(new FgoSpriteMotion { Profile = profile });
         return root;
+    }
+
+    private static bool HasMotionController(AnimatedSprite2D sprite)
+    {
+        foreach (var child in sprite.GetChildren())
+        {
+            if (child is FgoSpriteMotion) return true;
+        }
+
+        return false;
     }
 
     private static bool IsFgoResource(string path)
@@ -110,7 +123,8 @@ internal partial class FgoSpriteMotion : Node2D
 
     public override void _Process(double delta)
     {
-        if (_sprite.SpriteFrames is null) return;
+        // _sprite queda null si _Ready no llegó a correr (bridge roto en algunas instalaciones).
+        if (_sprite?.SpriteFrames is null || _previousFrame is null) return;
 
         var seconds = (float)delta;
         var target = TargetMotionOffset(seconds);

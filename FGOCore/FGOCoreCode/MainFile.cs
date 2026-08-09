@@ -19,6 +19,11 @@ public partial class MainFile : Node
 
     public static void Initialize()
     {
+        // Los reportes de jugadores llegan sin decir SO/runtime; el build Linux nativo tiene un
+        // bridge C# con fallas conocidas y sus excepciones salen con el mensaje enmascarado.
+        Logger.Info(
+            $"Runtime: {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription} | " +
+            $"{System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
         FgoRitsuIntegration.Initialize();
         ModConfigRegistry.Register(ModId, new FgoVisualConfig());
         Harmony harmony = new(ModId);
