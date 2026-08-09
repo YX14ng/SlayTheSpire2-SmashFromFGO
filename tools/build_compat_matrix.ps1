@@ -87,7 +87,8 @@ try {
         $probeProject = Join-Path $repo 'tools\compatibility_probe\CompatibilityProbe.csproj'
         $probeCore = Join-Path $stage 'FGOCore\FGOCore.dll'
         $characterArtifacts = @($characterProjects | ForEach-Object {
-            $projectName = [System.IO.Path]::GetFileNameWithoutExtension($_)
+            # Normalizado a '/': en Linux GetFileNameWithoutExtension no corta los '\' literales.
+            $projectName = [System.IO.Path]::GetFileNameWithoutExtension(($_ -replace '\\', '/'))
             Join-Path $stage "$projectName\$projectName.dll"
         })
         $probeArtifacts = $characterArtifacts

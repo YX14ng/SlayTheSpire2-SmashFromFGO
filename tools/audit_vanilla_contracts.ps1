@@ -232,7 +232,8 @@ $allSourceFiles = @(
 )
 $reflectionPattern = 'AccessTools\.(Field|Method|Property)|typeof\s*\([^)]*\)\s*\.\s*Get(Field|Method|Property|Constructor)\s*\('
 foreach ($file in $allSourceFiles) {
-    $relative = $file.FullName.Substring($Root.Length).TrimStart('\')
+    # Normalizado a '\' para que la allowlist (escrita con backslashes) matchee también en Linux.
+    $relative = $file.FullName.Substring($Root.Length).TrimStart('\', '/').Replace('/', '\')
     $lines = [IO.File]::ReadAllLines($file.FullName, [Text.Encoding]::UTF8)
     foreach ($line in $lines) {
         $code = ($line -replace '//.*$', '').Trim()
