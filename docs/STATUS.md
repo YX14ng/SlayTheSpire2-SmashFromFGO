@@ -2,6 +2,30 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-09 (e) — re-render de Astolfo: attack completo, preparado v0.1.9
+
+- **Causa cerrada:** `MEASURE_SKIP["400400"]` excluía el attack del union de crop asumiendo props
+  en el borde, pero el `attack_q` es galope terrestre de la FIGURA — 54/55 frames amputados en el
+  WebP. Re-render con el attack incluido: canvas 1513×1010 → **1909×1541**, mismos conteos
+  (78/55/30/17) y misma lista de archivos. Residual aceptado: la punta de la lanza roza el borde
+  izquierdo en 21 frames del galope (banda de 13-33 px, el cuerpo nunca — mismo criterio que los
+  props de Aesc/704710).
+- **Transform recalculado** (fórmula WORKFLOW-FGO, `cx_idle=1264.6`, `alphaBottom=1433`, factor
+  `768/1909`): escala `1.009`, combate `+126/−269`, tienda/fogata `−126/−269`; altura visible
+  ~362 px (baseline, sin cambio de tamaño percibido). Bounds/markers sin cambios. HD sigue con el
+  multiplicador default 0.75 (ambas variantes clampean el mismo canvas).
+- **Gotcha del pipeline en frío:** el `render_all` borra la carpeta de frames y el reimport
+  regenera los `.import` con params DEFAULT (lossless, sin mipmaps) y uids nuevos — el PCK saltó a
+  98 MB. `patch_webp_imports.ps1` los renormaliza (lossy 0.85 + mipmaps + 768/1024) → PCK final
+  **40,4 MB** (menos que los 46 del v0.1.8 pese al canvas mayor). El churn de uid es inocuo (los
+  `.tres` referencian por path). Portabilidad arreglada: `-MegaDot` en `render_all_astolfo.ps1` y
+  separadores en el match de `patch_webp_imports.ps1`.
+- **Verificación:** inventario del PCK idéntico al v0.1.8 publicado (1325/1325); alpha de los
+  frames medido con PIL (idle/cast/hurt sin contacto de borde). Fuentes de render enlazadas desde
+  la copia hermana (`assets/reference/{extracted,bundles}`, ahora gitignoreados).
+- **Pendiente:** playtest visual del galope y del tamaño en pantalla; upload de `v0.1.9` a
+  Workshop con orden explícita.
+
 ## 2026-08-09 (d) — lote publicado en Workshop desde la máquina Linux
 
 - **Publicado con orden explícita del usuario:** FGOCore `v0.1.21` (`3747876334`), Artoria
