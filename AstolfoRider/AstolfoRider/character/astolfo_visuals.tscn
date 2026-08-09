@@ -9,7 +9,8 @@
 unique_name_in_owner = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Visuals"]
-position = Vector2(-102, -229)
+position = Vector2(47, -182)
+scale = Vector2(0.8, 0.8)
 flip_h = true
 sprite_frames = ExtResource("frames")
 animation = &"idle"
@@ -18,15 +19,15 @@ script = ExtResource("script")
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
-offset_left = -150.0
-offset_top = -420.0
-offset_right = 150.0
+offset_left = -130.0
+offset_top = -370.0
+offset_right = 130.0
 offset_bottom = 0.0
 
 [node name="IntentPosition" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -455)
+position = Vector2(0, -400)
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -210)
+position = Vector2(0, -180)

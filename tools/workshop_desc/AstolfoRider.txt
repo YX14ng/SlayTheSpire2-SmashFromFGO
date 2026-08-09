@@ -1,7 +1,7 @@
 [h1]Astolfo — Follow the Next Caprice[/h1]
 Match a different Command each turn, turn Quick attacks into Critical Stars and summon Hippogriff to escape the hits that truly matter.
 
-[b]PLAYTEST BUILD — v0.1.7[/b]
+[b]PLAYTEST BUILD — v0.1.8[/b]
 The character and presentation are complete for testing; balance, save/load and co-op validation are still in progress.
 
 [h2]Core gameplay[/h2]
@@ -42,7 +42,7 @@ Unofficial fan-made mod. Fate/Grand Order characters and official visual assets 
 [h1]ESPAÑOL[/h1]
 Cumplí una Orden distinta cada turno, convertí Ataques Quick en Estrellas de Crítico e invocá a Hipogrifo para escapar de los golpes que realmente importan.
 
-[b]VERSIÓN DE PLAYTEST — v0.1.7[/b]
+[b]VERSIÓN DE PLAYTEST — v0.1.8[/b]
 El personaje y su presentación están completos para pruebas; el balance, guardado/carga y cooperativo todavía están en validación.
 
 [h2]Mecánicas principales[/h2]
@@ -83,7 +83,7 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [h1]简体中文[/h1]
 每回合遵循不同指令、把 Quick 攻击转化为暴击星，并召唤骏鹰避开真正致命的攻击。
 
-[b]测试版本 — v0.1.7[/b]
+[b]测试版本 — v0.1.8[/b]
 角色与视觉内容已可完整测试；平衡、存档及联机验证仍在进行。
 
 [h2]核心机制[/h2]

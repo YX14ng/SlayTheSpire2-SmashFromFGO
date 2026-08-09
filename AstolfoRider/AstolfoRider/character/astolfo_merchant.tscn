@@ -5,7 +5,8 @@
 [node name="AstolfoMerchant" type="Node2D"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(-102, -229)
+position = Vector2(-47, -182)
+scale = Vector2(0.8, 0.8)
 flip_h = true
 sprite_frames = ExtResource("frames")
 animation = &"idle"
