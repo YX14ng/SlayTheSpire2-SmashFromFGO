@@ -2,6 +2,38 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-09 (b) — revisión de dos ejes + caza de defectos sobre el lote
+
+- **Corregido [ALTA]:** `RelicPoolFallback` consultaba `RelicModel.Owner`, que hace
+  `AssertMutable()` y tira `CanonicalModelException` en el modelo canónico (hover en biblioteca,
+  fuera de run) — ahora replica el guard vanilla `IsMutable` de `EnergyIconHelper`. Además el
+  finalizer sólo suprime la `InvalidOperationException` del `First()`; todo lo demás se propaga.
+- **Endurecido:** la fila de medidores NP/★ aísla el anclado a `EnergyCounterContainer` (si el
+  contrato difiere en BETA, degrada a posición por defecto y el `Refresh` corre igual — RitsuLib
+  traga las excepciones del callback entero) y `CombatMetersActive` recién se enciende cuando la
+  fila dibujó al menos una vez: si el factory/attach falla, los powers legacy quedan visibles.
+  `IsVisible` de powers se lee en vivo (sin cache/serialización) → el flip es seguro.
+- **Corregido (co-op):** el drain de «Dos Caras del Verano» filtra dueño
+  (`cardPlay.Card.Owner != Owner.Player`), patrón vanilla universal; sin esto una carta del
+  compañero podía robar para una Artoria muerta (Thorns letales mid-carta dejaban el pendiente).
+  El pendiente además se limpia en `BeforeSideTurnStart` (regla de estado efímero de DECISIONS).
+- **Deuda saldada — Critical v2:** la consolidación (`cc8b6669`) migró el crítico de Artoria al
+  sistema global (×1.5 automático, 50★) pero dejó `ResolveCritDamage`/`ResolveCritDamageScaling`
+  como stubs que devolvían el daño base y tablas `Crit`/`CritCost`/`PerStar` huérfanas en 10
+  cartas — **código muerto que aparentaba mecánica**. Stubs eliminados y cartas podadas a daño
+  directo; cero cambio de runtime (esos números ya no se ejecutaban). Ninguna loc usaba `!Crit!`.
+- **Preventivos:** `PreviousFrame` ya no se nombra desde C# (mismo criterio del fix del bridge
+  Linux); `DrainFinishedRequests` hace `Dispose()` inmediato (el unref no queda diferido al GC) y
+  memoiza `Failed` como `GetFrames`.
+- **Verificados sin defecto (contra decompilado MAIN):** contratos Harmony del guard de tienda
+  (`_Ready` declarado en la clase, `PlayAnimation(string anim, bool)` bindea, skip seguro);
+  robo diferido no reintroduce el soft-lock (la carta en curso vive en la pila Play; el reshuffle
+  toma sólo Descarte+Mazo); Astolfo coherente en las tres superficies y con el flujo HD
+  (0.8×0.75=0.6 sobre 1024 = invariante exacta); publish de FGOCore+Artoria+Astolfo solos es
+  correcto (API aditiva). **Gate para publicar:** correr la matriz MAIN/BETA en Windows — el
+  riesgo restante es que `EnergyCounterContainer` difiera en BETA (ya degradado, la matriz lo
+  detecta).
+
 ## 2026-08-09 — lote de fixes por reportes de Steam (preparado en la máquina Linux)
 
 - **Crash de tienda (ArgoDevilian, Linux MAIN):** `NMerchantCharacter._Ready` construye
@@ -28,9 +60,10 @@ Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md
   registrar, cubierto por v0.1.20 (los 12 personajes registran los 5 genéricos + adaptador que
   repara saves). Confirmar en runtime; no requiere código nuevo.
 - **Artoria `v0.1.17`:** «Dos Caras del Verano» ahora difiere a `AfterCardPlayed` los robos que
-  el mazo no cubre (patrón Driftwood vanilla; el reshuffle ahí es seguro — antes simplemente no
-  robaba con mazo vacío, reporte chino 6/8). «Tajo de la Espada Sagrada» 6/13→**9/16** (up
-  12/21): base al piso de común 1⚡ pura, crítico pagado con 2★ a 3,5/★ (banda 3-5).
+  el mazo no cubre (la carta en curso sigue en la pila Play y el reshuffle sólo toma
+  Descarte+Mazo; precedente vanilla GamePiece — la cita anterior a Driftwood era errónea, esa
+  reliquia rerollea recompensas). «Tajo de la Espada Sagrada» 6→**9** (up 12): base al piso de
+  común 1⚡ pura.
 - **Astolfo `v0.1.8` (parcial):** escala 1.0→**0.8** y pivotes X/Y −102/−229→**+47/−182**
   (tienda/fogata −47 por la regla de no-espejado); Bounds/markers a valores tipo Okita. Estaba
   +24,5% sobre la baseline (~360 px visibles) por el factor de import de su lienzo 1513×1010 sin
