@@ -2,6 +2,35 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-09 (c) — toolchain Linux operativo; matriz MAIN/BETA verde en esta máquina
+
+- **Herramientas nativas instaladas:** MegaDot Linux 4.5.1.m.13 (descomprimido del zip del repo,
+  `GodotPath` en `Directory.Build.props` local), PowerShell 7.6.4 (`~/.local/opt`, symlink
+  `~/.local/bin/pwsh`), SteamCMD Linux (`tools/steamcmd/`, gitignoreado; upload sigue requiriendo
+  orden explícita). `.compat/sts2-{main,beta}` y los decompilados son symlinks a la copia hermana
+  de `/mnt/Programs`; los 7375 objetos LFS (2,6 GB) se materializaron desde el store hermano
+  (content-addressed, sin red) — la causa de los punteros era que los filters de LFS no estaban
+  instalados en esta máquina (`git lfs install` ya corrido; los próximos pull vienen completos).
+- **Matriz MAIN/BETA: VERDE local.** 454 contratos + tres probes `Compatibility OK`
+  (MAIN→MAIN, MAIN→BETA, BETA→BETA; 13 artefactos, 1.846 tipos, 2.288 miembros, 24/27 targets
+  Harmony). Cierra el gate BETA de la revisión (b): `EnergyCounterContainer` enlaza en BETA.
+  Fixes de portabilidad para correrla acá: `Sts2PathDiscovery.props` con fallback Proton
+  (`data_sts2_windows_x86_64`) y respeto del valor preseteado; `audit_vanilla_contracts.ps1`
+  normaliza separadores para la allowlist; `build_compat_matrix.ps1` extrae el nombre de proyecto
+  con separadores normalizados.
+- **Publish + PCK verificados por contenido:** FGOCore/Artoria/Astolfo exportados con MegaDot
+  Linux y montados con el motor para listar archivos — paridad EXACTA contra los PCK publicados
+  del Workshop (FGOCore 285 = 283 + los 2 scripts nuevos; Artoria 2389/2389; Astolfo 1325/1325,
+  con los .tscn nuevos adentro). ⚠️ El export sale con código -1 por la validación «no .sln»
+  (ruido conocido, el repo no usa .sln): NO usar el exit code como verde — verificar contenido
+  (dump por `load_resource_pack` + diff, script en scratchpad de sesión). Gotcha resuelto: un
+  export con punteros LFS deja `valid=false` en los `.import` y el PCK pierde esos ctex —
+  restaurar los `.import`, borrar los `.md5` huérfanos de `.godot/imported/` y `--headless
+  --import`.
+- **Pendiente que sigue igual:** playtest visual (medidor NP/★ y escala de Astolfo), re-render de
+  attack de Astolfo (ahora POSIBLE en esta máquina: assets LFS reales + MegaDot), y upload a
+  Workshop con orden explícita.
+
 ## 2026-08-09 (b) — revisión de dos ejes + caza de defectos sobre el lote
 
 - **Corregido [ALTA]:** `RelicPoolFallback` consultaba `RelicModel.Owner`, que hace
