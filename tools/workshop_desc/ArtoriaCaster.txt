@@ -1,7 +1,7 @@
 [h1]Artoria Caster — The Star of Hope[/h1]
 Prepare the battlefield as Fate/Grand Order's Child of Prophecy, then cross into a summer Berserker to cash stored NP and Critical Stars into a boss-killing turn.
 
-[b]RELEASE BUILD — v0.1.16[/b]
+[b]RELEASE BUILD — v0.1.17[/b]
 
 [h2]Core gameplay[/h2]
 [list]
@@ -39,7 +39,7 @@ Unofficial fan-made mod. Fate/Grand Order characters and official visual assets 
 [h1]ESPAÑOL[/h1]
 Prepará el campo con la Niña de la Profecía de Fate/Grand Order y cruzá a Berserker de verano para convertir NP y Estrellas acumuladas en un turno capaz de derribar jefes.
 
-[b]VERSIÓN PÚBLICA — v0.1.16[/b]
+[b]VERSIÓN PÚBLICA — v0.1.17[/b]
 
 [h2]Mecánicas principales[/h2]
 [list]
@@ -77,7 +77,7 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [h1]简体中文[/h1]
 先以《Fate/Grand Order》的预言之子准备战场，再切换为夏日狂战士，将积累的 NP 与暴击星化为击倒 Boss 的回合。
 
-[b]公开版本 — v0.1.16[/b]
+[b]公开版本 — v0.1.17[/b]
 
 [h2]核心机制[/h2]
 [list]

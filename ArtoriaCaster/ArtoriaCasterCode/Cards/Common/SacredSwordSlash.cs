@@ -10,7 +10,10 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Common;
 
 /// <summary>
 /// Tajo de la Espada Sagrada (圣剑斩击) — THE critical-pattern exemplar:
-/// 6 damage; Critical 2★: 13 (consume 2★ in Berserker/Avalon to use the crit value).
+/// 9 damage; Critical 2★: 16 (consume 2★ in Berserker/Avalon to use the crit value).
+/// Rebalance 2026-08-09 (reporte Steam «pega como un Strike»): base 6→9 = piso de común 1⚡ pura
+/// (baseline 9-10); el crítico no es rider gratis — se paga con 2★ (1★ ≈ ½⚡), delta +7 ≈ 3,5/★
+/// dentro de la banda 3-5 de la tasa de Estrellas.
 /// </summary>
 public sealed class SacredSwordSlash() : ArtoriaCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
@@ -18,8 +21,8 @@ public sealed class SacredSwordSlash() : ArtoriaCard(1, CardType.Attack, CardRar
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(6m, ValueProp.Move),
-        new DynamicVar("Crit", 13),
+        new DamageVar(9m, ValueProp.Move),
+        new DynamicVar("Crit", 16),
         new DynamicVar("CritCost", CritCost)
     ];
 
@@ -37,7 +40,7 @@ public sealed class SacredSwordSlash() : ArtoriaCard(1, CardType.Attack, CardRar
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["Crit"].UpgradeValueBy(4m);
+        DynamicVars.Damage.UpgradeValueBy(3m);   // 9 -> 12 (upgrade estándar de común)
+        DynamicVars["Crit"].UpgradeValueBy(5m);  // 16 -> 21
     }
 }
