@@ -20,7 +20,9 @@ foreach ($f in $files) {
     $t = $t -replace 'compress/mode=\d+', 'compress/mode=1'
     $t = $t -replace 'compress/lossy_quality=[\d.]+', 'compress/lossy_quality=0.85'
     $t = $t -replace 'mipmaps/generate=false', 'mipmaps/generate=true'
-    $effectiveSizeLimit = if ($f.FullName -match '\\character\\frames') { $FrameSizeLimit } else { $SizeLimit }
+    # [\\/] para que el match funcione también en Linux; quality_high/frames NO matchea a
+    # propósito (esa variante usa el límite general de 1024).
+    $effectiveSizeLimit = if ($f.FullName -match '[\\/]character[\\/]frames') { $FrameSizeLimit } else { $SizeLimit }
     $t = $t -replace 'process/size_limit=\d+', "process/size_limit=$effectiveSizeLimit"
     if ($t -ne $orig) {
         [IO.File]::WriteAllText($f.FullName, $t, $utf8)

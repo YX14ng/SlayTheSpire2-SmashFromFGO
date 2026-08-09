@@ -88,7 +88,11 @@ const CLIP_OVERRIDE := {
 # El attack_q de 704710 lanza las espadas telequineticas por TODO el canvas
 # (union 2048x2048 = recorte muerto) — mismo tratamiento: las espadas se cortan
 # en el borde del crop durante el ataque, la figura queda intacta.
-const MEASURE_SKIP := { "505320": ["attack"], "704710": ["attack"], "400400": ["attack"] }
+# 400400 (Astolfo) salió del skip 2026-08-09: su attack_q tiene movimiento TERRESTRE (galope con
+# la lanza) y excluirlo dejaba a la FIGURA entera fuera del union — 54/55 frames de attack
+# recortados EN el WebP (reporte Steam «cut out of frame»). Con props que sí se cortan en el
+# borde (espadas voladoras de Aesc/704710) el skip sigue siendo correcto.
+const MEASURE_SKIP := { "505320": ["attack"], "704710": ["attack"] }
 # Mallas de props ocultadas por modelo (patrones, match por contiene).
 const HIDE_MESHES := {}
 # Modelos con VARIOS atlas de textura (1 mesh, N superficies, cada una su atlas). Para estos

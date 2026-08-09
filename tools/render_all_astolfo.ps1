@@ -4,13 +4,15 @@ param(
     [string]$DebugClips = "",
     [int]$DebugFrom = 0,
     [int]$DebugTo = -1,
-    [int]$DebugStep = 5
+    [int]$DebugStep = 5,
+    # Override del binario (p.ej. MegaDotLinux/MegaDot_v4.5.1-stable_mono_linux.x86_64).
+    [string]$MegaDot = ""
 )
 
 $ErrorActionPreference = "Continue"
 $repo = Split-Path $PSScriptRoot -Parent
 $renderProject = Join-Path $repo "tools\render_project"
-$megadot = Join-Path $repo "MegaDot\MegaDot_v4.5.1-stable_mono_win64_console.exe"
+$megadot = if ($MegaDot) { $MegaDot } else { Join-Path $repo "MegaDot\MegaDot_v4.5.1-stable_mono_win64_console.exe" }
 $source = Join-Path $repo "assets\reference\extracted\400400_anim\Animator\chr"
 $texture = Join-Path $repo "assets\reference\bundles\400400.png"
 $characterDir = Join-Path $repo "AstolfoRider\AstolfoRider\character"

@@ -56,3 +56,7 @@ assets/reference/fanart/*
 **/__pycache__/
 *.pyc
 /.learnings/
+
+# Fuentes de render locales (symlinks a la copia con los FBX/atlas extraidos)
+/assets/reference/extracted
+/assets/reference/bundles
