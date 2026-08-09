@@ -25,5 +25,5 @@ public sealed class NpChargePower : FGOCorePower, IResourcePower
 
     // El medidor visible lo aporta RitsuLib; si su registro falló, el power vuelve a dibujarse
     // como antes de v0.1.20 para no dejar al jugador sin indicador. Conserva ID y estado de saves.
-    protected override bool IsVisibleInternal => !Ritsu.FgoSecondaryResources.CombatMetersActive;
+    protected override bool IsVisibleInternal => Ritsu.FgoSecondaryResources.LegacyPowersVisible;
 }

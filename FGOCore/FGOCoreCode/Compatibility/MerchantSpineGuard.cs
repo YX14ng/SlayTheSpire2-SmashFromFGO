@@ -24,11 +24,12 @@ internal static class MerchantReadySpineGuard
 {
     // Priority.Low: si la guardia propia de BaseLib 3.4.3 ya interceptó (camino CreateFromScene),
     // la nuestra ni corre. Sólo rescata el camino de auto-conversión que hoy crashea.
+    // true = correr el original (hay SpineSprite); false = saltearlo — el AnimatedSprite2D
+    // raster arranca solo con autoplay="idle".
     [HarmonyPriority(Priority.Low)]
     [HarmonyPrefix]
-    private static bool SkipSpineBindingForRasterScenes(NMerchantCharacter __instance)
+    private static bool RunOriginalOnlyForSpineScenes(NMerchantCharacter __instance)
         => MerchantSpineGuard.HasSpineChild(__instance);
-    // false = saltear el original; el AnimatedSprite2D arranca solo con autoplay="idle".
 }
 
 [HarmonyPatch(typeof(NMerchantCharacter), nameof(NMerchantCharacter.PlayAnimation))]

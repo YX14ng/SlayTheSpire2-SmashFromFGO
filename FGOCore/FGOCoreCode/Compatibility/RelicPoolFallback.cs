@@ -24,9 +24,15 @@ internal static class RelicPoolFallback
         Exception? __exception,
         ref RelicPoolModel __result)
     {
-        if (__exception is null) return null;
+        // Sólo el First() sin match (reliquia sin pool). Cualquier otra excepción del juego o de
+        // otro mod se propaga intacta (precedente DECISIONS: el guard de BaseLib 3.4.3 suprime
+        // únicamente su excepción exacta).
+        if (__exception is not InvalidOperationException) return __exception;
 
-        var fallback = __instance.Owner?.Character?.RelicPool
+        // RelicModel.Owner hace AssertMutable() y TIRA CanonicalModelException en el modelo
+        // canónico (hover en la biblioteca, fuera de una run) — mismo guard que usa el juego
+        // en su call site de EnergyIconHelper: consultar Owner sólo si IsMutable.
+        var fallback = (__instance.IsMutable ? __instance.Owner : null)?.Character?.RelicPool
             ?? ModelDb.AllRelicPools.FirstOrDefault();
         if (fallback is null) return __exception;
 

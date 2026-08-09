@@ -96,9 +96,10 @@ internal partial class FgoSpriteMotion : Node2D
         _lastVisualOffset = _sprite.Offset;
         _lastTexture = CurrentTexture();
 
+        // Sin Name: mismo criterio que el nodo controlador — set_name managed dispara el bridge
+        // roto del runtime Linux. Nadie busca este nodo por nombre (sólo el campo _previousFrame).
         _previousFrame = new Sprite2D
         {
-            Name = "PreviousFrame",
             Centered = _sprite.Centered,
             FlipH = _sprite.FlipH,
             FlipV = _sprite.FlipV,

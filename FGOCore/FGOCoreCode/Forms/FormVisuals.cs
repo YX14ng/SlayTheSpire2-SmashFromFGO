@@ -271,12 +271,18 @@ public static class FormVisuals
             var status = ResourceLoader.LoadThreadedGetStatus(path);
             if (status == ResourceLoader.ThreadLoadStatus.Loaded)
             {
-                ResourceLoader.LoadThreadedGet(path);
+                // Dispose inmediato: sin él, el unref queda diferido al GC del wrapper y los
+                // cientos de MB del frames set siguen pinneados un rato indeterminado.
+                ResourceLoader.LoadThreadedGet(path)?.Dispose();
                 Requested.Remove(path);
             }
             else if (status is ResourceLoader.ThreadLoadStatus.Failed or ResourceLoader.ThreadLoadStatus.InvalidResource)
             {
                 Requested.Remove(path);
+                // Mismo memo que GetFrames: sin esto, un path roto re-encolaba la carga completa
+                // en el próximo combate.
+                Failed.Add(path);
+                MainFile.Logger.Error($"FormVisuals: background load failed for {path} (won't retry)");
             }
         }
     }

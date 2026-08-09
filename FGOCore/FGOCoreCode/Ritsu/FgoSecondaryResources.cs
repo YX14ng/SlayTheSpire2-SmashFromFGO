@@ -33,11 +33,14 @@ public static class FgoSecondaryResources
     private static bool _initialized;
 
     /// <summary>
-    /// True sólo cuando la fila de medidores quedó registrada en la UI de combate de RitsuLib.
-    /// Mientras sea false, los powers legacy de NP/Estrellas vuelven a dibujarse como antes de
-    /// v0.1.20 para que el jugador nunca se quede sin indicador visible.
+    /// True sólo desde que la fila de medidores DIBUJÓ al menos una vez en la UI de combate de
+    /// RitsuLib. Mientras sea false, los powers legacy de NP/Estrellas vuelven a dibujarse como
+    /// antes de v0.1.20 para que el jugador nunca se quede sin indicador visible.
     /// </summary>
     public static bool CombatMetersActive { get; private set; }
+
+    /// <summary>Punto único de verdad para el fallback de visibilidad de los powers legacy.</summary>
+    public static bool LegacyPowersVisible => !CombatMetersActive;
 
     public static void Initialize()
     {
@@ -98,17 +101,10 @@ public static class FgoSecondaryResources
                     row.Configure();
                     return row;
                 },
-                static context =>
-                {
-                    PositionCounterRow(context.Parent, context.Node);
-                    context.Node.Refresh(context.Player, context.VisibleDefinitions);
-                },
-                static context =>
-                {
-                    PositionCounterRow(context.Parent, context.Node);
-                    context.Node.Refresh(context.Player, context.VisibleDefinitions);
-                });
-            CombatMetersActive = true;
+                static context => RefreshCounterRow(
+                    context.Parent, context.Node, context.Player, context.VisibleDefinitions),
+                static context => RefreshCounterRow(
+                    context.Parent, context.Node, context.Player, context.VisibleDefinitions));
         }
         catch (Exception exception)
         {
@@ -116,6 +112,39 @@ public static class FgoSecondaryResources
             MainFile.Logger.ErrorNoTrace(
                 $"No se pudo registrar la fila de medidores FGO; los powers legacy vuelven a ser visibles: {exception}");
         }
+    }
+
+    private static bool _positioningBroken;
+
+    private static void RefreshCounterRow(
+        NCombatUi combatUi,
+        NSecondaryResourceCounterRow row,
+        Player? player,
+        IReadOnlyList<SecondaryResourceDefinition> visibleDefinitions)
+    {
+        // Aislado para que un contrato distinto de NCombatUi (p.ej. EnergyCounterContainer
+        // renombrado en BETA) degrade a "fila en su posición por defecto", nunca a "sin medidores":
+        // RitsuLib traga las excepciones del callback entero y el Refresh no llegaría a correr.
+        if (!_positioningBroken)
+        {
+            try
+            {
+                PositionCounterRow(combatUi, row);
+            }
+            catch (Exception exception)
+            {
+                _positioningBroken = true;
+                MainFile.Logger.ErrorNoTrace(
+                    $"No se pudo anclar la fila de medidores FGO; queda en su posición por defecto: {exception}");
+            }
+        }
+
+        row.Refresh(player, visibleDefinitions);
+
+        // El flag recién se enciende cuando la fila DIBUJÓ al menos una vez: si el factory o el
+        // attach fallan (la fila nunca llega acá), los powers legacy siguen visibles y el jugador
+        // nunca queda sin indicador. IsVisible se consulta en vivo (sin cache), el flip es seguro.
+        CombatMetersActive = true;
     }
 
     /// <summary>
