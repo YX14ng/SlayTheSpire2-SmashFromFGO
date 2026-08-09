@@ -2,6 +2,26 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-09 (d) — lote publicado en Workshop desde la máquina Linux
+
+- **Publicado con orden explícita del usuario:** FGOCore `v0.1.21` (`3747876334`), Artoria
+  `v0.1.17` (`3747876956`) y Astolfo `v0.1.8` (`3774222236`) en UNA sesión de SteamCMD Linux,
+  `-Visibility 0` explícito (el stage fresco de esta máquina defaultea privado — gotcha a
+  recordar). Verificado contra la API de Steam: los tres `time_updated` al momento del upload,
+  `visibility=0`, descripciones con las versiones nuevas. El resto del roster no cambió
+  (FGOCore aditivo).
+- **Login:** SteamCMD no puede tomar la contraseña vía la sesión del agente; el usuario hizo el
+  `+login` interactivo una vez en una terminal propia y la credencial quedó cacheada para las
+  corridas no-interactivas siguientes.
+- **Fix del uploader:** el conteo de éxitos usaba un match literal `Committing update...Success`
+  que en el steamcmd de Linux cuenta 0 (ANSI + avisos IPC intercalados) y hacía fallar el script
+  DESPUÉS de subir bien — regex ahora Singleline con `.*?`. Los `tools/.workshop_id_*.txt` de los
+  13 items se recrearon en esta máquina (gitignoreados) para nunca duplicar items.
+- **Pendiente:** playtest real con los items sincronizados (medidor NP/★, tienda, Artoria co-op,
+  escala de Astolfo), re-render de attack de Astolfo, responder a los reporters de Steam
+  (ArgoDevilian: pedir log del cofre y avisar de OstyAnime/VoltaicAnime; reporte chino del
+  Circlet: confirmar que v0.1.20+ lo arregla).
+
 ## 2026-08-09 (c) — toolchain Linux operativo; matriz MAIN/BETA verde en esta máquina
 
 - **Herramientas nativas instaladas:** MegaDot Linux 4.5.1.m.13 (descomprimido del zip del repo,
