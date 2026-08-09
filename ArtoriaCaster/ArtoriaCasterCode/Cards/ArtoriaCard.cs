@@ -43,24 +43,4 @@ public abstract class ArtoriaCard(int cost, CardType type, CardRarity rarity, Ta
         }
     }
 
-    /// <summary>
-    /// Resuelve el daño de las cartas-Ataque de UN golpe con crítico: si el dueño puede criticar
-    /// (<see cref="Stars.CanCrit"/>) gasta las estrellas y devuelve el valor de crítico (Crit +
-    /// <see cref="Stars.CritBonus"/>); si no, devuelve el daño base. Era un bloque copiado palabra
-    /// por palabra en las cartas de un solo golpe (Arrebato/Tajo/Embate/Juicio/Estrella Fugaz/
-    /// Corte de Selección/Anhelo Heredado). Lee Damage/Crit de los DynamicVars de la propia carta.
-    /// </summary>
-    protected Task<decimal> ResolveCritDamage(int critCost) =>
-        Task.FromResult(DynamicVars.Damage.BaseValue);
-
-    /// <summary>
-    /// Variante de crítico ESCALABLE (anti feast-or-famine binario, P2 2026-06-25): en vez de un
-    /// umbral todo-o-nada (X★ → valor fijo), el crítico arranca al costo base y sube por cada ★ EXTRA
-    /// gastada, hasta <paramref name="maxCost"/>★ (techo). Consume tantas ★ como pueda pagar dentro de
-    /// [<paramref name="baseCost"/>, <paramref name="maxCost"/>]. Lee Crit (valor al costo base) y
-    /// PerStar (daño por ★ extra) de los DynamicVars. Baja la varianza sin subir el techo: a maxCost★
-    /// iguala el crítico fijo anterior, pero ya rinde algo en el escalón mínimo en lugar de 0.
-    /// </summary>
-    protected Task<decimal> ResolveCritDamageScaling(int baseCost, int maxCost) =>
-        Task.FromResult(DynamicVars.Damage.BaseValue);
 }

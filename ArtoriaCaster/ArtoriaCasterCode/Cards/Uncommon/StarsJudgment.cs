@@ -9,17 +9,13 @@ using ArtoriaCaster.ArtoriaCasterCode.Powers;
 namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Uncommon;
 
 /// <summary>
-/// Juicio de la Estrella — 8 de daño. Crítico 3★: 20.
+/// Juicio de la Estrella — 8 de daño. El crítico lo aporta Critical v2 global (×1.5 automático).
 /// </summary>
 public sealed class StarsJudgment() : ArtoriaCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    public const int CritCost = 3;
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(8m, ValueProp.Move),
-        new DynamicVar("Crit", 20),
-        new DynamicVar("CritCost", CritCost)
+        new DamageVar(8m, ValueProp.Move)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -28,8 +24,8 @@ public sealed class StarsJudgment() : ArtoriaCard(1, CardType.Attack, CardRarity
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var damage = await ResolveCritDamage(CritCost);
-        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
     }
@@ -37,6 +33,5 @@ public sealed class StarsJudgment() : ArtoriaCard(1, CardType.Attack, CardRarity
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["Crit"].UpgradeValueBy(6m);
     }
 }

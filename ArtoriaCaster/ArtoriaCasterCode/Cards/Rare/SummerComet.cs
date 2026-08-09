@@ -9,18 +9,15 @@ using ArtoriaCaster.ArtoriaCasterCode.Powers;
 namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Rare;
 
 /// <summary>
-/// Cometa del Verano — Ataque 0⚡: SOLO jugable con 5★ en forma crítica
-/// (Berserker/Avalon): consume las 5★ y hace 28 de daño (el crítico garantizado,
-/// «el Comet»). Mejora: 34.
+/// Cometa del Verano — Ataque 0⚡: SOLO jugable cuando la carta va a criticar
+/// (Criticals.WillCrit: Crítico Listo o 50★ globales en forma crítica): 28 de daño
+/// («el Comet», y el ×1.5 del crítico lo paga Critical v2 al jugarla). Mejora: 34.
 /// </summary>
 public sealed class SummerComet() : ArtoriaCard(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
-    public const int CritCost = CritStarsPower.CritCost;
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(28m, ValueProp.Move),
-        new DynamicVar("CritCost", CritCost)
+        new DamageVar(28m, ValueProp.Move)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];

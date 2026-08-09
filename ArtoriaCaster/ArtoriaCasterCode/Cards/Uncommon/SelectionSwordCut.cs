@@ -9,18 +9,14 @@ using ArtoriaCaster.ArtoriaCasterCode.Powers;
 namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Uncommon;
 
 /// <summary>
-/// Corte de la Espada de Selección — 16 de daño. Crítico 4★: 30 (el pago grande
-/// de la economía de estrellas en poco comunes).
+/// Corte de la Espada de Selección — 16 de daño. El crítico lo aporta Critical v2
+/// global (×1.5 automático).
 /// </summary>
 public sealed class SelectionSwordCut() : ArtoriaCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    public const int CritCost = 4;
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(16m, ValueProp.Move),
-        new DynamicVar("Crit", 30),
-        new DynamicVar("CritCost", CritCost)
+        new DamageVar(16m, ValueProp.Move)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -29,8 +25,8 @@ public sealed class SelectionSwordCut() : ArtoriaCard(2, CardType.Attack, CardRa
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var damage = await ResolveCritDamage(CritCost);
-        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }
@@ -38,6 +34,5 @@ public sealed class SelectionSwordCut() : ArtoriaCard(2, CardType.Attack, CardRa
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(4m);
-        DynamicVars["Crit"].UpgradeValueBy(8m);
     }
 }

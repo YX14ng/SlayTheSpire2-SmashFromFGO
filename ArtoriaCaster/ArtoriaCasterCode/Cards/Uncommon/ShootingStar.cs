@@ -9,17 +9,13 @@ using ArtoriaCaster.ArtoriaCasterCode.Powers;
 namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Uncommon;
 
 /// <summary>
-/// Estrella Fugaz — 0⚡: 3 de daño. Crítico 2★: 10 (el crítico barato del pool).
+/// Estrella Fugaz — 0⚡: 3 de daño. El crítico lo aporta Critical v2 global (×1.5 automático).
 /// </summary>
 public sealed class ShootingStar() : ArtoriaCard(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    public const int CritCost = 2;
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(3m, ValueProp.Move),
-        new DynamicVar("Crit", 10),
-        new DynamicVar("CritCost", CritCost)
+        new DamageVar(3m, ValueProp.Move)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -28,8 +24,8 @@ public sealed class ShootingStar() : ArtoriaCard(0, CardType.Attack, CardRarity.
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var damage = await ResolveCritDamage(CritCost);
-        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
     }
@@ -37,6 +33,5 @@ public sealed class ShootingStar() : ArtoriaCard(0, CardType.Attack, CardRarity.
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["Crit"].UpgradeValueBy(4m);
     }
 }

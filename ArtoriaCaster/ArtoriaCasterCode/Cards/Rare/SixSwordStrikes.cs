@@ -10,21 +10,16 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Rare;
 
 /// <summary>
 /// Seis Golpes de la Espada — Ataque 2⚡: 3 de daño ×6 al mismo objetivo (los seis
-/// golpes del NP real). Crítico 2★ (se consume UNA vez): 5×6. Mejora: 4×6 / 6×6.
-/// El bonus plano de crítico (ICritDamageBoost) se aplica una sola vez, al primer
-/// golpe, para mantener la paridad con las cartas de un golpe.
+/// golpes del NP real). Mejora: 4×6. Con Critical v2 global el ×1.5 multiplica los
+/// seis golpes de la carta que pagó el crítico.
 /// </summary>
 public sealed class SixSwordStrikes() : ArtoriaCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
-    public const int CritCost = 2;
-
     private const int Hits = 6;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(3m, ValueProp.Move),
-        new DynamicVar("Crit", 5),
-        new DynamicVar("CritCost", CritCost)
+        new DamageVar(3m, ValueProp.Move)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -48,6 +43,5 @@ public sealed class SixSwordStrikes() : ArtoriaCard(2, CardType.Attack, CardRari
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(1m);
-        DynamicVars["Crit"].UpgradeValueBy(1m);
     }
 }

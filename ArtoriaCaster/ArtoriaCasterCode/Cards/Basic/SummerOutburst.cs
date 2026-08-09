@@ -12,20 +12,16 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Basic;
 /// <summary>
 /// Arrebato de Verano («¡Intentémoslo! ¡Si fallo, que así sea!») — signature basic 1:
 /// 6 damage, THEN enter Berserker form (damage resolves before the switch so it never
-/// self-buffs). Critical 2★: 12 (only crits if you were ALREADY in Berserker/Avalon).
+/// self-buffs). El crítico lo aporta Critical v2 global (×1.5 automático).
 /// </summary>
 public sealed class SummerOutburst() : ArtoriaCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), BaseLib.Abstracts.ITranscendenceCard
 {
     public MegaCrit.Sts2.Core.Models.CardModel GetTranscendenceTransformedCard() =>
         MegaCrit.Sts2.Core.Models.ModelDb.Card<Rare.SummerComet>();
 
-    public const int CritCost = 2;
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(6m, ValueProp.Move),
-        new DynamicVar("Crit", 12),
-        new DynamicVar("CritCost", CritCost)
+        new DamageVar(6m, ValueProp.Move)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -35,8 +31,8 @@ public sealed class SummerOutburst() : ArtoriaCard(1, CardType.Attack, CardRarit
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var damage = await ResolveCritDamage(CritCost);
-        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
@@ -47,6 +43,5 @@ public sealed class SummerOutburst() : ArtoriaCard(1, CardType.Attack, CardRarit
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["Crit"].UpgradeValueBy(4m);
     }
 }

@@ -8,16 +8,12 @@ using ArtoriaCaster.ArtoriaCasterCode.Powers;
 
 namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Common;
 
-/// <summary>Embate de Verano — Ataque 2⚡: 15 de daño. Crítico 3★: 26.</summary>
+/// <summary>Embate de Verano — Ataque 2⚡: 15 de daño. Crítico: Critical v2 global (×1.5).</summary>
 public sealed class SummerOnslaught() : ArtoriaCard(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
-    public const int CritCost = 3;
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(15m, ValueProp.Move),
-        new DynamicVar("Crit", 26),
-        new DynamicVar("CritCost", CritCost)
+        new DamageVar(15m, ValueProp.Move)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
@@ -26,8 +22,8 @@ public sealed class SummerOnslaught() : ArtoriaCard(2, CardType.Attack, CardRari
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var damage = await ResolveCritDamage(CritCost);
-        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);
     }
@@ -35,6 +31,5 @@ public sealed class SummerOnslaught() : ArtoriaCard(2, CardType.Attack, CardRari
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(4m);
-        DynamicVars["Crit"].UpgradeValueBy(6m);
     }
 }
