@@ -32,11 +32,11 @@ public partial class MainFile : Node
             Cards.Basic.PaladinsHunch,
             Cards.Rare.PerfectImprovisation>(ModId, "reason_evaporated_relic");
         new Harmony(ModId).PatchAll();
-        // Escala 0.8: normaliza la altura visible a ~360 px (baseline del roster; Astolfo estaba
-        // +24,5% más grande porque su lienzo 1513×1010 tiene el factor de import más alto y la
-        // escena quedó en 1.0). X/Y por la fórmula de WORKFLOW-FGO §3.4 sobre el canvas actual.
+        // Re-render 2026-08-09 (canvas 1909×1541, attack ya sin recorte de figura): escala 1.009
+        // mantiene la altura visible en ~362 px (baseline del roster) y los pivotes salen de la
+        // fórmula de WORKFLOW-FGO §3.4 (cx_idle=1264.6, alphaBottom_idle=1433, factor 768/1909).
         FormVisuals.RegisterFramesWithSpriteTransform(
-            ($"{ResPath}/character/astolfo_frames.tres", 47f, -182f, 0.8f));
+            ($"{ResPath}/character/astolfo_frames.tres", 126f, -269f, 1.009f));
         NpCharge.GaugeFilledWithContext += EnsureNpInCombat;
         NpCharge.GaugeDroppedWithContext += DisarmManifest;
         FgoAttributes.RegisterOverride(ModelDb.GetId<Astolfo>(), FgoAttribute.Earth);
