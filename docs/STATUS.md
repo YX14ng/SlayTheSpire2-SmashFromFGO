@@ -2,6 +2,28 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-10 — FGOCore v0.1.22: kill-switch del smoothing (respuesta al 2.º gist de ArgoDevilian)
+
+ArgoDevilian reportó que el crash sigue con v0.1.21 (gist `Argo11/db13665c…`, log del 2026-08-09
+18:31, FGOCore actualizado confirmado por timestamp del item y por los logs de `RelicPoolFallback`
+funcionando en producción). Forense: 96 errores `ArgumentException 0x80070057`, TODOS de
+`FgoSpriteMotion`, ahora desde `InvokeGodotClassMethod`/`HasGodotClassMethod` durante el `AddChild`
+de `Prepare` y el teardown de sala (`RemoveChildSafely` en `SetCurrentScene`); el log muere justo
+en la transición al rest site — mismo patrón que su crash original del Treasure Chest.
+
+**Hallazgo:** en el build NATIVO Linux del juego (Argo corre el binario Linux, no Proton), toda
+llamada engine→script sobre un Node C# instanciado con `new` desde un assembly de mod falla —
+no era solo `set_name`. Las clases del juego pasan por node factories (BaseLib logea "Created
+node factory for X"); RitsuLib inicializa las suyas; `FgoSpriteMotion` era el único Node de mod
+`new`-eado crudo. **Fix (v0.1.22, `b6bae9b9`):** canario con kill-switch de sesión — si el
+`_Ready` del primer `FgoSpriteMotion` no corrió sincrónicamente dentro del `AddChild`
+(`ReadyRan==false`), se retira el nodo y el smoothing (puramente cosmético) queda desactivado.
+En Windows/Proton el canario pasa y no cambia nada. Matriz MAIN/BETA verde (13 artefactos).
+
+⚠️ Upload a Workshop PENDIENTE: la credencial cacheada de SteamCMD expiró (`Invalid Password`);
+requiere re-login interactivo del usuario y re-correr
+`workshop_upload.ps1 -Only FGOCore -Visibility 0`.
+
 ## 2026-08-09 (e) — re-render de Astolfo: attack completo, preparado v0.1.9
 
 - **Causa cerrada:** `MEASURE_SKIP["400400"]` excluía el attack del union de crop asumiendo props
