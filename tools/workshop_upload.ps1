@@ -29,7 +29,13 @@ param(
 $ErrorActionPreference = "Stop"
 $appid = "2868840"
 $repo  = Split-Path $PSScriptRoot -Parent
-$SteamCmd = if ($SteamCmd) { $SteamCmd } else { Join-Path $PSScriptRoot 'steamcmd\steamcmd.exe' }
+# Override por máquina (gitignoreado): ruta al steamcmd cuya instalación tiene la sesión de Steam
+# cacheada. La credencial vive en el config de CADA instalación de steamcmd — usar siempre el
+# mismo binario evita re-logins interactivos.
+$steamCmdOverrideFile = Join-Path $PSScriptRoot '.steamcmd_path.txt'
+$SteamCmd = if ($SteamCmd) { $SteamCmd }
+    elseif (Test-Path $steamCmdOverrideFile) { (Get-Content $steamCmdOverrideFile -Raw).Trim() }
+    else { Join-Path $PSScriptRoot 'steamcmd\steamcmd.exe' }
 $ModsRoot = if ($ModsRoot) { $ModsRoot } else { Join-Path $repo 'dist' }
 $stage = Join-Path $repo ".workshop_stage"
 $descDir = Join-Path $PSScriptRoot "workshop_desc"

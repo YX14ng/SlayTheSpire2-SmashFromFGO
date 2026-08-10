@@ -31,6 +31,7 @@ publish_log.txt
 /tools/steamcmd/
 /.workshop_stage/
 /tools/.workshop_id_*.txt
+/tools/.steamcmd_path.txt
 /tools/render_project/*.fbx
 /tools/render_project/*.png
 /tools/render_project/*.png.import
