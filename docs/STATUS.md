@@ -20,9 +20,11 @@ node factory for X"); RitsuLib inicializa las suyas; `FgoSpriteMotion` era el ú
 (`ReadyRan==false`), se retira el nodo y el smoothing (puramente cosmético) queda desactivado.
 En Windows/Proton el canario pasa y no cambia nada. Matriz MAIN/BETA verde (13 artefactos).
 
-⚠️ Upload a Workshop PENDIENTE: la credencial cacheada de SteamCMD expiró (`Invalid Password`);
-requiere re-login interactivo del usuario y re-correr
-`workshop_upload.ps1 -Only FGOCore -Visibility 0`.
+**PUBLICADO 2026-08-10 21:32 UTC** y verificado por API (item 3747876334, público, 14,5 MB).
+La credencial de la copia `tools/steamcmd/` había expirado; el usuario re-logueó en el steamcmd
+DE SISTEMA (`/usr/sbin/steamcmd`) y el uploader ahora resuelve el binario desde
+`tools/.steamcmd_path.txt` (gitignoreado, `85701f97`) para reutilizar siempre esa sesión cacheada
+— usar UNA sola instalación de steamcmd es lo que mantiene el login persistente.
 
 ## 2026-08-09 (e) — re-render de Astolfo: attack completo, preparado v0.1.9
 
