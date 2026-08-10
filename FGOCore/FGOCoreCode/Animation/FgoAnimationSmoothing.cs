@@ -14,6 +14,15 @@ namespace FGOCore.FGOCoreCode.Animation;
 /// </summary>
 internal static class FgoAnimationSmoothing
 {
+    // Kill-switch de sesión: en el build NATIVO Linux del juego, toda llamada engine→script sobre
+    // un Node C# instanciado con `new` desde un assembly de mod (sin node factory registrada, a
+    // diferencia de las clases del juego que BaseLib registra) tira "ArgumentException: Undefined
+    // resource string ID:0x80070057" — no solo set_name: también el AddChild inicial y el teardown
+    // de sala (RemoveChildSafely), donde el spam coincide con crashes reportados en transiciones
+    // (gist de ArgoDevilian 2026-08-09, 96 errores, todos FgoSpriteMotion). Si el _Ready del primer
+    // nodo no llegó a correr, el bridge está roto acá: se retira ese nodo y no se vuelve a intentar.
+    private static bool _bridgeBroken;
+
     private static readonly string[] ResourcePrefixes =
     [
         "res://MashShielder/",
@@ -32,6 +41,7 @@ internal static class FgoAnimationSmoothing
 
     internal static T Prepare<T>(T root) where T : Node
     {
+        if (_bridgeBroken) return root;
         var profile = FgoVisualQuality.GetAnimationProfile();
         if (root.FindChild("Sprite", recursive: true, owned: false) is not AnimatedSprite2D sprite
             || sprite.SpriteFrames is null
@@ -47,7 +57,22 @@ internal static class FgoAnimationSmoothing
         // del juego (MegaDot 4.5.1.m.12) tira "ArgumentException: Undefined resource string
         // ID:0x80070057" en cada spawn de criatura (~100 por sesión en reportes de jugadores).
         // add_child sin nombre asigna el auto-nombre por vía interna, sin callp al script.
-        sprite.AddChild(new FgoSpriteMotion { Profile = profile });
+        var motion = new FgoSpriteMotion { Profile = profile };
+        sprite.AddChild(motion);
+        // Con el padre ya en árbol, _Ready corre sincrónicamente dentro del AddChild; si no corrió
+        // es el bridge roto del build nativo Linux. El RemoveChild+QueueFree del canario todavía
+        // genera un par de errores de bridge, pero es el último intento de la sesión.
+        if (!motion.ReadyRan)
+        {
+            _bridgeBroken = true;
+            sprite.RemoveChild(motion);
+            motion.QueueFree();
+            MainFile.Logger.Warn(
+                "FgoAnimationSmoothing: el bridge engine→script no puede invocar nodos C# del mod "
+                + "en esta instalación (build nativo Linux); suavizado de animación desactivado "
+                + "para la sesión. Es solo cosmético, el combate no se ve afectado.");
+        }
+
         return root;
     }
 
@@ -79,6 +104,10 @@ internal static class FgoAnimationSmoothing
 internal partial class FgoSpriteMotion : Node2D
 {
     internal FgoAnimationProfile Profile { get; init; }
+
+    // Se setea al FINAL de _Ready: si el bridge nativo→managed está roto (o _Ready tira a mitad
+    // de camino), queda en false y Prepare desactiva el suavizado para toda la sesión.
+    internal bool ReadyRan { get; private set; }
 
     private AnimatedSprite2D _sprite = null!;
     private Sprite2D _previousFrame = null!;
@@ -112,6 +141,7 @@ internal partial class FgoSpriteMotion : Node2D
         _sprite.AnimationChanged += OnAnimationChanged;
         _sprite.FrameChanged += OnFrameChanged;
         _sprite.AnimationFinished += OnAnimationFinished;
+        ReadyRan = true;
     }
 
     public override void _ExitTree()
