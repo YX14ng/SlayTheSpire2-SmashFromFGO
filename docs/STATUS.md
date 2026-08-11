@@ -2,6 +2,30 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-11 — Crash con Driftwood: guarda de alternativas corregida en los 12 personajes
+
+3.er reporte de ArgoDevilian (gist `Argo11/47a09cd…`, log 2026-08-10 13:40): con la reliquia
+vanilla **Driftwood** (reroll de card rewards) no se abre ninguna Card Reward tras combate, y al
+continuar la run a veces crashea. El log confirma dos cosas:
+
+1. **El kill-switch de v0.1.22 FUNCIONA**: 20 bloques `0x80070057` (vs 96) — el ruido del único
+   canario al recrear el combate en `mode=FinishedCombat` — y después el warn "suavizado …
+   desactivado para la sesión"; cero errores de bridge desde ahí.
+2. **Bug nuevo, nuestro:** `InvalidOperationException: More than 2 card reward alternatives are
+   not supported` en `CardRewardAlternative.Generate` ← `CardReward.OnSelect` al clickear la
+   reward. **`Generate` TIRA con más de 2 alternativas en MAIN v0.107.1 Y BETA v0.110.1**
+   (verificado en ambos decompilados). Con Driftwood, Skip + Reroll ya son 2; nuestras 12
+   reliquias de identidad (gacha de NP) agregaban la suya con guarda `alternatives.Count >= 3`
+   → 3 → throw. Esa guarda venía del fix de junio `d52ea883`, cuya premisa ("la pantalla no topa
+   en 2, vanilla muestra 3") era falsa contra el juego actual.
+
+**Fix:** guarda `>= 2` en las 12 reliquias (`TryModifyCardRewardAlternatives`). No se pierde el
+gacha con Driftwood: `Reroll()` pone `CanReroll=false` y llama `Populate()` → `Generate` de nuevo
+→ `RefreshOptions`, así que tras usar el reroll la pantalla regenera Skip + gacha. Versiones
+bumpeadas: Mash v0.1.19, Morgan/Mordred/Gilgamesh/Okita/Oberon/Tiamat/Artoria v0.1.17-18,
+Siegfried v0.1.20, Kagetora v0.1.10, Shuten v0.1.9, Astolfo v0.1.10. FGOCore NO cambia.
+Matriz MAIN/BETA verde (13 artefactos, 0 warnings).
+
 ## 2026-08-10 — FGOCore v0.1.22: kill-switch del smoothing (respuesta al 2.º gist de ArgoDevilian)
 
 ArgoDevilian reportó que el crash sigue con v0.1.21 (gist `Argo11/db13665c…`, log del 2026-08-09
