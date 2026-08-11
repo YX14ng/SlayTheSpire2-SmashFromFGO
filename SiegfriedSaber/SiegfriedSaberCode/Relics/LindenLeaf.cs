@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.Rewards;
-using MegaCrit.Sts2.Core.Entities.Rewards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.CardRewardAlternatives;
 using MegaCrit.Sts2.Core.Combat;
@@ -87,15 +86,8 @@ public class LindenLeaf : SiegfriedRelic, IDragonScalePiercer, INpLevelStore
 
     public override bool TryModifyCardRewardAlternatives(Player player, CardReward cardReward, List<CardRewardAlternative> alternatives)
     {
-        if (Owner != player) return false;
-        // CardRewardAlternative.Generate TIRA con más de 2 alternativas (MAIN y BETA); con
-        // Driftwood (Skip + Reroll) no entramos. No se pierde el gacha: al usar el reroll la
-        // pantalla regenera las alternativas con CanReroll=false y la opción aparece ahí.
-        if (alternatives.Count >= 2) return false;
-        if (!NpLevels.CanLevelUp(Owner)) return false;
-
-        alternatives.Add(new CardRewardAlternative(DupeOptionId, OnDupeRoll, PostAlternateCardRewardAction.EndSelectionAndCompleteReward));
-        return true;
+        return NpDupeAlternative.TryAdd(
+            Owner, player, alternatives, DupeOptionId, OnDupeRoll);
     }
 
     private async Task OnDupeRoll()

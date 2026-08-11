@@ -23,6 +23,15 @@ internal static class FgoAnimationSmoothing
     // nodo no llegó a correr, el bridge está roto acá: se retira ese nodo y no se vuelve a intentar.
     private static bool _bridgeBroken;
 
+    // El canario SOLO es concluyente con el sprite ya en árbol (ahí _Ready corre sincrónicamente
+    // dentro del AddChild). Eso pasa únicamente en el postfix de NCreatureVisuals._Ready; los
+    // call-sites de hoguera y tienda (SceneFactoryHardening) trabajan sobre un nodo huérfano que el
+    // juego mete al árbol recién después, con _Ready diferido. Ahí no agregamos nada hasta que el
+    // combate haya confirmado el bridge: en Linux nativo el propio AddChild ya spamea la
+    // ArgumentException y ensucia el teardown de sala, y continuar un save adentro de una tienda
+    // entra a ese call-site sin ningún combate previo en la sesión.
+    private static bool _bridgeVerified;
+
     private static readonly string[] ResourcePrefixes =
     [
         "res://MashShielder/",
@@ -57,21 +66,29 @@ internal static class FgoAnimationSmoothing
         // del juego (MegaDot 4.5.1.m.12) tira "ArgumentException: Undefined resource string
         // ID:0x80070057" en cada spawn de criatura (~100 por sesión en reportes de jugadores).
         // add_child sin nombre asigna el auto-nombre por vía interna, sin callp al script.
+        // Sin sprite en árbol el canario no puede correr; si el bridge todavía no está confirmado,
+        // no tocamos el nodo (ver _bridgeVerified).
+        var spriteInTree = sprite.IsInsideTree();
+        if (!spriteInTree && !_bridgeVerified) return root;
+
         var motion = new FgoSpriteMotion { Profile = profile };
         sprite.AddChild(motion);
-        // Con el padre ya en árbol, _Ready corre sincrónicamente dentro del AddChild; si no corrió
-        // es el bridge roto del build nativo Linux. El RemoveChild+QueueFree del canario todavía
-        // genera un par de errores de bridge, pero es el último intento de la sesión.
-        if (!motion.ReadyRan)
+        if (!spriteInTree) return root;
+        if (motion.ReadyRan)
         {
-            _bridgeBroken = true;
-            sprite.RemoveChild(motion);
-            motion.QueueFree();
-            MainFile.Logger.Warn(
-                "FgoAnimationSmoothing: el bridge engine→script no puede invocar nodos C# del mod "
-                + "en esta instalación (build nativo Linux); suavizado de animación desactivado "
-                + "para la sesión. Es solo cosmético, el combate no se ve afectado.");
+            _bridgeVerified = true;
+            return root;
         }
+
+        // El RemoveChild+QueueFree del canario todavía genera un par de errores de bridge, pero es
+        // el último intento de la sesión.
+        _bridgeBroken = true;
+        sprite.RemoveChild(motion);
+        motion.QueueFree();
+        MainFile.Logger.Warn(
+            "FgoAnimationSmoothing: el bridge engine→script no puede invocar nodos C# del mod "
+            + "en esta instalación (build nativo Linux); suavizado de animación desactivado "
+            + "para la sesión. Es solo cosmético, el combate no se ve afectado.");
 
         return root;
     }

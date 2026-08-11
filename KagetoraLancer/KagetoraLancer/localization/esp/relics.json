@@ -16,6 +16,7 @@
   "KAGETORALANCER-COMMANDERS_HOLY_GRAIL.flavor": "Un recipiente que no promete milagros, solo un campo de batalla mayor donde ganarlos.",
   "KAGETORALANCER-SAKE_CUP.title": "Copa de Sake",
   "KAGETORALANCER-SAKE_CUP.description": "#Al inicio de tu primer turno, roba 1 carta y luego descarta 1.",
+  "KAGETORALANCER-SAKE_CUP.selectionScreenPrompt": "Descarta 1 carta.",
   "KAGETORALANCER-SAKE_CUP.flavor": "Una copa transparente sostenida con firmeza mientras las balas pasan a ambos lados.",
   "KAGETORALANCER-EIGHT_PETAL_BANNER.title": "Estandarte de Ocho Pétalos",
   "KAGETORALANCER-EIGHT_PETAL_BANNER.description": "#El primer avance exitoso de Doctrina de cada turno concede 2 de Bloqueo.",

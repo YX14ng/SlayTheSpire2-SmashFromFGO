@@ -37,6 +37,16 @@ public static class FgoSecondaryResources
     /// RitsuLib. Mientras sea false, los powers legacy de NP/Estrellas vuelven a dibujarse como
     /// antes de v0.1.20 para que el jugador nunca se quede sin indicador visible.
     /// </summary>
+    /// <remarks>
+    /// Latch a propósito: NO consultar la fila viva (validez + estar en el árbol). NPowerContainer
+    /// muestrea <c>power.IsVisible</c> UNA sola vez, al aplicar el power (NPowerContainer.cs:104-112,
+    /// desde OnPowerApplied y SetCreature) y nunca reevalúa, así que cualquier ventana en false crea
+    /// iconos legacy que ya no se sacan. Y esa ventana existiría: NSceneContainer.SetCurrentScene
+    /// desprende la NCombatRoom anterior ANTES de agregar la nueva, o sea que entre combates la fila
+    /// vieja deja de estar en el árbol y el SetCreature del combate nuevo — que corre ANTES del
+    /// primer Refresh — dibujaría los medidores duplicados que v0.1.20 vino a sacar. La recuperación
+    /// ante un registro fallido la da el catch de RegisterCombatUi, que apaga el latch.
+    /// </remarks>
     public static bool CombatMetersActive { get; private set; }
 
     /// <summary>Punto único de verdad para el fallback de visibilidad de los powers legacy.</summary>
@@ -141,9 +151,10 @@ public static class FgoSecondaryResources
 
         row.Refresh(player, visibleDefinitions);
 
-        // El flag recién se enciende cuando la fila DIBUJÓ al menos una vez: si el factory o el
+        // El latch recién se enciende cuando la fila DIBUJÓ al menos una vez: si el factory o el
         // attach fallan (la fila nunca llega acá), los powers legacy siguen visibles y el jugador
-        // nunca queda sin indicador. IsVisible se consulta en vivo (sin cache), el flip es seguro.
+        // nunca queda sin indicador. Ver el remarks de CombatMetersActive: apagarlo después es
+        // peligroso, porque los iconos legacy ya creados no se sacan.
         CombatMetersActive = true;
     }
 

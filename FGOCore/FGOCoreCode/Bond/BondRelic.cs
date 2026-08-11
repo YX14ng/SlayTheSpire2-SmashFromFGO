@@ -120,12 +120,50 @@ public abstract class BondRelic : CustomRelicModel
         await AddPoints(PointsForVictory(room.RoomType));
     }
 
+    // Punto de mapa (acto + col/row) del último +1 por sala; 0 = ninguno. GUARDADO a propósito: el
+    // motor re-dispara AfterRoomEntered al continuar un save — EventRoom.EnterInternal llama
+    // Hook.AfterRoomEntered incondicionalmente (ni IsPreFinished ni isRestoringRoomStackBase lo
+    // saltean) y, si el save quedó dentro del combate interno de un evento, RunManager re-entra
+    // además el EventRoom padre por ParentEventId. Como hay saves que se escriben DESPUÉS del +1
+    // (EventRoom.OnEventStateChanged al terminar un Ancient, y la victoria de CombatManager), sin
+    // esta clave cada ciclo salir/continuar sumaba otro punto permanente. Se usa el punto de mapa y
+    // no AbstractRoom.Id porque el motor documenta ese Id como NO estable a través de save/load,
+    // mientras que VisitedMapCoords sí se persiste y se restaura antes de entrar a la sala.
+    private int _lastBondMapPoint;
+
+    [SavedProperty]
+    protected int LastBondMapPoint
+    {
+        get => _lastBondMapPoint;
+        set
+        {
+            AssertMutable();
+            _lastBondMapPoint = value;
+        }
+    }
+
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
-        if (room.RoomType is RoomType.Event or RoomType.Shop or RoomType.RestSite)
-        {
-            await AddPoints(1);
-        }
+        if (room.RoomType is not (RoomType.Event or RoomType.Shop or RoomType.RestSite)) return;
+
+        // Sin coordenada no hay marca idempotente posible: salimos en vez de premiar y pisar la
+        // clave anterior con un 0 que ya no puede coincidir con nada (fallaría abierto y encima
+        // olvidaría la última sala legítima). En el flujo vanilla la ventana sin coordenada solo
+        // contiene la MapRoom, que ni siquiera está en los tipos premiados.
+        var mapPoint = CurrentMapPointKey();
+        if (mapPoint == 0 || mapPoint == LastBondMapPoint) return;
+
+        LastBondMapPoint = mapPoint;
+        await AddPoints(1);
+    }
+
+    /// <summary>Clave estable del punto de mapa actual, o 0 si todavía no hay coordenada. Cada
+    /// componente va +1 para que 0 nunca sea una posición válida.</summary>
+    private int CurrentMapPointKey()
+    {
+        var location = Owner.RunState.MapLocation;
+        if (location.coord is not { } coord) return 0;
+        return (location.actIndex + 1) * 1_000_000 + (coord.col + 1) * 1_000 + (coord.row + 1);
     }
 
     // Último nivel ya premiado con regalos de subida. TRANSIENT a propósito (no SavedProperty): se

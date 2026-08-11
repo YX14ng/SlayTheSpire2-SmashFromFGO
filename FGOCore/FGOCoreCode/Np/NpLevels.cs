@@ -81,10 +81,17 @@ public static class NpLevels
 
         var chance = BaseChancePercent + PityChancePercent * store.DupePity;
         // MP: rodá con el RNG per-player de recompensas, NO con RunState.Rng.CombatCardGeneration.
-        // Ese último es un stream COMPARTIDO que se consume DENTRO del combate sincronizado; el roll
-        // del dupe ocurre en el flujo de card-reward LOCAL-ONLY (solo el cliente del dueño), así que
-        // avanzar el stream de combate acá desfasa su contador entre clientes -> divergent states.
-        // PlayerRng.Rewards es per-player y no participa de la simulación sincronizada.
+        // Este roll corre en TODOS los clientes, no solo en el del dueño: RewardsSet.Offer genera las
+        // recompensas de cada jugador en todas las máquinas, y en CardReward.OnSelect el cliente
+        // remoto recibe la elección por WaitForRemoteChoice y después ejecuta el mismo
+        // OnSelect() -> OnDupeRoll, sin gate de LocalContext.IsMe. Por eso hay que usar un stream
+        // per-player (PlayerRng.Rewards), que avanza idéntico en todos los clientes y no participa
+        // de la simulación sincronizada; CombatCardGeneration es COMPARTIDO y se consume dentro del
+        // combate, así que avanzarlo acá desfasaría su contador -> divergent states.
+        // COROLARIO para quien toque esto: `store.NpLevel++` muta el relic en todos los clientes.
+        // Si algún día el roll se mueve a un camino realmente local (callback de UI gateado por
+        // LocalContext.IsMe), la mutación tiene que sincronizarse a mano o los factores de Scale
+        // divergen entre clientes y la run se aborta por StateDivergenceMessage.
         if (player.PlayerRng.Rewards.NextInt(100) < chance)
         {
             store.NpLevel++;

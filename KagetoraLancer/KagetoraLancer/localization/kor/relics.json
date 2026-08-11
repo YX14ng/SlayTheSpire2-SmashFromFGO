@@ -16,6 +16,7 @@
   "KAGETORALANCER-COMMANDERS_HOLY_GRAIL.flavor": "기적을 약속하지 않고, 기적을 쟁취할 더 큰 전장만을 약속하는 그릇.",
   "KAGETORALANCER-SAKE_CUP.title": "사케 잔",
   "KAGETORALANCER-SAKE_CUP.description": "#첫 턴 시작 시 카드를 1장 뽑고 1장 버립니다.",
+  "KAGETORALANCER-SAKE_CUP.selectionScreenPrompt": "카드 1장을 버립니다.",
   "KAGETORALANCER-SAKE_CUP.flavor": "총탄이 양옆을 스쳐도 맑은 잔은 흔들리지 않습니다.",
   "KAGETORALANCER-EIGHT_PETAL_BANNER.title": "팔화의 깃발",
   "KAGETORALANCER-EIGHT_PETAL_BANNER.description": "#매 턴 첫 성공적인 교리 진행이 방어도 2를 줍니다.",

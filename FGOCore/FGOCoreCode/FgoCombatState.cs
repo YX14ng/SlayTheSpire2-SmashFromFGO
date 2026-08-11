@@ -41,9 +41,10 @@ public sealed class FgoCombatStatePower : FGOCorePower, IResourcePower
 }
 
 /// <summary>
-/// Serializable combat-state slots for character mechanics. Fields are non-overlapping ranges of
-/// one to 30 bits selected by each character mod. Values are committed through PowerCmd so they
-/// participate in combat snapshots and multiplayer checksums.
+/// Serializable combat-state slots for character mechanics. Fields are non-overlapping bit ranges
+/// selected by each character mod, all of which must fit within bits 0..28 (see TotalBits).
+/// Values are committed through PowerCmd so they participate in combat snapshots and multiplayer
+/// checksums.
 /// </summary>
 public static class FgoCombatState
 {
@@ -118,9 +119,20 @@ public static class FgoCombatState
         }
     }
 
+    // Techo REAL de la clase. El estado vive en PowerModel.Amount, y todo camino de commit termina
+    // en PowerModel.SetAmount, que CLAMPEA en silencio: `Math.Clamp(amount, -999999999, 999999999)`
+    // (PowerModel.cs:545, idéntico en MAIN y BETA). Pasarse no tira: deja el Amount pegado al tope
+    // y todos los campos leen basura por el resto del combate. Como lo commiteado es state+1, el
+    // estado entero tiene que entrar bajo ese clamp: 29 bits (máx 536.870.911, commit 536.870.912)
+    // entran; 30 no (commit 1.073.741.824 > 999.999.999). El bit más alto que usan los 12 mods hoy
+    // es el 13, así que sobra margen.
+    private const int TotalBits = 29;
+
     private static void ValidateField(int offset, int width)
     {
-        if (offset < 0 || width is < 1 or > 30 || offset + width > 62)
+        // `offset > TotalBits - width` y no `offset + width > TotalBits`: la suma desborda con
+        // widths absurdos y se saltearía la guarda entera.
+        if (offset < 0 || width < 1 || width > TotalBits || offset > TotalBits - width)
             throw new ArgumentOutOfRangeException(nameof(offset));
     }
 }

@@ -68,10 +68,18 @@ public sealed class EvasionPower : FGOCorePower
         await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
         if (power != this || _isClamping || Amount <= MaxStacks) return;
 
+        // try/finally: ver CritStarsPower — una excepción de un listener ajeno dejaría el guard
+        // clavado y desactivaría el tope el resto del combate.
         _isClamping = true;
-        await PowerCmd.ModifyAmount(
-            choiceContext, this, MaxStacks - Amount, applier ?? Owner, cardSource);
-        _isClamping = false;
+        try
+        {
+            await PowerCmd.ModifyAmount(
+                choiceContext, this, MaxStacks - Amount, applier ?? Owner, cardSource);
+        }
+        finally
+        {
+            _isClamping = false;
+        }
     }
 }
 

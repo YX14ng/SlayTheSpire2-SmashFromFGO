@@ -32,7 +32,7 @@ public partial class MainFile : Node
             Cards.Basic.IncarnationOfBishamonten,
             Cards.Rare.ManifestationOfBishamonten>(ModId, "jeweled_pagoda_of_bishamonten");
         new Harmony(ModId).PatchAll();
-        NpCharge.GaugeFilledWithContext += TryManifestNp;
+        NpCharge.GaugeFilledWithContext += EnsureNpInCombat;
         NpCharge.GaugeDroppedWithContext += DisarmManifest;
 
         FormVisuals.RegisterFramesWithSpriteTransform(
@@ -43,10 +43,7 @@ public partial class MainFile : Node
         FgoAttributes.RegisterOverride(ModelDb.GetId<Kagetora>(), FgoAttribute.Earth);
     }
 
-    private static Task TryManifestNp(PlayerChoiceContext _, Creature creature) =>
-        EnsureNpInCombat(creature);
-
-    public static async Task EnsureNpInCombat(Creature creature)
+    public static async Task EnsureNpInCombat(PlayerChoiceContext context, Creature creature)
     {
         if (creature.Player?.Character is not Kagetora || creature.CombatState == null) return;
         if (!NpCharge.IsOvercharged(creature) || HasLiveNp(creature)) return;
@@ -54,7 +51,7 @@ public partial class MainFile : Node
         if (!creature.HasPower<NpManifestedPower>())
         {
             await PowerCmd.Apply<NpManifestedPower>(
-                new BlockingPlayerChoiceContext(), creature, 1m, creature, null, silent: true);
+                context, creature, 1m, creature, null, silent: true);
         }
 
         if (creature.HasPower<KenshinFormPower>())
@@ -62,6 +59,10 @@ public partial class MainFile : Node
         else
             await ManifestCards.ManifestToHand<BitenHassouKurumaGakariNoJin>(creature);
     }
+
+    // Contexto fresco solo para los caminos fuera de hooks (inicio de turno/combate).
+    public static Task EnsureNpInCombat(Creature creature) =>
+        EnsureNpInCombat(new BlockingPlayerChoiceContext(), creature);
 
     private static bool HasLiveNp(Creature creature)
     {

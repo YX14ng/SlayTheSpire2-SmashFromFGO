@@ -49,9 +49,18 @@ public sealed class CritStarsPower : FGOCorePower, IResourcePower
         // Auto-proc por defecto (Mash): una sola carta puede cruzar 200+ (ej. +100 de golpe).
         if (Amount > Max)
         {
+            // try/finally: ModifyAmount awaitea AfterPowerAmountChanged sobre TODOS los modelos del
+            // combate; si un listener de otro mod tira, el flag quedaría clavado en true y el tope
+            // dejaría de aplicarse el resto del combate (ActionExecutor loguea y sigue, no aborta).
             _isClamping = true;
-            await PowerCmd.ModifyAmount(choiceContext, this, Max - Amount, Owner, cardSource);
-            _isClamping = false;
+            try
+            {
+                await PowerCmd.ModifyAmount(choiceContext, this, Max - Amount, Owner, cardSource);
+            }
+            finally
+            {
+                _isClamping = false;
+            }
         }
 
         await Criticals.EnsureInstalled(choiceContext, Owner);

@@ -1,6 +1,7 @@
 using AstolfoRider.AstolfoRiderCode.Caprice;
 using AstolfoRider.AstolfoRiderCode.Cards.Uncommon;
 using AstolfoRider.AstolfoRiderCode.Powers;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -52,12 +53,15 @@ public sealed class OptimalPath() : AstolfoCard(
     {
         var chosenType = await UncommonRules.ChooseCaprice(c, this);
         if (!chosenType.HasValue) return;
-        var options = PileType.Draw.GetPile(Owner).Cards
+        // La pila de robo se muestra ordenada (rareza, id) para no filtrar el orden real de robo.
+        var options = PileType.Draw.GetPile(Owner).Cards.OrderBy(card => card.Rarity).ThenBy(card => card.Id)
             .Concat(PileType.Discard.GetPile(Owner).Cards)
             .Where(card => card is ICommandTyped typed && !typed.IsNoblePhantasm &&
                            typed.CommandType == chosenType.Value).ToList();
         if (options.Count == 0) return;
-        var selected = await CardSelectCmd.FromChooseACardScreen(c, options, Owner, false);
+        // Grilla y no FromChooseACardScreen: esta lista no tiene tope y esa pantalla tira con más de 3 cartas.
+        var selected = (await CardSelectCmd.FromSimpleGrid(
+            c, options, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1))).FirstOrDefault();
         if (selected != null) await CardPileCmd.Add(selected, PileType.Hand);
     }
     protected override void OnUpgrade() { }

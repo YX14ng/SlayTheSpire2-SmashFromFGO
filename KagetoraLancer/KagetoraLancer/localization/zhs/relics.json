@@ -16,6 +16,7 @@
   "KAGETORALANCER-COMMANDERS_HOLY_GRAIL.flavor": "此器不许诺奇迹，只许诺一片足以赢得奇迹的更大战场。",
   "KAGETORALANCER-SAKE_CUP.title": "酒盏",
   "KAGETORALANCER-SAKE_CUP.description": "#第一回合开始时，抽1张牌，然后弃1张牌。",
+  "KAGETORALANCER-SAKE_CUP.selectionScreenPrompt": "弃1张牌。",
   "KAGETORALANCER-SAKE_CUP.flavor": "弹丸从两侧飞过，清澈酒盏依然稳稳托在手中。",
   "KAGETORALANCER-EIGHT_PETAL_BANNER.title": "八华军旗",
   "KAGETORALANCER-EIGHT_PETAL_BANNER.description": "#每回合第一次成功推进教条时，获得2点格挡。",

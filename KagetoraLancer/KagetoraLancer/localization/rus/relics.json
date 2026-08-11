@@ -16,6 +16,7 @@
   "KAGETORALANCER-COMMANDERS_HOLY_GRAIL.flavor": "Сосуд обещает не чудо, а лишь большее поле битвы, где его можно заслужить.",
   "KAGETORALANCER-SAKE_CUP.title": "Чаша саке",
   "KAGETORALANCER-SAKE_CUP.description": "#В начале первого хода возьмите 1 карту, затем сбросьте 1.",
+  "KAGETORALANCER-SAKE_CUP.selectionScreenPrompt": "Сбросьте 1 карту.",
   "KAGETORALANCER-SAKE_CUP.flavor": "Прозрачная чаша остаётся неподвижной, пока пули летят по обе стороны.",
   "KAGETORALANCER-EIGHT_PETAL_BANNER.title": "Знамя восьми лепестков",
   "KAGETORALANCER-EIGHT_PETAL_BANNER.description": "#Первое успешное продвижение Доктрины в ход даёт 2 Блока.",

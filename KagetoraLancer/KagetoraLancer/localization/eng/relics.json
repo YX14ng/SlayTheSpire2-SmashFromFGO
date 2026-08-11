@@ -16,6 +16,7 @@
   "KAGETORALANCER-COMMANDERS_HOLY_GRAIL.flavor": "A vessel that promises no miracle—only a larger battlefield on which to earn one.",
   "KAGETORALANCER-SAKE_CUP.title": "Sake Cup",
   "KAGETORALANCER-SAKE_CUP.description": "#At the start of your first turn, draw 1 card, then discard 1.",
+  "KAGETORALANCER-SAKE_CUP.selectionScreenPrompt": "Discard 1 card.",
   "KAGETORALANCER-SAKE_CUP.flavor": "A clear cup held steady while bullets pass on either side.",
   "KAGETORALANCER-EIGHT_PETAL_BANNER.title": "Eight-Petal Banner",
   "KAGETORALANCER-EIGHT_PETAL_BANNER.description": "#The first successful Doctrine advance each turn grants 2 Block.",

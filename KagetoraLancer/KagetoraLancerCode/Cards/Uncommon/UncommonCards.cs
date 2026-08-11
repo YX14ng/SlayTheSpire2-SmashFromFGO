@@ -67,10 +67,14 @@ public sealed class FormationRelay() : KagetoraCard(1, CardType.Skill, CardRarit
     {
         var doctrine = Owner.Creature.GetPower<DoctrinePower>();
         if (doctrine == null) return;
-        var options = PileType.Discard.GetPile(Owner).Cards.Where(card =>
-            card is IPreceptCard tagged && doctrine.WouldAdvanceAfter(Precept.Heaven, tagged.Precept)).ToList();
-        if (options.Count == 0) return;
-        var chosen = await CardSelectCmd.FromChooseACardScreen(c, options, Owner, false);
+        // FromChooseACardScreen sirve para sets chicos GENERADOS: tira ArgumentException con más de
+        // 3 cartas y el descarte no tiene tope. Para elegir de una pila va FromCombatPile, que
+        // recibe el filtro y arma la grilla con TODAS las candidatas, sin recortarlas a 3.
+        var pile = PileType.Discard.GetPile(Owner);
+        bool CouldAdvance(CardModel card) =>
+            card is IPreceptCard tagged && doctrine.WouldAdvanceAfter(Precept.Heaven, tagged.Precept);
+        var chosen = (await CardSelectCmd.FromCombatPile(
+            c, pile, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1), CouldAdvance)).FirstOrDefault();
         if (chosen != null) await CardPileCmd.Add(chosen, PileType.Hand);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);

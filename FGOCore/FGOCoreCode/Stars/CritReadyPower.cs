@@ -32,9 +32,17 @@ public sealed class CritReadyPower : FGOCorePower
 
         if (Amount > MaxStacks)
         {
+            // try/finally: ver CritStarsPower — una excepción de un listener ajeno dejaría el guard
+            // clavado y desactivaría el tope el resto del combate.
             _isClamping = true;
-            await PowerCmd.ModifyAmount(context, this, MaxStacks - Amount, Owner, cardSource);
-            _isClamping = false;
+            try
+            {
+                await PowerCmd.ModifyAmount(context, this, MaxStacks - Amount, Owner, cardSource);
+            }
+            finally
+            {
+                _isClamping = false;
+            }
         }
 
         await Criticals.EnsureInstalled(context, Owner);
