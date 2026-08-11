@@ -3,7 +3,7 @@
     "name":  "Okita Souji - Captain of the First Unit",
     "author":  "Chaldea",
     "description":  "Adds Okita Souji (Saber) from Fate/Grand Order: the swiftest sword of the Bakumatsu. Attacking IS her economy - every cut raises petal-stars that return as crits, her only limit the breath of a dying body.",
-    "version":  "v0.1.17",
+    "version":  "v0.1.18",
     "has_pck":  true,
     "has_dll":  true,
     "dependencies":  [
@@ -17,7 +17,7 @@
                          },
                          {
                              "id":  "FGOCore",
-                             "min_version":  "v0.1.20"
+                             "min_version":  "v0.1.23"
                          }
                      ],
     "affects_gameplay":  true
