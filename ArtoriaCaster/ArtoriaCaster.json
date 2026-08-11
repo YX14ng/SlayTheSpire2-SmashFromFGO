@@ -3,7 +3,7 @@
     "name":  "Artoria Caster - Child of Prophecy",
     "author":  "Chaldea",
     "description":  "Adds Artoria Caster from Fate/Grand Order as a playable character: the staff-wielding Child of Prophecy who supports and endures as a Caster - until summer madness takes over and she switches into her Berserker self.",
-    "version":  "v0.1.17",
+    "version":  "v0.1.18",
     "has_pck":  true,
     "has_dll":  true,
     "dependencies":  [

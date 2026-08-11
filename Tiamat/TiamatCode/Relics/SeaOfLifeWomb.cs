@@ -69,7 +69,10 @@ public class SeaOfLifeWomb : TiamatRelic, INpLevelStore
     public override bool TryModifyCardRewardAlternatives(Player player, CardReward cardReward, List<CardRewardAlternative> alternatives)
     {
         if (Owner != player) return false;
-        if (alternatives.Count >= 3) return false;
+        // CardRewardAlternative.Generate TIRA con más de 2 alternativas (MAIN y BETA); con
+        // Driftwood (Skip + Reroll) no entramos. No se pierde el gacha: al usar el reroll la
+        // pantalla regenera las alternativas con CanReroll=false y la opción aparece ahí.
+        if (alternatives.Count >= 2) return false;
         if (!NpLevels.CanLevelUp(Owner)) return false;
 
         alternatives.Add(new CardRewardAlternative(DupeOptionId, OnDupeRoll, PostAlternateCardRewardAction.EndSelectionAndCompleteReward));
