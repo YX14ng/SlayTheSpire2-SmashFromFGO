@@ -15,7 +15,7 @@ Patrón tomado de `iryuko/sts2-mod-dev`. Estado vivo → [STATUS.md](STATUS.md).
 - Cuando cambia la API pública de FGOCore, **los 12 mods de personaje se republican JUNTOS** (dll viejo contra FGOCore nuevo → `MissingMethodException`/`ReflectionTypeLoadException`, falla silenciosa). Nunca shippear FGOCore solo.
 - Descripciones **localizadas** de Workshop: solo por web UI o Steamworks API (SteamCMD/VDF setea una sola, la default).
 - **Importación de texturas controlada (actualizado 2026-07-29)**: `tools/patch_webp_imports.ps1` normaliza imports PNG/WebP nuevos antes del publish (VRAM, mipmaps y límite 1024; 768 para frames). No se reescalan escenas ni se reescriben masivamente assets antiguos. El paso se usa solo cuando entran texturas nuevas y después se vuelve a publicar el `.pck`.
-- Manifest dependencies en formato nuevo: `[{"id":"BaseLib","min_version":"v3.4.1"}, {"id":"STS2-RitsuLib","min_version":"v0.5.10"}, {"id":"FGOCore","min_version":"v0.1.20"}]`.
+- Manifest dependencies en formato nuevo: `[{"id":"BaseLib","min_version":"v3.4.1"}, {"id":"STS2-RitsuLib","min_version":"v0.5.10"}, {"id":"FGOCore","min_version":"v0.1.23"}]`.
 
 ## Diseño / balance
 - **Touch of Orobas refina la primera Starter:** la reliquia mecánica debe ocupar el índice 0 de

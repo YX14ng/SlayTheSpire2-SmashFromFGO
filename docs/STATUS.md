@@ -2,6 +2,86 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-11 — Auditoría profunda de bugs (multi-agente): 11 confirmados, arreglados y re-verificados
+
+Pasada de tres etapas (buscar → refutar → arreglar → re-verificar el diff) sobre los 13 proyectos,
+con seis lentes: estado de combate, multiplayer/determinismo, entornos (Linux nativo vs Proton),
+compatibilidad MAIN/BETA, saves/serialización y contratos duros del vanilla. 12 hallazgos brutos,
+11 confirmados, 1 rechazado (el modo Auto de calidad visual en Linux nativo — decisión de diseño ya
+cerrada en DECISIONS.md:60, no un defecto). Dos rondas de re-verificación adversarial encontraron
+problemas en los primeros arreglos, así que lo que sigue es el estado final.
+
+**Crashes duros arreglados**
+
+- **`CardModel.SelectionScreenPrompt` TIRA si falta la clave de localización**
+  (`CardModel.cs:128-137`, igual en BETA; BaseLib NO lo cubre: `MissingLocPatch` parchea
+  `GetLocString`/`GetRawText` pero nunca `HasEntry`, que es lo que consulta `Exists()`).
+  AstolfoRider tenía 6 usos y 1 clave, KagetoraLancer 3 usos y 0 → **8 cartas crasheaban al
+  jugarse**. Agregadas las claves faltantes en eng/esp/kor/rus/zhs. `RelicModel` NO tiene ese
+  `throw`, pero le faltaba el texto a `SakeCup` (mostraba la clave cruda): también agregado.
+- **Guarda del gacha de NP: `>= 2` no alcanzaba.** Dos agujeros. (1) *Ceder no sirve*:
+  `CardReward.OnSelect` captura las alternativas UNA vez antes del loop (`CardReward.cs:189`) y
+  resuelve el índice contra esa copia (`:249`), mientras `Reroll()` → `Populate()` solo refresca la
+  PANTALLA — con Driftwood el clic sobre el gacha regenerado caía en el REROLL viejo → rerolls
+  gratis infinitos y gacha inalcanzable. (2) *Mirar la lista no alcanza*: `IterateHookListeners`
+  recorre `Player.Relics` en orden de obtención y la reliquia de identidad es **starter**, así que
+  corre primera y no ve lo que agreguen las de después — con **Pael's Wing** (Ancient, agrega
+  SACRIFICE sin condición) el total llegaba a 3 y `Generate` tiraba, **rompiendo toda recompensa de
+  carta del run**. Fix: `FGOCore/FGOCoreCode/Np/NpDupeAlternative.cs`, una sola implementación
+  compartida por los 12 personajes, que reserva el lugar de Pael's Wing y **desplaza** el REROLL en
+  vez de cederle el turno (solo cuando de verdad no entran los dos). Tradeoff asumido: con Driftwood
+  y NP por debajo del tope, el reroll no se muestra; al llegar al máximo (o con Grial) vuelve.
+- **Listas sin tope a `FromChooseACardScreen`** (tira con más de 3 cartas): `OptimalPath` (Astolfo)
+  pasó a `FromSimpleGrid` con orden determinista para multiplayer, `FormationRelay` (Kagetora) a
+  `FromCombatPile` con filtro — sin recortar candidatas.
+
+**Corrupción de estado y saves**
+
+- **`FgoCombatState`**: `ValidateField` prometía campos hasta el bit 61, pero `PowerModel.Amount` es
+  `int` y `SetAmount` **clampea en silencio** en ±999.999.999 (`PowerModel.cs:545`, MAIN y BETA).
+  Como se commitea `state+1`, el techo real es **29 bits**; con más, el Amount quedaba pegado al
+  tope y todos los campos leían basura. Corregido a `TotalBits = 29` (el bit más alto en uso hoy es
+  el 13) y la guarda reescrita como `offset > TotalBits - width` para que no desborde.
+- **`BondRelic`**: al continuar un save hecho justo después de un evento, `AfterRoomEntered` se
+  re-disparaba y re-sumaba el punto de vínculo. Ahora hay `LastBondMapPoint` (`[SavedProperty]`)
+  contra el punto de mapa, y sin coordenada válida se sale en vez de premiar.
+- **`ATeamDiary` (Mash)**: mismo replay, +1 Max HP duplicado. Guarda `GrantedRooms` contra el
+  historial de mapa, inicializada en `AfterObtained()` (es reliquia de evento: se consigue dentro
+  del room que después re-dispara el hook).
+- **Guards `_isClamping` sin `try/finally`** (`CritStarsPower`, `CritReadyPower`, `EvasionPower`):
+  una excepción en el `ModifyAmount` anidado dejaba el cap del recurso apagado el resto del combate.
+
+**Entornos y UI**
+
+- **Kill-switch del bridge con falso positivo**: el canario corría también sobre nodos huérfanos
+  (hoguera/tienda), donde `_Ready` está diferido y `ReadyRan == false` no dice nada — apagaba el
+  suavizado en **todos** los entornos, Windows/Proton incluido. Ahora el canario solo cuenta con el
+  sprite ya en árbol (combate), y los call-sites huérfanos no agregan nada hasta que el combate
+  confirme el bridge (`_bridgeVerified`). Costo conocido: si se continúa un save parado en una
+  tienda, esa visita va sin suavizado; se recupera tras el primer combate.
+- **`CombatMetersActive` sigue siendo un latch, y ahora está documentado por qué.** Se probó
+  cambiarlo por una consulta viva sobre la fila (para recuperarse si el factory falla en un combate
+  posterior) y la re-verificación lo tumbó: `NPowerContainer` muestrea `power.IsVisible` UNA sola
+  vez al aplicar el power (`NPowerContainer.cs:104-112`) y nunca reevalúa, y `NSceneContainer`
+  desprende la sala anterior antes de agregar la nueva — o sea que entre combates la propiedad viva
+  daba false justo cuando corre `SetCreature`, y volvían los indicadores DUPLICADOS que v0.1.20
+  había sacado. Revertido al latch, con la trampa explicada en un `<remarks>`. La recuperación ante
+  un registro fallido ya la daba el `catch` de `RegisterCombatUi`.
+- **Comentarios falsos corregidos** (`NpLevels.TryRollDupe` sobre el modelo de ejecución en MP, el
+  de `FormationRelay`, el de `CombatMetersActive`): en este repo un comentario falso ya causó una
+  vez que se escribiera una guarda sobre una premisa errada (`d52ea883`).
+
+**Versiones:** FGOCore **v0.1.23** (API nueva `NpDupeAlternative` → los 12 personajes se republican
+en el mismo lote y ahora piden `FGOCore >= v0.1.23`); Mash v0.1.20, Siegfried v0.1.21,
+Artoria/Morgan/Mordred/Gilgamesh/Okita/Oberon/Tiamat v0.1.18-19, Kagetora v0.1.11, Astolfo v0.1.11,
+Shuten v0.1.10. Matriz MAIN/BETA verde (26 builds, 0 warnings, Harmony targets 24/24/27).
+
+**Queda pendiente (no bloqueante):** portar `FgoSpriteMotion` a GDScript adjuntado desde el `.tscn`
+(como `vortigern_motion.gd` de Oberon) eliminaría de raíz el bridge C# de mod, el kill-switch y sus
+dos flags estáticas; hoy el canario del primer combate sigue emitiendo ~20 bloques `0x80070057` por
+sesión en Linux nativo. La sala final del Arquitecto no otorga el +1 de ATeamDiary (se entra sin
+apendear historial de mapa; es terminal, sin impacto jugable).
+
 ## 2026-08-11 — Crash con Driftwood: guarda de alternativas corregida en los 12 personajes
 
 3.er reporte de ArgoDevilian (gist `Argo11/47a09cd…`, log 2026-08-10 13:40): con la reliquia
@@ -19,12 +99,14 @@ continuar la run a veces crashea. El log confirma dos cosas:
    → 3 → throw. Esa guarda venía del fix de junio `d52ea883`, cuya premisa ("la pantalla no topa
    en 2, vanilla muestra 3") era falsa contra el juego actual.
 
-**Fix:** guarda `>= 2` en las 12 reliquias (`TryModifyCardRewardAlternatives`). No se pierde el
-gacha con Driftwood: `Reroll()` pone `CanReroll=false` y llama `Populate()` → `Generate` de nuevo
-→ `RefreshOptions`, así que tras usar el reroll la pantalla regenera Skip + gacha. Versiones
+**Fix:** guarda `>= 2` en las 12 reliquias (`TryModifyCardRewardAlternatives`). Versiones
 bumpeadas: Mash v0.1.19, Morgan/Mordred/Gilgamesh/Okita/Oberon/Tiamat/Artoria v0.1.17-18,
 Siegfried v0.1.20, Kagetora v0.1.10, Shuten v0.1.9, Astolfo v0.1.10. FGOCore NO cambia.
 Matriz MAIN/BETA verde (13 artefactos, 0 warnings).
+
+> **Corrección (2026-08-11, auditoría profunda):** este texto decía que "no se pierde el gacha con
+> Driftwood porque `Reroll()` → `Populate()` → `Generate` regenera Skip + gacha". **Es falso** y la
+> guarda `>= 2` quedó **reemplazada** — ver la entrada de la auditoría más abajo.
 
 ## 2026-08-10 — FGOCore v0.1.22: kill-switch del smoothing (respuesta al 2.º gist de ArgoDevilian)
 
