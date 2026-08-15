@@ -41,6 +41,6 @@ public sealed class MistVeil() : MorganCard(0, CardType.Skill, CardRarity.Common
 
     protected override void OnUpgrade()
     {
-        DynamicVars["ChargeCost"].UpgradeValueBy(-10m);
+        DynamicVars["Curse"].UpgradeValueBy(2m);
     }
 }

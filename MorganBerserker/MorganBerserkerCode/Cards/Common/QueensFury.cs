@@ -4,40 +4,46 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using MorganBerserker.MorganBerserkerCode.Powers;
 using MorganBerserker.MorganBerserkerCode.Powers.Forms;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#10 Furia de la Reina (女王之怒) — retocada v2: 10 de daño; en forma
-/// Reina/Invierno: Carga NP +10. Glow dorado en la forma correcta. (up +3 / NP→20)</summary>
-public sealed class QueensFury() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+/// <summary>
+/// Furia de la Reina (女王之怒) — re-efecto RE-POOL V2 (§3.3): el interruptor COMÚN hacia la
+/// forma detonadora que pedía el reporte 1. Entrá en Reina Hada Y pegá en la misma carta: 9 daño
+/// que Detona (mejora 13). Análogo Eruption de la Watcher — acá el auto-buff ES el punto.
+/// Implementación: IUsesTargetCurse para que la pasiva de forma NO detone por su cuenta (su
+/// _pendingSentence se cachea en BeforeCardPlayed, ANTES de que esta carta entre a la forma);
+/// la carta entra, Detona ella misma (respetando Cernunnos) y suma el bono a su único golpe.
+/// </summary>
+public sealed class QueensFury() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IUsesTargetCurse
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(10m, ValueProp.Move),
-        new DynamicVar("NpCharge", 10)
+        new DamageVar(9m, ValueProp.Move)
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
-
-    protected override bool ShouldGlowGoldInternal =>
-        Owner.Creature.HasPower<FairyQueenFormPower>() || Owner.Creature.HasPower<WinterQueenFormPower>();
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromKeyword(MorganKeywords.Detonar), HoverTipFactory.FromPower<CursePower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
+        await FormSwitch.Enter<FairyQueenFormPower>(choiceContext, Owner.Creature, this);
+
+        var damage = DynamicVars.Damage.BaseValue;
+        var bonus = await Sentencia.Detonar(Owner.Creature, cardPlay.Target);
+        damage += bonus;
+
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        if (Owner.Creature.HasPower<FairyQueenFormPower>() || Owner.Creature.HasPower<WinterQueenFormPower>())
-        {
-            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
-        }
+        Sentencia.ShowFloat(cardPlay.Target, bonus);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["NpCharge"].UpgradeValueBy(10m);
+        DynamicVars.Damage.UpgradeValueBy(4m);
     }
 }

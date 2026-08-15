@@ -45,12 +45,13 @@ public sealed class FairyQueenFormPower : MorganFormPower
         if (cardPlay.Card is IUsesTargetCurse) return;
         if (cardPlay.Target is not { } target || target == Owner || target.IsDead) return;
 
-        var curse = Curses.Of(target);
-        if (curse <= 0) return;
+        // Detonar (helper compartido): con Cernunnos re-especificada consume solo la mitad;
+        // el bono de daño sigue siendo la Maldición completa (REDESIGN-MORGAN-V2 §3.2/M5).
+        var bonus = await Sentencia.Detonar(Owner, target);
+        if (bonus <= 0) return;
 
-        _pendingSentence = curse;
+        _pendingSentence = bonus;
         Flash();
-        await Curses.Consume(target, curse);
     }
 
     // Devuelve el bono cacheado en el golpe del Ataque. PURO (NO muta): el hook ModifyDamage corre
@@ -80,6 +81,9 @@ public sealed class FairyQueenFormPower : MorganFormPower
         // Este callback también corre para golpes letales, a diferencia de AfterDamageReceived.
         if (dealer == Owner && !target.IsPlayer && props.IsPoweredAttack() && _pendingSentence > 0)
         {
+            // Flotante «¡Sentencia! +X» sobre la pegada real (nunca en preview) — legibilidad
+            // obligatoria del panel (J1-14/J2-4/J3-10).
+            Sentencia.ShowFloat(target, _pendingSentence);
             _pendingSentence = 0;
         }
 

@@ -16,7 +16,7 @@ namespace MorganBerserker.MorganBerserkerCode.Powers;
 /// </summary>
 public sealed class WinterCourtPower : MorganPower
 {
-    public const int NpPerArm = 5;
+    public const int NpPerArm = 10;
 
     public override PowerType Type => PowerType.Buff;
 

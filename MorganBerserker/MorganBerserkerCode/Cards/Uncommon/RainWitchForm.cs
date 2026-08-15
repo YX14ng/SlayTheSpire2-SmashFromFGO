@@ -9,7 +9,7 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 /// <summary>Cambio: Bruja de la Lluvia (切换：雨之魔女) — enter Rain Witch form + NP 10.</summary>
 public sealed class RainWitchForm() : MorganCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("NpCharge", 10)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("NpCharge", 20)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
@@ -21,6 +21,6 @@ public sealed class RainWitchForm() : MorganCard(0, CardType.Skill, CardRarity.U
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NpCharge"].UpgradeValueBy(8m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

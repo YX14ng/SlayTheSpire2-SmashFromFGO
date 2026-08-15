@@ -8,44 +8,31 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
 /// <summary>
-/// Sacrificio de la Reina (王之牺牲) — nuevo común P2 2026-06-25: 8 de daño; pierdes 1 HP;
-/// si tienes *Alzarse: +6 de daño. Da cuerpo al eje "Sangre de la Reina" (autodaño) que estaba
-/// subdimensionado (HP base 72, pocas cartas que paguen Vida) y lo conecta con el remate de Guts
-/// — la Reina que muere y vuelve más fuerte. Patrón Alzarse copiado de TyrantsLance.
+/// Sacrificio de la Reina (王之牺牲) — re-efecto RE-POOL V2 (§5.1): Habilidad 1⚡: 9 de Bloqueo;
+/// perdés 2 HP; +10 NP (mejora 12 de Bloqueo). El blood-Defend de la línea D — deja de ser dupe
+/// del payoff de Guts de Lanza de la Tirana; la pérdida dispara el cetro y Realce de Locura.
 /// </summary>
-public sealed class QueensSacrifice() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+public sealed class QueensSacrifice() : MorganCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(8m, ValueProp.Move),
-        new HpLossVar(1m),
-        new DynamicVar("Bonus", 6)
+        new BlockVar(9m, ValueProp.Move),
+        new HpLossVar(2m),
+        new DynamicVar("NpCharge", 10)
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<GutsPower>()];
-
-    protected override bool ShouldGlowGoldInternal => Owner.Creature.HasPower<GutsPower>();
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
-
-        var damage = DynamicVars.Damage.BaseValue;
-        if (Owner.Creature.HasPower<GutsPower>())
-        {
-            damage += DynamicVars["Bonus"].BaseValue;
-        }
-
-        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_bloody_impact")
-            .Execute(choiceContext);
+        await CreatureCmd.GainBlock(Owner.Creature, (BlockVar)DynamicVars.Block, cardPlay);
         await CreatureCmdCompatibility.DamageFromCard(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this, cardPlay);
+        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["Bonus"].UpgradeValueBy(3m);
+        DynamicVars.Block.UpgradeValueBy(3m);
     }
 }

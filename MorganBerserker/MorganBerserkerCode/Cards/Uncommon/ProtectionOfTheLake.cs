@@ -31,6 +31,6 @@ public sealed class ProtectionOfTheLake() : MorganCard(1, CardType.Skill, CardRa
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NpCharge"].UpgradeValueBy(8m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

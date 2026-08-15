@@ -27,6 +27,5 @@ public sealed class ProtectiveFrost() : MorganCard(1, CardType.Skill, CardRarity
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(3m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
-    }
+            }
 }

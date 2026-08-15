@@ -13,13 +13,13 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 /// TODOS + 1 por cada 4 de Maldición de cada objetivo (individual, máx +6 → a cap 25
 /// = 12 AoE, dentro del techo ×1.5). El payoff escalar de Maldición en común. (up: 6→9)
 /// </summary>
-public sealed class TyrantsSweep() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
+public sealed class TyrantsSweep() : MorganCard(2, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(6m, ValueProp.Move),
-        new DynamicVar("CursePer", 4),
-        new DynamicVar("MaxBonus", 6)
+        new DamageVar(8m, ValueProp.Move),
+        new DynamicVar("CursePer", 2),
+        new DynamicVar("MaxBonus", 8)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
@@ -43,6 +43,7 @@ public sealed class TyrantsSweep() : MorganCard(1, CardType.Attack, CardRarity.C
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars["MaxBonus"].UpgradeValueBy(2m);
     }
 }

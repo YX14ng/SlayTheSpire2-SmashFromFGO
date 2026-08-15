@@ -14,7 +14,7 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 public sealed class FaeBloodPact() : MorganCard(2, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new PowerVar<FaeBloodPactPower>("Stacks", 12m)];
+        [new PowerVar<FaeBloodPactPower>("Stacks", 10m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
@@ -26,6 +26,6 @@ public sealed class FaeBloodPact() : MorganCard(2, CardType.Power, CardRarity.Ra
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Stacks"].UpgradeValueBy(6m);
+        DynamicVars["Stacks"].UpgradeValueBy(10m);
     }
 }

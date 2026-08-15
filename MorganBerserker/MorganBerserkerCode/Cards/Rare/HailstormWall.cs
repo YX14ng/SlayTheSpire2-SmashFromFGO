@@ -12,8 +12,8 @@ public sealed class HailstormWall() : MorganCard(2, CardType.Skill, CardRarity.R
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(16m, ValueProp.Move),
-        new DynamicVar("Curse", 2)
+        new BlockVar(20m, ValueProp.Move),
+        new DynamicVar("Curse", 3)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];

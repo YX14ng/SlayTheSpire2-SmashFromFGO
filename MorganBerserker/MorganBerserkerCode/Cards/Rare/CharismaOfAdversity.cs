@@ -17,7 +17,7 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 public sealed class CharismaOfAdversity() : MorganCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new PowerVar<CharismaOfAdversityPower>("Stacks", 1m), new DynamicVar("AllyStrength", 1)];
+        [new PowerVar<CharismaOfAdversityPower>("Stacks", 2m), new DynamicVar("AllyStrength", 1)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

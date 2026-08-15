@@ -12,12 +12,12 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 /// #19 Acero del Invierno (寒冬之铁) — rediseño v2: 2⚡, 13 de Bloqueo; si algún
 /// enemigo tiene Maldición: +5 de Bloqueo (Maldición→Bloqueo). Glow dorado. (up +4/+2)
 /// </summary>
-public sealed class WinterSteel() : MorganCard(2, CardType.Skill, CardRarity.Common, TargetType.Self)
+public sealed class WinterSteel() : MorganCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(13m, ValueProp.Move),
-        new DynamicVar("Bonus", 5)
+        new BlockVar(5m, ValueProp.Move),
+        new DynamicVar("Bonus", 4)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
@@ -36,7 +36,7 @@ public sealed class WinterSteel() : MorganCard(2, CardType.Skill, CardRarity.Com
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(4m);
-        DynamicVars["Bonus"].UpgradeValueBy(2m);
+        DynamicVars.Block.UpgradeValueBy(2m);
+        DynamicVars["Bonus"].UpgradeValueBy(1m);
     }
 }

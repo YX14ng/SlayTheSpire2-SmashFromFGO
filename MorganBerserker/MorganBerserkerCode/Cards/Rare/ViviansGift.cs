@@ -13,15 +13,15 @@ public sealed class ViviansGift() : MorganCard(1, CardType.Skill, CardRarity.Rar
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(3)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await Special.KnightsArm.AddToHand(Owner.Creature, DynamicVars.Cards.IntValue);
+        await Special.KnightsArm.AddToHand(Owner.Creature, DynamicVars.Cards.IntValue, IsUpgraded);
     }
 
+    // RE-POOL V2: la mejora no agrega más Arms — las trae MEJORADAS (burst, no motor; J1-11/J3-5).
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

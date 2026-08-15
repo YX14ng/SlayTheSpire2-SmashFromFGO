@@ -7,9 +7,9 @@ using MorganBerserker.MorganBerserkerCode.Powers.Forms;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
 /// <summary>Cambio: La Reina (切换：妖精女王) — enter Fairy Queen form + 3 Curse.</summary>
-public sealed class FairyQueenForm() : MorganCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+public sealed class FairyQueenForm() : MorganCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Curse", 3)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Curse", 4)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
 
@@ -22,6 +22,6 @@ public sealed class FairyQueenForm() : MorganCard(1, CardType.Skill, CardRarity.
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Curse"].UpgradeValueBy(2m);
+        DynamicVars["Curse"].UpgradeValueBy(3m);
     }
 }

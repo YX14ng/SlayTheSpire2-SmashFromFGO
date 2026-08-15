@@ -16,7 +16,7 @@ public sealed class MadnessEnhancement() : MorganCard(1, CardType.Power, CardRar
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<MadnessEnhancementPower>("Triggers", 2m),
+        new PowerVar<MadnessEnhancementPower>("Triggers", 3m),
         new DynamicVar("NpCharge", MadnessEnhancementPower.NpPerTrigger)
     ];
 

@@ -10,7 +10,7 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 /// <summary>Ojos Feéricos (妖精眼) — al inicio de cada turno: aplica 1 de Maldición a TODOS.</summary>
 public sealed class FairyEyes() : MorganCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<FairyEyesPower>("Stacks", 1m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<FairyEyesPower>("Stacks", 2m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
 

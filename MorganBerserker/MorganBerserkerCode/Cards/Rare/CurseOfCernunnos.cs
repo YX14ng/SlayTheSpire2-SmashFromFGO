@@ -11,12 +11,13 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 /// Maldición de Cernunnos (科尔努诺斯的诅咒) — Poder: tus Maldiciones ya no se
 /// reducen al activarse. Mejora: coste 1⚡.
 /// </summary>
-public sealed class CurseOfCernunnos() : MorganCard(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+public sealed class CurseOfCernunnos() : MorganCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new PowerVar<CurseOfCernunnosPower>("Stacks", 1m)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromKeyword(MorganKeywords.Detonar), HoverTipFactory.FromPower<CursePower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

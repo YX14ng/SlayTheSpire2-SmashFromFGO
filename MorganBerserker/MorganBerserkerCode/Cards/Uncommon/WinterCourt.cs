@@ -33,8 +33,9 @@ public sealed class WinterCourt() : MorganCard(2, CardType.Power, CardRarity.Unc
         }
     }
 
+    // RE-POOL V2 (denominación J2-8): NpPerArm 5→10; la mejora YA no abarata — solo agrega el
+    // robo sostenido (WinterCourtDrawPower).
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
     }
 }

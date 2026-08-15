@@ -10,7 +10,7 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 /// <summary>Abrazo de la Dama del Lago (水妃的拥抱) — 12 de Bloqueo; solo jugable en forma Bruja.</summary>
 public sealed class EmbraceOfTheLake() : MorganCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(12m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(14m, ValueProp.Move)];
 
     protected override bool IsPlayable =>
         Owner.Creature.HasPower<RainWitchFormPower>() || Owner.Creature.HasPower<WinterQueenFormPower>();

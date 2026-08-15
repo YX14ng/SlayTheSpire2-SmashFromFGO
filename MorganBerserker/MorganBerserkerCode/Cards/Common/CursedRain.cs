@@ -10,7 +10,7 @@ public sealed class CursedRain() : MorganCard(1, CardType.Skill, CardRarity.Comm
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Curse", 2),
+        new DynamicVar("Curse", 3),
         new DynamicVar("NpCharge", 10)
     ];
 
@@ -31,7 +31,6 @@ public sealed class CursedRain() : MorganCard(1, CardType.Skill, CardRarity.Comm
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Curse"].UpgradeValueBy(1m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
-    }
+        DynamicVars["Curse"].UpgradeValueBy(2m);
+            }
 }

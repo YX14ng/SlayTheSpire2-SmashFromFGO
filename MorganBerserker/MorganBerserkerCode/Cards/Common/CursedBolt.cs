@@ -17,7 +17,7 @@ public sealed class CursedBolt() : MorganCard(1, CardType.Attack, CardRarity.Com
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(4m, ValueProp.Move),
+        new DamageVar(5m, ValueProp.Move),
         new DynamicVar("Curse", 2)
     ];
 

@@ -16,8 +16,9 @@ public sealed class BaobhanSithsShriek() : MorganCard(1, CardType.Attack, CardRa
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(9m, ValueProp.Move),
-        new DynamicVar("Curse", 4)
+        new DamageVar(6m, ValueProp.Move),
+        new DynamicVar("Curse", 4),
+        new PowerVar<MegaCrit.Sts2.Core.Models.Powers.WeakPower>("Weak", 1m)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
@@ -29,11 +30,13 @@ public sealed class BaobhanSithsShriek() : MorganCard(1, CardType.Attack, CardRa
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
         await Curses.Apply(choiceContext, cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.WeakPower>(choiceContext, cardPlay.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
         DynamicVars["Curse"].UpgradeValueBy(1m);
+        DynamicVars["Weak"].UpgradeValueBy(1m);
     }
 }

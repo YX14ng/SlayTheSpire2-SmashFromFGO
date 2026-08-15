@@ -8,16 +8,18 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
 /// <summary>
-/// #1 Réplica de Lanza (长枪复制品) — rediseño 2026-06-15 (swap Estrellas→Maldición): 9 de daño
-/// + aplica 2 de Maldición (las réplicas de Rhongomyniad hexan al clavarse). Rider de común del
-/// hilo de Maldición. (up +3/+1)
+/// Réplica de Lanza (长枪复制品) — re-spec RE-POOL V2 (parche J3-9, injerto de P2): 4 de daño ×2,
+/// 1 de Maldición por golpe (mejora 6×2, 2 por golpe). El multi-hit anti-Buffer en COMÚN que el
+/// pool no tenía; las réplicas de Rhongomyniad hexan al clavarse.
 /// </summary>
 public sealed class ReplicaLance() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
+    private const int Hits = 2;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(9m, ValueProp.Move),
-        new DynamicVar("Curse", 2)
+        new DamageVar(4m, ValueProp.Move),
+        new DynamicVar("Curse", 1)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -26,15 +28,19 @@ public sealed class ReplicaLance() : MorganCard(1, CardType.Attack, CardRarity.C
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Hits)
+            .FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
-        await Curses.Apply(choiceContext, cardPlay.Target, DynamicVars["Curse"].IntValue, Owner.Creature, this);
+        if (!cardPlay.Target.IsDead)
+        {
+            await Curses.Apply(choiceContext, cardPlay.Target, DynamicVars["Curse"].IntValue * Hits, Owner.Creature, this);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
         DynamicVars["Curse"].UpgradeValueBy(1m);
     }
 }

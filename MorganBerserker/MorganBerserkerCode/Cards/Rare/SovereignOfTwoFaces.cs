@@ -15,7 +15,7 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 public sealed class SovereignOfTwoFaces() : MorganCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new PowerVar<SovereignOfTwoFacesPower>("Stacks", 1m)];
+        [new PowerVar<SovereignOfTwoFacesPower>("Stacks", 2m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
@@ -30,6 +30,6 @@ public sealed class SovereignOfTwoFaces() : MorganCard(1, CardType.Power, CardRa
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["Stacks"].UpgradeValueBy(1m);
     }
 }

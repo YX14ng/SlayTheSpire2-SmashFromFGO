@@ -8,10 +8,10 @@ using MorganBerserker.MorganBerserkerCode.Powers;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
 /// <summary>Creación de Objetos (道具作成) — tus cartas que aplican Maldición aplican +1.</summary>
-public sealed class ItemConstruction() : MorganCard(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+public sealed class ItemConstruction() : MorganCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new PowerVar<ItemConstructionPower>("Stacks", 1m)];
+        [new PowerVar<ItemConstructionPower>("Stacks", 2m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
 
@@ -22,6 +22,6 @@ public sealed class ItemConstruction() : MorganCard(2, CardType.Power, CardRarit
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["Stacks"].UpgradeValueBy(1m);
     }
 }

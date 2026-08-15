@@ -19,7 +19,7 @@ public sealed class MemoryOfLondinium() : MorganCard(2, CardType.Attack, CardRar
     CommandType ICommandTyped.CommandType => CommandType.Buster;
     public bool IsNoblePhantasm => true;
 
-    public const int ChargeCost = 70;
+    public const int ChargeCost = 50; // RE-POOL V2: mín 70→50 (cambio declarado J3-13)
 
     /// <summary>Tier de sobrecarga: con esta carga consumida o más, también da Intangible y +1 Arma.</summary>
     public const int OverchargeTier = 100;

@@ -17,8 +17,8 @@ public sealed class AHomeWithMorgan() : MorganCard(1, CardType.Skill, CardRarity
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new MaxHpVar(3m),
-        new HealVar(3m)
+        new MaxHpVar(4m),
+        new HealVar(4m)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<GutsPower>()];

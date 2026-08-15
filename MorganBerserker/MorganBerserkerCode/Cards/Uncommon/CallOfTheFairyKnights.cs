@@ -20,7 +20,7 @@ public sealed class CallOfTheFairyKnights() : MorganCard(2, CardType.Skill, Card
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Curse", 2),
+        new DynamicVar("Curse", 3),
         new PowerVar<WeakPower>("Weak", 1m),
         new BlockVar(6m, ValueProp.Move),
         new CardsVar(1)
@@ -49,10 +49,9 @@ public sealed class CallOfTheFairyKnights() : MorganCard(2, CardType.Skill, Card
         await Special.KnightsArm.AddToHand(Owner.Creature, DynamicVars.Cards.IntValue);
     }
 
+    // RE-POOL V2: la mejora trae más caballeros (+1 Arm), no más números.
     protected override void OnUpgrade()
     {
-        DynamicVars["Curse"].UpgradeValueBy(1m);
-        DynamicVars["Weak"].UpgradeValueBy(1m);
-        DynamicVars.Block.UpgradeValueBy(3m);
+        DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

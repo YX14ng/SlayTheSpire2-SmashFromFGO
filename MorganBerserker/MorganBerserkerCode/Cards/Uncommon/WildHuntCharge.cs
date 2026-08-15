@@ -16,7 +16,7 @@ public sealed class WildHuntCharge() : MorganCard(2, CardType.Attack, CardRarity
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(10m, ValueProp.Move),
+        new DamageVar(8m, ValueProp.Move),
         new DynamicVar("Curse", 3)
     ];
 
@@ -36,6 +36,7 @@ public sealed class WildHuntCharge() : MorganCard(2, CardType.Attack, CardRarity
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["Curse"].UpgradeValueBy(1m);
     }
 }

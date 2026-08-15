@@ -15,31 +15,24 @@ public sealed class SillyMama() : MorganCard(0, CardType.Skill, CardRarity.Commo
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(1),
-        new DynamicVar("NpCharge", 10),
-        new DynamicVar("Curse", 0)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
-        HoverTipFactory.FromPower<NpChargePower>(),
-        HoverTipFactory.FromPower<CursePower>()
+        HoverTipFactory.FromPower<NpChargePower>()
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
         await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
-        if (DynamicVars["Curse"].IntValue > 0)
-        {
-            foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).Where(e => !e.IsDead).ToList())
-            {
-                await Curses.Apply(choiceContext, enemy, DynamicVars["Curse"].IntValue, Owner.Creature, this);
-            }
-        }
     }
 
+    // RE-POOL V2 (parche J2-16): la mejora NO muta de rol — antes agregaba Maldición AoE, ahora
+    // solo engorda el cantrip (+10 NP). El meme queda como pegamento flex de la línea C.
     protected override void OnUpgrade()
     {
-        DynamicVars["Curse"].UpgradeValueBy(2m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

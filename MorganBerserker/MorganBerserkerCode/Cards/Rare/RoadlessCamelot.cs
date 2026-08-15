@@ -16,7 +16,7 @@ public sealed class RoadlessCamelot() : MorganCard(2, CardType.Attack, CardRarit
     CommandType ICommandTyped.CommandType => CommandType.Buster;
     public bool IsNoblePhantasm => true;
 
-    public const int ChargeCost = 70;
+    public const int ChargeCost = 50; // RE-POOL V2: mín 70→50 (cambio declarado J3-13; paridad con los otros dos NP)
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

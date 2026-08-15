@@ -14,9 +14,9 @@ public sealed class SaviorsVengeance() : MorganCard(1, CardType.Attack, CardRari
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(6m, ValueProp.Move),
-        new DynamicVar("Divisor", 5),
-        new DynamicVar("Max", 20)
+        new DamageVar(8m, ValueProp.Move),
+        new DynamicVar("Divisor", 3),
+        new DynamicVar("Max", 30)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -32,7 +32,6 @@ public sealed class SaviorsVengeance() : MorganCard(1, CardType.Attack, CardRari
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Divisor"].UpgradeValueBy(-1m);
-        DynamicVars["Max"].UpgradeValueBy(4m);
+        DynamicVars["Max"].UpgradeValueBy(10m);
     }
 }

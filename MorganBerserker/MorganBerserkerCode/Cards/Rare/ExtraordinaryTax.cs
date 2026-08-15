@@ -42,7 +42,7 @@ public sealed class ExtraordinaryTax() : MorganCard(1, CardType.Skill, CardRarit
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Curse"].UpgradeValueBy(2m);
+        DynamicVars["Curse"].UpgradeValueBy(1m);
         DynamicVars.Heal.UpgradeValueBy(1m);
     }
 }

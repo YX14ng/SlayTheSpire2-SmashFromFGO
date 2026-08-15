@@ -13,8 +13,8 @@ public sealed class WinterThorns() : MorganCard(1, CardType.Skill, CardRarity.Un
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(7m, ValueProp.Move),
-        new PowerVar<WinterThornsPower>("Thorns", 2m)
+        new BlockVar(8m, ValueProp.Move),
+        new PowerVar<WinterThornsPower>("Thorns", 3m)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];

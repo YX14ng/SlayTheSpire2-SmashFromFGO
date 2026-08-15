@@ -13,11 +13,12 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 /// del objetivo al PRIMER golpe y la consume (sin doble-dip en multi-hit; lo maneja la forma).
 /// El aliento del dragón aplasta a la presa maldita. (up: daño 9→11)
 /// </summary>
-public sealed class AlbionsBreath() : MorganCard(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+public sealed class AlbionsBreath() : MorganCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(9m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Move)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromKeyword(MorganKeywords.Detonar), HoverTipFactory.FromPower<CursePower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

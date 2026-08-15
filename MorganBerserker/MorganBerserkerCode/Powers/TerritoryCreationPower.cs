@@ -15,7 +15,7 @@ namespace MorganBerserker.MorganBerserkerCode.Powers;
 /// </summary>
 public sealed class TerritoryCreationPower : MorganPower
 {
-    public const int NpPerTurn = 5;
+    public const int NpPerTurn = 10; // RE-POOL V2 (denominación J2-8)
 
     public override PowerType Type => PowerType.Buff;
 

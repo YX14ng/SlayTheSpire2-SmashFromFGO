@@ -28,8 +28,8 @@ namespace MorganBerserker.MorganBerserkerCode.Relics;
 public sealed class QueensScepter : MorganRelic, IFormChangeListener
 {
     public const int NpOnFirstSwitch = 10;
-    public const int CursePerHpLoss = 3;
-    public const int CurseTriggersPerTurn = 3;
+    public const int CursePerHpLoss = ScepterSeed.CursePerHpLoss;
+    public const int CurseTriggersPerTurn = ScepterSeed.CurseTriggersPerTurn;
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
@@ -64,30 +64,21 @@ public sealed class QueensScepter : MorganRelic, IFormChangeListener
         return Task.CompletedTask;
     }
 
-    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
-    {
-        if (!CombatManager.Instance.IsInProgress || target != Owner.Creature || result.UnblockedDamage <= 0) return;
-        if (Powers.FaeBloodPactPower.TickInProgress) return; // P4: el tick del Pacto no siembra Maldición.
-
-        if (Owner.Creature.CombatState is not { } combatState) return;
-        var living = new List<Creature>();
-        foreach (var enemy in combatState.GetOpponentsOf(Owner.Creature))
-        {
-            if (!enemy.IsDead) living.Add(enemy);
-        }
-        if (living.Count == 0) return;
-        if (FgoCombatState.GetTurn(Owner.Creature, 5, 2) >= CurseTriggersPerTurn) return;
-        await FgoCombatState.IncrementTurn(
-            choiceContext, Owner.Creature, 5, CurseTriggersPerTurn, cardSource, width: 2);
-
-        Flash();
-        var victim = living[Owner.RunState.Rng.CombatCardGeneration.NextInt(living.Count)];
-        // applier = Owner.Creature para que los amplificadores de Maldición (Caster/Invierno) cuenten.
-        await Curses.Apply(choiceContext, victim, CursePerHpLoss, Owner.Creature, null);
-    }
+    public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource) =>
+        // Motor «sangrar → sembrar» extraído a ScepterSeed para que la Ancient lo reinstale
+        // (REDESIGN-MORGAN-V2 §6, J2-1/J3-4).
+        ScepterSeed.OnHpLoss(this, choiceContext, target, result, cardSource);
 
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
+        // RE-POOL V2: bit 9 = «cambiaste de forma este turno» (lo leen Golpe Espejado, Ira de la
+        // Tormenta y Guardia Cambiante). El cetro/Ancient siempre están presentes, así que el flag
+        // se levanta en TODO cambio, antes del gate del bono de primer cambio.
+        if (FgoCombatState.GetTurn(Owner.Creature, 9) == 0)
+        {
+            await FgoCombatState.SetTurn(
+                choiceContext ?? new BlockingPlayerChoiceContext(), Owner.Creature, 9, 1);
+        }
         if (FgoCombatState.GetCombat(Owner.Creature, 0) != 0) return;
         var context = choiceContext ?? new BlockingPlayerChoiceContext();
         await FgoCombatState.SetCombat(context, Owner.Creature, 0, 1);

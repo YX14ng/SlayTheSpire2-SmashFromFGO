@@ -17,8 +17,8 @@ public sealed class FairyOfTheRainland() : MorganCard(1, CardType.Power, CardRar
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("NpCharge", 20),
-        new PowerVar<FairyOfTheRainlandPower>("Stacks", 5m),
+        new DynamicVar("NpCharge", 0),
+        new PowerVar<FairyOfTheRainlandPower>("Stacks", 10m),
         new DynamicVar("AllyCharge", FairyOfTheRainlandPower.AllyCharge)
     ];
 
@@ -26,13 +26,15 @@ public sealed class FairyOfTheRainland() : MorganCard(1, CardType.Power, CardRar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        if (DynamicVars["NpCharge"].IntValue > 0)
+        {
+            await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
+        }
         await PowerCmd.Apply<FairyOfTheRainlandPower>(choiceContext, Owner.Creature, DynamicVars["Stacks"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
-        DynamicVars["Stacks"].UpgradeValueBy(3m);
+        DynamicVars["NpCharge"].UpgradeValueBy(20m);
     }
 }

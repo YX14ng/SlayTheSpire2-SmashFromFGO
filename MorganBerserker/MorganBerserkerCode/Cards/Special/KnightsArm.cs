@@ -23,11 +23,20 @@ public sealed class KnightsArm() : MorganCard(0, CardType.Attack, CardRarity.Eve
     /// que estaba duplicado en WinterCourtPower / MemoryOfLondinium / CallOfTheFairyKnights /
     /// ViviansGift (delega en el helper común <see cref="ManifestCards.ManifestToHand{T}"/>).
     /// </summary>
-    public static async Task AddToHand(Creature creature, int count)
+    public static async Task AddToHand(Creature creature, int count, bool upgraded = false)
     {
         for (var i = 0; i < count; i++)
         {
-            await ManifestCards.ManifestToHand<KnightsArm>(creature, ManifestPreviewTime);
+            if (!upgraded)
+            {
+                await ManifestCards.ManifestToHand<KnightsArm>(creature, ManifestPreviewTime);
+                continue;
+            }
+            // RE-POOL V2 (Regalo de Vivian mejorada): Arms mejoradas — patrón GalahadsLegacy.
+            if (creature.CombatState == null || creature.Player == null) return;
+            var card = creature.CombatState.CreateCard<KnightsArm>(creature.Player);
+            card.UpgradeInternal();
+            await ManifestCards.ManifestToHand(creature, card, ManifestPreviewTime);
         }
     }
 

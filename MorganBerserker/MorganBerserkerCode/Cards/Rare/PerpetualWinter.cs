@@ -11,10 +11,10 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 /// Invierno Perpetuo (永恒之冬) — Poder: al inicio de cada turno, aplica 2 de
 /// Maldición a TODOS los enemigos. Mejora: coste 2⚡.
 /// </summary>
-public sealed class PerpetualWinter() : MorganCard(3, CardType.Power, CardRarity.Rare, TargetType.Self)
+public sealed class PerpetualWinter() : MorganCard(2, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new PowerVar<PerpetualWinterPower>("Stacks", 2m)];
+        [new PowerVar<PerpetualWinterPower>("Stacks", 4m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
 
@@ -26,6 +26,6 @@ public sealed class PerpetualWinter() : MorganCard(3, CardType.Power, CardRarity
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["Stacks"].UpgradeValueBy(1m);
     }
 }

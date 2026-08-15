@@ -29,7 +29,6 @@ public sealed class ScepterBlow() : MorganCard(1, CardType.Attack, CardRarity.Co
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
-    }
+        DynamicVars.Damage.UpgradeValueBy(4m);
+            }
 }

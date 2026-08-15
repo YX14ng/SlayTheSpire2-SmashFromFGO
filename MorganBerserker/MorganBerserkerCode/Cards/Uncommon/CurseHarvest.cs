@@ -33,6 +33,6 @@ public sealed class CurseHarvest() : MorganCard(1, CardType.Skill, CardRarity.Un
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Max"].UpgradeValueBy(4m);
+        EnergyCost.UpgradeBy(-1);
     }
 }

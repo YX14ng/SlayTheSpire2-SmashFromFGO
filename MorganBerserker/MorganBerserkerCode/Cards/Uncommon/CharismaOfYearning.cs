@@ -19,7 +19,7 @@ public sealed class CharismaOfYearning() : MorganCard(2, CardType.Skill, CardRar
     [
         new PowerVar<StrengthPower>("Strength", 2m),
         new PowerVar<VulnerablePower>("Vulnerable", 1m),
-        new DynamicVar("NpCharge", 20),
+        new DynamicVar("NpCharge", 10),
         new DynamicVar("AllyStrength", 1)
     ];
 
@@ -46,6 +46,5 @@ public sealed class CharismaOfYearning() : MorganCard(2, CardType.Skill, CardRar
     protected override void OnUpgrade()
     {
         DynamicVars["Strength"].UpgradeValueBy(1m);
-        DynamicVars["NpCharge"].UpgradeValueBy(10m);
-    }
+            }
 }

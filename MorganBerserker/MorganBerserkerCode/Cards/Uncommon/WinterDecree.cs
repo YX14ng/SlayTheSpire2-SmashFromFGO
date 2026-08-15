@@ -8,11 +8,11 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
 /// <summary>Decreto de Invierno (寒冬敕令) — 12 de Bloqueo + 2 de Maldición a TODOS.</summary>
-public sealed class WinterDecree() : MorganCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class WinterDecree() : MorganCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(12m, ValueProp.Move),
+        new BlockVar(8m, ValueProp.Move),
         new DynamicVar("Curse", 2)
     ];
 
@@ -32,7 +32,7 @@ public sealed class WinterDecree() : MorganCard(2, CardType.Skill, CardRarity.Un
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(4m);
+        DynamicVars.Block.UpgradeValueBy(3m);
         DynamicVars["Curse"].UpgradeValueBy(1m);
     }
 }

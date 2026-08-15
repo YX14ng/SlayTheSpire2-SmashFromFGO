@@ -14,7 +14,7 @@ public sealed class TwinReplicas() : MorganCard(1, CardType.Attack, CardRarity.C
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(4m, ValueProp.Move),
+        new DamageVar(5m, ValueProp.Move),
         new DynamicVar("NpCharge", 10)
     ];
 
@@ -33,6 +33,5 @@ public sealed class TwinReplicas() : MorganCard(1, CardType.Attack, CardRarity.C
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
-    }
+            }
 }

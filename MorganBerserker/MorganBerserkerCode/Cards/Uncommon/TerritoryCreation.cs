@@ -16,7 +16,7 @@ public sealed class TerritoryCreation() : MorganCard(1, CardType.Power, CardRari
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<TerritoryCreationPower>("Stacks", 4m),
+        new PowerVar<TerritoryCreationPower>("Stacks", 3m),
         new DynamicVar("NpCharge", TerritoryCreationPower.NpPerTurn)
     ];
 

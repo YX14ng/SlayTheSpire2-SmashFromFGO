@@ -38,5 +38,6 @@ public sealed class AdversitysFury() : MorganCard(1, CardType.Attack, CardRarity
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars["Bonus"].UpgradeValueBy(1m);
     }
 }

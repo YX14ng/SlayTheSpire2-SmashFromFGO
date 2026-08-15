@@ -9,7 +9,9 @@ namespace MorganBerserker.MorganBerserkerCode.Powers;
 /// <summary>
 /// Soberana de Dos Rostros (双面君主) — rediseño 2026-06-15 (swap Estrellas→Maldición): whenever
 /// you change form: draw 2 and NP +10 (premia la danza Caster↔Berserker, el corazón del motor).
-/// Notified by FGOCore's FormSwitch via IFormChangeListener.
+/// RE-POOL V2 (J1-9/J2-9/J3-7, el cap más estricto del panel): máximo Amount veces por turno
+/// (2 base, 3 mejorada) — sin el cap, el toggle común nuevo la volvía un motor de robo sin freno.
+/// Contador en bits 7-8 del estado de turno. Notified by FGOCore's FormSwitch via IFormChangeListener.
 /// </summary>
 public sealed class SovereignOfTwoFacesPower : MorganPower, IFormChangeListener
 {
@@ -18,10 +20,14 @@ public sealed class SovereignOfTwoFacesPower : MorganPower, IFormChangeListener
 
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public async Task OnFormChanged(PlayerChoiceContext? choiceContext)
     {
+        var used = FgoCombatState.GetTurn(Owner, 7, 2);
+        if (used >= (int)Amount) return;
+        await FgoCombatState.SetTurn(
+            choiceContext ?? new BlockingPlayerChoiceContext(), Owner, 7, used + 1, null, 2);
         Flash();
         var player = Owner.Player;
         if (choiceContext != null && player?.PlayerCombatState is { } playerCombatState)

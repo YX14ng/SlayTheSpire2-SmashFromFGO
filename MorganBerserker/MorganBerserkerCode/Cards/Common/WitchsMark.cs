@@ -8,7 +8,7 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 /// <summary>#13 Marca de la Bruja (魔女的印记) — 0⚡: aplica 3 de Maldición.</summary>
 public sealed class WitchsMark() : MorganCard(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Curse", 3)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Curse", 4)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
 

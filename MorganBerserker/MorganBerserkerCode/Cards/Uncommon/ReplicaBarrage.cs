@@ -8,14 +8,14 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 
 /// <summary>Andanada de Réplicas (复制枪连射) — 5 de daño ×3; Carga NP +5 por golpe que dañe HP.</summary>
-public sealed class ReplicaBarrage() : MorganCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+public sealed class ReplicaBarrage() : MorganCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     private const int Hits = 3;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(5m, ValueProp.Move),
-        new DynamicVar("NpCharge", 5)
+        new DamageVar(3m, ValueProp.Move),
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
@@ -36,6 +36,6 @@ public sealed class ReplicaBarrage() : MorganCard(2, CardType.Attack, CardRarity
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(1m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
     }
 }

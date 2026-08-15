@@ -16,12 +16,12 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 // IUsesTargetCurse: la Sentencia (forma Reina/Invierno) consumía la Maldición del objetivo en
 // BeforeCardPlayed antes de este OnPlay -> wasCursed=false -> no curaba (reporte de player). El marcador
 // exime la carta de la Sentencia y le deja la Maldición para leerla.
-public sealed class BarghestsFang() : MorganCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy), IUsesTargetCurse
+public sealed class BarghestsFang() : MorganCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy), IUsesTargetCurse
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(16m, ValueProp.Move),
-        new HealVar(4m)
+        new DamageVar(9m, ValueProp.Move),
+        new HealVar(3m)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
@@ -41,7 +41,7 @@ public sealed class BarghestsFang() : MorganCard(2, CardType.Attack, CardRarity.
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(5m);
-        DynamicVars.Heal.UpgradeValueBy(2m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Heal.UpgradeValueBy(1m);
     }
 }

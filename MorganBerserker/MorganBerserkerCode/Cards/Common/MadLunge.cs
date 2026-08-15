@@ -6,13 +6,15 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 
-/// <summary>#4 Embestida Demente (狂化突进) — 20 de daño; pierdes 2 HP.</summary>
-public sealed class MadLunge() : MorganCard(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+/// <summary>Embestida Demente (狂化突进) — re-efecto RE-POOL V2 (resolución J1-7×J2-10, la más
+/// restrictiva de ambas): 0⚡, 7 de daño; perdés 3 HP (mejora 10; perdés 3). El Hemokinesis-lite
+/// de la línea D: velocidad pagada en sangre que el cetro convierte en Maldición.</summary>
+public sealed class MadLunge() : MorganCard(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(20m, ValueProp.Move),
-        new HpLossVar(2m)
+        new DamageVar(7m, ValueProp.Move),
+        new HpLossVar(3m)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -27,6 +29,6 @@ public sealed class MadLunge() : MorganCard(2, CardType.Attack, CardRarity.Commo
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(6m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }

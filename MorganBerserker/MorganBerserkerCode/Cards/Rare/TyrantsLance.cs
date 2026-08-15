@@ -17,8 +17,8 @@ public sealed class TyrantsLance() : MorganCard(2, CardType.Attack, CardRarity.R
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(24m, ValueProp.Move),
-        new HpLossVar(4m),
+        new DamageVar(18m, ValueProp.Move),
+        new HpLossVar(3m),
         new DynamicVar("Bonus", 10)
     ];
 
@@ -47,5 +47,6 @@ public sealed class TyrantsLance() : MorganCard(2, CardType.Attack, CardRarity.R
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(6m);
+        DynamicVars["Bonus"].UpgradeValueBy(2m);
     }
 }

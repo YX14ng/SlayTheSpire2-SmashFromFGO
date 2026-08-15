@@ -11,13 +11,13 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Uncommon;
 /// Ejecución Real (女王处刑) — 14 de daño; si mata: Carga NP +30 y 2 de Maldición
 /// a TODOS. Rediseño v2: NP 25→30 (denominación "básica Arts"). (up +4/+5)
 /// </summary>
-public sealed class RoyalExecution() : MorganCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+public sealed class RoyalExecution() : MorganCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(14m, ValueProp.Move),
-        new DynamicVar("NpCharge", 30),
-        new DynamicVar("Curse", 2)
+        new DamageVar(10m, ValueProp.Move),
+        new DynamicVar("NpCharge", 20),
+        new DynamicVar("Curse", 3)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -45,6 +45,6 @@ public sealed class RoyalExecution() : MorganCard(2, CardType.Attack, CardRarity
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(4m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

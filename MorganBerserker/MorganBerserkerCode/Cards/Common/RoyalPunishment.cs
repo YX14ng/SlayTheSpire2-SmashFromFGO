@@ -16,11 +16,11 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 /// </summary>
 // IUsesTargetCurse: exime de la Sentencia (que consumía la Maldición del objetivo antes del OnPlay),
 // para que el +NP condicional a "objetivo maldito" dispare en forma Reina/Invierno.
-public sealed class RoyalPunishment() : MorganCard(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IUsesTargetCurse
+public sealed class RoyalPunishment() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IUsesTargetCurse
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(12m, ValueProp.Move),
+        new DamageVar(8m, ValueProp.Move),
         new PowerVar<VulnerablePower>("Vulnerable", 1m),
         new DynamicVar("NpCharge", 10)
     ];
@@ -51,7 +51,7 @@ public sealed class RoyalPunishment() : MorganCard(2, CardType.Attack, CardRarit
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
         DynamicVars["Vulnerable"].UpgradeValueBy(1m);
     }
 }

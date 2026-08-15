@@ -25,6 +25,6 @@ public sealed class RoyalEdict() : MorganCard(1, CardType.Skill, CardRarity.Comm
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NpCharge"].UpgradeValueBy(10m);
+        DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

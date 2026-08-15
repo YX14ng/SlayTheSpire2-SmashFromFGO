@@ -1,9 +1,9 @@
 {
   "MORGANBERSERKER-QUEENS_SCEPTER.title": "Rhongomyniad, el Cetro de la Reina",
-  "MORGANBERSERKER-QUEENS_SCEPTER.description": "#Comienza cada combate en forma *Reina *de *las *Hadas. La primera vez que cambias de forma en cada combate: obtén 1 de Energía, roba 1 carta y 10 de *Carga *NP. Cada vez que pierdes Vida: aplica 3 de *Maldición a un enemigo al azar, máx. 3 veces por turno. Al inicio de tu primer turno de cada combate: agregá a tu mano una Metamorfosis de la Reina gratuita y Etérea.",
+  "MORGANBERSERKER-QUEENS_SCEPTER.description": "#Comienza cada combate en forma *Reina *de *las *Hadas. La primera vez que cambias de forma en cada combate: obtén 1 de Energía, roba 1 carta y 10 de *Carga *NP. Cada vez que pierdes Vida: aplica 3 de *Maldición a un enemigo al azar, máx. 3 veces por turno. Al inicio de tu primer turno de cada combate: agregá a tu mano una Metamorfosis de la Reina gratuita y Etérea. Al llegar a 100 de Carga NP: la Metamorfosis gratuita vuelve a tu mano /(1 vez por pico/).",
   "MORGANBERSERKER-QUEENS_SCEPTER.flavor": "La lanza que sostiene el confín del mundo, tallada hasta volverse cetro. La Reina no necesita otra prueba de su derecho a gobernar.",
   "MORGANBERSERKER-WORLDS_END_CORONATION.title": "Coronación del Confín",
-  "MORGANBERSERKER-WORLDS_END_CORONATION.description": "#Cada vez que cambias de forma: obtén 1 de Energía (máx. 1 vez por turno).",
+  "MORGANBERSERKER-WORLDS_END_CORONATION.description": "#Comienza cada combate en forma Reina de las Hadas. Cada vez que pierdes Vida: aplica 3 de Maldición a un enemigo aleatorio /(máx. 3 veces por turno/). Al inicio de tu primer turno y al llegar a 100 de Carga NP: agrega una Metamorfosis de la Reina gratuita y Etérea a tu mano. Cada vez que cambias de forma: obtén 1 de Energía /(máx. 1 vez por turno/).",
   "MORGANBERSERKER-WORLDS_END_CORONATION.flavor": "Berserker y bruja, tirana y salvadora. En el fin del mundo, todas las coronas son suyas.",
   "MORGANBERSERKER-EXISTENCE_TAX.title": "Impuesto de Existencia",
   "MORGANBERSERKER-EXISTENCE_TAX.description": "#Al final de tu turno: obtén *Carga *NP igual a la *Maldición total de los enemigos (máx. !NpCharge!).",
@@ -12,7 +12,7 @@
   "MORGANBERSERKER-SPRIGGAN_TREASURY.description": "#Comienza cada combate con !NpCharge! de *Carga *NP.",
   "MORGANBERSERKER-SPRIGGAN_TREASURY.flavor": "El botín de la Reina, custodiado sin descanso. Spriggan cuenta cada moneda dos veces.",
   "MORGANBERSERKER-MIRROR_CLAN_GLASS.title": "Espejo del Clan",
-  "MORGANBERSERKER-MIRROR_CLAN_GLASS.description": "#Cada vez que cambias de forma: roba 1 carta.",
+  "MORGANBERSERKER-MIRROR_CLAN_GLASS.description": "#La primera vez que cambias de forma en cada turno: obtén 3 de Bloqueo.",
   "MORGANBERSERKER-MIRROR_CLAN_GLASS.flavor": "El Clan del Espejo nunca muestra el rostro que esperas. A la Reina eso le resulta de lo más útil.",
   "MORGANBERSERKER-BOTTLED_MORS.title": "Mors Embotellado",
   "MORGANBERSERKER-BOTTLED_MORS.description": "#Cuando un enemigo muere con *Maldición: su *Maldición salta a un enemigo aleatorio.",
@@ -28,5 +28,8 @@
   "MORGANBERSERKER-MORGAN_SUMMON_SEAL.flavor": "¿Deseas invocar a la Reina otra vez? Entonces presenta un catalizador digno de ella.",
   "MORGANBERSERKER-MORGAN_BOND.title": "Juramento a la Reina",
   "MORGANBERSERKER-MORGAN_BOND.description": "#Morgan gana puntos de Vínculo al vencer en combate (/+2, élites /+3, jefes /+5) y al entrar a eventos, tiendas y fogatas (/+1). Cada nivel de *Vínculo* otorga regalos permanentes: Vida máxima (Nv 1/3/6/9), *Carga *NP inicial (Nv 2/5/8), *Maldición inicial a TODOS los enemigos (Nv 4/7), y al Nv 10 la Reina encontró algo por lo que vivir: comienza cada combate con *Alzarse (sobrevive el daño letal con 1 de Vida). En multijugador, los regalos defensivos escalan con la cantidad de jugadores.",
-  "MORGANBERSERKER-MORGAN_BOND.flavor": "Sirve bien, y la Reina de la Britania de las Hadas tal vez te permita estar de pie junto a su trono."
+  "MORGANBERSERKER-MORGAN_BOND.flavor": "Sirve bien, y la Reina de la Britania de las Hadas tal vez te permita estar de pie junto a su trono.",
+  "MORGANBERSERKER-CROWN_OF_THORNS.title": "Corona de Espinas",
+  "MORGANBERSERKER-CROWN_OF_THORNS.description": "#La primera vez en cada turno que una carta tuya te hace perder Vida: obtén 4 de Bloqueo.",
+  "MORGANBERSERKER-CROWN_OF_THORNS.flavor": "Toda corona hace sangrar la frente que la porta."
 }

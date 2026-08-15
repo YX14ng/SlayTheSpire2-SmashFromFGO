@@ -1,9 +1,9 @@
 {
   "MORGANBERSERKER-QUEENS_SCEPTER.title": "止境之枪·王笏",
-  "MORGANBERSERKER-QUEENS_SCEPTER.description": "#战斗开始时：进入*妖精女王*形态。每场战斗第一次变换形态时：获得1点能量、抽1张牌并获得10点*宝具值*。每当摩根失去生命时：对一名随机敌人施加3层*诅咒*，每回合最多触发3次。每场战斗你的第一个回合开始时：将一张免费且虚无的「女王的变身」加入手牌。",
+  "MORGANBERSERKER-QUEENS_SCEPTER.description": "#战斗开始时：进入*妖精女王*形态。每场战斗第一次变换形态时：获得1点能量、抽1张牌并获得10点*宝具值*。每当摩根失去生命时：对一名随机敌人施加3层*诅咒*，每回合最多触发3次。每场战斗你的第一个回合开始时：将一张免费且虚无的「女王的变身」加入手牌。宝具值达到100时：免费的「女王的变身」会再次加入你的手牌（每次蓄满1次）。",
   "MORGANBERSERKER-QUEENS_SCEPTER.flavor": "曾射穿星辰的圣枪伦戈米尼亚德，如今被女王握作王笏。它仍记得如何终结一切。",
   "MORGANBERSERKER-WORLDS_END_CORONATION.title": "止境的加冕",
-  "MORGANBERSERKER-WORLDS_END_CORONATION.description": "#你每次变换形态时：获得1点能量（每回合最多1次）。",
+  "MORGANBERSERKER-WORLDS_END_CORONATION.description": "#战斗开始时：进入妖精女王形态。每当你失去生命时：对一名随机敌人施加3层诅咒（每回合最多3次）。你的第一个回合开始时以及宝具值达到100时：将一张免费且虚无的「女王的变身」加入手牌。你每次变换形态时：获得1点能量（每回合最多1次）。",
   "MORGANBERSERKER-WORLDS_END_CORONATION.flavor": "两副面孔，一个王座。加冕从未落幕。",
   "MORGANBERSERKER-EXISTENCE_TAX.title": "存在税",
   "MORGANBERSERKER-EXISTENCE_TAX.description": "#在你的回合结束时：获得等同于敌人*诅咒*总层数的*宝具值*（最多+!NpCharge!）。",
@@ -12,7 +12,7 @@
   "MORGANBERSERKER-SPRIGGAN_TREASURY.description": "#每场战斗开始时拥有!NpCharge!点宝具值。",
   "MORGANBERSERKER-SPRIGGAN_TREASURY.flavor": "看守宝库的妖精照例抽成。女王对此睁一只眼闭一只眼。",
   "MORGANBERSERKER-MIRROR_CLAN_GLASS.title": "镜之氏族的魔镜",
-  "MORGANBERSERKER-MIRROR_CLAN_GLASS.description": "#你每次变换形态时：抽1张牌。",
+  "MORGANBERSERKER-MIRROR_CLAN_GLASS.description": "#每回合第一次变换形态时：获得3点格挡。",
   "MORGANBERSERKER-MIRROR_CLAN_GLASS.flavor": "镜中映出的，究竟是女王，还是魔女？",
   "MORGANBERSERKER-BOTTLED_MORS.title": "瓶中的摩耳斯",
   "MORGANBERSERKER-BOTTLED_MORS.description": "#当敌人在持有*诅咒*时死亡：其*诅咒*转移给一名随机敌人。",
@@ -28,5 +28,8 @@
   "MORGANBERSERKER-MORGAN_SUMMON_SEAL.flavor": "妖精国的女王不接受拒绝。再抽一次。",
   "MORGANBERSERKER-MORGAN_BOND.title": "向女王宣誓效忠",
   "MORGANBERSERKER-MORGAN_BOND.description": "#摩根通过战斗胜利获得羁绊点数（/+2，精英/+3，头目/+5），进入事件、商店和篝火时/+1。每提升一级*羁绊*获得永久奖励：生命上限（1/3/6/9级）、初始*宝具值*（2/5/8级）、战斗开始时对所有敌人施加*诅咒*（4/7级）——10级时「想和摩根组建家庭」：每场战斗开始时获得*毅力*。多人游戏中，防御类奖励会随玩家数量提升。",
-  "MORGANBERSERKER-MORGAN_BOND.flavor": "向女王效忠。这不是请求，而是敕命。"
+  "MORGANBERSERKER-MORGAN_BOND.flavor": "向女王效忠。这不是请求，而是敕命。",
+  "MORGANBERSERKER-CROWN_OF_THORNS.title": "荆棘王冠",
+  "MORGANBERSERKER-CROWN_OF_THORNS.description": "#每回合第一次因你自己的卡牌失去生命时：获得4点格挡。",
+  "MORGANBERSERKER-CROWN_OF_THORNS.flavor": "每一顶王冠，都会刺痛佩戴它的额头。"
 }

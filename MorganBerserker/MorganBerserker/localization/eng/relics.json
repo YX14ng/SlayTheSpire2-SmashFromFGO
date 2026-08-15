@@ -1,9 +1,9 @@
 {
   "MORGANBERSERKER-QUEENS_SCEPTER.title": "Rhongomyniad, the Queen's Scepter",
-  "MORGANBERSERKER-QUEENS_SCEPTER.description": "#Start each combat in Fairy Queen form. The first time you change form each combat: gain 1 Energy, draw 1 card and 10 NP Charge. Whenever you lose HP: apply 3 Curse to a random enemy, up to 3 times per turn. At the start of your first turn each combat: add a free, Ethereal Queen's Metamorphosis to your hand.",
+  "MORGANBERSERKER-QUEENS_SCEPTER.description": "#Start each combat in Fairy Queen form. The first time you change form each combat: gain 1 Energy, draw 1 card and 10 NP Charge. Whenever you lose HP: apply 3 Curse to a random enemy, up to 3 times per turn. At the start of your first turn each combat: add a free, Ethereal Queen's Metamorphosis to your hand. Upon reaching 100 NP Charge: the free Metamorphosis is re-added to your hand /(once per peak/).",
   "MORGANBERSERKER-QUEENS_SCEPTER.flavor": "The lance that anchors the world's end, whittled down to a scepter. The Queen requires no other proof of her right to rule.",
   "MORGANBERSERKER-WORLDS_END_CORONATION.title": "Coronation at World's End",
-  "MORGANBERSERKER-WORLDS_END_CORONATION.description": "#Whenever you change form: gain 1 Energy (max once per turn).",
+  "MORGANBERSERKER-WORLDS_END_CORONATION.description": "#Start each combat in Fairy Queen form. Whenever you lose HP: apply 3 Curse to a random enemy /(max 3 times per turn/). At the start of your first turn and upon reaching 100 NP Charge: add a free, Ethereal Queen's Metamorphosis to your hand. Whenever you change form: gain 1 Energy /(max once per turn/).",
   "MORGANBERSERKER-WORLDS_END_CORONATION.flavor": "Berserker and witch, tyrant and savior. At the end of the world, every crown is hers.",
   "MORGANBERSERKER-EXISTENCE_TAX.title": "Existence Tax",
   "MORGANBERSERKER-EXISTENCE_TAX.description": "#At the end of your turn: gain NP Charge equal to the enemies' total Curse (max !NpCharge!).",
@@ -12,7 +12,7 @@
   "MORGANBERSERKER-SPRIGGAN_TREASURY.description": "#Start each combat with !NpCharge! NP Charge.",
   "MORGANBERSERKER-SPRIGGAN_TREASURY.flavor": "The Queen's hoard, guarded without rest. Spriggan counts every coin twice.",
   "MORGANBERSERKER-MIRROR_CLAN_GLASS.title": "Mirror Clan's Mirror",
-  "MORGANBERSERKER-MIRROR_CLAN_GLASS.description": "#Whenever you change form: draw 1 card.",
+  "MORGANBERSERKER-MIRROR_CLAN_GLASS.description": "#The first time you change form each turn: gain 3 Block.",
   "MORGANBERSERKER-MIRROR_CLAN_GLASS.flavor": "The Mirror Clan never shows the face you expect. The Queen finds this most useful.",
   "MORGANBERSERKER-BOTTLED_MORS.title": "Bottled Mors",
   "MORGANBERSERKER-BOTTLED_MORS.description": "#When an enemy dies with Curse: its Curse jumps to a random enemy.",
@@ -28,5 +28,8 @@
   "MORGANBERSERKER-MORGAN_SUMMON_SEAL.flavor": "You wish to summon the Queen again? Then present a catalyst worthy of her.",
   "MORGANBERSERKER-MORGAN_BOND.title": "Oath to the Queen",
   "MORGANBERSERKER-MORGAN_BOND.description": "#Morgan earns Bond points from combat victories (/+2, Elites /+3, Bosses /+5) and from entering events, shops and rest sites (/+1). Each *Bond* level grants permanent gifts: Max HP (Lv 1/3/6/9), starting *NP *Charge (Lv 2/5/8), starting Curse on ALL enemies (Lv 4/7) - and at Lv 10, the Queen has found something to live for: start each combat with Guts (survive lethal damage at 1 HP). In multiplayer, the defensive gifts scale with the player count.",
-  "MORGANBERSERKER-MORGAN_BOND.flavor": "Serve well, and the Queen of Fairy Britain may permit you to stand beside her throne."
+  "MORGANBERSERKER-MORGAN_BOND.flavor": "Serve well, and the Queen of Fairy Britain may permit you to stand beside her throne.",
+  "MORGANBERSERKER-CROWN_OF_THORNS.title": "Crown of Thorns",
+  "MORGANBERSERKER-CROWN_OF_THORNS.description": "#The first time each turn one of your cards makes you lose HP: gain 4 Block.",
+  "MORGANBERSERKER-CROWN_OF_THORNS.flavor": "Every crown draws blood from the brow that bears it."
 }

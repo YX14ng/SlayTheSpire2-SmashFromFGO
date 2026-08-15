@@ -16,7 +16,7 @@ public sealed class Vassalage() : MorganCard(0, CardType.Skill, CardRarity.Commo
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("Curse", 8),
+        new DynamicVar("Curse", 5),
         new DynamicVar("NpPerPoint", 4)
     ];
 
@@ -40,6 +40,6 @@ public sealed class Vassalage() : MorganCard(0, CardType.Skill, CardRarity.Commo
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Curse"].UpgradeValueBy(4m);
+        DynamicVars["Curse"].UpgradeValueBy(3m);
     }
 }

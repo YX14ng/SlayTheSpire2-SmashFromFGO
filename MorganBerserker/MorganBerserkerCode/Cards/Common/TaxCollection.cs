@@ -13,7 +13,7 @@ public sealed class TaxCollection() : MorganCard(1, CardType.Skill, CardRarity.C
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("NpCharge", 20),
-        new DynamicVar("Bonus", 20)
+        new DynamicVar("Bonus", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -35,5 +35,6 @@ public sealed class TaxCollection() : MorganCard(1, CardType.Skill, CardRarity.C
     protected override void OnUpgrade()
     {
         DynamicVars["NpCharge"].UpgradeValueBy(10m);
+        DynamicVars["Bonus"].UpgradeValueBy(10m);
     }
 }

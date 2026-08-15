@@ -13,12 +13,12 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Common;
 /// cuando apuntás a un enemigo sin Maldición). Auditoría 2026-06-15.</summary>
 // IUsesTargetCurse: exime de la Sentencia (que consumía la Maldición del objetivo antes del OnPlay),
 // para que el +daño condicional a "objetivo maldito" dispare en forma Reina/Invierno.
-public sealed class QueensScorn() : MorganCard(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IUsesTargetCurse
+public sealed class QueensScorn() : MorganCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IUsesTargetCurse
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(4m, ValueProp.Move),
-        new DynamicVar("Bonus", 3)
+        new DamageVar(7m, ValueProp.Move),
+        new DynamicVar("Bonus", 5)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
@@ -39,6 +39,6 @@ public sealed class QueensScorn() : MorganCard(0, CardType.Attack, CardRarity.Co
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["Bonus"].UpgradeValueBy(1m);
+        DynamicVars["Bonus"].UpgradeValueBy(2m);
     }
 }

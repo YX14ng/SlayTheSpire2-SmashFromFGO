@@ -16,8 +16,8 @@ public sealed class LastResort() : MorganCard(1, CardType.Skill, CardRarity.Rare
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("NpCharge", 50),
-        new DynamicVar("Turn", 5)
+        new DynamicVar("NpCharge", 30),
+        new DynamicVar("Turn", 3)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -37,6 +37,5 @@ public sealed class LastResort() : MorganCard(1, CardType.Skill, CardRarity.Rare
     protected override void OnUpgrade()
     {
         DynamicVars["Turn"].UpgradeValueBy(-1m);
-        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

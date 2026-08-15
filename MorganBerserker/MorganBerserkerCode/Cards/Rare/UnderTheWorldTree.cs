@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 
 /// <summary>Bajo el Árbol del Mundo (世界树之下) — roba 3 y Carga NP +20.</summary>
-public sealed class UnderTheWorldTree() : MorganCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
+public sealed class UnderTheWorldTree() : MorganCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -26,6 +26,5 @@ public sealed class UnderTheWorldTree() : MorganCard(2, CardType.Skill, CardRari
     protected override void OnUpgrade()
     {
         DynamicVars.Cards.UpgradeValueBy(1m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
-    }
+            }
 }

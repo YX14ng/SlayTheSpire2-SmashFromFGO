@@ -16,11 +16,10 @@ public sealed class SprigganVigil() : MorganCard(2, CardType.Power, CardRarity.R
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<SprigganVigilPower>("Stacks", 5m),
-        new DynamicVar("NpCharge", SprigganVigilPower.NpPerTurn)
+        new PowerVar<SprigganVigilPower>("Stacks", 10m)
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -30,6 +29,6 @@ public sealed class SprigganVigil() : MorganCard(2, CardType.Power, CardRarity.R
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Stacks"].UpgradeValueBy(2m);
+        DynamicVars["Stacks"].UpgradeValueBy(4m);
     }
 }

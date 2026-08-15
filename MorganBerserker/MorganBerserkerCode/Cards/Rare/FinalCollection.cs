@@ -15,12 +15,12 @@ namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 /// consumía la Maldición del objetivo en BeforeCardPlayed (antes de este OnPlay), dejando esta carta
 /// en 0 → no hacía daño (reporte de player). El marcador hace que la Sentencia la saltee.
 /// </summary>
-public sealed class FinalCollection() : MorganCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IUsesTargetCurse
+public sealed class FinalCollection() : MorganCard(2, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy), IUsesTargetCurse
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(0m, ValueProp.Move),
-        new DynamicVar("PerPoint", 2)
+        new DynamicVar("PerPoint", 3)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CursePower>()];
@@ -37,10 +37,12 @@ public sealed class FinalCollection() : MorganCard(1, CardType.Attack, CardRarit
         var consumed = await Curses.Consume(choiceContext, cardPlay.Target, CursePower.MaxPerEnemy);
         if (consumed <= 0) return;
 
-        await DamageCmd.Attack(consumed * DynamicVars["PerPoint"].IntValue).FromCardFgoCompatibility(this, cardPlay)
-            .Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_bloody_impact")
-            .Execute(choiceContext);
+        // Re-tipada a Habilidad (resolución §9.3-2, 2-1): daño Unpowered — el cash-out total de
+        // la Maldición no debe escalar ADEMÁS con Fuerza/tipo Buster. Como Habilidad, la Sentencia
+        // ya ni la considera (los form powers cortan en Type != Attack antes de detonar); el
+        // marcador IUsesTargetCurse queda por robustez ante refactors futuros.
+        await CreatureCmd.Damage(choiceContext, cardPlay.Target,
+            consumed * DynamicVars["PerPoint"].IntValue, ValueProp.Unpowered, Owner.Creature);
     }
 
     protected override void OnUpgrade()

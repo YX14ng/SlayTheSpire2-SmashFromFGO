@@ -1,9 +1,9 @@
 {
   "MORGANBERSERKER-QUEENS_SCEPTER.title": "여왕의 홀, 롱고미니아드",
-  "MORGANBERSERKER-QUEENS_SCEPTER.description": "#각 전투를 요정 여왕 형태로 시작합니다. 각 전투에서 처음 형태를 변경할 때 에너지를 1 얻고, 카드를 1장 뽑고, NP 충전을 10 얻습니다. 체력을 잃을 때마다 무작위 적에게 저주를 3 부여합니다 /(턴마다 최대 3회). 각 전투의 첫 턴 시작 시 비용이 없고 휘발성인 여왕의 변신을 손에 추가합니다.",
+  "MORGANBERSERKER-QUEENS_SCEPTER.description": "#각 전투를 요정 여왕 형태로 시작합니다. 각 전투에서 처음 형태를 변경할 때 에너지를 1 얻고, 카드를 1장 뽑고, NP 충전을 10 얻습니다. 체력을 잃을 때마다 무작위 적에게 저주를 3 부여합니다 /(턴마다 최대 3회). 각 전투의 첫 턴 시작 시 비용이 없고 휘발성인 여왕의 변신을 손에 추가합니다. NP 충전이 100에 도달하면 무료 여왕의 변신이 다시 손에 추가됩니다 /(정점마다 1회/).",
   "MORGANBERSERKER-QUEENS_SCEPTER.flavor": "세계의 끝을 고정하는 창을 깎아 만든 홀. 여왕은 통치할 권리를 증명할 다른 것이 필요 없습니다.",
   "MORGANBERSERKER-WORLDS_END_CORONATION.title": "세계의 끝의 대관식",
-  "MORGANBERSERKER-WORLDS_END_CORONATION.description": "#형태를 변경할 때마다 에너지를 1 얻습니다 /(턴마다 최대 1회).",
+  "MORGANBERSERKER-WORLDS_END_CORONATION.description": "#각 전투를 요정 여왕 형태로 시작합니다. 체력을 잃을 때마다 무작위 적에게 저주를 3 부여합니다 /(턴마다 최대 3회/). 첫 턴 시작 시와 NP 충전이 100에 도달할 때 비용이 없고 휘발성인 여왕의 변신을 손에 추가합니다. 형태를 변환할 때마다 에너지를 1 얻습니다 /(턴마다 최대 1회/).",
   "MORGANBERSERKER-WORLDS_END_CORONATION.flavor": "버서커와 마녀, 폭군과 구원자. 세계의 끝에서 모든 왕관은 그녀의 것입니다.",
   "MORGANBERSERKER-EXISTENCE_TAX.title": "존재세",
   "MORGANBERSERKER-EXISTENCE_TAX.description": "#내 턴 종료 시 적들의 저주 합계만큼 NP 충전을 얻습니다 /(최대 !NpCharge!).",
@@ -12,7 +12,7 @@
   "MORGANBERSERKER-SPRIGGAN_TREASURY.description": "#각 전투를 NP 충전 !NpCharge!으로 시작합니다.",
   "MORGANBERSERKER-SPRIGGAN_TREASURY.flavor": "쉬지 않고 지키는 여왕의 보물. 스프리건은 모든 동전을 두 번 셉니다.",
   "MORGANBERSERKER-MIRROR_CLAN_GLASS.title": "거울 씨족의 거울",
-  "MORGANBERSERKER-MIRROR_CLAN_GLASS.description": "#형태를 변경할 때마다 카드를 1장 뽑습니다.",
+  "MORGANBERSERKER-MIRROR_CLAN_GLASS.description": "#매 턴 처음 형태를 변환할 때 방어도를 3 얻습니다.",
   "MORGANBERSERKER-MIRROR_CLAN_GLASS.flavor": "거울 씨족은 예상한 얼굴을 결코 비추지 않습니다. 여왕은 그것을 매우 유용하게 여깁니다.",
   "MORGANBERSERKER-BOTTLED_MORS.title": "병에 든 모르스",
   "MORGANBERSERKER-BOTTLED_MORS.description": "#저주가 있는 적이 죽으면 그 저주가 무작위 적에게 옮겨갑니다.",
@@ -28,5 +28,8 @@
   "MORGANBERSERKER-MORGAN_SUMMON_SEAL.flavor": "여왕을 다시 소환하고 싶습니까? 그렇다면 그녀에게 걸맞은 촉매를 바치십시오.",
   "MORGANBERSERKER-MORGAN_BOND.title": "여왕을 향한 맹세",
   "MORGANBERSERKER-MORGAN_BOND.description": "#모르간은 전투 승리 /(/+2, 엘리트 /+3, 보스 /+5)와 이벤트, 상점, 휴식 장소 방문 /(/+1)으로 인연 점수를 얻습니다. 각 *인연* 레벨은 영구적인 선물을 부여합니다: 최대 체력 /(1/3/6/9레벨), 시작 *NP *충전 /(2/5/8레벨), 모든 적의 시작 저주 /(4/7레벨). 10레벨에는 여왕이 살아갈 이유를 찾아 각 전투를 거츠로 시작합니다 /(치명적인 피해를 받고 체력 1로 생존). 멀티플레이에서는 방어 선물이 플레이어 수에 따라 증가합니다.",
-  "MORGANBERSERKER-MORGAN_BOND.flavor": "잘 섬긴다면 요정국 브리튼의 여왕이 옥좌 곁에 설 것을 허락할지도 모릅니다."
+  "MORGANBERSERKER-MORGAN_BOND.flavor": "잘 섬긴다면 요정국 브리튼의 여왕이 옥좌 곁에 설 것을 허락할지도 모릅니다.",
+  "MORGANBERSERKER-CROWN_OF_THORNS.title": "가시 왕관",
+  "MORGANBERSERKER-CROWN_OF_THORNS.description": "#매 턴 처음으로 내 카드 때문에 체력을 잃으면 방어도를 4 얻습니다.",
+  "MORGANBERSERKER-CROWN_OF_THORNS.flavor": "모든 왕관은 그것을 쓴 이마에서 피를 흘리게 한다."
 }
