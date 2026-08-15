@@ -72,11 +72,13 @@ public sealed class PaladinsInstinctOwedPower : AstolfoPower
     public override PowerStackType StackType => PowerStackType.Single;
     public override bool ShouldScaleInMultiplayer => false;
     protected override bool IsVisibleInternal => false;
-    public override async Task BeforeSideTurnStart(
-        PlayerChoiceContext context, CombatSide side,
-        IReadOnlyList<Creature> participants, ICombatState combatState)
+    // Mismo hook que el vanilla BlockNextTurnPower: en el arranque de turno el orden es
+    // BeforeSideTurnStart → ClearBlock → AfterBlockCleared (CombatManager, MAIN y BETA), así que
+    // otorgar acá evita que el Bloqueo se borre en el mismo inicio de turno (reportes de Steam
+    // 2026-08-13/14: el Bloqueo aparecía al final del turno enemigo y desaparecía al instante).
+    public override async Task AfterBlockCleared(Creature creature)
     {
-        if (!participants.Contains(Owner)) return;
+        if (creature != Owner) return;
         var block = Amount;
         await PowerCmd.Remove(this);
         await CreatureCmd.GainBlock(Owner, block, ValueProp.Unpowered, null);
