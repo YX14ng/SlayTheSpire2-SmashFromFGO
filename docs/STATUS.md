@@ -2,6 +2,28 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-15 (b) — Rebalance por reportes: Tiamat inmortal (nerf) + Artoria bajo curva (buff)
+
+Reportes de Steam en la página de Tiamat (3, "immortal every run") + nota de Obsidian con el
+comentario chino sobre Artoria. Diagnóstico, propuesta y números en
+[`REBALANCE-TIAMAT-ARTORIA.md`](REBALANCE-TIAMAT-ARTORIA.md) (aprobado e implementado el mismo día).
+
+- **Tiamat**: el bloqueo del enjambre ya no escala con Crianza (`n×2`/turno, era `n×(2+Crianza)`
+  sin tope); Limo Protector pasó de Baluarte/turno (retención que componía combate entero) a
+  Bloqueo plano 4 (+2); el bono por Laḫmu de Carapace es Bloqueo normal (solo el 6 base se
+  retiene). La ofensa (mordidas, Maldición, Devorar, ventana Bestia) quedó intacta.
+- **Artoria**: la consolidación Critical v2 había podado las tablas de crítico dejando las cartas
+  en su mitad base — se devolvió el payoff con riders «con Crítico Listo» (Juicio 9+5, Anhelo
+  16+8, Tajo 9+4 — este último además rompía el duplicado con Proyección), Estrella Fugaz 3→5,
+  Embestida con refund 2⚡ al matar (patrón HandOfGreed), Marea 30→40★, Recarga de Hechizos 2⚡→1⚡
+  con mejora a 2 Habilidades (power a Counter, contador en bits 9-10 del estado de turno).
+  Vulnerable NO se agrega (el amp de Artoria es el crítico global; sería doble amp).
+- **Versiones preparadas:** FGOCore **v0.1.24** (cambio interno, sin API nueva — los personajes
+  siguen pidiendo `>= v0.1.23`), Tiamat **v0.1.19**, Artoria **v0.1.20**.
+- **Validación:** SimpleLoc 0 ambigüedades; paridad 13×5 OK; matriz MAIN/BETA con 3 probes
+  `Compatibility OK` (13 artefactos). **Pendiente:** playtest de ambos kits y publicación con
+  orden explícita (basta el lote FGOCore+Tiamat+Artoria: FGOCore v0.1.24 no rompe linkage).
+
 ## 2026-08-15 — Paladin's Instinct: el Bloqueo diferido sobrevive al inicio de turno (Astolfo v0.1.12 preparado)
 
 Dos reportes de Steam (gilgamesh 2026-08-14 en zhs, CinKro 2026-08-13): el Bloqueo de Paladin's
