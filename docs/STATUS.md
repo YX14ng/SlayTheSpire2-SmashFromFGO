@@ -2,6 +2,33 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-15 (c) — Morgan RE-POOL V2 implementado (panel de 3 propuestas + 3 jueces)
+
+Reportes de 七煌夜 (08-14: interruptores de forma escasos/asimétricos; confusión
+Sentencia vs no-decay) + encargo del usuario de re-pool completo multi-arquetipo. Diagnóstico en
+[`REBALANCE-MORGAN.md`](REBALANCE-MORGAN.md); diseño del panel e implementación en
+[`REDESIGN-MORGAN-V2.md`](REDESIGN-MORGAN-V2.md) (ganó «arquetipos» 3-0; los parches de los
+jueces mandaron; 5 contradicciones resueltas al más restrictivo).
+
+- **75 drafteables (25C/30PC/20R), 4 arquetipos** (Danza/Invierno/NP/Sangre) con matriz de
+  cobertura y fila anti-strip-boss por línea. ~24 re-efectos sobre IDs existentes, 4 cartas
+  nuevas (`ShiftingGuard`, `BloodOath`, `PriceOfTheCrown`, `WoodwoseLoyalty` + power de retención
+  de 1 turno), 1 reliquia nueva (`CrownOfThorns`), 2 re-especificadas (Ancient reinstala TODO el
+  motor del cetro — hallazgo estructural del panel; Espejo del Clan a 3 Block 1/turno), cetro
+  re-arma la Metamorfosis a 100 NP. **0 demotes, 0 renombres; FGOCore intacto.**
+- **Keyword `Detonar`** registrado vía BaseLib CustomEnum (card_keywords.json ×5, primero del
+  repo), pasivas M4 re-escritas en dos frases/dos verbos, flotante «¡Sentencia! +X» sobre la
+  escena vanilla `vfx_blocked_text` (sin Nodes C# de mod — inmune al bug del bridge Linux),
+  Cernunnos re-efectada (Detonaciones consumen la mitad) vía helper compartido
+  `Sentencia.Detonar`. Interruptores: paridad 2-2 por dirección con puerta común (Furia de la
+  Reina entra Y detona; el toggle bajó a común).
+- **Versión:** Morgan **v0.1.19**. Matriz MAIN/BETA verde (3 probes `Compatibility OK`, 13
+  artefactos), paridad 13×5 OK, SimpleLoc 0 ambigüedades, build 0 warnings.
+- **Pendiente:** playtest de los 4 arquetipos; arte definitivo de los 5 items nuevos (hoy
+  placeholders copiados); publish (con `patch_webp_imports.ps1` por las texturas nuevas) y
+  upload con orden explícita + changelog de Workshop con TODAS las cartas re-especificadas
+  (obligatorio J2-15; la lista es el §9.5 del REDESIGN-V2).
+
 ## 2026-08-15 (b) — Rebalance por reportes: Tiamat inmortal (nerf) + Artoria bajo curva (buff)
 
 Reportes de Steam en la página de Tiamat (3, "immortal every run") + nota de Obsidian con el

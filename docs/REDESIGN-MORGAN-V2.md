@@ -1,6 +1,22 @@
 # REDESIGN-MORGAN-V2 — Morgan, Reina Hada de Britania
 
-> **Estado: PROPUESTA APROBADA POR PANEL — PENDIENTE DE APROBACIÓN DEL USUARIO.**
+> **IMPLEMENTADO 2026-08-15** (orden directa del usuario). Morgan **v0.1.19**; FGOCore intacto.
+> Matriz MAIN/BETA verde, paridad 13×5, SimpleLoc 0. Notas de implementación sobre el diseño:
+> (a) Furia de la Reina detona vía `IUsesTargetCurse` + `Sentencia.Detonar` propio — el
+> `_pendingSentence` de la forma se cachea en `BeforeCardPlayed`, ANTES de que la carta entre a
+> la forma; (b) la ventana devuelve +1⚡/robo con el guard anti-soft-lock del cetro (robo solo si
+> el mazo tiene cartas) — excepción documentada a la convención «solo dan la carta» de 2026-06-26;
+> (c) el flotante «¡Sentencia! +X» reusa la escena vanilla `vfx_blocked_text` con el label
+> reescrito (cero Nodes C# de mod → inmune al bug del bridge en Linux nativo); (d) bits de estado
+> de turno: 7-8 cap de Soberana, 9 flag «cambiaste de forma este turno» (lo levantan
+> cetro/Ancient), 10 Corona de Espinas, 11 Espejo del Clan; (e) `SovereignOfTwoFacesPower` pasó a
+> `Counter` (el icono muestra el cap; dos copias apilan el cap — aceptado); (f) la mejora de
+> Corte del Invierno ya no abarata, solo agrega el robo; (g) **arte placeholder** en las 4 cartas
+> nuevas + Corona (copias de mirror_clans_trick/tyrants_blood/queens_sacrifice/winter_steel/
+> habetrot_thread) — el arte definitivo de §14.9 sigue pendiente. Pendiente: playtest, arte, y
+> publish (correr `patch_webp_imports.ps1` por las texturas nuevas) + upload con orden explícita.
+>
+> **Estado original: PROPUESTA APROBADA POR PANEL.**
 > Síntesis del panel de diseño del 2026-08-15 (WORKFLOW-FGO §4.6.7: tres propuestas, tres jueces, "los parches del juez mandan"). Base: **Propuesta 3 (arquetipos)**, ganadora por unanimidad (3–0), con todos los parches obligatorios de los tres jueces aplicados e injertos de las propuestas perdedoras. **No se implementa nada hasta el visto bueno del usuario.**
 > Mecanismo save-safe obligatorio: ningún ID se renombra; el re-pool es re-efecto sobre IDs existentes + 4 cartas y 1 reliquia [NUEVA]; **cero demotes nuevos**. FGOCore no se toca en este pase.
 
