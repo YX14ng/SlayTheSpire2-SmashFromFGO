@@ -26,7 +26,8 @@ public sealed class LahmuNurturePower : FGOCorePower
             if (!IsMutable) return base.Description;
 
             var description = new LocString("powers", $"{Id.Entry}.smartDescription");
-            description.Add("BlockPerLahmu", LahmuSwarmPower.BlockPerLahmu + Amount);
+            // Rebalance 2026-08-15: la Crianza ya no suma al Bloqueo del enjambre (solo a la mordida).
+            description.Add("BlockPerLahmu", (decimal)LahmuSwarmPower.BlockPerLahmu);
             description.Add("BitePerLahmu", LahmuSwarmPower.BitePerLahmu + Amount);
             return description;
         }

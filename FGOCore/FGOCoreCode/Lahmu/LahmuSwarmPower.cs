@@ -17,7 +17,9 @@ namespace FGOCore.FGOCoreCode.Lahmu;
 /// <summary>
 /// Enjambre de Laḫmu (ラフム) — los hijos de Tiamat nacidos del Mar de Vida. El contador es el
 /// nº de Laḫmu en campo (tope <see cref="MaxSwarm"/>). Al INICIO del turno enemigo, el enjambre
-/// (a) le da a su dueña BLOQUE = <c>nº × (2 + Crianza)</c> (la cubren con sus cuerpos) y
+/// (a) le da a su dueña BLOQUE = <c>nº × 2</c> (la cubren con sus cuerpos; rebalance 2026-08-15:
+/// la Crianza ya NO suma al bloqueo — con Crianza alta el ingreso pasivo superaba todo output
+/// enemigo, ver docs/REBALANCE-TIAMAT-ARTORIA.md) y
 /// (b) MUERDE al enemigo más maldito por <c>nº × (1 + Crianza)</c> — la Marea de Caos
 /// (<see cref="CursePower"/>) dirige a quién muerden. La Crianza vive en
 /// <see cref="LahmuNurturePower"/>. Usar el helper <see cref="Lahmu"/> para parir/alimentar/devorar.
@@ -49,7 +51,7 @@ public sealed class LahmuSwarmPower : FGOCorePower
             var biteDamage = Amount * (BitePerLahmu + nurture);
             var description = new LocString("powers", $"{Id.Entry}.smartDescription");
             description.Add("Nurture", nurture);
-            description.Add("Block", Amount * (BlockPerLahmu + nurture));
+            description.Add("Block", Amount * BlockPerLahmu);
             description.Add("BiteDamage", biteDamage);
             description.Add("BiteCount", biteCount);
             description.Add("TotalBiteDamage", biteDamage * biteCount);
@@ -66,9 +68,8 @@ public sealed class LahmuSwarmPower : FGOCorePower
     {
         if (side == Owner.Side || Owner.IsDead || Amount <= 0) return;
 
-        var nurture = Lahmu.NurtureOf(Owner);
         Flash();
-        await CreatureCmd.GainBlock(Owner, Amount * (BlockPerLahmu + nurture), ValueProp.Unpowered, null);
+        await CreatureCmd.GainBlock(Owner, Amount * BlockPerLahmu, ValueProp.Unpowered, null);
     }
 
     // MORDIDA al final de TU turno (BeforeSideTurnEnd) — 2026-07-04: antes mordía al inicio del turno
