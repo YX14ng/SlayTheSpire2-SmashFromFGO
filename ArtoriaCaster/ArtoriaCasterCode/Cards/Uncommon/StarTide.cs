@@ -13,7 +13,9 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Uncommon;
 /// </summary>
 public sealed class StarTide() : ArtoriaCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Stars", 30)];
+    // Rebalance 2026-08-15 (REBALANCE-TIAMAT-ARTORIA.md A5): 30→40 — un crítico cuesta 50★ y 30
+    // no llegaba ni al 60%; DESIGN-ARTORIA §8.bis ya pedía generadores +25%.
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Stars", 40)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];
 

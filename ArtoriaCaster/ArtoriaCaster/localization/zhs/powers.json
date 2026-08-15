@@ -54,8 +54,8 @@
   "ARTORIACASTER-SWORD_INSTINCT_POWER.description": "#每回合首次造成暴击时，返还10颗暴击星。",
   "ARTORIACASTER-SWORD_INSTINCT_POWER.smartDescription": "#每回合首次造成暴击时，返还10颗暴击星。",
   "ARTORIACASTER-SPELL_RELOADING_POWER.title": "技能再装填",
-  "ARTORIACASTER-SPELL_RELOADING_POWER.description": "#你每回合打出的第一张技能牌，费用减少1点。",
-  "ARTORIACASTER-SPELL_RELOADING_POWER.smartDescription": "#你每回合打出的第一张技能牌，费用减少1点。",
+  "ARTORIACASTER-SPELL_RELOADING_POWER.description": "#每回合，你打出的最初几张技能牌费用各减少1点，张数等于层数。",
+  "ARTORIACASTER-SPELL_RELOADING_POWER.smartDescription": "#每回合，你打出的最初几张技能牌费用各减少1点，张数等于层数。",
   "ARTORIACASTER-AVALON_BENEDICTION_POWER.title": "阿瓦隆的祝祷",
   "ARTORIACASTER-AVALON_BENEDICTION_POWER.description": "#在你的回合开始时：获得此数值的宝具值。",
   "ARTORIACASTER-AVALON_BENEDICTION_POWER.smartDescription": "#在你的回合开始时：获得此数值的宝具值。"

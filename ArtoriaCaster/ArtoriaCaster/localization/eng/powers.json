@@ -57,6 +57,6 @@
   "ARTORIACASTER-SWORD_INSTINCT_POWER.description": "#The first time each turn you perform a Critical, regain 10 Critical Stars.",
   "ARTORIACASTER-SWORD_INSTINCT_POWER.smartDescription": "#The first time each turn you perform a Critical, regain 10 Critical Stars.",
   "ARTORIACASTER-SPELL_RELOADING_POWER.title": "Spell Reloading",
-  "ARTORIACASTER-SPELL_RELOADING_POWER.description": "#The first Skill you play each turn costs 1 less.",
-  "ARTORIACASTER-SPELL_RELOADING_POWER.smartDescription": "#The first Skill you play each turn costs 1 less."
+  "ARTORIACASTER-SPELL_RELOADING_POWER.description": "#Each turn, your first Skills cost 1 less Energy, as many as the stacks.",
+  "ARTORIACASTER-SPELL_RELOADING_POWER.smartDescription": "#Each turn, your first Skills cost 1 less Energy, as many as the stacks."
 }

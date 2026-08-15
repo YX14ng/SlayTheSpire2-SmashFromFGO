@@ -57,6 +57,6 @@
   "ARTORIACASTER-SWORD_INSTINCT_POWER.description": "#Первый Крит в каждом ходу возвращает 10 Критических звёзд.",
   "ARTORIACASTER-SWORD_INSTINCT_POWER.smartDescription": "#Первый Крит в каждом ходу возвращает 10 Критических звёзд.",
   "ARTORIACASTER-SPELL_RELOADING_POWER.title": "Перезарядка заклинаний",
-  "ARTORIACASTER-SPELL_RELOADING_POWER.description": "#Первый разыгрываемый вами Навык в каждом ходу стоит на 1 меньше.",
-  "ARTORIACASTER-SPELL_RELOADING_POWER.smartDescription": "#Первый разыгрываемый вами Навык в каждом ходу стоит на 1 меньше."
+  "ARTORIACASTER-SPELL_RELOADING_POWER.description": "#Каждый ход первые разыгрываемые Навыки стоят на 1 меньше, по числу зарядов.",
+  "ARTORIACASTER-SPELL_RELOADING_POWER.smartDescription": "#Каждый ход первые разыгрываемые Навыки стоят на 1 меньше, по числу зарядов."
 }
