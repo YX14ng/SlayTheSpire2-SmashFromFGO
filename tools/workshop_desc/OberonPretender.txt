@@ -1,7 +1,7 @@
 [h1]Oberon — Borrow Now, Let the Lie Pay Later[/h1]
 Take NP Charge and Critical Stars from a dream, delay the bill and decide who pays when the story finally collapses.
 
-[b]RELEASE BUILD — v0.1.16[/b]
+[b]RELEASE BUILD — v0.1.18[/b]
 
 [h2]Core gameplay[/h2]
 [list]
@@ -24,7 +24,7 @@ Take NP Charge and Critical Stars from a dream, delay the bill and decide who pa
 [list]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.4.1+[/url]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747602295]RitsuLib 0.5.10+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.20+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.23+[/url]
 [*]Built for MAIN 0.107.1 and public BETA 0.110.1
 [/list]
 
@@ -39,7 +39,7 @@ Unofficial fan-made mod. Fate/Grand Order characters and official visual assets 
 [h1]ESPAÑOL[/h1]
 Pedí Carga NP y Estrellas prestadas a un sueño, aplazá la cuenta y decidí quién paga cuando el cuento finalmente se derrumbe.
 
-[b]VERSIÓN PÚBLICA — v0.1.16[/b]
+[b]VERSIÓN PÚBLICA — v0.1.18[/b]
 
 [h2]Mecánicas principales[/h2]
 [list]
@@ -62,7 +62,7 @@ Pedí Carga NP y Estrellas prestadas a un sueño, aplazá la cuenta y decidí qu
 [list]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.4.1+[/url]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747602295]RitsuLib 0.5.10+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.20+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.23+[/url]
 [*]Compatible con MAIN 0.107.1 y BETA pública 0.110.1
 [/list]
 
@@ -77,7 +77,7 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [h1]简体中文[/h1]
 从梦境借取 NP 与暴击星、推迟账单，并决定童话最终崩塌时由谁偿还代价。
 
-[b]公开版本 — v0.1.16[/b]
+[b]公开版本 — v0.1.18[/b]
 
 [h2]核心机制[/h2]
 [list]
@@ -100,7 +100,7 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [list]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.4.1+[/url]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747602295]RitsuLib 0.5.10+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.20+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.23+[/url]
 [*]兼容正式版 0.107.1 与公开测试版 0.110.1
 [/list]
 

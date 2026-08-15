@@ -1,7 +1,7 @@
 [h1]FGO Core — Shared Servant Systems[/h1]
 The common foundation behind all 12 Fate/Grand Order character mods in this collection: one consistent system for Noble Phantasms, Command Cards, Critical Stars, forms and persistent progression.
 
-[b]LIBRARY MOD — v0.1.21[/b]
+[b]LIBRARY MOD — v0.1.23[/b]
 FGO Core does not add a playable character by itself. Install it together with any supported FGO character.
 
 [h2]Shared systems[/h2]
@@ -43,7 +43,7 @@ Unofficial fan-made library. Fate/Grand Order characters and official visual ass
 [h1]ESPAÑOL[/h1]
 La base común de los 12 personajes de Fate/Grand Order de esta colección: un único sistema coherente para Noble Phantasms, Command Cards, Estrellas de Crítico, formas y progresión persistente.
 
-[b]MOD BIBLIOTECA — v0.1.21[/b]
+[b]MOD BIBLIOTECA — v0.1.23[/b]
 FGO Core no añade un personaje jugable por sí solo. Instalalo junto con cualquier personaje FGO compatible.
 
 [h2]Sistemas compartidos[/h2]
@@ -84,7 +84,7 @@ Biblioteca fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [h1]简体中文[/h1]
 本合集 12 名《Fate/Grand Order》角色共用的基础机制库：统一处理宝具、指令卡、暴击星、形态切换与跨局成长。
 
-[b]机制库 MOD — v0.1.21[/b]
+[b]机制库 MOD — v0.1.23[/b]
 FGO Core 本身不提供可玩角色，请与任一受支持的 FGO 角色一同安装。
 
 [h2]共用系统[/h2]
