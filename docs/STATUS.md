@@ -2,6 +2,31 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-15 — Paladin's Instinct: el Bloqueo diferido sobrevive al inicio de turno (Astolfo v0.1.12 preparado)
+
+Dos reportes de Steam (gilgamesh 2026-08-14 en zhs, CinKro 2026-08-13): el Bloqueo de Paladin's
+Instinct aparecía "al final del turno enemigo" y desaparecía al instante, en vez de otorgarse al
+inicio del turno siguiente como dice la carta.
+
+- **Causa (verificada en decompilado MAIN y BETA):** `PaladinsInstinctOwedPower` otorgaba el
+  Bloqueo en `BeforeSideTurnStart`, pero el orden real del arranque de turno es
+  `Hook.BeforeSideTurnStart` (`CombatManager.cs:458`) → `Creature.AfterTurnStart` → `ClearBlock()`
+  (`Creature.cs:691`) → `Hook.AfterBlockCleared` (`CombatManager.cs:504`) — el juego borraba el
+  Bloqueo recién otorgado en el mismo inicio de turno. Visualmente el grant caía en la transición,
+  por eso los reportes lo describen como "tras el ataque enemigo".
+- **Fix:** migrado a `AfterBlockCleared(Creature)` con guarda `creature == Owner` — el mismo hook
+  que usa el vanilla `BlockNextTurnPower` (precedente exacto de "gana Bloqueo el turno próximo").
+  Las descripciones existentes ya coinciden con el comportamiento corregido; sin cambios de loc.
+- **Barrido:** ningún otro handler `BeforeSideTurnStart` del repo otorga Bloqueo al dueño en su
+  propio turno (los demás son resets de contadores o efectos del turno enemigo, como LahmuSwarm).
+- **Reporte de escala/encuadre (Smithjf 2026-08-05):** anterior al fix ya publicado — la escala
+  0.8 salió en v0.1.8 y el re-render del attack completo en v0.1.9 (2026-08-09). No requiere
+  código; responder al reporter que actualice y confirme.
+- **Versión:** Astolfo **v0.1.12** (solo código + manifiesto; FGOCore no cambia, el resto del
+  roster no se toca). Matriz MAIN/BETA verde: 26 builds, 0 warnings, probes `Compatibility OK`
+  (13 artefactos, Harmony 24/24). **Pendiente:** publish del PCK + upload a Workshop con orden
+  explícita, y playtest runtime del Bloqueo diferido.
+
 ## 2026-08-11 — Auditoría profunda de bugs (multi-agente): 11 confirmados, arreglados y re-verificados
 
 Pasada de tres etapas (buscar → refutar → arreglar → re-verificar el diff) sobre los 13 proyectos,
