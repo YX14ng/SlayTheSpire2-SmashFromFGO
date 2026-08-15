@@ -38,6 +38,12 @@ inicio del turno siguiente como dice la carta.
   vía editor web o re-upload). **Pendiente:** playtest runtime del Bloqueo diferido y responder
   a los tres reporters (gilgamesh/CinKro: v0.1.12 lo arregla; Smithjf: escala y encuadre ya
   resueltos en v0.1.8/v0.1.9, que actualice).
+- **Fichas refrescadas 2026-08-15 ~18:35 UTC:** los 12 `tools/workshop_desc/*.txt` restantes
+  bumpeados a sus versiones vigentes (+ requisito FGO Core 0.1.23+) y re-subidos en una sesión
+  (12/12 Success, contenido idéntico al lote del 08-11). Verificado por API: las 13 fichas
+  muestran su versión actual. Nota: Steam no bumpea `time_updated` si el contenido es idéntico
+  y solo cambia la descripción. Push a GitHub destrabado vía `gh auth setup-git` (helper HTTPS);
+  `main` sincronizado con origin.
 
 ## 2026-08-11 — Auditoría profunda de bugs (multi-agente): 11 confirmados, arreglados y re-verificados
 
