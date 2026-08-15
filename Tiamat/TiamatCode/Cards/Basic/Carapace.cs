@@ -1,4 +1,5 @@
 using FGOCore.FGOCoreCode.Block;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -7,8 +8,11 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace TiamatBeast.TiamatCode.Cards.Basic;
 
-/// <summary>Caparazón Larval — Baluarte básico (Bulwark, retenido entre turnos): 6 + 1 por cada
-/// Laḫmu en campo (hasta +3). La cría no solo muerde: blinda a la madre mientras cría el enjambre.</summary>
+/// <summary>Caparazón Larval — Baluarte básico (Bulwark, retenido entre turnos): 6 de Baluarte,
+/// más 1 de Bloqueo NORMAL por cada Laḫmu en campo (hasta +3). Rebalance 2026-08-15: el bono por
+/// Laḫmu era Baluarte también y componía el piso retenido con las 3 copias del mazo inicial
+/// (docs/REBALANCE-TIAMAT-ARTORIA.md); los cuerpos de la cría amortiguan el golpe, no se
+/// endurecen — solo el caparazón propio se retiene.</summary>
 public sealed class Carapace() : TiamatCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
 {
     // Tag Defend vanilla: es el Bloqueo básico de Tiamat. Sin un Basic+Defend, LargeCapsule (巨大扭蛋)
@@ -31,8 +35,12 @@ public sealed class Carapace() : TiamatCard(1, CardType.Skill, CardRarity.Basic,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await BlockRetention.GainBulwarkBlock(this, Owner.Creature, DynamicVars.Block.BaseValue);
         var bonus = Math.Min(Lahmu.Count(Owner.Creature) * DynamicVars["PerLahmu"].IntValue, DynamicVars["MaxBonus"].IntValue);
-        await BlockRetention.GainBulwarkBlock(this, Owner.Creature, DynamicVars.Block.BaseValue + bonus);
+        if (bonus > 0)
+        {
+            await CreatureCmd.GainBlock(Owner.Creature, bonus, ValueProp.Unpowered, null);
+        }
     }
 
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);

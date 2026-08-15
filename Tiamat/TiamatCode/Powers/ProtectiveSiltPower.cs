@@ -1,17 +1,19 @@
-using FGOCore.FGOCoreCode.Block;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace TiamatBeast.TiamatCode.Powers;
 
 /// <summary>
-/// Limo Protector — pasiva defensiva persistente: al inicio de TUS turnos ganás Baluarte igual a las
+/// Limo Protector — pasiva defensiva persistente: al inicio de TUS turnos ganás Bloqueo igual a las
 /// acumulaciones (el lodo primordial se endurece solo). Análogo directo de Metallicize (poco común
-/// vanilla, 3 bloqueo/turno) con la identidad Tiamat: es Baluarte (se RETIENE entre turnos, capado por
-/// <see cref="BlockRetention"/>), así alimenta el plan de tortuga de Lily sin tocar el enjambre.
-/// La concede la carta poco común <c>ProtectiveSilt</c>. Apilable (Counter = Baluarte por turno).
+/// vanilla, 3 bloqueo/turno). Rebalance 2026-08-15: era Baluarte por turno, o sea un Metallicize
+/// estrictamente mejor cuyo piso retenido COMPONÍA combate entero (reportes de inmortalidad, ver
+/// docs/REBALANCE-TIAMAT-ARTORIA.md); ahora es Bloqueo plano y la retención de Tiamat vuelve a
+/// salir solo de las cartas de Baluarte jugadas. La concede la carta poco común
+/// <c>ProtectiveSilt</c>. Apilable (Counter = Bloqueo por turno).
 /// </summary>
 public sealed class ProtectiveSiltPower : TiamatPower
 {
@@ -19,12 +21,10 @@ public sealed class ProtectiveSiltPower : TiamatPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<BulwarkPower>()];
-
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != Owner.Player || Owner.Player == null) return;
         Flash();
-        await BlockRetention.GainBulwarkBlock(null, Owner, Amount, choiceContext: choiceContext);
+        await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
     }
 }
