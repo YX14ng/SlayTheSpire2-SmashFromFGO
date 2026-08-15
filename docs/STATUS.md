@@ -24,8 +24,20 @@ inicio del turno siguiente como dice la carta.
   código; responder al reporter que actualice y confirme.
 - **Versión:** Astolfo **v0.1.12** (solo código + manifiesto; FGOCore no cambia, el resto del
   roster no se toca). Matriz MAIN/BETA verde: 26 builds, 0 warnings, probes `Compatibility OK`
-  (13 artefactos, Harmony 24/24). **Pendiente:** publish del PCK + upload a Workshop con orden
-  explícita, y playtest runtime del Bloqueo diferido.
+  (13 artefactos, Harmony 24/24).
+- **PUBLICADO 2026-08-15 18:11 UTC** (orden explícita) en el item `3774222236` y verificado por
+  API: público, 40,6 MB, ficha v0.1.12. Mismo PCK del 08-11 (cambio solo dll+json, build Release
+  fresco tras purgar el dll Debug que un build previo había dejado en `dist/`). Sesión steamcmd:
+  la cacheada de `steamcmd_fgo.sh` (HOME aislado `~/.local/share/steamcmd-fgo`) — ese wrapper
+  ejecuta el mismo binario de sistema `~/.steam/steamcmd/linux32/steamcmd`.
+- **Aclarado el estado del lote v0.1.23:** SÍ se subió el 2026-08-11 23:17 UTC (los 13 items;
+  la sesión cacheada se creó ese mismo minuto), aunque esta entrada no lo registró entonces.
+  Las fichas de Workshop de los otros 12 items siguen mostrando versiones viejas (p. ej. FGOCore
+  «v0.1.21», Mash «v0.1.18») porque los `tools/workshop_desc/*.txt` no se bumpearon — el
+  CONTENIDO publicado es el actual; solo el texto de las fichas está desactualizado (arreglable
+  vía editor web o re-upload). **Pendiente:** playtest runtime del Bloqueo diferido y responder
+  a los tres reporters (gilgamesh/CinKro: v0.1.12 lo arregla; Smithjf: escala y encuadre ya
+  resueltos en v0.1.8/v0.1.9, que actualice).
 
 ## 2026-08-11 — Auditoría profunda de bugs (multi-agente): 11 confirmados, arreglados y re-verificados
 
