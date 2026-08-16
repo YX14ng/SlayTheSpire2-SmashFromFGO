@@ -24,10 +24,18 @@ jueces mandaron; 5 contradicciones resueltas al más restrictivo).
   Reina entra Y detona; el toggle bajó a común).
 - **Versión:** Morgan **v0.1.19**. Matriz MAIN/BETA verde (3 probes `Compatibility OK`, 13
   artefactos), paridad 13×5 OK, SimpleLoc 0 ambigüedades, build 0 warnings.
-- **Pendiente:** playtest de los 4 arquetipos; arte definitivo de los 5 items nuevos (hoy
-  placeholders copiados); publish (con `patch_webp_imports.ps1` por las texturas nuevas) y
-  upload con orden explícita + changelog de Workshop con TODAS las cartas re-especificadas
-  (obligatorio J2-15; la lista es el §9.5 del REDESIGN-V2).
+- **PUBLICADO 2026-08-16 07:06-07:07 UTC** (orden explícita): lote FGOCore v0.1.24 (14,5 MB) +
+  Tiamat v0.1.19 (131,2 MB) + Artoria v0.1.20 (133,8 MB) + Morgan v0.1.19 (176,9 MB), verificado
+  por API (público, fichas con versiones nuevas). Morgan se subió en sesión separada con el
+  changelog J2-15 completo (keyword, 4 arquetipos, cartas re-especificadas y tuneadas, aviso de
+  arte placeholder, "saves safe"). Gotchas del publish: (1) el export frío regeneró los 254
+  imports de Morgan y `patch_webp_imports` los tocó TODOS — se restauraron los 243 trackeados
+  (DECISIONS: no reescribir assets viejos) y solo los 11 nuevos quedaron normalizados; PCK final
+  176,8 MB ≈ los 176,1 publicados; (2) verificado por contenido: las 5 texturas nuevas y los 5
+  `card_keywords.json` están dentro del PCK (strings sobre el .pck, no exit code).
+- **Pendiente:** playtest de los 4 arquetipos y del rebalance Tiamat/Artoria; arte definitivo de
+  los 5 items nuevos (hoy placeholders copiados); responder a los reporters (七煌夜 ×3,
+  OneLostGamer, transfox girlfail, gilgamesh/CinKro/Smithjf de Astolfo).
 
 ## 2026-08-15 (b) — Rebalance por reportes: Tiamat inmortal (nerf) + Artoria bajo curva (buff)
 
