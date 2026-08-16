@@ -16,6 +16,14 @@ public sealed class DoctrineTurnStatePower : KagetoraPower, IResourcePower
     public override PowerStackType StackType => PowerStackType.Single;
     public override bool ShouldScaleInMultiplayer => false;
     protected override bool IsVisibleInternal => false;
+
+    // §16.4 — CAMPO DE DOS BITS. `DoctrineTurnState.Set` guarda `advances & 3`, así que con
+    // `DoctrinePower.MaxAdvancesPerTurn = 4` el cuarto avance guardaría 0, el contador wrappearía,
+    // `WouldAdvance` volvería a devolver true y el tope desaparecería: avances ilimitados ⇒ ciclos
+    // ilimitados ⇒ refund de energía ilimitado (E1). Es un loop determinista, no un ajuste de
+    // número. Si alguna vez hiciera falta subirlo: primero se ENSANCHA este campo (y el corrimiento
+    // de AdvancedMask), después se re-verifica WouldAdvanceAfter, y recién entonces se escribe un
+    // cap explícito de 1 refund/turno. Mismo comentario, a propósito, en Doctrine.cs.
     public int Advances => State & 3;
     public int AdvancedMask => State >> 2;
 
@@ -63,7 +71,36 @@ public enum KagetoraUsage
     SixPlateArmour = 256,
     ShiranuiTachi = 512,
     SakeCup = 1024,
-    WhiteFlameBrazier = 2048
+    WhiteFlameBrazier = 2048,
+
+    // REDESIGN-KAGETORA-V2 §16.3 — bits libres a partir de 4096.
+    /// <summary>E6: ya se gastó el crítico de este turno (lo marca DoctrinePower).</summary>
+    CriticalThisTurn = 4096,
+
+    /// <summary>
+    /// P-5 / §14.1-2: la Divinidad ya bonificó un Ataque este turno. <c>DivinityPower</c> se re-arma
+    /// por <c>CardPlay</c>, así que sin este bit el +3 (+5 como Kenshin) entraba en el primer impacto
+    /// de CADA Ataque y la auditoría de pico no cerraba. La ligadura de <c>CardPlay</c> que decide
+    /// QUÉ impacto es el primero sigue siendo privada y local al hook de cálculo (excepción
+    /// documentada en §11.3): lo único que se hace visible es el flag POR TURNO, que es lo que
+    /// DECISIONS:79-82 exige.
+    /// </summary>
+    Divinity = 8192,
+
+    /// <summary>
+    /// Reservado por §16.3 para E8 («armada» vs. «gastada»). NO se usa: el tope de 4 impactos de la
+    /// Bendición es estado de una sola jugada y vive en <c>BishamontenBlessingActivePower</c>, que
+    /// se remueve al terminar la carta. Se deja declarado para que nadie reasigne el valor.
+    /// </summary>
+    BlessingArmedThisTurn = 16384,
+
+    /// <summary>
+    /// Deuda de §11.3: <c>TreasureWindowPower._prevented</c> era un flag «una vez por turno» en un
+    /// campo privado (viola DECISIONS:79-82). Acá es visible y se limpia con el resto del mask. La
+    /// semántica del texto no cambia: «el PRÓXIMO debuff DEL TURNO se evita», una sola vez, aunque
+    /// varios avances de Pecho vuelvan a abrir la Ventana en el mismo turno.
+    /// </summary>
+    TreasureWindow = 32768
 }
 
 public sealed class KagetoraUsagePower : KagetoraPower, IResourcePower
@@ -73,7 +110,11 @@ public sealed class KagetoraUsagePower : KagetoraPower, IResourcePower
               KagetoraUsage.WhiteFlame | KagetoraUsage.EightFormations |
               KagetoraUsage.FieldJudge | KagetoraUsage.VictoryInTheFeet |
               KagetoraUsage.EightPetalBanner | KagetoraUsage.HoushoutsukigeReins |
-              KagetoraUsage.SixPlateArmour | KagetoraUsage.ShiranuiTachi);
+              KagetoraUsage.SixPlateArmour | KagetoraUsage.ShiranuiTachi |
+              KagetoraUsage.CriticalThisTurn | KagetoraUsage.Divinity |
+              KagetoraUsage.TreasureWindow);
+    // Fuera del PerTurnMask a propósito: SakeCup y WhiteFlameBrazier son «una vez por COMBATE».
+    // BlessingArmedThisTurn está declarado pero sin usar (ver el enum).
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;

@@ -120,17 +120,39 @@ public sealed class GeneralsDoctrinePower : KagetoraPower, IDoctrineAdvanceListe
     }
 }
 
+/// <summary>
+/// Divinidad C→A: el primer impacto de <b>UN</b> Ataque por turno recibe +<c>Amount</c>
+/// (+<see cref="KenshinBonus"/> más como Kenshin).
+///
+/// <para><b>Cap P-5 / §14.1-2:</b> este power se re-arma por <c>CardPlay</c>, así que sin tope
+/// bonificaba el primer impacto de CADA Ataque — con 4-5 Ataques en el turno de pico eso son +15/+25
+/// que la auditoría de §14 no contaba, y el texto de la carta («UN Ataque por turno») sería falso.
+/// El flag por turno es <c>KagetoraUsage.Divinity</c>, visible en el mask de
+/// <c>KagetoraUsagePower</c> (§16.3).</para>
+///
+/// <para><b>Reparto de estado, deliberado:</b> el bit POR TURNO es visible y se resetea con el mask;
+/// <c>_active</c> / <c>_usedHit</c> siguen siendo privados porque son ligaduras de <c>CardPlay</c> —
+/// deciden QUÉ impacto de esta jugada es el primero — y <c>ModifyDamageAdditiveFgo</c> corre varias
+/// veces por preview, así que tiene que quedar puro (DECISIONS:83-84, excepción documentada en
+/// §11.3). Leer el bit acá es puro; MARCARLO va en <see cref="AfterDamageGiven"/>, que sólo corre
+/// sobre daño real.</para>
+/// </summary>
 public sealed class DivinityPower : KagetoraPower
 {
+    public const int KenshinBonus = 2;
+
     private CardPlay? _active;
     private bool _usedHit;
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
     public override bool ShouldScaleInMultiplayer => false;
 
+    private decimal Bonus => Amount + (Owner.HasPower<KenshinFormPower>() ? KenshinBonus : 0m);
+
     public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner?.Creature == Owner && cardPlay.Card.Type == CardType.Attack)
+        if (cardPlay.Card.Owner?.Creature == Owner && cardPlay.Card.Type == CardType.Attack &&
+            !KagetoraUsages.WasUsed(Owner, KagetoraUsage.Divinity))
         {
             _active = cardPlay;
             _usedHit = false;
@@ -142,18 +164,23 @@ public sealed class DivinityPower : KagetoraPower
         Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer != Owner || cardSource?.Type != CardType.Attack || !props.IsPoweredAttack()) return 0m;
-        if (_active == null) return Amount + (Owner.HasPower<KenshinFormPower>() ? 2m : 0m);
+        // Antes de la ligadura de jugada: si el turno ya gastó su Ataque bonificado, no hay bonus ni
+        // en el daño real ni en el preview. Que el preview mienta es un bug de UI, no una licencia.
+        if (KagetoraUsages.WasUsed(Owner, KagetoraUsage.Divinity)) return 0m;
+        if (_active == null) return Bonus;
         if (_usedHit || _active.Card != cardSource || (cardPlay != null && cardPlay != _active)) return 0m;
-        return Amount + (Owner.HasPower<KenshinFormPower>() ? 2m : 0m);
+        return Bonus;
     }
 
-    public override Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer,
+    public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer,
         DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
     {
-        if (!_usedHit && _active != null && dealer == Owner && _active.Card == cardSource &&
-            props.IsPoweredAttack())
-            _usedHit = true;
-        return Task.CompletedTask;
+        if (_usedHit || _active == null || dealer != Owner || _active.Card != cardSource ||
+            !props.IsPoweredAttack()) return;
+        _usedHit = true;
+        // El bit se enciende recién cuando el bonus se COBRÓ de verdad: un Ataque que no llega a
+        // pegar (esquiva, muerte previa, 0 impactos) no debería quemar la Divinidad del turno.
+        await KagetoraUsages.Mark(choiceContext, Owner, KagetoraUsage.Divinity, cardSource);
     }
 
     public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)

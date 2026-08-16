@@ -44,6 +44,13 @@ public sealed class EightPetalBanner : KagetoraRelic, IDoctrineAdvanceListener
     }
 }
 
+/// <summary>
+/// §8: la primera Pies de cada turno, +10★.
+/// <para>§16.6 (colisión de re-tipado, auditada y ACEPTADA): con el pool nuevo la primera Pies del
+/// turno puede ser <c>StarlitCharge</c>, que es un Ataque de <b>0⚡</b>. La reliquia se dispara igual
+/// —el precepto no cambió— pero deja de costar energía activarla. Aceptado: la conversión ya paga
+/// 20★ y el neto de esa carta sigue siendo negativo en estrellas (E5).</para>
+/// </summary>
 public sealed class HoushoutsukigeReins : KagetoraRelic
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
@@ -58,6 +65,14 @@ public sealed class HoushoutsukigeReins : KagetoraRelic
     }
 }
 
+/// <summary>
+/// §8: la primera <b>carta de Pecho</b> de cada turno, +4 Bloqueo.
+/// <para>§16.6 (delta silencioso declarado, va al changelog): el guard mira el PRECEPTO, no el tipo,
+/// así que ahora también la disparan las dos comunes nuevas de Pecho que son <b>Ataques</b>
+/// (<c>SpearWall</c>, <c>EchigoRampart</c>). Es coherente con el texto —dice «carta de Pecho»— y
+/// deliberado: Pecho dejó de ser el único precepto sin Ataques. Se verificó que
+/// <c>FearlessChestPower</c> NO colisiona: escucha el AVANCE, no el tipo de carta.</para>
+/// </summary>
 public sealed class SixPlateArmour : KagetoraRelic
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
@@ -86,8 +101,17 @@ public sealed class ShiranuiTachi : KagetoraRelic, ICriticalConsumedListener
     }
 }
 
+/// <summary>
+/// §8 / §5: al ascender, <b>+1⚡ este turno, +30★ y +50 de Carga NP</b>. Es el arranque de la segunda
+/// carrera de NP (hoy la ascensión dejaba el medidor en 0 y había que juntar 100 desde cero), y es un
+/// pico ACOTADO A UN TURNO, no un techo nuevo: por eso Kenshin no recibe +1⚡ permanente (§12.3-3).
+/// </summary>
 public sealed class WhiteFlameBrazier : KagetoraRelic, IAscensionListener
 {
+    public const int AscensionEnergy = 1;
+    public const int AscensionStars = 30;
+    public const int AscensionNpCharge = 50;
+
     public override RelicRarity Rarity => RelicRarity.Rare;
     public async Task AfterAscendingToKenshin(PlayerChoiceContext context, CardModel source)
     {
@@ -95,8 +119,14 @@ public sealed class WhiteFlameBrazier : KagetoraRelic, IAscensionListener
         await KagetoraUsages.Mark(
             context, Owner.Creature, KagetoraUsage.WhiteFlameBrazier, source);
         Flash();
-        await PlayerCmd.GainEnergy(1, Owner);
-        await CritStars.Gain(context, Owner.Creature, 30, source);
+        // §16.2 advierte contra colgar ganancia de energía de AfterSideTurnStart (corre antes o
+        // después del reset según el orden interno) y manda AfterEnergyReset para las ganancias POR
+        // TURNO. Acá no aplica: la ascensión ocurre a mitad de turno, al resolver el NP, y «+1⚡ este
+        // turno» significa AHORA. Un AfterEnergyReset daría la energía recién al turno siguiente, que
+        // es otro turno. PlayerCmd.GainEnergy directo es el camino correcto para este disparador.
+        await PlayerCmd.GainEnergy(AscensionEnergy, Owner);
+        await CritStars.Gain(context, Owner.Creature, AscensionStars, source);
+        await NpCharge.Gain(context, Owner.Creature, AscensionNpCharge, source);
     }
 }
 

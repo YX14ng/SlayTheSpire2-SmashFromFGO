@@ -17,10 +17,31 @@ using MegaCrit.Sts2.Core.Saves.Runs;
 
 namespace KagetoraLancer.KagetoraLancerCode.Relics;
 
-/// <summary>Reliquia inicial: la recompensa de ciclo roba una carta.</summary>
-public sealed class JeweledPagodaOfBishamonten : KagetoraRelic, IDoctrineCycleListener
+/// <summary>
+/// Reliquia inicial (E3, §8) — <b>+10★ por cada AVANCE de la Doctrina</b>, exactamente 3 procs por
+/// turno, <b>sin robo</b>.
+///
+/// <para><b>El cap de 3 procs/turno NO está implementado y no hay que implementarlo</b> (§16.5): es
+/// una CONSECUENCIA de <c>DoctrinePower.MaxAdvancesPerTurn = 3</c>, evaluado en la primera línea de
+/// <c>WouldAdvance</c> y otra vez en el guard de <c>AfterCardPlayed</c>, las dos veces ANTES de
+/// cualquier <c>IDoctrineFailureOverride</c>. Agregar acá un contador redundante sería superficie de
+/// bug y de desincronización con el motor. Que nadie lo «arregle».</para>
+///
+/// <para>Antes proceaba una sola vez por CICLO: un tercio del caudal contra el que se calibró el
+/// pool (E4: 10+10+10 de la Pagoda + 20 del innato de Pies = 50★ = <c>CritStarsPower.CritCost</c>,
+/// el crítico del turno).</para>
+///
+/// <para><b>El robo se fue</b> (parche J1 P-2, §12.3-1): con E1 el cierre ya devuelve 1⚡, y un ciclo
+/// repetible que paga ⚡ <i>y</i> carta es la bandera roja n.º 1 del rúbrico. El robo sobrevive en la
+/// Gran Pagoda, que es reliquia de jefe y está pagada.</para>
+/// </summary>
+public sealed class JeweledPagodaOfBishamonten : KagetoraRelic, IDoctrineAdvanceListener
 {
+    public const int StarsPerAdvance = 10;
+
     public override RelicRarity Rarity => RelicRarity.Starter;
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromPower<DoctrinePower>(), HoverTipFactory.FromPower<CritStarsPower>()];
 
     public override RelicModel? GetUpgradeReplacement() =>
         ModelDb.Relic<GreatPagodaOfBishamonten>();
@@ -33,24 +54,32 @@ public sealed class JeweledPagodaOfBishamonten : KagetoraRelic, IDoctrineCycleLi
         await CommandBonusPower.EnsureInstalled(Owner.Creature);
     }
 
-    public async Task AfterDoctrineCycle(PlayerChoiceContext context, DoctrineAdvance result)
+    public async Task AfterDoctrineAdvance(PlayerChoiceContext context, DoctrineAdvance result)
     {
-        if (Owner.Relics.Any(relic => relic is GreatPagodaOfBishamonten)) return;
-        // El Flash va ANTES del chequeo del mazo: completar un ciclo es el evento central del
-        // personaje y con el mazo de robo vacío quedaba COMPLETAMENTE silencioso (bugfix
-        // 2026-08-16). El guard del mazo se conserva: robar con el mazo vacío gatilla el reshuffle
-        // que puede corromper la carta en curso (patrón anti-soft-lock del repo).
+        // La Gran Pagoda hereda el mismo evento; el guard evita el doble proceo si por cualquier
+        // camino las dos conviven en la bolsa.
+        if (!result.Advanced || Owner.Relics.Any(relic => relic is GreatPagodaOfBishamonten)) return;
         Flash();
-        var drawPile = PileType.Draw.GetPile(Owner);
-        if (drawPile.Cards.Count <= 0) return;
-        await CardPileCmd.Draw(context, 1, Owner);
+        await CritStars.Gain(context, Owner.Creature, StarsPerAdvance, result.CardPlay.Card);
     }
 }
 
-/// <summary>Intercambio Ancient: conserva el mismo evento y roba dos.</summary>
-public sealed class GreatPagodaOfBishamonten : KagetoraRelic, IDoctrineCycleListener
+/// <summary>
+/// Intercambio Ancient (§8): las mismas <see cref="JeweledPagodaOfBishamonten.StarsPerAdvance"/> por
+/// avance, <b>y al completar un ciclo: robá 1 y +10 de Carga NP</b>. Acá sí vive el robo — es
+/// reliquia de jefe (§12.3-1). Reinstala forma / Doctrina / CommandBonus como la base, que es el
+/// contrato de DECISIONS para un reemplazo Ancient de una starter.
+/// </summary>
+public sealed class GreatPagodaOfBishamonten : KagetoraRelic, IDoctrineAdvanceListener, IDoctrineCycleListener
 {
+    public const int CycleNpCharge = 10;
+
     public override RelicRarity Rarity => RelicRarity.Ancient;
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromPower<DoctrinePower>(), HoverTipFactory.FromPower<CritStarsPower>(),
+        HoverTipFactory.FromPower<NpChargePower>()
+    ];
 
     public override async Task BeforeCombatStartLate()
     {
@@ -59,12 +88,24 @@ public sealed class GreatPagodaOfBishamonten : KagetoraRelic, IDoctrineCycleList
         await CommandBonusPower.EnsureInstalled(Owner.Creature);
     }
 
+    public async Task AfterDoctrineAdvance(PlayerChoiceContext context, DoctrineAdvance result)
+    {
+        if (!result.Advanced) return;
+        Flash();
+        await CritStars.Gain(
+            context, Owner.Creature, JeweledPagodaOfBishamonten.StarsPerAdvance, result.CardPlay.Card);
+    }
+
     public async Task AfterDoctrineCycle(PlayerChoiceContext context, DoctrineAdvance result)
     {
-        var draw = Math.Min(2, PileType.Draw.GetPile(Owner).Cards.Count);
-        if (draw <= 0) return;
+        // El Flash va ANTES del chequeo del mazo: completar un ciclo es el evento central del
+        // personaje y con el mazo de robo vacío quedaba COMPLETAMENTE silencioso (bugfix
+        // 2026-08-16). El guard del mazo se conserva: robar con el mazo vacío gatilla el reshuffle
+        // que puede corromper la carta en curso (patrón anti-soft-lock del repo).
         Flash();
-        await CardPileCmd.Draw(context, draw, Owner);
+        await NpCharge.Gain(context, Owner.Creature, CycleNpCharge, result.CardPlay.Card);
+        if (PileType.Draw.GetPile(Owner).Cards.Count <= 0) return;
+        await CardPileCmd.Draw(context, 1, Owner);
     }
 }
 
