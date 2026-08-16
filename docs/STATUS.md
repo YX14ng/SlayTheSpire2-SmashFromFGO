@@ -33,9 +33,16 @@ jueces mandaron; 5 contradicciones resueltas al más restrictivo).
   (DECISIONS: no reescribir assets viejos) y solo los 11 nuevos quedaron normalizados; PCK final
   176,8 MB ≈ los 176,1 publicados; (2) verificado por contenido: las 5 texturas nuevas y los 5
   `card_keywords.json` están dentro del PCK (strings sobre el .pck, no exit code).
-- **Pendiente:** playtest de los 4 arquetipos y del rebalance Tiamat/Artoria; arte definitivo de
-  los 5 items nuevos (hoy placeholders copiados); responder a los reporters (七煌夜 ×3,
-  OneLostGamer, transfox girlfail, gilgamesh/CinKro/Smithjf de Astolfo).
+- **Arte definitivo PUBLICADO 2026-08-16 07:19 UTC** (Morgan re-subida, 177,3 MB): los 5 items
+  nuevos usan arte oficial de Atlas — Guardia Cambiante ← CE 9303440 «My Poisoned Chalice, My
+  Mask», Juramento de Sangre ← CE 9401580 «Ath nGabla», El Precio de la Corona ← CE 9308210
+  «Queen's Necklace», Lealtad de Woodwose ← CE 9306180 «Amulet from the Depths of the Dark
+  Forest», Corona de Espinas ← item 94082502 «朽葉の冠» (icono + outline alfa). Procedencia
+  registrada en `mapping_morgan.csv` y `make_morgan_icons.ps1`; dedup verificado contra los 173
+  assetIds ya usados por el roster. Fanart de Pixiv: solo CANDIDATOS con link (regla del
+  proyecto: nada de Pixiv sin autorización verificable del artista).
+- **Pendiente:** playtest de los 4 arquetipos y del rebalance Tiamat/Artoria; responder a los
+  reporters (七煌夜 ×3, OneLostGamer, transfox girlfail, gilgamesh/CinKro/Smithjf de Astolfo).
 
 ## 2026-08-15 (b) — Rebalance por reportes: Tiamat inmortal (nerf) + Artoria bajo curva (buff)
 
