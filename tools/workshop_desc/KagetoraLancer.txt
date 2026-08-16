@@ -1,7 +1,7 @@
 [h1]Nagao Kagetora → Uesugi Kenshin[/h1]
 Play a fully animated Fate/Grand Order character built around military formations, Critical Stars, Noble Phantasms and an irreversible mid-combat ascension.
 
-[b]PLAYTEST BUILD — v0.1.11[/b]
+[b]PLAYTEST BUILD — v0.1.12[/b]
 This build is feature-complete enough for testing, but its balance and presentation are not final.
 
 [h2]Core gameplay[/h2]
@@ -44,7 +44,7 @@ Unofficial fan-made mod. Fate/Grand Order characters and official visual assets 
 [h1]ESPAÑOL[/h1]
 Jugá con Nagao Kagetora y su ascensión irreversible a Uesugi Kenshin en un personaje completamente animado, centrado en formaciones militares, Estrellas de Crítico y Noble Phantasms.
 
-[b]VERSIÓN DE PLAYTEST — v0.1.11[/b]
+[b]VERSIÓN DE PLAYTEST — v0.1.12[/b]
 La implementación ya está completa para pruebas, pero el balance y la presentación todavía no son definitivos.
 
 [h2]Mecánicas principales[/h2]
@@ -85,7 +85,7 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [h1]简体中文[/h1]
 以可完整游玩的动画角色体验长尾景虎，并在战斗中不可逆地升华为上杉谦信。角色玩法围绕军阵、暴击星与宝具展开。
 
-[b]测试版本 — v0.1.11[/b]
+[b]测试版本 — v0.1.12[/b]
 当前版本已具备完整测试内容，但平衡与视觉表现仍非最终版本。
 
 [h2]核心机制[/h2]
