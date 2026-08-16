@@ -95,8 +95,14 @@ public sealed class KagetoraUsagePower : KagetoraPower, IResourcePower
 
 public static class KagetoraUsages
 {
+    // BUGFIX 2026-08-16 (diagnóstico del reporte de Steam): `int? & int` es una comparación
+    // LEVANTADA — sin el power, `?.Mask` es null, `null & N` es null y `null != 0` es TRUE en C#.
+    // Como el power SOLO se crea dentro de Mark y los 12 call-sites de Mark están detrás de un
+    // guard WasUsed, el estado era absorbente: el power nunca nacía y los 12 efectos por turno
+    // (Llama Blanca, Ocho Formaciones, Juez del Campo, Victoria en los Pies, Cabalgata, Doctrina
+    // del General y 6 reliquias) NUNCA se ejecutaban. El `?? 0` restaura la semántica.
     public static bool WasUsed(Creature owner, KagetoraUsage usage) =>
-        (owner.GetPower<KagetoraUsagePower>()?.Mask & (int)usage) != 0;
+        ((owner.GetPower<KagetoraUsagePower>()?.Mask ?? 0) & (int)usage) != 0;
 
     public static async Task Mark(
         PlayerChoiceContext context, Creature owner, KagetoraUsage usage, CardModel? source)

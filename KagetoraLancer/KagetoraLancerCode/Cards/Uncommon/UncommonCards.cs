@@ -200,7 +200,9 @@ public sealed class WallOfBanners() : KagetoraCard(2, CardType.Skill, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, p);
-        if ((Owner.Creature.GetPower<DoctrinePower>()?.AdvancedMaskThisTurn & ~(int)Precept.Chest) != 0)
+        // `?? 0` obligatorio: sin él, `null & N` es null y `null != 0` es TRUE — sin DoctrinePower
+        // la carta regalaba las estrellas (mismo defecto que KagetoraUsages.WasUsed, 2026-08-16).
+        if (((Owner.Creature.GetPower<DoctrinePower>()?.AdvancedMaskThisTurn ?? 0) & ~(int)Precept.Chest) != 0)
             await CritStars.Gain(c, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
     protected override void OnUpgrade() { DynamicVars.Block.UpgradeValueBy(4m); DynamicVars["Stars"].UpgradeValueBy(10m); }
@@ -326,7 +328,14 @@ public sealed class ArmyFootsteps() : KagetoraCard(1, CardType.Skill, CardRarity
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         await CritStars.Gain(c, Owner.Creature, DynamicVars["Stars"].IntValue, this);
-        var card = PileType.Draw.GetPile(Owner).Cards.FirstOrDefault(x => x is IPreceptCard { Precept: Precept.Feet });
+        // BUGFIX 2026-08-16: tutoreaba un Pies A SECAS. Como esta carta ES Pies y ya avanzó al
+        // resolverse, en Kagetora (orden fijo) la carta traída NUNCA podía avanzar → tutor inútil.
+        // Ahora usa WouldAdvanceAfter como BattleOrder (CommonCards.cs:69-72): trae la primera que
+        // SÍ avanzaría después de esta. Sirve en ambas formas.
+        var doctrine = Owner.Creature.GetPower<DoctrinePower>();
+        if (doctrine == null) return;
+        var card = PileType.Draw.GetPile(Owner).Cards.FirstOrDefault(x =>
+            x is IPreceptCard tagged && doctrine.WouldAdvanceAfter(Precept.Feet, tagged.Precept));
         if (card != null) await CardPileCmd.Add(card, PileType.Hand);
     }
     protected override void OnUpgrade() => DynamicVars["Stars"].UpgradeValueBy(10m);

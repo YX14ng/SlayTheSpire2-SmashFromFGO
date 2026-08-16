@@ -77,7 +77,10 @@ public sealed class JustPathPower : KagetoraPower
     public override async Task BeforeSideTurnEnd(
         PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (!participants.Contains(Owner) || Owner.GetPower<DoctrinePower>()?.AdvancesThisTurn < 2) return;
+        // `?? 0` obligatorio: `null < 2` es FALSE en C# (toda comparación relacional levantada con
+        // null lo es), así que sin DoctrinePower este power NO retornaba y regalaba el Bloqueo sin
+        // condición — el mismo error de razonamiento que KagetoraUsages.WasUsed, con signo opuesto.
+        if (!participants.Contains(Owner) || (Owner.GetPower<DoctrinePower>()?.AdvancesThisTurn ?? 0) < 2) return;
         Flash();
         await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
     }

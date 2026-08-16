@@ -36,9 +36,13 @@ public sealed class JeweledPagodaOfBishamonten : KagetoraRelic, IDoctrineCycleLi
     public async Task AfterDoctrineCycle(PlayerChoiceContext context, DoctrineAdvance result)
     {
         if (Owner.Relics.Any(relic => relic is GreatPagodaOfBishamonten)) return;
+        // El Flash va ANTES del chequeo del mazo: completar un ciclo es el evento central del
+        // personaje y con el mazo de robo vacío quedaba COMPLETAMENTE silencioso (bugfix
+        // 2026-08-16). El guard del mazo se conserva: robar con el mazo vacío gatilla el reshuffle
+        // que puede corromper la carta en curso (patrón anti-soft-lock del repo).
+        Flash();
         var drawPile = PileType.Draw.GetPile(Owner);
         if (drawPile.Cards.Count <= 0) return;
-        Flash();
         await CardPileCmd.Draw(context, 1, Owner);
     }
 }

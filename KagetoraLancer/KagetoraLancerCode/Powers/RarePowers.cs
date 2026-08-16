@@ -99,7 +99,13 @@ public sealed class TreasureWindowPower : KagetoraPower
         decimal amount, Creature? applier, out decimal modifiedAmount)
     {
         modifiedAmount = amount;
-        if (_prevented || target != Owner || applier == null || applier.Side == target.Side ||
+        // BUGFIX 2026-08-16: faltaba el guard `amount <= 0` del precedente vanilla
+        // (RuinedHelmet.cs:42-45). Hook.ModifyPowerAmountReceived (Hook.cs:1916-1928) encadena los
+        // listeners propagando el valor YA modificado y acumula TODOS los que devuelven true; si
+        // Artifact corrió antes y dejó amount=0, GetTypeForAmount(0) sigue devolviendo Debuff
+        // (PowerModel.cs:460-470: los dos early-return exigen < 0) → esta Ventana también se
+        // consumía. Un solo debuff bloqueado gastaba las DOS defensas.
+        if (_prevented || amount <= 0m || target != Owner || applier == null || applier.Side == target.Side ||
             canonicalPower.GetTypeForAmount(amount) != PowerType.Debuff || !canonicalPower.IsVisible) return false;
         modifiedAmount = 0m;
         return true;
