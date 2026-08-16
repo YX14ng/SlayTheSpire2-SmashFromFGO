@@ -41,6 +41,17 @@ jueces mandaron; 5 contradicciones resueltas al más restrictivo).
   registrada en `mapping_morgan.csv` y `make_morgan_icons.ps1`; dedup verificado contra los 173
   assetIds ya usados por el roster. Fanart de Pixiv: solo CANDIDATOS con link (regla del
   proyecto: nada de Pixiv sin autorización verificable del artista).
+- **Pasada de arte 2026-08-16 ~10:00 UTC (Morgan re-subida, 183 MB):** re-elección con Atlas
+  ampliado + dominio público — 23 cartas pasan a pinturas artúricas/prerrafaelitas PD (Sandys
+  «Morgan le Fay» en Furia de la Reina, Burne-Jones «Last Sleep of Arthur in Avalon» en Desde el
+  Fin del Mundo, Duncan «Riders of the Sidhe» en el Llamado, Friedrich ×3 para el invierno,
+  Fuseli/Blake/Turner/Martin/Waterhouse/De Morgan/Watts/Hunt/Dicksee/Leighton/Paton ×2/Archer/
+  Hughes), Forma: Reina Hada ← charagraph oficial 704000a@2, Forma: Bruja ← CE Aesc 9308590.
+  Se eliminaron TODAS las CEs duplicadas dentro del pool (Self Geas ×2, Aesc ×2, Lady of the
+  Lake ×2, Tower of Avalon, Purple Eyes, Gentle Rain, Blood-Thirsting Axe…). Procedencia y
+  licencia por carta en `assets/reference/paintings_morgan.csv` (artistas muertos ≤1945, PD
+  vida+70); mapping en `mapping_morgan.csv` con prefijos `PD:`/`CHARA:`. Cada pieza fue
+  verificada visualmente antes de asignarse.
 - **Pendiente:** playtest de los 4 arquetipos y del rebalance Tiamat/Artoria; responder a los
   reporters (七煌夜 ×3, OneLostGamer, transfox girlfail, gilgamesh/CinKro/Smithjf de Astolfo).
 
