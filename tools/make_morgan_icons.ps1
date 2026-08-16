@@ -39,6 +39,7 @@ $relics = @{
     "existence_tax"             = "$items/6531.png"
     "spriggan_treasury"         = "$items/6515.png"
     "mirror_clan_glass"         = "$items/6999.png"
+    "crown_of_thorns"           = "$items/94082502.png" # 朽葉の冠, corona de hojas marchitas (RE-POOL V2)
     "bottled_mors"              = "$items/6517.png"
     "habetrot_thread"           = "$items/6501.png"
     "lady_of_the_lake_chalice"  = "$items/7998.png"
