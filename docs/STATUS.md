@@ -2,6 +2,60 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-16 — Kagetora RE-DISEÑO V2 publicado + 19 poderes muertos resucitados (Kagetora y Astolfo)
+
+Reporte de 七煌夜 (Steam 08-14): «三令法制很难运转，太缺费了 / 按顺序推进游戏内有点看不明白 / 进化后
+没什么显著的变化，意义不明». Diagnóstico multi-agente en
+[`DIAGNOSTICO-KAGETORA.md`](DIAGNOSTICO-KAGETORA.md), diseño en
+[`REDESIGN-KAGETORA-V2.md`](REDESIGN-KAGETORA-V2.md) (panel 3 propuestas + 3 jueces; ganó
+«motor y economía» 3-0).
+
+**El hallazgo que reordenó todo — bug P0 en DOS mods.** `WasUsed` hacía
+`(GetPower<T>()?.Mask & (int)usage) != 0`: sin el power, `null & N` es null y **`null != 0` es TRUE**
+en C# (comprobado empíricamente compilando el caso). Como el power SOLO se crea dentro de `Mark` y
+los call-sites de `Mark` están todos detrás de un guard `WasUsed`, el estado era absorbente: el power
+nunca nacía. **12 efectos muertos en Kagetora** (entre ellos la ÚNICA ganancia de energía del kit y
+la única válvula para saltarse el orden fijo — o sea, parte de «太缺费了» era este bug) y **7 en
+Astolfo**, publicados. Astolfo además no reseteaba nunca su máscara «por turno». Corregidos con
+`?? 0` + `BeforeSideTurnStart`. Tercer sitio del mismo patrón en `WallOfBanners`.
+
+**Otros bugs cerrados:** Artifact + Ventana del Tesoro se consumían AMBOS con un solo debuff (faltaba
+el guard `amount <= 0` del vanilla `RuinedHelmet`); `JustPath` regalaba Bloqueo sin condición
+(`null < 2` es false); completar ciclo era mudo con el mazo vacío; el tutor de Pisadas traía una
+carta que nunca podía avanzar; **4 spans dorados desbordados en zhs** (3 cartas del mazo inicial + el
+NP, en el idioma del reporter — el `。` no cierra el span); dos cartas imprimían «Draw 0.».
+
+**El rediseño (los tres reclamos, estructuralmente):**
+- **Energía:** cerrar ciclo devuelve **+1⚡**, innato al motor. El refund es ≤1/turno **por
+  construcción** (el tope de 3 avances ya existente lo garantiza: cero estado nuevo). Curva de
+  costos rebajada: cadena media 3,79⚡ → 3,17⚡, cero cartas de 3⚡, 6 ceros repetibles contra 1.
+  Energía libre 0,43⚡ → ~1,5⚡. Se DESCARTÓ subir a 4⚡ base (el diagnóstico midió que no cambia la
+  tasa de ciclo).
+- **Legibilidad:** cinco canales — `StackType.Counter` + `DisplayAmount` (el icono muestra el
+  número; con `Single` el motor NUNCA lo dibujaba), `smartDescription` que dice el orden y cambia
+  por forma, ordinales I/II/III en las 69 cartas, tooltip de la Doctrina en todas, y glow dorado
+  usando `WouldAdvance` (que ya existía escrito como predicado puro). Breakpoint didáctico:
+  **1 ciclo = 50★ = 1 crítico exacto** (la Pagoda pasó a +10★ por AVANCE, 3/turno).
+- **Ascensión:** los dos `FormPower` estaban VACÍOS. Kagetora gana anti-atasco; Kenshin: doble NP
+  por ciclo, retención de 5 de Bloqueo (`IBlockRetentionSource`), NP de 8 impactos que arranca el
+  Bloqueo antes del daño (hacía 69 donde Kagetora hacía 91), y riders de forma 3 → 9 cartas.
+- **3 cartas nuevas** (`SpearWall`, `EchigoRampart` — los primeros ATAQUES de Pecho, que tenía 0 en
+  22 cartas — y `StarlitCharge`), con arte de dominio público: Kuniyoshi «川中島大合戦之圖» y un
+  jinete de Toyokuni (procedencia en `assets/reference/paintings_kagetora.csv`).
+- **Cero DEMOTE, cero IDs quemados, FGOCore intacto** → no se republican los 12 personajes.
+
+**Validación:** build 0/0, SimpleLoc 0 ambigüedades, paridad 13×5, matriz MAIN/BETA verde (3 probes,
+13 artefactos), y contenido del PCK verificado por `strings` (las 3 texturas nuevas adentro).
+
+**PUBLICADO 2026-08-16 22:47-22:48 UTC** y verificado por API: Kagetora **v0.1.12** (70,1 MB) y
+Astolfo **v0.1.13** (40,6 MB), ambos públicos con changelog bilingüe EN/中文.
+
+**Pendiente:** playtest de los 4 arquetipos y del refund; el doc firma ⚠️ (no ✅) en «sin loops de
+robo neto» hasta re-simular con el pool nuevo, y admite que la convergencia 1:1:1 se mitiga pero no
+desaparece. Responder a 七煌夜 (reportó Morgan Y Kagetora: ambos resueltos) y a Sac2Loo2Sac
+(pide que la Reina del Invierno no consuma Maldición y que se quiten los caps — lo segundo choca
+con el techo de saturación de DECISIONS).
+
 ## 2026-08-15 (c) — Morgan RE-POOL V2 implementado (panel de 3 propuestas + 3 jueces)
 
 Reportes de 七煌夜 (08-14: interruptores de forma escasos/asimétricos; confusión
