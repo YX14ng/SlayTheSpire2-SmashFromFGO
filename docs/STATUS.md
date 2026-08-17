@@ -2,6 +2,30 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-17 — Morgan v0.1.20: la Reina del Invierno retiene campo (feedback de Sac2Loo2Sac)
+
+Reporte en Steam: «la forma combinada no debería consumir los stacks de Maldición, no podés salir de
+ella y se supone que es lo mejor de ambas; los stacks/escalado no deberían estar limitados».
+
+- **Adoptado a medias, deliberadamente.** La Reina del Invierno (clímax PERMANENTE) ahora consume
+  solo la **MITAD** al Detonar (redondeo arriba) y el daño extra sigue siendo la Maldición COMPLETA.
+  No consumir nada quedó **descartado**: convertiría la Maldición en un multiplicador sin techo y
+  choca con el techo de saturación de DECISIONS — que es justo lo que otros tres reporters pidieron
+  reforzar en Tiamat («immortal every run»). La regla vive en `Sentencia.Detonar`, único lugar que
+  consume.
+- **Cernunnos reconvertida** (su efecto anterior ERA la media detonación): pasa a **+10 de Carga NP
+  por Detonación** (mejora 20) — el knob que el propio panel dejó aprobado en
+  `REDESIGN-MORGAN-V2 §15.4-4` («nunca exención de consumo»). Deja de ser redundante con el clímax y
+  se vuelve el puente danza→Sobrecarga que le faltaba al arquetipo C. Su power pasó de `Single` a
+  `Counter` porque ahora el número ES lo que le importa al jugador (con `Single` el motor nunca lo
+  dibuja — `NPower.cs:234`).
+- **El tercer pedido (quitar los caps del roster) NO se atiende** y conviene dejarlo escrito: los
+  caps (Maldición 25, enjambre 6, Evasión 3, Estrellas 100, NP 300) son transversales y deliberados.
+- **Validación:** build 0/0, SimpleLoc 0, paridad 13×5, matriz MAIN/BETA verde (3 probes).
+  **PUBLICADO 2026-08-17 00:03 UTC**, verificado por API (v0.1.20, 183,2 MB, público).
+- **Riesgo declarado:** sin playtest. Es un buff a la línea que ya era la más fuerte de Morgan —
+  primer candidato a revisar si el próximo reporte dice que el Invierno quedó pasado.
+
 ## 2026-08-16 — Kagetora RE-DISEÑO V2 publicado + 19 poderes muertos resucitados (Kagetora y Astolfo)
 
 Reporte de 七煌夜 (Steam 08-14): «三令法制很难运转，太缺费了 / 按顺序推进游戏内有点看不明白 / 进化后
