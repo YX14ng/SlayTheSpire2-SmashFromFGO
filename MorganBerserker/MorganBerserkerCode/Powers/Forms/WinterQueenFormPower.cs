@@ -18,7 +18,11 @@ namespace MorganBerserker.MorganBerserkerCode.Powers.Forms;
 /// (a) Mientras estés en esta forma, tu Maldición NO decae (ICursePreserver).
 /// (b) Tus cartas que aplican Maldición aplican +1 (ICurseAmplifier).
 /// (c) Al inicio de tu turno: aplica +2 de Maldición a TODOS los enemigos.
-/// (d) "Sentencia": tus Ataques infligen daño extra = la Maldición del objetivo y la consumen.
+/// (d) "Sentencia": tus Ataques infligen daño extra = la Maldición del objetivo y consumen solo la
+///     MITAD (redondeo arriba) — el privilegio del clímax permanente, 2026-08-16, feedback de
+///     Sac2Loo2Sac: es irreversible y se vende como «lo mejor de ambas», así que retiene campo.
+///     No consumir NADA quedó descartado: convertiría la Maldición en un multiplicador sin techo.
+///     La regla vive en <see cref="Sentencia.Detonar"/>, que es el único lugar que consume.
 /// (e) Primera vez que dañás HP enemigo cada turno: +10 NP. Sin penalización de Ataque.
 ///
 /// La Sentencia replica la implementación de FairyQueenFormPower (caché por carta, single-hit,

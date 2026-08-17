@@ -136,7 +136,7 @@
   "MORGANBERSERKER-CHARISMA_OF_ADVERSITY.title": "Charisma of Adversity",
   "MORGANBERSERKER-CHARISMA_OF_ADVERSITY.description": "#Your Attacks deal +!Stacks! damage for each threshold of HP you are missing: any, 25%, 50% and 75%. In co-op, each ally gains !AllyStrength! *Strength.",
   "MORGANBERSERKER-CURSE_OF_CERNUNNOS.title": "Curse of Cernunnos",
-  "MORGANBERSERKER-CURSE_OF_CERNUNNOS.description": "#Your *Detonations consume only HALF of the target's *Curse /(rounded up/); the additional damage is still the full *Curse.",
+  "MORGANBERSERKER-CURSE_OF_CERNUNNOS.description": "#Whenever you *Detonate: gain !Stacks! *NP *Charge.",
   "MORGANBERSERKER-SOVEREIGN_OF_TWO_FACES.title": "Sovereign of Two Faces",
   "MORGANBERSERKER-SOVEREIGN_OF_TWO_FACES.description": "#Whenever you change form: draw 2 cards and gain 10 *NP *Charge, up to !Stacks! times per turn.",
   "MORGANBERSERKER-SPRIGGAN_VIGIL.title": "Spriggan's Vigil",

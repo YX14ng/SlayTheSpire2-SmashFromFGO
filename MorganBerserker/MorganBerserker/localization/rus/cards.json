@@ -136,7 +136,7 @@
   "MORGANBERSERKER-CHARISMA_OF_ADVERSITY.title": "Харизма невзгод",
   "MORGANBERSERKER-CHARISMA_OF_ADVERSITY.description": "#Ваши Атаки наносят на /+!Stacks! урона за каждый пройденный порог недостающих ОЗ: любые, 25%, 50% и 75%. В совместной игре каждый союзник получает !AllyStrength! *Силы.",
   "MORGANBERSERKER-CURSE_OF_CERNUNNOS.title": "Проклятие Кернунна",
-  "MORGANBERSERKER-CURSE_OF_CERNUNNOS.description": "#Ваши *Детонации расходуют лишь ПОЛОВИНУ *Проклятия цели /(с округлением вверх/); дополнительный урон по-прежнему равен полному *Проклятию.",
+  "MORGANBERSERKER-CURSE_OF_CERNUNNOS.description": "#Каждый раз, когда вы *Детонируете: получите !Stacks! *заряда *NP.",
   "MORGANBERSERKER-SOVEREIGN_OF_TWO_FACES.title": "Владычица двух ликов",
   "MORGANBERSERKER-SOVEREIGN_OF_TWO_FACES.description": "#Каждый раз, когда вы меняете форму: возьмите 2 карты и получите 10 *заряда *NP, не более !Stacks! раз за ход.",
   "MORGANBERSERKER-SPRIGGAN_VIGIL.title": "Бдение Сприггана",

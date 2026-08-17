@@ -136,7 +136,7 @@
   "MORGANBERSERKER-CHARISMA_OF_ADVERSITY.title": "역경의 카리스마",
   "MORGANBERSERKER-CHARISMA_OF_ADVERSITY.description": "#잃은 체력이 다음 각 문턱에 도달할 때마다 내 공격이 /+!Stacks!의 피해를 줍니다: 조금이라도, 25%, 50%, 75%. 협동에서는 각 아군이 *힘을 !AllyStrength! 얻습니다.",
   "MORGANBERSERKER-CURSE_OF_CERNUNNOS.title": "케르눈노스의 저주",
-  "MORGANBERSERKER-CURSE_OF_CERNUNNOS.description": "#*기폭이 대상의 *저주를 절반만 소모합니다 /(올림/). 추가 피해는 여전히 *저주 전체만큼입니다.",
+  "MORGANBERSERKER-CURSE_OF_CERNUNNOS.description": "#*기폭할 때마다 *NP *충전을 !Stacks! 얻습니다.",
   "MORGANBERSERKER-SOVEREIGN_OF_TWO_FACES.title": "두 얼굴의 군주",
   "MORGANBERSERKER-SOVEREIGN_OF_TWO_FACES.description": "#형태를 변환할 때마다 카드를 2장 뽑고 *NP *충전을 10 얻습니다. 매 턴 최대 !Stacks!회 발동합니다.",
   "MORGANBERSERKER-SPRIGGAN_VIGIL.title": "스프리건의 불침번",

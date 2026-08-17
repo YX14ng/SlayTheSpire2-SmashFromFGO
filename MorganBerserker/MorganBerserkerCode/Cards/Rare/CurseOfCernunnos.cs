@@ -8,13 +8,14 @@ using MorganBerserker.MorganBerserkerCode.Powers;
 namespace MorganBerserker.MorganBerserkerCode.Cards.Rare;
 
 /// <summary>
-/// Maldición de Cernunnos (科尔努诺斯的诅咒) — Poder: tus Maldiciones ya no se
-/// reducen al activarse. Mejora: coste 1⚡.
+/// Maldición de Cernunnos (科尔努诺斯的诅咒) — Poder 1⚡: cada Detonación tuya te da 10 de Carga NP
+/// (mejora: 20). Re-efecto 2026-08-16: su «media detonación» se mudó a la Reina del Invierno
+/// (ver <see cref="Powers.CurseOfCernunnosPower"/>).
 /// </summary>
 public sealed class CurseOfCernunnos() : MorganCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new PowerVar<CurseOfCernunnosPower>("Stacks", 1m)];
+        [new PowerVar<CurseOfCernunnosPower>("Stacks", 10m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromKeyword(MorganKeywords.Detonar), HoverTipFactory.FromPower<CursePower>()];
@@ -27,6 +28,6 @@ public sealed class CurseOfCernunnos() : MorganCard(1, CardType.Power, CardRarit
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["Stacks"].UpgradeValueBy(10m);
     }
 }

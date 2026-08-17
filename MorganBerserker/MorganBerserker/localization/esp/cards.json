@@ -136,7 +136,7 @@
   "MORGANBERSERKER-CHARISMA_OF_ADVERSITY.title": "Carisma de la Adversidad",
   "MORGANBERSERKER-CHARISMA_OF_ADVERSITY.description": "#Tus Ataques infligen +!Stacks! de daño por cada umbral de Vida perdida que alcances: 1%, 25%, 50% y 75%. En co-op, cada aliado obtiene !AllyStrength! de *Fuerza.",
   "MORGANBERSERKER-CURSE_OF_CERNUNNOS.title": "Maldición de Cernunnos",
-  "MORGANBERSERKER-CURSE_OF_CERNUNNOS.description": "#Tus *Detonaciones consumen solo la MITAD de la *Maldición del objetivo /(redondeando hacia arriba/); el daño adicional sigue siendo la *Maldición completa.",
+  "MORGANBERSERKER-CURSE_OF_CERNUNNOS.description": "#Cada vez que *Detonás: obtenés !Stacks! de *Carga *NP.",
   "MORGANBERSERKER-SOVEREIGN_OF_TWO_FACES.title": "Soberana de Dos Rostros",
   "MORGANBERSERKER-SOVEREIGN_OF_TWO_FACES.description": "#Cada vez que cambias de forma: roba 2 cartas y obtén 10 de *Carga *NP, máximo !Stacks! veces por turno.",
   "MORGANBERSERKER-SPRIGGAN_VIGIL.title": "Vigilia de Spriggan",
