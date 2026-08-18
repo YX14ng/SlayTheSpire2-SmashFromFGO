@@ -17,7 +17,7 @@ public sealed class FaerieEyes() : ArtoriaCard(1, CardType.Power, CardRarity.Unc
     [
         new PowerVar<FaerieEyesPower>("Power", 1m),
         new DynamicVar("Stars", FaerieEyesPower.StarsPerTrigger),
-        new DynamicVar("NpCharge", 5)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -36,6 +36,6 @@ public sealed class FaerieEyes() : ArtoriaCard(1, CardType.Power, CardRarity.Unc
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NpCharge"].UpgradeValueBy(3m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

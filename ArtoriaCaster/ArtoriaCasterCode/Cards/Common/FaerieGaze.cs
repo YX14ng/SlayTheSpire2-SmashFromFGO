@@ -17,7 +17,7 @@ public sealed class FaerieGaze() : ArtoriaCard(0, CardType.Skill, CardRarity.Com
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new PowerVar<WeakPower>("Weak", 1m),
-        new DynamicVar("Stars", 0)
+        new DynamicVar("Stars", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -35,6 +35,6 @@ public sealed class FaerieGaze() : ArtoriaCard(0, CardType.Skill, CardRarity.Com
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Stars"].UpgradeValueBy(10m);
+        DynamicVars["Weak"].UpgradeValueBy(1m);
     }
 }

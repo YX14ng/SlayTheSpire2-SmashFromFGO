@@ -11,7 +11,7 @@ public sealed class FaerieChant() : ArtoriaCard(1, CardType.Skill, CardRarity.Co
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("NpCharge", 10),
+        new DynamicVar("NpCharge", 20),
         new DynamicVar("Stars", 10)
     ];
 

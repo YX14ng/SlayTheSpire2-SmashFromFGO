@@ -13,7 +13,7 @@ public sealed class PilgrimsStep() : ArtoriaCard(0, CardType.Skill, CardRarity.C
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(3m, ValueProp.Move),
-        new DynamicVar("NpCharge", 4)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
@@ -27,6 +27,6 @@ public sealed class PilgrimsStep() : ArtoriaCard(0, CardType.Skill, CardRarity.C
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(2m);
-        DynamicVars["NpCharge"].UpgradeValueBy(2m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

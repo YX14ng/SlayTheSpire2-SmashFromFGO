@@ -17,7 +17,7 @@ public sealed class LakesProtection() : ArtoriaCard(1, CardType.Skill, CardRarit
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("NpCharge", 25),
+        new DynamicVar("NpCharge", 30),
         new DynamicVar("CasterBonus", 10),
         new DynamicVar("AllyNpCharge", 10)
     ];

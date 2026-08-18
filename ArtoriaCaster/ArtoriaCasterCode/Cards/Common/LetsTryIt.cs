@@ -14,7 +14,7 @@ public sealed class LetsTryIt() : ArtoriaCard(0, CardType.Skill, CardRarity.Comm
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Stars", 10),
-        new DynamicVar("NpCharge", 5)
+        new DynamicVar("NpCharge", 10)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

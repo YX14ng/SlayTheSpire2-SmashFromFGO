@@ -16,7 +16,7 @@ public sealed class SpringsPulse() : ArtoriaCard(2, CardType.Skill, CardRarity.U
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("NpCharge", 40),
+        new DynamicVar("NpCharge", 50),
         new DynamicVar("Stars", 20)
     ];
 

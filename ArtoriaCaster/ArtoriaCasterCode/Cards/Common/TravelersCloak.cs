@@ -15,7 +15,7 @@ public sealed class TravelersCloak() : ArtoriaCard(2, CardType.Skill, CardRarity
     [
         new BlockVar(10m, ValueProp.Move),
         new DynamicVar("Stars", 10),
-        new DynamicVar("NpCharge", 5)
+        new DynamicVar("NpCharge", 20)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

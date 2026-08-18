@@ -9,7 +9,7 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Common;
 /// <summary>Tiburón de Verano — Ataque 1⚡: 6 de daño a TODOS los enemigos.</summary>
 public sealed class SummerShark() : ArtoriaCard(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

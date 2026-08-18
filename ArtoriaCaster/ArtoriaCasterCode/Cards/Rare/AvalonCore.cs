@@ -15,7 +15,7 @@ public sealed class AvalonCore() : ArtoriaCard(1, CardType.Skill, CardRarity.Rar
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("NpCharge", 30),
+        new DynamicVar("NpCharge", 50),
         new DynamicVar("AllyNpCharge", 10)
     ];
 
@@ -32,6 +32,6 @@ public sealed class AvalonCore() : ArtoriaCard(1, CardType.Skill, CardRarity.Rar
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NpCharge"].UpgradeValueBy(15m);
+        DynamicVars["NpCharge"].UpgradeValueBy(20m);
     }
 }

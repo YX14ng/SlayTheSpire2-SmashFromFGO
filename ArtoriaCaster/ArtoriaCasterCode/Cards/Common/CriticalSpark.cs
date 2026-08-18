@@ -13,8 +13,8 @@ public sealed class CriticalSpark() : ArtoriaCard(1, CardType.Attack, CardRarity
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(5m, ValueProp.Move),
-        new DynamicVar("Stars", 10)
+        new DamageVar(8m, ValueProp.Move),
+        new DynamicVar("Stars", 20)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CriticalStarsPower>()];

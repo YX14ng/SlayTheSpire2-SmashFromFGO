@@ -16,7 +16,7 @@ public sealed class SummerFaerie() : ArtoriaCard(1, CardType.Skill, CardRarity.U
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("NpCharge", 15),
+        new DynamicVar("NpCharge", 20),
         new PowerVar<OverchargeBlessingPower>("Blessing", 2m),
         new DynamicVar("AllyNpCharge", 10)
     ];

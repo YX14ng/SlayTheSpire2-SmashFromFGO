@@ -16,7 +16,7 @@ public sealed class StaffsVoice() : ArtoriaCard(1, CardType.Skill, CardRarity.Un
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(2),
-        new DynamicVar("NpCharge", 10)
+        new DynamicVar("NpCharge", 20)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

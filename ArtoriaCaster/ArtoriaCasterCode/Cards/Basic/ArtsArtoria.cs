@@ -17,7 +17,7 @@ public sealed class ArtsArtoria() : ArtoriaCard(1, CardType.Attack, CardRarity.B
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(6m, ValueProp.Move),
-        new DynamicVar("NpCharge", 25)
+        new DynamicVar("NpCharge", 30)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];

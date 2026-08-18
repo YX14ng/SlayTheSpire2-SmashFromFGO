@@ -8,7 +8,7 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Common;
 /// <summary>Bendición del Lago — Habilidad 0⚡: Carga NP +8.</summary>
 public sealed class LakesBlessing() : ArtoriaCard(0, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("NpCharge", 8)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("NpCharge", 20)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 

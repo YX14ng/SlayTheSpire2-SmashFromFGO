@@ -38,7 +38,7 @@
   "ARTORIACASTER-FAERIE_CHANT.title": "Faerie Chant",
   "ARTORIACASTER-FAERIE_CHANT.description": "#Gain !NpCharge! *NP *Charge. Gain !Stars! *Critical *Star(s).",
   "ARTORIACASTER-FAERIE_GAZE.title": "Faerie Gaze",
-  "ARTORIACASTER-FAERIE_GAZE.description": "#Apply !Weak! *Weak.+ Gain !Stars! *Critical *Star.+",
+  "ARTORIACASTER-FAERIE_GAZE.description": "#Apply !Weak! *Weak. Gain !Stars! *Critical *Star.",
   "ARTORIACASTER-PILGRIMS_STEP.title": "Pilgrim's Step",
   "ARTORIACASTER-PILGRIMS_STEP.description": "#Gain !B! Block. Gain !NpCharge! *NP *Charge.",
   "ARTORIACASTER-TRAVELERS_CLOAK.title": "Traveler's Cloak",
