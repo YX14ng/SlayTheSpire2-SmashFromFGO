@@ -17,7 +17,8 @@ public sealed class FaerieGaze() : ArtoriaCard(0, CardType.Skill, CardRarity.Com
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new PowerVar<WeakPower>("Weak", 1m),
-        new DynamicVar("Stars", 10)
+        new DynamicVar("Stars", 10),
+        new CardsVar(0)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -31,10 +32,18 @@ public sealed class FaerieGaze() : ArtoriaCard(0, CardType.Skill, CardRarity.Com
         {
             await Stars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
         }
+        // v0.1.21: el reporter señaló que el problema era la EFICIENCIA DE CARTA (gastar un slot de
+        // mano por 1 Débil no paga), no el número. El robo de la mejora lo ataca de frente; Agotar
+        // —la otra vía vanilla— sería peor acá porque Débil es un efecto que querés re-aplicar.
+        if (DynamicVars.Cards.IntValue > 0)
+        {
+            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
+        }
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["Weak"].UpgradeValueBy(1m);
+        DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

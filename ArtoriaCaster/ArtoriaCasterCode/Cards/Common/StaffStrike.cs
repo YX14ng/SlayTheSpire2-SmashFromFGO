@@ -35,6 +35,6 @@ public sealed class StaffStrike() : ArtoriaCard(0, CardType.Attack, CardRarity.C
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["NpCharge"].UpgradeValueBy(3m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

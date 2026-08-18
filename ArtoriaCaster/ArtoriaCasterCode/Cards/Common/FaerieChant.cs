@@ -26,7 +26,7 @@ public sealed class FaerieChant() : ArtoriaCard(1, CardType.Skill, CardRarity.Co
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
         DynamicVars["Stars"].UpgradeValueBy(10m);
     }
 }

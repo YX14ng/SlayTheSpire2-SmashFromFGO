@@ -38,7 +38,7 @@
   "ARTORIACASTER-FAERIE_CHANT.title": "요정의 영창",
   "ARTORIACASTER-FAERIE_CHANT.description": "#*NP *충전을 !NpCharge! 얻습니다. *크리티컬 *스타를 !Stars! 얻습니다.",
   "ARTORIACASTER-FAERIE_GAZE.title": "요정의 시선",
-  "ARTORIACASTER-FAERIE_GAZE.description": "#*약화를 !Weak! 부여합니다. *크리티컬 *스타를 !Stars! 얻습니다.",
+  "ARTORIACASTER-FAERIE_GAZE.description": "#*약화를 !Weak! 부여합니다. *크리티컬 *스타를 !Stars! 얻습니다.+ 카드를 !C!장 뽑습니다.+",
   "ARTORIACASTER-PILGRIMS_STEP.title": "순례자의 발걸음",
   "ARTORIACASTER-PILGRIMS_STEP.description": "#!B!의 방어도를 얻습니다. *NP *충전을 !NpCharge! 얻습니다.",
   "ARTORIACASTER-TRAVELERS_CLOAK.title": "여행자의 망토",

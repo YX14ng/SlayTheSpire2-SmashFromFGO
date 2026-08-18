@@ -8,13 +8,14 @@ using ArtoriaCaster.ArtoriaCasterCode.Powers;
 namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Rare;
 
 /// <summary>
-/// Bendición de Avalon — Poder 2⚡: al inicio de cada turno: Carga NP +8.
-/// Mejora: +12.
+/// Bendición de Avalon — Poder 2⚡: al inicio de cada turno: Carga NP +20.
+/// Mejora: +30. (v0.1.21: 8/12 quedaba fuera de las denominaciones 10/20/30/50 y, tras subir el
+/// resto de las fuentes de NP, era la PEOR carta de NP del pool siendo rara de 2⚡.)
 /// </summary>
 public sealed class AvalonBenediction() : ArtoriaCard(2, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new PowerVar<AvalonBenedictionPower>("NpCharge", 8m)];
+        [new PowerVar<AvalonBenedictionPower>("NpCharge", 20m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
@@ -25,6 +26,6 @@ public sealed class AvalonBenediction() : ArtoriaCard(2, CardType.Power, CardRar
 
     protected override void OnUpgrade()
     {
-        DynamicVars["NpCharge"].UpgradeValueBy(4m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

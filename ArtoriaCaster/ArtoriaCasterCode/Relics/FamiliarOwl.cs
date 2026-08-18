@@ -32,6 +32,8 @@ public sealed class FamiliarOwl : ArtoriaRelic
         if (!participants.Contains(Owner.Creature)) return;
         if (FgoCombatState.GetTurn(Owner.Creature, 7) != 0) return;
         Flash();
-        await Stars.Gain(choiceContext, Owner.Creature, 1, null);
+        // v0.1.21: era 1 — valor legacy anterior a la migración ×10 de la economía de estrellas
+        // (CritStarsPower.CritCost = 50). Daba 1/50 de un crítico por turno: cosméticamente inútil.
+        await Stars.Gain(choiceContext, Owner.Creature, 10, null);
     }
 }

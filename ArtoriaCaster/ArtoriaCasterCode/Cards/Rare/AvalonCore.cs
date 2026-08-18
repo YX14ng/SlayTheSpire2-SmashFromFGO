@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Rare;
 
 /// <summary>
-/// Núcleo de Avalon — Habilidad 1⚡, Exhaust: Carga NP +30. Mejora: +45.
+/// Núcleo de Avalon — Habilidad 1⚡, Exhaust: Carga NP +50. Mejora: +70.
 /// Co-op: cada aliado gana Carga NP +10.
 /// </summary>
 public sealed class AvalonCore() : ArtoriaCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)

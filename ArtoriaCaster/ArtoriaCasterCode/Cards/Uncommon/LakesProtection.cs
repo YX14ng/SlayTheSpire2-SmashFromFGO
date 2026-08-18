@@ -8,7 +8,7 @@ namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Uncommon;
 
 /// <summary>
 /// Protección del Lago A (skill real S2 de Castoria; existe también en Morgan a rango C —
-/// colisión temática deliberada) — Carga NP +25; en forma Caster: +10 más. Exhaust.
+/// colisión temática deliberada) — Carga NP +30; en forma Caster: +10 más. Exhaust.
 /// Co-op: cada aliado gana Carga NP +10.
 /// </summary>
 public sealed class LakesProtection() : ArtoriaCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)

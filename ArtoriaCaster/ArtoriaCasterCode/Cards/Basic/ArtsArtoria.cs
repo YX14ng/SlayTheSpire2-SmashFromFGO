@@ -8,7 +8,7 @@ using ArtoriaCaster.ArtoriaCasterCode.Powers;
 
 namespace ArtoriaCaster.ArtoriaCasterCode.Cards.Basic;
 
-/// <summary>Carta de Comando: Arts — daño bajo + Carga NP (25: la denominación de Castoria).</summary>
+/// <summary>Carta de Comando: Arts — daño bajo + Carga NP (30: la denominación de comando del proyecto (WORKFLOW-FGO 4.6.1)).</summary>
 public sealed class ArtsArtoria() : ArtoriaCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), ICommandTyped
 {
     CommandType ICommandTyped.CommandType => CommandType.Arts;

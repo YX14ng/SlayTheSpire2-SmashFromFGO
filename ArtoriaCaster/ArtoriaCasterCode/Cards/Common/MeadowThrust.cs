@@ -14,7 +14,7 @@ public sealed class MeadowThrust() : ArtoriaCard(1, CardType.Attack, CardRarity.
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(8m, ValueProp.Move),
+        new DamageVar(10m, ValueProp.Move),
         new DynamicVar("Stars", 10)
     ];
 
