@@ -2,6 +2,41 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-18 — Artoria v0.1.21: la economía de NP reconstruida (reporte de 1369642093)
+
+Reporte muy técnico en Steam: «la potencia ya alcanza para pasar, pero (1) las cartas de Carga NP
+**dan poco**, así que jugar dos veces más los Arts iniciales carga más rápido — **la recompensa de
+carta vale menos que saltearla**; y (2) hay cartas que básicamente no se draftean (Destello Crítico,
+Tiburón de Verano, Mirada Feérica): son de transición, el número es bajo y las estrellas no dan
+beneficio inmediato. El juego original resuelve esto con Agotar o +1 energía».
+
+- **Confirmado con números:** el Arts básico daba **25 NP** y las drafteables **4/5/8/10** (umbral
+  100). La peor era Manto del Viaje: **2⚡ por 5 NP**. Además esas denominaciones violaban la regla
+  4.6.3 del proyecto (10/20/30/50/100) y el Arts estaba fuera de la 4.6.1 (que fija 6 daño + 30 NP).
+- **Recalibración:** Arts 25→30, los 0⚡ a 10-20, los 1⚡ a 20-30, Pulso 40→50, Núcleo de Avalon
+  30→50, Bendición de Avalon 8→20/turno. Primer NP: turno 4 → turno 3; la peor carta de NP ahora
+  acelera **+18%** en vez de ser ruido.
+- **Cartas rescatadas:** Destello Crítico 5→8 daño +20★; Tiburón 6→8 AoE (ancla Cleave); Mirada
+  Feérica da 10★ de base y su mejora **roba 1** — el reporter hablaba de EFICIENCIA DE CARTA, no de
+  número (Agotar habría sido peor: Débil se re-aplica).
+
+**Segunda pasada de análisis con otro modelo (Fable 5), que encontró lo que la primera no vio:**
+- **Una dominación estricta creada por el propio fix:** al subir Destello a 8 quedó idéntico a
+  Estocada de la Pradera (1⚡, 8, mejora +3) pero con 20★ incondicional contra 10★ solo-en-Berserker
+  → Estocada muerta. Corregido: Estocada a **10 daño** (beater vs generadora).
+- **Búho Familiar daba 1 estrella** — valor legacy anterior a la migración ×10 de la economía
+  (CritCost = 50): 1/50 de un crítico por turno. Ahora 10.
+- Deltas de mejora fuera de denominación y 4 comentarios stale, corregidos.
+- **Riesgo anotado, NO tocado** (se mide antes de tocar): con la carga acelerada la ulti se
+  re-manifiesta cada ~2-2,5 turnos y abre ventana de crítico en CUALQUIER forma, con lo que el
+  candado de Berserker (que cuesta +2 de daño recibido) se vuelve opcional. No rompe números, rompe
+  la decisión de identidad. Perilla si el playtest lo confirma: sacar los 30★ de la ulti.
+- **Candidatas al próximo pase** (mismo defecto, no urgentes): Hidromancia de Verano (dominada por
+  Escudo de Luz), Lluvia de Familiares (sin conectividad), Embate de Verano (bajo curva).
+
+**Validación:** build 0/0, SimpleLoc 0, paridad 13×5, matriz MAIN/BETA 3/3.
+**PUBLICADO 2026-08-18 14:51 UTC** y verificado por API (v0.1.21, 133,8 MB, público).
+
 ## 2026-08-17 — Morgan v0.1.20: la Reina del Invierno retiene campo (feedback de Sac2Loo2Sac)
 
 Reporte en Steam: «la forma combinada no debería consumir los stacks de Maldición, no podés salir de
