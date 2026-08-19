@@ -44,10 +44,14 @@ Sin cambio de balance: mismo bonus de Sobrecarga, mismo daño, mismas cartas ago
 cruce main→beta, que es el artefacto que se distribuye; confirma que `WithNoAttackerAnim` existe en
 ambas ramas) · publish limpio, PCK 85.680.900 B, **cero churn de `.import`** · `audit_vfx_paths` OK.
 
+**PUBLICADO 2026-08-19 14:40 UTC** y verificado por API (item 3751610575, 85.802.654 B, visibilidad
+0, ficha en `v0.1.19`). El changelog EN/中文 le dice al reporter qué era, que su reporte era un
+defecto real, y le pide las tres cosas que faltan.
+
 **Pendiente:** esto es hardening sobre el sospechoso más fuerte, **no un diagnóstico confirmado** —
-sin el `godot.log` del reporter no hay prueba de cuál era el `await`. Sigue pendiente pedirle el log
-y preguntarle si pasaba solo contra Élites/Jefes (si dice que sí, el fix era exactamente ese) y si
-era solo o en co-op. **Sin publicar a Workshop todavía.**
+sin el `godot.log` del reporter no hay prueba de cuál era el `await`. Falta que Nut Butter confirme,
+y sus dos respuestas parten el árbol: si dice **solo contra Élites/Jefes**, el fix era exactamente
+ese; si le pasa también en salas comunes, la rama que toqué ni corría y hay que seguir buscando.
 
 ## 2026-08-18 — Artoria v0.1.21: la economía de NP reconstruida (reporte de 1369642093)
 
