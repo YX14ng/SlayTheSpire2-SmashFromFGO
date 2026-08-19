@@ -71,26 +71,42 @@ public sealed class EnumaElishUnleashed() : GilgameshCard(0, CardType.Attack, Ca
         //   bonus anti-divino, nunca el daño base contra «lo meramente humano».
         // Solo en salas con rango divino (audit 2026-07-05): el bonus por Arma aplica unicamente a
         // Elites/Jefes — exhaustar el arsenal en una sala comun era puro costo sin efecto.
+        //
+        // ORDEN (reporte de Steam 2026-08-18, Nut Butter: «el NP se traba en el medio de la pantalla y
+        // no hace nada»): acá SOLO se LEE el arsenal; el Agotar corre al FINAL, después del daño. Una
+        // carta jugada vive en el PlayContainer —el centro exacto de la pantalla— hasta que su OnPlay
+        // retorna, así que cualquier await que no vuelva la deja congelada ahí. `CardCmd.Exhaust` con
+        // visuales entra a `CardPileCmd.Add`, que espera un tween (`await tween.AwaitFinished`) DENTRO
+        // de nuestra propia resolución; con el daño primero, aunque esa espera falle el NP ya pegó.
+        var arms = new List<CardModel>();
         if (Owner.PlayerCombatState != null && RoyalTrait.IsInDivineRoom(Owner.Creature))
         {
-            var arms = Owner.PlayerCombatState.Hand.Cards.OfType<ITreasureArm>().Cast<CardModel>().ToList();
-            overcharge += arms.Count * PerArmInHand;
-            foreach (var arm in arms)
-            {
-                await CardCmd.Exhaust(choiceContext, arm);
-            }
+            arms.AddRange(Owner.PlayerCombatState.Hand.Cards.OfType<ITreasureArm>().Cast<CardModel>());
         }
+        overcharge += arms.Count * PerArmInHand;
 
         // 2) El bonus anti-divino se calcula POR objetivo: a cada enemigo según sea o no de rango divino.
         //    El daño base (30) es plano para todos; sólo Élites/Jefes reciben +Divine (+overcharge).
+        //    La animación de ataque se dispara UNA sola vez para todo el NP (patrón OnlyPlayAnimOnce de
+        //    Astolfo): un Execute por enemigo la repetía N veces, con su espera por cada repetición.
+        var animPlayed = false;
         foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).ToList())
         {
             if (enemy.IsDead) continue;
             var divineBonus = RoyalTrait.IsDivine(enemy) ? DynamicVars["Divine"].IntValue + overcharge : 0;
             var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + divineBonus);
-            await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
-                .WithHitFx("vfx/vfx_starry_impact")
-                .Execute(choiceContext);
+            var attack = DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
+                .WithHitFx("vfx/vfx_starry_impact");
+            if (animPlayed) attack = attack.WithNoAttackerAnim();
+            animPlayed = true;
+            await attack.Execute(choiceContext);
+        }
+
+        // 3) Recién ahora se cobra el arsenal, y sin visuales (patrón ShutenDouji.ExhaustSiblingNp):
+        //    el bonus ya está horneado en el daño de arriba, así que este paso no puede robárselo.
+        foreach (var arm in arms)
+        {
+            await CardCmd.Exhaust(choiceContext, arm, skipVisuals: true);
         }
     }
 

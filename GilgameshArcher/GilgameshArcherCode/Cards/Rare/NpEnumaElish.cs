@@ -55,14 +55,19 @@ public sealed class NpEnumaElish() : GilgameshCard(2, CardType.Attack, CardRarit
         var overcharge = (tier - ChargeCost) / 10 * PerTen; // sobrecarga a TODOS
 
         // 2) base + sobrecarga es plano para todos; sólo Élites/Jefes reciben +Divine.
+        //    La animación de ataque se dispara UNA sola vez para todo el NP (igual que la ulti
+        //    auto-manifestada): un Execute por enemigo la repetía N veces, con su espera cada vez.
+        var animPlayed = false;
         foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).ToList())
         {
             if (enemy.IsDead) continue;
             var divineBonus = RoyalTrait.IsDivine(enemy) ? DynamicVars["Divine"].IntValue : 0;
             var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + overcharge + divineBonus);
-            await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
-                .WithHitFx("vfx/vfx_starry_impact")
-                .Execute(choiceContext);
+            var attack = DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
+                .WithHitFx("vfx/vfx_starry_impact");
+            if (animPlayed) attack = attack.WithNoAttackerAnim();
+            animPlayed = true;
+            await attack.Execute(choiceContext);
         }
     }
 
