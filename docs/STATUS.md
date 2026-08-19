@@ -2,6 +2,53 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-19 — Gilgamesh v0.1.19: el Enuma Elish congelado (reporte de Nut Butter)
+
+Reporte en Steam: «everything else works except for the noble phantasm getting stuck in the middle
+of the screen whenever you use it and not doing anything».
+
+**Qué significa el síntoma (verificado en el decompilado, no inferido):** una carta jugada se
+reparenta al `PlayContainer`, cuya posición es literalmente el centro de la pantalla
+(`PileTypeExtensions.cs:57` → `PlayContainer.Size * 0.5f - node.Size * 0.5f`), y sale de ahí recién
+cuando su `OnPlay` **retorna**. «Trabada en el medio sin hacer nada» = el `OnPlay` no vuelve: o un
+`await` colgado, o una excepción que abortó la cadena. Es la misma familia que el gotcha ya
+documentado en DECISIONS («un path inexistente tira NRE y deja la carta congelada»).
+
+**Descartado con evidencia** (no por lectura): `audit_vfx_paths` OK (290 refs / 7 rutas / 13
+proyectos) · `choice_context_audit` 0 hallazgos · `audit_simpleloc` 0 ambigüedades · diff de FGOCore
+desde el build de Gilgamesh = **solo Lahmu**, ninguna firma pública tocada (no hay
+`MissingMethodException` por skew) · API de Steam: item 3751610575 `upd 2026-08-11 23:18` = **igual
+a HEAD**, el build publicado no está viejo · `CreatureCmd.TriggerAnim` **no** espera la animación
+(espera un tiempo fijo), así que no hay deadlock de anim · null-lifting limpio (los 3 usos llevan
+`?? 0`) · cero `.Result`/`.Wait()`/`while`/parches Harmony propios.
+
+**También descartado tras verificar** (evita un fix inútil): `ArmsPlayedPower.ThisTurn/ThisCombat` y
+`CardsThisTurnPower.Played` son campos privados del modelo, lo que *parece* violar la regla de
+DECISIONS sobre estado efímero guardable — pero **el combate no se serializa** (`Saves.Runs/` no
+tiene `SerializableCombat` ni `SerializablePower`), así que mueren con el combate y están bien.
+
+**Lo arreglado (`EnumaElishUnleashed` + `NpEnumaElish`, v0.1.19):**
+- **Orden invertido:** la rama que agota las Armas del Tesoro de la mano corría **antes** del daño y
+  **solo en salas de Élite/Jefe** (`RoyalTrait.IsInDivineRoom`) — justo donde la gente guarda el NP,
+  por eso lee como «siempre que lo usás». `CardCmd.Exhaust` con visuales entra a `CardPileCmd.Add`,
+  que hace `await tween.AwaitFinished` **dentro** de nuestra propia resolución. Ahora se LEE el
+  arsenal para el bonus, se pega, y recién al final se agota — si esa espera falla, el NP ya pegó.
+- **`skipVisuals: true`** en ese agotado, el precedente de `ShutenDouji.ExhaustSiblingNp:74`.
+- **Animación una sola vez por NP**: el loop per-enemigo hacía un `Execute` por objetivo y cada uno
+  re-disparaba la animación de ataque con su espera. Ahora solo la primera (`WithNoAttackerAnim()`
+  en el resto), patrón `OnlyPlayAnimOnce` de Astolfo.
+
+Sin cambio de balance: mismo bonus de Sobrecarga, mismo daño, mismas cartas agotadas.
+
+**Verificación:** build 0 warnings / 0 errores · matriz de compatibilidad **3/3** (main, beta y el
+cruce main→beta, que es el artefacto que se distribuye; confirma que `WithNoAttackerAnim` existe en
+ambas ramas) · publish limpio, PCK 85.680.900 B, **cero churn de `.import`** · `audit_vfx_paths` OK.
+
+**Pendiente:** esto es hardening sobre el sospechoso más fuerte, **no un diagnóstico confirmado** —
+sin el `godot.log` del reporter no hay prueba de cuál era el `await`. Sigue pendiente pedirle el log
+y preguntarle si pasaba solo contra Élites/Jefes (si dice que sí, el fix era exactamente ese) y si
+era solo o en co-op. **Sin publicar a Workshop todavía.**
+
 ## 2026-08-18 — Artoria v0.1.21: la economía de NP reconstruida (reporte de 1369642093)
 
 Reporte muy técnico en Steam: «la potencia ya alcanza para pasar, pero (1) las cartas de Carga NP
