@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.HoverTips;
+using MashShielder.MashShielderCode.Powers;
 using MashShielder.MashShielderCode.Extensions;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -8,8 +10,13 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MashShielder.MashShielderCode.Cards.Uncommon;
 
 /// <summary>Bunker Bolt — consume ALL Block, convert it into damage.</summary>
-public sealed class BunkerBolt() : MashShielderCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+public sealed class BunkerBolt() : MashShielderCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy), Cards.IDischargeCard
 {
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromKeyword(MashKeywords.Descargar), HoverTipFactory.Static(StaticHoverTip.Block)];
+
+    protected override bool ShouldGlowGoldInternal => Owner.Creature.Block > 0;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(12m, ValueProp.Move),
@@ -22,6 +29,7 @@ public sealed class BunkerBolt() : MashShielderCard(2, CardType.Attack, CardRari
 
         var block = await Owner.Creature.ConsumeAllBlock(choiceContext, Owner.Creature);
         var bonus = block / Math.Max(1, DynamicVars["Divisor"].IntValue);
+        Descarga.ShowFloat(Owner.Creature, bonus);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);

@@ -16,7 +16,7 @@ namespace MashShielder.MashShielderCode.Cards.Special;
 /// protects everything. A direct upgrade over Lord Camelot: more Bulwark while preserving
 /// its Strength, Intercept and co-op protection.
 /// </summary>
-public sealed class LordChaldeasUnleashed() : MashShielderCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IMashNpCard, ICommandTyped
+public sealed class LordChaldeasUnleashed() : MashShielderCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IMashNpCard, ICommandTyped, Cards.IBulwarkCard
 {
     // Tipo de comando FGO de la ulti (audit 2026-07-05): el bono reforzado de CommandBonusPower
     // solo existia en LordCamelotUnleashed; el resto de las 7 cartas NP no lo recibia.

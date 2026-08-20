@@ -8,9 +8,9 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MashShielder.MashShielderCode.Cards.Common;
 
 /// <summary>Postura Firme — Bulwark Block: it persists between turns.</summary>
-public sealed class FirmStance() : MashShielderCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public sealed class FirmStance() : MashShielderCard(1, CardType.Skill, CardRarity.Common, TargetType.Self), Cards.IBulwarkCard
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(6m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(7m, ValueProp.Move)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<BulwarkPower>()];
 

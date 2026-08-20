@@ -11,7 +11,7 @@ public sealed class PrayerToGalahad() : MashShielderCard(1, CardType.Skill, Card
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("MaxBonus", 18)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("MaxBonus", 15)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

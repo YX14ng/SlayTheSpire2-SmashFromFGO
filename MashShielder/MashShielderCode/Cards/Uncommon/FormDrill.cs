@@ -13,7 +13,7 @@ namespace MashShielder.MashShielderCode.Cards.Uncommon;
 /// 0E Hab: cambia a la otra forma (Shielder↔Ortinax; en Paladín: +10 NP en su lugar).
 /// Up (parche P2 del juez): roba 1 — el robo NO va en base para que el ping-pong con
 /// HomunculusHeart no sea un motor de robo a 0E. EL pan-y-manteca de formas que faltaba.</summary>
-public sealed class FormDrill() : MashShielderCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class FormDrill() : MashShielderCard(0, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

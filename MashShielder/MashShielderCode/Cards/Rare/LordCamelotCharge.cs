@@ -1,30 +1,33 @@
+using MashShielder.MashShielderCode.Cards;
 using MashShielder.MashShielderCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace MashShielder.MashShielderCode.Cards.Rare;
 
 /// <summary>
-/// Embate de Lord Camelot (罗德·卡美洛之冲撞 / Lord Camelot Charge) — nueva rara P2 2026-06-25: el cierre
-/// ofensivo que le faltaba a Mash en acto 3 FUERA de la ventana NP. 2⚡ Ataque: inflige daño igual a tu
-/// Baluarte (Bloqueo) actual ×1, *Unpowered (NO escala con Fuerza), 1 vez por turno. No consume el
-/// Bloqueo: la muralla embiste sin bajar la guardia. Su daño
-/// = Owner.Block) pero como carta de un disparo, gateada por <see cref="LordCamelotChargePower"/>.
-/// El daño = Block sin Fuerza mantiene el techo controlado (un mazo Baluarte alto ya es el escalado).
+/// Embate de Lord Camelot (罗德·卡美洛之冲撞) — el cierre ofensivo de Mash fuera de la ventana NP.
+///
+/// <para>REDESIGN-MASH-V2 §6.3: antes leía el Bloqueo SIN gastarlo («la muralla embiste sin bajar la
+/// guardia» decía el docstring — ése era exactamente el defecto) y necesitaba un candado de 1/turno
+/// para no ser infinita. Ahora **Descarga** el muro entero y convierte ×1.5: es la versión rara de la
+/// Embestida. El candado de 1/turno se retira porque el diseño se autolimita — hay un solo muro.
+/// <see cref="Powers.LordCamelotChargePower"/> queda INERTE (no se borra: rompería saves).</para>
 /// </summary>
-public sealed class LordCamelotCharge() : MashShielderCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+public sealed class LordCamelotCharge() : MashShielderCard(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IDischargeCard
 {
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.Block)];
+    private const decimal BaseConversion = 1.5m;
+    private const decimal UpgradedConversion = 2m;
 
-    private static bool CanFire(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature)
-    {
-        var gate = creature.GetPowerInstances<LordCamelotChargePower>().FirstOrDefault();
-        return gate == null || gate.CanFire;
-    }
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Percent", (int)(BaseConversion * 100))];
 
-    protected override bool IsPlayable => CanFire(Owner.Creature) && Owner.Creature.Block > 0;
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromKeyword(MashKeywords.Descargar), HoverTipFactory.Static(StaticHoverTip.Block)];
+
+    protected override bool IsPlayable => Owner.Creature.Block > 0;
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 
@@ -32,11 +35,11 @@ public sealed class LordCamelotCharge() : MashShielderCard(2, CardType.Attack, C
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        // Asegura el control 1/turno y lo marca como disparado (idempotente: Single).
-        var gate = await PowerCmd.Apply<LordCamelotChargePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-        if (gate != null) await gate.MarkFired(choiceContext, this);
+        var damage = await Descarga.All(choiceContext, Owner.Creature, DynamicVars["Percent"].BaseValue / 100m);
+        if (damage <= 0) return;
 
-        await DamageCmd.Attack(Owner.Creature.Block).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
+        Descarga.ShowFloat(Owner.Creature, damage);
+        await DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .Unpowered()
             .WithHitFx("vfx/vfx_attack_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);
@@ -44,6 +47,6 @@ public sealed class LordCamelotCharge() : MashShielderCard(2, CardType.Attack, C
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["Percent"].UpgradeValueBy((UpgradedConversion - BaseConversion) * 100m);
     }
 }

@@ -17,7 +17,7 @@ public sealed class ShieldsUp() : MashShielderCard(2, CardType.Skill, CardRarity
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(12m, ValueProp.Move),
-        new PowerVar<ProvokePower>("Intercept", 3m)
+        new PowerVar<ProvokePower>("Intercept", 5m)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ProvokePower>()];

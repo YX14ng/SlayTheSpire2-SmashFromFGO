@@ -11,7 +11,7 @@ namespace MashShielder.MashShielderCode.Cards.Rare;
 /// Campo de Nieve del Adiós — a great farewell wall + NP Charge. Exhaust.
 /// Rediseño v2: 20 Bloqueo con Baluarte (up +6) + 20 NP (up +10; antes +5 — denominación).
 /// </summary>
-public sealed class FarewellSnowfield() : MashShielderCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
+public sealed class FarewellSnowfield() : MashShielderCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self), Cards.IBulwarkCard
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

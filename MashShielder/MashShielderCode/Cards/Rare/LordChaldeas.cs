@@ -12,7 +12,7 @@ namespace MashShielder.MashShielderCode.Cards.Rare;
 /// LORD CHALDEAS — NP card (min 50 charge, consumes ALL): a fortress of Bulwark Block.
 /// FGO Overcharge: +Block per 10 charge consumed beyond the minimum.
 /// </summary>
-public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self), IMashNpCard, ICommandTyped
+public sealed class LordChaldeas() : MashShielderCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self), IMashNpCard, ICommandTyped, IBulwarkCard
 {
     // Tipo de comando FGO de la ulti (audit 2026-07-05): el bono reforzado de CommandBonusPower
     // solo existia en LordCamelotUnleashed; el resto de las 7 cartas NP no lo recibia.

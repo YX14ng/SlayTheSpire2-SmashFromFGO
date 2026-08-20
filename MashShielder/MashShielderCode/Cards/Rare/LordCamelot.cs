@@ -15,7 +15,7 @@ namespace MashShielder.MashShielderCode.Cards.Rare;
 /// FGO Overcharge: +Block per 10 extra charge. Strength and Intercept always included.
 /// Rediseño v2 (AUDITORÍA + fidelidad FGO: NP al 100%): mínimo 70 → 100.
 /// </summary>
-public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRarity.Rare, TargetType.Self), IMashNpCard, ICommandTyped
+public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRarity.Rare, TargetType.Self), IMashNpCard, ICommandTyped, IBulwarkCard
 {
     // Tipo de comando FGO de la ulti (audit 2026-07-05): el bono reforzado de CommandBonusPower
     // solo existia en LordCamelotUnleashed; el resto de las 7 cartas NP no lo recibia.
@@ -29,6 +29,7 @@ public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRari
         new BlockVar(23m, ValueProp.Move),
         new PowerVar<StrengthPower>("Strength", 3m),
         new PowerVar<ProvokePower>("Provoke", 12m),
+        new PowerVar<Powers.InterceptPower>("Intercept", 3m),
         new DynamicVar("ChargeCost", ChargeCost),
         new DynamicVar("PerTen", 4),
         new DynamicVar("AllyBlock", 12),
@@ -57,6 +58,11 @@ public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRari
         }
         await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
         await PowerCmd.Apply<ProvokePower>(choiceContext, Owner.Creature, DynamicVars["Provoke"].BaseValue, Owner.Creature, this);
+        // REDESIGN-MASH-V2 §6.3: el escudo de Camelot ES el contraataque. Con Baluarte de un solo
+        // turno, una NP de 3⚡ + medidor lleno que sólo diera muro efímero quedaba floja; la
+        // Intercepción PERMANENTE es la compensación temática y el puente arquetipo C → A. Apila
+        // entre casteos (declarado en el diseño, no accidental).
+        await PowerCmd.Apply<Powers.InterceptPower>(choiceContext, Owner.Creature, DynamicVars["Intercept"].BaseValue, Owner.Creature, this);
 
         // Co-op (Lord Camelot = «la fortaleza que escuda a TODA la Mesa Redonda»): cada aliado vivo
         // recibe una porción de Baluarte y de Intercepción-por-provocación, de modo que también
@@ -73,5 +79,6 @@ public sealed class LordCamelot() : MashShielderCard(3, CardType.Skill, CardRari
     {
         DynamicVars.Block.UpgradeValueBy(10m);
         DynamicVars["Strength"].UpgradeValueBy(1m);
+        DynamicVars["Intercept"].UpgradeValueBy(2m);
     }
 }

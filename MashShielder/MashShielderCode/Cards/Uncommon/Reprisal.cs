@@ -13,7 +13,7 @@ public sealed class Reprisal() : MashShielderCard(1, CardType.Attack, CardRarity
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(7m, ValueProp.Move),
-        new DynamicVar("PerHit", 4)
+        new DynamicVar("PerHit", 5)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

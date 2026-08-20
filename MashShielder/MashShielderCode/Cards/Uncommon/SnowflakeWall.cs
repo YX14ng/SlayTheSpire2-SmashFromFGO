@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MashShielder.MashShielderCode.Cards.Uncommon;
 
 /// <summary>Muro de Copos de Nieve — big Bulwark Block.</summary>
-public sealed class SnowflakeWall() : MashShielderCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class SnowflakeWall() : MashShielderCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self), Cards.IBulwarkCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(14m, ValueProp.Move)];
 

@@ -21,7 +21,7 @@ public sealed class UtopianFortress() : MashShielderCard(2, CardType.Skill, Card
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Percent", 50),
-        new DynamicVar("MaxBlock", 60)
+        new DynamicVar("MaxBlock", 40)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
@@ -40,6 +40,6 @@ public sealed class UtopianFortress() : MashShielderCard(2, CardType.Skill, Card
     protected override void OnUpgrade()
     {
         DynamicVars["Percent"].UpgradeValueBy(25m);
-        DynamicVars["MaxBlock"].UpgradeValueBy(30m);
+        DynamicVars["MaxBlock"].UpgradeValueBy(20m);
     }
 }

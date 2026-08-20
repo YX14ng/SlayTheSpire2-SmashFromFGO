@@ -1,4 +1,5 @@
 using BaseLib.Extensions;
+using FGOCore.FGOCoreCode.Block;
 using FGOCore.FGOCoreCode.Combat;
 using MashShielder.MashShielderCode.Extensions;
 using MegaCrit.Sts2.Core.Combat;
@@ -31,6 +32,13 @@ public abstract class MashFormPower : FormPower
 
     /// <summary>Attacks consume up to 5 Block and add that much damage (Bunker Bolt).</summary>
     protected virtual bool OrtinaxPassive => false;
+
+    /// <summary>
+    /// Ortinax/Paladín son las formas artilleras: sus efectos de <see cref="Powers.Descarga"/>
+    /// convierten ×1.5 (REDESIGN-MASH-V2 §3 CANDADO 3 — la forma tiene que cambiar la DECISIÓN, no
+    /// sólo los números: entrás a Ortinax el turno que vaciás el muro).
+    /// </summary>
+    public bool BoostsDischarge => OrtinaxPassive;
 
     /// <summary>Defense cards grant 1 less Block (Ortinax only).</summary>
     protected virtual bool DefensePenalty => false;
@@ -77,10 +85,28 @@ public abstract class MashFormPower : FormPower
         return delta;
     }
 
-    public override Task AfterBlockGained(Creature creature, decimal amount, ValueProp props, CardModel? cardSource)
+    /// <summary>
+    /// Shielder (REDESIGN-MASH-V2 §3 CANDADO 3): el PRIMER Bloqueo que ganás con una carta cada turno
+    /// es además <b>Baluarte</b> — el piso de muro de la forma defensiva, sin gastar cartas de
+    /// Baluarte. Acotado por construcción: una carta por turno, y el Baluarte dura un solo turno.
+    ///
+    /// <para>Guard F6 (revisión adversarial): este hook corre TAMBIÉN cuando el Bloqueo ya vino por
+    /// <c>GainBulwarkBlock</c>. Sin el guard, jugar FirmStance como primera carta aplicaría DOS tandas
+    /// de stacks (14 por 7 de Bloqueo) y el techo quedaría por encima del Bloqueo real.</para>
+    /// </summary>
+    public override async Task AfterBlockGained(Creature creature, decimal amount, ValueProp props, CardModel? cardSource)
     {
-        if (creature == Owner && cardSource != null) _blockCardBonusUsed = true;
-        return Task.CompletedTask;
+        if (creature != Owner || cardSource == null) return;
+
+        var wasFirstBlockCard = !_blockCardBonusUsed;
+        _blockCardBonusUsed = true;
+
+        if (!ShielderPassive || !wasFirstBlockCard || amount <= 0) return;
+        // Sólo Bloqueo que NO sea ya de Baluarte: si la carta lo aplica ella misma, no re-stackear.
+        if (cardSource is Cards.IBulwarkCard) return;
+
+        await PowerCmd.Apply<BulwarkPower>(
+            new BlockingPlayerChoiceContext(), Owner, amount, Owner, cardSource);
     }
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
@@ -103,6 +129,10 @@ public abstract class MashFormPower : FormPower
     {
         if (!OrtinaxPassive) return;
         if (cardPlay.Card.Type != CardType.Attack || cardPlay.Card.Owner?.Creature != Owner) return;
+        // Riesgo 4 de la revisión: sobre una carta que YA se lleva todo el muro, comerle 5 antes del
+        // OnPlay es cobrar dos veces — y el reembolso de AfterCardPlayed se los devolvería DESPUÉS de
+        // vaciarlo, dejándola con 5 de Bloqueo justo cuando el diseño dice "quedás desnuda".
+        if (cardPlay.Card is Cards.IDischargeCard) return;
 
         _resolvingAttack = true;
         var consume = (int)Math.Min(BunkerBoltMax, Owner.Block);
@@ -121,6 +151,10 @@ public abstract class MashFormPower : FormPower
     public override decimal ModifyDamageAdditiveFgo(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (!OrtinaxPassive || Owner != dealer || !props.IsPoweredAttack()) return 0m;
+        // Las cartas que Descargan no pagan el peaje de Ortinax (ver BeforeCardPlayed). Sin este
+        // guard, en MAIN — donde el fallback es _resolvingAttack, que estas cartas nunca prenden —
+        // la rama de "preview" les sumaría min(5, Bloqueo) de daño REAL.
+        if (cardSource is Cards.IDischargeCard) return 0m;
 
         // v0.109 forwards CardPlay for real damage and null for previews. MAIN has no such hook
         // parameter, so its universal artifact retains the explicit play-lifetime fallback.
@@ -133,7 +167,8 @@ public abstract class MashFormPower : FormPower
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (OrtinaxPassive && cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner?.Creature == Owner)
+        if (OrtinaxPassive && cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner?.Creature == Owner
+            && cardPlay.Card is not Cards.IDischargeCard)
         {
             _resolvingAttack = false;
             // Si NADIE cobró el bono (fizzle, o un Ataque Unpowered como el Embate de Lord Camelot,

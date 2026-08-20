@@ -9,9 +9,9 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace MashShielder.MashShielderCode.Cards.Uncommon;
 
 /// <summary>Cambio: ¡Ortinax! — enter the offensive form with a burst of Block.</summary>
-public sealed class SwitchOrtinax() : MashShielderCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class SwitchOrtinax() : MashShielderCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(10m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8m, ValueProp.Move)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<OrtinaxFormPower>()];
 

@@ -10,7 +10,7 @@ namespace MashShielder.MashShielderCode.Cards.Uncommon;
 /// <summary>Mold Camelot — manifest the shield: Bulwark Block + NP Charge.
 /// Rediseño v2: 11 Bloqueo con Baluarte (up +3) + 10 NP (up +10; antes 12/18 — denominación fija).
 /// Sigue siendo el objetivo de GalahadsLegacy.</summary>
-public sealed class MoldCamelot() : MashShielderCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public sealed class MoldCamelot() : MashShielderCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self), Cards.IBulwarkCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

@@ -12,7 +12,7 @@ namespace MashShielder.MashShielderCode.Cards.Uncommon;
 /// suelto borderline; ahora apila sobre la retención y enciende los riders de Baluarte.</summary>
 public sealed class IronWill() : MashShielderCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<IronWillPower>("IronWill", 4m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<IronWillPower>("IronWill", 5m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<BulwarkPower>()];
 

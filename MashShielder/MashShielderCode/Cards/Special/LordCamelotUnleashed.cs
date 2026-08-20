@@ -16,7 +16,7 @@ namespace MashShielder.MashShielderCode.Cards.Special;
 /// (into hand, cost 0) the first time the NP gauge reaches 100 in a combat. Playing
 /// it consumes the full gauge.
 /// </summary>
-public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IMashNpCard, ICommandTyped
+public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill, CardRarity.Event, TargetType.Self), IMashNpCard, ICommandTyped, Cards.IBulwarkCard
 {
     public const int ChargeCost = 100;
 
@@ -31,6 +31,7 @@ public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill,
         new BlockVar(30m, ValueProp.Move),
         new PowerVar<StrengthPower>("Strength", 3m),
         new PowerVar<ProvokePower>("Provoke", 12m),
+        new PowerVar<Powers.InterceptPower>("Intercept", 3m),
         new DynamicVar("ChargeCost", ChargeCost),
         new DynamicVar("PerTen", 3),
         new DynamicVar("AllyBlock", 12),
@@ -61,6 +62,9 @@ public sealed class LordCamelotUnleashed() : MashShielderCard(0, CardType.Skill,
         }
         await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
         await PowerCmd.Apply<ProvokePower>(choiceContext, Owner.Creature, DynamicVars["Provoke"].BaseValue, Owner.Creature, this);
+        // Paridad con la LordCamelot drafteable (REDESIGN-MASH-V2 §6.3): la misma NP no puede dar
+        // cosas distintas segun venga del mazo o del auto-manifest.
+        await PowerCmd.Apply<Powers.InterceptPower>(choiceContext, Owner.Creature, DynamicVars["Intercept"].BaseValue, Owner.Creature, this);
 
         // Co-op: misma fantasía/NP que LORD CAMELOT -> espejo exacto de su reparto a aliados.
         // Cada aliado vivo recibe Baluarte e Intercepción-por-provocación. En 1 jugador el foreach

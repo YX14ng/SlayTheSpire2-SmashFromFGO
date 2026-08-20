@@ -12,11 +12,14 @@ namespace MashShielder.MashShielderCode.Cards.Common;
 /// Mantenimiento del Ortinax — retoque v2: pierde TODO tu Bloqueo → esa cantidad de
 /// Carga NP, máx 30 (up: máx 50 — antes 40: denominación fija).
 /// </summary>
-public sealed class OrtinaxMaintenance() : MashShielderCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public sealed class OrtinaxMaintenance() : MashShielderCard(1, CardType.Skill, CardRarity.Common, TargetType.Self), Cards.IDischargeCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("MaxCharge", 30)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromKeyword(MashKeywords.Descargar), HoverTipFactory.FromPower<NpChargePower>()];
+
+    protected override bool ShouldGlowGoldInternal => Owner.Creature.Block > 0;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
