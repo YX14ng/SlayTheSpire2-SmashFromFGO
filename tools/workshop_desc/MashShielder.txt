@@ -1,7 +1,7 @@
 [h1]Mash Kyrielight — The Shield That Remains[/h1]
 Play Fate/Grand Order's first Demi-Servant as a fully animated defensive character who stores protection across turns, covers allies and turns an impossible wall into the finishing blow.
 
-[b]RELEASE BUILD — v0.1.20[/b]
+[b]RELEASE BUILD — v0.1.21[/b]
 
 [h2]Core gameplay[/h2]
 [list]
@@ -24,7 +24,7 @@ Play Fate/Grand Order's first Demi-Servant as a fully animated defensive charact
 [list]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.4.1+[/url]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747602295]RitsuLib 0.5.10+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.23+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.25+[/url]
 [*]Built for MAIN 0.107.1 and public BETA 0.110.1
 [/list]
 
@@ -39,7 +39,7 @@ Unofficial fan-made mod. Fate/Grand Order characters and official visual assets 
 [h1]ESPAÑOL[/h1]
 Jugá con la primera Demi-Servant de Fate/Grand Order como un personaje defensivo completamente animado: conservá protección entre turnos, cubrí aliados y convertí una muralla imposible en el golpe final.
 
-[b]VERSIÓN PÚBLICA — v0.1.20[/b]
+[b]VERSIÓN PÚBLICA — v0.1.21[/b]
 
 [h2]Mecánicas principales[/h2]
 [list]
@@ -62,7 +62,7 @@ Jugá con la primera Demi-Servant de Fate/Grand Order como un personaje defensiv
 [list]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.4.1+[/url]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747602295]RitsuLib 0.5.10+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.23+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.25+[/url]
 [*]Compatible con MAIN 0.107.1 y BETA pública 0.110.1
 [/list]
 
@@ -77,7 +77,7 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [h1]简体中文[/h1]
 扮演《Fate/Grand Order》的首位亚从者：跨回合保留防护、掩护队友，并将不可逾越的城墙化为终结战斗的一击。
 
-[b]公开版本 — v0.1.20[/b]
+[b]公开版本 — v0.1.21[/b]
 
 [h2]核心机制[/h2]
 [list]
@@ -100,7 +100,7 @@ Mod fan no oficial, sin afiliación con TYPE-MOON, Lasengle ni Mega Crit.
 [list]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127]BaseLib 3.4.1+[/url]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747602295]RitsuLib 0.5.10+[/url]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.23+[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747876334]FGO Core 0.1.25+[/url]
 [*]兼容正式版 0.107.1 与公开测试版 0.110.1
 [/list]
 
