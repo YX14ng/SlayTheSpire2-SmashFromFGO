@@ -18,6 +18,12 @@
 > cambio **sí se toca FGOCore**, cosa que el pase de Morgan evitó: la semántica de Baluarte vive ahí y
 > el arreglo no puede ser local (§13, radio de impacto sobre Siegfried y Tiamat).
 >
+> **Revisión adversarial 2026-08-20 (Fable 5, sólo lectura):** encontró 5 errores fácticos y 2
+> huecos técnicos que resucitaban el bug; todos aplicados en esta versión del documento y anotados
+> como parches **F1-F9** en §9.3. Veredicto: la idea elegida (P2) es la correcta, la enmienda es de
+> **mecanismo, no de diseño**. Las cuentas de pico de §2.5 y §11 fueron rehechas y **corregidas a la
+> baja**: las originales estaban infladas.
+>
 > El panel corrió **en una sola sesión, sin subagentes** (regla activa de la sesión). Las tres
 > propuestas y los tres jueces son lentes adversariales aplicadas por el mismo autor, no tres agentes
 > independientes; se anota acá para no inflar la evidencia. Todo hallazgo de §2 está **verificado
@@ -97,16 +103,27 @@ Defensa y ofensa son **la misma pila**, y la pila **nunca baja**. Esa es la fras
 
 ### 2.5 Auditoría de pico ANTES (acto 3, draft defensivo razonable, turno 6)
 
-Techo de retención acumulado: `IronWill` desde el turno 2 (5 procs × 4 = 20) + `DemiServant` desde el
-turno 3 (4 procs × 5 = 20) + `FirmStance` ×2 (12) + `SnowflakeWall` (14) + `MoldCamelot` (11) = **77**,
-más el piso 10 de la starter → **≈ 87 de Bloqueo permanente**, creciendo **+9 por turno sin gastar una
-sola carta**.
+Techo de retención acumulado (cuenta corregida por la revisión, parche **F3** — la primera versión de
+este documento contaba mal los procs y decía 87):
 
-- Daño entrante de élite/jefe de acto 3 ≈ 30-45/turno → **neto +40/turno. Invulnerable desde el turno 5.**
-- Ofensiva del mismo turno: `RoundTablePunishment` (3⚡) = **87 a TODOS**, repetible **cada turno**, y
-  `LordCamelotCharge` (2⚡) = **87 a uno**. Total **≈ 174 daño/turno con 5⚡ y el muro intacto.**
-- El techo de saturación de DECISIONS es 180-220 — pero ese techo se pensó para picos **gateados**.
-  Acá se alcanza **sin riesgo, sin costo, sin setup y de forma repetible**, y sube solo cada turno.
+| Fuente | Procs reales al turno 6 | Aporte |
+|---|---|---|
+| `IronWill` (jugada t2; proca en `BeforeSideTurnEnd`) | fin de t2, t3, t4, t5 = **4** | 16 |
+| `DemiServant` (jugada t3; proca en `AfterPlayerTurnStart`, **no** el turno en que se juega) | inicio de t4, t5, t6 = **3** | 15 |
+| `FirmStance` ×2 | — | 12 |
+| `SnowflakeWall` | — | 14 |
+| `MoldCamelot` | — | 11 |
+| `RoundTableFragment` (término `best`, no suma) | — | 10 |
+| | | **≈ 78** |
+
+- Daño entrante de élite/jefe de acto 3 ≈ 30-45/turno; el motor pasivo aporta **+9/turno sin gastar una
+  sola carta**. **Invulnerable en cuanto el muro pasa el entrante — turno 5-6.**
+- Ofensiva: `RoundTablePunishment` (3⚡) = **~78 a TODOS** + `LordCamelotCharge` (2⚡) = **~78 a uno**.
+  **Corrección honesta (F3):** ese turno gastás los 5⚡ en pegar, así que el muro sólo crece +9 contra
+  30-45 entrantes ⇒ el pico **no** es "174 por turno con el muro intacto"; es **~140-155 UNA vez**, y
+  después hay que esperar 2-3 turnos a que el muro se recomponga.
+- Aun corregido, el defecto queda intacto: **el pico no cuesta nada, no se gatea, y el piso desde el
+  cual se dispara sube solo todos los turnos.** Lo que está roto es el ratchet, no el número.
 
 **Conclusión del panel: el reporte no es una queja de números. Es un defecto de reglas.** Bajar
 valores no lo arregla: mientras Baluarte acumule sin tope y los payoffs no gasten, cualquier número
@@ -140,16 +157,36 @@ hizo que jugadores **y diseñador** lo leyeran como Barricada permanente (parche
 - **`DistantUtopiaCastle` queda como la ÚNICA Barricada real** — 3⚡, rara, con tope numérico (§6.3).
   Es el clímax drafteado, como manda vanilla, no el estado por defecto del personaje.
 
-**Dónde va el código (parche J3-1, gotcha del preventer único):** el reset **NO** puede vivir en
-`BulwarkPower.AfterPreventingBlockClear`. El juego elige **un solo** preventer de limpieza de Bloqueo
-(WORKFLOW-FGO §5, "Bloqueo retenido"); si el que gana la carrera es la reliquia
-(`BulwarkEngineRelic.AfterPreventingBlockClear`), el hook del power **no corre** y los stacks
-sobreviven. El reset va **dentro de `BlockRetention.Enforce`**, que es el punto por el que pasan todos
-los preventers propios, y `Enforce` deja de retornar temprano con `block == 0` (hoy `BlockRetention.cs:73`
-lo hace) para que el gasto ocurra igual sin Bloqueo en pie.
-Hueco conocido y aceptado: si el preventer ganador es uno **vanilla** (Barricade / Blur / Burrowed /
-Sturdy Clamp) o `DistantUtopiaCastlePower`, `Enforce` no corre — pero en esos casos la retención ya es
-infinita o fija por otra vía y los stacks de Baluarte son irrelevantes.
+**Dónde va el código — versión corregida (parche J3-1 enmendado por F1/F2/F5):**
+
+El reset **NO** puede vivir en `BulwarkPower.AfterPreventingBlockClear`: el juego elige **un solo**
+preventer (`Creature.cs:718-728` → `Hook.ShouldClearBlock` devuelve **el primero** que dice que no,
+`Hook.cs:2193-2205`), así que si gana la reliquia, el hook del power no corre.
+
+La primera versión de este documento mandaba el reset a `BlockRetention.Enforce`. **Está mal, por dos
+huecos que la revisión encontró:**
+- `DistantUtopiaCastlePower.AfterPreventingBlockClear` (`DistantUtopiaCastlePower.cs:24-28`) **no llama
+  a `Enforce`**: sólo hace `Flash()`. Y como el reset re-aplica `BulwarkPower` cada turno, el power
+  reaplicado se va **al final** del orden de listeners ⇒ con el Castillo en juego, **el Castillo gana
+  siempre la carrera** y no habría ni reset ni trim. Con el tope nuevo de 40 (§6.3) eso ya no es
+  inofensivo: la carta diría 40 y retendría todo.
+- Con un preventer **vanilla** temporal (Blur) ganando N turnos, los stacks quedan rancios y al expirar
+  el primer `Enforce` retiene contra un techo inflado.
+
+**Anclaje correcto: el hook vanilla `AfterBlockCleared`.** `CombatManager.cs:500-507` lo dispara para
+**cada** criatura que empieza turno, **incondicionalmente**, después de la fase de clear/prevención —
+gane quien gane la carrera, y haya o no Bloqueo en pie. Es el mismo hook que usa el vanilla
+`BlockNextTurnPower.cs:19`, y el mismo que ya nos arregló el Bloqueo diferido de Astolfo.
+
+- **Reset**: `BulwarkPower.AfterBlockCleared(creature)` → si `creature == Owner`, `PowerCmd.Remove(this)`.
+  Inmune al preventer único, cubre `block == 0` sin tocar guards.
+- **Trim**: se queda en `BlockRetention.Enforce`, sin cambios de guard.
+- **F1**: `DistantUtopiaCastlePower.AfterPreventingBlockClear` **debe delegar en `Enforce`** (patrón
+  `BulwarkPower.cs:27`) para que su tope de 40 se aplique de verdad — incluidas las copias que la carta
+  pone en los aliados en co-op (`DistantUtopiaCastle.cs:22-25`).
+- **F5**: el corte por `block == 0` está **duplicado** (`BlockRetention.cs:73` y
+  `BulwarkEngineRelic.cs:105`). Con el reset fuera de `Enforce` ninguno de los dos hace daño, pero se
+  anotan para que el próximo lector no crea que el de la reliquia es intencional.
 
 ### CANDADO 2 — Keyword `Descargar`: lo que convierte el muro, **lo gasta**
 
@@ -191,6 +228,11 @@ juego en dos preguntas distintas:
 El `[NUEVO]` de Shielder se implementa en `MashFormPower.AfterBlockGained` (ya existe el flag
 `_blockCardBonusUsed` que marca "primera carta de Bloqueo del turno"): aplicar `BulwarkPower` por ese
 monto. Bounded por construcción: **una carta por turno, un turno de duración.**
+
+**Parche F6 (doble conteo):** ese hook corre TAMBIÉN cuando el Bloqueo ya vino por
+`GainBulwarkBlock`. Si la primera carta del turno es `FirmStance`, sin guard se aplicarían **dos**
+tandas de stacks (14 por 7 de Bloqueo) y el techo quedaría por encima del Bloqueo real. La pasiva
+sólo aplica a **Bloqueo que no sea ya de Baluarte** — el guard es obligatorio, no opcional.
 
 ---
 
@@ -241,18 +283,19 @@ Razón: el reporte no cuestiona el arranque, y el mazo inicial ya abre las cuatr
 
 | Carta | Antes | Después | Por qué |
 |---|---|---|---|
-| `FirmStance` | 1⚡ **6** Baluarte | 1⚡ **8** Baluarte **[NÚM]** | Contraintuitivo y correcto: la carta **mejora** mientras el arquetipo se acota. Con Baluarte de un turno, 8 es la tasa vanilla de una común de 1⚡ (7-9) con un rider de un turno. |
+| `FirmStance` | 1⚡ **6** Baluarte | 1⚡ **7** Baluarte **[NÚM]** | Contraintuitivo y correcto: la carta **mejora** mientras el arquetipo se acota. Parche **F7**: la primera versión decía 8, pero la skill §2 tasa la común de 1⚡ **con rider** en 4-7 — 8 + retención estaba sobre-tasa según la tabla que este mismo documento invoca. Arranca en **7**. |
 | `Crush` | 1⚡ 8 daño + consume hasta 10 | igual, etiquetado **Descargar hasta 10** **[GASTA]** | Ya gastaba; ahora se llama como se llama y brilla. |
 | `OrtinaxMaintenance` | 1⚡ pierde TODO el Bloqueo → NP (máx 30) | igual, etiquetado **Descargar** **[GASTA]** | Ídem: es el prototipo del keyword. |
 | `ShieldsUp` | 2⚡ 12 Bloqueo + **3** Intercepción | 2⚡ 12 Bloqueo + **5** Intercepción **[NÚM]** | El payoff de la línea A se muda a Intercepción. |
-| `Provoke` | 0⚡ **3** Intercepción | 0⚡ **4** Intercepción **[NÚM]** | Ídem, y es la puerta común de A. |
 | `CoveringFire` | 0⚡ 5 daño, exige 8 Bloqueo | **[=]** | El gate de 8 sigue siendo alcanzable dentro del turno. Verificado: la economía nueva no rompe ningún gate (§10). |
+| `Provoke` | 0⚡ **4** Intercepción | **[=]** | Parche **F4**: la primera versión de este documento la listaba como "3 → 4". **Ya es 4** (`Cards/Common/Provoke.cs:13`, mejora +3). Fila corregida y cambio retirado: la línea A ya recibe su compensación en `ShieldsUp`, `Reprisal` y `LordCamelot`. |
+| `SharpenedEdge` | 1⚡ 5 daño +1 por Bloqueo (máx 8) | **[=] deliberado** | Lee el muro sin gastarlo, o sea contradice «lo que convierte, gasta» — pero con tope 8 es Intercepción-lite, no un payoff de Descargar. Se anota explícito (**F9**) para que el próximo panel no lo reporte como inconsistencia. |
 
 ### 6.2 Poco comunes
 
 | Carta | Antes | Después | Por qué |
 |---|---|---|---|
-| `CamelotRam` | **2⚡** daño = tu Bloqueo (no lo gasta) | **1⚡ Descargar**: daño = Bloqueo consumido **[GASTA]** | Body Slam honesto: más barata porque ahora **cuesta el muro**. Mejora: la conversión pasa a ×1.5. |
+| `CamelotRam` | **2⚡** daño = tu Bloqueo (no lo gasta) | **1⚡ Descargar**: daño = Bloqueo consumido **[GASTA]** | Body Slam honesto: más barata porque ahora **cuesta el muro**. Mejora: **la conversión pasa a ×1.5**, NO `-1⚡` (parche **F8**: la mejora actual es `EnergyCost.UpgradeBy(-1)`; a 0⚡ sería «vaciá el muro gratis»). |
 | `DefensiveFormation` | 1⚡, amount **99** (= TODAS tus cartas de Bloqueo, dos veces) | 1⚡, amount **2** (tus próximas 2 cartas de Bloqueo) **[NÚM]** | Parche J1-2. El power ya decrementa por uso (`AfterModifyingCardPlayCount`); el 99 era un "todas" disfrazado de contador. Cambio de **una constante**. |
 | `PrayerToGalahad` | 1⚡ Agotar, duplica Bloqueo (máx +18) | máx **+15** **[NÚM]** | El Bloqueo duplicado **no** es Baluarte (ya era así) ⇒ se evapora salvo que también lo Baluartees. Sólo se recorta el tope. |
 | `IronWill` | Power, +**4** Baluarte al final del turno | +**5** **[NÚM]** | Pasa de "sube el techo para siempre" a "piso de 5 cada turno": el buff compensa la pérdida de la acumulación. |
@@ -267,9 +310,9 @@ Razón: el reporte no cuestiona el arranque, y el mazo inicial ya abre las cuatr
 |---|---|---|---|
 | `RoundTablePunishment` | **3⚡** daño = tu Bloqueo a TODOS, **no lo gasta**, escala con Fuerza | **2⚡ Descargar**: daño = Bloqueo consumido a TODOS, **`Unpowered`** (no escala con Fuerza) **[GASTA]** | El peor infractor del §2.4. Baja de precio porque ahora **te deja desnuda**; pierde el escalado con Fuerza (parche J1-1) para que no se combine con `KnightsVow`/`LordCamelot` en un doble motor. |
 | `LordCamelotCharge` | 2⚡ daño = tu Bloqueo, `Unpowered`, **1/turno**, no lo gasta | **2⚡ Descargar**: daño = Bloqueo consumido **×1.5**, `Unpowered`, **sin candado de 1/turno** **[GASTA]** | El candado 1/turno era un parche sobre el síntoma; ahora se autolimita solo (hay un solo muro). El ×1.5 la distingue de `CamelotRam` como la versión rara. `LordCamelotChargePower` queda **inerte, no se borra** (save-safety). |
-| `DistantUtopiaCastle` | 3⚡ Power: **TODO** tu Bloqueo persiste, sin tope | 3⚡ Power: todo tu Bloqueo persiste, **hasta un máximo de 40 (mejora: 60)** **[NÚM]** | Parche J1-4, injerto de la Propuesta 1. Sigue siendo la Barricada de Mash y el clímax de la línea A, pero con una altura de castillo declarada. Implementación: `RetentionCap` devuelve 40/60 en vez de `decimal.MaxValue`. |
+| `DistantUtopiaCastle` | 3⚡ Power: **TODO** tu Bloqueo persiste, sin tope | 3⚡ Power: todo tu Bloqueo persiste, **hasta un máximo de 40 (mejora: 60)** **[NÚM]** + **delega en `Enforce`** | Parche J1-4, injerto de la Propuesta 1. Sigue siendo la Barricada de Mash y el clímax de la línea A, pero con una altura de castillo declarada. Implementación: `RetentionCap` devuelve 40/60 en vez de `decimal.MaxValue`, **y `AfterPreventingBlockClear` tiene que llamar a `BlockRetention.Enforce`** o el tope no se aplica nunca (parche **F1**, §3 CANDADO 1). |
 | `UtopianFortress` | 2⚡ Agotar, Bloqueo = 50% de la Carga (máx **60**) | máx **40** (mejora: 60) **[NÚM]** | Parche J1-3: con el banco de 300, 60 por 2⚡ era ×4 Impervious leyendo un recurso que ni se gasta. |
-| `LordCamelot` (y `LordCamelotUnleashed`) | NP: Baluarte 23 (+4/10 OC) + 2 Fuerza + Intercepción de turno | + **3 de Intercepción PERMANENTE** **[NÚM]** | Con Baluarte de un turno, una NP de 3⚡ + medidor lleno que sólo da muro de un turno queda floja. La compensación es temática (el escudo de Camelot **es** el contraataque) y **puentea C→A**, que es justo lo que pedía la matriz. |
+| `LordCamelot` (y `LordCamelotUnleashed`) | NP: Baluarte 23 (+4/10 OC) + **3** Fuerza (mejora 4) + Intercepción de turno | + **3 de Intercepción PERMANENTE**, que **apila** entre casteos **[NÚM]** | Con Baluarte de un turno, una NP de 3⚡ + medidor lleno que sólo da muro de un turno queda floja. La compensación es temática (el escudo de Camelot **es** el contraataque) y **puentea C→A**, que es justo lo que pedía la matriz. |
 | `DemiServant` | Power, +**5** Baluarte al inicio del turno | +**6** **[NÚM]** | Mismo criterio que `IronWill`. |
 | `AbsoluteWall` | 2⚡ Agotar, tu Vida no baja hasta tu próximo turno | **[=]** | Es Intangible: un turno, Agotar, rara. Está en tasa vanilla. Se deja con knob declarado (§12). |
 
@@ -341,7 +384,23 @@ Motivos convergentes:
 | J3-1 | técnico | El reset de Baluarte va en `BlockRetention.Enforce`, **no** en el hook del power (gotcha del preventer único), y `Enforce` deja de cortar con `block == 0` | §3 CANDADO 1 |
 | J3-2 | radio | El cambio de FGOCore obliga a re-verificar y publicar **Siegfried y Tiamat en el mismo lote** | §13 |
 | J3-3 | save-safety | Cero renombres de ID; `LordCamelotChargePower` queda inerte en vez de borrarse | §6.3 |
-| J3-4 | fidelidad | Compensar la pérdida de durabilidad con números (`FirmStance` 8, `IronWill` 5, `DemiServant` 6, Shielder Baluartea la primera carta) — Mash tiene que **seguir siendo la mejor tanque del elenco** | §3, §6 |
+| J3-4 | fidelidad | Compensar la pérdida de durabilidad con números (`FirmStance` 7, `IronWill` 5, `DemiServant` 6, Shielder Baluartea la primera carta) — Mash tiene que **seguir siendo la mejor tanque del elenco** | §3, §6 |
+
+### 9.3.bis Parches de la revisión adversarial (Fable 5, 2026-08-20) — MANDAN sobre §9.3
+
+| # | Tipo | Hallazgo | Dónde quedó |
+|---|---|---|---|
+| **F1** | ERROR | `DistantUtopiaCastlePower.AfterPreventingBlockClear` **no llama a `Enforce`** y, con el reset re-aplicando `BulwarkPower`, **gana siempre la carrera de preventers** ⇒ ni reset ni trim: el tope de 40 sería letra muerta | §3 CANDADO 1, §6.3 |
+| **F2** | ERROR | El reset **no puede vivir en `Enforce`**: anclarlo en el hook vanilla `AfterBlockCleared`, que corre incondicionalmente para toda criatura que empieza turno (`CombatManager.cs:500-507`; precedente vanilla `BlockNextTurnPower.cs:19` y el fix de Astolfo). Cierra además el hueco de Blur (stacks rancios) | §3 CANDADO 1 |
+| **F3** | ERROR | La auditoría de pico ANTES estaba inflada: procs mal contados (78, no 87) y la energía contada dos veces (~140-155 **una vez**, no 174 **por turno**) | §2.5, §11 |
+| **F4** | ERROR | `Provoke` **ya es 4** — la fila "3 → 4" era falsa | §6.1 |
+| **F5** | ERROR | `LordCamelot` da **3** Fuerza, no 2; y el guard `block == 0` está duplicado en `BulwarkEngineRelic.cs:105` | §6.3, §3 |
+| **F6** | RIESGO | Shielder `[NUEVO]` duplica stacks si no excluye el Bloqueo que ya vino con Baluarte | §3 CANDADO 3 |
+| **F7** | BALANCE | `FirmStance` 8 está sobre-tasa contra la propia tabla de la skill (común 1⚡ con rider = 4-7) → arranca en **7** | §6.1 |
+| **F8** | BALANCE | La mejora de `CamelotRam` no puede ser `-1⚡` (0⚡ = vaciar el muro gratis): la mejora es la conversión | §6.2 |
+| **F9** | FORMA | `SharpenedEdge` lee el muro sin gastarlo: declararlo `[=]` deliberado, no omitirlo | §6.1 |
+| **F10** | RADIO | `DragonScaleAegis` (Siegfried) **se rompe** con Baluarte de un turno: no cumple el contrato de `IBlockRetentionSource` | §13 |
+| **F11** | FORMA | El changelog necesita el callout **por ID** de las ~14 cartas re-specificadas (disciplina J2-15 de Morgan V2) | §14 |
 
 ### 9.4 Contradicciones entre jueces — resueltas al más restrictivo
 
@@ -382,6 +441,7 @@ Motivos convergentes:
 | Multi-hit anti-Buffer en las tres rarezas | ✅ `TwinHaftStrike` (común), `BlackBarrelBurst` (PC), `PaladinAssault` (rara) |
 | Ningún gate de Bloqueo queda inalcanzable | ✅ `CoveringFire` 8, `ChaldeaSandwich` 12, `KnightsVow` 20 — los tres se alcanzan **dentro** de un turno (Defender 5 + `ProtectSenpai` 8 + `FirmStance` 8 = 21 con 3⚡). Sólo dependían de la pila acumulada de forma incidental. |
 | Las formas cambian decisiones, no números (skill §5) | ✅ §3 CANDADO 3 |
+| Ningún rider de "conservaste Bloqueo" se apaga | ✅ `FrontalCharge` (el único rider explícito de Baluarte en común) detecta la retención por **historial de combate** (`BlockGainedEntry`), no por stacks ⇒ el reset no la rompe, y con Baluarte de un turno pasa a ser una decisión real |
 
 ---
 
@@ -389,12 +449,20 @@ Motivos convergentes:
 
 | | **ANTES** | **DESPUÉS** |
 |---|---|---|
-| Bloqueo en pie | **~87**, +9/turno automático, sin tope | **~32-42** (12 llevados + 20-30 del turno); un turno de muro grande llega a ~55 y **ese turno no pegás** |
+| Bloqueo en pie | **~78**, +9/turno automático, sin tope | **~32-42** (12 llevados + 20-30 del turno); un turno de muro grande llega a ~55 y **ese turno no pegás** |
 | ¿Invulnerable? | **Sí**, desde el turno 5, permanentemente | **No**: entrante de acto 3 (30-45) queda a tiro del muro |
-| Ofensiva del turno pico | `RoundTablePunishment` 87 AoE **+** `LordCamelotCharge` 87 ST = **~174 con 5⚡, muro intacto, repetible cada turno** | `RoundTablePunishment` ~40 AoE (Descargar) + Ataques ~25 + Intercepción ~15 = **~80-95, y quedás en 0 de Bloqueo** |
-| ¿Se puede repetir? | Sí, todos los turnos, y **sube** | No: hay que reconstruir el muro (2-3 turnos) |
+| Ofensiva del turno pico | `RoundTablePunishment` ~78 AoE **+** `LordCamelotCharge` ~78 ST = **~140-155 con 5⚡** (cuenta corregida F3: ese turno no defendés, el muro sólo crece +9) | `RoundTablePunishment` ~40 AoE (Descargar) + Ataques ~25 + Intercepción ~15 = **~80-95, y quedás en 0 de Bloqueo** |
+| ¿Se puede repetir? | Cada 2-3 turnos, y el piso desde el que disparás **sube solo** cada turno | No: hay que reconstruir el muro (2-3 turnos) |
 | Con `DistantUtopiaCastle` (rara) | infinito | muro estable de **40**, descarga de 40 cada 2 turnos |
 | Costo del pico | **ninguno** | **toda tu defensa del próximo turno enemigo** |
+
+**Nota de pico en Paladín (F-riesgo 4, a auditar en implementación):** `LordCamelotCharge` ×1.5 dentro
+de la forma Ortinax/Paladín ×1.5 da **×2.25** — 40 de muro ⇒ ~90 de daño. Sigue bajo el techo 180-220,
+pero hay que computarlo explícito. Además, el orden de consumo importa: `MashFormPower.BeforeCardPlayed`
+Descarga hasta 5 de Bloqueo **antes** del `OnPlay`, así que en Ortinax toda carta de Descargar lee 5
+menos; y el reembolso de `AfterCardPlayed` (para Ataques `Unpowered` como `LordCamelotCharge`) devuelve
+esos 5 **después** de que la carta vació el muro — o sea que "quedás desnuda" en realidad te deja con 5.
+Decidir en implementación si el reembolso se suprime cuando la carta tiene Descargar.
 
 Mash queda como **la mejor tanque del elenco** (nadie más lleva 30-40 de Bloqueo estable + Intercepción
 + el piso de la starter) sin ser inmortal, y su daño grande vuelve a ser **una apuesta**.
@@ -433,8 +501,23 @@ Mash queda como **la mejor tanque del elenco** (nadie más lleva 30-40 de Bloque
 | Mod | Usos de Baluarte | Efecto del cambio |
 |---|---|---|
 | **Mash** | 8 fuentes (§2.2) | el objetivo del pase |
-| **Siegfried** | `DraconicRampart` (PC), `StrategicWithdrawal` (rara). `DragonScaleAegis` es `IBlockRetentionSource` con tope fijo → **no se ve afectada** | dos cartas pasan de "muro permanente" a "muro de un turno". Nerf real pero chico: no tiene motores automáticos por turno. |
+| **Siegfried** | `DraconicRampart` (PC, 10), `StrategicWithdrawal` (rara, 18, Agotar) **y `DragonScaleAegis`** | dos cartas pasan de "muro permanente" a "muro de un turno" (nerf real pero chico: no tiene motores automáticos por turno) **+ un ERROR que hay que arreglar en el mismo lote → F10, abajo** |
 | **Tiamat** | `Carapace` (**BÁSICA**), `TidePool` (común), `AbyssalChrysalis` (rara) | **el más afectado**: una básica que Baluartea todos los turnos tenía exactamente la misma degeneración que Mash, sólo que más lenta. Es un arreglo para ella también, pero le mueve el acto 1. Knob declarado: `Carapace` +2 de Bloqueo base. |
+
+### 13.bis Parche F10 — `DragonScaleAegis` se ROMPE, no queda igual
+
+La primera versión de este documento decía que la reliquia de Siegfried "no se ve afectada porque tiene
+tope fijo". **Es falso.** `SiegfriedSaber/.../Relics/DragonScaleAegis.cs` implementa `IBlockRetentionSource`
+(o sea aporta al cálculo del cap) pero **no overridea `ShouldClearBlock` ni `AfterPreventingBlockClear`**,
+que es justo el contrato que documenta `FGOCore/.../Block/IBlockRetentionSource.cs` — y que la cita como
+el ejemplo a seguir. Hoy su piso funciona **de prestado**: hay un `BulwarkPower` cuasi-permanente que
+responde `false` por ella y dispara el `Enforce`.
+
+Con Baluarte de un turno, `BulwarkPower` desaparece cada turno ⇒ **en todo turno en que Siegfried no
+jugó una carta de Baluarte no hay preventer y el Bloqueo se limpia entero**: la reliquia queda muerta la
+mayoría de los turnos. **Hay que agregarle los dos overrides del contrato** (patrón
+`BulwarkEngineRelic.cs:99-108`) en el mismo lote. No es opcional: sin eso, el pase de Mash rompe una
+reliquia publicada de otro personaje.
 
 **Consecuencia operativa (parche J3-2):** este pase publica **FGOCore + Mash + Siegfried + Tiamat en
 el mismo lote**, con la matriz MAIN/BETA verde para los cuatro y `audit_simpleloc` + paridad 5 idiomas.
@@ -452,9 +535,12 @@ a activar**, con el costo declarado.
 
 Orden de trabajo (pipeline WORKFLOW-FGO §4.6.7: lotes por rareza → loc → auditorías → matriz → publish):
 
-1. **FGOCore** — `BlockRetention.Enforce`: quitar el corte por `block == 0`, y tras el trim remover
-   todos los `BulwarkPower` del dueño. Comentario obligatorio con el gotcha del preventer único.
-   Bump de FGOCore + revisión de firmas públicas (no cambia ninguna: es comportamiento interno).
+1. **FGOCore** — `BulwarkPower.AfterBlockCleared(creature)`: si `creature == Owner`, removerse
+   (el reset; **F2**). `BlockRetention.Enforce` queda como está (sólo el trim). Comentario obligatorio
+   con el gotcha del preventer único y con por qué el reset NO vive en `Enforce`. Bump de FGOCore +
+   revisión de firmas públicas (no cambia ninguna: es comportamiento interno).
+1.bis. **Los dos preventers que esquivan el helper**: `DistantUtopiaCastlePower.AfterPreventingBlockClear`
+   → delegar en `Enforce` (**F1**); `DragonScaleAegis` → agregar los dos overrides del contrato (**F10**).
 2. **Keyword `Descargar`** — registro del keyword dorado + tooltip en `card_keywords.json` ×5 idiomas
    (eng/esp/zhs/kor/rus), con el cierre explícito `*词*` en zhs.
 3. **Texto de Baluarte** ×5 idiomas (`powers.json`), con la frase «se gasta».
@@ -468,8 +554,9 @@ Orden de trabajo (pipeline WORKFLOW-FGO §4.6.7: lotes por rareza → loc → au
    se mueren con exit 137 por OOM) + probe del artefacto universal main→beta.
 9. **Versiones**: Mash `v0.1.21`, FGOCore `v0.1.24`, Siegfried y Tiamat bump; `tools/workshop_desc/*.txt`
    bumpeados **en el mismo commit** (el olvido histórico de §275 de STATUS).
-10. **Publish** con orden explícita del usuario; changelog del Workshop en eng/zhs explicando el nerf y
-    **respondiendo a Moopamoop** con lo que cambió y por qué.
+10. **Publish** con orden explícita del usuario; changelog del Workshop en eng/zhs explicando el nerf,
+    con el **callout carta por carta, por ID**, de las ~14 re-specificadas (disciplina J2-15 de Morgan
+    V2; parche **F11**), y **respondiendo a Moopamoop** con lo que cambió y por qué.
 
 Commits separados por tipo: `feat` (keyword + reglas), `fix` (los topes de §6.3), `docs` (este archivo
 + STATUS), `chore` (bumps de versión y fichas).

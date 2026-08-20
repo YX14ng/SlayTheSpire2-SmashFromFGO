@@ -31,6 +31,23 @@ así que el pase publica **FGOCore + Mash + Siegfried + Tiamat juntos** (Tiamat 
 `Carapace` es **básica** y tenía la misma degeneración). Variante de radio cero registrada y descartada
 por el panel (`IBulwarkCeiling` sólo para Mash).
 
+**Revisión adversarial (Fable 5, sólo lectura, mismo día):** el diseño se sostiene, la enmienda es de
+**mecanismo**. Hallazgos aplicados al doc como parches **F1-F11**. Los dos que importan:
+- **El reset de Baluarte NO puede ir en `BlockRetention.Enforce`.** `DistantUtopiaCastlePower` es un
+  preventer propio que **no** llama a `Enforce`, y como el reset re-aplica `BulwarkPower`, el power
+  reaplicado cae al final del orden de listeners ⇒ el Castillo gana siempre la carrera y no habría ni
+  reset ni trim. Anclaje correcto: el hook vanilla **`AfterBlockCleared`** (`CombatManager.cs:500-507`),
+  que corre incondicionalmente para toda criatura que empieza turno — el mismo del vanilla
+  `BlockNextTurnPower` y el mismo que arregló el Bloqueo diferido de Astolfo.
+- **`DragonScaleAegis` (Siegfried) se ROMPE**, no queda igual: implementa `IBlockRetentionSource` pero
+  no overridea `ShouldClearBlock`/`AfterPreventingBlockClear`, o sea funciona **de prestado** gracias a
+  que hoy siempre hay un `BulwarkPower` cuasi-permanente. Hay que completarle el contrato en el lote.
+
+También corregidas a la baja las cuentas de pico (78 de Bloqueo, no 87; ~140-155 **una vez**, no 174
+**por turno** — la primera versión contaba mal los procs y gastaba la energía dos veces) y cuatro datos
+del inventario (`Provoke` ya era 4, `LordCamelot` da 3 Fuerza, `FirmStance` arranca en 7 por la propia
+tabla de la skill, la mejora de `CamelotRam` no puede ser `-1⚡`).
+
 **Estado: PROPUESTA. No se implementa nada hasta el visto bueno del usuario.** Pendiente además:
 responder a Moopamoop y a los reporters acumulados.
 
