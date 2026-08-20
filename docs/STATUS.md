@@ -2,6 +2,38 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-20 — Mash: el reporte de invulnerabilidad y el rediseño V2 (PROPUESTA, sin implementar)
+
+Reporte en Steam de **Moopamoop**: «Agreed with previous comments about the character being way, way
+too powerful. She's very fun but it's trivially easy to build up absurd amounts of block and become
+practically invincible, from there how you win is trivial.» Encargo del usuario: rediseñar a Mash
+**bajo los mismos términos que Morgan V2**. Resultado: [`REDESIGN-MASH-V2.md`](REDESIGN-MASH-V2.md).
+
+**El defecto, verificado en código (no inferido):** `BlockRetention.Cap` (`BlockRetention.cs:66`)
+devuelve **la SUMA de los stacks de `BulwarkPower`** más el máximo de las fuentes, y `BulwarkPower`
+**no decae en ninguna parte** — `GainBulwarkBlock` aplica stacks iguales al Bloqueo ganado
+(`:90`, `:100`). O sea: **cada punto de Bloqueo con Baluarte sube el techo de retención para siempre
+en ese combate**, y `FirmStance` es una **COMÚN de 1⚡ que vende Barricade**. Encima `IronWill` (+4/turno)
+y `DemiServant` (+5/turno) suben ese techo **solos, sin gastar cartas**, y los tres payoffs de
+«daño = tu Bloqueo» (`CamelotRam`, `RoundTablePunishment`, `LordCamelotCharge`) **leen la pila sin
+gastarla** — defensa y ofensa son el mismo recurso gratis. Pico medido al turno 6: **~87 de Bloqueo
+permanente creciendo +9/turno** y **~174 de daño/turno con 5⚡ y el muro intacto, repetible**.
+
+**El arreglo propuesto (3 candados):** (1) **Baluarte pasa a ser una prórroga de UN turno** — se gasta
+después de retener; el reset va en `BlockRetention.Enforce`, no en el hook del power (gotcha del
+preventer único), y `Enforce` deja de cortar con `block == 0`. (2) **Keyword `Descargar`** (dorado,
+5 idiomas, glow + flotante propio): todo lo que convierte el muro **lo consume** — cero API nueva,
+`BlockExtensions.ConsumeAllBlock`/`ConsumeBlockUpTo` ya existen. (3) **Las formas vuelven a decidir**:
+Shielder Baluartea la primera carta de Bloqueo del turno, Ortinax convierte ×1.5.
+
+**Costos declarados:** cero cartas nuevas, cero demotes, cero renombres de ID — pero **toca FGOCore**,
+así que el pase publica **FGOCore + Mash + Siegfried + Tiamat juntos** (Tiamat es la más afectada:
+`Carapace` es **básica** y tenía la misma degeneración). Variante de radio cero registrada y descartada
+por el panel (`IBulwarkCeiling` sólo para Mash).
+
+**Estado: PROPUESTA. No se implementa nada hasta el visto bueno del usuario.** Pendiente además:
+responder a Moopamoop y a los reporters acumulados.
+
 ## 2026-08-19 — Gilgamesh v0.1.19: el Enuma Elish congelado (reporte de Nut Butter)
 
 Reporte en Steam: «everything else works except for the noble phantasm getting stuck in the middle
