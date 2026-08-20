@@ -41,7 +41,16 @@ degeneración); su compensación `+2` de Bloqueo queda como knob, sin aplicar.
 probe universal main→beta) · `audit_simpleloc` 0 ambigüedades · paridad de localización 13×5 ·
 `audit_vfx_paths` OK (290 refs) · publish local de los 4 con PCK verificado por contenido
 (`Discharge`/`倾泻`/`Descargar` dentro del PCK de Mash) y **cero churn de `.import`** (sólo los 4
-`.cs.uid` nuevos). **Falta: playtest y el upload a Workshop (requiere orden explícita).**
+`.cs.uid` nuevos).
+
+**PUBLICADO 2026-08-20 14:14-14:15 UTC** — los 4 en una sola sesión de SteamCMD, `Success` ×4 y
+verificado por la API de Steam: FGOCore `3747876334` (14.535.075 B), Mash `3747876464` (121.491.858 B),
+Siegfried `3751611015` (66.400.678 B), Tiamat `3751611145` (131.183.609 B); los cuatro con
+`visibility 0` (ya eran públicos) y las fichas mostrando las versiones nuevas + `FGO Core 0.1.25+`.
+Las fichas se bumpearon **en el mismo lote** que el contenido, sin repetir el olvido histórico.
+
+**Falta: playtest, responder a Moopamoop con el callout carta por carta (parche F11) y a los demás
+reporters acumulados.**
 
 ## 2026-08-20 — Mash: el reporte de invulnerabilidad y el rediseño V2 (PROPUESTA, sin implementar)
 
