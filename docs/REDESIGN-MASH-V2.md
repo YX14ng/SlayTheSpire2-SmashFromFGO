@@ -1,6 +1,22 @@
 # REDESIGN-MASH-V2 — Mash Kyrielight, la muralla que se gasta
 
-> **ESTADO: PROPUESTA APROBADA POR PANEL — NO SE IMPLEMENTA NADA HASTA EL VISTO BUENO DEL USUARIO.**
+> **IMPLEMENTADO 2026-08-20** (orden directa del usuario). FGOCore **v0.1.25**, Mash **v0.1.21**,
+> Siegfried **v0.1.22**, Tiamat **v0.1.20**. Build 0 warnings / 0 errores en los 13 proyectos; matriz
+> MAIN/BETA verde 3/3 (main, beta, probe main→beta); `audit_simpleloc` 0 ambigüedades; paridad de
+> localización 13 proyectos × 5 idiomas; `audit_vfx_paths` OK. Notas de implementación sobre el
+> diseño: (a) el keyword `Descargar` es `[CustomEnum]` en `MashKeywords`, con tooltip en 5 idiomas y
+> cierre dorado **explícito** `*Descargar*` en todos los idiomas (no sólo zhs) — el terminador ASCII
+> no cubre los dos puntos; (b) el multiplicador de forma vive en `Descarga.Multiplier`, un camino
+> único que también dispara el flotante; (c) marcadores nuevos `IDischargeCard` e `IBulwarkCard` —
+> el primero apaga el peaje de Ortinax (y su rama de preview, que en MAIN habría sumado daño real),
+> el segundo evita el doble stack de la pasiva nueva de Shielder; (d) `DistantUtopiaCastlePower`
+> guarda su altura en `Amount` y su mejora ya **no abarata**, sube la altura (precedente «Corte del
+> Invierno»); (e) `LordCamelotUnleashed` recibe la misma Intercepción permanente que la drafteable —
+> la misma NP no puede dar cosas distintas según venga del mazo o del auto-manifest;
+> (f) `LordCamelotChargePower` queda inerte, sin borrar. **Pendiente: playtest y publish** (el
+> publish necesita orden explícita).
+>
+> **Estado original: PROPUESTA APROBADA POR PANEL.**
 > Origen: reporte de **Moopamoop** (Steam, 2026-08-20): *«Agreed with previous comments about the
 > character being way, way too powerful. She's very fun but it's trivially easy to build up absurd
 > amounts of block and become practically invincible, from there how you win is trivial.»*

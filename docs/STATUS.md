@@ -2,6 +2,47 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-20 (2) — Mash V2 IMPLEMENTADO: el Baluarte se gasta y el muro es munición
+
+Orden del usuario tras la revisión. **FGOCore v0.1.25 · Mash v0.1.21 · Siegfried v0.1.22 · Tiamat
+v0.1.20.** Diseño completo en [`REDESIGN-MASH-V2.md`](REDESIGN-MASH-V2.md) (§9.3.bis = los parches
+F1-F11 de la revisión adversarial).
+
+**Los tres candados, ya en código:**
+- **Baluarte dura UN turno.** `BulwarkPower.AfterBlockCleared` se remueve a sí mismo. Ese hook —y no
+  `BlockRetention.Enforce`— porque el juego elige UN SOLO preventer y re-aplicar el power lo manda al
+  final del orden de listeners: `DistantUtopiaCastlePower` le ganaría la carrera siempre. `AfterBlockCleared`
+  corre para toda criatura que empieza turno, incondicionalmente (precedente vanilla `BlockNextTurnPower`).
+- **Keyword `Descargar`** (`[CustomEnum]` en `MashKeywords`, 5 idiomas, glow condicional + flotante
+  «¡Descarga! X» sobre `vfx_blocked_text`): `CamelotRam` (2⚡→1⚡), `RoundTablePunishment` (3⚡→2⚡ y
+  `Unpowered`) y `LordCamelotCharge` (×1.5, sin candado 1/turno) **ahora consumen el muro**;
+  `Crush`/`BunkerBolt`/`OrtinaxMaintenance` quedan etiquetadas. Motor único en `Powers/Descarga.cs`.
+- **Las formas deciden**: Shielder Baluartea la primera carta de Bloqueo del turno; Ortinax/Paladín
+  convierten ×1.5 al Descargar.
+
+**Marcadores nuevos y por qué existen:** `IDischargeCard` apaga el peaje de Ortinax en las cartas que
+ya se llevan todo el muro — incluida su rama de *preview*, que en MAIN (donde el fallback es
+`_resolvingAttack`) les habría sumado daño REAL; `IBulwarkCard` evita que la pasiva nueva de Shielder
+aplique stacks dos veces sobre una carta que ya da Baluarte.
+
+**Números:** `FirmStance` 6→7, `ShieldsUp` Intercepción 3→5, `IronWill` 4→5, `DemiServant` 5→6,
+`Reprisal` 4→5, `SwitchOrtinax` 1⚡/10→0⚡/8, `FormDrill` PC→**COMÚN**, `DefensiveFormation` 99→**2**,
+`PrayerToGalahad` 18→15, `UtopianFortress` 60→40, `DistantUtopiaCastle` infinito→**40 (mejora 60,
+y la mejora ya no abarata)**, `LordCamelot` +3 de Intercepción **permanente** (también en su Unleashed).
+Cero cartas nuevas, cero demotes, cero renombres de ID.
+
+**Radio: `DragonScaleAegis` (Siegfried) estaba ROTA de antes** — implementaba `IBlockRetentionSource`
+sin `ShouldClearBlock`/`AfterPreventingBlockClear`, o sea funcionaba de prestado gracias a que siempre
+había un `BulwarkPower` cuasi-permanente. Con Baluarte de un turno habría quedado muerta. Ahora cumple
+el contrato. Tiamat sólo recibe el cambio de reglas (`Carapace` es básica y tenía la misma
+degeneración); su compensación `+2` de Bloqueo queda como knob, sin aplicar.
+
+**Verificación:** build 0 warnings / 0 errores en los 13 proyectos · matriz **3/3** (main, beta,
+probe universal main→beta) · `audit_simpleloc` 0 ambigüedades · paridad de localización 13×5 ·
+`audit_vfx_paths` OK (290 refs) · publish local de los 4 con PCK verificado por contenido
+(`Discharge`/`倾泻`/`Descargar` dentro del PCK de Mash) y **cero churn de `.import`** (sólo los 4
+`.cs.uid` nuevos). **Falta: playtest y el upload a Workshop (requiere orden explícita).**
+
 ## 2026-08-20 — Mash: el reporte de invulnerabilidad y el rediseño V2 (PROPUESTA, sin implementar)
 
 Reporte en Steam de **Moopamoop**: «Agreed with previous comments about the character being way, way
