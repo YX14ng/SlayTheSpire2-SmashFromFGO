@@ -75,7 +75,7 @@ public sealed class PrayerToBishamonten() : KagetoraCard(0, CardType.Skill, Card
     // E5: un 0⚡ REPETIBLE tiene que ser una conversión que gasta más de lo que su propio avance
     // devuelve (20★ salen, 10★ vuelven por la Pagoda). Por eso pierde Agotar: la fricción ya la pone
     // el banco de estrellas, no el descarte de la carta.
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Stars", 20), new DynamicVar("NpCharge", 30)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Stars", 20), new DynamicVar("NpCharge", 20)];
     protected override IEnumerable<IHoverTip> PreceptHoverTips =>
         [HoverTipFactory.FromPower<CritStarsPower>(), HoverTipFactory.FromPower<NpChargePower>()];
     protected override bool IsPlayable => CritStars.CanPay(Owner.Creature, DynamicVars["Stars"].IntValue);
@@ -84,7 +84,7 @@ public sealed class PrayerToBishamonten() : KagetoraCard(0, CardType.Skill, Card
         if (!await CritStars.Spend(c, Owner.Creature, DynamicVars["Stars"].IntValue, this)) return;
         await NpCharge.Gain(c, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
-    protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(20m);
+    protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(10m);
 }
 
 public sealed class TurnTheReins() : KagetoraCard(0, CardType.Skill, CardRarity.Common, TargetType.Self, Precept.Heaven)
