@@ -22,7 +22,7 @@ public sealed class LightningSpeed() : MordredCard(1, CardType.Attack, CardRarit
     private const int BaseStars = 10; // piso normalizado en cualquier forma
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(9m, ValueProp.Move), new DynamicVar("Stars", 10), new DynamicVar("BaseStars", BaseStars)];
+        [new DamageVar(9m, ValueProp.Move), new DynamicVar("Stars", 20), new DynamicVar("BaseStars", BaseStars)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<RebellionFormPower>(), HoverTipFactory.FromPower<CritStarsPower>()];
@@ -39,5 +39,9 @@ public sealed class LightningSpeed() : MordredCard(1, CardType.Attack, CardRarit
         await CritStars.Gain(choiceContext, Owner.Creature, stars, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["Stars"].UpgradeValueBy(10m);
+    }
 }

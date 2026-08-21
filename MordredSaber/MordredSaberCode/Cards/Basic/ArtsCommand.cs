@@ -20,7 +20,7 @@ public sealed class ArtsCommand() : MordredCard(1, CardType.Attack, CardRarity.B
     public bool IsNoblePhantasm => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(5m, ValueProp.Move), new DynamicVar("NpCharge", 10)];
+        [new DamageVar(6m, ValueProp.Move), new DynamicVar("NpCharge", 30)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
@@ -33,5 +33,9 @@ public sealed class ArtsCommand() : MordredCard(1, CardType.Attack, CardRarity.B
         await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(5m);
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
+    }
 }

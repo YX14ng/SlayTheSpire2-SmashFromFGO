@@ -27,6 +27,6 @@ public sealed class TournamentFootwork() : MordredCard(0, CardType.Skill, CardRa
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(2m);
-        DynamicVars["NpCharge"].UpgradeValueBy(5m);
+        DynamicVars["NpCharge"].UpgradeValueBy(10m);
     }
 }

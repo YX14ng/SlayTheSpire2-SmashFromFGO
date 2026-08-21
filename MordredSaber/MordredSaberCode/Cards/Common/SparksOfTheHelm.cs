@@ -20,7 +20,7 @@ namespace MordredSaber.MordredSaberCode.Cards.Common;
 /// </summary>
 public sealed class SparksOfTheHelm() : MordredCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
-    private const int BaseNp = 8; // piso de NP en cualquier forma (la chispa salta igual)
+    private const int BaseNp = 10; // piso de NP en cualquier forma (la chispa salta igual)
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new BlockVar(8m, ValueProp.Move), new DynamicVar("NpCharge", 20), new DynamicVar("BaseNp", BaseNp)];

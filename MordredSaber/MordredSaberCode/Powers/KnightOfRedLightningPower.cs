@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -33,7 +34,53 @@ public sealed class KnightOfRedLightningPower : MordredPower
     {
         if (dealer != Owner || !props.IsPoweredAttack() || cardSource == null) return 0m;
         // +Ataque plano siempre; +Crítico extra solo cuando hay un Crítico Listo en cola.
-        var critExtra = Criticals.WillCrit(Owner, cardSource) ? CritBonus : 0;
+        var critExtra = Criticals.WillCrit(Owner, cardSource) && IsFirstCritHit(cardSource, cardPlay) ? CritBonus : 0;
         return Amount + critExtra;
     }
+
+    // ---- REDESIGN-MORDRED-V2 D7 / Candado 4 -------------------------------------------------
+    // El bonus de CRÍTICO se cobra UNA vez por carta, en el primer impacto que pega de verdad.
+    // Antes salía de `ModifyDamageAdditiveFgo`, que corre una vez POR IMPACTO: con una multi-hit
+    // mejorada eso multiplicaba el bonus por la cantidad de golpes y encima el x1,5 del crítico
+    // (contrato de Criticos v2: el multiplicador aplica a TODOS los impactos de la carta) lo volvia
+    // a escalar. La auditoria de pico rehecha da ~302 de daño en un turno de 3⚡, ~40% POR ENCIMA de
+    // la banda 180-220 de DECISIONS.md. Con este gate: ~212.
+    //
+    // El proyecto ya fallo este mismo caso en Kagetora (`DivinityPower`, UncommonPowers.cs): la
+    // ligadura va al `CardPlay`, el marcado va en `AfterDamageGiven` -que solo corre sobre dano
+    // REAL, no sobre previews- y `ModifyDamageAdditiveFgo` queda PURO (DECISIONS: los hooks de
+    // preview no mutan estado). Un Ataque que no llega a pegar no quema el bonus.
+    private CardPlay? _critPlay;
+    private bool _critHitUsed;
+
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        if (cardPlay.Card.Owner?.Creature == Owner)
+        {
+            _critPlay = cardPlay;
+            _critHitUsed = false;
+        }
+        return Task.CompletedTask;
+    }
+
+    /// <summary>Lectura PURA: ¿este impacto es el primero de la carta que esta criticando?</summary>
+    private bool IsFirstCritHit(CardModel? cardSource, CardPlay? cardPlay)
+    {
+        if (_critPlay == null) return true;   // fuera de una jugada real (preview): se muestra el bonus
+        if (_critHitUsed) return false;
+        if (_critPlay.Card != cardSource) return false;
+        return cardPlay == null || cardPlay == _critPlay;
+    }
+
+    public override Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer,
+        DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
+    {
+        if (!_critHitUsed && _critPlay != null && dealer == Owner &&
+            _critPlay.Card == cardSource && props.IsPoweredAttack())
+        {
+            _critHitUsed = true;
+        }
+        return Task.CompletedTask;
+    }
+
 }

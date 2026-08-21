@@ -11,7 +11,7 @@ namespace MordredSaber.MordredSaberCode.Cards.Common;
 /// </summary>
 public sealed class ManaIgnition() : MordredCard(0, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("NpCharge", 30)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("NpCharge", 20)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 
@@ -20,5 +20,5 @@ public sealed class ManaIgnition() : MordredCard(0, CardType.Skill, CardRarity.C
         await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(20m);
+    protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(10m);
 }

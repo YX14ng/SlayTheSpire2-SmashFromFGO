@@ -22,7 +22,7 @@ public sealed class DentedHelm() : MordredCard(1, CardType.Skill, CardRarity.Unc
     private const int BaseStars = 10; // piso normalizado en cualquier forma
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(11m, ValueProp.Move), new DynamicVar("Stars", 10), new DynamicVar("BaseStars", BaseStars)];
+        [new BlockVar(11m, ValueProp.Move), new DynamicVar("Stars", 20), new DynamicVar("BaseStars", BaseStars)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<MaskedKnightFormPower>(), HoverTipFactory.FromPower<CritStarsPower>()];
@@ -36,5 +36,9 @@ public sealed class DentedHelm() : MordredCard(1, CardType.Skill, CardRarity.Unc
         await CritStars.Gain(choiceContext, Owner.Creature, stars, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(4m);
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Block.UpgradeValueBy(4m);
+        DynamicVars["Stars"].UpgradeValueBy(10m);
+    }
 }

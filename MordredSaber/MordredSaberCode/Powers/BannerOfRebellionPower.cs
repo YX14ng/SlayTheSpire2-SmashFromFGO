@@ -20,6 +20,17 @@ public sealed class BannerOfRebellionPower : MordredPower, IFormChangeListener
     public int NpPerSwitch = 5;
     public int DrawsPerSwitch; // 0 base; 1 tras el up (lo fija la carta)
 
+    /// <summary>
+    /// REDESIGN-MORDRED-V2 D5 / Candado 2 — tope de activaciones por turno. El disparador es un
+    /// CAMBIO DE FORMA, que el jugador controla y puede repetir cuantas veces quiera en un turno con
+    /// cartas de 0⚡ (Rugido de Rebelión, Visita Relámpago): sin tope esto es generación gratuita
+    /// ilimitada, no un poder por turno. Idioma del propio personaje: `AccumulatedHatredPower`
+    /// (MaxProcsPerTurn = 2) y la starter (3 conversiones/turno). Bits 10-11 del campo de
+    /// turno de FGOCore (se resetea solo al empezar tu turno).
+    /// </summary>
+    public int MaxProcsPerTurn = 2;
+
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -34,6 +45,8 @@ public sealed class BannerOfRebellionPower : MordredPower, IFormChangeListener
         var player = Owner.Player;
         if (player?.PlayerCombatState is not { } playerCombatState || Owner.IsDead) return;
         var context = choiceContext ?? new BlockingPlayerChoiceContext();
+        if (FgoCombatState.GetTurn(Owner, 10, 2) >= MaxProcsPerTurn) return;
+        await FgoCombatState.IncrementTurn(context, Owner, 10, MaxProcsPerTurn, null, width: 2);
         Flash();
         await CritStars.Gain(context, Owner, StarsPerSwitch * (int)Amount, null);
         await NpCharge.Gain(context, Owner, NpPerSwitch * (int)Amount, null);

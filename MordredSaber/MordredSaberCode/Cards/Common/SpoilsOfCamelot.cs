@@ -28,5 +28,5 @@ public sealed class SpoilsOfCamelot() : MordredCard(0, CardType.Skill, CardRarit
         await CritStars.Gain(choiceContext, Owner.Creature, DynamicVars["Stars"].IntValue, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars["NpCost"].UpgradeValueBy(-20m);
+    protected override void OnUpgrade() => DynamicVars["Stars"].UpgradeValueBy(10m);
 }

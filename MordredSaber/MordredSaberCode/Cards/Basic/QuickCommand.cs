@@ -21,7 +21,7 @@ public sealed class QuickCommand() : MordredCard(1, CardType.Attack, CardRarity.
     public bool IsNoblePhantasm => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(5m, ValueProp.Move), new DynamicVar("Stars", 20)];
+        [new DamageVar(6m, ValueProp.Move), new DynamicVar("Stars", 20)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<CritStarsPower>()];
 

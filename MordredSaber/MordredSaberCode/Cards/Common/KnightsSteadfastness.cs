@@ -19,10 +19,10 @@ namespace MordredSaber.MordredSaberCode.Cards.Common;
 /// </summary>
 public sealed class KnightsSteadfastness() : MordredCard(2, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
-    private const int BaseNp = 5; // piso de NP en cualquier forma
+    private const int BaseNp = 10; // piso de NP en cualquier forma
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(13m, ValueProp.Move), new DynamicVar("NpCharge", 10), new DynamicVar("BaseNp", BaseNp)];
+        [new BlockVar(13m, ValueProp.Move), new DynamicVar("NpCharge", 20), new DynamicVar("BaseNp", BaseNp)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<MaskedKnightFormPower>(), HoverTipFactory.FromPower<NpChargePower>()];

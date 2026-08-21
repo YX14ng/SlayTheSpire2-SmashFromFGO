@@ -20,7 +20,7 @@ public sealed class BusterCommand() : MordredCard(1, CardType.Attack, CardRarity
     public bool IsNoblePhantasm => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(8m, ValueProp.Move), new DynamicVar("NpCharge", 5)];
+        [new DamageVar(10m, ValueProp.Move), new DynamicVar("NpCharge", 5)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NpChargePower>()];
 

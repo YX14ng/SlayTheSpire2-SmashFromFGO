@@ -22,6 +22,17 @@ public sealed class SecretRevealedPower : MordredPower, IFormChangeListener
     public int Stars = 20;
     public int Cards = 1;
 
+    /// <summary>
+    /// REDESIGN-MORDRED-V2 D5 / Candado 2 — tope de activaciones por turno. El disparador es un
+    /// CAMBIO DE FORMA, que el jugador controla y puede repetir cuantas veces quiera en un turno con
+    /// cartas de 0⚡ (Rugido de Rebelión, Visita Relámpago): sin tope esto es generación gratuita
+    /// ilimitada, no un poder por turno. Idioma del propio personaje: `AccumulatedHatredPower`
+    /// (MaxProcsPerTurn = 2) y la starter (3 conversiones/turno). Bits 12-13 del campo de
+    /// turno de FGOCore (se resetea solo al empezar tu turno).
+    /// </summary>
+    public int MaxProcsPerTurn = 2;
+
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -35,8 +46,11 @@ public sealed class SecretRevealedPower : MordredPower, IFormChangeListener
     {
         // Solo cuenta la REVELACIÓN: arrancarse el yelmo (entrar en Rebelión).
         if (!FormsHelper.InRebellion(Owner)) return;
+        var context = choiceContext ?? new BlockingPlayerChoiceContext();
+        if (FgoCombatState.GetTurn(Owner, 12, 2) >= MaxProcsPerTurn) return;
+        await FgoCombatState.IncrementTurn(context, Owner, 12, MaxProcsPerTurn, null, width: 2);
         Flash();
-        await CritStars.Gain(choiceContext ?? new BlockingPlayerChoiceContext(), Owner, Stars * (int)Amount, null);
+        await CritStars.Gain(context, Owner, Stars * (int)Amount, null);
         var player = Owner.Player;
         if (choiceContext != null && player?.PlayerCombatState is { } playerCombatState)
         {

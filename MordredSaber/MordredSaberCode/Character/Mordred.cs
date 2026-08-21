@@ -32,14 +32,13 @@ public class Mordred : PlaceholderCharacterModel
     // ya cableadas (DESIGN-REVIEW-2: el deck genérico sin generación de NP/★ dejaba el acto 1 roto por
     // falta de motor). Modeladas sobre las de Okita: el Buster carga NP al pegar, el Arts es el feeder
     // de NP de peso, el Quick produce las Estrellas del Crítico. Así el mazo GENERA desde el turno 1.
-    // Composición: 2 Buster + 1 Arts + 1 Quick (QAABB) + 1 Golpe + 3 Defensa + las DOS FIRMAS (Rebelión
+    // Composición: 2 Buster + 2 Arts + 1 Quick (QAABB real) + 3 Defensa + las DOS FIRMAS (Rebelión
     // y Bajar la Visera, los cambios de forma que enseñan la danza del casco desde el combate 1).
     public override IEnumerable<CardModel> StartingDeck =>
     [
         ModelDb.Card<BusterCommand>(), ModelDb.Card<BusterCommand>(),
-        ModelDb.Card<ArtsCommand>(),
+        ModelDb.Card<ArtsCommand>(), ModelDb.Card<ArtsCommand>(),
         ModelDb.Card<QuickCommand>(),
-        ModelDb.Card<Strike>(),
         ModelDb.Card<Defend>(), ModelDb.Card<Defend>(), ModelDb.Card<Defend>(),
         ModelDb.Card<Rebellion>(),
         ModelDb.Card<LowerTheVisor>()

@@ -29,5 +29,5 @@ public sealed class TributeToTheThrone() : MordredCard(0, CardType.Skill, CardRa
         await NpCharge.Gain(choiceContext, Owner.Creature, DynamicVars["NpCharge"].IntValue, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars["StarCost"].UpgradeValueBy(-20m);
+    protected override void OnUpgrade() => DynamicVars["NpCharge"].UpgradeValueBy(10m);
 }
