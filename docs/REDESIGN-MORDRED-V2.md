@@ -243,13 +243,13 @@ renames, cero borrados, cero cambios de rareza, cero cartas nuevas.
 | ID | ahora | V2 | por qué |
 |---|---|---|---|
 | `ArtsCommand` | 5 daño + **10** NP; up +5 NP | **6 daño + 30 NP**; up **+3 daño / +10 NP** | §4.6.1 y paridad con Kagetora/Artoria (D1) |
-| `BusterCommand` | 8 daño + 5 NP; up +3 | **10 daño**, sin NP; up +3 | §4.6.1; la carga se concentra en el Arts |
+| `BusterCommand` | 8 daño + 5 NP; up +3 | **10 daño** + 5 NP; up +3 | §4.6.1 para el daño. **Los 5 NP se CONSERVAN** (cambio respecto de la primera versión de este documento): el comentario de `Character/Mordred.cs:33-35` los pone ahí a propósito —«modeladas sobre las de Okita: el Buster carga NP al pegar»— y la cuenta de turno 3 cierra igual con o sin ellos (R5). Quitarlos era pisar una decisión deliberada sin evidencia de que haga daño |
 | `QuickCommand` | 5 daño + 20★; up +3 | **6 daño** + 20★; up **+3 daño solamente** | §4.6.1. **No se tocan las 20★ impresas**: toda Quick recibe +10★ del motor de tipos (`FGOCore/.../CardTypes/CommandBonusPower.cs:38,81-83`), así que ya son 30★ efectivas. Kagetora lo tiene escrito como advertencia: *«No subir el var a 30: duplicaría el caudal»* (`StartingCards.cs:59`) |
 | `LowerTheVisor` | 4 Bloqueo + enmascara + 5 NP; up +3/+5 | 4 Bloqueo + enmascara + **10 NP**; up +3 / **+10** | denominación legal; es la firma defensiva |
 | `Defend`, `Strike`, `Rebellion` | — | **[=]** | ya están en estándar |
 | **`Mordred.StartingDeck`** (`Character/Mordred.cs:42`) | 2 Buster + **1 Arts** + 1 Quick + **1 Golpe** + 3 Defensa + 2 firmas | 2 Buster + **2 Arts** + 1 Quick + 3 Defensa + 2 firmas (**el Golpe pasa a ser el segundo Arts**) | Sin esto el Candado 1 **no llega a turno 3**: con un solo Arts el ciclo queda en 40 y el primer NP en el turno ~4. Además el mazo pasa a ser **QAABB de verdad** (§4.6.1), que hoy no es. Save-safe: `StartingDeck` sólo afecta runs nuevas y no renombra ningún ID |
 
-Primer NP tras el cambio: 2×30 (Arts) + 10 (Visera) = **70 impresos por ciclo de mazo** + 5 NP/turno
+Primer NP tras el cambio: 2×30 (Arts) + 10 (Visera) + 2×5 (Buster) = **80 impresos por ciclo de mazo** + 5 NP/turno
 de la forma Enmascarado + la starter (crítico consumido → 10 NP) ⇒ **turno 3**.
 
 ### 5.2 Comunes — Candados 1 y 3

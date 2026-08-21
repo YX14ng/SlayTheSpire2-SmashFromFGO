@@ -101,6 +101,75 @@ tabla de la skill, la mejora de `CamelotRam` no puede ser `-1⚡`).
 **Estado: PROPUESTA. No se implementa nada hasta el visto bueno del usuario.** Pendiente además:
 responder a Moopamoop y a los reporters acumulados.
 
+## 2026-08-21 — Mordred V2 y auditoría de Kagetora (rediseño + revisión Fable 5)
+
+Encargo: *«rediseñá con Opus 5 los diseños de Mordred y Kagetora para ver si son mejorables, después
+una revisión con Fable 5, después implementalos»*. Diseño en
+[`REDESIGN-MORDRED-V2.md`](REDESIGN-MORDRED-V2.md) y
+[`AUDIT-KAGETORA-2026-08-21.md`](AUDIT-KAGETORA-2026-08-21.md); registro de la revisión adversarial
+en `REDESIGN-MORDRED-V2.md §10`.
+
+**Mordred: el motor estaba invertido, y el techo estaba mal medido.**
+
+- **El mazo inicial no podía cargar.** El Arts básico daba **10 NP** donde el estándar §4.6.1 (y
+  Kagetora y Artoria) da **30** ⇒ primer NP en el **turno ~6** contra el objetivo de turno 3. Y el
+  mazo real tiene **un solo Arts** (`Character/Mordred.cs`), no dos como decía `DESIGN-MORDRED.md`,
+  así que ni siquiera era QAABB. Arts a 6/30, Buster a 10 de daño, Quick a 6, Visera a 10 NP, y el
+  `Strike` del mazo inicial pasa a ser el **segundo Arts** ⇒ turno 3 y QAABB real.
+- **Una común de 0⚡ daba más que todo el mazo.** `ManaIgnition` a 30 / mejorada **50** contra la
+  banda de 10-20 que el proyecto fijó tres días antes en la recalibración de Artoria. Ahora 20 / 30.
+- **Dos poco-comunes vendían un payoff de FORMA que pagaba CERO.** `LightningSpeed` y `DentedHelm`
+  tenían `BaseStars = 10` y `Stars = 10`: el borde se doraba y el tooltip prometía un bonus
+  inexistente. Efecto colateral: la **común** `SlashOfClarent` dominaba estrictamente a la **poco
+  común** `LightningSpeed`. Ahora la rama de forma paga +10 y la mejora la sube a 30.
+- **El cambio de forma era un motor gratuito y card-positivo.** `RoarOfRebellion` (0⚡, mejorada
+  robá 2) + `BannerOfRebellionPower` y `SecretRevealedPower` pagando por **cada** switch, sin tope
+  por turno y escalando por stacks: un 0⚡ daba +20★, +10 NP y **4 cartas**. Los dos poderes quedan
+  capeados a **2 activaciones por turno** (bits 10-11 y 12-13 del campo de turno de FGOCore) y la
+  mejora del Rugido pasa de robar a dar Estrellas.
+- **El par espejo mejorado era positivo-suma** (la mejora bajaba el costo de las **dos** direcciones
+  ⇒ +20 NP/+20★ netos por dos cartas de 0⚡). Ahora la mejora sube la **salida** +10 y el costo queda
+  fijo: neto +10/+10, umbral 30→50. No llega a cero, y está declarado como perilla, no escondido.
+- **BUG EN PRODUCCIÓN, encontrado por la revisión:** `HundredShatteredSwords` hacía **0 de daño**.
+  `CriticalResolverPower.BeforeCardPlayed` corre **antes** del `OnPlay` de todo Ataque elegible y, sin
+  Crítico Listo, se lleva 50★ solo; la carta volvía a pedir 50★ y retornaba sin pegar, después de
+  haber quemado el banco, con el borde dorado puesto. Arreglado con el patrón textual de
+  `StarlitCharge` (Kagetora): gastar primero y pegar si pagó **o** si la carta está criticando.
+- **La auditoría de pico estaba INVERTIDA.** La primera versión decía «~40% por debajo del techo»;
+  usaba **×2** cuando el crítico multiplica **×1,5** (`Criticals.cs:52`), no contaba cartas mejoradas
+  ni multi-hit, y facturaba 34 de daño por la carta que hacía 0. Rehecha: los dos poderes de crítico
+  cobraban su bonus **por impacto** (`ModifyDamageAdditiveFgo` corre una vez por golpe) y el ×1,5 de
+  Críticos v2 aplica a todos los impactos ⇒ **~302 de daño en un turno de 3⚡, ~40% POR ENCIMA** de la
+  banda 180-220. El bonus de crítico pasa a cobrarse **una vez por carta, en el primer impacto que
+  pega de verdad** (patrón `DivinityPower` de Kagetora: ligadura al `CardPlay`, marcado en
+  `AfterDamageGiven`, hook de preview **puro**) ⇒ **~212**. Ese es el cambio de mayor impacto del lote.
+
+**19 IDs re-especificados**, cero renames, cero borrados, cero cambios de rareza, cero cartas nuevas,
+FGOCore intacto. El único cambio no-numérico es el mazo inicial, que sólo afecta runs nuevas.
+
+**Kagetora: NO se rediseña, y la razón está medida.** La V2 se cerró el 2026-08-16 con panel 3–0 y
+~50 parches de juez, se publicó como v0.1.12 y **nunca se jugó**. Auditado: **93% de conectividad**
+al recurso propio (72/77 cartas con precepto), reparto **23/25/24** entre Cielo/Pecho/Pies,
+**cero riders muertos**, cota de **≤1⚡ de refund por turno demostrada en el código** con la
+prohibición explícita del contador de 2 bits, y **1 crítico por turno** con válvula. Es la
+arquitectura más sana del repo. Único cambio: `PrayerToBishamonten` (común 0⚡) dominaba en tasa **y**
+en umbral a `TurnTheReins`; baja de 20★→30 NP (mejorada 50) a **20★→20 NP (mejorada 30)**.
+
+**Revisión adversarial (Fable 5):** 14 hallazgos, **12 aceptados**, 1 reclasificado y 1 rechazado con
+evidencia (el revisor argumentó que `PrayerToBishamonten` se diferencia de `TurnTheReins` por ser de
+precepto Cielo — **las dos son `Precept.Heaven`**). Los tres de más valor —la composición real del
+mazo inicial, el ×1,5, y el whiff de Cien Espadas— eran errores míos o bugs que mi diagnóstico no vio.
+
+**Verificación:** build **0 warnings / 0 errores** en los dos proyectos · matriz de compatibilidad
+**3/3** (`main`, `beta`, y el cruce `main -> beta`, una rama por invocación por el OOM conocido) ·
+`audit_simpleloc` **0 ambigüedades** · `audit_localization_parity` **OK: 13 proyectos, 5 idiomas** ·
+`audit_vfx_paths` **OK (290 referencias)** · publish local a `dist/` con los textos nuevos verificados
+dentro del PCK (`Twice per turn`, `Dos veces por turno`, `每回合至多2次`, `primer impacto de un
+Crítico`) y **cero churn de `.import`**.
+
+**NO publicado a Workshop** (falta pedido explícito). **Sin playtest**: nada de esto está validado en
+runtime, y el gate de primer impacto (−30% al pico) es lo primero a mirar si Mordred queda floja.
+
 ## 2026-08-21 — Gilgamesh v0.1.20: el Enuma congelado NO estaba arreglado (reporte de Kduong)
 
 Segundo reporte del MISMO síntoma, y esta vez **posterior al fix**: Kduong, 2026-08-20 18:20 PDT
