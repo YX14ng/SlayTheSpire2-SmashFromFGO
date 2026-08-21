@@ -28,8 +28,15 @@ public sealed class HundredShatteredSwords() : MordredCard(0, CardType.Attack, C
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        if (!CritStars.CanPay(Owner.Creature, StarCost)) return;
-        await CritStars.Gain(choiceContext, Owner.Creature, -StarCost, this);
+        // REDESIGN-MORDRED-V2 D8 — es el ÚNICO Ataque del pool que además gasta Estrellas a mano, así
+        // que compite con el crítico por el mismo banco: `CriticalResolverPower.BeforeCardPlayed`
+        // (FGOCore/.../Stars/Criticals.cs) corre ANTES de este OnPlay y, si no había Crítico Listo, ya
+        // se llevó 50★ solo. Con 50-99★ el cobro doble dejaba la carta en CERO de daño después de
+        // haber quemado el banco, y su `IsPlayable` se había evaluado antes del cobro. Si el crítico
+        // ya pagó, el coste está cumplido con creces y la carta pega igual.
+        // Patrón textual de `StarlitCharge` (KagetoraLancer/.../Cards/Common/CommonCards.cs).
+        var paid = await CritStars.Spend(choiceContext, Owner.Creature, StarCost, this);
+        if (!paid && !Criticals.IsCritical(cardPlay)) return;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardFgoCompatibility(this, cardPlay).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
