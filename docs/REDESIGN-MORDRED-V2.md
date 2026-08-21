@@ -17,8 +17,7 @@ la Infidelidad, se lo arranca para cobrarla en CRÍTICOS de relámpago rojo, y l
 Blood Arthur.* Verbos: **enmascarar, cobrar, criticar**. Recursos: **Carga NP 0-300** y **Estrellas
 de Crítico**, cosidos por la starter (Vida→★, Crítico consumido→NP).
 
-El problema no es la fantasía. **Es que el motor está invertido en tres lugares**, y en los tres
-está medido.
+El problema no es la fantasía. **Es que el motor está invertido**, y cada punto está medido.
 
 ---
 
@@ -36,17 +35,20 @@ NP**, y está implementado así en los dos personajes calibrados más recienteme
 `KagetoraLancer/.../Cards/Basic/StartingCards.cs:37` y `ArtoriaCaster/.../Cards/Basic/ArtsArtoria.cs:20`.
 **Mordred está a un tercio.**
 
-Cuenta del mazo inicial (10 cartas: 3 Buster + 2 Arts + 1 Quick + 2 Defender + 1 Rebelión + 1 Bajar
-la Visera), umbral de manifestación = 100:
+Cuenta del mazo inicial. **La composición real está en `Character/Mordred.cs:37-46`** y NO es la que
+declara `DESIGN-MORDRED.md §5.0`: son **2 Buster + 1 Arts + 1 Quick + 1 Golpe + 3 Defensa + Rebelión
++ Bajar la Visera**. (Un solo Arts ⇒ el mazo ni siquiera es QAABB, otra desviación de §4.6.1.)
 
 | fuente | ahora | por ciclo de mazo |
 |---|---|---|
-| 2× Arts | 10 c/u | 20 |
-| 3× Buster (`BusterCommand.cs:23`, `NpCharge` 5) | 5 c/u | 15 |
+| **1×** Arts | 10 | 10 |
+| 2× Buster (`BusterCommand.cs:23`, `NpCharge` 5) | 5 c/u | 10 |
 | 1× Bajar la Visera (`LowerTheVisor`, 5) | 5 | 5 |
-| **total** | | **40** |
+| **total impreso** | | **25** |
+| + forma Enmascarado (`MordredFormPower.cs:25`, +5 NP al inicio de tu turno) | 5/turno | +10 por ciclo |
+| **total real** | | **35** |
 
-Un ciclo de mazo son ~2 turnos ⇒ **el primer NP cae recién en el turno ~5**. El objetivo declarado
+Un ciclo de mazo son ~2 turnos ⇒ **el primer NP cae recién en el turno ~6**. El objetivo declarado
 del ecosistema, fijado en la recalibración de Artoria del 2026-08-18 (`docs/STATUS.md`), es **turno 3**.
 
 ### D2 — Una común de 0⚡ da 3-5× lo que da el Arts básico (ALTO)
@@ -96,12 +98,15 @@ Tres piezas que por separado son razonables:
 2. `Powers/BannerOfRebellionPower.cs:38-48` — por **cada** cambio de forma: `StarsPerSwitch * Amount`
    (10★ por stack) + `NpPerSwitch * Amount` (5 NP por stack) + robo si está mejorada.
    **Sin tope por turno.**
-3. `Cards/Uncommon/LightningVisit.cs` — **0⚡**: cambiás de forma y **volvés al final del turno** ⇒
-   **dos** cambios por carta.
+3. `Powers/SecretRevealedPower.cs:34-53` (rara `SecretRevealed`, 2⚡ / **1⚡ mejorada**) — por **cada**
+   entrada en Rebelión: `Stars * Amount` (**20★ por stack**) **y robá 1**. Tampoco tiene tope por turno,
+   y es el doble de grande que el Estandarte.
 
 Juntas: con Estandarte mejorado ×2 stacks, un **Rugido de Rebelión mejorado (0⚡)** da
-**+20★, +10 NP y robá 3** — se reemplaza a sí mismo con dos cartas de ganancia neta y encima paga
-las dos economías. `LightningVisit` lo duplica. Eso es exactamente lo que la rúbrica prohíbe:
+**+20★, +10 NP y robá 4** (2 del Rugido + `DrawsPerSwitch * Amount` = 2 del Estandarte,
+`BannerOfRebellionPower.cs:48`) — se reemplaza a sí mismo con tres cartas de ganancia neta y encima
+paga las dos economías. Con `SecretRevealed` en juego se suman otros +20★ por stack y otro robo. Eso
+es exactamente lo que la rúbrica prohíbe:
 *«Buscar cadenas de coste cero, robo neto positivo, energía neta positiva y generación recursiva»*.
 
 **Y el daño colateral de diseño es peor que el numérico:** el eje de FORMAS —el arquetipo propio del
@@ -118,6 +123,49 @@ Ida y vuelta con las dos mejoradas: −30 NP +50★, después −30★ +50 NP �
 0⚡ y dos cartas**. El doc de diseño las llama «ESPEJO A/B» y promete fungibilidad; una mejora que
 baja el costo de las dos direcciones convierte el espejo en una bomba de recursos.
 
+### D7 — el bonus de crítico se cobra POR IMPACTO y las multi-hit rompen el techo (ALTO)
+
+`Powers/KnightOfRedLightningPower.cs:32-38` y `Powers/TheMostRadiantSwordPower.cs:35-41` devuelven su
+bonus de crítico desde `ModifyDamageAdditiveFgo`, que corre **una vez por impacto**. Y el
+multiplicador de crítico **no es ×2**: es **×1,5** (`FGOCore/FGOCoreCode/Stars/Criticals.cs:52`,
+`DamageMultiplier = 1.5m`) y por contrato de Críticos v2 se aplica a **todos** los impactos de la
+carta (`docs/DESIGN-FGOCORE-CRITICAL-V2.md:40`). Los comentarios de varias cartas de Mordred que
+dicen «sólo el PRIMER golpe se dobla (parche P8)» quedaron **stale** desde la migración a v2.
+
+Resultado, con el motor completo mejorado (forma Clímax +2, Caballero+ +3 y +8 al crítico, Espada
+Más Resplandeciente+ +12 al crítico, Doble Filo+ +4, Estallido de Maná+ +6): cada impacto lleva
+**+15 planos y +20 más si la carta critica**, y todo eso se multiplica por 1,5. Una común de 1⚡:
+
+- `LightningSplinters`+ (5 de daño **×3 impactos**): (5+15+20) × 1,5 = **60 por impacto ⇒ 180 por 1⚡**.
+- `RebelsDoubleEdge`+ (6 **×2**): (6+35) × 1,5 = 61 c/u ⇒ **122 por 1⚡**.
+
+El daño base de la carta es irrelevante al lado de los planos: **el techo real de Mordred lo fijan las
+multi-hit, no las cartas grandes**, y está en ~300 por turno de 3⚡ (§6), contra la banda de
+**180-220** de `DECISIONS.md:40`.
+
+El proyecto **ya falló este mismo caso** en Kagetora: `DivinityPower`
+(`KagetoraLancer/.../Powers/UncommonPowers.cs:123-185`) documenta que sin tope «bonificaba el primer
+impacto de CADA Ataque … que la auditoría no contaba», y lo cerró ligando el bonus al `CardPlay` y
+marcándolo en `AfterDamageGiven` (daño real), dejando `ModifyDamageAdditiveFgo` **puro**. Mordred no
+recibió ese tratamiento.
+
+### D8 — `HundredShatteredSwords` se anula a sí misma y hace CERO (ALTO — bug en producción)
+
+`CriticalResolverPower.BeforeCardPlayed` (`Criticals.cs:132-167`) corre **antes** del `OnPlay` de
+cualquier Ataque elegible y, si no hay Crítico Listo, **gasta 50★ del banco solo** para criticar.
+`Cards/Rare/HundredShatteredSwords.cs:30-31` vuelve a pedir `CanPay(50)` y **retorna sin pegar** si no
+llega. Con 50-99★ y sin Crítico Listo la carta **quema las 50★ y hace 0 de daño**; su `IsPlayable`
+se evaluó antes del cobro, así que el jugador la ve dorada y jugable.
+
+El repo ya tiene el fix canónico escrito **y comentado con este mismo razonamiento**:
+`StarlitCharge` de Kagetora (`Cards/Common/CommonCards.cs:444-455`) gasta primero y pega si pagó
+**o** si `Criticals.IsCritical(cardPlay)`.
+
+### D9 — el mismo motor de D5, más grande, en la capa de raras (ALTO)
+
+`SecretRevealedPower` (arriba, D5 punto 3) es el Estandarte al doble y sin tope. Cualquier candado
+que se le ponga sólo al Estandarte es cosmético.
+
 ### Lo que se verificó y está BIEN (para no arreglar lo que no está roto)
 
 - **Techo de daño por turno dentro del rango.** Ver §6: el pico auditado con motor completo es
@@ -125,8 +173,8 @@ baja el costo de las dos direcciones convierte el espejo en una bomba de recurso
   no es un nerf de potencia.
 - **Cleanse acotado a los dos vectores que su kit justifica** (`SecretOfPedigreeEX` +
   `MagicResistanceBCharm`), como manda la regla negativa de `DESIGN-MORDRED.md §2`.
-- **`HundredShatteredSwords`** (rara 0⚡, 26 de daño) **paga 50★** (`StarCost = 50`, gate en
-  `IsPlayable`) — es el slot Cometa, no una carta gratis.
+- **`HundredShatteredSwords`** (rara 0⚡, 26 de daño) **paga 50★** — no es una carta gratis. Pero el
+  cobro está **roto**: ver D8.
 - **La starter no se apila con la reliquia de jefe**: `ClarentOverloadedWithHatred` silencia a
   `ClarentTheStolenSword` (fix del audit 2026-07-05), y la starter tiene tope de 3 procs/turno.
 - **La retención de Bloqueo de las formas sobrevive al cambio de Baluarte de FGOCore v0.1.25.**
@@ -137,7 +185,7 @@ baja el costo de las dos direcciones convierte el espejo en una bomba de recurso
 
 ---
 
-## 3. Los tres candados
+## 3. Los cuatro candados
 
 ### Candado 1 — el mazo inicial carga; la común deja de saltearlo
 
@@ -150,10 +198,20 @@ Las cuatro cartas bi-condicionales pasan a pagar **exactamente una denominación
 la forma correcta, con pisos legales. El motor de switch deja de reemplazarse a sí mismo y deja de
 ser ilimitado por turno.
 
-### Candado 3 — las conversiones no dan ganancia neta gratis
+### Candado 3 — las conversiones dejan de ser una bomba de recursos
 
-La mejora del par espejo sube la **salida** y deja el **costo fijo**, en vez de bajar el costo de las
-dos direcciones.
+La mejora del par espejo sube la **salida (+10)** y deja el **costo fijo**, en vez de bajar el costo
+de las dos direcciones. La ida y vuelta totalmente mejorada baja de **+20 NP/+20★ a +10 NP/+10★**, y
+el umbral para usarlas sube de 30 a 50. *No* la lleva a cero: eso queda declarado en R2, no escondido
+detrás del título.
+
+### Candado 4 — el crítico deja de cobrarse por impacto
+
+El bonus de crítico de los dos poderes que lo dan se cobra **una vez por carta, en el primer impacto
+que pega de verdad**, con el patrón exacto de `DivinityPower` de Kagetora (ligadura al `CardPlay`,
+marcado en `AfterDamageGiven`, hook de preview **puro**). El multiplicador ×1,5 sigue aplicando a
+todos los impactos: eso es el contrato de Críticos v2 y no se toca. Esto es lo que devuelve a Mordred
+adentro de la banda de 180-220 (§6).
 
 ---
 
@@ -186,12 +244,13 @@ renames, cero borrados, cero cambios de rareza, cero cartas nuevas.
 |---|---|---|---|
 | `ArtsCommand` | 5 daño + **10** NP; up +5 NP | **6 daño + 30 NP**; up **+3 daño / +10 NP** | §4.6.1 y paridad con Kagetora/Artoria (D1) |
 | `BusterCommand` | 8 daño + 5 NP; up +3 | **10 daño**, sin NP; up +3 | §4.6.1; la carga se concentra en el Arts |
-| `QuickCommand` | 5 daño + 20★; up +3 | **6 daño** + 20★; up +3 **/ +10★** | §4.6.1 |
+| `QuickCommand` | 5 daño + 20★; up +3 | **6 daño** + 20★; up **+3 daño solamente** | §4.6.1. **No se tocan las 20★ impresas**: toda Quick recibe +10★ del motor de tipos (`FGOCore/.../CardTypes/CommandBonusPower.cs:38,81-83`), así que ya son 30★ efectivas. Kagetora lo tiene escrito como advertencia: *«No subir el var a 30: duplicaría el caudal»* (`StartingCards.cs:59`) |
 | `LowerTheVisor` | 4 Bloqueo + enmascara + 5 NP; up +3/+5 | 4 Bloqueo + enmascara + **10 NP**; up +3 / **+10** | denominación legal; es la firma defensiva |
 | `Defend`, `Strike`, `Rebellion` | — | **[=]** | ya están en estándar |
+| **`Mordred.StartingDeck`** (`Character/Mordred.cs:42`) | 2 Buster + **1 Arts** + 1 Quick + **1 Golpe** + 3 Defensa + 2 firmas | 2 Buster + **2 Arts** + 1 Quick + 3 Defensa + 2 firmas (**el Golpe pasa a ser el segundo Arts**) | Sin esto el Candado 1 **no llega a turno 3**: con un solo Arts el ciclo queda en 40 y el primer NP en el turno ~4. Además el mazo pasa a ser **QAABB de verdad** (§4.6.1), que hoy no es. Save-safe: `StartingDeck` sólo afecta runs nuevas y no renombra ningún ID |
 
-Primer NP tras el cambio: 2×30 + 10 = **70 por ciclo de mazo** + la starter (crítico consumido→10 NP)
-⇒ **turno 3**.
+Primer NP tras el cambio: 2×30 (Arts) + 10 (Visera) = **70 impresos por ciclo de mazo** + 5 NP/turno
+de la forma Enmascarado + la starter (crítico consumido → 10 NP) ⇒ **turno 3**.
 
 ### 5.2 Comunes — Candados 1 y 3
 
@@ -200,8 +259,9 @@ Primer NP tras el cambio: 2×30 + 10 = **70 por ciclo de mazo** + la starter (cr
 | `ManaIgnition` | 0⚡ +30 NP; up **+20 (⇒50)** | 0⚡ **+20 NP**; up **+10 (⇒30)** | banda 0⚡ del ecosistema (D2). La mejora la lleva a la banda de 1⚡: eso es lo que una mejora debe hacer |
 | `SparksOfTheHelm` | 8 Bloqueo; **8** NP base / 20 Enmascarado | 8 Bloqueo; **10** NP base / **20** Enmascarado; up +3 Bloqueo | piso a denominación legal; el bonus de forma queda en exactamente +10 (D3) |
 | `KnightsSteadfastness` | 13 Bloqueo; **5** NP base / 10 Enmascarado | 13 Bloqueo; **10** NP base / **20** Enmascarado; up +4 Bloqueo **/ +10 a la rama Enmascarado** | ídem (D3) |
-| `SpoilsOfCamelot` | 50 NP → 50★; up **costo −20** | 50 NP → 50★; up **salida +20 (⇒70★)**, costo fijo | D6 |
-| `TributeToTheThrone` | 50★ → 50 NP; up **costo −20** | 50★ → 50 NP; up **salida +20 (⇒70 NP)**, costo fijo | D6 |
+| `SpoilsOfCamelot` | 50 NP → 50★; up **costo −20** | 50 NP → 50★; up **salida +10 (⇒60★)**, costo fijo | D6. Con +20 la ida y vuelta seguía dando el mismo +20/+20 de hoy; con +10 baja a +10/+10 |
+| `TributeToTheThrone` | 50★ → 50 NP; up **costo −20** | 50★ → 50 NP; up **salida +10 (⇒60 NP)**, costo fijo | D6 |
+| `TournamentFootwork` | 3 Bloqueo + 10 NP; up +2 Bloqueo / **+5 NP (⇒15)** | up +2 Bloqueo / **+10 NP (⇒20)** | 15 no es denominación legal (`TournamentFootwork.cs:30`) |
 | resto de las 20 comunes | — | **[=]** | sin hallazgo |
 
 ### 5.3 Poco comunes — Candado 2
@@ -212,45 +272,52 @@ Primer NP tras el cambio: 2×30 + 10 = **70 por ciclo de mazo** + la starter (cr
 | `DentedHelm` | 11 Bloqueo; 10★ base / **10★** Enmascarado; up +4 Bloqueo | 11 Bloqueo; **10★ base / 20★ Enmascarado**; up +4 Bloqueo **y +10★ a la rama Enmascarado** | D3 |
 | `RoarOfRebellion` | 0⚡ switch + robá 1; up **robá 2** | 0⚡ switch + robá 1; up **+10★** en vez del segundo robo | D5: el conector del arquetipo puede ser un cantrip neutro en cartas, no card-positivo |
 | `BannerOfRebellion` (vía `BannerOfRebellionPower`) | por cada switch, sin tope | **máximo 2 activaciones por turno** (reset al inicio de tu turno) | D5. Idioma del propio repo: `AccumulatedHatred` (`MaxProcs = 2`), `ClarentTheStolenSword` (3/turno), `RoundTableFragment` |
-| `LightningVisit` | 0⚡, dos switches por carta | **[=]** | con el tope del Estandarte deja de ser un multiplicador; se deja como está y se mide |
+| `LightningVisit` | 0⚡, ida + regreso automático | **[=]** | **no** era un multiplicador: el regreso entra con `source == null` (`LightningVisitReturnPower.cs:46-56`) y `FormSwitch.Enter` no notifica listeners en ese caso (`FGOCore/.../Forms/FormSwitch.cs:36-37`). Proca **una** vez, igual que un Rugido |
 | resto de las 28 poco comunes | — | **[=]** | sin hallazgo |
 
-### 5.4 Raras, especiales, reliquias, formas y NP
+### 5.4 Raras y poderes — Candados 2 y 4
 
-**[=] TODO.** No se toca ninguna rara, ninguna carta-NP, ninguna reliquia, ninguna forma, ni el
-modelo de Carga NP. El diagnóstico no encontró defecto en esa capa y ampliar el diff sin evidencia
-es exactamente lo que este documento evita.
-
-**Total: 13 IDs re-especificados** (7 básicas/comunes + 4 poco comunes + 1 power + 1 mejora), de 78
-cartas + 13 reliquias + 27 poderes.
-
----
-
-## 6. Auditoría de pico (ANTES de implementar)
-
-Escenario de motor completo, acto 3, contra un Jefe, 3⚡, con `KnightOfRedLightningAPlus` (Ataques
-+2, Críticos +6), `TheMostRadiantSword` (Críticos +8), forma **Relámpago Carmesí** (Ataques +2) y un
-Crítico Listo en cola. El orden de StS es **aditivo → multiplicativo**, así que el ×2 del crítico
-multiplica todo lo aditivo.
-
-| jugada | ⚡ | cuenta | daño |
+| ID | ahora | V2 | por qué |
 |---|---|---|---|
-| `ManaBurstA` (Ataques +4 este turno, Exhaust) | 1 | — | 0 |
-| `LightningOfClarent` **con el crítico** | 2 | (18 +4 +2 +2 +6 +8) × 2 | **80** |
-| `HundredShatteredSwords` (paga 50★) | 0 | 26 +4 +2 +2 | **34** |
-| `InsolentStrike` | 0 | 4 +4 +2 +2 | **12** |
-| **total** | **3** | | **~126** |
+| `SecretRevealed` (vía `SecretRevealedPower`) | +20★ × stacks **y robá 1** por cada entrada en Rebelión, **sin tope** | **máximo 2 activaciones por turno** (mismo contador que el Estandarte) | D9. Sin esto el Candado 2 es cosmético: se capea el motor chico y se deja libre el doble de grande |
+| `HundredShatteredSwords` | pide 50★ en `OnPlay` **después** de que el resolutor de críticos ya se los llevó ⇒ 0 de daño | gastar primero y pegar **si pagó o si la carta está criticando** (`Criticals.IsCritical(cardPlay)`) | D8. Patrón textual de `StarlitCharge` (Kagetora) |
+| `KnightOfRedLightningAPlus` (vía su power) | +Ataque plano **y** +8 al crítico, los dos **por impacto** | el +Ataque plano sigue por impacto; **el bonus de crítico, sólo en el primer impacto que pega** | D7 / Candado 4. Patrón `DivinityPower` |
+| `TheMostRadiantSword` (vía su power) | +12 al crítico **por impacto** | **sólo en el primer impacto que pega** | D7 / Candado 4 |
+| resto de las 20 raras, las 3 especiales, las 13 reliquias, las 3 formas y el modelo de NP | — | **[=]** | sin hallazgo |
 
-Contra el techo de saturación vigente del proyecto (**180-220**), Mordred con motor completo está
-**~40% por debajo**. Con la carta-NP manifestada en lugar de `LightningOfClarent` el pico sube pero
-consume los 100-300 del medidor, que es un recurso de varios turnos.
+**Total: 19 IDs re-especificados** (5 básicas + 1 mazo inicial + 5 comunes + 4 poco comunes +
+4 raras/poderes), sobre 78 cartas, 13 reliquias y 27 poderes.
 
-**Conclusión del audit: este rediseño NO baja potencia.** Los candados 1 y 2 son *net-neutrales o
-levemente positivos* (el mazo inicial pega y carga más; dos poco-comunes pasan a pagar de verdad);
-el único recorte real es `ManaIgnition` y el tope del Estandarte, y los dos atacan **generación
-gratuita**, no daño.
+## 6. Auditoría de pico (rehecha tras la revisión adversarial)
 
----
+**La primera versión de esta auditoría estaba mal por tres lados**: usaba ×2 en vez del ×1,5 real
+(`Criticals.cs:52`), no contaba cartas mejoradas ni multi-hit, y contaba 34 de daño por una
+`HundredShatteredSwords` que en ese turno hace **0** (D8). Rehecha:
+
+Escenario: acto 3, 3⚡, motor completo **con todo mejorado** — forma **Relámpago Carmesí** (+2),
+`KnightOfRedLightningAPlus`+ (+3 plano, +8 al crítico), `TheMostRadiantSword`+ (+12 al crítico),
+`DoubleEdgeOfHatred`+ (+4 en forma ofensiva), `ManaBurstA`+ (+6 este turno) y Críticos Listos en cola
+(tope 3, `CritReadyPower.cs:16`). Orden de StS: **aditivo → multiplicativo**, y el ×1,5 aplica a
+**todos** los impactos de la carta (contrato de Críticos v2).
+
+**Plano por impacto: +15. Extra si la carta critica: +20.**
+
+| jugada | ⚡ | HOY (bonus de crítico por impacto) | CON el Candado 4 (primer impacto) |
+|---|---|---|---|
+| `ManaBurstA`+ (setup, Exhaust) | 1 | 0 | 0 |
+| `LightningSplinters`+ (5 daño **×3**) | 1 | 3 × (5+35)×1,5 = **180** | (5+35)×1,5 + 2×(5+15)×1,5 = **120** |
+| `RebelsDoubleEdge`+ (6 **×2**) | 1 | 2 × (6+35)×1,5 = **122** | (6+35)×1,5 + (6+15)×1,5 = **92** |
+| **total del turno** | **3** | **~302** | **~212** |
+
+- **Hoy Mordred está ~40% POR ENCIMA** de la banda de saturación de 180-220 (`DECISIONS.md:40`), no
+  40% por debajo como decía la versión anterior de este documento. **La conclusión estaba invertida.**
+- **Con el Candado 4 aterriza en ~212**, o sea en el borde superior de la banda — que es donde debe
+  estar un personaje con el motor completamente armado en el acto 3.
+- El resto del rediseño (básicas +1/+2 de daño, cargas de NP, estrellas) mueve el pico en el orden de
+  las unidades: es **irrelevante** frente a esto. Los candados 1-3 son de *forma*; el techo lo fija
+  el Candado 4.
+- La `ChispaDeClarent` que manifiesta la starter al consumir un crítico está **capeada 1/turno**
+  (`RedLightningSparkPower.cs:19-20`) y suma un AoE de 0⚡ encima de esa cuenta.
 
 ## 7. Restricciones duras verificadas
 
@@ -260,8 +327,9 @@ gratuita**, no daño.
 | Ninguna carta borrada | ✅ 0 |
 | Ningún cambio de rareza (cero DEMOTE) | ✅ 0 |
 | Ninguna carta nueva | ✅ 0 |
+| Cambio de mazo inicial | ⚠️ 1 (`Strike` → 2.º `ArtsCommand`). Sólo afecta runs **nuevas**; no renombra ni borra IDs |
 | Superficie pública de FGOCore intacta | ✅ — se publica solo `MordredSaber` |
-| Denominaciones 10/20/30/50/100 | ✅ el cambio **corrige** dos violaciones (8 y 5) |
+| Denominaciones 10/20/30/50/100 | ✅ el cambio **corrige tres** violaciones: 8 (`SparksOfTheHelm`), 5 (`KnightsSteadfastness`) y 15 (`TournamentFootwork` mejorada) |
 | Localización: 5 idiomas por clave tocada | ⚠️ pendiente de implementación (eng/esp/zhs/kor/rus) |
 
 ---
@@ -274,7 +342,9 @@ gratuita**, no daño.
 | R2 | El par espejo **totalmente mejorado** sigue dando +20 NP / +20★ por dos cartas de 0⚡ (≈ un `WarCry` de 1⚡ repartido en dos cartas). Está **acotado** por copias y por mano, y **medido**, no ignorado | si el playtest lo muestra abusivo: bajar las dos mejoras de +20 a +10 |
 | R3 | El tope de 2 activaciones/turno del Estandarte puede dejarlo flojo como rara-de-arquetipo | subir a 3/turno (el mismo tope que la starter), nunca quitarlo |
 | R4 | `LightningSpeed` a 20★/30★ en Rebelión podría empujar demasiado el arquetipo B | bajar la mejora de la rama de Rebelión a +0 y dejarla en 20★ |
-| R5 | Quitarle los 5 NP al Buster resta 15 NP por ciclo a un mazo que ya cambia mucho | devolvérselos (la cuenta de §5.1 sigue dando turno 3 con o sin ellos) |
+| R5 | Quitarle los 5 NP al Buster resta **10** NP por ciclo (2 Busters, no 3) a un mazo que ya cambia mucho | devolvérselos (la cuenta de §5.1 sigue dando turno 3 con o sin ellos) |
+| R6 | El Candado 4 es el cambio de mayor impacto del lote (−30% al pico) y **no está validado en runtime**. Si Mordred queda floja en el acto 3, es lo primero a mirar | revertir el gate de primer impacto en `TheMostRadiantSwordPower` **antes** que en `KnightOfRedLightningPower` (el +12 pesa más que el +8) |
+| R7 | Cambiar `StartingDeck` no toca runs en curso: los jugadores con una run abierta **no** ven la mejora del Arts hasta empezar otra | ninguna; es la única forma save-safe de cambiar el mazo |
 
 **Nada de esto está validado en runtime.** Todo el documento es análisis estático sobre `HEAD`.
 
@@ -297,3 +367,35 @@ gratuita**, no daño.
    verificación de contenido del PCK y cero churn de `.import`.
 5. Bump: `MordredSaber` v0.1.18 → v0.1.19 + `tools/workshop_desc/MordredSaber.txt` **en el mismo
    lote** (la ficha no se deja atrasada).
+
+---
+
+## 10. Registro de la revisión adversarial (Fable 5, 2026-08-21)
+
+Revisión encargada sobre la versión anterior de este documento. **Cada hallazgo se verificó contra el
+código antes de aceptarlo**; se aceptaron 12 de 14, se corrigió 1 por ser un dato equivocado del
+propio revisor, y 1 se reclasificó.
+
+| # | severidad | qué encontró | resolución |
+|---|---|---|---|
+| **E1** | ALTO | La composición del mazo inicial de D1 estaba tomada de `DESIGN-MORDRED.md`, no del código. El real tiene **1 Arts, no 2**, y un `Strike` | **ACEPTADO.** D1 rehecho (25 impresos + 10 de forma = 35/ciclo, primer NP turno ~6). Y la proyección «turno 3» era inalcanzable con un solo Arts ⇒ se agrega el swap `Strike`→`ArtsCommand` a §5.1 |
+| **E2** | ALTO | El crítico multiplica **×1,5**, no ×2 (`Criticals.cs:52`) | **ACEPTADO.** Error mío: copié el ×2 del doc de diseño viejo en vez de leer la constante. §6 rehecho |
+| **E3** | ALTO | `HundredShatteredSwords` hace **0 de daño** cuando el resolutor de críticos ya se llevó las 50★ | **ACEPTADO.** Bug en producción, ver D8. Es el hallazgo de más valor de la revisión |
+| **E4** | ALTO | Mordred no tiene `ICriticalAccessRule`: todo Ataque elegible drena 50★ del banco | **RECLASIFICADO a MEDIO y documentado, no arreglado.** Sólo los **Ataques** son elegibles (`Criticals.IsEligible` exige `CardType.Attack`), así que las Habilidades que leen el banco (Tributo al Trono, Instinto de Batalla) **no** compiten. El único Ataque que gastaba ★ manualmente era Cien Espadas, y eso lo cierra D8. Queda como propiedad declarada: **con Mordred, las cartas que leen el banco se juegan antes que los Ataques** |
+| **E5** | MEDIO | «`LightningVisit` son dos cambios de forma» es falso: el regreso entra con `source == null` y `FormSwitch` no notifica | **ACEPTADO.** Premisa mía equivocada; D5 y §5.3 corregidos |
+| **E6** | ALTO | `SecretRevealedPower` es el mismo motor sin tope, más grande, y §5.4 lo declaraba limpio | **ACEPTADO.** Ver D9; §5.4 reescrito |
+| **E7** | BAJO | La cuenta de D5 se quedaba corta: son 4 robos, no 3 | **ACEPTADO** |
+| **E8** | MEDIO | El Candado 3 no hacía lo que su título decía: la mejora a +20 dejaba el mismo +20/+20 neto | **ACEPTADO**, opción (ii): mejora **+10** ⇒ neto +10/+10, y el título y el texto dicen la verdad |
+| **E9** | MEDIO | El up «+10★» del Quick ignoraba el +10★ universal del motor de tipos | **ACEPTADO.** Up = +3 de daño solamente |
+| **E10** | BAJO | D1 omitía el +5 NP/turno de la forma Enmascarado | **ACEPTADO**, agregado a la tabla |
+| **E11** | BAJO | `TournamentFootwork` mejorada da 15 NP, denominación ilegal, y §7 no lo contaba | **ACEPTADO**, up +10 ⇒ 20 |
+| **E12** | MEDIO | La conclusión «~40% por debajo del techo» está mal; el techo real lo fijan las multi-hit | **ACEPTADO y ES EL HALLAZGO QUE CAMBIA EL SIGNO DEL REDISEÑO.** Rehaciendo la cuenta con ×1,5, cartas mejoradas y multi-hit, Mordred está **~302 por turno, ~40% POR ENCIMA** de la banda. De ahí salen D7 y el **Candado 4**, que no existían en la versión anterior |
+| **E13** | MEDIO | (Kagetora) La justificación de K-1 afirma que Reins gana en tasa al mejorarse, y es falso | **ACEPTADO** el arreglo de prosa. **RECHAZADO** el argumento extra del revisor de que «Prayer es Cielo y avanza Doctrina» diferencia a las dos: **las dos son `Precept.Heaven`** (verificado en `CommonCards.cs`), así que ese factor no las separa |
+| **E14** | BAJO | «`DoctrinePowers.cs` implementa `ShouldClearBlock`» — en realidad lo **hereda** de `FormPower` | **ACEPTADO**, corregido en la auditoría de Kagetora |
+
+**Lo que el revisor confirmó y quedó como estaba:** D2 (banda de 0⚡), D3 (los dos riders de forma con
+delta 0, con glow y tooltip que prometen de más), D4 (dominación estricta común > poco común), D6 (el
+espejo baja el costo en las dos direcciones), la cadena de retención de Bloqueo intacta tras
+FGOCore v0.1.25, los topes reales de la starter, el cleanse acotado a dos vectores, y —en Kagetora—
+la conectividad 72/77, el reparto 23/25/24, la cota de ≤1⚡ por turno, el cap de 1 crítico por turno y
+**la conclusión de no rediseñar**.

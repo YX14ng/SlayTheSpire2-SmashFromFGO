@@ -5,6 +5,9 @@
 > Encargo: *«redisená Kagetora para ver si es mejorable»*.
 > **Respuesta corta: sí, en dos números concretos. No, en la arquitectura — y hay una razón fuerte
 > para no tocarla todavía.**
+> Revisado adversarialmente por Fable 5 el 2026-08-21: confirmó la conclusión y los dos hallazgos,
+> corrigió la prosa de K-1 (§3) y un dato de herencia en §2. Registro completo en
+> `REDESIGN-MORDRED-V2.md §10`.
 
 ---
 
@@ -38,7 +41,7 @@ lista de hallazgos es corta.
 | **Refund de energía del ciclo** | **acotado por construcción y demostrado en el código**. `Doctrine/Doctrine.cs:239-253`: el mask se vacía en el mismo `AfterCardPlayed`, cada avance enciende un bit, y `MaxAdvancesPerTurn = 3` ⇒ **≤1 ciclo y ≤1⚡ por turno**. La prueba está escrita en el comentario, no asumida. |
 | **Peligro del contador de 2 bits** | **documentado con prohibición explícita** (`Doctrine.cs:65-72`): subir `MaxAdvancesPerTurn` a 4 wrappea el campo y abre refund ilimitado. Está anotado con el procedimiento para cambiarlo. |
 | **Críticos** | **1 por turno**, con válvula (`DoctrinePower.CanSpendCritical`) que además deja pasar las cartas ajenas y las de Pies. Sin ella el banco compraba dos por turno y el breakpoint «un ciclo = 50★ = un crítico» sería mentira. |
-| **Retención de Bloqueo tras el cambio de Baluarte de FGOCore v0.1.25** | **intacta**. `DoctrinePowers.cs` implementa `ShouldClearBlock` (cumple el contrato de `IBlockRetentionSource`); no depende del `BulwarkPower` que ahora decae. |
+| **Retención de Bloqueo tras el cambio de Baluarte de FGOCore v0.1.25** | **intacta**. `KenshinFormPower` declara su `RetentionCap` en `Powers/DoctrinePowers.cs:76-93` y **hereda** el `ShouldClearBlock` + `AfterPreventingBlockClear` correctos de `FGOCore/FGOCoreCode/Forms/FormPower.cs:59-73`; no depende del `BulwarkPower` que ahora decae. |
 
 La arquitectura está en mejor estado que la de cualquier otro personaje del repo auditado hasta hoy.
 **No es candidata a rediseño; es candidata a playtest.**
@@ -65,9 +68,15 @@ sumidero cuando estás pegado al tope de 100★ y querés vaciar — un caso de 
 - `PrayerToBishamonten`: 20★ → **20 NP** (up → **30 NP**). Tasa 1,00 / 1,50.
 - `TurnTheReins`: **[=]** (50★ → 50 NP, up 70).
 
-Quedan paralelas en tasa base y con roles distintos: **Prayer es la granular** (barata, se juega
-seguido, tasa honesta) y **Reins es la de bulto** (umbral alto, más NP de una, mejor tasa al
-mejorarse). Y es un recorte de generación, que es la dirección segura.
+Quedan **iguales en tasa base (1,00)** y con roles distintos por **umbral y bulto**, no por tasa:
+**Prayer es la granular** (20★, se juega seguido, entra temprano) y **Reins es la de bulto** (50★ de
+una, 50-70 NP de golpe, para cuando el banco está lleno).
+
+**Aclaración honesta:** mejoradas, Prayer sigue arriba en tasa (1,50 contra 1,40 de Reins). No hay
+denominación legal que invierta eso —80 está fuera de la regla 10/20/30/50/100—, así que la
+diferenciación es deliberadamente por **umbral y tamaño de lote**, no por eficiencia. Lo que el fix
+sí logra es que la común barata deje de ser **estrictamente mejor en las dos dimensiones**. Y es un
+recorte de generación, que es la dirección segura.
 
 ---
 
