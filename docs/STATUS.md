@@ -101,6 +101,65 @@ tabla de la skill, la mejora de `CamelotRam` no puede ser `-1⚡`).
 **Estado: PROPUESTA. No se implementa nada hasta el visto bueno del usuario.** Pendiente además:
 responder a Moopamoop y a los reporters acumulados.
 
+## 2026-08-21 — Gilgamesh v0.1.20: el Enuma congelado NO estaba arreglado (reporte de Kduong)
+
+Segundo reporte del MISMO síntoma, y esta vez **posterior al fix**: Kduong, 2026-08-20 18:20 PDT
+(«the NP is bugged to where it stays stuck to the middle of the screen and nothing happens»),
+mientras que v0.1.19 se publicó el 2026-08-19 14:40 UTC. O sea: **el hardening de v0.1.19 no
+resolvió el bug**. Además responde la pregunta que partía el árbol en la entrada anterior: si le
+pasa a un segundo jugador «siempre», la rama de Élite/Jefe que se tocó ni siquiera era la que corría.
+
+**Acotado con evidencia (no por lectura):**
+- **Es de Gilgamesh, no de FGOCore.** Se barrieron los comentarios de los 13 items de Workshop
+  buscando el síntoma (`stuck|freez|卡住|middle of the screen|no hace nada`): los **tres** reportes
+  de cuelgue del ecosistema están en el item 3751610575 y en ninguno más. Mordred, Okita y Oberon
+  usan la MISMA `ManifestCards.ManifestToHand` y el MISMO `NpCharge.ConsumeAllForNpCard` sin un solo
+  reporte → el defecto no está en la vía compartida.
+- **`CreatureCmd.TriggerAnim` re-verificado**: `SetAnimationTrigger` + `Cmd.CustomScaledWait` de
+  tiempo fijo (`CreatureCmd.cs`), no espera a la animación → no hay deadlock de anim.
+- **`Cmd.Wait` re-verificado**: guarda `!(seconds <= 0f)`, así que el `CustomScaledWait(0.15f - num,
+  0.3f - num)` negativo de `OnPlayWrapper` (que toda carta larga produce) no cuelga.
+- **`Hook.BeforeAttack`/`AfterAttack` no pueden tirar «Collection was modified»**:
+  `CombatState.IterateHookListeners` construye una `List` snapshot antes de iterar.
+- **Sin parches Harmony propios** en Gilgamesh (`PatchAll` no encuentra ninguno).
+- **`godot.log` local**: las únicas excepciones de los mods son la saga conocida `FgoSpriteMotion` /
+  `FgoAnimationSmoothing.Prepare` (bridge engine→script en Linux nativo, pantalla de selección), sin
+  relación con la resolución de cartas.
+
+**Lo único estructuralmente único de Gilgamesh que quedó identificado:** las dos cartas del Enuma
+son las **únicas del juego** (vanilla incluido) que llaman `AttackCommand.Execute` **una vez por
+enemigo** dentro de un mismo `OnPlay` — el patrón vanilla para daño por-objetivo es un solo
+`AttackContext` con N `CreatureCmd.Damage` (`Omnislice`, `EchoingSlash`). Eso dispara
+`Hook.BeforeAttack`/`AfterAttack` e `History.CreatureAttacked` N veces y gasta N cargas de
+`SureHitPower`. **Es sospechoso y es incorrecto, pero no está probado que sea la causa**, y el
+método del proyecto prohíbe encadenar otro parche especulativo sobre el mismo síntoma.
+
+**Lo que SÍ se hizo (v0.1.20):** convertir el modo de fallo de *irrecuperable* a *recuperable y
+auditable*. Una carta jugada vive en el `PlayContainer` —el centro exacto de la pantalla— y sale de
+ahí recién cuando su `OnPlay` **retorna**: `CardModel.OnPlayWrapper` mueve la carta a su pila
+resultado **después** del `await OnPlay`, así que cualquier excepción aborta el wrapper y deja la
+carta congelada ahí con el combate intacto — exactamente el síntoma. Ambos `OnPlay` del Enuma ahora
+envuelven su cadena en un `try/catch` con un marcador de fase (`carga` / `arsenal` / `dano` /
+`agotar arsenal`) que loguea el stack completo por `MainFile.Logger.Error` y deja que la carta
+termine su resolución.
+
+- Si la causa es una **excepción** (la clase de bug documentada en DECISIONS: «una ruta inexistente
+  tira NRE y deja la carta congelada»), esto **arregla el síntoma reportado**: el NP pierde lo que
+  le faltaba, pero la carta se agota, el turno sigue y la run no se brickea.
+- Si la causa es un **await que nunca vuelve**, esto **no lo arregla** — y el log tampoco saldrá.
+  Ese caso necesita el `godot.log` del reporter.
+
+Sin cambio de balance: mismo daño, misma sobrecarga, mismas cartas agotadas.
+
+**Verificación:** build 0 warnings / 0 errores · publish local a `dist/GilgameshArcher/` con PCK
+85.683.204 B, marcadores nuevos (`aborto en la fase`, `RED DE SEGURIDAD`, `v0.1.20`) presentes en el
+PCK y **cero churn de `.import`**. **No publicado a Workshop** (falta pedido explícito). **Sin
+playtest** — nada de esto está validado en runtime.
+
+**Pendiente y bloqueante para cerrar:** pedirle a Kduong (y a Nut Butter) el `godot.log` y las tres
+cosas que parten el árbol: (1) ¿sala común o Élite/Jefe?, (2) ¿solo o en cooperativo?, (3) ¿la carta
+que se traba es la que aparece sola al llegar a 100, o la Rara drafteable, o las dos?
+
 ## 2026-08-19 — Gilgamesh v0.1.19: el Enuma Elish congelado (reporte de Nut Butter)
 
 Reporte en Steam: «everything else works except for the noble phantasm getting stuck in the middle
