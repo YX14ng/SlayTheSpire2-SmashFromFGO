@@ -61,52 +61,79 @@ public sealed class EnumaElishUnleashed() : GilgameshCard(0, CardType.Attack, Ca
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 1) Consume TODA la carga; tier = lo realmente consumido (>= 100, + OverchargeBlessing).
-        var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
-        var overcharge = (tier - ChargeCost) / 20 * PerTwenty; // SÓLO escala el bonus anti-divino
-
-        // 1.bis) FIX HOMOGENEIZACIÓN (P2): las Armas del Tesoro que queden en la mano se EXHAUSTAN como
-        //   Sobrecarga extra de la PROPIA tribu de Gil (+1 al bonus anti-divino c/u) — el gasto del NP
-        //   depende de su arsenal, no solo de la carga genérica del medidor. Fiel al OC: SÓLO escala el
-        //   bonus anti-divino, nunca el daño base contra «lo meramente humano».
-        // Solo en salas con rango divino (audit 2026-07-05): el bonus por Arma aplica unicamente a
-        // Elites/Jefes — exhaustar el arsenal en una sala comun era puro costo sin efecto.
+        // RED DE SEGURIDAD (reportes de Steam de Nut Butter 2026-08-18 y Kduong 2026-08-20, este
+        // ULTIMO YA SOBRE v0.1.19: «el NP se traba en el medio de la pantalla y no pasa nada»).
+        // Una carta jugada vive en el PlayContainer —el centro EXACTO de la pantalla
+        // (PileTypeExtensions.cs:57)— y sale de ahi recien cuando su OnPlay RETORNA: CardModel
+        // .OnPlayWrapper mueve la carta a su pila resultado DESPUES del await OnPlay, asi que
+        // cualquier excepcion en esta cadena aborta el wrapper y deja la carta congelada ahi con el
+        // combate intacto. Ese es, literalmente, el sintoma reportado.
         //
-        // ORDEN (reporte de Steam 2026-08-18, Nut Butter: «el NP se traba en el medio de la pantalla y
-        // no hace nada»): acá SOLO se LEE el arsenal; el Agotar corre al FINAL, después del daño. Una
-        // carta jugada vive en el PlayContainer —el centro exacto de la pantalla— hasta que su OnPlay
-        // retorna, así que cualquier await que no vuelva la deja congelada ahí. `CardCmd.Exhaust` con
-        // visuales entra a `CardPileCmd.Add`, que espera un tween (`await tween.AwaitFinished`) DENTRO
-        // de nuestra propia resolución; con el daño primero, aunque esa espera falle el NP ya pegó.
-        var arms = new List<CardModel>();
-        if (Owner.PlayerCombatState != null && RoyalTrait.IsInDivineRoom(Owner.Creature))
+        // No es un diagnostico: es hacer que el modo de fallo sea RECUPERABLE y AUDITABLE. Si algo
+        // tira, el NP pierde lo que le quedaba por hacer, pero la carta se agota, el turno sigue y
+        // el `phase` + el stack quedan en godot.log para el proximo reporte. El cuelgue por un await
+        // que nunca vuelve NO lo cubre esto (ver docs/STATUS.md).
+        var phase = "carga";
+        try
         {
-            arms.AddRange(Owner.PlayerCombatState.Hand.Cards.OfType<ITreasureArm>().Cast<CardModel>());
-        }
-        overcharge += arms.Count * PerArmInHand;
+            // 1) Consume TODA la carga; tier = lo realmente consumido (>= 100, + OverchargeBlessing).
+            var tier = await NpCharge.ConsumeAllForNpCard(choiceContext, Owner.Creature, ChargeCost, this);
+            var overcharge = (tier - ChargeCost) / 20 * PerTwenty; // SOLO escala el bonus anti-divino
 
-        // 2) El bonus anti-divino se calcula POR objetivo: a cada enemigo según sea o no de rango divino.
-        //    El daño base (30) es plano para todos; sólo Élites/Jefes reciben +Divine (+overcharge).
-        //    La animación de ataque se dispara UNA sola vez para todo el NP (patrón OnlyPlayAnimOnce de
-        //    Astolfo): un Execute por enemigo la repetía N veces, con su espera por cada repetición.
-        var animPlayed = false;
-        foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).ToList())
-        {
-            if (enemy.IsDead) continue;
-            var divineBonus = RoyalTrait.IsDivine(enemy) ? DynamicVars["Divine"].IntValue + overcharge : 0;
-            var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + divineBonus);
-            var attack = DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
-                .WithHitFx("vfx/vfx_starry_impact");
-            if (animPlayed) attack = attack.WithNoAttackerAnim();
-            animPlayed = true;
-            await attack.Execute(choiceContext);
-        }
+            // 1.bis) FIX HOMOGENEIZACION (P2): las Armas del Tesoro que queden en la mano se EXHAUSTAN como
+            //   Sobrecarga extra de la PROPIA tribu de Gil (+1 al bonus anti-divino c/u) — el gasto del NP
+            //   depende de su arsenal, no solo de la carga generica del medidor. Fiel al OC: SOLO escala el
+            //   bonus anti-divino, nunca el dano base contra «lo meramente humano».
+            // Solo en salas con rango divino (audit 2026-07-05): el bonus por Arma aplica unicamente a
+            // Elites/Jefes — exhaustar el arsenal en una sala comun era puro costo sin efecto.
+            //
+            // ORDEN (v0.1.19): aca SOLO se LEE el arsenal; el Agotar corre al FINAL, despues del dano.
+            // `CardCmd.Exhaust` con visuales entra a `CardPileCmd.Add`, que espera un tween
+            // (`await tween.AwaitFinished`) DENTRO de nuestra propia resolucion; con el dano primero,
+            // aunque esa espera falle el NP ya pego.
+            phase = "arsenal";
+            var arms = new List<CardModel>();
+            if (Owner.PlayerCombatState != null && RoyalTrait.IsInDivineRoom(Owner.Creature))
+            {
+                arms.AddRange(Owner.PlayerCombatState.Hand.Cards.OfType<ITreasureArm>().Cast<CardModel>());
+            }
+            overcharge += arms.Count * PerArmInHand;
 
-        // 3) Recién ahora se cobra el arsenal, y sin visuales (patrón ShutenDouji.ExhaustSiblingNp):
-        //    el bonus ya está horneado en el daño de arriba, así que este paso no puede robárselo.
-        foreach (var arm in arms)
+            // 2) El bonus anti-divino se calcula POR objetivo: a cada enemigo segun sea o no de rango divino.
+            //    El dano base (30) es plano para todos; solo Elites/Jefes reciben +Divine (+overcharge).
+            //    La animacion de ataque se dispara UNA sola vez para todo el NP (patron OnlyPlayAnimOnce de
+            //    Astolfo): un Execute por enemigo la repetia N veces, con su espera por cada repeticion.
+            phase = "dano";
+            var combatState = Owner.Creature.CombatState;
+            if (combatState != null)
+            {
+                var animPlayed = false;
+                foreach (var enemy in combatState.GetOpponentsOf(Owner.Creature).ToList())
+                {
+                    if (enemy.IsDead) continue;
+                    var divineBonus = RoyalTrait.IsDivine(enemy) ? DynamicVars["Divine"].IntValue + overcharge : 0;
+                    var damage = NpLevels.Scale(Owner, DynamicVars.Damage.BaseValue + divineBonus);
+                    var attack = DamageCmd.Attack(damage).FromCardFgoCompatibility(this, cardPlay).Targeting(enemy)
+                        .WithHitFx("vfx/vfx_starry_impact");
+                    if (animPlayed) attack = attack.WithNoAttackerAnim();
+                    animPlayed = true;
+                    await attack.Execute(choiceContext);
+                }
+            }
+
+            // 3) Recien ahora se cobra el arsenal, y sin visuales (patron ShutenDouji.ExhaustSiblingNp):
+            //    el bonus ya esta horneado en el dano de arriba, asi que este paso no puede robarselo.
+            phase = "agotar arsenal";
+            foreach (var arm in arms)
+            {
+                await CardCmd.Exhaust(choiceContext, arm, skipVisuals: true);
+            }
+        }
+        catch (Exception ex)
         {
-            await CardCmd.Exhaust(choiceContext, arm, skipVisuals: true);
+            MainFile.Logger.Error(
+                $"ENUMA ELISH: Desatado aborto en la fase '{phase}'. La carta termina su resolucion " +
+                $"igual para no quedar congelada en el centro de la pantalla. {ex}");
         }
     }
 
