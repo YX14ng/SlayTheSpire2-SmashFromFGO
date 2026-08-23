@@ -176,20 +176,24 @@ Pico de la base parcheada: **212** sin appends (dentro del techo), ~268 con appe
 encima de la vara por diseño). Todo en
 [PANEL-UOLGA-VEREDICTO-BALANCE.md](PANEL-UOLGA-VEREDICTO-BALANCE.md).
 
+**El juez de implementabilidad ya corrió** (2026-08-23):
+[PANEL-UOLGA-VEREDICTO-IMPLEMENTACION.md](PANEL-UOLGA-VEREDICTO-IMPLEMENTACION.md). Veredicto: la
+base parcheada se construye en ~85% con piezas probadas y **nada obliga a tocar FGOCore** (cero
+republish). 11 parches más, entre ellos que el **Decreto sea `CardType.Skill`** (con eso los tres
+candados del acta y el «no critica» salen gratis), que `GaugeDropped` **exhauste a la hermana no
+jugada**, y que el Anti-Purga y el Bloqueo de Curación se **reimplementen locales** (el acta prometía
+un reuso cross-mod que no existe). Orden de lotes con riesgos, incluido que la metaprogresión es
+**aislable y recortable** del primer release.
+
 **Pendiente para la próxima sesión, en orden:**
-1. **Relanzar el juez 2 (fidelidad y legibilidad)** — murió por límite de sesión. Encargo: si se
+1. **Relanzar el juez de fidelidad y legibilidad** — murió por límite de sesión. Encargo: si se
    juega como U-Olga y no como una Bestia genérica; auditoría de los ~68 nombres (los genéricos de
    fantasía espacial se van); techo de complejidad en mano; glows faltantes; refrito contra
    Gilgamesh (token vs arsenal) y Siegfried (mismo trigger de starter); tabla de nombres definitivos
    ES/EN/中文.
-2. **Relanzar el juez 3 (implementabilidad)** — también murió. Encargo: cuánto de `ICommandTyped`
-   está cableado fuera de las básicas; implementación real del token (1/turno, reloj 5, expiración,
-   los tres candados) contra el gotcha de que `ModifyDamage*` corre en preview; la manifestación
-   doble a 100 sin repetir el brickeo histórico de Tiamat; si `GutsPower` banca un Guts condicional
-   por atributo del atacante; la metaprogresión (`RunManager.OnEnded`, store propio, co-op,
-   Daily/Custom, abandono); y qué obliga a tocar FGOCore y republicar los 13.
-3. **Síntesis final**: aplicar los 17 parches sobre B y volcar el pool definitivo a este documento.
-4. Después recién: assets (Atlas `4000100`, tres ascensiones), scaffold del mod y localización.
+2. **Síntesis final**: aplicar los 17 parches del juez de balance + los 11 del de implementabilidad
+   sobre B, y volcar el pool definitivo a este documento.
+3. Después recién: assets (Atlas `4000100`, tres ascensiones), scaffold del mod y localización.
 
 ## 10. Lo que falta (encargo del panel §4.6.7)
 
