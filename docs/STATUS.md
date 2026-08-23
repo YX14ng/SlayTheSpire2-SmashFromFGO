@@ -19,9 +19,17 @@ la API se presta al bug — `VisibleDefinitions` global + una fila por mod = dup
 entre cualquier par de mods que la usen).
 
 **Verificación:** `dotnet build FGOCore -c Release` en Linux, 0 warnings / 0 errores. Cambio interno
-(métodos privados), sin tocar la superficie pública → no obliga a republicar los 12 personajes.
-**Omitido:** matriz MAIN/BETA (PowerShell), playtest en runtime y bump/publicación de FGOCore
-(sigue en v0.1.25, la publicada) — el fix no llega al juego hasta que se suba a Workshop.
+(métodos privados), sin tocar la superficie pública → no obliga a republicar los 12 personajes (todos
+piden `FGOCore >= v0.1.25`, satisfecho por v0.1.26).
+
+**PUBLICADO 2026-08-23 05:28:55 UTC — FGOCore `v0.1.26`, item `3747876334`.** Sólo cambió el DLL: el
+PCK subido es **byte a byte el mismo** que el publicado el 08-20 (`md5 dabba76d…`, sin re-exportar con
+MegaDot, que no está instalado en esta máquina); el DLL sí cambió (`md5 b2d3af4c…` → `cb0f4b97…`, mismo
+tamaño por padding, de ahí que el `file_size` del item no se mueva). Confirmado por la API de Steam:
+`time_updated` nuevo, `visibility 0`, `banned 0`. Ficha de Workshop bumpeada a v0.1.26 en el mismo lote
+(EN/ES/ZH).
+
+**Omitido:** matriz MAIN/BETA (PowerShell/Windows) y playtest en runtime.
 
 ## 2026-08-20 (2) — Mash V2 IMPLEMENTADO: el Baluarte se gasta y el muro es munición
 
