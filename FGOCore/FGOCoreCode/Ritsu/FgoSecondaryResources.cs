@@ -149,7 +149,7 @@ public static class FgoSecondaryResources
             }
         }
 
-        row.Refresh(player, visibleDefinitions);
+        row.Refresh(player, OwnVisibleDefinitions(visibleDefinitions));
 
         // El latch recién se enciende cuando la fila DIBUJÓ al menos una vez: si el factory o el
         // attach fallan (la fila nunca llega acá), los powers legacy siguen visibles y el jugador
@@ -157,6 +157,30 @@ public static class FgoSecondaryResources
         // peligroso, porque los iconos legacy ya creados no se sacan.
         CombatMetersActive = true;
     }
+
+    /// <summary>
+    /// Recorta la lista de visibles a los dos recursos de FGOCore. RitsuLib arma UN snapshot con
+    /// los recursos de TODOS los mods (<c>SecondaryResourceVisibility.GetCombatUiDefinitions</c>) y
+    /// se lo pasa igual a cada fila registrada, así que sin este filtro nuestra fila dibuja también
+    /// los medidores ajenos. Verificado con Remilia v1.0.2, cuya fila de Blood Pool comete el error
+    /// espejo y por eso duplica NP/Estrellas jugando un personaje FGO.
+    /// </summary>
+    private static List<SecondaryResourceDefinition> OwnVisibleDefinitions(
+        IReadOnlyList<SecondaryResourceDefinition> visibleDefinitions)
+    {
+        var own = new List<SecondaryResourceDefinition>(2);
+        for (var index = 0; index < visibleDefinitions.Count; index++)
+        {
+            var definition = visibleDefinitions[index];
+            if (IsOwnResource(definition.Id)) own.Add(definition);
+        }
+
+        return own;
+    }
+
+    private static bool IsOwnResource(string resourceId)
+        => string.Equals(resourceId, NpChargeResourceId, StringComparison.OrdinalIgnoreCase)
+           || string.Equals(resourceId, CritStarsResourceId, StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
     /// Ancla la fila justo arriba del contador de Energía para heredar su posición real en
@@ -293,9 +317,7 @@ public static class FgoSecondaryResources
         public async Task AfterSecondaryResourceChanged(SecondaryResourceChangeContext context)
         {
             var resourceId = context.Definition.Id;
-            if (!string.Equals(resourceId, NpChargeResourceId, StringComparison.OrdinalIgnoreCase)
-                && !string.Equals(resourceId, CritStarsResourceId, StringComparison.OrdinalIgnoreCase))
-                return;
+            if (!IsOwnResource(resourceId)) return;
 
             var key = (context.Player, resourceId);
             if (IsBridgeActive(key) || context.Player.Creature is not { } creature) return;
