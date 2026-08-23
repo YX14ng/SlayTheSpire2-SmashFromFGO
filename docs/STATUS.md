@@ -2,6 +2,27 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-23 — Medidores NP/★ duplicados jugando Tiamat: choque de filas con Remilia
+
+Reporte del usuario con captura (Tiamat, cuatro contadores: ★ 0/100, NP 20/100, ★ 0/100, NP 20/100).
+**Causa: no es Tiamat.** Con Remilia v1.0.2 instalado hay **dos** filas de medidores registradas
+sobre `NCombatUi` (`FGO_CORE_NODEATTACHMENT_COMBAT_COUNTER_ROW` + `REMILIA_NODEATTACHMENT_BLOOD_POOL_ROW`,
+ambas en `godot.log`) y RitsuLib le pasa a cada una la lista de visibles **global**, no la del mod
+dueño. Detalle del mecanismo en [`FINDINGS.md`](FINDINGS.md).
+
+**Hecho:** `FgoSecondaryResources.RefreshCounterRow` recorta ahora a los dos IDs de FGOCore
+(`OwnVisibleDefinitions`), y el `LegacyPowerBridge` reusa el mismo predicado `IsOwnResource`. Esto
+elimina el error espejo — nuestra fila ya no dibuja recursos ajenos (p. ej. el Blood Pool jugando
+Remilia) — pero **no borra por sí solo el duplicado de la captura**: la fila de Remilia sigue
+dibujando NP/★ hasta que ese mod filtre igual. Queda pendiente avisarle a su autor (y a Ritsukage:
+la API se presta al bug — `VisibleDefinitions` global + una fila por mod = duplicado garantizado
+entre cualquier par de mods que la usen).
+
+**Verificación:** `dotnet build FGOCore -c Release` en Linux, 0 warnings / 0 errores. Cambio interno
+(métodos privados), sin tocar la superficie pública → no obliga a republicar los 12 personajes.
+**Omitido:** matriz MAIN/BETA (PowerShell), playtest en runtime y bump/publicación de FGOCore
+(sigue en v0.1.25, la publicada) — el fix no llega al juego hasta que se suba a Workshop.
+
 ## 2026-08-20 (2) — Mash V2 IMPLEMENTADO: el Baluarte se gasta y el muro es munición
 
 Orden del usuario tras la revisión. **FGOCore v0.1.25 · Mash v0.1.21 · Siegfried v0.1.22 · Tiamat

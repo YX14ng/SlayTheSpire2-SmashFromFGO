@@ -3,6 +3,24 @@
 Conclusiones de alta densidad (no historial). **Verificado** = visto en código/log/decompilado;
 lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas → [DECISIONS.md](DECISIONS.md).
 
+## La lista de visibles de RitsuLib es GLOBAL: cada fila de medidores debe filtrar la suya (verificado, 2026-08-23)
+
+- Reporte del usuario: jugando Tiamat aparecían **dos medidores de NP y dos de Estrellas**. No es
+  del mod de Tiamat: son **dos filas** dibujando los mismos dos recursos. El log lo muestra literal:
+  `FGO_CORE_NODEATTACHMENT_COMBAT_COUNTER_ROW` y `REMILIA_NODEATTACHMENT_BLOOD_POOL_ROW`, las dos
+  `NCombatUi -> NSecondaryResourceCounterRow` (Remilia v1.0.2, workshop `3747515571`).
+- **Mecanismo**: `SecondaryResourceVisibility.GetCombatUiDefinitions` arma UN snapshot con los
+  recursos de **todos** los mods y `SecondaryResourceUiRuntime.RegisterCombatUpdater` se lo pasa
+  igual a **cada** fila registrada. `NSecondaryResourceCounterRow.Refresh` deduplica por ID sólo
+  *dentro* de una fila, así que dos filas × dos definiciones = cuatro contadores. Con Tiamat activa,
+  el Blood Pool de Remilia no es visible y su fila termina mostrando exactamente NP + Estrellas;
+  ambas se anclan al `EnergyCounterContainer` (nosotros con offset −72 px, Remilia se *reparenta*
+  adentro) y quedan pegadas.
+- **Regla**: quien registra una fila propia debe recortar `context.VisibleDefinitions` a **sus**
+  IDs antes del `Refresh`/`Bind`. FGOCore ya lo hace (`OwnVisibleDefinitions`); antes cometía el
+  error espejo y dibujaba el Blood Pool jugando Remilia. El duplicado que se ve en pantalla sólo
+  desaparece del todo cuando el otro mod filtra también — filtrar de un solo lado no alcanza.
+
 ## Una forma final no debe manifestar una NP inferior a la forma que reemplaza (verificado, 2026-08-04)
 
 - Paladín es una forma permanente obtenida por una carta rara: conserva las pasivas completas de
