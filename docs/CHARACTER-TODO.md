@@ -6,7 +6,14 @@ mod permanente.
 
 ## Pendientes
 
-- Ningún personaje sin diseño asignado.
+- [ ] **U-Olga Marie — UnBeast** · mod `UOlgaMarieBeast` (`res://UOlgaMarieBeast/`)
+  - Acta de identidad cerrada el 2026-08-23 por interrogatorio de diseño (22 decisiones), en
+    [`DESIGN-UOLGA.md`](DESIGN-UOLGA.md). **Pool, reliquias y mazo inicial pendientes del panel**
+    §4.6.7 (propuestas con lentes distintas + jueces adversariales).
+  - Eje propio: el medidor NP es **moneda**, no bala — convertirlo en Autoridad (ataques extra)
+    compite con dispararlo. Segunda mecánica: Guts de 人理の防人 como puerta única a la Forma 3.
+  - Primera **metaprogresión entre runs** del proyecto (追加技能 desbloqueables al completar runs).
+  - Canon: Atlas `4000100` / collectionNo 444, mazo canónico **QAABB**, NP Buster AoE.
 
 ## En validación
 
