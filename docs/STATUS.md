@@ -2,6 +2,28 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-08-23 (2) — U-Olga Marie: acta de diseño cerrada y panel a mitad de camino
+
+Personaje nuevo en el backlog: **U-Olga Marie (UnBeast)**, mod `UOlgaMarieBeast`. El acta de
+identidad quedó cerrada por interrogatorio (22 decisiones del usuario) en
+[`DESIGN-UOLGA.md`](DESIGN-UOLGA.md): el medidor NP como **moneda** (convertirlo en Autoridad =
+ataques extra, compite con dispararlo), el **Guts de 人理の防人** como puerta única e irreversible a la
+Forma 3, el marcador de **Amenaza para la Humanidad** (jefes siempre + enemigos de otros mods como
+Estrella; élites de fallback) y la primera **metaprogresión entre runs** del proyecto (追加技能
+desbloqueables al completar runs, elección por evento estilo Grial).
+
+**Canon verificado** contra Atlas `4000100`/collectionNo 444 + fgo.wiki, con dos correcciones sobre
+el resumen del wiki chino: el Guts se dispara **cuando una Amenaza te MATA** (「〜にやられた時」), no
+cuando vos la matás; y su mazo canónico es **QAABB**, idéntico al estándar §4.6.1 del proyecto.
+
+**Panel §4.6.7 — hecho a medias:** las tres propuestas de pool completas están guardadas
+([A](PANEL-UOLGA-A-RAFAGA.md), [B](PANEL-UOLGA-B-CAZA.md), [C](PANEL-UOLGA-C-PRESUPUESTO.md)) y el
+**juez de balance** ya dictaminó (base **B** + injertos, 17 parches obligatorios, fórmula del token
+`10 + tier÷10` tope 30, pico corregido 212 sin appends):
+[PANEL-UOLGA-VEREDICTO-BALANCE.md](PANEL-UOLGA-VEREDICTO-BALANCE.md). **Los jueces de fidelidad y de
+implementabilidad murieron por límite de sesión y hay que relanzarlos** — el encargo de cada uno está
+escrito en `DESIGN-UOLGA.md` §9. Sin código todavía: no hay proyecto, ni assets, ni localización.
+
 ## 2026-08-23 — Medidores NP/★ duplicados jugando Tiamat: choque de filas con Remilia
 
 Reporte del usuario con captura (Tiamat, cuatro contadores: ★ 0/100, NP 20/100, ★ 0/100, NP 20/100).

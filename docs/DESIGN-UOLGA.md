@@ -162,7 +162,36 @@ FGOCore (`NpCharge`, `CritStars`, `FgoAttributes`, `FormSwitch`, `GutsPower`, `S
   la misma ventana; el panel debe presentar la cuenta del pico, no prometerla.
 - **HP base**: banda 70-72 del roster (precedente Tiamat 70, Gilgamesh 72) para un kit explosivo.
 
-## 9. Lo que falta (encargo del panel §4.6.7)
+## 9. Estado del panel §4.6.7 (2026-08-23) — INTERRUMPIDO, retomar acá
+
+**Las tres propuestas están hechas y guardadas** (con las ~68 cartas, 12 reliquias y mazo inicial de
+cada una): [A — Ráfaga y Tempo](PANEL-UOLGA-A-RAFAGA.md) · [B — La Caza y el
+Martirio](PANEL-UOLGA-B-CAZA.md) · [C — El Presupuesto de la Directora](PANEL-UOLGA-C-PRESUPUESTO.md).
+
+**Corrió 1 de 3 jueces.** El de balance dictaminó: **base = B**, con injertos de C (candados del
+starter, «Garantía de Cumplimiento») y de A (cap +15 al Decreto, el token no critica, «Trono de la
+Bestia VII»), **17 parches obligatorios** y la fórmula del token resuelta —
+`daño = 10 + tier÷10, tope 30` — que es lo que hace defendibles las tres decisiones de conversión.
+Pico de la base parcheada: **212** sin appends (dentro del techo), ~268 con appends maxeados (por
+encima de la vara por diseño). Todo en
+[PANEL-UOLGA-VEREDICTO-BALANCE.md](PANEL-UOLGA-VEREDICTO-BALANCE.md).
+
+**Pendiente para la próxima sesión, en orden:**
+1. **Relanzar el juez 2 (fidelidad y legibilidad)** — murió por límite de sesión. Encargo: si se
+   juega como U-Olga y no como una Bestia genérica; auditoría de los ~68 nombres (los genéricos de
+   fantasía espacial se van); techo de complejidad en mano; glows faltantes; refrito contra
+   Gilgamesh (token vs arsenal) y Siegfried (mismo trigger de starter); tabla de nombres definitivos
+   ES/EN/中文.
+2. **Relanzar el juez 3 (implementabilidad)** — también murió. Encargo: cuánto de `ICommandTyped`
+   está cableado fuera de las básicas; implementación real del token (1/turno, reloj 5, expiración,
+   los tres candados) contra el gotcha de que `ModifyDamage*` corre en preview; la manifestación
+   doble a 100 sin repetir el brickeo histórico de Tiamat; si `GutsPower` banca un Guts condicional
+   por atributo del atacante; la metaprogresión (`RunManager.OnEnded`, store propio, co-op,
+   Daily/Custom, abandono); y qué obliga a tocar FGOCore y republicar los 13.
+3. **Síntesis final**: aplicar los 17 parches sobre B y volcar el pool definitivo a este documento.
+4. Después recién: assets (Atlas `4000100`, tres ascensiones), scaffold del mod y localización.
+
+## 10. Lo que falta (encargo del panel §4.6.7)
 
 Pool de ~68 recompensas (20/28/20) con conectividad ≥90% en comunes y denominaciones 10/20/30/50/100;
 mazo inicial de 10 sesgado a QAABB; starter relic como motor con cap 3/turno; ~12 reliquias; la
