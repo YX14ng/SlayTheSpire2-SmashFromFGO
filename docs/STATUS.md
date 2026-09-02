@@ -35,6 +35,16 @@ resuelven limpio contra MAIN 0.107.1, BETA 0.110.1 y BETA 0.111.0; el probe pasa
 **Omitido:** `build_compat_matrix.ps1` completa (no hay referencia `.compat` congelada de 0.111.0),
 export de `.pck` (MegaDot no instalado en esta máquina) y playtest en runtime.
 
+**PUBLICADO 2026-09-02 05:26-05:27 UTC — los 13 items en una sola sesión de SteamCMD.** FGOCore
+`v0.1.27` (`3747876334`) + los 12 personajes con un patch cada uno. Gilgamesh (`v0.1.21`), Okita
+(`v0.1.19`) y Shuten (`v0.1.11`) suben además su `FGOCore min_version` a v0.1.27, porque llaman a
+`CardCmdCompatibility` y con FGOCore v0.1.26 se comerían un `TypeLoadException`; los otros nueve no lo
+usan y conservan el suyo. Sólo cambiaron DLL y manifiesto: los `.pck` se subieron **byte a byte
+iguales** a los publicados (FGOCore sigue en `md5 dabba76d…`, sin re-exportar con MegaDot, que no está
+instalado en esta máquina). Confirmado por la API de Steam: `time_updated` nuevo en los 13,
+`visibility 0`, `banned 0`. **Falta bumpear las fichas de Workshop** (EN/ES/ZH) y el playtest en
+runtime contra 0.111.0.
+
 **Diferido con razón, no olvidado:**
 - **`ModCredits` (BaseLib 3.4.5)**: resuelve el texto desde la loc table `credits` con claves
   `<MODID>-<SECCION>.header`/`.names`, o sea `credits.json` en 5 idiomas × 13 mods. Sólo Morgan tiene
