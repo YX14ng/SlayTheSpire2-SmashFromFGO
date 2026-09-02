@@ -429,57 +429,9 @@ try
             type.FullName == "STS2RitsuLib.Models.Capabilities.ICardPropertyContributor"),
         "FgoCommandTagCapability must contribute RitsuLib card properties.");
 
-    var baseLibCharacterSelectCompatibility = RequireType(core,
-        "FGOCore.FGOCoreCode.Compatibility.BaseLibCharacterSelectCompatibility");
     var touchOfOrobas = RequireType(game, "MegaCrit.Sts2.Core.Models.Relics.TouchOfOrobas");
     Assert(touchOfOrobas.GetField("_upgradedRelic", BindingFlags.Instance | BindingFlags.NonPublic) is not null,
         "TouchOfOrobas._upgradedRelic reflection target is missing.");
-    var recognizesBaseLibMismatch = baseLibCharacterSelectCompatibility.GetMethod(
-        "IsKnownBaseLibMismatch", BindingFlags.NonPublic | BindingFlags.Static)
-        ?? throw new MissingMethodException(baseLibCharacterSelectCompatibility.FullName,
-            "IsKnownBaseLibMismatch(Exception)");
-    var suppressBaseLibMismatch = baseLibCharacterSelectCompatibility.GetMethod(
-        "SuppressBrokenBaseLibPostfix", BindingFlags.NonPublic | BindingFlags.Static)
-        ?? throw new MissingMethodException(baseLibCharacterSelectCompatibility.FullName,
-            "SuppressBrokenBaseLibPostfix(Exception)");
-    Assert((bool)recognizesBaseLibMismatch.Invoke(null,
-               [new MissingMethodException("unrelated member")])! == false,
-        "BaseLib compatibility guard must not suppress unrelated MissingMethodException instances.");
-
-    if (Environment.GetEnvironmentVariable("FGO_EXPECT_BASELIB_MAIN_LOBBY_MISMATCH") == "1")
-    {
-        Assert(runtimeBranch == "main",
-            "The BaseLib StartRunLobby mismatch reproducer is only valid against MAIN.");
-        var brokenPatch = baseLib.GetType(
-            "BaseLib.Patches.UI.CharacterSelectStartingRelicsPatch", throwOnError: true)!;
-        var brokenPostfix = brokenPatch.GetMethod("OnEmbarkPressedPostfix",
-                                BindingFlags.NonPublic | BindingFlags.Static)
-                            ?? throw new MissingMethodException(brokenPatch.FullName,
-                                "OnEmbarkPressedPostfix(NCharacterSelectScreen)");
-        var characterSelectScreen = RequireType(game,
-            "MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect.NCharacterSelectScreen");
-        var uninitializedScreen = RuntimeHelpers.GetUninitializedObject(characterSelectScreen);
-        Exception? reproducedMismatch = null;
-        try
-        {
-            brokenPostfix.Invoke(null, [uninitializedScreen]);
-        }
-        catch (TargetInvocationException exception)
-        {
-            reproducedMismatch = exception.InnerException;
-        }
-
-        Assert(reproducedMismatch is MissingMethodException,
-            $"Expected BaseLib's MAIN/BETA LocalPlayer mismatch, got {reproducedMismatch?.GetType().FullName ?? "no exception"}.");
-        Assert((bool)recognizesBaseLibMismatch.Invoke(null, [reproducedMismatch])!,
-            "FGOCore did not recognize BaseLib 3.4.3's reproduced StartRunLobby.LocalPlayer mismatch.");
-        var warningLogged = baseLibCharacterSelectCompatibility.GetField(
-            "_warningLogged", BindingFlags.NonPublic | BindingFlags.Static)
-            ?? throw new MissingFieldException(baseLibCharacterSelectCompatibility.FullName, "_warningLogged");
-        warningLogged.SetValue(null, 1); // The game logger requires a live Godot host, absent in this probe.
-        Assert(suppressBaseLibMismatch.Invoke(null, [reproducedMismatch]) is null,
-            "FGOCore did not suppress BaseLib 3.4.3's reproduced StartRunLobby.LocalPlayer mismatch.");
-    }
     var compatibilityType = core.GetType(
         "FGOCore.FGOCoreCode.Compatibility.CreatureCmdCompatibility", throwOnError: true)!;
     RuntimeHelpers.RunClassConstructor(compatibilityType.TypeHandle);
@@ -493,6 +445,8 @@ try
     // CardCmd.Exhaust cambio su retorno (Task -> Task<CardPileAddResult?>) en BETA 0.111.0 sin tocar
     // los parametros. Correr el ctor estatico fuerza la resolucion del puente: si la sobrecarga no
     // existe en este runtime, RequireExhaust lanza y el probe falla acá en vez de al jugar la carta.
+    // No se compara contra runtimeBranch porque la referencia BETA de .compat puede ser anterior a
+    // 0.111.0; lo que se exige es que el puente ligue, no contra que rama ligo.
     var cardCmdCompatibility = RequireType(core, "FGOCore.FGOCoreCode.Compatibility.CardCmdCompatibility");
     RuntimeHelpers.RunClassConstructor(cardCmdCompatibility.TypeHandle);
     var supportsExhaustResult = (bool)cardCmdCompatibility

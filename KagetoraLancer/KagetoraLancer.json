@@ -7,7 +7,7 @@
   "has_pck": true,
   "has_dll": true,
   "dependencies": [
-    { "id": "BaseLib", "min_version": "v3.4.1" },
+    { "id": "BaseLib", "min_version": "v3.4.5" },
     { "id": "STS2-RitsuLib", "min_version": "v0.5.10" },
     { "id": "FGOCore", "min_version": "v0.1.23" }
   ],

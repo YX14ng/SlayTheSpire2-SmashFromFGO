@@ -219,7 +219,6 @@ foreach ($runtime in $vanillaRoots) {
 # A new literal/reflection call bypasses compile-time checking. It must be placed in an audited
 # compatibility file and covered by the runtime probe before it is allowed into the matrix.
 $reflectionAllowList = @(
-    'FGOCore\FGOCoreCode\Compatibility\BaseLibCharacterSelectCompatibility.cs',
     'FGOCore\FGOCoreCode\Compatibility\CardCmdCompatibility.cs',
     'FGOCore\FGOCoreCode\Compatibility\CreatureCmdCompatibility.cs',
     'FGOCore\FGOCoreCode\Compatibility\LegacyDamageHookCompatibility.cs',
