@@ -3,7 +3,7 @@
   "name": "Nagao Kagetora / Uesugi Kenshin",
   "author": "Chaldea",
   "description": "Adds Nagao Kagetora and her ascended form Uesugi Kenshin from Fate/Grand Order. Complete the Three Precepts, command the battlefield, and ascend through Biten Hassou.",
-  "version": "v0.1.13",
+  "version": "v0.1.14",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [
