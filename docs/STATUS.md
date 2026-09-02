@@ -2,6 +2,60 @@
 
 Backlog canónico de futuros personajes: [`CHARACTER-TODO.md`](CHARACTER-TODO.md).
 
+## 2026-09-02 — BETA 0.111.0 rompió `CardCmd.Exhaust`; baseline BaseLib a 3.4.5 y guard de Embark retirado
+
+**Auditoría de actualizaciones.** El BETA instalado pasó a **v0.111.0** (build `24724944`, commit
+`41cef1ea`, 2026-08-13) mientras el repo apuntaba a 0.110.1. MAIN sigue en 0.107.1 (no confirmado por
+fuente directa — SteamDB da 403 —, pero BaseLib 3.4.5 declara `min_game_version 0.107.1` y RitsuLib
+0.5.18 sigue publicando la variante compat `0.107.1`). Método: volcado completo de firmas de los tres
+`sts2.dll` con Mono.Cecil + resolución forzada de todas las `MemberReference` de los 13 DLL contra cada
+runtime, más un detector de overrides huérfanos. Detalle en
+[`COMPATIBILITY-0.111.md`](COMPATIBILITY-0.111.md).
+
+**Un solo rompimiento:** `CardCmd.Exhaust` cambió su retorno de `Task` a `Task<CardPileAddResult?>`.
+Afectaba a Gilgamesh, Okita y Shuten (4 call sites). Resuelto con
+`FGOCore/FGOCoreCode/Compatibility/CardCmdCompatibility.cs`, sin ramificar: los parámetros son
+idénticos entre ramas y el binding relajado de delegates liga `Task<T>` a un delegate `Task`
+(comprobado empíricamente antes de escribirlo).
+
+**BaseLib: baseline 3.4.0 → 3.4.5, `min_version` v3.4.1 → v3.4.5 en los 13 manifiestos.** La premisa
+«NuGet termina en 3.4.0» de DECISIONS estaba vieja. Compilar contra la versión que corre en Workshop
+recupera chequeo en compilación: 3.4.1-3.4.5 rompieron `CustomResource.PrepForCombat()`, el ctor de
+`ResourceHandler` y `CardTransformReward.Amount`, y con baseline 3.4.0 el compilador no los veía (el
+repo no usa ninguno; se verificó por grep).
+
+**`BaseLibCharacterSelectCompatibility` borrado.** 3.4.5 arregló el mismatch de raíz vía
+`BetaMainCompatibility.LobbyLocalReady()` (reflexión por nombre). Se borró también su reproductor en el
+probe y las variables `FGO_EXPECT_BASELIB_MAIN_LOBBY_MISMATCH` / `FGO_BASELIB_RUNTIME_DLL`. Va atado al
+`min_version >= v3.4.5`: bajarlo obliga a reponer el guard.
+
+**Verificación:** los 13 proyectos compilan contra MAIN con **0 warnings / 0 errores**; los 13 DLL
+resuelven limpio contra MAIN 0.107.1, BETA 0.110.1 y BETA 0.111.0; el probe pasa contra los tres
+(`ExhaustResult` = False/False/True, 26 targets de Harmony, 2334 miembros de runtime).
+**Omitido:** `build_compat_matrix.ps1` completa (no hay referencia `.compat` congelada de 0.111.0),
+export de `.pck` (MegaDot no instalado en esta máquina) y playtest en runtime.
+
+**Diferido con razón, no olvidado:**
+- **`ModCredits` (BaseLib 3.4.5)**: resuelve el texto desde la loc table `credits` con claves
+  `<MODID>-<SECCION>.header`/`.names`, o sea `credits.json` en 5 idiomas × 13 mods. Sólo Morgan tiene
+  procedencia estructurada y verificable (`assets/reference/paintings_morgan.csv`: autor, obra, año,
+  licencia); para el resto habría que inventar atribuciones de arte de terceros. Hacerlo cuando haya
+  datos de procedencia por personaje.
+- **Pin de RitsuLib 0.5.10 → 0.5.18**: no hay nada que ganar hoy. El bug de la fila de medidores **no**
+  se arregló de raíz en 0.5.18 (`RegisterCombatUpdater` sigue pasando el snapshot global), así que
+  `OwnVisibleDefinitions` se queda. Lo aprovechable de 0.5.18 es runtime (el panel de DebugTools ya
+  lista NP/★ con el 0.5.18 de Workshop instalado, sin recompilar) o sirve sólo a U-Olga
+  (`ContentSourceResolver`), que puede pinnear 0.5.18 en su propio csproj sin mover el monorepo.
+- **Recuperar el tween del Agotar silencioso**: 0.111.0 hizo pública
+  `CardPileCmd.GetTweenForCardsChangingPiles(..., fromSilentAdd)`, que dispararía los callbacks que
+  `skipVisuals: true` saltea. Sólo-BETA; adoptar cuando MAIN alcance a BETA.
+- **`DESIGN-UOLGA.md` §6 tiene dos supuestos falsos** (a corregir cuando se scaffoldee U-Olga):
+  `RunEndedEvent(SerializableRun, IsVictory, IsAbandoned, OccurredAtUtc)` existe en RitsuLib desde
+  ≤0.5.10, así que «no hay hook de fin de run» es falso; y el storage correcto es
+  `ModDataStore.For(modId).Register<T>(..., SaveScope.Profile, ...)` con migraciones, no el precedente
+  `SimpleModConfig`, que es ciego a perfiles. `Saves.RawProgress.*` de 0.5.18 se evaluó y se **descarta**
+  para esto: muta el documento de progreso vanilla, y un bug propio dejaría el perfil entero en recovery.
+
 ## 2026-08-23 (2) — U-Olga Marie: acta de diseño cerrada y panel a mitad de camino
 
 Personaje nuevo en el backlog: **U-Olga Marie (UnBeast)**, mod `UOlgaMarieBeast`. El acta de

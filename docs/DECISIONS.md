@@ -4,7 +4,7 @@ Solo decisiones **cerradas** + caminos abandonados, para no volver a girar sobre
 Patrón tomado de `iryuko/sts2-mod-dev`. Estado vivo → [STATUS.md](STATUS.md). Evidencia → [FINDINGS.md](FINDINGS.md).
 
 ## Versión / plataforma
-- Target dual con un único artefacto de Workshop: **MAIN v0.107.1 + BETA v0.110.1**. Baseline de compilación **BaseLib 3.4.0** (última versión publicada en NuGet); manifiestos exigen runtime `>= v3.4.1`, cuyo hotfix de `%FormVfx` fue verificado contra el binario oficial.
+- Target dual con un único artefacto de Workshop: **MAIN v0.107.1 + BETA v0.111.0**. Baseline de compilación **BaseLib 3.4.5** (última publicada en NuGet, verificada 2026-09-02); manifiestos exigen runtime `>= v3.4.5`. Se compila contra la misma versión que corre en Workshop a propósito: con baseline 3.4.0 el compilador quedaba ciego a las rupturas de firma de 3.4.1-3.4.5 (`CustomResource.PrepForCombat()`, ctor de `ResourceHandler`, `CardTransformReward.Amount`) y sólo aparecían en runtime.
 - **MegaDot 4.5.1** para exportar el `.pck` (el juego no carga un `.pck` de un Godot más nuevo).
 
 ## Deploy
@@ -15,7 +15,7 @@ Patrón tomado de `iryuko/sts2-mod-dev`. Estado vivo → [STATUS.md](STATUS.md).
 - Cuando cambia la API pública de FGOCore, **los 12 mods de personaje se republican JUNTOS** (dll viejo contra FGOCore nuevo → `MissingMethodException`/`ReflectionTypeLoadException`, falla silenciosa). Nunca shippear FGOCore solo.
 - Descripciones **localizadas** de Workshop: solo por web UI o Steamworks API (SteamCMD/VDF setea una sola, la default).
 - **Importación de texturas controlada (actualizado 2026-07-29)**: `tools/patch_webp_imports.ps1` normaliza imports PNG/WebP nuevos antes del publish (VRAM, mipmaps y límite 1024; 768 para frames). No se reescalan escenas ni se reescriben masivamente assets antiguos. El paso se usa solo cuando entran texturas nuevas y después se vuelve a publicar el `.pck`.
-- Manifest dependencies en formato nuevo: `[{"id":"BaseLib","min_version":"v3.4.1"}, {"id":"STS2-RitsuLib","min_version":"v0.5.10"}, {"id":"FGOCore","min_version":"v0.1.23"}]`.
+- Manifest dependencies en formato nuevo: `[{"id":"BaseLib","min_version":"v3.4.5"}, {"id":"STS2-RitsuLib","min_version":"v0.5.10"}, {"id":"FGOCore","min_version":"v0.1.23"}]`.
 
 ## Diseño / balance
 - **Touch of Orobas refina la primera Starter:** la reliquia mecánica debe ocupar el índice 0 de
@@ -66,10 +66,19 @@ Patrón tomado de `iryuko/sts2-mod-dev`. Estado vivo → [STATUS.md](STATUS.md).
   estables Buster/Arts/Quick mediante una capacidad de modelo, expone NP/Estrellas como recursos
   secundarios y registra Orobas/Archaic Tooth por personaje. Los powers previos conservan sus IDs y
   se sincronizan como puente de saves. La DLL del framework sigue siendo externa y nunca se redistribuye.
-- **BaseLib 3.4.3 requiere guard en MAIN 0.107.1:** su postfix de reliquias iniciales fue compilado
-  contra el retorno BETA de `StartRunLobby.LocalPlayer`. FGOCore sólo suprime esa
-  `MissingMethodException` exacta después de Embark; no se ocultan otros errores de BaseLib o del
-  juego. Se mantiene BaseLib `>=3.4.1` en manifests para no bloquear runtimes reparados futuros.
+- **El guard de Embark de BaseLib 3.4.3 se retiró (2026-09-02).** BaseLib 3.4.5 arregló el mismatch
+  de raíz: su `CharacterSelectStartingRelicsPatch.OnEmbarkPressedPostfix` ahora pasa por
+  `BetaMainCompatibility.LobbyLocalReady()`, que resuelve `StartRunLobby.LocalPlayer` con un
+  `VariableReference` por nombre — inmune a la diferencia de retorno CLR entre `LobbyPlayer` (MAIN) y
+  `StartRunLobbyPlayer` (BETA). Verificado decompilando 3.4.5. Con `min_version >= v3.4.5` el cargador
+  del juego impide que reaparezca un runtime 3.4.3, así que `BaseLibCharacterSelectCompatibility` era
+  código muerto y se borró junto con su reproductor en el probe. **Las dos cosas van juntas:** bajar el
+  `min_version` obliga a reponer el guard.
+- **BaseLib 3.4.5 no resuelve contra MAIN 0.107.1** (hallazgo colateral, no nos afecta): referencia
+  `NTreasureRoom._chestButton` tipado `NTreasureButton`, que en MAIN es `NButton` — cambiaron un
+  `AccessTools.FieldRef` por acceso directo compilado contra BETA. Rompe sólo a quien use
+  `CustomActModel.CustomActTreasureChest`; el repo no lo usa. Es un segundo desajuste MAIN además del
+  de lobby, así que la clase de bug no está cerrada: no asumir que un BaseLib nuevo corre en MAIN.
 - **Telemetry abandonado:** `FGOTelemetry` no forma parte del grafo, del build ni de futuros
   releases. La compatibilidad útil vive en FGOCore/RitsuLib y no captura ni persiste telemetría.
 - `CardRarity.Special` **no existe** en el enum del juego → usar `CardRarity.Event` para cartas manifestadas / no-drafteables (quedan fuera de recompensas).

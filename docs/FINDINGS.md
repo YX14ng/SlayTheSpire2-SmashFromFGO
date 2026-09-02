@@ -3,6 +3,29 @@
 Conclusiones de alta densidad (no historial). **Verificado** = visto en código/log/decompilado;
 lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas → [DECISIONS.md](DECISIONS.md).
 
+## Los hooks de animación por estado del juego son Spine-only: no corren para los FGO (verificado, 2026-09-02)
+
+- StS2 0.111.0 agregó «low HP idle animations for all playable characters» (changelog oficial) y con
+  eso `CharacterModel.AnimationStates` / `IsLowHealth` protegidos y la firma nueva
+  `GenerateAnimator(MegaSprite controller, Creature creature)`. Parecía un punto de extensión
+  aprovechable para los 12 personajes.
+- **No lo es.** `NCreature` sólo llama `GenerateAnimator` dentro de `if (HasSpineAnimation)`
+  (`decompiled/MegaCrit.Sts2.Core.Nodes.Combat/NCreature.cs:501`), y
+  `NCreatureVisuals.HasSpineAnimation => SpineBody != null` (`NCreatureVisuals.cs:191`), con
+  `SpineBody` construido desde un esqueleto Spine real y puesto en `null` si no hay data.
+- Las escenas FGO son `Node2D` + `AnimatedSprite2D` + `SpriteFrames` (raster), y el repo no tiene una
+  sola referencia a `MegaSprite`/`SpineBody`. Entonces `SpineBody == null` → `GenerateAnimator`,
+  `AnimationStates`, `IsLowHealth` y `AnimState.lowHealthIdleAnim` **nunca se ejecutan** para nuestros
+  personajes. Lo mismo vale para `CustomCharacterModel.SetupCustomAnimationStates(MegaSprite)` de
+  BaseLib, idéntico en 3.4.5.
+- **Consecuencias**: (a) no choca ni reemplaza a `FgoAnimationSmoothing`, que opera sobre
+  `AnimatedSprite2D` en otra capa; (b) el dilema MAIN-1-arg vs BETA-2-args de `GenerateAnimator` es
+  irrelevante — aunque se puenteara, nunca se invoca; (c) replicar el efecto exige una animación
+  `idle_lowhp` en los `SpriteFrames` más un listener de HP propio: es trabajo de pipeline de arte
+  (re-render de 12 personajes × formas), no adopción de API.
+- **No re-investigar**: cualquier hook de animación del juego tipado sobre `MegaSprite` está fuera de
+  alcance mientras los personajes sean raster.
+
 ## La lista de visibles de RitsuLib es GLOBAL: cada fila de medidores debe filtrar la suya (verificado, 2026-08-23)
 
 - Reporte del usuario: jugando Tiamat aparecían **dos medidores de NP y dos de Estrellas**. No es
@@ -325,7 +348,7 @@ lo no verificado se marca *(probable)* / *(a confirmar)*. Decisiones cerradas �
 - **La matriz no modifica el paquete distribuible**: MAIN y BETA se escriben en
   `.compat/build-main` y `.compat/build-beta`. `dist` conserva el último build/publish normal. El
   artefacto que se distribuye sigue compilándose contra MAIN, cuyo bridge se verifica cargando sobre
-  el runtime BETA. Procedimiento y contrato completo en `docs/COMPATIBILITY-0.110.md`.
+  el runtime BETA. Procedimiento y contrato completo en `docs/COMPATIBILITY-0.111.md`.
 
 ## v0.107.1 — cambios de API (verificados con ilspycmd sobre sts2.dll)
 - Hooks de inicio de turno: `AfterSideTurnStart(CombatSide, IReadOnlyList<Creature> participants, ICombatState)`; `BeforeSideTurnStart` igual +participants.

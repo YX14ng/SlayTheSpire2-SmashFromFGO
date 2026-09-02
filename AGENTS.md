@@ -19,8 +19,9 @@ Astolfo).
 Each top-level folder with a `*.csproj` is an independent mod. All gameplay mods depend on BaseLib
 + RitsuLib; characters additionally depend on FGOCore.
 
-- Targets **MAIN v0.107.1 and BETA v0.110.1** with one artifact set, compiled against **BaseLib
-  3.4.0** (latest NuGet), requiring runtime 3.4.1+ and guarding the 3.4.3 MAIN signature mismatch,
+- Targets **MAIN v0.107.1 and BETA v0.111.0** with one artifact set, compiled against **BaseLib
+  3.4.5** (latest NuGet), requiring runtime 3.4.5+ — 3.4.5 fixed the MAIN Embark mismatch upstream,
+  so FGOCore's old guard is gone; `CardCmdCompatibility` now bridges `CardCmd.Exhaust`,
   plus **RitsuLib 0.5.10**. All 13 projects compile green; Kagetora, Shuten and Astolfo
   remain in validation/playtest state (see `docs/STATUS.md` for Workshop state).
 - `decompiled/` is the decompiled game (ground truth for hooks/VFX/base classes);
