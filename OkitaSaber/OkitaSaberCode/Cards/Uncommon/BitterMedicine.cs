@@ -9,7 +9,7 @@ namespace OkitaSaber.OkitaSaberCode.Cards.Uncommon;
 /// <summary>
 /// Medicina Amarga (苦药) — DESIGN-OKITA §5.3. 1⚡ Hab, Exhaust: curá 5; exhaustá todas las *Tos de
 /// tu mano (up: curá 8). Su única cura: chica + Exhaust (FGO: sin curas). Lee la mano vía
-/// PlayerCombatState.Hand y exhausta con CardCmd.Exhaust.
+/// PlayerCombatState.Hand y exhausta con CardCmdCompatibility.Exhaust (puente de firma MAIN/BETA).
 /// </summary>
 public sealed class BitterMedicine() : OkitaCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
@@ -23,7 +23,7 @@ public sealed class BitterMedicine() : OkitaCard(1, CardType.Skill, CardRarity.U
         if (Owner.PlayerCombatState == null) return;
         foreach (var tos in Owner.PlayerCombatState.Hand.Cards.OfType<Tos>().ToList())
         {
-            await CardCmd.Exhaust(choiceContext, tos);
+            await CardCmdCompatibility.Exhaust(choiceContext, tos);
         }
     }
 

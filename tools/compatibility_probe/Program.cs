@@ -490,6 +490,20 @@ try
     Assert(supportsCardPlay == (runtimeBranch == "beta"),
         $"Runtime branch detection mismatch: expected {runtimeBranch}, CardPlay support={supportsCardPlay}.");
 
+    // CardCmd.Exhaust cambio su retorno (Task -> Task<CardPileAddResult?>) en BETA 0.111.0 sin tocar
+    // los parametros. Correr el ctor estatico fuerza la resolucion del puente: si la sobrecarga no
+    // existe en este runtime, RequireExhaust lanza y el probe falla acá en vez de al jugar la carta.
+    var cardCmdCompatibility = RequireType(core, "FGOCore.FGOCoreCode.Compatibility.CardCmdCompatibility");
+    RuntimeHelpers.RunClassConstructor(cardCmdCompatibility.TypeHandle);
+    var supportsExhaustResult = (bool)cardCmdCompatibility
+        .GetProperty("SupportsExhaustResult", BindingFlags.Static | BindingFlags.Public)!
+        .GetValue(null)!;
+    Assert(RequirePublicStaticMethod(cardCmdCompatibility, "Exhaust",
+        RequireType(game, "MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext"),
+        RequireType(game, "MegaCrit.Sts2.Core.Models.CardModel"),
+        typeof(bool), typeof(bool)) is not null,
+        "CardCmdCompatibility.Exhaust must expose the runtime's Exhaust parameter list.");
+
     var creature = RequireType(game, "MegaCrit.Sts2.Core.Entities.Creatures.Creature");
     var cardModel = RequireType(game, "MegaCrit.Sts2.Core.Models.CardModel");
     var relicModel = RequireType(game, "MegaCrit.Sts2.Core.Models.RelicModel");
@@ -750,6 +764,7 @@ try
 
     Console.WriteLine(
         $"Compatibility OK: build={buildBranch}, runtime={runtimeBranch}, CardPlay={supportsCardPlay}, " +
+        $"ExhaustResult={supportsExhaustResult}, " +
         $"artifacts={auditedArtifacts.Length}, runtime types={resolvedRuntimeTypes}, " +
         $"runtime members={resolvedRuntimeMembers}, Harmony targets={resolvedHarmonyTargets}, " +
         $"BaseLib={baseLib.GetName().Version}, RitsuLib={ritsuLib.GetName().Version}, " +

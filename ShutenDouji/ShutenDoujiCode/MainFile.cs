@@ -71,7 +71,7 @@ public partial class MainFile : Node
             foreach (var sibling in pile.GetPile(player).Cards
                          .Where(card => card != played && card is IShutenNpCard).ToList())
             {
-                await CardCmd.Exhaust(context, sibling, skipVisuals: true);
+                await CardCmdCompatibility.Exhaust(context, sibling, skipVisuals: true);
             }
         }
     }

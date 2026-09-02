@@ -220,6 +220,7 @@ foreach ($runtime in $vanillaRoots) {
 # compatibility file and covered by the runtime probe before it is allowed into the matrix.
 $reflectionAllowList = @(
     'FGOCore\FGOCoreCode\Compatibility\BaseLibCharacterSelectCompatibility.cs',
+    'FGOCore\FGOCoreCode\Compatibility\CardCmdCompatibility.cs',
     'FGOCore\FGOCoreCode\Compatibility\CreatureCmdCompatibility.cs',
     'FGOCore\FGOCoreCode\Compatibility\LegacyDamageHookCompatibility.cs',
     'FGOCore\FGOCoreCode\Compatibility\OrobasStarterUpgradeCompatibility.cs',

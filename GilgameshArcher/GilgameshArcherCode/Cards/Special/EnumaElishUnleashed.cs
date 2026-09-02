@@ -126,7 +126,7 @@ public sealed class EnumaElishUnleashed() : GilgameshCard(0, CardType.Attack, Ca
             phase = "agotar arsenal";
             foreach (var arm in arms)
             {
-                await CardCmd.Exhaust(choiceContext, arm, skipVisuals: true);
+                await CardCmdCompatibility.Exhaust(choiceContext, arm, skipVisuals: true);
             }
         }
         catch (Exception ex)

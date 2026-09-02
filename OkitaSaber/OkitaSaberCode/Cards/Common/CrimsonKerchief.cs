@@ -32,7 +32,7 @@ public sealed class CrimsonKerchief() : OkitaCard(0, CardType.Skill, CardRarity.
         var stars = DynamicVars["Stars"].IntValue;
         foreach (var tos in TosInHand)
         {
-            await CardCmd.Exhaust(choiceContext, tos);
+            await CardCmdCompatibility.Exhaust(choiceContext, tos);
             await NpCharge.Gain(choiceContext, Owner.Creature, np, this);
             if (stars > 0) await CritStars.Gain(choiceContext, Owner.Creature, stars, this);
         }
